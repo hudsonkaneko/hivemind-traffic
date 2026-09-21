@@ -1,4 +1,4 @@
 # Environments
 
-PettingZoo-compatible multi-agent environments and environment wrappers.
+PettingZoo environments and wrappers belong here.
 

@@ -1,4 +1,4 @@
 # Visualization
 
-Kit extensions, ovrtx application code, and visualization-specific integration assets.
+Kit extensions and ovrtx application code belong here.
 

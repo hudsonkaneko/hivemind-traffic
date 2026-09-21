@@ -1,4 +1,4 @@
 # Traffic
 
-TraCI orchestration, simulation runners, and vehicle-control adapters.
+TraCI runners and vehicle-control code belong here.
 
