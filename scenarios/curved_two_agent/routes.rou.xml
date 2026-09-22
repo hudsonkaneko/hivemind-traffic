@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="controlled_car" vClass="passenger" length="5.0" minGap="2.5"
+           accel="2.6" decel="4.5" emergencyDecel="9.0" maxSpeed="27.0" sigma="0.0"/>
+    <vType id="background_car" vClass="passenger" length="5.0" minGap="2.5"
+           accel="2.2" decel="4.5" emergencyDecel="9.0" maxSpeed="24.0" sigma="0.0"/>
+    <route id="curved_route" edges="curve_0 curve_1 curve_2"/>
+
+    <vehicle id="agent_0" type="controlled_car" route="curved_route" depart="0.0"
+             departLane="0" departPos="0.0" departSpeed="10.0"/>
+    <vehicle id="agent_1" type="controlled_car" route="curved_route" depart="0.0"
+             departLane="1" departPos="12.0" departSpeed="10.0"/>
+
+    <vehicle id="background_0" type="background_car" route="curved_route" depart="2.0"
+             departLane="0" departPos="0.0" departSpeed="8.0"/>
+    <vehicle id="background_1" type="background_car" route="curved_route" depart="4.0"
+             departLane="1" departPos="0.0" departSpeed="9.0"/>
+    <vehicle id="background_2" type="background_car" route="curved_route" depart="6.0"
+             departLane="best" departPos="0.0" departSpeed="8.0"/>
+</routes>
+

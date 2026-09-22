@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-09-21T19:40:25.175479-08:00 by Eclipse SUMO netconvert 1.27.1
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <node-files value="scenarios\curved_two_agent\nodes.nod.xml"/>
+        <edge-files value="scenarios\curved_two_agent\edges.edg.xml"/>
+    </input>
+
+    <output>
+        <output-file value="scenarios\curved_two_agent\network.net.xml"/>
+    </output>
+
+</netconvertConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="0.00,115.00" convBoundary="0.00,0.00,900.00,230.00" origBoundary="0.00,-115.00,900.00,115.00" projParameter="!"/>
+
+    <edge id=":bend_a_0" function="internal">
+        <lane id=":bend_a_0_0" index="0" speed="26.00" length="0.10" shape="301.52,200.45 301.52,200.45"/>
+        <lane id=":bend_a_0_1" index="1" speed="26.00" length="0.10" shape="300.51,203.48 300.51,203.48"/>
+    </edge>
+    <edge id=":bend_b_0" function="internal">
+        <lane id=":bend_b_0_0" index="0" speed="26.00" length="0.10" shape="601.52,20.45 601.52,20.45"/>
+        <lane id=":bend_b_0_1" index="1" speed="26.00" length="0.10" shape="600.51,23.48 600.51,23.48"/>
+    </edge>
+
+    <edge id="curve_0" from="start" to="bend_a" priority="2" shape="0.00,115.00 75.00,115.00 150.00,130.00 225.00,180.00 300.00,205.00">
+        <lane id="curve_0_0" index="0" speed="27.00" length="321.72" shape="-0.00,110.20 75.48,110.20 151.87,125.48 227.13,175.65 301.52,200.45"/>
+        <lane id="curve_0_1" index="1" speed="27.00" length="321.72" shape="-0.00,113.40 75.16,113.40 150.62,128.49 225.71,178.55 300.51,203.48"/>
+    </edge>
+    <edge id="curve_1" from="bend_a" to="bend_b" priority="2" shape="300.00,205.00 375.00,230.00 450.00,115.00 525.00,0.00 600.00,25.00">
+        <lane id="curve_1_0" index="0" speed="25.00" length="432.70" shape="301.52,200.45 373.00,224.27 445.98,112.38 523.00,-5.73 601.52,20.45"/>
+        <lane id="curve_1_1" index="1" speed="25.00" length="432.70" shape="300.51,203.48 374.33,228.09 448.66,114.13 524.33,-1.91 600.51,23.48"/>
+    </edge>
+    <edge id="curve_2" from="bend_b" to="finish" priority="2" shape="600.00,25.00 675.00,50.00 750.00,100.00 825.00,115.00 900.00,115.00">
+        <lane id="curve_2_0" index="0" speed="27.00" length="319.64" shape="601.52,20.45 677.13,45.65 751.87,95.48 825.48,110.20 900.00,110.20"/>
+        <lane id="curve_2_1" index="1" speed="27.00" length="319.64" shape="600.51,23.48 675.71,48.55 750.62,98.49 825.16,113.40 900.00,113.40"/>
+    </edge>
+
+    <junction id="bend_a" type="priority" x="300.00" y="205.00" incLanes="curve_0_0 curve_0_1" intLanes=":bend_a_0_0 :bend_a_0_1" shape="300.00,205.00 302.02,198.93 300.00,205.00">
+        <request index="0" response="00" foes="00" cont="0"/>
+        <request index="1" response="00" foes="00" cont="0"/>
+    </junction>
+    <junction id="bend_b" type="priority" x="600.00" y="25.00" incLanes="curve_1_0 curve_1_1" intLanes=":bend_b_0_0 :bend_b_0_1" shape="600.00,25.00 602.02,18.93 600.00,25.00">
+        <request index="0" response="00" foes="00" cont="0"/>
+        <request index="1" response="00" foes="00" cont="0"/>
+    </junction>
+    <junction id="finish" type="dead_end" x="900.00" y="115.00" incLanes="curve_2_0 curve_2_1" intLanes="" shape="900.00,108.60 900.00,115.00"/>
+    <junction id="start" type="dead_end" x="0.00" y="115.00" incLanes="" intLanes="" shape="0.00,115.00 -0.00,108.60"/>
+
+    <connection from="curve_0" to="curve_1" fromLane="0" toLane="0" via=":bend_a_0_0" dir="s" state="M"/>
+    <connection from="curve_0" to="curve_1" fromLane="1" toLane="1" via=":bend_a_0_1" dir="s" state="M"/>
+    <connection from="curve_1" to="curve_2" fromLane="0" toLane="0" via=":bend_b_0_0" dir="s" state="M"/>
+    <connection from="curve_1" to="curve_2" fromLane="1" toLane="1" via=":bend_b_0_1" dir="s" state="M"/>
+
+    <connection from=":bend_a_0" to="curve_1" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":bend_a_0" to="curve_1" fromLane="1" toLane="1" dir="s" state="M"/>
+    <connection from=":bend_b_0" to="curve_2" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":bend_b_0" to="curve_2" fromLane="1" toLane="1" dir="s" state="M"/>
+
+</net>

@@ -24,7 +24,7 @@ No vehicle may have two pose authorities during the same interval:
 Exit evidence: `agent_0` completes the route without collisions and repeated seed-42
 runs match exactly.
 
-### 2. PettingZoo traffic environment — next
+### 2. PettingZoo traffic environment — complete
 
 - Wrap the TraCI backend as a `ParallelEnv`.
 - Begin with one agent, then expand to two simultaneously acting vehicles.
@@ -32,7 +32,9 @@ runs match exactly.
   and pass PettingZoo API and seed tests.
 - Keep observations state-based; do not introduce lidar into training yet.
 
-Exit gate: deterministic two-agent rollouts with scripted and random policies.
+Exit evidence: the curved two-agent scenario passes PettingZoo API and seed tests,
+fixed-action replay is deterministic, and both controlled agents complete the route
+alongside three SUMO-controlled background vehicles.
 
 ### 3. Coordination baselines and learning
 
@@ -89,4 +91,3 @@ smoothness, sensing cost, and synchronization drift reported.
 2. Define and unit-test the traffic snapshot and coordinate conversion contract.
 3. Verify the target Isaac Sim installation and run a one-frame RTX lidar smoke test.
 4. Export the single-vehicle SUMO baseline as the first OpenUSD replay fixture.
-

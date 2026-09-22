@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nodes>
+    <node id="start" x="0.0" y="0.0" type="priority"/>
+    <node id="bend_a" x="300.0" y="90.0" type="priority"/>
+    <node id="bend_b" x="600.0" y="-90.0" type="priority"/>
+    <node id="finish" x="900.0" y="0.0" type="priority"/>
+</nodes>
+
