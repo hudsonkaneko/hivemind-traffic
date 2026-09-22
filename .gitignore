@@ -11,4 +11,5 @@ __pycache__/
 # Generated simulation output
 results/*
 !results/README.md
-
+outputs/
+logs/
