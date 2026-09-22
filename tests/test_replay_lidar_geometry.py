@@ -1,5 +1,18 @@
 import numpy as np
-from scripts.replay_lidar_geometry import ReplayReference, rotate, summarize
+from scripts.replay_lidar_geometry import ReplayReference, rotate, summarize, box_edge_distance
+
+
+def test_box_edge_distance_on_face_and_edge():
+    points = np.array([[2.,0.,0.], [2.,.99,0.], [2.,1.,0.]])
+    np.testing.assert_allclose(box_edge_distance(points,[0,0,0],[4,2,1]), [.5,.01,0], atol=1e-12)
+
+
+def test_recorded_surface_edge_distance():
+    ref = reference()
+    ref.config['sensor_mount_m'] = [.01,0,.65]
+    scan = dict(timestamp_ns=0,offset_ns=np.array([0]),azimuth_deg=np.array([0]),elevation_deg=np.array([0]))
+    ranges, labels = ref.expected(scan)
+    np.testing.assert_allclose(ref.edge_distances(scan,ranges,labels), [.55])
 
 
 def reference():

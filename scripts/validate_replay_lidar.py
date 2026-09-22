@@ -19,8 +19,19 @@ def main():
     parser.add_argument('--replay-dir', type=Path, default=ROOT/'outputs/sumo_replay')
     parser.add_argument('--config', type=Path, default=ROOT/'experiments/configs/replay_lidar_validation.json')
     parser.add_argument('--frames', type=int, help='Diagnostic short run; normal coverage gates still apply')
+    parser.add_argument('--identity-deltas', action='store_true', help='Exploratory capture of renderer identity updates')
+    parser.add_argument('--zero-azimuth-noise', action='store_true', help='Controlled azimuth-noise ablation, not production validation')
+    parser.add_argument('--identity-preflight', action='store_true', help='Diagnostic: register all known replay vehicles before capture')
+    parser.add_argument('--uninstance-vehicles', action='store_true', help='Diagnostic session-only renderer instancing ablation')
     args = parser.parse_args()
+    if args.frames is not None and args.frames <= 0:
+        parser.error('--frames must be positive')
     config = json.loads(args.config.read_text())
+    config['identity_deltas'] = args.identity_deltas
+    config['zero_azimuth_noise'] = args.zero_azimuth_noise
+    config['identity_preflight'] = args.identity_preflight
+    config['uninstance_vehicles'] = args.uninstance_vehicles
+    config['requested_frames'] = args.frames or round(config['duration_s']*config['fps'])
     data = json.loads((args.replay_dir/'recording.json').read_text())
     reference = ReplayReference(data, config)
     run_id = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+uuid.uuid4().hex[:6]
@@ -51,7 +62,7 @@ def main():
         import omni.usd
         import omni.timeline
         import omni.replicator.core as rep
-        from pxr import Usd
+        from pxr import Usd, UsdGeom
         from isaacsim.sensors.experimental.rtx import (Lidar,LidarSensor,parse_generic_model_output_data,
                                                       parse_stable_id_map_data,parse_object_ids)
         from replay_export import export_replay, vehicle_path
@@ -65,8 +76,19 @@ def main():
         app.update()
         stage = omni.usd.get_context().get_stage()
         stage.SetEditTarget(stage.GetSessionLayer())
+        if config['uninstance_vehicles']:
+            for vehicle_id in reference.ids:
+                stage.GetPrimAtPath(vehicle_path(vehicle_id)+'/Model').SetInstanceable(False)
+        if config['identity_preflight']:
+            # Temporary initialization only; never edit the portable asset layers.
+            for vehicle_id in reference.ids:
+                UsdGeom.Imageable(stage.GetPrimAtPath(vehicle_path(vehicle_id))).GetVisibilityAttr().Set('inherited')
         lidar = Lidar.create(vehicle_path(config['ego_id'])+'/Lidar',config=config['sensor_config'],
                              translations=np.array(config['sensor_mount_m']),aux_output_level='FULL')
+        if config['zero_azimuth_noise']:
+            attribute = lidar.prims[0].GetAttribute('omni:sensor:Core:azimuthErrorStd')
+            if not attribute or not attribute.Set(0.0) or attribute.Get() != 0.0:
+                raise RuntimeError('Could not disable azimuth noise in the session layer')
         sensor = LidarSensor(lidar,annotators=[])
         manifest['sensor_attributes'] = {a.GetName():str(a.Get()) for a in lidar.prims[0].GetAttributes() if a.GetName().startswith('omni:sensor')}
         timeline = omni.timeline.get_timeline_interface()
@@ -79,17 +101,32 @@ def main():
             def __init__(self):
                 self.data_structure='renderProduct'
                 self.annotators=[rep.annotators.get('GenericModelOutput'),rep.annotators.get('StableIdMap')]
+                self.identity_map = {}
+                self.map_updates = []
+                if config['identity_deltas']:
+                    self.annotators.append(rep.annotators.get('StableIdMapDeltas'))
             def write(self,payload):
                 try:
                     for product in payload.get('renderProducts',{}).values():
+                        # Identity updates can arrive between accumulated lidar scans.
+                        for map_name in ['StableIdMap', 'StableIdMapDeltas'] if config['identity_deltas'] else ['StableIdMap']:
+                            map_raw = product.get(map_name)
+                            if isinstance(map_raw, dict): map_raw = map_raw.get('data')
+                            if map_raw is None or not np.asarray(map_raw).size: continue
+                            entries = parse_stable_id_map_data(map_raw)
+                            changed = {k:v for k,v in entries.items() if self.identity_map.get(k) != v}
+                            if changed:
+                                update_index = len(self.map_updates)
+                                np.save(output/f'identity_update_{update_index:04d}.npy', np.asarray(map_raw))
+                                self.map_updates.append(dict(source=map_name,callback_time_s=timeline.get_current_time(),
+                                    entries={str(k):str(v) for k,v in changed.items()}))
+                                self.identity_map.update(changed)
                         raw=product.get('GenericModelOutput')
                         if isinstance(raw,dict): raw=raw.get('data')
                         if raw is None: continue
                         gmo=parse_generic_model_output_data(raw)
                         if not gmo.numElements: continue
-                        raw_map=product.get('StableIdMap')
-                        if isinstance(raw_map,dict): raw_map=raw_map.get('data')
-                        sid_map=parse_stable_id_map_data(raw_map) if raw_map is not None else {}
+                        sid_map = dict(self.identity_map)
                         oid=parse_object_ids(gmo.objId)
                         label_map={key:next((i for i,path in enumerate(paths) if str(value).startswith(path+'/')), -1) for key,value in sid_map.items()}
                         scan=dict(azimuth_deg=np.array(gmo.x),elevation_deg=np.array(gmo.y),range_m=np.array(gmo.z),
@@ -113,12 +150,25 @@ def main():
                             frame_end_ns=int(gmo.frameEnd.timestampNs),frame_start_position=list(gmo.frameStart.posM),
                             frame_end_position=list(gmo.frameEnd.posM),frame_start_orientation=list(gmo.frameStart.orientation),
                             frame_end_orientation=list(gmo.frameEnd.orientation),stable_id_map={str(k):str(v) for k,v in sid_map.items()}))
+                        (output/'identity-updates.json').write_text(json.dumps(self.map_updates,indent=2))
                 except Exception as error:
                     errors.append(repr(error))
         rep.WriterRegistry.register(ReplayValidationWriter)
         sensor.attach_writer('ReplayValidationWriter')
+        if config['identity_preflight']:
+            for _ in range(12):
+                app.update()
+            for vehicle_id in reference.ids:
+                attr = UsdGeom.Imageable(stage.GetPrimAtPath(vehicle_path(vehicle_id))).GetVisibilityAttr()
+                attr.Clear()
+                for time in reference.times:
+                    expected = reference.pose(vehicle_id, np.array([time]))[2][0]
+                    if (attr.Get(time*60) != 'invisible') != bool(expected):
+                        raise RuntimeError('Preflight did not restore recorded visibility')
+            if records:
+                raise RuntimeError('Preflight unexpectedly produced scans while paused')
         timeline.play()
-        for _ in range(args.frames or round(config['duration_s']*config['fps'])):
+        for _ in range(config['requested_frames']):
             app.update()
         timeline.stop()
         sensor.detach_writer('ReplayValidationWriter')

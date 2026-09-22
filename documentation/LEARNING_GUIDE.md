@@ -30,6 +30,8 @@ Reported checks are historical evidence, not tests rerun during document authori
 | 15 | Interview and study workbook | Learning exercises |
 | 16 | Moving lidar geometry and timing | See moving-lidar-validation.md |
 | 17 | Curved replay lidar validation | See replay-lidar-validation.md |
+| 18 | Ground truth vs lidar perception | Architecture clarification; no code change |
+| 19 | Lidar failure diagnostics | See lidar-diagnostics.md |
 
 ## Ongoing update contract
 

@@ -12,6 +12,12 @@ def rotate(vectors, yaw):
                             s*vectors[:, 0]+c*vectors[:, 1], vectors[:, 2]))
 
 
+def box_edge_distance(local_points, center, size):
+    """Distance along a box face to its closest edge (points already on surface)."""
+    face_distances = np.abs(np.abs(local_points - np.asarray(center)) - np.asarray(size)/2)
+    return np.partition(face_distances, 1, axis=1)[:, 1]
+
+
 class ReplayReference:
     def __init__(self, recording, config):
         self.config = config
@@ -81,6 +87,29 @@ class ReplayReference:
                     outliers_over_20cm=int((errors>.2).sum()),
                     matched_identity_p95_m=float(np.percentile(matched_errors,95)) if matched_errors.size else None,
                     vehicle_hits={name:int((observed & (labels == i)).sum()) for i,name in enumerate(self.ids)}), errors
+
+    def edge_distances(self, scan, expected, labels):
+        """Diagnostic only: proximity of ideal vehicle intersections to silhouettes.
+
+        Never used to drop returns or relax acceptance gates.
+        """
+        times = (float(scan['timestamp_ns']) + scan['offset_ns'].astype(float))*1e-9
+        times -= self.config['sensor_to_usd_offset_s']
+        origin, yaw, _ = self.sensor_pose(times)
+        rays = rotate(directions(scan['azimuth_deg'], scan['elevation_deg']), yaw)
+        distances = np.full(len(times), np.nan)
+        for label, vehicle_id in enumerate(self.ids):
+            selected = (labels == label) & np.isfinite(expected)
+            if not selected.any():
+                continue
+            pos, angle, _ = self.pose(vehicle_id, times[selected])
+            hit = origin[selected] + rays[selected] * expected[selected, None]
+            local = rotate(hit-pos, -angle)
+            track = self.tracks[vehicle_id]
+            distances[selected] = box_edge_distance(local,
+                [-track['length']/2, 0, self.config['body_center_height_m']],
+                [track['length'], track['width'], self.config['body_height_m']])
+        return distances
 
 
 def summarize(records, config, callback_errors=()):

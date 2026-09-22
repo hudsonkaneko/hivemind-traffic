@@ -131,6 +131,11 @@ smoothness, sensing cost, and synchronization drift reported.
    strict range/identity acceptance fails. Resolve the dynamic identity-map
    limitation and investigate silhouette returns before using lidar as policy
    observations. See `documentation/replay-lidar-validation.md` for evidence.
+   Five short diagnostic captures now reject simple identity-delta, visibility
+   preflight, and uninstancing fixes; disabling azimuth noise alone does not remove
+   range outliers. The offline audit preserves confusion matrices and boundary
+   distances. See `documentation/lidar-diagnostics.md`. Next isolate renderer ID
+   lifecycle and return semantics before repeating full-route acceptance.
    Improve shared road/vehicle assets without breaking the validation fixtures.
 5. Resume communication experiments against the frozen no-communication baseline.
 
