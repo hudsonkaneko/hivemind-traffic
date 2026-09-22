@@ -15,6 +15,7 @@ from time import perf_counter
 
 from environments.highway_parallel_env import DEFAULT_CONFIG, HighwayParallelEnv
 from policies.baselines import make_policy
+from policies.ppo import CheckpointPolicy
 from traffic.sumo_backend import find_sumo_binary
 
 
@@ -32,9 +33,10 @@ def run_rollout(
     horizon: int,
     gui: bool = False,
     gui_delay_ms: int = 50,
+    checkpoint: Path | None = None,
 ) -> tuple[list[dict], dict]:
     env = HighwayParallelEnv(horizon=horizon, gui=gui, gui_delay_ms=gui_delay_ms)
-    policy = make_policy(policy_name)
+    policy = CheckpointPolicy(checkpoint) if policy_name == "trained" else make_policy(policy_name)
     policy.reset(seed)
     rows: list[dict] = []
     summary = {
@@ -81,6 +83,8 @@ def run_rollout(
                         "reward_unsafe_gap": components["unsafe_gap"],
                         "reward_collision": components["collision"],
                         "reward_completion": components["completion"],
+                        "reward_safety_intervention": components["safety_intervention"],
+                        "reward_lane_change_request": components["lane_change_request"],
                         "proposed_speed_action": proposed[0],
                         "proposed_lane_action": proposed[1],
                         "applied_speed_action": applied[0],
@@ -112,6 +116,7 @@ def write_evidence_package(
     horizon: int,
     gui: bool,
     gui_delay_ms: int,
+    checkpoint: Path | None,
     output_root: Path,
 ) -> Path:
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
@@ -123,6 +128,7 @@ def write_evidence_package(
         horizon=horizon,
         gui=gui,
         gui_delay_ms=gui_delay_ms,
+        checkpoint=checkpoint,
     )
     metrics_path = run_dir / "metrics.csv"
     with metrics_path.open("w", newline="", encoding="utf-8") as handle:
@@ -149,7 +155,7 @@ def write_evidence_package(
         "gui_delay_ms": gui_delay_ms,
         "scenario": str(config.relative_to(ROOT)),
         "communication": "none",
-        "checkpoint": None,
+        "checkpoint": str(checkpoint) if checkpoint else None,
     }
     (run_dir / "resolved-config.json").write_text(
         json.dumps(resolved, indent=2), encoding="utf-8"
@@ -183,19 +189,23 @@ def write_evidence_package(
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--policy", choices=("scripted", "random"), default="scripted")
+    parser.add_argument("--policy", choices=("scripted", "random", "trained"), default="scripted")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--horizon", type=int, default=400)
     parser.add_argument("--gui", action="store_true")
     parser.add_argument("--gui-delay-ms", type=int, default=50)
+    parser.add_argument("--checkpoint", type=Path)
     parser.add_argument("--output-root", type=Path, default=ROOT / "results" / "rollouts")
     args = parser.parse_args()
+    if args.policy == "trained" and args.checkpoint is None:
+        parser.error("--checkpoint is required when --policy trained")
     run_dir = write_evidence_package(
         policy_name=args.policy,
         seed=args.seed,
         horizon=args.horizon,
         gui=args.gui,
         gui_delay_ms=args.gui_delay_ms,
+        checkpoint=args.checkpoint.resolve() if args.checkpoint else None,
         output_root=args.output_root.resolve(),
     )
     print(run_dir)
@@ -203,4 +213,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

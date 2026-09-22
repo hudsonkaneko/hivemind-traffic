@@ -48,7 +48,10 @@ normalization, safety, and communication contracts.
 
 Current evidence: the deterministic scripted policy completes both routes without
 collisions, while the matched seeded-random policy times out both agents and incurs
-substantially more safety-shield overrides. PPO/IPPO training has not started.
+substantially more safety-shield overrides. The first shared PPO/no-communication
+baseline and checkpoint replay path are implemented. Its smoke-trained checkpoint
+completes the route but still depends on more shield overrides than the scripted
+policy, so reward/training refinement remains necessary before communication work.
 
 ### 4. OpenUSD bridge and replay
 

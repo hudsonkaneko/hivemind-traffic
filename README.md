@@ -43,3 +43,6 @@ sumo --version
 .\.venv\Scripts\python.exe -c "import traci, pettingzoo; print(traci.__file__); print(pettingzoo.__version__)"
 ```
 
+Train and visibly replay the first shared PPO baseline using the commands in
+[`experiments/README.md`](experiments/README.md).
+

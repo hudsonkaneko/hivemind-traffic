@@ -144,12 +144,19 @@ class HighwayParallelEnv(ParallelEnv):
             progress = max(0.0, current - previous)
             speed = float(state["speed"]) if state else 0.0
             unsafe_gap = self._nearest_gap(agent, ahead=True)
+            backend_intervention = any(
+                bool(self._result.executed_actions.get(agent, {}).get(key))
+                for key in ("speed_clamped", "lane_clamped")
+            )
+            safety_intervention = bool(shield_reasons[agent]) or backend_intervention
             components = {
                 "progress": 0.02 * progress,
                 "speed": 0.01 * min(speed / 27.0, 1.0),
                 "unsafe_gap": -1.0 if unsafe_gap is not None and unsafe_gap < 5.0 else 0.0,
                 "collision": -10.0 if agent in collided else 0.0,
                 "completion": 5.0 if agent in arrived else 0.0,
+                "safety_intervention": -0.1 if safety_intervention else 0.0,
+                "lane_change_request": -0.02 if applied[agent][1] != 1 else 0.0,
             }
             rewards[agent] = float(sum(components.values()))
             terminations[agent] = agent in collided or agent in arrived
@@ -160,11 +167,7 @@ class HighwayParallelEnv(ParallelEnv):
                 "proposed_action": proposed[agent],
                 "applied_action": applied[agent],
                 "executed_action": self._result.executed_actions.get(agent, {}),
-                "safety_intervention": bool(shield_reasons[agent])
-                or any(
-                    bool(self._result.executed_actions.get(agent, {}).get(key))
-                    for key in ("speed_clamped", "lane_clamped")
-                ),
+                "safety_intervention": safety_intervention,
                 "safety_reasons": shield_reasons[agent],
                 "active_agents": tuple(transition_agents),
                 "termination_cause": (
