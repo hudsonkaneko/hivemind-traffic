@@ -29,6 +29,7 @@ Reported checks are historical evidence, not tests rerun during document authori
 | 14 | Shared exporter and ovrtx | 69d3cb3 |
 | 15 | Interview and study workbook | Learning exercises |
 | 16 | Moving lidar geometry and timing | See moving-lidar-validation.md |
+| 17 | Curved replay lidar validation | See replay-lidar-validation.md |
 
 ## Ongoing update contract
 

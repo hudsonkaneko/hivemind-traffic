@@ -126,9 +126,11 @@ smoothness, sensing cost, and synchronization drift reported.
    Geometric and timing validation of moving scans remains outstanding.
 2. Shared USD export and isolated Isaac sensor/UI authoring are implemented.
 3. Minimal ovstage + ovrtx PNG rendering and shared traffic snapshots are verified.
-4. Controlled straight-motion lidar geometry/timing validation is implemented;
-   see `documentation/moving-lidar-validation.md`. Validate the curved traffic
-   replay separately before claiming all replay scans have accurate timing.
+4. Controlled straight-motion lidar validation passes. Curved traffic replay
+   checks are now implemented; timing/coverage pass in the first full run, but
+   strict range/identity acceptance fails. Resolve the dynamic identity-map
+   limitation and investigate silhouette returns before using lidar as policy
+   observations. See `documentation/replay-lidar-validation.md` for evidence.
    Improve shared road/vehicle assets without breaking the validation fixtures.
 5. Resume communication experiments against the frozen no-communication baseline.
 
