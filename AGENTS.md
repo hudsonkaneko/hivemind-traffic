@@ -13,3 +13,11 @@ Project direction: both Isaac Sim with RTX lidar and ovstage + ovrtx are intende
 targets. Share portable USD assets, motion recordings, and timestamp conventions
 between them. Keep renderer-specific sensors and UI in separate adapters/layers.
 Commit and push each tested, meaningful change; exclude generated scans and logs.
+
+Maintain the native Google Docs Engineering & Learning Guide linked from
+`documentation/LEARNING_GUIDE.md`. For each meaningful change, add a dedicated
+tab explaining purpose, technology, design choices, reproduction steps, evidence,
+limitations, and the associated commit. Preserve existing user notes. Distinguish
+implemented/tested behavior from plans and historical checks from fresh tests.
+If the document cannot be updated, record the pending entry in documentation
+and explicitly report that it still needs to be synced.

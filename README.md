@@ -8,6 +8,9 @@ with RTX lidar for required 3D sensor playback and downstream validation. See
 [`experiments/ROADMAP.md`](experiments/ROADMAP.md) for the gated implementation
 timeline.
 
+For explanations of the implementation, design decisions, reproduction exercises,
+and interview preparation, see the [Engineering & Learning Guide](documentation/LEARNING_GUIDE.md).
+
 ```text
 hivemind-traffic/
 ├── scenarios/       # SUMO networks, routes, and configurations
