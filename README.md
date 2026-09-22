@@ -2,6 +2,12 @@
 
 Repository scaffold for a multi-agent highway traffic simulation project.
 
+The committed system architecture uses SUMO/TraCI for scalable traffic behavior,
+PettingZoo for multi-agent learning, OpenUSD for scene interchange, and Isaac Sim
+with RTX lidar for required 3D sensor playback and downstream validation. See
+[`experiments/ROADMAP.md`](experiments/ROADMAP.md) for the gated implementation
+timeline.
+
 ```text
 hivemind-traffic/
 ├── scenarios/       # SUMO networks, routes, and configurations
