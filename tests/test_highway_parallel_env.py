@@ -40,7 +40,7 @@ class FakeBackend:
                 "lane_index": index,
                 "lane_id": f"lane_{index}",
                 "road_id": "fake_road",
-                "distance": float(10 * self.step_count + index),
+                "distance": float(10 * self.step_count + 20 * index),
                 "waiting_time": 0.0,
                 "time_loss": 0.0,
             }
@@ -134,13 +134,33 @@ def test_safety_shield_logs_boundary_and_headway_overrides():
             }
         )
         assert infos["agent_0"]["proposed_action"] == (2, 0)
-        assert infos["agent_0"]["applied_action"] == (0, 1)
-        assert set(infos["agent_0"]["safety_reasons"]) == {
-            "emergency_headway",
-            "road_boundary",
-        }
+        assert infos["agent_0"]["applied_action"] == (2, 1)
+        assert infos["agent_0"]["safety_reasons"] == ("road_boundary",)
         assert infos["agent_1"]["applied_action"][1] == 1
         assert infos["agent_1"]["safety_intervention"]
+    finally:
+        env.close()
+
+
+def test_lane_change_cooldown_is_observed_and_enforced():
+    env = HighwayParallelEnv(horizon=5, backend_factory=FakeBackend)
+    try:
+        env.reset(seed=42)
+        observations, _, _, _, _ = env.step(
+            {
+                "agent_0": np.array([1, 2], dtype=np.int64),
+                "agent_1": np.array([1, 1], dtype=np.int64),
+            }
+        )
+        assert observations["agent_0"][15] == 1.0
+        _, _, _, _, infos = env.step(
+            {
+                "agent_0": np.array([1, 2], dtype=np.int64),
+                "agent_1": np.array([1, 1], dtype=np.int64),
+            }
+        )
+        assert infos["agent_0"]["applied_action"][1] == 1
+        assert "lane_change_cooldown" in infos["agent_0"]["safety_reasons"]
     finally:
         env.close()
 

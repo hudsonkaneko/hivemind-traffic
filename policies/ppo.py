@@ -19,13 +19,29 @@ def action_masks_from_observations(observations: np.ndarray) -> np.ndarray:
     rightmost = observations[:, 1] < 0.5
     masks[rightmost, 1, 0] = False
     masks[~rightmost, 1, 2] = False
+    cooldown_active = observations[:, 15] > 0.0
+    masks[cooldown_active, 1, 0] = False
+    masks[cooldown_active, 1, 2] = False
+
+    # A lane change is masked when either neighboring gap in the target lane
+    # is present and closer than the shield's eight-metre threshold.
+    target_lane_1_blocked = (
+        ((observations[:, 5] > 0.5) & (observations[:, 3] < 0.08))
+        | ((observations[:, 8] > 0.5) & (observations[:, 6] < 0.08))
+    )
+    target_lane_2_blocked = (
+        ((observations[:, 11] > 0.5) & (observations[:, 9] < 0.08))
+        | ((observations[:, 14] > 0.5) & (observations[:, 12] < 0.08))
+    )
+    masks[rightmost & target_lane_2_blocked, 1, 2] = False
+    masks[~rightmost & target_lane_1_blocked, 1, 0] = False
     return masks
 
 
 class SharedActorCritic(nn.Module):
     """One local-observation policy shared by every homogeneous vehicle."""
 
-    def __init__(self, observation_size: int = 9, hidden_sizes: Sequence[int] = (128, 128)):
+    def __init__(self, observation_size: int = 16, hidden_sizes: Sequence[int] = (128, 128)):
         super().__init__()
         layers: list[nn.Module] = []
         input_size = observation_size
@@ -100,7 +116,7 @@ class SharedActorCritic(nn.Module):
 class ObservationNormalizer:
     """Running training-only statistics that are frozen in evaluation checkpoints."""
 
-    def __init__(self, size: int = 9, epsilon: float = 1e-4):
+    def __init__(self, size: int = 16, epsilon: float = 1e-4):
         self.mean = np.zeros(size, dtype=np.float64)
         self.variance = np.ones(size, dtype=np.float64)
         self.count = float(epsilon)
@@ -143,10 +159,13 @@ class CheckpointPolicy:
     def __init__(self, checkpoint_path: str | Path):
         checkpoint = torch.load(Path(checkpoint_path), map_location="cpu", weights_only=False)
         hidden_sizes = checkpoint["config"]["model"]["hidden_sizes"]
-        self.model = SharedActorCritic(hidden_sizes=hidden_sizes)
+        observation_size = checkpoint["config"]["model"].get("observation_size", 9)
+        self.model = SharedActorCritic(
+            observation_size=observation_size, hidden_sizes=hidden_sizes
+        )
         self.model.load_state_dict(checkpoint["model_state"])
         self.model.eval()
-        self.normalizer = ObservationNormalizer()
+        self.normalizer = ObservationNormalizer(size=observation_size)
         self.normalizer.load_state_dict(checkpoint["normalizer_state"])
 
     def reset(self, seed: int) -> None:

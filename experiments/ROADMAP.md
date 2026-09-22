@@ -36,7 +36,7 @@ Exit evidence: the curved two-agent scenario passes PettingZoo API and seed test
 fixed-action replay is deterministic, and both controlled agents complete the route
 alongside three SUMO-controlled background vehicles.
 
-### 3. Coordination baselines and learning — baselines complete, training next
+### 3. Coordination baselines and learning — no-communication baseline complete
 
 - Establish no-learning and independent-control baselines.
 - Train shared PPO/IPPO before communication.
@@ -47,11 +47,12 @@ Exit gate: a measurable policy checkpoint with documented observation, action,
 normalization, safety, and communication contracts.
 
 Current evidence: the deterministic scripted policy completes both routes without
-collisions, while the matched seeded-random policy times out both agents and incurs
-substantially more safety-shield overrides. The first shared PPO/no-communication
-baseline and checkpoint replay path are implemented. Its smoke-trained checkpoint
-completes the route but still depends on more shield overrides than the scripted
-policy, so reward/training refinement remains necessary before communication work.
+collisions, while the matched seeded-random policy times out both agents. The
+refined shared PPO/no-communication policy completes both agents on all three held-
+out seeds with no collisions. It averages 37 safety overrides, versus 0 for the
+scripted policy and 498 for random, and finishes in about 245 steps versus 269 for
+scripted. Communication experiments may now start, while override rate remains an
+explicit metric to improve rather than being hidden by the safety shield.
 
 ### 4. OpenUSD bridge and replay
 
@@ -94,7 +95,8 @@ smoothness, sensing cost, and synchronization drift reported.
 
 ## Immediate implementation order
 
-1. Build the PettingZoo wrapper around the tested TraCI backend.
+1. Add a bounded vehicle-to-vehicle message to the shared PPO policy and compare it
+   against the frozen no-communication baseline on identical seeds.
 2. Define and unit-test the traffic snapshot and coordinate conversion contract.
 3. Verify the target Isaac Sim installation and run a one-frame RTX lidar smoke test.
 4. Export the single-vehicle SUMO baseline as the first OpenUSD replay fixture.

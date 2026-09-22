@@ -17,10 +17,24 @@ class ScriptedPolicy:
         actions: dict[str, np.ndarray] = {}
         for agent, observation in observations.items():
             speed, lane = float(observation[0]), float(observation[1])
-            front_gap, front_present = float(observation[3]), bool(observation[5])
+            own_offset = 3 if lane < 0.5 else 9
+            target_offset = 9 if lane < 0.5 else 3
+            front_gap = float(observation[own_offset])
+            front_present = bool(observation[own_offset + 2])
+            target_front_safe = not bool(observation[target_offset + 2]) or bool(
+                observation[target_offset] >= 0.08
+            )
+            target_rear_safe = not bool(observation[target_offset + 5]) or bool(
+                observation[target_offset + 3] >= 0.08
+            )
+            cooldown_active = observation[15] > 0.0
             if front_present and front_gap < 0.15:
                 speed_action = 0
-                lane_action = 2 if lane < 0.5 else 0
+                lane_action = (
+                    (2 if lane < 0.5 else 0)
+                    if target_front_safe and target_rear_safe and not cooldown_active
+                    else 1
+                )
             else:
                 speed_action = 2 if speed < 0.75 else 1
                 lane_action = 1
@@ -50,4 +64,3 @@ def make_policy(name: str):
     if name == "random":
         return RandomPolicy()
     raise ValueError(f"Unknown baseline policy: {name}")
-

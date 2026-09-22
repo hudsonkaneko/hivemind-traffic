@@ -103,6 +103,8 @@ class SumoBackend:
             str(self.step_length),
             "--no-step-log",
             "true",
+            "--xml-validation",
+            "never",
             "--quit-on-end",
             "true",
         ]

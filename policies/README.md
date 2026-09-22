@@ -15,3 +15,7 @@ training-only observation normalization, and deterministic checkpoint loader. Th
 same neural network controls every equivalent vehicle; no communication or global
 critic state is used in this baseline.
 
+Checkpoint selection is completion-first: validation completion rate is compared
+before mean team reward. This prevents a slow policy that never reaches the end of
+the route from being selected merely because it avoids penalties.
+

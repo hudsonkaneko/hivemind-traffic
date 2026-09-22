@@ -234,12 +234,18 @@ def train(config_path: Path, output_root: Path) -> Path:
     checkpoints.mkdir(parents=True, exist_ok=False)
     (run_dir / "resolved-config.json").write_text(json.dumps(config, indent=2), encoding="utf-8")
 
-    model = SharedActorCritic(hidden_sizes=config["model"]["hidden_sizes"])
+    observation_size = config["model"]["observation_size"]
+    model = SharedActorCritic(
+        observation_size=observation_size,
+        hidden_sizes=config["model"]["hidden_sizes"],
+    )
     optimizer = torch.optim.Adam(model.parameters(), lr=config["learning_rate"])
-    normalizer = ObservationNormalizer()
+    normalizer = ObservationNormalizer(size=observation_size)
     global_transitions = 0
     episode_seed = config["training_seed"]
-    best_validation = -float("inf")
+    best_selection_score = -float("inf")
+    best_validation_reward = -float("inf")
+    best_validation_completion = 0.0
     training_rows = []
     started = perf_counter()
     while global_transitions < config["total_transitions"]:
@@ -264,8 +270,14 @@ def train(config_path: Path, output_root: Path) -> Path:
         latest_policy = CheckpointPolicy(checkpoints / "latest.pt")
         validation = evaluate(latest_policy, config["validation_seeds"], config["horizon"])
         validation_mean = float(np.mean([episode["team_reward"] for episode in validation]))
-        if validation_mean > best_validation:
-            best_validation = validation_mean
+        validation_completion = float(
+            np.mean([episode["completed_agents"] / 2 for episode in validation])
+        )
+        selection_score = 1000.0 * validation_completion + validation_mean
+        if selection_score > best_selection_score:
+            best_selection_score = selection_score
+            best_validation_reward = validation_mean
+            best_validation_completion = validation_completion
             save_checkpoint(
                 checkpoints / "best.pt",
                 model,
@@ -281,6 +293,7 @@ def train(config_path: Path, output_root: Path) -> Path:
                 "training_completion_rate": np.mean([item["completed_agents"] / 2 for item in episodes]),
                 "training_mean_safety_overrides": np.mean([item["safety_overrides"] for item in episodes]),
                 "validation_mean_team_reward": validation_mean,
+                "validation_completion_rate": validation_completion,
                 **losses,
             }
         )
@@ -320,7 +333,9 @@ def train(config_path: Path, output_root: Path) -> Path:
             (run_dir / "training-metrics.csv").read_bytes()
         ).hexdigest(),
         "evaluation_sha256": hashlib.sha256((run_dir / "evaluation.json").read_bytes()).hexdigest(),
-        "best_validation_mean_team_reward": best_validation,
+        "best_validation_mean_team_reward": best_validation_reward,
+        "best_validation_completion_rate": best_validation_completion,
+        "best_selection_score": best_selection_score,
         "best_checkpoint": "checkpoints/best.pt",
         "latest_checkpoint": "checkpoints/latest.pt",
     }

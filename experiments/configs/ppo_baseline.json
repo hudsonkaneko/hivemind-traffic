@@ -3,7 +3,7 @@
   "training_seed": 101,
   "validation_seeds": [1001, 1002],
   "test_seeds": [2001, 2002, 2003],
-  "total_transitions": 16384,
+  "total_transitions": 32768,
   "minimum_rollout_transitions": 1024,
   "horizon": 400,
   "gamma": 0.99,
@@ -16,9 +16,10 @@
   "update_epochs": 4,
   "minibatch_size": 256,
   "model": {
+    "observation_size": 16,
     "hidden_sizes": [128, 128]
   },
   "communication": "none",
   "critic_input": "local_observation",
-  "selection_metric": "validation_mean_team_reward"
+  "selection_metric": "validation_completion_rate_then_mean_team_reward"
 }

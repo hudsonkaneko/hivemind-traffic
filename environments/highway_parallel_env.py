@@ -15,6 +15,8 @@ from traffic.sumo_backend import StepResult, SumoBackend, VehicleCommand
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONFIG = ROOT / "scenarios" / "curved_two_agent" / "scenario.sumocfg"
+OBSERVATION_SIZE = 16
+LANE_CHANGE_COOLDOWN_STEPS = 10
 
 
 class HighwayParallelEnv(ParallelEnv):
@@ -48,16 +50,21 @@ class HighwayParallelEnv(ParallelEnv):
         self._result: StepResult | None = None
         self._step_count = 0
         self._previous_distance: dict[str, float] = {}
+        self._lane_change_cooldown: dict[str, int] = {}
         self._last_observation = {
-            agent: np.zeros(9, dtype=np.float32) for agent in self.possible_agents
+            agent: np.zeros(OBSERVATION_SIZE, dtype=np.float32)
+            for agent in self.possible_agents
         }
 
     @lru_cache(maxsize=None)
     def observation_space(self, agent: str) -> gym.spaces.Box:
         self._validate_agent(agent)
         return gym.spaces.Box(
-            low=np.array([0, 0, 0, 0, -1, 0, 0, -1, 0], dtype=np.float32),
-            high=np.array([1, 1, 1, 1, 1, 1, 1, 1, 1], dtype=np.float32),
+            low=np.array(
+                [0, 0, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0],
+                dtype=np.float32,
+            ),
+            high=np.ones(OBSERVATION_SIZE, dtype=np.float32),
             dtype=np.float32,
         )
 
@@ -69,7 +76,7 @@ class HighwayParallelEnv(ParallelEnv):
 
     @property
     def state_space(self) -> gym.spaces.Box:
-        return gym.spaces.Box(low=-1.0, high=1.0, shape=(20,), dtype=np.float32)
+        return gym.spaces.Box(low=-1.0, high=1.0, shape=(34,), dtype=np.float32)
 
     def reset(self, seed: int | None = None, options: dict | None = None):
         self.np_random, _ = gym.utils.seeding.np_random(seed)
@@ -86,6 +93,7 @@ class HighwayParallelEnv(ParallelEnv):
             agent: float(self._result.states[agent]["distance"])
             for agent in self.agents
         }
+        self._lane_change_cooldown = {agent: 0 for agent in self.possible_agents}
         observations = self._observations(self.agents)
         infos = {
             agent: {
@@ -111,6 +119,10 @@ class HighwayParallelEnv(ParallelEnv):
         applied: dict[str, tuple[int, int]] = {}
         shield_reasons: dict[str, tuple[str, ...]] = {}
         for agent in transition_agents:
+            self._lane_change_cooldown[agent] = max(
+                0, self._lane_change_cooldown.get(agent, 0) - 1
+            )
+        for agent in transition_agents:
             action = np.asarray(actions[agent], dtype=np.int64)
             if not self.action_space(agent).contains(action):
                 raise ValueError(f"Action for {agent} is outside its declared space: {action}")
@@ -123,6 +135,8 @@ class HighwayParallelEnv(ParallelEnv):
             target_speed = max(0.0, current_speed + (-2.0, 0.0, 2.0)[speed_action])
             lane_delta = (-1, 0, 1)[lane_action]
             commands[agent] = VehicleCommand(target_speed=target_speed, lane_delta=lane_delta)
+            if lane_delta:
+                self._lane_change_cooldown[agent] = LANE_CHANGE_COOLDOWN_STEPS
             proposed[agent] = proposed_action
             applied[agent] = (speed_action, lane_action)
             shield_reasons[agent] = reasons
@@ -200,25 +214,35 @@ class HighwayParallelEnv(ParallelEnv):
             backend.close()
         self.agents = []
         self._result = None
+        self._lane_change_cooldown = {}
 
     def _observations(self, agents: list[str]) -> dict[str, np.ndarray]:
         observations: dict[str, np.ndarray] = {}
         for agent in agents:
             state = self._result.states[agent]
-            front = self._nearest_neighbor(agent, ahead=True)
-            rear = self._nearest_neighbor(agent, ahead=False)
             speed = float(state["speed"])
+            lane_neighbors = []
+            for lane_index in (0, 1):
+                front = self._nearest_neighbor(agent, ahead=True, lane_index=lane_index)
+                rear = self._nearest_neighbor(agent, ahead=False, lane_index=lane_index)
+                lane_neighbors.extend(
+                    [
+                        min(front[0] / 100.0, 1.0) if front else 1.0,
+                        np.clip((front[1] - speed) / 27.0, -1.0, 1.0) if front else 0.0,
+                        1.0 if front else 0.0,
+                        min(rear[0] / 100.0, 1.0) if rear else 1.0,
+                        np.clip((rear[1] - speed) / 27.0, -1.0, 1.0) if rear else 0.0,
+                        1.0 if rear else 0.0,
+                    ]
+                )
             observation = np.array(
                 [
                     np.clip(speed / 27.0, 0.0, 1.0),
                     np.clip(float(state["lane_index"]), 0.0, 1.0),
                     np.clip(float(state["distance"]) / self.route_length, 0.0, 1.0),
-                    min(front[0] / 100.0, 1.0) if front else 1.0,
-                    np.clip((front[1] - speed) / 27.0, -1.0, 1.0) if front else 0.0,
-                    1.0 if front else 0.0,
-                    min(rear[0] / 100.0, 1.0) if rear else 1.0,
-                    np.clip((rear[1] - speed) / 27.0, -1.0, 1.0) if rear else 0.0,
-                    1.0 if rear else 0.0,
+                    *lane_neighbors,
+                    self._lane_change_cooldown.get(agent, 0)
+                    / LANE_CHANGE_COOLDOWN_STEPS,
                 ],
                 dtype=np.float32,
             )
@@ -228,7 +252,9 @@ class HighwayParallelEnv(ParallelEnv):
             self._last_observation[agent] = observation
         return observations
 
-    def _nearest_neighbor(self, agent: str, *, ahead: bool) -> tuple[float, float] | None:
+    def _nearest_neighbor(
+        self, agent: str, *, ahead: bool, lane_index: int | None = None
+    ) -> tuple[float, float] | None:
         ego = self._result.states.get(agent)
         if ego is None:
             return None
@@ -237,13 +263,20 @@ class HighwayParallelEnv(ParallelEnv):
         for other, state in self._result.states.items():
             if other == agent:
                 continue
+            if lane_index is not None and int(state["lane_index"]) != lane_index:
+                continue
             delta = float(state["distance"]) - ego_distance
             if (ahead and delta > 0.0) or (not ahead and delta < 0.0):
                 candidates.append((abs(delta), float(state["speed"])))
         return min(candidates, default=None, key=lambda item: item[0])
 
     def _nearest_gap(self, agent: str, *, ahead: bool) -> float | None:
-        neighbor = self._nearest_neighbor(agent, ahead=ahead)
+        state = self._result.states.get(agent)
+        if state is None:
+            return None
+        neighbor = self._nearest_neighbor(
+            agent, ahead=ahead, lane_index=int(state["lane_index"])
+        )
         return neighbor[0] if neighbor else None
 
     def _apply_safety_shield(
@@ -263,6 +296,9 @@ class HighwayParallelEnv(ParallelEnv):
         if target_lane not in (0, 1):
             lane_action = 1
             reasons.append("road_boundary")
+        elif target_lane != lane_index and self._lane_change_cooldown.get(agent, 0) > 0:
+            lane_action = 1
+            reasons.append("lane_change_cooldown")
         elif target_lane != lane_index:
             ego_distance = float(state["distance"])
             occupied = any(
