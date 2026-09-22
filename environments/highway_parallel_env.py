@@ -28,6 +28,8 @@ class HighwayParallelEnv(ParallelEnv):
         config_path: str | Path = DEFAULT_CONFIG,
         horizon: int = 400,
         route_length: float = 1074.06,
+        gui: bool = False,
+        gui_delay_ms: int = 50,
         backend_factory: Callable[[], SumoBackend] | None = None,
     ) -> None:
         self.possible_agents = ["agent_0", "agent_1"]
@@ -35,7 +37,13 @@ class HighwayParallelEnv(ParallelEnv):
         self.horizon = int(horizon)
         self.route_length = float(route_length)
         self._config_path = Path(config_path).resolve()
-        self._backend_factory = backend_factory or (lambda: SumoBackend(self._config_path))
+        self._backend_factory = backend_factory or (
+            lambda: SumoBackend(
+                self._config_path,
+                gui=gui,
+                gui_delay_ms=gui_delay_ms,
+            )
+        )
         self._backend: SumoBackend | None = None
         self._result: StepResult | None = None
         self._step_count = 0
@@ -99,18 +107,25 @@ class HighwayParallelEnv(ParallelEnv):
             )
 
         commands: dict[str, VehicleCommand] = {}
-        requested: dict[str, tuple[int, int]] = {}
+        proposed: dict[str, tuple[int, int]] = {}
+        applied: dict[str, tuple[int, int]] = {}
+        shield_reasons: dict[str, tuple[str, ...]] = {}
         for agent in transition_agents:
             action = np.asarray(actions[agent], dtype=np.int64)
             if not self.action_space(agent).contains(action):
                 raise ValueError(f"Action for {agent} is outside its declared space: {action}")
-            speed_action, lane_action = (int(action[0]), int(action[1]))
+            proposed_action = (int(action[0]), int(action[1]))
+            speed_action, lane_action, reasons = self._apply_safety_shield(
+                agent, *proposed_action
+            )
             state = self._result.states[agent]
             current_speed = float(state["speed"])
             target_speed = max(0.0, current_speed + (-2.0, 0.0, 2.0)[speed_action])
             lane_delta = (-1, 0, 1)[lane_action]
             commands[agent] = VehicleCommand(target_speed=target_speed, lane_delta=lane_delta)
-            requested[agent] = (speed_action, lane_action)
+            proposed[agent] = proposed_action
+            applied[agent] = (speed_action, lane_action)
+            shield_reasons[agent] = reasons
 
         self._result = self._require_backend().step(commands)
         self._step_count += 1
@@ -142,12 +157,15 @@ class HighwayParallelEnv(ParallelEnv):
             infos[agent] = {
                 "simulation_time": self._result.simulation_time,
                 "reward_components": components,
-                "requested_action": requested[agent],
+                "proposed_action": proposed[agent],
+                "applied_action": applied[agent],
                 "executed_action": self._result.executed_actions.get(agent, {}),
-                "safety_intervention": any(
+                "safety_intervention": bool(shield_reasons[agent])
+                or any(
                     bool(self._result.executed_actions.get(agent, {}).get(key))
                     for key in ("speed_clamped", "lane_clamped")
                 ),
+                "safety_reasons": shield_reasons[agent],
                 "active_agents": tuple(transition_agents),
                 "termination_cause": (
                     "collision" if agent in collided else "route_complete" if agent in arrived else None
@@ -224,6 +242,36 @@ class HighwayParallelEnv(ParallelEnv):
     def _nearest_gap(self, agent: str, *, ahead: bool) -> float | None:
         neighbor = self._nearest_neighbor(agent, ahead=ahead)
         return neighbor[0] if neighbor else None
+
+    def _apply_safety_shield(
+        self, agent: str, speed_action: int, lane_action: int
+    ) -> tuple[int, int, tuple[str, ...]]:
+        """Enforce simple tactical bounds before a command reaches TraCI."""
+
+        reasons: list[str] = []
+        state = self._result.states[agent]
+        lane_index = int(state["lane_index"])
+        front_gap = self._nearest_gap(agent, ahead=True)
+        if front_gap is not None and front_gap < 5.0 and speed_action != 0:
+            speed_action = 0
+            reasons.append("emergency_headway")
+
+        target_lane = lane_index + (-1, 0, 1)[lane_action]
+        if target_lane not in (0, 1):
+            lane_action = 1
+            reasons.append("road_boundary")
+        elif target_lane != lane_index:
+            ego_distance = float(state["distance"])
+            occupied = any(
+                other != agent
+                and int(other_state["lane_index"]) == target_lane
+                and abs(float(other_state["distance"]) - ego_distance) < 8.0
+                for other, other_state in self._result.states.items()
+            )
+            if occupied:
+                lane_action = 1
+                reasons.append("occupied_target_gap")
+        return speed_action, lane_action, tuple(reasons)
 
     def _require_backend(self) -> SumoBackend:
         if self._backend is None:

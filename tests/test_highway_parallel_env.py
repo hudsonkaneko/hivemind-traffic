@@ -123,6 +123,28 @@ def test_fake_backend_agent_lifecycle_and_rewards():
         env.close()
 
 
+def test_safety_shield_logs_boundary_and_headway_overrides():
+    env = HighwayParallelEnv(horizon=5, backend_factory=FakeBackend)
+    try:
+        env.reset(seed=42)
+        _, _, _, _, infos = env.step(
+            {
+                "agent_0": np.array([2, 0], dtype=np.int64),
+                "agent_1": np.array([1, 2], dtype=np.int64),
+            }
+        )
+        assert infos["agent_0"]["proposed_action"] == (2, 0)
+        assert infos["agent_0"]["applied_action"] == (0, 1)
+        assert set(infos["agent_0"]["safety_reasons"]) == {
+            "emergency_headway",
+            "road_boundary",
+        }
+        assert infos["agent_1"]["applied_action"][1] == 1
+        assert infos["agent_1"]["safety_intervention"]
+    finally:
+        env.close()
+
+
 def test_joint_action_advances_sumo_once():
     env = HighwayParallelEnv(horizon=5)
     try:

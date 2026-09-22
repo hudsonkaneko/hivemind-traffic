@@ -36,7 +36,7 @@ Exit evidence: the curved two-agent scenario passes PettingZoo API and seed test
 fixed-action replay is deterministic, and both controlled agents complete the route
 alongside three SUMO-controlled background vehicles.
 
-### 3. Coordination baselines and learning
+### 3. Coordination baselines and learning — baselines complete, training next
 
 - Establish no-learning and independent-control baselines.
 - Train shared PPO/IPPO before communication.
@@ -45,6 +45,10 @@ alongside three SUMO-controlled background vehicles.
 
 Exit gate: a measurable policy checkpoint with documented observation, action,
 normalization, safety, and communication contracts.
+
+Current evidence: the deterministic scripted policy completes both routes without
+collisions, while the matched seeded-random policy times out both agents and incurs
+substantially more safety-shield overrides. PPO/IPPO training has not started.
 
 ### 4. OpenUSD bridge and replay
 

@@ -32,14 +32,15 @@ class StepResult:
     executed_actions: dict[str, dict[str, float | int | bool | None]]
 
 
-def find_sumo_binary() -> Path:
+def find_sumo_binary(*, gui: bool = False) -> Path:
     """Resolve SUMO without tying the repository to one user's file system."""
 
-    executable = "sumo.exe" if os.name == "nt" else "sumo"
+    program = "sumo-gui" if gui else "sumo"
+    executable = f"{program}.exe" if os.name == "nt" else program
     candidates: list[Path] = []
     if value := os.environ.get("SUMO_BINARY"):
         candidates.append(Path(value))
-    if value := shutil.which("sumo"):
+    if value := shutil.which(program):
         candidates.append(Path(value))
     if value := os.environ.get("SUMO_HOME"):
         candidates.append(Path(value) / "bin" / executable)
@@ -65,10 +66,16 @@ class SumoBackend:
         *,
         step_length: float = 0.2,
         sumo_binary: str | Path | None = None,
+        gui: bool = False,
+        gui_delay_ms: int = 50,
     ) -> None:
         self.config_path = Path(config_path).resolve()
         self.step_length = float(step_length)
-        self.sumo_binary = Path(sumo_binary).resolve() if sumo_binary else find_sumo_binary()
+        self.gui = bool(gui)
+        self.gui_delay_ms = int(gui_delay_ms)
+        self.sumo_binary = (
+            Path(sumo_binary).resolve() if sumo_binary else find_sumo_binary(gui=self.gui)
+        )
         self._connection = None
         self._label: str | None = None
         self._active: set[str] = set()
@@ -99,6 +106,8 @@ class SumoBackend:
             "--quit-on-end",
             "true",
         ]
+        if self.gui:
+            command.extend(["--delay", str(self.gui_delay_ms), "--start"])
         try:
             traci.start(command, label=self._label)
             self._connection = traci.getConnection(self._label)
@@ -213,4 +222,3 @@ class SumoBackend:
 
     def __exit__(self, *_args) -> None:
         self.close()
-
