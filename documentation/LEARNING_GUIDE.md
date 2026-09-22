@@ -28,6 +28,7 @@ Reported checks are historical evidence, not tests rerun during document authori
 | 13 | ovrtx architecture decision | 6c8d007 |
 | 14 | Shared exporter and ovrtx | 69d3cb3 |
 | 15 | Interview and study workbook | Learning exercises |
+| 16 | Moving lidar geometry and timing | See moving-lidar-validation.md |
 
 ## Ongoing update contract
 

@@ -124,11 +124,12 @@ smoothness, sensing cost, and synchronization drift reported.
 1. Preserve the working Isaac replay/lidar milestone: five recorded vehicles,
    endpoint position checks, moving sensor returns, and tested GUI point display.
    Geometric and timing validation of moving scans remains outstanding.
-2. Extract a renderer-independent USD export path and isolate Isaac-specific
-   sensor/UI authoring in a separate layer. The current script combines these.
-3. Prove a minimal ovstage + ovrtx PNG render, then load the shared traffic replay.
-   Do this before investing in extensive Isaac-only playback UI.
-4. Improve shared road/vehicle assets and validate moving lidar geometry/timing.
+2. Shared USD export and isolated Isaac sensor/UI authoring are implemented.
+3. Minimal ovstage + ovrtx PNG rendering and shared traffic snapshots are verified.
+4. Controlled straight-motion lidar geometry/timing validation is implemented;
+   see `documentation/moving-lidar-validation.md`. Validate the curved traffic
+   replay separately before claiming all replay scans have accurate timing.
+   Improve shared road/vehicle assets without breaking the validation fixtures.
 5. Resume communication experiments against the frozen no-communication baseline.
 
 Reference: https://github.com/NVIDIA-Omniverse/ovrtx (official setup and ovstage
