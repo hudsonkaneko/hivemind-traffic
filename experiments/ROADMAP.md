@@ -86,7 +86,7 @@ first and last poses match the source telemetry.
 Exit gate: the same recorded traffic replay produces timestamped lidar output with
 stable calibration and no unresolved USD assets.
 
-### 6. ovstage + ovrtx rendering — required, not yet implemented
+### 6. ovstage + ovrtx rendering — fixed-timestamp RGB milestone verified
 
 - Check and pin compatible runtime, Python, driver, and GPU versions in a separate
   environment before integrating traffic. Start with NVIDIA's single-PNG example.
@@ -100,6 +100,11 @@ stable calibration and no unresolved USD assets.
 
 Exit gate: timestamped images from the same replay without running Isaac Sim or
 SUMO, followed by verified sensor output with a recorded configuration.
+
+Current evidence: separate Python environment, NVIDIA minimal image, and traffic
+images at 2 and 15 seconds through ovstage + ovrtx. Shared export checks first/last
+positions and headings for all five vehicles. Rendering preserves the shared USD
+layers. Interactive ovrtx playback and ovrtx lidar remain future work.
 
 ### 7. Sensor-aware and physics validation
 
