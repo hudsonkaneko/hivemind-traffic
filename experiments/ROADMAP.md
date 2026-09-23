@@ -136,6 +136,12 @@ smoothness, sensing cost, and synchronization drift reported.
    range outliers. The offline audit preserves confusion matrices and boundary
    distances. See `documentation/lidar-diagnostics.md`. Next isolate renderer ID
    lifecycle and return semantics before repeating full-route acceptance.
+   The minimal two-car lifecycle test now reproduces missing target IDs twice
+   without SUMO or the traffic exporter: interior geometry and cadence pass,
+   identity fails after appearance. Its always-visible control passes. See
+   `documentation/lidar-lifecycle-validation.md`; this does not clear the broader
+   curved-replay acceptance gate. Next investigate the sensor/annotator mapping
+   path using this small fixture.
    Improve shared road/vehicle assets without breaking the validation fixtures.
 5. Resume communication experiments against the frozen no-communication baseline.
 

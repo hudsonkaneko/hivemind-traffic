@@ -1,0 +1,153 @@
+{
+  "analysis_sha256": "c5e195935561babaf1ed14a0d8c520a483950deb299a5828f4ae61d72778c257",
+  "runs": [
+    {
+      "run_id": "20260923T153148Z-always-visible-7a6ed7",
+      "summary": {
+        "passed": true,
+        "variant": "always-visible",
+        "scans": 48,
+        "phases": {
+          "visible": {
+            "scans": 43,
+            "hits": 34402,
+            "identity_agreement": 1.0,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": 0.01856433018894421
+          }
+        },
+        "timing_passed": true,
+        "max_cadence_error_s": 5.273559366969494e-16,
+        "callback_errors": [],
+        "limitation": "Interior ROI and guarded visibility phases only; not full traffic or sensor validation."
+      },
+      "roi_echo_counts": {
+        "0": 34402
+      },
+      "target_path_ever_in_map": true,
+      "unmapped_or_wrong_target_roi_ids": {},
+      "manifest_sha256": "c68c1308a383aba4b22baace4bfc27662726323574ec9d332bb1744a4f10a533",
+      "artifact_hashes_verified": true
+    },
+    {
+      "run_id": "20260923T153233Z-lifecycle-443e9a",
+      "summary": {
+        "passed": false,
+        "variant": "lifecycle",
+        "scans": 48,
+        "phases": {
+          "hidden_initial": {
+            "scans": 5,
+            "hits": 0,
+            "identity_agreement": null,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": null
+          },
+          "visible_first": {
+            "scans": 5,
+            "hits": 3996,
+            "identity_agreement": 0.0,
+            "geometry_passed": true,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.01856397190183401
+          },
+          "hidden_again": {
+            "scans": 5,
+            "hits": 0,
+            "identity_agreement": null,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": null
+          },
+          "visible_again": {
+            "scans": 13,
+            "hits": 10397,
+            "identity_agreement": 0.0,
+            "geometry_passed": true,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.014295130762331354
+          }
+        },
+        "timing_passed": true,
+        "max_cadence_error_s": 5.273559366969494e-16,
+        "callback_errors": [],
+        "limitation": "Interior ROI and guarded visibility phases only; not full traffic or sensor validation."
+      },
+      "roi_echo_counts": {
+        "0": 14393
+      },
+      "target_path_ever_in_map": false,
+      "unmapped_or_wrong_target_roi_ids": {
+        "37384897492231046530439738658": 14393
+      },
+      "manifest_sha256": "dacb04cc92e92ebc62bfa01f784b871ab7689a642fd7768a2bb5464a5d4f554d",
+      "artifact_hashes_verified": true
+    },
+    {
+      "run_id": "20260923T153253Z-lifecycle-389883",
+      "summary": {
+        "passed": false,
+        "variant": "lifecycle",
+        "scans": 48,
+        "phases": {
+          "hidden_initial": {
+            "scans": 5,
+            "hits": 0,
+            "identity_agreement": null,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": null
+          },
+          "visible_first": {
+            "scans": 5,
+            "hits": 4012,
+            "identity_agreement": 0.0,
+            "geometry_passed": true,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.018564686709192202
+          },
+          "hidden_again": {
+            "scans": 5,
+            "hits": 0,
+            "identity_agreement": null,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": null
+          },
+          "visible_again": {
+            "scans": 13,
+            "hits": 10408,
+            "identity_agreement": 0.0,
+            "geometry_passed": true,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.014297095234873325
+          }
+        },
+        "timing_passed": true,
+        "max_cadence_error_s": 5.273559366969494e-16,
+        "callback_errors": [],
+        "limitation": "Interior ROI and guarded visibility phases only; not full traffic or sensor validation."
+      },
+      "roi_echo_counts": {
+        "0": 14420
+      },
+      "target_path_ever_in_map": false,
+      "unmapped_or_wrong_target_roi_ids": {
+        "37384897492231046530439738658": 14420
+      },
+      "manifest_sha256": "75cc4288326c8d5c18fb3a4c78df379addf424e8eeae2191568498ef916ff326",
+      "artifact_hashes_verified": true
+    }
+  ]
+}
