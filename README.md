@@ -26,6 +26,15 @@ hivemind-traffic/
 
 ## Development setup
 
+### Portable demo launcher
+
+From the repository root, use `python -m hivemind demo sumo`, `demo trained`,
+`demo lidar`, `demo replay`, or `demo ovrtx` (repeat the `python -m hivemind`
+prefix each time). Add `--check` for a non-rendering setup check.
+See [portable demos](documentation/portable-demos.md) for first-clone setup,
+checkpoint/recording requirements and the ignored local runtime configuration.
+The commands are shared; dependencies and GPU support still vary by machine.
+
 The initial toolchain is pinned to Python 3.11 and SUMO 1.27.1. On Windows,
 install SUMO, create the local environment, and install the Python dependencies:
 

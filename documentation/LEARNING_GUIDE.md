@@ -33,6 +33,7 @@ Reported checks are historical evidence, not tests rerun during document authori
 | 18 | Ground truth vs lidar perception | Architecture clarification; no code change |
 | 19 | Lidar failure diagnostics | See lidar-diagnostics.md |
 | 20 | Two-car lidar identity isolation | See lidar-lifecycle-validation.md |
+| 21 | Portable demonstration launcher | See portable-demos.md |
 
 ## Ongoing update contract
 
