@@ -1,0 +1,317 @@
+{
+  "analysis_sha256": "34c5c2038acd1144169571d6d772f9e6070afeb2401287a602bf6d40118997e2",
+  "runs": [
+    {
+      "run_id": "20260924T163218Z-lifecycle-sensor-efd302",
+      "summary": {
+        "passed": false,
+        "variant": "lifecycle",
+        "scans": 48,
+        "phases": {
+          "hidden_initial": {
+            "scans": 5,
+            "hits": 0,
+            "identity_agreement": null,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": null
+          },
+          "visible_first": {
+            "scans": 5,
+            "hits": 3990,
+            "identity_agreement": 0.0,
+            "geometry_passed": true,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.018564567992727987
+          },
+          "hidden_again": {
+            "scans": 5,
+            "hits": 0,
+            "identity_agreement": null,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": null
+          },
+          "visible_again": {
+            "scans": 13,
+            "hits": 10390,
+            "identity_agreement": 0.0,
+            "geometry_passed": true,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.014295937490160782
+          }
+        },
+        "timing_passed": true,
+        "max_cadence_error_s": 5.273559366969494e-16,
+        "callback_errors": [],
+        "limitation": "Interior ROI and guarded visibility phases only; not full traffic or sensor validation."
+      },
+      "roi_echo_counts": {
+        "0": 14380
+      },
+      "map_source": "sensor",
+      "render_preflight": false,
+      "sensor_map_identity_agreement": 0.0,
+      "target_path_ever_in_map": false,
+      "unmapped_or_wrong_target_roi_ids": {
+        "37384897492231046530439738658": 14380
+      },
+      "manifest_sha256": "47f9bda0e3c6d1a49ae16b030e5a3b292b50a85660a7e78ce051372661248edc",
+      "artifact_hashes_verified": true
+    },
+    {
+      "run_id": "20260924T163355Z-lifecycle-camera-d35145",
+      "summary": {
+        "passed": false,
+        "variant": "lifecycle",
+        "scans": 48,
+        "phases": {
+          "hidden_initial": {
+            "scans": 5,
+            "hits": 0,
+            "identity_agreement": null,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": null
+          },
+          "visible_first": {
+            "scans": 5,
+            "hits": 3995,
+            "identity_agreement": 0.0,
+            "geometry_passed": true,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.018564210409234505
+          },
+          "hidden_again": {
+            "scans": 5,
+            "hits": 0,
+            "identity_agreement": null,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": null
+          },
+          "visible_again": {
+            "scans": 13,
+            "hits": 10401,
+            "identity_agreement": 0.0,
+            "geometry_passed": true,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.014295370682994246
+          }
+        },
+        "timing_passed": true,
+        "max_cadence_error_s": 5.273559366969494e-16,
+        "callback_errors": [],
+        "limitation": "Interior ROI and guarded visibility phases only; not full traffic or sensor validation."
+      },
+      "roi_echo_counts": {
+        "0": 14396
+      },
+      "map_source": "camera",
+      "render_preflight": false,
+      "sensor_map_identity_agreement": 0.0,
+      "target_path_ever_in_map": false,
+      "unmapped_or_wrong_target_roi_ids": {
+        "37384897492231046530439738658": 14396
+      },
+      "manifest_sha256": "7179e8f80891c2c4145ed8b28c80cbc201c4ea0c1f00c039d3c6fc4b582cc4a2",
+      "artifact_hashes_verified": true
+    },
+    {
+      "run_id": "20260924T163434Z-lifecycle-camera-678f98",
+      "summary": {
+        "passed": false,
+        "variant": "lifecycle",
+        "scans": 48,
+        "phases": {
+          "hidden_initial": {
+            "scans": 5,
+            "hits": 0,
+            "identity_agreement": null,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": null
+          },
+          "visible_first": {
+            "scans": 5,
+            "hits": 3990,
+            "identity_agreement": 0.0,
+            "geometry_passed": true,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.01856444891635256
+          },
+          "hidden_again": {
+            "scans": 5,
+            "hits": 0,
+            "identity_agreement": null,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": null
+          },
+          "visible_again": {
+            "scans": 13,
+            "hits": 10397,
+            "identity_agreement": 0.0,
+            "geometry_passed": true,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.01429622545403042
+          }
+        },
+        "timing_passed": true,
+        "max_cadence_error_s": 5.273559366969494e-16,
+        "callback_errors": [],
+        "limitation": "Interior ROI and guarded visibility phases only; not full traffic or sensor validation."
+      },
+      "roi_echo_counts": {
+        "0": 14387
+      },
+      "map_source": "camera",
+      "render_preflight": false,
+      "sensor_map_identity_agreement": 0.0,
+      "target_path_ever_in_map": false,
+      "unmapped_or_wrong_target_roi_ids": {
+        "37384897492231046530439738658": 14387
+      },
+      "manifest_sha256": "bc07515ff72d66f24625b50267c4e89356131ff76151aafbeb410eb60b15e9e8",
+      "artifact_hashes_verified": true
+    },
+    {
+      "run_id": "20260924T163455Z-always-visible-camera-f95271",
+      "summary": {
+        "passed": true,
+        "variant": "always-visible",
+        "scans": 48,
+        "phases": {
+          "visible": {
+            "scans": 43,
+            "hits": 34398,
+            "identity_agreement": 1.0,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": 0.01856468811898715
+          }
+        },
+        "timing_passed": true,
+        "max_cadence_error_s": 5.273559366969494e-16,
+        "callback_errors": [],
+        "limitation": "Interior ROI and guarded visibility phases only; not full traffic or sensor validation."
+      },
+      "roi_echo_counts": {
+        "0": 34398
+      },
+      "map_source": "camera",
+      "render_preflight": false,
+      "sensor_map_identity_agreement": 1.0,
+      "target_path_ever_in_map": true,
+      "unmapped_or_wrong_target_roi_ids": {},
+      "manifest_sha256": "d19df8a630a0dad348d88882ee9d4eb2b0d13eb33a107c5bd65adfa2ee554aa0",
+      "artifact_hashes_verified": true
+    },
+    {
+      "run_id": "20260924T163528Z-always-visible-camera-97bc2e",
+      "summary": {
+        "passed": true,
+        "variant": "always-visible",
+        "scans": 48,
+        "phases": {
+          "visible": {
+            "scans": 43,
+            "hits": 34390,
+            "identity_agreement": 1.0,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": 0.018564211109584505
+          }
+        },
+        "timing_passed": true,
+        "max_cadence_error_s": 5.273559366969494e-16,
+        "callback_errors": [],
+        "limitation": "Interior ROI and guarded visibility phases only; not full traffic or sensor validation."
+      },
+      "roi_echo_counts": {
+        "0": 34390
+      },
+      "map_source": "camera",
+      "render_preflight": false,
+      "sensor_map_identity_agreement": 1.0,
+      "target_path_ever_in_map": true,
+      "unmapped_or_wrong_target_roi_ids": {},
+      "manifest_sha256": "ec5468f465ab48823901e8412359dcbbc4f1dc37b0b2d77cf5cccb0fafb0307f",
+      "artifact_hashes_verified": true
+    },
+    {
+      "run_id": "20260924T163626Z-lifecycle-camera-ec1d1e",
+      "summary": {
+        "passed": false,
+        "variant": "lifecycle",
+        "scans": 48,
+        "phases": {
+          "hidden_initial": {
+            "scans": 5,
+            "hits": 4001,
+            "identity_agreement": null,
+            "geometry_passed": false,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.014008430334879307
+          },
+          "visible_first": {
+            "scans": 5,
+            "hits": 4005,
+            "identity_agreement": 1.0,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": 0.01856468811898715
+          },
+          "hidden_again": {
+            "scans": 5,
+            "hits": 3992,
+            "identity_agreement": null,
+            "geometry_passed": false,
+            "identity_passed": false,
+            "coverage_passed": true,
+            "max_range_error_m": 0.014402156887051376
+          },
+          "visible_again": {
+            "scans": 13,
+            "hits": 10417,
+            "identity_agreement": 1.0,
+            "geometry_passed": true,
+            "identity_passed": true,
+            "coverage_passed": true,
+            "max_range_error_m": 0.014297311333615781
+          }
+        },
+        "timing_passed": true,
+        "max_cadence_error_s": 5.273559366969494e-16,
+        "callback_errors": [],
+        "limitation": "Interior ROI and guarded visibility phases only; not full traffic or sensor validation."
+      },
+      "roi_echo_counts": {
+        "0": 22415
+      },
+      "map_source": "camera",
+      "render_preflight": true,
+      "sensor_map_identity_agreement": 1.0,
+      "target_path_ever_in_map": true,
+      "unmapped_or_wrong_target_roi_ids": {},
+      "manifest_sha256": "7ce96c424a8e1d05c64119c99d617891b2e908e0db8dac93e3c5bbc5824418c0",
+      "artifact_hashes_verified": true
+    }
+  ]
+}

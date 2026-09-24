@@ -1,6 +1,8 @@
 import json
 from pathlib import Path
 import numpy as np
+import pytest
+from scripts.analyze_lidar_lifecycle import verify_labels
 from scripts.lidar_lifecycle_analysis import analyze,summarize
 
 CONFIG=json.loads((Path(__file__).resolve().parents[1]/'experiments/configs/lidar_lifecycle.json').read_text())
@@ -40,3 +42,14 @@ def test_hidden_target_returns_are_not_accepted():
     rows=[analyze(scan(.3+i*.1),CONFIG,'lifecycle') for i in range(4)]
     result=summarize(rows,CONFIG,'lifecycle')
     assert not result['phases']['hidden_initial']['geometry_passed']
+
+
+def test_labels_require_full_exact_id_and_path():
+    key=7+(3<<96)
+    raw=np.frombuffer(key.to_bytes(16,'little'),dtype=np.uint8).copy()
+    record=dict(object_id_raw=raw,target_label=np.array([True]))
+    verify_labels(record,{key:'/World/Target/Body'})
+    for mapping in [{},{7:'/World/Target/Body'},{key:'/World/Ego/Body'}]:
+        with pytest.raises(ValueError,match='exact renderer ID'):
+            verify_labels(record,mapping)
+    verify_labels(dict(record,target_label=np.array([False])),{})

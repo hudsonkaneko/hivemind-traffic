@@ -34,6 +34,7 @@ Reported checks are historical evidence, not tests rerun during document authori
 | 19 | Lidar failure diagnostics | See lidar-diagnostics.md |
 | 20 | Two-car lidar identity isolation | See lidar-lifecycle-validation.md |
 | 21 | Portable demonstration launcher | See portable-demos.md |
+| 22 | Lidar identity map-source investigation | See lidar-map-source-study.md |
 
 ## Ongoing update contract
 
