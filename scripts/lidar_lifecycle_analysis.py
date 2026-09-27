@@ -9,6 +9,9 @@ except ImportError:
 def phases(variant, duration):
     if variant == 'always-visible':
         return [('visible', 0., duration, True)]
+    if variant == 'initially-visible':
+        return [('visible_initial', 0., 1., True), ('visible_first', 1., 2., True),
+                ('hidden_again', 2., 3., False), ('visible_again', 3., duration, True)]
     return [('hidden_initial', 0., 1., False), ('visible_first', 1., 2., True),
             ('hidden_again', 2., 3., False), ('visible_again', 3., duration, True)]
 

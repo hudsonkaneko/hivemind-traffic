@@ -35,6 +35,7 @@ Reported checks are historical evidence, not tests rerun during document authori
 | 20 | Two-car lidar identity isolation | See lidar-lifecycle-validation.md |
 | 21 | Portable demonstration launcher | See portable-demos.md |
 | 22 | Lidar identity map-source investigation | See lidar-map-source-study.md |
+| 23 (pending sync) | Initial visibility and lidar registration | See lidar-initial-visibility-study.md |
 
 ## Ongoing update contract
 

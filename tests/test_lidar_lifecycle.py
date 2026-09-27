@@ -31,6 +31,14 @@ def test_empty_run_fails():
     assert not summarize([],CONFIG,'always-visible')['passed']
 
 
+def test_initially_visible_keeps_later_negative_control():
+    assert analyze(scan(.3),CONFIG,'initially-visible')['target_visible'] is True
+    assert analyze(scan(2.3),CONFIG,'initially-visible')['target_visible'] is False
+    assert analyze(scan(3.3),CONFIG,'initially-visible')['target_visible'] is True
+    result=summarize([analyze(scan(2.3),CONFIG,'initially-visible')],CONFIG,'initially-visible')
+    assert not result['phases']['hidden_again']['geometry_passed']
+
+
 def test_valid_control_and_wrong_identity_gates():
     rows=[dict(analyze(scan(.3+i*.1),CONFIG,'always-visible'),hits=100,identity_matches=100) for i in range(4)]
     assert summarize(rows,CONFIG,'always-visible')['passed']

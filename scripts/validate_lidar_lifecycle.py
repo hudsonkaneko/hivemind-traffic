@@ -16,7 +16,7 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--variant',choices=['always-visible','lifecycle'],default='lifecycle')
+    parser.add_argument('--variant',choices=['always-visible','lifecycle','initially-visible'],default='lifecycle')
     parser.add_argument('--map-source',choices=['sensor','camera'],default='sensor',
                         help='Diagnostic: compare the sensor map with a separate camera render product')
     parser.add_argument('--render-preflight',action='store_true',
@@ -46,11 +46,14 @@ def main():
     from isaacsim import SimulationApp
     app=SimulationApp({'headless':True,'width':640,'height':480,'enable_motion_bvh':True,
                        'extra_args':['--/rtx-transient/stableIds/enabled=true']})
-    rows,errors=[],[]
+    rows,errors,map_events=[],[],[]
     try:
         import omni.usd
         import omni.timeline
         import omni.replicator.core as rep
+        import carb
+        settings=carb.settings.get_settings()
+        manifest['stable_ids_after_startup']=settings.get('/rtx-transient/stableIds/enabled')
         from pxr import Usd, UsdGeom, Gf
         from isaacsim.sensors.experimental.rtx import Lidar,LidarSensor,parse_generic_model_output_data,parse_stable_id_map_data,parse_object_ids
         stage=omni.usd.get_context().get_stage()
@@ -65,7 +68,7 @@ def main():
             body.AddTranslateOp().Set(Gf.Vec3d(*center))
             body.AddScaleOp().Set(Gf.Vec3f(*size))
         vis=UsdGeom.Imageable(stage.GetPrimAtPath('/World/Target')).CreateVisibilityAttr()
-        for time,visible in [(0,args.variant=='always-visible'),(1,True),(2,args.variant=='always-visible'),(3,True)]:
+        for time,visible in [(0,args.variant!='lifecycle'),(1,True),(2,args.variant=='always-visible'),(3,True)]:
             vis.Set('inherited' if visible else 'invisible',time*config['fps'])
         lidar=Lidar.create('/World/Ego/Lidar',config=config['sensor_config'],translations=np.array(config['sensor_mount_m']),aux_output_level='FULL')
         sensor=LidarSensor(lidar,annotators=[])
@@ -108,7 +111,7 @@ def main():
             timeline.set_current_time(0.)
             if abs(timeline.get_current_time())>1e-9:
                 raise RuntimeError('Preflight failed to restore initial time')
-            for time,visible in [(0,args.variant=='always-visible'),(1,True),(2,args.variant=='always-visible'),(3,True)]:
+            for time,visible in [(0,args.variant!='lifecycle'),(1,True),(2,args.variant=='always-visible'),(3,True)]:
                 if (vis.Get(time*config['fps'])!='invisible')!=visible:
                     raise RuntimeError('Preflight failed to restore visibility')
             manifest['preflight_target_registered']='/World/Target/Body' in camera_mapping.values()
@@ -128,6 +131,12 @@ def main():
                             if isinstance(raw,dict): raw=raw.get('data')
                             if raw is not None and np.asarray(raw).size:
                                 entries=parse_stable_id_map_data(raw)
+                                raw_path=f'map_{len(map_events):05d}.npy'
+                                np.save(output/raw_path,np.array(raw,copy=True),allow_pickle=False)
+                                map_events.append(dict(source=name,raw_path=raw_path,
+                                    time_s=timeline.get_current_time(),
+                                    has_gmo=product.get('GenericModelOutput') is not None,
+                                    entries={str(k):str(v) for k,v in entries.items()}))
                                 self.mapping.update(entries)
                                 maps[name]={str(k):str(v) for k,v in entries.items()}
                         raw=product.get('GenericModelOutput')
@@ -146,7 +155,10 @@ def main():
                         np.savez_compressed(output/f'scan_{index:04d}.npz',**scan)
                         if args.map_source=='camera':
                             maps['CameraStableIdMap']={str(k):str(v) for k,v in camera_mapping.items()}
+                        maps['SensorStableIdMapSnapshot']={str(k):str(v) for k,v in self.mapping.items()}
                         rows.append(dict(index=index,**analyze(scan,config,args.variant),maps=maps,
+                            body_visibility=str(UsdGeom.Imageable(stage.GetPrimAtPath('/World/Target/Body')).ComputeVisibility(
+                                Usd.TimeCode(timeline.get_current_time()*config['fps']))),
                             callback_time_s=timeline.get_current_time(),frame_start_ns=int(gmo.frameStart.timestampNs),
                             frame_end_ns=int(gmo.frameEnd.timestampNs),frame_start_position=list(gmo.frameStart.posM),
                             frame_end_position=list(gmo.frameEnd.posM),coordinate_type=str(gmo.elementsCoordsType),
@@ -155,6 +167,7 @@ def main():
                     errors.append(repr(error))
         rep.WriterRegistry.register(LifecycleWriter)
         sensor.attach_writer('LifecycleWriter')
+        manifest['stable_ids_after_attachment']=settings.get('/rtx-transient/stableIds/enabled')
         stage.Export(str(output/'scene.usda'))
         timeline.play()
         for frame in range(config['frames']):
@@ -184,6 +197,7 @@ def main():
         traceback.print_exc()
         manifest.update(status='failed',error=repr(error))
     finally:
+        (output/'sensor-map-events.json').write_text(json.dumps(map_events,indent=2))
         manifest['end_utc']=datetime.now(timezone.utc).isoformat()
         manifest['output_hashes']={str(p.relative_to(output)):digest(p) for p in output.rglob('*') if p.is_file() and p!=manifest_path}
         manifest_path.write_text(json.dumps(manifest,indent=2))

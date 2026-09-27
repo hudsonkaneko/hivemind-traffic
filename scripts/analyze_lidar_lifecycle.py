@@ -28,6 +28,8 @@ def evaluate(run):
             scan={k:data[k] for k in data.files}
         for name in ['StableIdMap','StableIdMapDeltas']:
             sensor_mapping.update({int(k):v for k,v in row['maps'].get(name,{}).items()})
+        if 'SensorStableIdMapSnapshot' in row['maps']:
+            sensor_mapping={int(k):v for k,v in row['maps']['SensorStableIdMapSnapshot'].items()}
         mapping=({int(k):v for k,v in row['maps'].get('CameraStableIdMap',{}).items()}
                  if config.get('map_source','sensor')=='camera' else sensor_mapping)
         verify_labels(scan,mapping)
