@@ -1,0 +1,6 @@
+<configuration>
+  <input><net-file value="../single_vehicle/network.net.xml"/></input>
+  <time><step-length value="0.1"/><end value="300"/></time>
+  <processing><time-to-teleport value="-1"/><collision.action value="warn"/></processing>
+  <report><no-step-log value="true"/><duration-log.disable value="true"/></report>
+</configuration>
