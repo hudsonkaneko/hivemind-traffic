@@ -52,7 +52,8 @@ def evaluate(path):
         and s['final_speed']<.2 and s['speed_interventions']==0 and not any(r['collisions'] for r in rows)
         and all(r['healthy'] for r in rows) and len(rows)==round(config['seconds']/.1))
     if bool(accepted)!=s['passed']: raise ValueError('Acceptance mismatch')
-    return dict(run=path.name,verified=True,config=config,summary=s)
+    return dict(run=path.name,verified=True,config=config,summary=s,
+                manifest_sha256=hashlib.sha256((path/'manifest.json').read_bytes()).hexdigest())
 
 
 if __name__=='__main__':

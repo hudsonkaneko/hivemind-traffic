@@ -23,6 +23,12 @@ def test_control_bounds_and_stop():
     assert target_speed(Clearance(5,True,10),8)[0]==pytest.approx(7.7)
 
 
+def test_stale_clear_road_cannot_keep_cruising():
+    clear=Clearance(80,True,20)
+    assert target_speed(clear,8,fresh=True)[0]==8
+    assert target_speed(clear,8,fresh=False)[0]==pytest.approx(7.7)
+
+
 def test_invalid_arrays_rejected():
     with pytest.raises(ValueError): forward_clearance([1],[1,2],[1],[64])
 
