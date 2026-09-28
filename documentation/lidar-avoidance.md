@@ -1,5 +1,7 @@
 # Going around a stationary obstacle
 
+Verified results, repeatability and retained failures: [validation report](lidar-avoidance-results.md).
+
 From the project root, run:
 
 ```bat
@@ -73,6 +75,21 @@ run and its source snapshot are retained, not overwritten.
 
 The first audit-dispatch test also exposed old test fixtures without a mode field;
 dispatch now keeps the original audit behavior when that field is absent.
+
+One blocked-lane attempt (`20260928T174028Z-avoid-11d1a6`) then suffered a native
+access violation in `rtx.rtxsensor.plugin.dll` after 169 raw scans. The vehicle had
+stopped, but the process died before a final report; this attempt is **not a pass**.
+The crash log and incomplete evidence remain, with a recovery note. A native crash
+bypasses Python cleanup, so new runs now flush each completed step to
+`telemetry.jsonl` and save initialized sensor metadata early. The suite preserves
+per-case reports and records missing-result/failed-audit cases rather than losing
+the preceding successful results. A successful retry does not prove the runtime
+crash fixed; do not treat this prototype as production-stable.
+
+Research found [NVIDIA's multi-tick sensor known issues](https://docs.isaacsim.omniverse.nvidia.com/6.0.1/sensors/isaacsim_sensors_multitick_rendering.html)
+and an [Isaac 6.0.1 sensor-plugin crash report](https://forums.developer.nvidia.com/t/isaac-sim-6-0-1-unbounded-hang-from-null-data-pointer-dereference-in-librtx-rtxsensor-plugin-so-0x2c40d/380481).
+Those reports have different conditions/platforms and do not establish this
+crash's exact cause. No binary patch, driver change, or external runtime edit was made.
 
 ## Limits to explain accurately
 

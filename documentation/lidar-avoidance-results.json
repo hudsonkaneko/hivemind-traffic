@@ -1,0 +1,197 @@
+{
+  "runs": [
+    {
+      "run": "20260928T173127Z-avoid-03cd76",
+      "verified": true,
+      "config": {
+        "gui": true,
+        "mode": "avoid",
+        "blocked_lane": false,
+        "speed": 6,
+        "gap": 40,
+        "seconds": 25,
+        "seed": 42,
+        "fault_step": -1,
+        "ideal_sensor": false
+      },
+      "summary": {
+        "passed": true,
+        "steps": 250,
+        "completed": true,
+        "blocked_fallback": false,
+        "min_obstacle_gap_m": 1.1114054270244842,
+        "max_lateral_step_m": 0.0640000000000005,
+        "speed_interventions": 0,
+        "final_speed": 6,
+        "phase_sequence": [
+          "outbound",
+          "passing",
+          "returning",
+          "complete"
+        ],
+        "wall_seconds": 144.07799999999997,
+        "traffic_seconds": 25,
+        "limitation": "Static obstacles only; lidar occupancy plus known lane map; SUMO lane-change kinematics"
+      },
+      "manifest_sha256": "407feb62070d6e2d78a73534dc7ba0f5b111ce0b79bdb9db586c1dce32aad4f4"
+    },
+    {
+      "run": "20260928T173439Z-avoid-113840",
+      "verified": true,
+      "config": {
+        "gui": false,
+        "mode": "avoid",
+        "blocked_lane": false,
+        "speed": 6,
+        "gap": 40,
+        "seconds": 25,
+        "seed": 42,
+        "fault_step": -1,
+        "ideal_sensor": false
+      },
+      "summary": {
+        "passed": true,
+        "steps": 250,
+        "completed": true,
+        "blocked_fallback": false,
+        "min_obstacle_gap_m": 1.1114054270244842,
+        "max_lateral_step_m": 0.0640000000000005,
+        "speed_interventions": 0,
+        "final_speed": 6,
+        "phase_sequence": [
+          "outbound",
+          "passing",
+          "returning",
+          "complete"
+        ],
+        "wall_seconds": 112.23399999999992,
+        "traffic_seconds": 25,
+        "limitation": "Static obstacles only; lidar occupancy plus known lane map; SUMO lane-change kinematics"
+      },
+      "manifest_sha256": "2845a15bc9b30c692312f6e73a9fc61e936372f2546d38fba458d729e72f0c46"
+    },
+    {
+      "run": "20260928T173637Z-avoid-e462fd",
+      "verified": true,
+      "config": {
+        "gui": false,
+        "mode": "avoid",
+        "blocked_lane": false,
+        "speed": 6,
+        "gap": 40,
+        "seconds": 25,
+        "seed": 42,
+        "fault_step": -1,
+        "ideal_sensor": false
+      },
+      "summary": {
+        "passed": true,
+        "steps": 250,
+        "completed": true,
+        "blocked_fallback": false,
+        "min_obstacle_gap_m": 1.1114054270244842,
+        "max_lateral_step_m": 0.0640000000000005,
+        "speed_interventions": 0,
+        "final_speed": 6,
+        "phase_sequence": [
+          "outbound",
+          "passing",
+          "returning",
+          "complete"
+        ],
+        "wall_seconds": 111.20400000000018,
+        "traffic_seconds": 25,
+        "limitation": "Static obstacles only; lidar occupancy plus known lane map; SUMO lane-change kinematics"
+      },
+      "manifest_sha256": "fc85b8d40b3b53f9a4349a5131ccbe14fd0867d29e116ebf0248f6a9c9714eb6"
+    },
+    {
+      "run": "20260928T173833Z-avoid-ddcf29",
+      "verified": true,
+      "config": {
+        "gui": false,
+        "mode": "avoid",
+        "blocked_lane": false,
+        "speed": 8,
+        "gap": 55,
+        "seconds": 25,
+        "seed": 43,
+        "fault_step": -1,
+        "ideal_sensor": false
+      },
+      "summary": {
+        "passed": true,
+        "steps": 250,
+        "completed": true,
+        "blocked_fallback": false,
+        "min_obstacle_gap_m": 1.1553105913986719,
+        "max_lateral_step_m": 0.0640000000000005,
+        "speed_interventions": 0,
+        "final_speed": 6,
+        "phase_sequence": [
+          "approach",
+          "outbound",
+          "passing",
+          "returning",
+          "complete"
+        ],
+        "wall_seconds": 109.03200000000015,
+        "traffic_seconds": 25,
+        "limitation": "Static obstacles only; lidar occupancy plus known lane map; SUMO lane-change kinematics"
+      },
+      "manifest_sha256": "986f88baf0eee4b2fc32ef2c4ebb414fd7b4997fb1465b4251c06017c7b64695"
+    },
+    {
+      "run": "20260928T174315Z-avoid-be5a40",
+      "verified": true,
+      "config": {
+        "gui": false,
+        "mode": "avoid",
+        "blocked_lane": true,
+        "speed": 6,
+        "gap": 40,
+        "seconds": 25,
+        "seed": 42,
+        "fault_step": -1,
+        "ideal_sensor": false
+      },
+      "summary": {
+        "passed": true,
+        "steps": 250,
+        "completed": false,
+        "blocked_fallback": true,
+        "min_obstacle_gap_m": 1.1799999999999997,
+        "max_lateral_step_m": 0,
+        "speed_interventions": 0,
+        "final_speed": 0,
+        "phase_sequence": [
+          "approach"
+        ],
+        "wall_seconds": 109.42200000000048,
+        "traffic_seconds": 25,
+        "limitation": "Static obstacles only; lidar occupancy plus known lane map; SUMO lane-change kinematics"
+      },
+      "manifest_sha256": "8a28fd99cd55a29080b8007d430bb082cb67248cc07cf2306819316a8ed23317"
+    }
+  ],
+  "automated_tests": 67,
+  "failed_attempts": [
+    {
+      "run": "20260928T172851Z-avoid-7b1563",
+      "status": "failed_maneuver",
+      "reason": "Heading-settling gate held the planner in outbound. Fixed by using lane position for phase arrival; regression test added."
+    },
+    {
+      "run": "20260928T174028Z-avoid-11d1a6",
+      "status": "native_crash",
+      "reason": "RTX sensor access violation after 169 scans; no completed result. Unchanged retry passed; root cause not established.",
+      "log": "logs/avoid-suite-20260928T173439Z-3.log"
+    }
+  ],
+  "repeat_max_differences": {
+    "x": 0,
+    "y": 0,
+    "speed": 0
+  },
+  "repeat_tolerance": 0.01
+}

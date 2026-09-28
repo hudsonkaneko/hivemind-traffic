@@ -113,6 +113,7 @@ def main():
         sensor=LidarSensor(lidar,annotators=[])
         manifest['sensor_attributes']={a.GetName():str(a.Get()) for a in lidar.prims[0].GetAttributes() if a.GetName().startswith('omni:sensor')}
         manifest['isaac_version']=next((f.read_text().strip() for f in [Path(sys.executable).parent.parent.parent/'VERSION'] if f.exists()),'unknown')
+        (out/'manifest.json').write_text(json.dumps(manifest,indent=2))
         timeline=omni.timeline.get_timeline_interface();timeline.set_target_framerate(60)
         timeline.set_end_time(3600);timeline.set_looping(False)
         latest={};callback_errors=[]
@@ -196,6 +197,9 @@ def main():
                     lidar_distance=decision.clearance,obstacle_end_x=wall_x+4,
                     obstacle_gap=min(rectangle_gap(swept,o) for o in obstacles))
             rows.append(row)
+            # Preserve completed steps even if a native renderer crash bypasses finally.
+            with (out/'telemetry.jsonl').open('a') as trace:
+                trace.write(json.dumps(row)+'\n')
             if args.gui:
                 set_camera_view(eye=np.array([ego['x']-15,-24,15]),target=np.array([ego['x']+15,-4.8,0]))
                 label.text=f'{args.mode.upper()} | SUMO {before:.1f}s\nLidar/map gap {row["lidar_distance"]:.2f} m | speed {after["speed"]:.2f} m/s\n{reason} | fresh scan {step+1}\nSUMO motion; RTX-based control'
