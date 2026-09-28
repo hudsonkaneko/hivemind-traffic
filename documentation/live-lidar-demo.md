@@ -5,6 +5,8 @@ clearance to choose the next speed command. It is not a recording being replayed
 The first mode stops one car before a stationary obstacle. The second follows a
 scripted lead car and stops when that car brakes.
 
+Verified outcomes and retained failures: [validation results](live-lidar-results.md).
+
 ## Launch
 
 Run these single-line commands from the repository root. They work in PowerShell
@@ -140,6 +142,11 @@ met every driving gate. This failure is retained, not relabelled a pass.
 An explicitly separate `--ideal-sensor` diagnostic disables configured angular
 standard deviations and range accuracy noise. It does not make the native noisy
 profile deterministic or validate robustness to other noise distributions.
+
+NVIDIA documents the angular error and range-accuracy fields in its
+[lidar configuration reference](https://docs.isaacsim.omniverse.nvidia.com/2023.1.1/features/sensors_simulation/isaac_sim_sensors_rtx_based_lidar/lidar_config.html).
+The actual values used here are captured from the installed runtime's USD sensor
+attributes in each manifest; the reference explains the fields, not this experiment's result.
 
 ```text
 .venv\Scripts\python.exe experiments/run_live_lidar_suite.py --diagnostics --gui-last

@@ -1,0 +1,308 @@
+{
+  "date": "2026-09-28",
+  "automated_tests": 51,
+  "native": {
+    "passed": false,
+    "runs": [
+      {
+        "run": "20260928T164635Z-stop-015d41",
+        "verified": true,
+        "config": {
+          "gui": false,
+          "mode": "stop",
+          "speed": 4,
+          "gap": 20,
+          "seconds": 25,
+          "seed": 42,
+          "fault_step": -1
+        },
+        "summary": {
+          "passed": true,
+          "steps": 250,
+          "min_gap_m": 5.2200108528137505,
+          "max_clearance_error_m": 0.021306610107423296,
+          "final_speed": 0,
+          "progress_m": 14.77998914718625,
+          "speed_interventions": 0,
+          "sensor_fault_actions": 0,
+          "wall_seconds": 113.29700000000003,
+          "traffic_seconds": 25,
+          "limitation": "Discrete sample-and-hold RTX; SUMO lane following, not physics steering or continuous-motion lidar"
+        },
+        "manifest_sha256": "3d91e3fbc5db5be0c0fa1b681967a478ad03c6e7d348dacc1ef5339366234388"
+      },
+      {
+        "run": "20260928T164834Z-stop-29694a",
+        "verified": true,
+        "config": {
+          "gui": false,
+          "mode": "stop",
+          "speed": 8,
+          "gap": 40,
+          "seconds": 25,
+          "seed": 42,
+          "fault_step": -1
+        },
+        "summary": {
+          "passed": true,
+          "steps": 250,
+          "min_gap_m": 5.2252805957856125,
+          "max_clearance_error_m": 0.03708953857422159,
+          "final_speed": 0,
+          "progress_m": 34.77471940421439,
+          "speed_interventions": 0,
+          "sensor_fault_actions": 0,
+          "wall_seconds": 112.40699999999993,
+          "traffic_seconds": 25,
+          "limitation": "Discrete sample-and-hold RTX; SUMO lane following, not physics steering or continuous-motion lidar"
+        },
+        "manifest_sha256": "686a8d540afd4c44076e06eb0b4ea2f1991991f5650d1b2057c90cf7c6a0a83f"
+      },
+      {
+        "run": "20260928T165032Z-stop-9d1c0c",
+        "verified": true,
+        "config": {
+          "gui": false,
+          "mode": "stop",
+          "speed": 12,
+          "gap": 65,
+          "seconds": 25,
+          "seed": 42,
+          "fault_step": -1
+        },
+        "summary": {
+          "passed": true,
+          "steps": 250,
+          "min_gap_m": 5.2264332903691155,
+          "max_clearance_error_m": 0.05476074218749716,
+          "final_speed": 0,
+          "progress_m": 59.773566709630884,
+          "speed_interventions": 0,
+          "sensor_fault_actions": 0,
+          "wall_seconds": 114.20299999999997,
+          "traffic_seconds": 25,
+          "limitation": "Discrete sample-and-hold RTX; SUMO lane following, not physics steering or continuous-motion lidar"
+        },
+        "manifest_sha256": "b6f8a468a284c838239ddf9b853bbe46d78ba12939ec53a7035a72fc8376c881"
+      },
+      {
+        "run": "20260928T165231Z-follow-932f68",
+        "verified": true,
+        "config": {
+          "gui": false,
+          "mode": "follow",
+          "speed": 6,
+          "gap": 30,
+          "seconds": 25,
+          "seed": 42,
+          "fault_step": -1
+        },
+        "summary": {
+          "passed": true,
+          "steps": 250,
+          "min_gap_m": 5.228514143626157,
+          "max_clearance_error_m": 0.029789733886708802,
+          "final_speed": 0,
+          "progress_m": 57.951485856374134,
+          "speed_interventions": 0,
+          "sensor_fault_actions": 0,
+          "wall_seconds": 109.9380000000001,
+          "traffic_seconds": 25,
+          "limitation": "Discrete sample-and-hold RTX; SUMO lane following, not physics steering or continuous-motion lidar"
+        },
+        "manifest_sha256": "43e8b389f4a7ac55d3664990bdec12d113868f30fae094ed9b97418e77cf53e1"
+      },
+      {
+        "run": "20260928T165426Z-follow-f8819f",
+        "verified": true,
+        "config": {
+          "gui": false,
+          "mode": "follow",
+          "speed": 6,
+          "gap": 30,
+          "seconds": 25,
+          "seed": 42,
+          "fault_step": -1
+        },
+        "summary": {
+          "passed": true,
+          "steps": 250,
+          "min_gap_m": 5.228498535156518,
+          "max_clearance_error_m": 0.029791641235341615,
+          "final_speed": 0,
+          "progress_m": 57.95150146484377,
+          "speed_interventions": 0,
+          "sensor_fault_actions": 0,
+          "wall_seconds": 106.32799999999997,
+          "traffic_seconds": 25,
+          "limitation": "Discrete sample-and-hold RTX; SUMO lane following, not physics steering or continuous-motion lidar"
+        },
+        "manifest_sha256": "93b8dcc433bc23ab176e3034d9a5398d5da94cbaa7e71df95e2cc41de2c0614c"
+      },
+      {
+        "run": "20260928T165618Z-stop-6245a9",
+        "verified": true,
+        "config": {
+          "gui": false,
+          "mode": "stop",
+          "speed": 8,
+          "gap": 40,
+          "seconds": 25,
+          "seed": 43,
+          "fault_step": -1
+        },
+        "summary": {
+          "passed": true,
+          "steps": 250,
+          "min_gap_m": 5.2252813910569245,
+          "max_clearance_error_m": 0.03708953857422159,
+          "final_speed": 0,
+          "progress_m": 34.774718608943076,
+          "speed_interventions": 0,
+          "sensor_fault_actions": 0,
+          "wall_seconds": 106.67200000000003,
+          "traffic_seconds": 25,
+          "limitation": "Discrete sample-and-hold RTX; SUMO lane following, not physics steering or continuous-motion lidar"
+        },
+        "manifest_sha256": "731852dba2cc2c984c6c2f0f1ec5457fb43d1c36bf13f670bd0abd5f7c6fbc1a"
+      },
+      {
+        "run": "20260928T165810Z-stop-20b37e",
+        "verified": true,
+        "config": {
+          "gui": true,
+          "mode": "stop",
+          "speed": 8,
+          "gap": 40,
+          "seconds": 25,
+          "seed": 42,
+          "fault_step": 40,
+          "ideal_sensor": false
+        },
+        "summary": {
+          "passed": true,
+          "steps": 250,
+          "min_gap_m": 5.225280402135084,
+          "max_clearance_error_m": 0.03708953857422159,
+          "final_speed": 0,
+          "progress_m": 34.774719597864916,
+          "speed_interventions": 0,
+          "sensor_fault_actions": 1,
+          "wall_seconds": 141.375,
+          "traffic_seconds": 25,
+          "limitation": "Discrete sample-and-hold RTX; SUMO lane following, not physics steering or continuous-motion lidar"
+        },
+        "manifest_sha256": "5aaf665fdbc8606b493fd6b062c80e32a35d18d2d5b5c108d9631b9ce7e7ebcc"
+      }
+    ],
+    "repeat_tolerance": 0.001,
+    "repeat_max_absolute_differences": {
+      "ego_x": 0.000043614705404593224,
+      "speed": 0.0004336039225263377,
+      "lidar_distance": 0.00146484375,
+      "post_gap": 0.000043614705404593224
+    },
+    "repeat_passed": false,
+    "fault_injection_passed": true,
+    "diagnostics": false
+  },
+  "diagnostic": {
+    "passed": true,
+    "runs": [
+      {
+        "run": "20260928T170056Z-stop-999c83",
+        "verified": true,
+        "config": {
+          "gui": false,
+          "mode": "stop",
+          "speed": 8,
+          "gap": 40,
+          "seconds": 25,
+          "seed": 42,
+          "fault_step": -1,
+          "ideal_sensor": false
+        },
+        "summary": {
+          "passed": true,
+          "steps": 250,
+          "min_gap_m": 5.22528062811746,
+          "max_clearance_error_m": 0.03708953857422159,
+          "final_speed": 0,
+          "progress_m": 34.77471937188254,
+          "speed_interventions": 0,
+          "sensor_fault_actions": 0,
+          "wall_seconds": 111.57799999999997,
+          "traffic_seconds": 25,
+          "limitation": "Discrete sample-and-hold RTX; SUMO lane following, not physics steering or continuous-motion lidar"
+        },
+        "manifest_sha256": "d58ce205bf5e6c09dbc0c528f11692d57a2176d1c9b0be73493294d3135e3f26"
+      },
+      {
+        "run": "20260928T170253Z-follow-48dec9",
+        "verified": true,
+        "config": {
+          "gui": false,
+          "mode": "follow",
+          "speed": 6,
+          "gap": 30,
+          "seconds": 25,
+          "seed": 42,
+          "fault_step": -1,
+          "ideal_sensor": true
+        },
+        "summary": {
+          "passed": true,
+          "steps": 250,
+          "min_gap_m": 5.219780807495312,
+          "max_clearance_error_m": 0.000006103515829636308,
+          "final_speed": 0,
+          "progress_m": 57.96021919250498,
+          "speed_interventions": 0,
+          "sensor_fault_actions": 0,
+          "wall_seconds": 95.95299999999997,
+          "traffic_seconds": 25,
+          "limitation": "Discrete sample-and-hold RTX; SUMO lane following, not physics steering or continuous-motion lidar"
+        },
+        "manifest_sha256": "866516da92a98975bd701646dc8f2ae6292e6dd2ad000d5b67b157156c2586fe"
+      },
+      {
+        "run": "20260928T170432Z-follow-33d787",
+        "verified": true,
+        "config": {
+          "gui": true,
+          "mode": "follow",
+          "speed": 6,
+          "gap": 30,
+          "seconds": 25,
+          "seed": 42,
+          "fault_step": -1,
+          "ideal_sensor": true
+        },
+        "summary": {
+          "passed": true,
+          "steps": 250,
+          "min_gap_m": 5.219780807495312,
+          "max_clearance_error_m": 0.000006103515829636308,
+          "final_speed": 0,
+          "progress_m": 57.96021919250498,
+          "speed_interventions": 0,
+          "sensor_fault_actions": 0,
+          "wall_seconds": 129.34400000000005,
+          "traffic_seconds": 25,
+          "limitation": "Discrete sample-and-hold RTX; SUMO lane following, not physics steering or continuous-motion lidar"
+        },
+        "manifest_sha256": "98cb4bd065bd64fa4dd6c7370471e69fd0c68db9243883aaea0fdf9de84ac866"
+      }
+    ],
+    "repeat_tolerance": 0.001,
+    "repeat_max_absolute_differences": {
+      "ego_x": 0,
+      "speed": 0,
+      "lidar_distance": 0,
+      "post_gap": 0
+    },
+    "repeat_passed": true,
+    "fault_injection_passed": null,
+    "diagnostics": true
+  }
+}
