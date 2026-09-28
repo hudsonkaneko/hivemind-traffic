@@ -76,11 +76,13 @@ changes label registration, reproduced the result twice, and checked that the
 candidate still stopped detecting the target while it was hidden. I did not
 present a changed scenario as a general fix."
 
-## Pending Google Docs sync
+## Google Docs sync
 
-Proposed tab: **23 Initial visibility and lidar registration**. Use this entry's
+Synced tab: **23 Initial visibility and lidar registration**. It includes this entry's
 purpose, technology, protocol, results, commands and limitations. Associate it
 with the commit titled `Investigate initial visibility in lidar ID registration`.
 The native document was reachable, but its prescribed trusted-read helper rejected
 the absolute Windows workspace path (`workspaceRoot must be an absolute path`).
-No Google Docs content was changed; this entry must still be synced.
+The later explicit-visibility task used direct native connector reads and writes
+to sync this entry without changing existing tabs. The original helper issue
+remains; it does not mean the document connector is unavailable.

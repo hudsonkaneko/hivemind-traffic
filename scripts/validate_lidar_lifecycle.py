@@ -8,7 +8,7 @@ import shutil
 import sys
 import uuid
 import numpy as np
-from lidar_lifecycle_analysis import analyze, summarize
+from lidar_lifecycle_analysis import analyze, summarize, visibility_at
 from validate_moving_lidar import command, digest
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -19,14 +19,18 @@ def main():
     parser.add_argument('--variant',choices=['always-visible','lifecycle','initially-visible'],default='lifecycle')
     parser.add_argument('--map-source',choices=['sensor','camera'],default='sensor',
                         help='Diagnostic: compare the sensor map with a separate camera render product')
+    parser.add_argument('--visibility-mode',choices=['time-sampled','explicit'],default='time-sampled')
     parser.add_argument('--render-preflight',action='store_true',
                         help='Rejected diagnostic: frozen-time registration; can produce false hidden-target returns')
     args=parser.parse_args()
     if args.render_preflight and args.map_source!='camera':
         parser.error('--render-preflight requires --map-source camera')
+    if args.render_preflight and args.visibility_mode=='explicit':
+        parser.error('Explicit visibility must be tested independently of preflight')
     config=json.loads((ROOT/'experiments/configs/lidar_lifecycle.json').read_text())
     config['map_source']=args.map_source
     config['render_preflight']=args.render_preflight
+    config['visibility_mode']=args.visibility_mode
     run_id=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+args.variant+'-'+args.map_source+'-'+uuid.uuid4().hex[:6]
     output=ROOT/'outputs/lidar_lifecycle'/run_id
     output.mkdir(parents=True,exist_ok=False)
@@ -46,7 +50,7 @@ def main():
     from isaacsim import SimulationApp
     app=SimulationApp({'headless':True,'width':640,'height':480,'enable_motion_bvh':True,
                        'extra_args':['--/rtx-transient/stableIds/enabled=true']})
-    rows,errors,map_events=[],[],[]
+    rows,errors,map_events,visibility_events=[],[],[],[]
     try:
         import omni.usd
         import omni.timeline
@@ -68,8 +72,11 @@ def main():
             body.AddTranslateOp().Set(Gf.Vec3d(*center))
             body.AddScaleOp().Set(Gf.Vec3f(*size))
         vis=UsdGeom.Imageable(stage.GetPrimAtPath('/World/Target')).CreateVisibilityAttr()
-        for time,visible in [(0,args.variant!='lifecycle'),(1,True),(2,args.variant=='always-visible'),(3,True)]:
-            vis.Set('inherited' if visible else 'invisible',time*config['fps'])
+        if args.visibility_mode=='time-sampled':
+            for time,visible in [(0,args.variant!='lifecycle'),(1,True),(2,args.variant=='always-visible'),(3,True)]:
+                vis.Set('inherited' if visible else 'invisible',time*config['fps'])
+        else:
+            vis.Set('inherited' if visibility_at(args.variant,0.) else 'invisible')
         lidar=Lidar.create('/World/Ego/Lidar',config=config['sensor_config'],translations=np.array(config['sensor_mount_m']),aux_output_level='FULL')
         sensor=LidarSensor(lidar,annotators=[])
         # Keep both independent renderer maps. Never infer labels from geometry.
@@ -171,6 +178,13 @@ def main():
         stage.Export(str(output/'scene.usda'))
         timeline.play()
         for frame in range(config['frames']):
+            if args.visibility_mode=='explicit':
+                now=timeline.get_current_time()
+                value='inherited' if visibility_at(args.variant,now) else 'invisible'
+                # Poll each update; author only actual transitions to avoid redundant USD edits.
+                if not visibility_events or visibility_events[-1]['value']!=value:
+                    vis.Set(value)
+                    visibility_events.append(dict(frame=frame,time_s=now,value=value))
             app.update()
             for name,annotator in camera_annotators:
                 raw=annotator.get_data()
@@ -197,6 +211,7 @@ def main():
         traceback.print_exc()
         manifest.update(status='failed',error=repr(error))
     finally:
+        (output/'visibility-events.json').write_text(json.dumps(visibility_events,indent=2))
         (output/'sensor-map-events.json').write_text(json.dumps(map_events,indent=2))
         manifest['end_utc']=datetime.now(timezone.utc).isoformat()
         manifest['output_hashes']={str(p.relative_to(output)):digest(p) for p in output.rglob('*') if p.is_file() and p!=manifest_path}

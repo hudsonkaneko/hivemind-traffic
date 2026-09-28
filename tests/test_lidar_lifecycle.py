@@ -3,7 +3,14 @@ from pathlib import Path
 import numpy as np
 import pytest
 from scripts.analyze_lidar_lifecycle import verify_labels
-from scripts.lidar_lifecycle_analysis import analyze,summarize
+from scripts.lidar_lifecycle_analysis import analyze,summarize,visibility_at
+
+
+@pytest.mark.parametrize('time,expected',[(0.,False),(.999,False),(1.,True),(1.999,True),(2.,False),(2.999,False),(3.,True),(5.,True)])
+def test_explicit_visibility_schedule(time,expected):
+    assert visibility_at('lifecycle',time) == expected
+    assert visibility_at('always-visible',time) is True
+    assert visibility_at('initially-visible',time) == (True if time<1. else expected)
 
 CONFIG=json.loads((Path(__file__).resolve().parents[1]/'experiments/configs/lidar_lifecycle.json').read_text())
 

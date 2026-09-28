@@ -53,6 +53,7 @@ def evaluate(run):
         raise ValueError('Offline summary differs from capture summary')
     return dict(run_id=manifest['run_id'],summary=recomputed,roi_echo_counts=echoes,
         map_source=config.get('map_source','sensor'),
+        visibility_mode=config.get('visibility_mode','time-sampled'),
         render_preflight=config.get('render_preflight',False),
         sensor_map_identity_agreement=sensor_matches/max(1,selected_hits),
         target_path_ever_in_map='/World/Target/Body' in mapped_paths,

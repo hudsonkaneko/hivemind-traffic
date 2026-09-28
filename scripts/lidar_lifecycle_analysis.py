@@ -16,6 +16,15 @@ def phases(variant, duration):
             ('hidden_again', 2., 3., False), ('visible_again', 3., duration, True)]
 
 
+def visibility_at(variant, time_s):
+    """Unbounded schedule for live default-value writes, without time samples."""
+    if variant == 'always-visible':
+        return True
+    if time_s < 1.:
+        return variant == 'initially-visible'
+    return time_s < 2. or time_s >= 3.
+
+
 def analyze(scan, config, variant):
     start = float(scan['timestamp_ns'])*1e-9-config['sensor_to_usd_offset_s']
     end = start + config['scan_period_s']
