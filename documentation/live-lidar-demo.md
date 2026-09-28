@@ -7,6 +7,8 @@ scripted lead car and stops when that car brakes.
 
 Verified outcomes and retained failures: [validation results](live-lidar-results.md).
 
+For the newer pass-and-return maneuver, see [stationary obstacle avoidance](lidar-avoidance.md).
+
 ## Launch
 
 Run these single-line commands from the repository root. They work in PowerShell

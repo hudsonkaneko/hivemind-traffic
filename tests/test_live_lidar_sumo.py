@@ -54,3 +54,19 @@ def test_close_on_setup_failure(monkeypatch):
     with pytest.raises(RuntimeError, match='injected'):
         LiveTraffic(BINARY, Path('unused'), mode='stop', speed=8, gap=40, seed=42)
     assert closed == [True]
+
+
+def test_continuous_lane_change_timing_and_safety():
+    traffic=LiveTraffic(BINARY,ROOT/'scenarios/live_lidar/scenario.sumocfg',mode='avoid',speed=6,gap=40,seed=42)
+    try:
+        previous=traffic.snapshot()['vehicles']['ego']
+        positions=[]
+        for i in range(65):
+            current=traffic.step(6,1 if i==0 else None)['vehicles']['ego']
+            assert abs(current['y']-previous['y'])<=.15
+            positions.append(current);previous=current
+        assert positions[-1]['y']==pytest.approx(-1.6)
+        assert any(abs(p['angle']-90)>.1 for p in positions)
+        assert traffic.connection.vehicle.getSpeedMode('ego')==31
+        assert traffic.connection.vehicle.getLaneChangeMode('ego')==512
+    finally:traffic.close()

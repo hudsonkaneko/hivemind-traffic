@@ -11,6 +11,9 @@ from traffic.lidar_control import forward_clearance,target_speed
 
 def evaluate(path):
     manifest=json.loads((path/'manifest.json').read_text())
+    if manifest['config'].get('mode')=='avoid':
+        from scripts.audit_lidar_avoidance import audit
+        return audit(path)
     for name,wanted in manifest['hashes'].items():
         if hashlib.sha256((path/name).read_bytes()).hexdigest()!=wanted:
             raise ValueError('Changed artifact: '+name)

@@ -15,12 +15,14 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from traffic.live_runtime import find_sumo
 from traffic.lidar_control import forward_clearance,target_speed
+from traffic.lidar_avoidance import AvoidancePlanner, road_points, body_bounds, rectangle_gap, summarize
 
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--gui',action='store_true')
-    p.add_argument('--mode',choices=['stop','follow'],default='stop')
+    p.add_argument('--mode',choices=['stop','follow','avoid'],default='stop')
+    p.add_argument('--blocked-lane',action='store_true',help='Avoidance test: stationary obstacle in the adjacent lane')
     p.add_argument('--speed',type=float,default=8.)
     p.add_argument('--gap',type=float,default=40.)
     p.add_argument('--seconds',type=float,default=25.)
@@ -28,6 +30,7 @@ def main():
     p.add_argument('--fault-step',type=int,default=-1)
     p.add_argument('--ideal-sensor',action='store_true',help='Diagnostic only: disable configured angular/range noise')
     args=p.parse_args()
+    if args.blocked_lane and args.mode!='avoid': p.error('--blocked-lane requires --mode avoid')
     if not all(np.isfinite(v) and v>0 for v in [args.speed,args.gap,args.seconds]): p.error('positive finite speed/gap/seconds required')
     if args.speed>12 or args.gap>100 or args.seconds>40: p.error('This validated small-road fixture supports speed<=12, gap<=100, seconds<=40')
     binary=find_sumo()
@@ -38,7 +41,7 @@ def main():
     run=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+args.mode+'-'+uuid.uuid4().hex[:6]
     out=ROOT/'outputs/live_lidar'/run;out.mkdir(parents=True)
     (out/'source').mkdir()
-    files=['scripts/live_lidar_drive.py','traffic/lidar_control.py','traffic/live_lidar_sumo.py','traffic/live_runtime.py',
+    files=['scripts/live_lidar_drive.py','traffic/lidar_control.py','traffic/lidar_avoidance.py','traffic/live_lidar_sumo.py','traffic/live_runtime.py',
            'scenarios/live_lidar/scenario.sumocfg','scenarios/single_vehicle/network.net.xml']
     for f in files: shutil.copyfile(ROOT/f,out/'source'/Path(f).name)
     def git(*a): return subprocess.check_output(['git',*a],cwd=ROOT,text=True).strip()
@@ -79,15 +82,23 @@ def main():
         asset=UsdGeom.Xform.Define(stage,'/VehicleAsset')
         box('/VehicleAsset/Body',[-2.5,0,.8],[5,2,1.6],[.12,.5,.85])
         UsdGeom.Imageable(asset).CreateVisibilityAttr().Set('invisible')
-        transforms={}
+        transforms={};rotations={}
         for vid in state['vehicles']:
             xf=UsdGeom.Xform.Define(stage,'/World/Vehicles/'+vid)
             xf.GetPrim().GetReferences().AddInternalReference('/VehicleAsset')
             UsdGeom.Imageable(xf).CreateVisibilityAttr().Set('inherited')
             transforms[vid]=xf.AddTranslateOp()
+            rotations[vid]=xf.AddRotateZOp()
             xf.GetPrim().CreateAttribute('sumo:id',Sdf.ValueTypeNames.String).Set(vid)
         wall_x=state['vehicles']['ego']['x']+args.gap
-        if args.mode=='stop': box('/World/Obstacle',[wall_x+2,-4.8,.8],[4,2,1.6],[.9,.25,.12])
+        if args.mode in ('stop','avoid'): box('/World/Obstacle',[wall_x+2,-4.8,.8],[4,2,1.6],[.9,.25,.12])
+        obstacles=[(wall_x,wall_x+4,-5.8,-3.8)]
+        if args.blocked_lane:
+            blocker_x=state['vehicles']['ego']['x']+8
+            box('/World/AdjacentObstacle',[blocker_x+2,-1.6,.8],[4,2,1.6],[.8,.6,.1])
+            obstacles.append((blocker_x,blocker_x+4,-2.6,-.6))
+        manifest['evaluation_obstacles']=obstacles if args.mode=='avoid' else []
+        planner=AvoidancePlanner(args.speed) if args.mode=='avoid' else None
         stage.GetRootLayer().Export(str(out/'static.usda'))
         stage.SetEditTarget(stage.GetSessionLayer())
         if args.gui:
@@ -135,8 +146,9 @@ def main():
             if not app.is_running(): raise RuntimeError('Viewer closed before completion')
             ego=state['vehicles']['ego']
             for vid,v in state['vehicles'].items():
-                if abs(v['angle']-90)>1e-5: raise RuntimeError('Straight-road heading contract violated')
+                if args.mode!='avoid' and abs(v['angle']-90)>1e-5: raise RuntimeError('Straight-road heading contract violated')
                 transforms[vid].Set(Gf.Vec3d(v['x'],v['y'],0))
+                rotations[vid].Set(90-v['angle'])
             expected_pose=np.array([ego['x'],ego['y'],1.])
             # Drain two full rotary periods after pose edit before accepting a scan.
             # SUMO remains frozen; do not use a scan spanning old and new poses.
@@ -158,29 +170,41 @@ def main():
             clearance=forward_clearance(s['az'],s['el'],s['ranges'],s['flags'])
             fresh=step!=args.fault_step
             requested,reason=target_speed(clearance,ego['speed'],cruise=args.speed,fresh=fresh)
+            decision=None
+            if planner:
+                points,healthy=road_points(s['az'],s['el'],s['ranges'],s['flags'],ego)
+                decision=planner.step(points,healthy,ego,fresh=fresh)
+                requested,reason=decision.speed,decision.reason
             # Truth is computed only after the controller decision, solely for evaluation.
-            true_gap=(wall_x-ego['x']) if args.mode=='stop' else state['vehicles']['lead']['x']-5-ego['x']
-            measurement_error=abs(clearance.distance-true_gap)
+            true_gap=(wall_x-ego['x']) if args.mode!='follow' else state['vehicles']['lead']['x']-5-ego['x']
+            measurement_error=abs(clearance.distance-true_gap) if not planner else None
             np.savez_compressed(out/f'scan_{step:04d}.npz',**{k:s[k] for k in ['timestamp','az','el','ranges','flags','offset']})
-            before=state['time'];state=traffic.step(requested)
+            before=state['time'];state=traffic.step(requested,decision.lane_request if decision else None)
             if abs(state['time']-before-.1)>1e-8: raise RuntimeError('SUMO step mismatch')
             after=state['vehicles']['ego']
-            post_gap=(wall_x-after['x']) if args.mode=='stop' else state['vehicles']['lead']['x']-5-after['x']
+            post_gap=(wall_x-after['x']) if args.mode!='follow' else state['vehicles']['lead']['x']-5-after['x']
             row=dict(step=step,traffic_time=before,sensor_time=s['timestamp']*1e-9,sensor_epoch=epoch,
                 lidar_distance=clearance.distance,points=clearance.points,healthy=clearance.healthy,
                 speed=ego['speed'],requested_speed=requested,realized_speed=after['speed'],reason=reason,
                 true_gap=true_gap,post_gap=post_gap,error_m=measurement_error,ego_x=ego['x'],
                 lead_speed=state['vehicles'].get('lead',{}).get('speed'),collisions=state['collisions'])
+            if decision:
+                a,b=body_bounds(ego),body_bounds(after)
+                swept=(min(a[0],b[0])-.02,max(a[1],b[1])+.02,min(a[2],b[2])-.02,max(a[3],b[3])+.02)
+                row.update(ego=ego,ego_after=after,phase=decision.phase,lane_request=decision.lane_request,
+                    adjacent_clear=decision.adjacent_clear,healthy=decision.healthy,
+                    lidar_distance=decision.clearance,obstacle_end_x=wall_x+4,
+                    obstacle_gap=min(rectangle_gap(swept,o) for o in obstacles))
             rows.append(row)
             if args.gui:
                 set_camera_view(eye=np.array([ego['x']-15,-24,15]),target=np.array([ego['x']+15,-4.8,0]))
-                label.text=f'{args.mode.upper()} | SUMO {before:.1f}s\nLidar gap {clearance.distance:.2f} m | speed {after["speed"]:.2f} m/s\n{reason} | fresh scan {step+1}\nSUMO road-following; RTX distance-based speed control'
-                if step==50:
+                label.text=f'{args.mode.upper()} | SUMO {before:.1f}s\nLidar/map gap {row["lidar_distance"]:.2f} m | speed {after["speed"]:.2f} m/s\n{reason} | fresh scan {step+1}\nSUMO motion; RTX-based control'
+                if step==50 or (planner and step in (90,130,180)):
                     from omni.kit.viewport.utility import get_active_viewport,capture_viewport_to_file
-                    capture_viewport_to_file(get_active_viewport(),str(out/'preview.png'))
-            if step%50==0: print(f'LIVE step={step} gap={clearance.distance:.2f} speed={after["speed"]:.2f}',flush=True)
+                    capture_viewport_to_file(get_active_viewport(),str(out/('preview.png' if step==50 else f'preview_{step:04d}.png')))
+            if step%50==0: print(f'LIVE step={step} gap={row["lidar_distance"]:.2f} speed={after["speed"]:.2f} phase={decision.phase if decision else args.mode}',flush=True)
         timeline.stop();sensor.detach_writer('Capture')
-        minimum=min(r['post_gap'] for r in rows);error=max(r['error_m'] for r in rows)
+        minimum=min(r['post_gap'] for r in rows);error=max(r['error_m'] or 0 for r in rows)
         interventions=sum(abs(r['realized_speed']-r['requested_speed'])>.15 for r in rows)
         progress=state['vehicles']['ego']['x']-traffic.initial_x
         passed=(minimum>=2 and error<=.25 and progress>=5 and rows[-1]['realized_speed']<.2
@@ -190,6 +214,11 @@ def main():
             sensor_fault_actions=sum(r['reason']=='sensor-failsafe' for r in rows),
             wall_seconds=time.monotonic()-began,traffic_seconds=len(rows)*.1,
             limitation='Discrete sample-and-hold RTX; SUMO lane following, not physics steering or continuous-motion lidar')
+        if planner:
+            summary=summarize(rows,args.blocked_lane)
+            summary.update(wall_seconds=time.monotonic()-began,traffic_seconds=len(rows)*.1,
+                limitation='Static obstacles only; lidar occupancy plus known lane map; SUMO lane-change kinematics')
+            passed=summary['passed']
         manifest['status']='passed' if passed else 'failed'
     except BaseException as e:
         import traceback;traceback.print_exc();manifest.update(status='failed',error=repr(e))

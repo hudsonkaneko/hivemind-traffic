@@ -9,7 +9,8 @@ class LiveTraffic:
         self.mode=mode
         try:
             label='lidar-'+uuid.uuid4().hex
-            traci.start([str(binary),'-c',str(config),'--seed',str(seed)],label=label)
+            extra=['--lanechange.duration','5'] if mode=='avoid' else []
+            traci.start([str(binary),'-c',str(config),'--seed',str(seed),*extra],label=label)
             self.connection=traci.getConnection(label)
             c=self.connection
             c.route.add('road',['highway_0','highway_1'])
@@ -38,8 +39,11 @@ class LiveTraffic:
             'y':c.vehicle.getPosition(v)[1],'speed':c.vehicle.getSpeed(v),'angle':c.vehicle.getAngle(v)}
             for v in c.vehicle.getIDList()},'collisions':list(c.simulation.getCollidingVehiclesIDList())}
 
-    def step(self,speed):
+    def step(self,speed,lane_request=None):
         c=self.connection
+        if lane_request is not None:
+            if self.mode!='avoid' or lane_request not in (0,1): raise ValueError('Invalid lane request')
+            c.vehicle.changeLane('ego',lane_request,5.)
         c.vehicle.setSpeed('ego',float(speed))
         if self.mode=='follow': c.vehicle.setSpeed('lead',4. if c.simulation.getTime()<8. else 0.)
         c.simulationStep()
