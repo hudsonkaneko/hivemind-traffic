@@ -27,7 +27,7 @@ def forward_clearance(azimuth, elevation, ranges, flags):
 
 
 def target_speed(clearance, speed, *, cruise=8., dt=.1, fresh=True):
-    if not math.isfinite(speed) or speed<0 or not math.isfinite(cruise) or cruise<0 or dt<=0:
+    if not math.isfinite(speed) or speed<0 or not math.isfinite(cruise) or cruise<0 or not math.isfinite(dt) or dt<=0:
         raise ValueError('Invalid speed/control interval')
     if not fresh or not clearance.healthy or not math.isfinite(clearance.distance):
         return max(0.,speed-3.*dt), 'sensor-failsafe'

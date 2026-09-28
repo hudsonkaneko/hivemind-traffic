@@ -8,7 +8,8 @@ from scripts.analyze_live_lidar import evaluate
 
 
 def report(suite):
-    records=json.loads(suite.read_text())['runs']
+    package=json.loads(suite.read_text())
+    records=package['runs'];diagnostics=package.get('diagnostics',False)
     audited=[evaluate(suite.parent/r['run']) for r in records]
     following=[r for r in audited if r['config']['mode']=='follow']
     if len(following)!=2:raise ValueError('Expected two following runs')
@@ -19,10 +20,11 @@ def report(suite):
     tolerance=.001
     repeat_pass=all(d<=tolerance for d in differences.values())
     faults=[r for r in audited if r['config']['fault_step']>=0]
-    fault_pass=len(faults)==1 and faults[0]['summary']['sensor_fault_actions']==1
+    fault_pass=(not faults if diagnostics else len(faults)==1 and faults[0]['summary']['sensor_fault_actions']==1)
     return dict(passed=all(r['summary']['passed'] for r in audited) and repeat_pass and fault_pass,
                 runs=audited,repeat_tolerance=tolerance,repeat_max_absolute_differences=differences,
-                repeat_passed=repeat_pass,fault_injection_passed=fault_pass)
+                repeat_passed=repeat_pass,fault_injection_passed=None if diagnostics else fault_pass,
+                diagnostics=diagnostics)
 
 
 if __name__=='__main__':

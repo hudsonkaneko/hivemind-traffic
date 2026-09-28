@@ -126,6 +126,31 @@ communication, or PPO training. The lead car is scripted. Earlier label-registra
 and curved-replay issues are not declared fixed by these tests. The ovrtx pipeline
 is not changed; this milestone uses Isaac's Kit runtime.
 
+Vehicles are simple 5 m box proxies rather than detailed car assets. They have no
+wheel or steering physics in this fixture. The sensor is mounted at the front
+bumper to make distance evaluation unambiguous.
+
+The green point-cloud overlay shows raw returns, including self/road hits.
+The controller's forward corridor is filtered separately, so seeing green points
+on the ego vehicle is not evidence that it is braking for its own body.
+
+The native sensor profile has angular/range measurement error settings. A stricter
+1 mm repeated-clearance check failed at 1.46 mm even though both following runs
+met every driving gate. This failure is retained, not relabelled a pass.
+An explicitly separate `--ideal-sensor` diagnostic disables configured angular
+standard deviations and range accuracy noise. It does not make the native noisy
+profile deterministic or validate robustness to other noise distributions.
+
+```text
+.venv\Scripts\python.exe experiments/run_live_lidar_suite.py --diagnostics --gui-last
+.venv\Scripts\python.exe scripts/report_live_lidar.py outputs/live_lidar/suite-YOUR_TIMESTAMP.json
+```
+
+The diagnostic batch repeats the ordinary stop and runs two ideal-sensor following
+cases. The report re-audits every scan and compares repeated trajectories. The
+original suite's overall report intentionally fails when its stricter repeat
+gate fails, even if all individual driving cases pass.
+
 Next development should tackle continuous-motion synchronization and robust
 perception, then physical steering/dynamics or policy training against a fixed
 observation contract. Keep those separate from proving this small baseline works.

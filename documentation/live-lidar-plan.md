@@ -26,6 +26,14 @@ and gap, and 0.001 m/s for speed (declared before the first following case).
 Raw sensor timestamps need not be identical because sensor and traffic clocks
 are separate. Compare the state/control trajectory at each traffic step.
 
+Diagnostic amendment after the first repeated native-profile pair: the maximum
+clearance difference was 0.00146484375 m, failing the original 0.001 m gate.
+The original failure remains reported. The profile has azimuthErrorStd=0.015 deg
+and rangeAccuracyM=0.02 m. Run two additional 25 s following cases with an explicit
+`--ideal-sensor` flag setting angular standard deviations and range accuracy to
+zero. Keep the original 0.001 tolerance for this separate diagnostic; do not
+replace the original noisy-profile runs or silently relax the gate.
+
 Sensor mount is the ego front bumper at z=1 m, world Z up, metres, +X road.
 SUMO front-bumper x/y maps directly to USD x/y; yaw=90-angle. The central
 forward corridor excludes self geometry behind the bumper and ground below

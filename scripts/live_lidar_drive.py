@@ -26,6 +26,7 @@ def main():
     p.add_argument('--seconds',type=float,default=25.)
     p.add_argument('--seed',type=int,default=42)
     p.add_argument('--fault-step',type=int,default=-1)
+    p.add_argument('--ideal-sensor',action='store_true',help='Diagnostic only: disable configured angular/range noise')
     args=p.parse_args()
     if not all(np.isfinite(v) and v>0 for v in [args.speed,args.gap,args.seconds]): p.error('positive finite speed/gap/seconds required')
     if args.speed>12 or args.gap>100 or args.seconds>40: p.error('This validated small-road fixture supports speed<=12, gap<=100, seconds<=40')
@@ -37,7 +38,7 @@ def main():
     run=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'-'+args.mode+'-'+uuid.uuid4().hex[:6]
     out=ROOT/'outputs/live_lidar'/run;out.mkdir(parents=True)
     (out/'source').mkdir()
-    files=['scripts/live_lidar_drive.py','traffic/lidar_control.py','traffic/live_lidar_sumo.py',
+    files=['scripts/live_lidar_drive.py','traffic/lidar_control.py','traffic/live_lidar_sumo.py','traffic/live_runtime.py',
            'scenarios/live_lidar/scenario.sumocfg','scenarios/single_vehicle/network.net.xml']
     for f in files: shutil.copyfile(ROOT/f,out/'source'/Path(f).name)
     def git(*a): return subprocess.check_output(['git',*a],cwd=ROOT,text=True).strip()
@@ -93,6 +94,11 @@ def main():
             from isaacsim.core.experimental.utils.app import enable_extension
             enable_extension('isaacsim.sensors.rtx.nodes')
         lidar=Lidar.create('/World/Vehicles/ego/Lidar',config='Example_Rotary',translations=np.array([0,0,1.]),aux_output_level='FULL')
+        if args.ideal_sensor:
+            for name in ['azimuthErrorStd','elevationErrorStd','rangeAccuracyM']:
+                attribute=lidar.prims[0].GetAttribute('omni:sensor:Core:'+name)
+                if not attribute or not attribute.Set(0.):
+                    raise RuntimeError('Cannot configure diagnostic sensor attribute '+name)
         sensor=LidarSensor(lidar,annotators=[])
         manifest['sensor_attributes']={a.GetName():str(a.Get()) for a in lidar.prims[0].GetAttributes() if a.GetName().startswith('omni:sensor')}
         manifest['isaac_version']=next((f.read_text().strip() for f in [Path(sys.executable).parent.parent.parent/'VERSION'] if f.exists()),'unknown')

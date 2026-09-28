@@ -27,6 +27,11 @@ def test_invalid_arrays_rejected():
     with pytest.raises(ValueError): forward_clearance([1],[1,2],[1],[64])
 
 
+@pytest.mark.parametrize('dt', [0,-1,float('nan'),float('inf')])
+def test_invalid_control_interval_rejected(dt):
+    with pytest.raises(ValueError):target_speed(Clearance(80,True,20),8,dt=dt)
+
+
 def test_self_and_side_returns_excluded():
     az=np.full(2000,180.);el=np.zeros(2000);r=np.full(2000,2.)
     az[:1000]=90.
