@@ -21,6 +21,13 @@ from traffic.lidar_avoidance import AvoidancePlanner, road_points, body_bounds, 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--gui',action='store_true')
+    p.add_argument('--realtime',action='store_true',help='Experimental continuous RTX acquisition, avoidance only')
+    p.add_argument('--unpaced',action='store_true',help='Measure maximum throughput without wall-clock pacing')
+    p.add_argument('--dropout-step',type=int,default=-1,help='Realtime: stop accepting scans from this control step')
+    p.add_argument('--world-motion',choices=['COMPENSATED','NONCOMPENSATED'],default='NONCOMPENSATED',help='Realtime RTX coordinate diagnostic')
+    p.add_argument('--sensor-quality',choices=['native','demo'],default='demo',help='Realtime: demo uses 32 emitters and 0.5-degree horizontal sampling')
+    p.add_argument('--capture-preview',action='store_true',help='Realtime GUI: save three preview frames (adds recording overhead)')
+    p.add_argument('--gc-mode',choices=['normal','deferred'],default='deferred',help='Realtime: defer cyclic GC for bounded <=60 second run; restore afterward')
     p.add_argument('--mode',choices=['stop','follow','avoid'],default='stop')
     p.add_argument('--blocked-lane',action='store_true',help='Avoidance test: stationary obstacle in the adjacent lane')
     p.add_argument('--speed',type=float,default=8.)
@@ -32,7 +39,8 @@ def main():
     args=p.parse_args()
     if args.blocked_lane and args.mode!='avoid': p.error('--blocked-lane requires --mode avoid')
     if not all(np.isfinite(v) and v>0 for v in [args.speed,args.gap,args.seconds]): p.error('positive finite speed/gap/seconds required')
-    if args.speed>12 or args.gap>100 or args.seconds>40: p.error('This validated small-road fixture supports speed<=12, gap<=100, seconds<=40')
+    if args.speed>12 or args.gap>100 or args.seconds>(60 if args.realtime else 40): p.error('Fixture limits: speed<=12, gap<=100, seconds<=40 (60 realtime)')
+    if args.realtime and args.mode!='avoid': p.error('--realtime currently requires --mode avoid')
     binary=find_sumo()
     # SUMO ships portable pure-Python TraCI/sumolib; do not mix venv binary packages.
     sys.path.append(str(binary.parent.parent/'tools'))
@@ -43,12 +51,14 @@ def main():
     (out/'source').mkdir()
     files=['scripts/live_lidar_drive.py','traffic/lidar_control.py','traffic/lidar_avoidance.py','traffic/live_lidar_sumo.py','traffic/live_runtime.py',
            'scenarios/live_lidar/scenario.sumocfg','scenarios/single_vehicle/network.net.xml']
+    if args.realtime: files+=['traffic/realtime_lidar.py','scripts/audit_realtime_lidar.py']
     for f in files: shutil.copyfile(ROOT/f,out/'source'/Path(f).name)
     def git(*a): return subprocess.check_output(['git',*a],cwd=ROOT,text=True).strip()
     manifest=dict(run=run,status='running',config=vars(args),python=sys.version,traci=traci.__file__,
         sumo_version=subprocess.check_output([str(binary),'--version'],text=True).splitlines()[0],
         git_commit=git('rev-parse','HEAD'),git_status=git('status','--porcelain'),
         gpu=subprocess.check_output(['nvidia-smi','--query-gpu=name,driver_version','--format=csv,noheader'],text=True).strip(),
+        command=[sys.executable,*sys.argv],
         timing='SUMO 0.1s lockstep; poses held during fresh RTX acquisition; distinct sensor clock',
         authority='SUMO kinematics; lidar clearance controls ego speed; no PPO or physics steering')
     (out/'working-tree.patch').write_text(git('diff','HEAD'))
@@ -105,6 +115,18 @@ def main():
             from isaacsim.core.experimental.utils.app import enable_extension
             enable_extension('isaacsim.sensors.rtx.nodes')
         lidar=Lidar.create('/World/Vehicles/ego/Lidar',config='Example_Rotary',translations=np.array([0,0,1.]),aux_output_level='FULL')
+        if args.realtime:
+            if args.sensor_quality=='demo':
+                prim=lidar.prims[0]
+                for attribute in prim.GetAttributes():
+                    if attribute.GetName().startswith('omni:sensor:Core:emitterState:s001:'):
+                        value=attribute.Get()
+                        if hasattr(value,'__len__') and len(value)==128: attribute.Set(value[:32])
+                prim.GetAttribute('omni:sensor:Core:numberOfEmitters').Set(32)
+                prim.GetAttribute('omni:sensor:Core:patternFiringRateHz').Set(7200.)
+            for name,value in [('elementsCoordsType','CARTESIAN'),('outputFrameOfReference','WORLD'),('outputMotionCompensationState',args.world_motion)]:
+                if not lidar.prims[0].GetAttribute('omni:sensor:Core:'+name).Set(value):
+                    raise RuntimeError('Could not configure '+name)
         if args.ideal_sensor:
             for name in ['azimuthErrorStd','elevationErrorStd','rangeAccuracyM']:
                 attribute=lidar.prims[0].GetAttribute('omni:sensor:Core:'+name)
@@ -115,6 +137,10 @@ def main():
         manifest['isaac_version']=next((f.read_text().strip() for f in [Path(sys.executable).parent.parent.parent/'VERSION'] if f.exists()),'unknown')
         (out/'manifest.json').write_text(json.dumps(manifest,indent=2))
         timeline=omni.timeline.get_timeline_interface();timeline.set_target_framerate(60)
+        if args.realtime:
+            from isaacsim.core.rendering_manager import RenderingManager
+            RenderingManager.set_dt(1/30)
+            timeline.set_play_every_frame(True)
         timeline.set_end_time(3600);timeline.set_looping(False)
         latest={};callback_errors=[]
         class Capture(rep.Writer):
@@ -128,6 +154,13 @@ def main():
                         if raw is None: continue
                         g=parse_generic_model_output_data(raw)
                         if not g.numElements: continue
+                        if args.realtime:
+                            if str(g.elementsCoordsType).split('.')[-1]!='CARTESIAN' or str(g.frameOfReference).split('.')[-1]!='WORLD' or str(g.motionCompensationState).split('.')[-1]!=args.world_motion:
+                                raise RuntimeError('Expected compensated Cartesian world output')
+                            latest.clear();latest.update(timestamp=int(g.timestampNs),xyz=np.column_stack((g.x,g.y,g.z)),flags=np.array(g.flags),offset=np.array(g.timeOffsetNs),
+                                start_position=np.array(g.frameStart.posM),end_position=np.array(g.frameEnd.posM),
+                                frame_start=int(g.frameStart.timestampNs),frame_end=int(g.frameEnd.timestampNs),received_wall=time.perf_counter())
+                            continue
                         if not str(g.elementsCoordsType).endswith('SPHERICAL') or not str(g.frameOfReference).endswith('SENSOR'):
                             raise RuntimeError('Unexpected lidar coordinate format')
                         latest.clear();latest.update(timestamp=int(g.timestampNs),az=np.array(g.x),el=np.array(g.y),
@@ -142,8 +175,28 @@ def main():
             window=ui.Window('Live lidar control',width=430,height=150)
             with window.frame: label=ui.Label('Starting sensor...',word_wrap=True)
         timeline.play()
+        if args.realtime:
+            from traffic.realtime_lidar import run_realtime
+            manifest['timing']='30 Hz render interpolation; 10 Hz SUMO/control; WORLD RTX packets; explicit sensor/traffic epoch; wall pacing'
+            (out/'manifest.json').write_text(json.dumps(manifest,indent=2))
+            def pose(vehicles):
+                for vid,v in vehicles.items():
+                    transforms[vid].Set(Gf.Vec3d(v['x'],v['y'],0))
+                    rotations[vid].Set(90-v['angle'])
+            def display(ego,text):
+                if args.gui:
+                    set_camera_view(eye=np.array([ego['x']-15,-24,15]),target=np.array([ego['x']+15,-4.8,0]))
+                    label.text=text
+            summary=run_realtime(app,timeline,traffic,latest,callback_errors,planner,pose,display,args,out,obstacles,rows)
+            sensor.detach_writer('Capture')
+            if args.gui: sensor.detach_writer('draw-point-cloud')
+            timeline.stop()
+            manifest['status']='passed' if summary['passed'] else 'failed'
+            return 0 if summary['passed'] else 1
         previous_stamp=-1
+        loop_started=time.monotonic()
         for step in range(round(args.seconds/.1)):
+            step_started=time.monotonic()
             if not app.is_running(): raise RuntimeError('Viewer closed before completion')
             ego=state['vehicles']['ego']
             for vid,v in state['vehicles'].items():
@@ -154,6 +207,7 @@ def main():
             # Drain two full rotary periods after pose edit before accepting a scan.
             # SUMO remains frozen; do not use a scan spanning old and new poses.
             epoch=timeline.get_current_time()
+            scan_started=time.monotonic()
             acquired=False
             for frame in range(36):
                 app.update()
@@ -168,6 +222,7 @@ def main():
                 # No traffic step is allowed without a valid acquisition. Freeze and fail closed.
                 raise RuntimeError('Fresh complete lidar scan timed out; SUMO held stationary')
             s=latest;previous_stamp=s['timestamp']
+            control_started=time.monotonic()
             clearance=forward_clearance(s['az'],s['el'],s['ranges'],s['flags'])
             fresh=step!=args.fault_step
             requested,reason=target_speed(clearance,ego['speed'],cruise=args.speed,fresh=fresh)
@@ -179,8 +234,11 @@ def main():
             # Truth is computed only after the controller decision, solely for evaluation.
             true_gap=(wall_x-ego['x']) if args.mode!='follow' else state['vehicles']['lead']['x']-5-ego['x']
             measurement_error=abs(clearance.distance-true_gap) if not planner else None
+            save_started=time.monotonic()
             np.savez_compressed(out/f'scan_{step:04d}.npz',**{k:s[k] for k in ['timestamp','az','el','ranges','flags','offset']})
+            traffic_started=time.monotonic()
             before=state['time'];state=traffic.step(requested,decision.lane_request if decision else None)
+            traffic_finished=time.monotonic()
             if abs(state['time']-before-.1)>1e-8: raise RuntimeError('SUMO step mismatch')
             after=state['vehicles']['ego']
             post_gap=(wall_x-after['x']) if args.mode!='follow' else state['vehicles']['lead']['x']-5-after['x']
@@ -197,6 +255,9 @@ def main():
                     lidar_distance=decision.clearance,obstacle_end_x=wall_x+4,
                     obstacle_gap=min(rectangle_gap(swept,o) for o in obstacles))
             rows.append(row)
+            row['profile_seconds']=dict(pose=scan_started-step_started,acquisition=control_started-scan_started,
+                control=save_started-control_started,scan_save=traffic_started-save_started,traci=traffic_finished-traffic_started)
+            row['render_updates']=frame+1
             # Preserve completed steps even if a native renderer crash bypasses finally.
             with (out/'telemetry.jsonl').open('a') as trace:
                 trace.write(json.dumps(row)+'\n')
@@ -224,6 +285,9 @@ def main():
                 limitation='Static obstacles only; lidar occupancy plus known lane map; SUMO lane-change kinematics')
             passed=summary['passed']
         manifest['status']='passed' if passed else 'failed'
+        summary['loop_wall_seconds']=time.monotonic()-loop_started
+        summary['loop_real_time_factor']=len(rows)*.1/summary['loop_wall_seconds']
+        summary['profile_totals_seconds']={key:sum(r['profile_seconds'][key] for r in rows) for key in rows[0]['profile_seconds']}
     except BaseException as e:
         import traceback;traceback.print_exc();manifest.update(status='failed',error=repr(e))
     finally:
