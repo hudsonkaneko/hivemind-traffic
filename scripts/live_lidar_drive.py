@@ -156,7 +156,7 @@ def main():
                         if not g.numElements: continue
                         if args.realtime:
                             if str(g.elementsCoordsType).split('.')[-1]!='CARTESIAN' or str(g.frameOfReference).split('.')[-1]!='WORLD' or str(g.motionCompensationState).split('.')[-1]!=args.world_motion:
-                                raise RuntimeError('Expected compensated Cartesian world output')
+                                raise RuntimeError('Expected requested Cartesian world output mode')
                             latest.clear();latest.update(timestamp=int(g.timestampNs),xyz=np.column_stack((g.x,g.y,g.z)),flags=np.array(g.flags),offset=np.array(g.timeOffsetNs),
                                 start_position=np.array(g.frameStart.posM),end_position=np.array(g.frameEnd.posM),
                                 frame_start=int(g.frameStart.timestampNs),frame_end=int(g.frameEnd.timestampNs),received_wall=time.perf_counter())
