@@ -18,7 +18,7 @@ def interpolate(a,b,f):
     return result
 
 
-def packet_points(packet,ego,now,max_age=.25):
+def packet_points(packet,ego,now,max_age=.25,*,require_scan_complete=False):
     """Validate timing and filter WORLD points. No obstacle truth is accepted."""
     xyz=np.asarray(packet['xyz']); flags=np.asarray(packet['flags'])
     if xyz.ndim!=2 or xyz.shape[1]!=3 or flags.shape!=(len(xyz),):
@@ -30,6 +30,13 @@ def packet_points(packet,ego,now,max_age=.25):
     # GMO frameStart/frameEnd describe the latest render interval, not the
     # accumulated rotary scan. Per-ray offsets define the acquisition window.
     timing=(.09<=end-start<=.11 and -.002<=now-end and -.002<=age<=max_age)
+    if require_scan_complete:
+        # Full-scan metadata, not the span of successful hits, establishes
+        # completion. A narrow road can leave entire angular sectors empty.
+        age=now-packet['timestamp']*1e-9
+        timing=(packet.get('scan_complete')==1 and np.isfinite(offsets).all()
+                and offsets.min()>=0 and offsets.max()<=110_000_000
+                and -.002<=now-end and -.002<=age<=max_age)
     valid=np.isfinite(xyz).all(axis=1)&((flags&64)!=0)
     healthy=bool(timing and len(xyz)>=1000 and valid.sum()>=20)
     yaw=math.radians(90-ego['angle'])

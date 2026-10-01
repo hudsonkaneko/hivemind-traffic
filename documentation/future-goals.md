@@ -10,6 +10,8 @@ Status: **Backlog — implement in a future integration milestone.** Some conven
 
 Progress note (2026-09-28): the [continuous lidar milestone](realtime-lidar.md) now records sensor/traffic clock origins, acquisition windows, pose conventions, and freshness bounds per run. This is a partial implementation of timing and pose requirements, not completion of the shared identity/lifecycle/schema contract below.
 
+Progress note (2026-09-30): the [two-car cooperation milestone](cooperative-lidar.md) adds receiver-local tracking timestamps and a versioned V2V envelope with episode, sender, sequence and expiry checks. Independent sensor ownership and batched stepping are validation requirements. This is still a fixed two-car fixture, not the reusable spawn/removal/reset and live/replay contract described below; consult its results report for runtime verification.
+
 ### Purpose
 
 Define a reusable, versioned agreement for how SUMO/TraCI, controller/environment code, Isaac Sim/OpenUSD, recorded datasets, and the future ovrtx viewer exchange information. Each component must interpret the same record the same way. A visually plausible scene is not sufficient evidence of correct spacing, timing, or identity.

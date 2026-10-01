@@ -10,6 +10,8 @@ The opt-in `--realtime` path instead advances SUMO once per 0.1-second control i
 
 The original launcher without `--realtime` retains sample-and-hold behavior.
 
+The newer [two-car cooperation demo](cooperative-lidar.md) builds on this baseline with independent sensors, local tracking and timestamped messages.
+
 ## Timing contract
 
 Each run saves `timing-contract.json`, raw packets, vehicle states, receipt ages, timing profiles, and a source snapshot. After stationary sensor warm-up:
@@ -19,6 +21,8 @@ Each run saves `timing-contract.json`, raw packets, vehicle states, receipt ages
 The traffic and sensor clocks must remain aligned within 0.1 ms. The renderer tick is 1/30 second; the controller and SUMO step are 0.1 second. Isaac's `RenderingManager.set_dt` configures the run loop and timeline coherently before play. Setting only the timeline target FPS was insufficient on this installed runtime.
 
 **A scan is not a render frame.** The GMO frameStart/frameEnd metadata in our captures describes the latest render interval, whereas a complete rotary scan covers approximately 0.1 second. Acquisition times come from `timestampNs + timeOffsetNs` for each ray. Complete scan duration must be 90–110 ms, with no future rays beyond a 2 ms numeric tolerance. Oldest-ray simulation age and wall-clock packet receipt age each have a 250 ms limit. Stale observations request braking and no new lane change; a maneuver already accepted by SUMO may continue laterally.
+
+Correction from the two-car milestone (2026-09-30): the 90–110 ms check above is the older fixture's return-span proxy, not a reliable general test of scan completion. Missing hits can shorten the span even when acquisition completed. The fleet path instead validates the native `scanComplete` flag and configured scan period and uses a conservative scan-origin age; the legacy caller remains unchanged for reproducibility.
 
 ## Sensor and motion choices
 
