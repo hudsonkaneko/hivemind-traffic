@@ -30,6 +30,15 @@ Isaac's bundled Python.
 Vehicle asset iterations belong in `vehicles/sim_ready/<vehicle-name>/v01`, etc.
 Archived experiment results remain historical evidence, not fresh validation.
 
+## Active development: hybrid vehicle physics
+
+The [current 20-step roadmap](documentation/hybrid-roadmap.md) assigns evaluated
+cars to Isaac/PhysX and lightweight background traffic to SUMO. This is a staged
+migration: the existing demos remain SUMO-driven, and the separate one-car
+physics foundation does not yet include LiDAR or a traffic bridge.
+See the [documentation index](documentation/README.md) and
+[development workflow](documentation/workflow.md) for changes, evidence and review.
+
 ## Scaling foundations and workstation measurements
 
 The October 3 capacity study separates cheap SUMO background traffic from
