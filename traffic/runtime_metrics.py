@@ -5,6 +5,26 @@ import math
 import time
 
 
+def refresh_sensor_packets(update, packets, *, frames=6, clock=time.perf_counter):
+    """Refresh stationary scans after expensive setup, before setting epochs.
+
+    Does not advance SUMO or relax the normal runtime sensor freshness check.
+    """
+    if type(frames) is not int or frames < 1 or not packets:
+        raise ValueError('Positive frame count and sensor packet sinks required')
+    previous = {vid: packet.get('timestamp', -1) for vid, packet in packets.items()}
+    for _ in range(frames):
+        update()
+    now = clock()
+    ages = {}
+    for vid, packet in packets.items():
+        age = now - packet.get('received_wall', -math.inf)
+        if packet.get('timestamp', -1) <= previous[vid] or not -.001 <= age <= .25:
+            raise RuntimeError('Sensor failed post-setup refresh: ' + vid)
+        ages[vid] = age
+    return dict(frames=frames, receipt_ages_s=ages)
+
+
 class MemorySampler:
     """Sample process RSS at simulation-time intervals without collecting objects."""
 

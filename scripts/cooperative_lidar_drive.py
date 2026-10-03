@@ -19,7 +19,7 @@ from traffic.realtime_lidar import interpolate, packet_points
 from traffic.lidar_avoidance import body_bounds, rectangle_gap
 from traffic.lidar_tracking import LidarTracker
 from traffic.cooperative_control import CooperativeController
-from traffic.runtime_metrics import MemorySampler, ScopedGC
+from traffic.runtime_metrics import MemorySampler, ScopedGC, refresh_sensor_packets
 from traffic.v2v import V2VBus, IntentPayload, ObservedObstacle
 
 
@@ -167,6 +167,13 @@ def main():
         manifest['sensor_ids']=contract['sensor_ids']
         (out/'manifest.json').write_text(json.dumps(manifest,indent=2))
         with ScopedGC(args.gc_mode) as gc_profile:
+            # GC preparation can age the last stationary scan past the 250 ms
+            # failsafe bound. Refresh scans without advancing SUMO, then anchor
+            # both clocks. This fixes setup ordering, not sensor nondeterminism.
+            contract['post_setup_refresh']=refresh_sensor_packets(app.update,packets)
+            if errors:raise RuntimeError(errors[-1])
+            sensor_origin=timeline.get_current_time()
+            contract['sensor_origin']=sensor_origin
             started=time.perf_counter();contract['loop_wall_origin']=started
             (out/'timing-contract.json').write_text(json.dumps(contract,indent=2))
             for step in range(round(args.seconds*10)):

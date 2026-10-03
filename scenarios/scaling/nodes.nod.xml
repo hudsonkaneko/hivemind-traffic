@@ -1,0 +1,4 @@
+<nodes>
+  <node id="start" x="0" y="0" type="priority"/>
+  <node id="finish" x="8000" y="0" type="priority"/>
+</nodes>

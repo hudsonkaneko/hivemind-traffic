@@ -8,6 +8,12 @@ Recorded: 2026-09-28. Requested by the user based on the supplied photo titled â
 
 Status: **Backlog â€” implement in a future integration milestone.** Some conventions may already exist in individual components; audit and consolidate them rather than assuming they are absent or consistently enforced.
 
+Progress note (2026-10-03): [state contract v1](state-contract-v1.md) now provides
+validated vehicle/snapshot types, reversible episode/vehicle prim IDs, rotated
+front-bumper-to-center conversion, and reset/spawn/removal/order checks. The
+capacity-study producer and JSON fixture use it. Existing live/replay adapters
+are not yet all migrated; the original completion criteria still apply.
+
 Progress note (2026-09-28): the [continuous lidar milestone](realtime-lidar.md) now records sensor/traffic clock origins, acquisition windows, pose conventions, and freshness bounds per run. This is a partial implementation of timing and pose requirements, not completion of the shared identity/lifecycle/schema contract below.
 
 Progress note (2026-09-30): the [two-car cooperation milestone](cooperative-lidar.md) adds receiver-local tracking timestamps and a versioned V2V envelope with episode, sender, sequence and expiry checks. Independent sensor ownership and batched stepping are validation requirements. This is still a fixed two-car fixture, not the reusable spawn/removal/reset and live/replay contract described below; consult its results report for runtime verification.

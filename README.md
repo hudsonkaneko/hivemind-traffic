@@ -30,6 +30,15 @@ Isaac's bundled Python.
 Vehicle asset iterations belong in `vehicles/sim_ready/<vehicle-name>/v01`, etc.
 Archived experiment results remain historical evidence, not fresh validation.
 
+## Scaling foundations and workstation measurements
+
+The October 3 capacity study separates cheap SUMO background traffic from
+expensive independent RTX sensors. See the [implementation walkthrough](documentation/scaling-foundations.md),
+[measured capacity report](documentation/capacity-results.md), and
+[shared state contract](documentation/state-contract-v1.md).
+The current integrated cooperative demo still has two cars; the larger-fleet
+probes are isolated capacity tests, not proof of large-fleet autonomy.
+
 Multi-agent highway traffic simulation combining SUMO/TraCI, PettingZoo, PPO communication policies, and OpenUSD/Isaac Sim visualization.
 
 ## Repository boundaries

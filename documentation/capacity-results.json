@@ -1,0 +1,1415 @@
+{
+  "hardware": {
+    "cpu": "AMD Ryzen 9 9950X3D 16-Core Processor",
+    "os_physical_memory_GiB": 61.61208724975586,
+    "gpu": {
+      "wall": 102931.8050105,
+      "name": "NVIDIA GeForce RTX 5070",
+      "total_mib": 12227.0,
+      "used_mib": 2997.0,
+      "utilization_percent": 1.0,
+      "driver": "610.74"
+    }
+  },
+  "traffic_groups": [
+    {
+      "vehicles": 2,
+      "mode": "sumo_native",
+      "control_hz": 2,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 0.2498816650283211,
+      "min_p95_step_ms": 0.24215999292209728,
+      "max_p95_step_ms": 0.26254500553477556,
+      "mean_step_ms": 0.16490133333718404,
+      "mean_real_time_factor": 607.1372132521067,
+      "mean_cpu_cores_at_real_time": 0.0018229166666666667,
+      "max_sampled_process_RSS_MiB": 66.42578125
+    },
+    {
+      "vehicles": 2,
+      "mode": "scripted_speed",
+      "control_hz": 2,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 0.264473326387815,
+      "min_p95_step_ms": 0.2605199864774475,
+      "max_p95_step_ms": 0.2684300030523444,
+      "mean_step_ms": 0.16996000000896552,
+      "mean_real_time_factor": 588.965878828494,
+      "mean_cpu_cores_at_real_time": 0.0018229166666666667,
+      "max_sampled_process_RSS_MiB": 66.9765625
+    },
+    {
+      "vehicles": 2,
+      "mode": "scripted_speed",
+      "control_hz": 10,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 0.28516166275949206,
+      "min_p95_step_ms": 0.2666199914528987,
+      "max_p95_step_ms": 0.2959299970825668,
+      "mean_step_ms": 0.18631450002430938,
+      "mean_real_time_factor": 536.9832244485838,
+      "mean_cpu_cores_at_real_time": 0.00234375,
+      "max_sampled_process_RSS_MiB": 67.19140625
+    },
+    {
+      "vehicles": 20,
+      "mode": "sumo_native",
+      "control_hz": 2,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 0.5972716671143037,
+      "min_p95_step_ms": 0.578964998567244,
+      "max_p95_step_ms": 0.6233100008103064,
+      "mean_step_ms": 0.5119551666575717,
+      "mean_real_time_factor": 195.34146278117507,
+      "mean_cpu_cores_at_real_time": 0.005208333333333333,
+      "max_sampled_process_RSS_MiB": 67.36328125
+    },
+    {
+      "vehicles": 20,
+      "mode": "scripted_speed",
+      "control_hz": 2,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 0.7627366615148882,
+      "min_p95_step_ms": 0.7300749995920341,
+      "max_p95_step_ms": 0.811414989584591,
+      "mean_step_ms": 0.5627263333493223,
+      "mean_real_time_factor": 177.99253570684846,
+      "mean_cpu_cores_at_real_time": 0.005989583333333334,
+      "max_sampled_process_RSS_MiB": 68.046875
+    },
+    {
+      "vehicles": 20,
+      "mode": "scripted_speed",
+      "control_hz": 10,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 0.8516799976253726,
+      "min_p95_step_ms": 0.8384349930565803,
+      "max_p95_step_ms": 0.8627350056485739,
+      "mean_step_ms": 0.7182746666755216,
+      "mean_real_time_factor": 139.22335552546545,
+      "mean_cpu_cores_at_real_time": 0.008333333333333333,
+      "max_sampled_process_RSS_MiB": 68.35546875
+    },
+    {
+      "vehicles": 50,
+      "mode": "sumo_native",
+      "control_hz": 2,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 1.1241516602846482,
+      "min_p95_step_ms": 1.1061599914683027,
+      "max_p95_step_ms": 1.1364249876351091,
+      "mean_step_ms": 1.0329943333393505,
+      "mean_real_time_factor": 96.80662527067994,
+      "mean_cpu_cores_at_real_time": 0.011458333333333333,
+      "max_sampled_process_RSS_MiB": 68.50390625
+    },
+    {
+      "vehicles": 50,
+      "mode": "scripted_speed",
+      "control_hz": 2,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 1.593793328599228,
+      "min_p95_step_ms": 1.5746949960885102,
+      "max_p95_step_ms": 1.605084991751937,
+      "mean_step_ms": 1.1407644999902307,
+      "mean_real_time_factor": 87.66055766134917,
+      "mean_cpu_cores_at_real_time": 0.011979166666666667,
+      "max_sampled_process_RSS_MiB": 68.82421875
+    },
+    {
+      "vehicles": 50,
+      "mode": "scripted_speed",
+      "control_hz": 10,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 2.658443329467748,
+      "min_p95_step_ms": 1.9397749914787705,
+      "max_p95_step_ms": 3.1332900027337014,
+      "mean_step_ms": 2.1857631666352972,
+      "mean_real_time_factor": 47.30324513239132,
+      "mean_cpu_cores_at_real_time": 0.024479166666666666,
+      "max_sampled_process_RSS_MiB": 68.78515625
+    },
+    {
+      "vehicles": 100,
+      "mode": "sumo_native",
+      "control_hz": 2,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 3.1399999978020787,
+      "min_p95_step_ms": 3.0779350068769418,
+      "max_p95_step_ms": 3.2047649932792406,
+      "mean_step_ms": 2.9159824999806006,
+      "mean_real_time_factor": 34.30132253886898,
+      "mean_cpu_cores_at_real_time": 0.029166666666666667,
+      "max_sampled_process_RSS_MiB": 69.30078125
+    },
+    {
+      "vehicles": 100,
+      "mode": "scripted_speed",
+      "control_hz": 2,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 4.584464997363587,
+      "min_p95_step_ms": 4.221324995887699,
+      "max_p95_step_ms": 4.887719998077954,
+      "mean_step_ms": 3.1627323333426225,
+      "mean_real_time_factor": 31.671286990716368,
+      "mean_cpu_cores_at_real_time": 0.03359375,
+      "max_sampled_process_RSS_MiB": 69.859375
+    },
+    {
+      "vehicles": 100,
+      "mode": "scripted_speed",
+      "control_hz": 10,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 4.909035001522473,
+      "min_p95_step_ms": 4.693635004514362,
+      "max_p95_step_ms": 5.051429996092338,
+      "mean_step_ms": 4.5511733333114535,
+      "mean_real_time_factor": 21.979740463123388,
+      "mean_cpu_cores_at_real_time": 0.05,
+      "max_sampled_process_RSS_MiB": 70.08203125
+    },
+    {
+      "vehicles": 200,
+      "mode": "sumo_native",
+      "control_hz": 2,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 5.886874999123393,
+      "min_p95_step_ms": 5.864899994776351,
+      "max_p95_step_ms": 5.920800002058968,
+      "mean_step_ms": 5.507559333345853,
+      "mean_real_time_factor": 18.15743050825668,
+      "mean_cpu_cores_at_real_time": 0.05598958333333333,
+      "max_sampled_process_RSS_MiB": 70.75390625
+    },
+    {
+      "vehicles": 200,
+      "mode": "scripted_speed",
+      "control_hz": 2,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 8.770701666071545,
+      "min_p95_step_ms": 8.743554999819025,
+      "max_p95_step_ms": 8.78628500722698,
+      "mean_step_ms": 6.170922666642582,
+      "mean_real_time_factor": 16.205605910742225,
+      "mean_cpu_cores_at_real_time": 0.062239583333333334,
+      "max_sampled_process_RSS_MiB": 70.88671875
+    },
+    {
+      "vehicles": 200,
+      "mode": "scripted_speed",
+      "control_hz": 10,
+      "n": 3,
+      "passed": 3,
+      "mean_p95_step_ms": 8.944943334548347,
+      "min_p95_step_ms": 8.900584995717509,
+      "max_p95_step_ms": 9.011760004796088,
+      "mean_step_ms": 8.143648666664376,
+      "mean_real_time_factor": 12.349934544914834,
+      "mean_cpu_cores_at_real_time": 0.0890625,
+      "max_sampled_process_RSS_MiB": 70.8125
+    }
+  ],
+  "rtx_cases": [
+    {
+      "path": "outputs\\rtx_scaling\\20261003T082837Z-07383bdd",
+      "passed": true,
+      "cars": 2,
+      "sensors": 0,
+      "frames": 240,
+      "wall_seconds": 0.41434670001035556,
+      "represented_seconds": 8.0,
+      "real_time_factor": 19.30750262956133,
+      "p50_frame_ms": 1.7127499959315173,
+      "p95_frame_ms": 1.9366900021850595,
+      "max_frame_ms": 3.853500005789101,
+      "updates_per_second": 579.2250788868399,
+      "resources_before": {
+        "available": true,
+        "rss_bytes": 5617745920,
+        "peak_rss_bytes": 5617745920,
+        "cpu_seconds": 22.03125
+      },
+      "resources_after": {
+        "available": true,
+        "rss_bytes": 5587197952,
+        "peak_rss_bytes": 5618925568,
+        "cpu_seconds": 29.5
+      },
+      "sensor_new_packets": {},
+      "latest_point_counts": {},
+      "errors": [],
+      "caveat": "Unpaced sensor/readback and moving-box probe; no controller, SUMO, GUI, physics or scan recording",
+      "exit_code": 0,
+      "stop_reason": null,
+      "gpu_peak_mib": 4539.0,
+      "gpu_peak_utilization": 8.0,
+      "gpu_scope": "whole GPU incl desktop, sampled every ~1s",
+      "gpu_monitor_errors": []
+    },
+    {
+      "path": "outputs\\rtx_scaling\\20261003T082848Z-f83d687b",
+      "passed": true,
+      "cars": 2,
+      "sensors": 1,
+      "frames": 240,
+      "wall_seconds": 2.05270699999528,
+      "represented_seconds": 8.0,
+      "real_time_factor": 3.8972926969208928,
+      "p50_frame_ms": 8.704399995622225,
+      "p95_frame_ms": 9.955620003893273,
+      "max_frame_ms": 11.469599994597957,
+      "updates_per_second": 116.91878090762678,
+      "resources_before": {
+        "available": true,
+        "rss_bytes": 5764915200,
+        "peak_rss_bytes": 5764915200,
+        "cpu_seconds": 26.53125
+      },
+      "resources_after": {
+        "available": true,
+        "rss_bytes": 5768437760,
+        "peak_rss_bytes": 5768998912,
+        "cpu_seconds": 48.109375
+      },
+      "sensor_new_packets": {
+        "0": 80
+      },
+      "latest_point_counts": {
+        "0": 3355
+      },
+      "errors": [],
+      "caveat": "Unpaced sensor/readback and moving-box probe; no controller, SUMO, GUI, physics or scan recording",
+      "exit_code": 0,
+      "stop_reason": null,
+      "gpu_peak_mib": 4523.0,
+      "gpu_peak_utilization": 12.0,
+      "gpu_scope": "whole GPU incl desktop, sampled every ~1s",
+      "gpu_monitor_errors": []
+    },
+    {
+      "path": "outputs\\rtx_scaling\\20261003T082901Z-9e562d7b",
+      "passed": true,
+      "cars": 2,
+      "sensors": 2,
+      "frames": 240,
+      "wall_seconds": 3.1274911999935284,
+      "represented_seconds": 8.0,
+      "real_time_factor": 2.557960834555363,
+      "p50_frame_ms": 12.827300000935793,
+      "p95_frame_ms": 15.785635002248455,
+      "max_frame_ms": 17.129200001363643,
+      "updates_per_second": 76.7388250366609,
+      "resources_before": {
+        "available": true,
+        "rss_bytes": 5929410560,
+        "peak_rss_bytes": 5929410560,
+        "cpu_seconds": 28.015625
+      },
+      "resources_after": {
+        "available": true,
+        "rss_bytes": 5929902080,
+        "peak_rss_bytes": 5934813184,
+        "cpu_seconds": 56.921875
+      },
+      "sensor_new_packets": {
+        "0": 80,
+        "1": 80
+      },
+      "latest_point_counts": {
+        "0": 3355,
+        "1": 3371
+      },
+      "errors": [],
+      "caveat": "Unpaced sensor/readback and moving-box probe; no controller, SUMO, GUI, physics or scan recording",
+      "exit_code": 0,
+      "stop_reason": null,
+      "gpu_peak_mib": 4521.0,
+      "gpu_peak_utilization": 15.0,
+      "gpu_scope": "whole GPU incl desktop, sampled every ~1s",
+      "gpu_monitor_errors": []
+    },
+    {
+      "path": "outputs\\rtx_scaling\\20261003T082916Z-a3e660cc",
+      "passed": true,
+      "cars": 20,
+      "sensors": 2,
+      "frames": 240,
+      "wall_seconds": 3.3065821999916807,
+      "represented_seconds": 8.0,
+      "real_time_factor": 2.419416641152949,
+      "p50_frame_ms": 13.978149996546563,
+      "p95_frame_ms": 16.090950000216253,
+      "max_frame_ms": 17.535100007080473,
+      "updates_per_second": 72.58249923458847,
+      "resources_before": {
+        "available": true,
+        "rss_bytes": 5926232064,
+        "peak_rss_bytes": 5926232064,
+        "cpu_seconds": 26.546875
+      },
+      "resources_after": {
+        "available": true,
+        "rss_bytes": 5930127360,
+        "peak_rss_bytes": 5931012096,
+        "cpu_seconds": 59.59375
+      },
+      "sensor_new_packets": {
+        "0": 80,
+        "1": 80
+      },
+      "latest_point_counts": {
+        "0": 3720,
+        "1": 3720
+      },
+      "errors": [],
+      "caveat": "Unpaced sensor/readback and moving-box probe; no controller, SUMO, GUI, physics or scan recording",
+      "exit_code": 0,
+      "stop_reason": null,
+      "gpu_peak_mib": 4520.0,
+      "gpu_peak_utilization": 16.0,
+      "gpu_scope": "whole GPU incl desktop, sampled every ~1s",
+      "gpu_monitor_errors": []
+    },
+    {
+      "path": "outputs\\rtx_scaling\\20261003T082932Z-f55bc40f",
+      "passed": true,
+      "cars": 50,
+      "sensors": 2,
+      "frames": 240,
+      "wall_seconds": 3.6384649999963585,
+      "represented_seconds": 8.0,
+      "real_time_factor": 2.1987294092448346,
+      "p50_frame_ms": 15.173500003584195,
+      "p95_frame_ms": 16.776659998868126,
+      "max_frame_ms": 19.34899999469053,
+      "updates_per_second": 65.96188227734504,
+      "resources_before": {
+        "available": true,
+        "rss_bytes": 5923774464,
+        "peak_rss_bytes": 5923774464,
+        "cpu_seconds": 29.25
+      },
+      "resources_after": {
+        "available": true,
+        "rss_bytes": 5921148928,
+        "peak_rss_bytes": 5926932480,
+        "cpu_seconds": 59.0
+      },
+      "sensor_new_packets": {
+        "0": 80,
+        "1": 80
+      },
+      "latest_point_counts": {
+        "0": 3723,
+        "1": 3724
+      },
+      "errors": [],
+      "caveat": "Unpaced sensor/readback and moving-box probe; no controller, SUMO, GUI, physics or scan recording",
+      "exit_code": 0,
+      "stop_reason": null,
+      "gpu_peak_mib": 4520.0,
+      "gpu_peak_utilization": 14.0,
+      "gpu_scope": "whole GPU incl desktop, sampled every ~1s",
+      "gpu_monitor_errors": []
+    },
+    {
+      "path": "outputs\\rtx_scaling\\20261003T082947Z-01d5355b",
+      "passed": true,
+      "cars": 20,
+      "sensors": 4,
+      "frames": 240,
+      "wall_seconds": 5.702625799996895,
+      "represented_seconds": 8.0,
+      "real_time_factor": 1.402862519929741,
+      "p50_frame_ms": 23.24640000006184,
+      "p95_frame_ms": 30.43558499848586,
+      "max_frame_ms": 38.77910001028795,
+      "updates_per_second": 42.08587559789223,
+      "resources_before": {
+        "available": true,
+        "rss_bytes": 6236717056,
+        "peak_rss_bytes": 6236717056,
+        "cpu_seconds": 33.203125
+      },
+      "resources_after": {
+        "available": true,
+        "rss_bytes": 6232887296,
+        "peak_rss_bytes": 6239076352,
+        "cpu_seconds": 82.46875
+      },
+      "sensor_new_packets": {
+        "0": 80,
+        "1": 80,
+        "2": 80,
+        "3": 80
+      },
+      "latest_point_counts": {
+        "0": 3718,
+        "1": 3719,
+        "2": 3794,
+        "3": 3795
+      },
+      "errors": [],
+      "caveat": "Unpaced sensor/readback and moving-box probe; no controller, SUMO, GUI, physics or scan recording",
+      "exit_code": 0,
+      "stop_reason": null,
+      "gpu_peak_mib": 4759.0,
+      "gpu_peak_utilization": 18.0,
+      "gpu_scope": "whole GPU incl desktop, sampled every ~1s",
+      "gpu_monitor_errors": []
+    },
+    {
+      "path": "outputs\\rtx_scaling\\20261003T083005Z-ab92e2cd",
+      "passed": true,
+      "cars": 2,
+      "sensors": 2,
+      "frames": 240,
+      "wall_seconds": 3.2749559999938356,
+      "represented_seconds": 8.0,
+      "real_time_factor": 2.4427809106488936,
+      "p50_frame_ms": 13.497200001438614,
+      "p95_frame_ms": 16.65040500665782,
+      "max_frame_ms": 18.4750000044005,
+      "updates_per_second": 73.28342731946681,
+      "resources_before": {
+        "available": true,
+        "rss_bytes": 5917933568,
+        "peak_rss_bytes": 5917933568,
+        "cpu_seconds": 28.140625
+      },
+      "resources_after": {
+        "available": true,
+        "rss_bytes": 5918760960,
+        "peak_rss_bytes": 5924261888,
+        "cpu_seconds": 57.796875
+      },
+      "sensor_new_packets": {
+        "0": 80,
+        "1": 80
+      },
+      "latest_point_counts": {
+        "0": 3353,
+        "1": 3369
+      },
+      "errors": [],
+      "caveat": "Unpaced sensor/readback and moving-box probe; no controller, SUMO, GUI, physics or scan recording",
+      "exit_code": 0,
+      "stop_reason": null,
+      "gpu_peak_mib": 4499.0,
+      "gpu_peak_utilization": 15.0,
+      "gpu_scope": "whole GPU incl desktop, sampled every ~1s",
+      "gpu_monitor_errors": []
+    }
+  ],
+  "rtx_smoke_cases": [
+    {
+      "path": "outputs\\rtx_scaling\\20261003T082720Z-bfd3c383",
+      "passed": true,
+      "cars": 2,
+      "sensors": 1,
+      "frames": 240,
+      "wall_seconds": 3.036674100003438,
+      "represented_seconds": 8.0,
+      "real_time_factor": 2.6344611692084254,
+      "p50_frame_ms": 10.621149995131418,
+      "p95_frame_ms": 22.495360001630612,
+      "max_frame_ms": 26.400999995530583,
+      "updates_per_second": 79.03383507625276,
+      "resources_before": {
+        "available": true,
+        "rss_bytes": 5769543680,
+        "peak_rss_bytes": 5784174592,
+        "cpu_seconds": 30.953125
+      },
+      "resources_after": {
+        "available": true,
+        "rss_bytes": 5764763648,
+        "peak_rss_bytes": 5794123776,
+        "cpu_seconds": 56.09375
+      },
+      "sensor_new_packets": {
+        "0": 81
+      },
+      "latest_point_counts": {
+        "0": 3346
+      },
+      "errors": [],
+      "caveat": "Unpaced sensor/readback and moving-box probe; no controller, SUMO, GUI, physics or scan recording",
+      "exit_code": 0,
+      "stop_reason": null,
+      "gpu_peak_mib": 7343.0,
+      "gpu_peak_utilization": 85.0,
+      "gpu_scope": "whole GPU incl desktop, sampled every ~1s",
+      "gpu_monitor_errors": []
+    }
+  ],
+  "refresh_cases": [
+    {
+      "seconds": 25,
+      "exit_code": 0,
+      "timed_out": false,
+      "command": [
+        "C:\\isaacsim\\python.bat",
+        "C:\\Users\\hudso\\Documents\\highwaysim\\scripts\\cooperative_lidar_drive.py",
+        "--seconds",
+        "25",
+        "--seed",
+        "42",
+        "--comm",
+        "ideal"
+      ],
+      "passed": true,
+      "path": "outputs\\cooperative_lidar\\20261003T083245Z-ideal-5fac60",
+      "audit": {
+        "run": "20261003T083245Z-ideal-5fac60",
+        "integrity_passed": true,
+        "passed": true,
+        "behavior_passed": true,
+        "safe": true,
+        "steps": 250,
+        "traffic_seconds": 25.0,
+        "loop_real_time_factor": 0.9999664931225516,
+        "deadline_misses_over_100ms": 0,
+        "min_vehicle_gap_m": 1.2145781160551157,
+        "min_obstacle_gap_m": 1.124276646629899,
+        "speed_interventions": 0,
+        "final_phases": {
+          "ego": "complete",
+          "peer": "cruise"
+        },
+        "communication": {
+          "sent_messages": 500,
+          "sent_bytes": 149447,
+          "delivered_messages": 499,
+          "delivered_bytes": 149206,
+          "dropped_messages": 0,
+          "dropped_bytes": 0,
+          "expired_messages": 0,
+          "expired_bytes": 0,
+          "invalid_messages": 0,
+          "duplicate_messages": 0,
+          "out_of_order_messages": 0
+        },
+        "sensor_counts": {
+          "ego": 250,
+          "peer": 250
+        },
+        "peer_visibility_passed": true,
+        "initial_peer_returns": {
+          "ego": 121,
+          "peer": 1295
+        }
+      },
+      "first_fresh": {
+        "ego": true,
+        "peer": true
+      },
+      "first_receipt_age_s": {
+        "ego": 0.04627679999975953,
+        "peer": 0.04597890000150073
+      },
+      "summary": {
+        "passed": true,
+        "behavior_passed": true,
+        "steps": 250,
+        "traffic_seconds": 25.0,
+        "loop_wall_seconds": 25.000837700004922,
+        "loop_real_time_factor": 0.9999664931225516,
+        "deadline_misses_over_100ms": 0,
+        "min_vehicle_gap_m": 1.2145781160551157,
+        "min_obstacle_gap_m": 1.124276646629899,
+        "final_phases": {
+          "ego": "complete",
+          "peer": "cruise"
+        },
+        "progress_m": {
+          "ego": 145.62293500264028,
+          "peer": 116.6299999999994
+        },
+        "speed_interventions": 0,
+        "communication": {
+          "sent_messages": 500,
+          "sent_bytes": 149447,
+          "delivered_messages": 499,
+          "delivered_bytes": 149206,
+          "dropped_messages": 0,
+          "dropped_bytes": 0,
+          "expired_messages": 0,
+          "expired_bytes": 0,
+          "invalid_messages": 0,
+          "duplicate_messages": 0,
+          "out_of_order_messages": 0
+        },
+        "memory": {
+          "available": true,
+          "error": null,
+          "samples": [
+            {
+              "simulation_time": 0.0,
+              "wall_time": 103190.8193333,
+              "rss_bytes": 5949317120,
+              "sampling_seconds": 1.930000144056976e-05,
+              "private_bytes": 10133168128
+            },
+            {
+              "simulation_time": 10.0,
+              "wall_time": 103201.0881297,
+              "rss_bytes": 5949935616,
+              "sampling_seconds": 3.809999907389283e-05,
+              "private_bytes": 10055696384
+            },
+            {
+              "simulation_time": 20.0,
+              "wall_time": 103211.088161,
+              "rss_bytes": 5954068480,
+              "sampling_seconds": 2.7699992642737925e-05,
+              "private_bytes": 10060587008
+            },
+            {
+              "simulation_time": 25.0,
+              "wall_time": 103216.092496,
+              "rss_bytes": 5955739648,
+              "sampling_seconds": 3.7300007534213364e-05,
+              "private_bytes": 10062290944
+            }
+          ],
+          "rss_start_bytes": 5949317120,
+          "rss_end_bytes": 5955739648,
+          "rss_delta_bytes": 6422528,
+          "rss_peak_bytes": 5955739648,
+          "last_half_slope_bytes_per_second": 334233.6
+        },
+        "gc": {
+          "requested_mode": "deferred",
+          "effective_mode": "deferred",
+          "note": null,
+          "collection_count": 1,
+          "total_collection_seconds": 0.17631679998885375,
+          "events": [
+            {
+              "start": 103190.8202236,
+              "end": 103190.9965404,
+              "generation": 2,
+              "duration_seconds": 0.17631679998885375
+            }
+          ]
+        },
+        "limitations": "Two-car scripted static-box fixture; no learned policy or vehicle physics; bounded <=120s",
+        "safe": true,
+        "completed": true,
+        "duration_sim_s": 25.0,
+        "duration_wall_s": 25.000837700004922,
+        "real_time_factor": 0.9999664931225516,
+        "late_over_100ms": 0,
+        "merge_time": 3.3,
+        "completion_time": 19.599999999999998,
+        "communications": {
+          "sent_messages": 500,
+          "sent_bytes": 149447,
+          "delivered_messages": 499,
+          "delivered_bytes": 149206,
+          "dropped_messages": 0,
+          "dropped_bytes": 0,
+          "expired_messages": 0,
+          "expired_bytes": 0,
+          "invalid_messages": 0,
+          "duplicate_messages": 0,
+          "out_of_order_messages": 0
+        },
+        "final_phase": {
+          "ego": "complete",
+          "peer": "cruise"
+        },
+        "sensor_counts": {
+          "ego": 250,
+          "peer": 250
+        },
+        "max_sensor_pose_error_m": {
+          "ego": 0.20114168326716172,
+          "peer": 0.20000732421835465
+        },
+        "peer_visibility_passed": true,
+        "initial_peer_returns": {
+          "ego": 121,
+          "peer": 1295
+        }
+      }
+    },
+    {
+      "seconds": 25,
+      "exit_code": 0,
+      "timed_out": false,
+      "command": [
+        "C:\\isaacsim\\python.bat",
+        "C:\\Users\\hudso\\Documents\\highwaysim\\scripts\\cooperative_lidar_drive.py",
+        "--seconds",
+        "25",
+        "--seed",
+        "42",
+        "--comm",
+        "ideal"
+      ],
+      "passed": true,
+      "path": "outputs\\cooperative_lidar\\20261003T083324Z-ideal-07faa9",
+      "audit": {
+        "run": "20261003T083324Z-ideal-07faa9",
+        "integrity_passed": true,
+        "passed": true,
+        "behavior_passed": true,
+        "safe": true,
+        "steps": 250,
+        "traffic_seconds": 25.0,
+        "loop_real_time_factor": 0.9999649532280376,
+        "deadline_misses_over_100ms": 0,
+        "min_vehicle_gap_m": 1.2145781160551157,
+        "min_obstacle_gap_m": 1.1242695709939143,
+        "speed_interventions": 0,
+        "final_phases": {
+          "ego": "complete",
+          "peer": "cruise"
+        },
+        "communication": {
+          "sent_messages": 500,
+          "sent_bytes": 149692,
+          "delivered_messages": 499,
+          "delivered_bytes": 149451,
+          "dropped_messages": 0,
+          "dropped_bytes": 0,
+          "expired_messages": 0,
+          "expired_bytes": 0,
+          "invalid_messages": 0,
+          "duplicate_messages": 0,
+          "out_of_order_messages": 0
+        },
+        "sensor_counts": {
+          "ego": 250,
+          "peer": 250
+        },
+        "peer_visibility_passed": true,
+        "initial_peer_returns": {
+          "ego": 121,
+          "peer": 1295
+        }
+      },
+      "first_fresh": {
+        "ego": true,
+        "peer": true
+      },
+      "first_receipt_age_s": {
+        "ego": 0.042528100006165914,
+        "peer": 0.04222820000723004
+      },
+      "summary": {
+        "passed": true,
+        "behavior_passed": true,
+        "steps": 250,
+        "traffic_seconds": 25.0,
+        "loop_wall_seconds": 25.000876200007042,
+        "loop_real_time_factor": 0.9999649532280376,
+        "deadline_misses_over_100ms": 0,
+        "min_vehicle_gap_m": 1.2145781160551157,
+        "min_obstacle_gap_m": 1.1242695709939143,
+        "final_phases": {
+          "ego": "complete",
+          "peer": "cruise"
+        },
+        "progress_m": {
+          "ego": 145.62401785044517,
+          "peer": 116.66999999999939
+        },
+        "speed_interventions": 0,
+        "communication": {
+          "sent_messages": 500,
+          "sent_bytes": 149692,
+          "delivered_messages": 499,
+          "delivered_bytes": 149451,
+          "dropped_messages": 0,
+          "dropped_bytes": 0,
+          "expired_messages": 0,
+          "expired_bytes": 0,
+          "invalid_messages": 0,
+          "duplicate_messages": 0,
+          "out_of_order_messages": 0
+        },
+        "memory": {
+          "available": true,
+          "error": null,
+          "samples": [
+            {
+              "simulation_time": 0.0,
+              "wall_time": 103229.8653741,
+              "rss_bytes": 5956407296,
+              "sampling_seconds": 2.2199994418770075e-05,
+              "private_bytes": 9858641920
+            },
+            {
+              "simulation_time": 10.0,
+              "wall_time": 103240.1387218,
+              "rss_bytes": 5963603968,
+              "sampling_seconds": 3.7699996028095484e-05,
+              "private_bytes": 9779519488
+            },
+            {
+              "simulation_time": 20.0,
+              "wall_time": 103250.1385372,
+              "rss_bytes": 5968084992,
+              "sampling_seconds": 2.9800008633174002e-05,
+              "private_bytes": 9784442880
+            },
+            {
+              "simulation_time": 25.0,
+              "wall_time": 103255.1431919,
+              "rss_bytes": 5969666048,
+              "sampling_seconds": 3.880000440403819e-05,
+              "private_bytes": 9786040320
+            }
+          ],
+          "rss_start_bytes": 5956407296,
+          "rss_end_bytes": 5969666048,
+          "rss_delta_bytes": 13258752,
+          "rss_peak_bytes": 5969666048,
+          "last_half_slope_bytes_per_second": 316211.2
+        },
+        "gc": {
+          "requested_mode": "deferred",
+          "effective_mode": "deferred",
+          "note": null,
+          "collection_count": 1,
+          "total_collection_seconds": 0.17575450000003912,
+          "events": [
+            {
+              "start": 103229.8714541,
+              "end": 103230.0472086,
+              "generation": 2,
+              "duration_seconds": 0.17575450000003912
+            }
+          ]
+        },
+        "limitations": "Two-car scripted static-box fixture; no learned policy or vehicle physics; bounded <=120s",
+        "safe": true,
+        "completed": true,
+        "duration_sim_s": 25.0,
+        "duration_wall_s": 25.000876200007042,
+        "real_time_factor": 0.9999649532280376,
+        "late_over_100ms": 0,
+        "merge_time": 3.3,
+        "completion_time": 19.0,
+        "communications": {
+          "sent_messages": 500,
+          "sent_bytes": 149692,
+          "delivered_messages": 499,
+          "delivered_bytes": 149451,
+          "dropped_messages": 0,
+          "dropped_bytes": 0,
+          "expired_messages": 0,
+          "expired_bytes": 0,
+          "invalid_messages": 0,
+          "duplicate_messages": 0,
+          "out_of_order_messages": 0
+        },
+        "final_phase": {
+          "ego": "complete",
+          "peer": "cruise"
+        },
+        "sensor_counts": {
+          "ego": 250,
+          "peer": 250
+        },
+        "max_sensor_pose_error_m": {
+          "ego": 0.20114116042132307,
+          "peer": 0.20000488281210238
+        },
+        "peer_visibility_passed": true,
+        "initial_peer_returns": {
+          "ego": 121,
+          "peer": 1295
+        }
+      }
+    },
+    {
+      "seconds": 120,
+      "exit_code": 0,
+      "timed_out": false,
+      "command": [
+        "C:\\isaacsim\\python.bat",
+        "C:\\Users\\hudso\\Documents\\highwaysim\\scripts\\cooperative_lidar_drive.py",
+        "--seconds",
+        "120",
+        "--seed",
+        "42",
+        "--comm",
+        "ideal"
+      ],
+      "passed": true,
+      "path": "outputs\\cooperative_lidar\\20261003T083403Z-ideal-841c43",
+      "audit": {
+        "run": "20261003T083403Z-ideal-841c43",
+        "integrity_passed": true,
+        "passed": true,
+        "behavior_passed": true,
+        "safe": true,
+        "steps": 1200,
+        "traffic_seconds": 120.0,
+        "loop_real_time_factor": 0.9999927850520508,
+        "deadline_misses_over_100ms": 0,
+        "min_vehicle_gap_m": 1.2145781160551157,
+        "min_obstacle_gap_m": 1.123620916819796,
+        "speed_interventions": 0,
+        "final_phases": {
+          "ego": "complete",
+          "peer": "cruise"
+        },
+        "communication": {
+          "sent_messages": 2400,
+          "sent_bytes": 715494,
+          "delivered_messages": 2399,
+          "delivered_bytes": 715250,
+          "dropped_messages": 0,
+          "dropped_bytes": 0,
+          "expired_messages": 0,
+          "expired_bytes": 0,
+          "invalid_messages": 0,
+          "duplicate_messages": 0,
+          "out_of_order_messages": 0
+        },
+        "sensor_counts": {
+          "ego": 1197,
+          "peer": 1197
+        },
+        "peer_visibility_passed": true,
+        "initial_peer_returns": {
+          "ego": 120,
+          "peer": 1297
+        }
+      },
+      "first_fresh": {
+        "ego": true,
+        "peer": true
+      },
+      "first_receipt_age_s": {
+        "ego": 0.041798399994149804,
+        "peer": 0.0414195000048494
+      },
+      "summary": {
+        "passed": true,
+        "behavior_passed": true,
+        "steps": 1200,
+        "traffic_seconds": 120.0,
+        "loop_wall_seconds": 120.00086580000061,
+        "loop_real_time_factor": 0.9999927850520508,
+        "deadline_misses_over_100ms": 0,
+        "min_vehicle_gap_m": 1.2145781160551157,
+        "min_obstacle_gap_m": 1.123620916819796,
+        "final_phases": {
+          "ego": "complete",
+          "peer": "cruise"
+        },
+        "progress_m": {
+          "ego": 715.4606809783379,
+          "peer": 686.5300000000046
+        },
+        "speed_interventions": 0,
+        "communication": {
+          "sent_messages": 2400,
+          "sent_bytes": 715494,
+          "delivered_messages": 2399,
+          "delivered_bytes": 715250,
+          "dropped_messages": 0,
+          "dropped_bytes": 0,
+          "expired_messages": 0,
+          "expired_bytes": 0,
+          "invalid_messages": 0,
+          "duplicate_messages": 0,
+          "out_of_order_messages": 0
+        },
+        "memory": {
+          "available": true,
+          "error": null,
+          "samples": [
+            {
+              "simulation_time": 0.0,
+              "wall_time": 103268.9124555,
+              "rss_bytes": 5967872000,
+              "sampling_seconds": 2.0699997548945248e-05,
+              "private_bytes": 9866309632
+            },
+            {
+              "simulation_time": 10.0,
+              "wall_time": 103279.1910548,
+              "rss_bytes": 5972430848,
+              "sampling_seconds": 3.890000516548753e-05,
+              "private_bytes": 9786363904
+            },
+            {
+              "simulation_time": 20.0,
+              "wall_time": 103289.1910881,
+              "rss_bytes": 5977268224,
+              "sampling_seconds": 2.6700014132075012e-05,
+              "private_bytes": 9791729664
+            },
+            {
+              "simulation_time": 30.0,
+              "wall_time": 103299.1910939,
+              "rss_bytes": 5980610560,
+              "sampling_seconds": 3.0499999411404133e-05,
+              "private_bytes": 9794637824
+            },
+            {
+              "simulation_time": 40.0,
+              "wall_time": 103309.1911688,
+              "rss_bytes": 5983129600,
+              "sampling_seconds": 3.270000161137432e-05,
+              "private_bytes": 9797029888
+            },
+            {
+              "simulation_time": 50.0,
+              "wall_time": 103319.1912075,
+              "rss_bytes": 5986504704,
+              "sampling_seconds": 3.169999399688095e-05,
+              "private_bytes": 9800400896
+            },
+            {
+              "simulation_time": 60.0,
+              "wall_time": 103329.1909467,
+              "rss_bytes": 5989900288,
+              "sampling_seconds": 3.310000465717167e-05,
+              "private_bytes": 9803665408
+            },
+            {
+              "simulation_time": 70.0,
+              "wall_time": 103339.1908246,
+              "rss_bytes": 5993312256,
+              "sampling_seconds": 3.1800009310245514e-05,
+              "private_bytes": 9807032320
+            },
+            {
+              "simulation_time": 80.0,
+              "wall_time": 103349.1911275,
+              "rss_bytes": 5996916736,
+              "sampling_seconds": 3.060000017285347e-05,
+              "private_bytes": 9810866176
+            },
+            {
+              "simulation_time": 90.0,
+              "wall_time": 103359.1909972,
+              "rss_bytes": 6000521216,
+              "sampling_seconds": 2.9999995604157448e-05,
+              "private_bytes": 9814450176
+            },
+            {
+              "simulation_time": 100.0,
+              "wall_time": 103369.1909057,
+              "rss_bytes": 6004051968,
+              "sampling_seconds": 3.1100003980100155e-05,
+              "private_bytes": 9818091520
+            },
+            {
+              "simulation_time": 110.0,
+              "wall_time": 103379.1910678,
+              "rss_bytes": 6007623680,
+              "sampling_seconds": 3.680000372696668e-05,
+              "private_bytes": 9821728768
+            },
+            {
+              "simulation_time": 120.0,
+              "wall_time": 103389.1908759,
+              "rss_bytes": 6011068416,
+              "sampling_seconds": 3.239999932702631e-05,
+              "private_bytes": 9825267712
+            },
+            {
+              "simulation_time": 120.0,
+              "wall_time": 103389.215437,
+              "rss_bytes": 6011068416,
+              "sampling_seconds": 5.429999146144837e-05,
+              "private_bytes": 9825267712
+            }
+          ],
+          "rss_start_bytes": 5967872000,
+          "rss_end_bytes": 6011068416,
+          "rss_delta_bytes": 43196416,
+          "rss_peak_bytes": 6011068416,
+          "last_half_slope_bytes_per_second": 354129.88432055747
+        },
+        "gc": {
+          "requested_mode": "deferred",
+          "effective_mode": "deferred",
+          "note": null,
+          "collection_count": 1,
+          "total_collection_seconds": 0.18169399999896996,
+          "events": [
+            {
+              "start": 103268.9180063,
+              "end": 103269.0997003,
+              "generation": 2,
+              "duration_seconds": 0.18169399999896996
+            }
+          ]
+        },
+        "limitations": "Two-car scripted static-box fixture; no learned policy or vehicle physics; bounded <=120s",
+        "safe": true,
+        "completed": true,
+        "duration_sim_s": 120.0,
+        "duration_wall_s": 120.00086580000061,
+        "real_time_factor": 0.9999927850520508,
+        "late_over_100ms": 0,
+        "merge_time": 3.3,
+        "completion_time": 19.0,
+        "communications": {
+          "sent_messages": 2400,
+          "sent_bytes": 715494,
+          "delivered_messages": 2399,
+          "delivered_bytes": 715250,
+          "dropped_messages": 0,
+          "dropped_bytes": 0,
+          "expired_messages": 0,
+          "expired_bytes": 0,
+          "invalid_messages": 0,
+          "duplicate_messages": 0,
+          "out_of_order_messages": 0
+        },
+        "final_phase": {
+          "ego": "complete",
+          "peer": "cruise"
+        },
+        "sensor_counts": {
+          "ego": 1197,
+          "peer": 1197
+        },
+        "max_sensor_pose_error_m": {
+          "ego": 0.8000120330226209,
+          "peer": 0.8000195312529303
+        },
+        "peer_visibility_passed": true,
+        "initial_peer_returns": {
+          "ego": 120,
+          "peer": 1297
+        }
+      }
+    }
+  ],
+  "arithmetic_projections": {
+    "2": {
+      "all_lidar": {
+        "control_commands_per_second": 20.0,
+        "nominal_lidar_sample_opportunities_per_second": 460800.0,
+        "full_return_payload_MB_per_second": 9.216,
+        "full_return_payload_GB_per_hour": 33.1776,
+        "message_publications_per_second": 20.0,
+        "logical_receiver_deliveries_per_second": 20.0,
+        "logical_receiver_payload_MB_per_second": 0.006,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      },
+      "two_lidar": {
+        "control_commands_per_second": 20.0,
+        "nominal_lidar_sample_opportunities_per_second": 460800.0,
+        "full_return_payload_MB_per_second": 9.216,
+        "full_return_payload_GB_per_hour": 33.1776,
+        "message_publications_per_second": 20.0,
+        "logical_receiver_deliveries_per_second": 20.0,
+        "logical_receiver_payload_MB_per_second": 0.006,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      },
+      "eight_neighbors": {
+        "control_commands_per_second": 20.0,
+        "nominal_lidar_sample_opportunities_per_second": 460800.0,
+        "full_return_payload_MB_per_second": 9.216,
+        "full_return_payload_GB_per_hour": 33.1776,
+        "message_publications_per_second": 20.0,
+        "logical_receiver_deliveries_per_second": 20.0,
+        "logical_receiver_payload_MB_per_second": 0.006,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      }
+    },
+    "20": {
+      "all_lidar": {
+        "control_commands_per_second": 200.0,
+        "nominal_lidar_sample_opportunities_per_second": 4608000.0,
+        "full_return_payload_MB_per_second": 92.16,
+        "full_return_payload_GB_per_hour": 331.776,
+        "message_publications_per_second": 200.0,
+        "logical_receiver_deliveries_per_second": 3800.0,
+        "logical_receiver_payload_MB_per_second": 1.14,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      },
+      "two_lidar": {
+        "control_commands_per_second": 200.0,
+        "nominal_lidar_sample_opportunities_per_second": 460800.0,
+        "full_return_payload_MB_per_second": 9.216,
+        "full_return_payload_GB_per_hour": 33.1776,
+        "message_publications_per_second": 200.0,
+        "logical_receiver_deliveries_per_second": 3800.0,
+        "logical_receiver_payload_MB_per_second": 1.14,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      },
+      "eight_neighbors": {
+        "control_commands_per_second": 200.0,
+        "nominal_lidar_sample_opportunities_per_second": 460800.0,
+        "full_return_payload_MB_per_second": 9.216,
+        "full_return_payload_GB_per_hour": 33.1776,
+        "message_publications_per_second": 200.0,
+        "logical_receiver_deliveries_per_second": 1600.0,
+        "logical_receiver_payload_MB_per_second": 0.48,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      }
+    },
+    "50": {
+      "all_lidar": {
+        "control_commands_per_second": 500.0,
+        "nominal_lidar_sample_opportunities_per_second": 11520000.0,
+        "full_return_payload_MB_per_second": 230.4,
+        "full_return_payload_GB_per_hour": 829.44,
+        "message_publications_per_second": 500.0,
+        "logical_receiver_deliveries_per_second": 24500.0,
+        "logical_receiver_payload_MB_per_second": 7.35,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      },
+      "two_lidar": {
+        "control_commands_per_second": 500.0,
+        "nominal_lidar_sample_opportunities_per_second": 460800.0,
+        "full_return_payload_MB_per_second": 9.216,
+        "full_return_payload_GB_per_hour": 33.1776,
+        "message_publications_per_second": 500.0,
+        "logical_receiver_deliveries_per_second": 24500.0,
+        "logical_receiver_payload_MB_per_second": 7.35,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      },
+      "eight_neighbors": {
+        "control_commands_per_second": 500.0,
+        "nominal_lidar_sample_opportunities_per_second": 460800.0,
+        "full_return_payload_MB_per_second": 9.216,
+        "full_return_payload_GB_per_hour": 33.1776,
+        "message_publications_per_second": 500.0,
+        "logical_receiver_deliveries_per_second": 4000.0,
+        "logical_receiver_payload_MB_per_second": 1.2,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      }
+    },
+    "100": {
+      "all_lidar": {
+        "control_commands_per_second": 1000.0,
+        "nominal_lidar_sample_opportunities_per_second": 23040000.0,
+        "full_return_payload_MB_per_second": 460.8,
+        "full_return_payload_GB_per_hour": 1658.88,
+        "message_publications_per_second": 1000.0,
+        "logical_receiver_deliveries_per_second": 99000.0,
+        "logical_receiver_payload_MB_per_second": 29.7,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      },
+      "two_lidar": {
+        "control_commands_per_second": 1000.0,
+        "nominal_lidar_sample_opportunities_per_second": 460800.0,
+        "full_return_payload_MB_per_second": 9.216,
+        "full_return_payload_GB_per_hour": 33.1776,
+        "message_publications_per_second": 1000.0,
+        "logical_receiver_deliveries_per_second": 99000.0,
+        "logical_receiver_payload_MB_per_second": 29.7,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      },
+      "eight_neighbors": {
+        "control_commands_per_second": 1000.0,
+        "nominal_lidar_sample_opportunities_per_second": 460800.0,
+        "full_return_payload_MB_per_second": 9.216,
+        "full_return_payload_GB_per_hour": 33.1776,
+        "message_publications_per_second": 1000.0,
+        "logical_receiver_deliveries_per_second": 8000.0,
+        "logical_receiver_payload_MB_per_second": 2.4,
+        "assumptions": {
+          "one_sample_per_emitter_per_firing": true,
+          "full_returns": true,
+          "point_bytes": 20,
+          "message_bytes": 300,
+          "caveat": "Not measured ray hits, compressed disk use, physical network bandwidth or GPU load"
+        }
+      }
+    }
+  },
+  "traffic_suite": "outputs\\traffic_scaling_suites\\20261003T082422Z-2ddca072",
+  "rtx_suite": "outputs\\rtx_scaling_suites\\20261003T082837Z-f3c27406",
+  "traffic_repeat": {
+    "passed": true,
+    "cases": 45,
+    "repeat_path": "outputs\\traffic_scaling\\20261003T082526Z-3ba9beb7",
+    "repeat_matches": true
+  }
+}
