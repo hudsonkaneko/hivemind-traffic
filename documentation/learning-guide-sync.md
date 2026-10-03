@@ -2,6 +2,10 @@
 
 Last verified: October 3, 2026.
 
+Source milestone: commit `955e47d`, published on `codex/physics-vehicle-foundation`.
+[Pull request #1](https://github.com/hudsonkaneko/hivemind-traffic/pull/1) records
+the implementation, tests, evidence and remaining gates. `main` is unchanged.
+
 The [Google engineering and learning guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit)
 now contains:
 
