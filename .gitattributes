@@ -1,0 +1,2 @@
+# Historical source snapshots are evidence; preserve their exact bytes.
+documentation/runs/**/source/** -text

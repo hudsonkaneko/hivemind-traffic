@@ -115,9 +115,41 @@ not uploading installed runtimes or gigabytes of recorded sensor data.
 - A fresh bounded cooperative LiDAR check is recorded separately from historical
   long-duration performance evidence.
 
-Final test counts, hash totals, GPU-check results, and remote verification are
-recorded below when complete. Previous repeatability/timing/memory limitations
-remain unless a specific new test establishes otherwise.
+### Final local verification
+
+| Archived source | Compared files | Byte-identical | Intentionally different | Missing |
+| --- | ---: | ---: | ---: | ---: |
+| Previous highwaysim | 26,366 | 26,360 | 6 | 0 |
+| Older hivemind-traffic | 5,116 | 5,092 | 24 | 0 |
+| September 21 backup | 119 | 114 | 5 | 0 |
+
+All 31,601 comparisons have a corresponding active file. Differences are retained
+in the archive, not discarded. In the previous canonical workspace, the six
+content changes are the ignore rules, workspace instructions, root README,
+documentation index, location guide, and pytest temporary directory setting.
+Older checkout differences include the newer controllers and consolidated
+launcher configuration. Historical source snapshot line endings were restored
+exactly and protected with `.gitattributes` after Git checkout normalization.
+
+- **218 tests passed** in the combined traffic environment after consolidation.
+- Scripted and trained-PPO SUMO rollouts each ran for a 50-step budget.
+- SUMO, trained PPO, OVRTX, and cooperative launcher setup checks passed.
+- Fresh cooperative run: `20261003T003430Z-ideal-e3ccac` (UTC ID; October 2 local).
+  Completed 250 steps / 25 simulated seconds, real-time factor 0.999957,
+  zero delays over 100 ms, safe obstacle passage, ego complete and peer cruise.
+  The independent raw-evidence audit passed. This is a bounded headless check,
+  not a new long-duration or GUI performance certification.
+- An orphaned console remained after Isaac logged shutdown; its console was
+  closed separately. Behavior and evidence passed, but a clean wrapper exit
+  was not used as the proof of success.
+- Both `765d912` (old main) and `1f017d9` (live LiDAR) are ancestors of the
+  consolidation merge, `a6f081e`. Its tree deliberately retains the manually
+  reconciled union, rather than applying the old branch's scaffold-era deletions.
+- Historical pytest fixtures were preserved; new tests use
+  `outputs/pytest-current` instead of overwriting `outputs/pytest-live-lidar`.
+
+Previous repeatability/timing/memory limitations remain. Full physics, OVRTX
+rendering, and every historical training run were not rerun in this operation.
 
 ## Documentation synchronization
 

@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -36,15 +37,17 @@ def main():
         source = args.archive / name
         if not source.is_dir():
             raise FileNotFoundError(source)
-        rows = []
-        for rel, path in files(source):
+        def compare(item):
+            rel, path = item
             target = ROOT / rel
             original = digest(path)
             current = digest(target) if target.is_file() else None
-            rows.append({'path': rel, 'source_sha256': original,
+            return {'path': rel, 'source_sha256': original,
                          'active_sha256': current,
                          'status': 'missing' if current is None else
-                                   'identical' if original == current else 'different'})
+                                   'identical' if original == current else 'different'}
+        with ThreadPoolExecutor(max_workers=8) as pool:
+            rows = list(pool.map(compare, files(source)))
         counts = {key: sum(r['status'] == key for r in rows)
                   for key in ('identical', 'different', 'missing')}
         summary[name] = {'source': str(source), 'files': len(rows), **counts}
