@@ -1,0 +1,70 @@
+import json
+from pathlib import Path
+import numpy as np
+import pytest
+from scripts.analyze_lidar_lifecycle import verify_labels
+from scripts.lidar_lifecycle_analysis import analyze,summarize,visibility_at
+
+
+@pytest.mark.parametrize('time,expected',[(0.,False),(.999,False),(1.,True),(1.999,True),(2.,False),(2.999,False),(3.,True),(5.,True)])
+def test_explicit_visibility_schedule(time,expected):
+    assert visibility_at('lifecycle',time) == expected
+    assert visibility_at('always-visible',time) is True
+    assert visibility_at('initially-visible',time) == (True if time<1. else expected)
+
+CONFIG=json.loads((Path(__file__).resolve().parents[1]/'experiments/configs/lidar_lifecycle.json').read_text())
+
+
+def scan(time,label=True):
+    return dict(timestamp_ns=round((time+CONFIG['sensor_to_usd_offset_s'])*1e9),azimuth_deg=np.array([0.]),
+        elevation_deg=np.array([0.]),range_m=np.array([10.]),flags=np.array([64]),
+        target_label=np.array([label]),echo_id=np.array([0]))
+
+
+def test_lifecycle_phase_guard_and_geometry():
+    assert analyze(scan(.95),CONFIG,'lifecycle')['phase']=='transition_excluded'
+    assert analyze(scan(1.3),CONFIG,'lifecycle')['phase']=='visible_first'
+    assert analyze(scan(2.3),CONFIG,'lifecycle')['phase']=='hidden_again'
+    assert analyze(scan(3.3),CONFIG,'lifecycle')['max_m']==0
+
+
+def test_unknown_identity_remains_failure():
+    row=analyze(scan(1.3,False),CONFIG,'lifecycle')
+    assert row['identity_matches']==0 and row['max_m']==0
+    assert not summarize([row],CONFIG,'lifecycle')['passed']
+
+
+def test_empty_run_fails():
+    assert not summarize([],CONFIG,'always-visible')['passed']
+
+
+def test_initially_visible_keeps_later_negative_control():
+    assert analyze(scan(.3),CONFIG,'initially-visible')['target_visible'] is True
+    assert analyze(scan(2.3),CONFIG,'initially-visible')['target_visible'] is False
+    assert analyze(scan(3.3),CONFIG,'initially-visible')['target_visible'] is True
+    result=summarize([analyze(scan(2.3),CONFIG,'initially-visible')],CONFIG,'initially-visible')
+    assert not result['phases']['hidden_again']['geometry_passed']
+
+
+def test_valid_control_and_wrong_identity_gates():
+    rows=[dict(analyze(scan(.3+i*.1),CONFIG,'always-visible'),hits=100,identity_matches=100) for i in range(4)]
+    assert summarize(rows,CONFIG,'always-visible')['passed']
+    rows[0]['identity_matches']=0
+    assert not summarize(rows,CONFIG,'always-visible')['passed']
+
+
+def test_hidden_target_returns_are_not_accepted():
+    rows=[analyze(scan(.3+i*.1),CONFIG,'lifecycle') for i in range(4)]
+    result=summarize(rows,CONFIG,'lifecycle')
+    assert not result['phases']['hidden_initial']['geometry_passed']
+
+
+def test_labels_require_full_exact_id_and_path():
+    key=7+(3<<96)
+    raw=np.frombuffer(key.to_bytes(16,'little'),dtype=np.uint8).copy()
+    record=dict(object_id_raw=raw,target_label=np.array([True]))
+    verify_labels(record,{key:'/World/Target/Body'})
+    for mapping in [{},{7:'/World/Target/Body'},{key:'/World/Ego/Body'}]:
+        with pytest.raises(ValueError,match='exact renderer ID'):
+            verify_labels(record,mapping)
+    verify_labels(dict(record,target_label=np.array([False])),{})

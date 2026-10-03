@@ -1,0 +1,20 @@
+{
+  "protocol_version": 1,
+  "sensor_config": "Example_Rotary",
+  "ego_id": "agent_0",
+  "sensor_mount_m": [-2.5, 0.0, 1.8],
+  "fps": 60,
+  "duration_s": 48.3,
+  "scan_period_s": 0.1,
+  "sensor_to_usd_offset_s": 0.03333333333333333,
+  "warmup_scans": 3,
+  "range_p95_tolerance_m": 0.10,
+  "range_max_tolerance_m": 0.20,
+  "pose_tolerance_m": 0.05,
+  "min_identity_agreement": 0.99,
+  "min_evaluated_scans": 470,
+  "min_vehicle_rays": 1000,
+  "min_other_vehicles": 4,
+  "body_center_height_m": 0.65,
+  "body_height_m": 1.1
+}

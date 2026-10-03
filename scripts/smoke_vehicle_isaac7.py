@@ -20,6 +20,7 @@ WHEELS = ["Wheel__Knuckle__Front_Left", "Wheel__Knuckle__Front_Right",
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dt", type=float, default=1 / 120)
+    parser.add_argument("--bounded-drives", action="store_true")
     args = parser.parse_args()
     author = Stage("openusd").create_stage()
     try:
@@ -59,6 +60,16 @@ def main():
                   "gains": [a.numpy().tolist() for a in car.get_dof_gains()],
                   "link_names": list(car.link_names)}
         (output / "initial-health.json").write_text(json.dumps(health, indent=2))
+        if args.bounded_drives:
+            stiffness, damping = [a.numpy().copy() for a in car.get_dof_gains()]
+            for index, name in enumerate(car.dof_names):
+                if name in WHEELS:
+                    damping[0, index] = 100.0
+                elif name.startswith("Knuckle__"):
+                    stiffness[0, index] = 100.0
+                    damping[0, index] = 10.0
+            car.set_dof_gains(wp.array(stiffness, dtype=wp.float32, device="cpu"),
+                              wp.array(damping, dtype=wp.float32, device="cpu"))
         # Preserve authored joint poses for this importer validation; changing
         # suspension joints independently can violate the asset's closed loops.
         for step in range(round(1 / args.dt)):

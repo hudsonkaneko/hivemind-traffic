@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<edges>
+    <edge id="curve_0" from="start" to="bend_a" numLanes="2" speed="27.0" priority="2"
+          shape="0,0 75,0 150,15 225,65 300,90"/>
+    <edge id="curve_1" from="bend_a" to="bend_b" numLanes="2" speed="25.0" priority="2"
+          shape="300,90 375,115 450,0 525,-115 600,-90"/>
+    <edge id="curve_2" from="bend_b" to="finish" numLanes="2" speed="27.0" priority="2"
+          shape="600,-90 675,-65 750,-15 825,0 900,0"/>
+</edges>

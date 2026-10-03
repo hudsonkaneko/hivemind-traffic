@@ -1,6 +1,6 @@
 # Project locations
 
-Updated: 2026-09-18
+Updated: 2026-10-02
 
 ## Canonical project root
 
@@ -23,7 +23,15 @@ The Highway Sim launch scripts refer to these locations. They are dependencies, 
 
 ## Legacy compatibility path
 
-`C:\Users\hudso\Documents\ChatGPT\Highway Sim` remains only so older commands and saved references continue to work. Its project entries point to the canonical project. New Codex tasks and terminal sessions should be opened directly in `C:\Users\hudso\Documents\highwaysim`.
+The old `C:\Users\hudso\Documents\ChatGPT\Highway Sim` compatibility entries
+and `C:\Users\hudso\Documents\hivemind-traffic` checkout have been retired into
+`C:\Users\hudso\Documents\expired_highwaysim`. Do not use those paths to run or
+edit the project. The empty legacy directory may remain while an application
+holds it open. Open new tasks and terminals directly in the canonical root.
+
+The canonical checkout's remote remains
+`https://github.com/hudsonkaneko/hivemind-traffic.git`.
+See [the consolidation record](consolidation-2026-10-02.md).
 
 ## Folder ownership
 
@@ -35,4 +43,3 @@ The Highway Sim launch scripts refer to these locations. They are dependencies, 
 | `outputs\` | Policies, checkpoints, evaluation results, and captured media |
 | `logs\` | Installation, simulation, training, and validation logs |
 | `isaacsim-research\` | Research notes and supporting experiments |
-

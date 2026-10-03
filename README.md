@@ -1,5 +1,35 @@
 # Hivemind Traffic
 
+## One active workspace
+
+The canonical local checkout is `C:\Users\hudso\Documents\highwaysim`.
+Its GitHub repository is **hudsonkaneko/hivemind-traffic**; the different local
+folder name does not mean a second project. Older working folders are archived
+under `C:\Users\hudso\Documents\expired_highwaysim` and are not active workspaces.
+
+This checkout consolidates the original SUMO/PettingZoo/PPO and replay work with
+the newer live LiDAR, obstacle-avoidance, real-time, and two-car V2V experiments.
+See [consolidation and verification](documentation/consolidation-2026-10-02.md)
+for preserved versions, environment separation, evidence, and limitations.
+
+From the repository root, using a configured Python environment:
+
+```text
+python -m hivemind demo sumo --check
+python -m hivemind demo trained --check
+python scripts/demo_cooperative_lidar.py --check
+```
+
+Remove `--check` to launch the corresponding GUI demo. Configure Isaac/SUMO and
+the traffic Python in the ignored `hivemind.local.json` as described in
+[portable demos](documentation/portable-demos.md). On this machine the preserved
+traffic environment is `.venv-traffic`, the newer CPU-test environment is `.venv`,
+and rendering uses its own runtime. These environments must not be mixed into
+Isaac's bundled Python.
+
+Vehicle asset iterations belong in `vehicles/sim_ready/<vehicle-name>/v01`, etc.
+Archived experiment results remain historical evidence, not fresh validation.
+
 Multi-agent highway traffic simulation combining SUMO/TraCI, PettingZoo, PPO communication policies, and OpenUSD/Isaac Sim visualization.
 
 ## Repository boundaries

@@ -5,3 +5,11 @@ outputs/
 .venv/
 runtimes/
 .venv-isaac7/
+.venv-traffic/
+.venv-ovrtx/
+.pytest_cache/
+.idea/
+.vscode/
+hivemind.local.json
+results/*
+!results/README.md

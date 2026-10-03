@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes>
+    <vType id="controlled_car"
+           vClass="passenger"
+           length="5.0"
+           minGap="2.5"
+           accel="2.6"
+           decel="4.5"
+           emergencyDecel="9.0"
+           maxSpeed="30.0"
+           sigma="0.0"/>
+    <route id="highway_route" edges="highway_0 highway_1"/>
+    <vehicle id="agent_0"
+             type="controlled_car"
+             route="highway_route"
+             depart="0.0"
+             departLane="0"
+             departPos="0.0"
+             departSpeed="8.0"/>
+</routes>
+

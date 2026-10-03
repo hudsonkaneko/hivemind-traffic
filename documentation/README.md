@@ -1,8 +1,14 @@
 # Highway Sim documentation
 
+Workspace consolidation and recovery locations:
+[October 2 consolidation](consolidation-2026-10-02.md).
+
 Created: 2026-09-11. Project: `C:\Users\hudso\Documents\highwaysim`.
 
 Current file and dependency locations are documented in [locations.md](locations.md).
+
+Experimental Isaac Sim 7 / OVRTX migration status and backup details:
+[migration-2026-09-21.md](migration-2026-09-21.md). The vehicle migration is incomplete; the original demo remains the default.
 Dates in the human-written history use America/Los_Angeles; automatic records
 include both UTC and the machine's local UTC offset.
 
