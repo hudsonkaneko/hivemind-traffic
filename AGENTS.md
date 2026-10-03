@@ -2,8 +2,17 @@
 
 Treat `C:\Users\hudso\Documents\highwaysim` as the canonical root for this project.
 
+**ONLY use this directory as the active project workspace.** Before any project
+command or edit, verify the working directory resolves to this root or one of
+its children. If a chat opens in a legacy folder, explicitly select this root
+instead; do not infer the working folder from the GitHub repository name.
+This rule supersedes older project-location notes. Do not read recovery archives
+as current implementation or use them for new work; consult them only for an
+explicit recovery/audit task. User-provided source assets may be read/copied from
+elsewhere, but all prepared assets and project outputs belong under this root.
+
 - Create and modify project code, assets, documentation, logs, checkpoints, and generated outputs only inside this folder.
-- Do not use `C:\Users\hudso\Documents\ChatGPT\Highway Sim` as a project root. It is a legacy compatibility path only.
+- Do not use `C:\Users\hudso\Documents\ChatGPT\Highway Sim` as a project root. It is retired, not an active compatibility workspace.
 - `C:\isaacsim` and `C:\Users\hudso\Documents\IsaacLab` are external runtime dependencies. Read or execute them when needed, but do not relocate or modify them as part of ordinary Highway Sim work.
 - Record meaningful implementation, training, asset, and parameter changes in `documentation/`.
 - Put trained policies and evaluation artifacts in `outputs/`, and runtime logs in `logs/`.

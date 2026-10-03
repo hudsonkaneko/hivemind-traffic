@@ -7,6 +7,10 @@
 - Recovery archive: `C:\Users\hudso\Documents\expired_highwaysim`
 
 The local folder and remote repository intentionally have different names.
+The user's follow-up explicitly requires ONLY this active directory. `AGENTS.md`
+now requires checking the working root before project commands/edits and forbids
+using archived implementations for ordinary work. External source assets can be
+read/copied into the project; this does not make their source folders workspaces.
 Do not create another working copy at the old `Documents/hivemind-traffic` path.
 Open this project's chats and terminals in the active folder, not the retired
 `Documents/ChatGPT/Highway Sim` compatibility directory.
