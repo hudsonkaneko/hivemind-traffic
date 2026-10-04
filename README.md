@@ -34,8 +34,17 @@ Archived experiment results remain historical evidence, not fresh validation.
 
 The [current 20-step roadmap](documentation/hybrid-roadmap.md) assigns evaluated
 cars to Isaac/PhysX and lightweight background traffic to SUMO. This is a staged
-migration: the existing demos remain SUMO-driven, and the separate one-car
-physics foundation does not yet include LiDAR or a traffic bridge.
+migration: the existing traffic demos remain SUMO-driven. The separate one-car
+[physical LiDAR view](documentation/physics-lidar-view.md) adds a marked curved
+road, overview/follow cameras, planned-path overlays and scripted LiDAR braking.
+It needs no SUMO; a two-way traffic bridge and physics-based training remain future work.
+
+```text
+python scripts/demo_physics_lidar.py --points
+```
+
+This opens the bounded physics-car demonstration using the configured external
+Isaac runtime. It is scripted control, not a trained driving policy.
 See the [documentation index](documentation/README.md) and
 [development workflow](documentation/workflow.md) for changes, evidence and review.
 

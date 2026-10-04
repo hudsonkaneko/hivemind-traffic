@@ -24,6 +24,7 @@ mixed-traffic, statistics, and visualization goals.
 | [Physics-vehicle foundation](physics-vehicle-foundation.md) | First low-speed physical-car fixture, verified subset, and remaining gates |
 | [Dynamics, resets and Isaac Lab](physics-validation.md) | Expanded physical checks, real Lab reset/step compatibility, and retained warning investigation |
 | [Scripted lane following](lane-following.md) | Straight/curved 100 m physical routes, driver layers, measured tracking/stop/contact checks, and future user-led training setup |
+| [Visible physical car + LiDAR](physics-lidar-view.md) | Curved road, overview/follow controls, path overlays, sensor timing and scripted emergency braking |
 | [Hybrid motion-authority decision](decisions/001-hybrid-motion-authority.md) | Who moves each vehicle, responsibilities transferred from SUMO, and comparison limits |
 | [Change log](CHANGELOG.md) | Meaningful changes, reasons, and evidence pointers |
 | [Contribution and documentation workflow](workflow.md) | Branches, tests, commits, GitHub review, and learning-document updates |

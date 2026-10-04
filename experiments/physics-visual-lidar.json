@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "seed": 101,
+  "physics_hz": 120,
+  "control_hz": 60,
+  "planner_hz": 10,
+  "render_hz": 30,
+  "sensor_hz": 20,
+  "route_id": "left_r60",
+  "route_file": "scenarios/physics-road/routes.json",
+  "driver_config": "experiments/physics-lane-following.json",
+  "duration_s": 40,
+  "settle_s": 2,
+  "target_speed_m_s": 3,
+  "barrier_station_m": 70,
+  "barrier_dimensions_m": [2, 1.6, 1.5],
+  "max_process_seconds": 540,
+  "max_gpu_fraction": 0.90,
+  "acceptance": {
+    "lane_rms_max_m": 0.20,
+    "lane_max_m": 0.50,
+    "minimum_barrier_gap_m": 0.50,
+    "stop_speed_max_m_s": 0.05,
+    "hold_s": 5,
+    "minimum_progress_m": 20,
+    "sensor_pose_error_max_m": 0.05,
+    "sensor_max_age_s": 0.20,
+    "physics_clock_error_max_s": 0.000001,
+    "render_must_not_advance_physics": true
+  }
+}

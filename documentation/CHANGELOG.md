@@ -4,6 +4,31 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-04 — Visible physical car with RTX emergency braking
+
+- Added a separate SUMO-free GUI demo with a marked curved road, overview/follow
+  cameras, cyan reference path, pink pursuit target, green LiDAR points and pause
+  controls. Simple vehicle visuals remain; no asset imports or training occurred.
+- Added a 120-Hz physics clock with render-only checks, 60-Hz scripted control,
+  20-Hz RTX capture, explicit acquisition/delivery/frame metadata and fail-safe
+  braking. Map/odometry steering remains distinct from LiDAR emergency stopping.
+- Corrected scan timing without relaxing the 0.20-s age gate, rejected malformed
+  successful hits, fixed writer-registration order, and disabled a duplicate
+  WORLD-to-world transform in the point display. All failed attempts remain local.
+- **784 CPU tests passed**, plus all 23 view tests in Isaac's Python, including
+  two USD tests skipped by the traffic environment. Accepted headless, dropout,
+  GUI and overview checks passed with no runtime errors or scene-reference warning.
+- Curve RMS error was 0.02120 m; final barrier gap 4.24599 m; zero contacts.
+  Frozen scans caused full braking at the exact expected tick 1,452. Independent
+  review recomputed decisions from retained raw clouds and verified identical
+  headless/GUI physical traces, plus source/artifact hashes.
+- Preserved nine attempts in [main evidence](physics-lidar-view-results.json) and
+  [overview evidence](physics-lidar-overview-results.json). One numerical GUI pass
+  was rejected by visual QA before the corrected capture was accepted.
+- The headless full case achieved RTF 0.675, not real time. Full sensing/reset,
+  hybrid traffic, multi-car communication and endurance gates remain open.
+  See the [learning and reproduction note](physics-lidar-view.md).
+
 ## 2026-10-04 — Physical lane-following subset verified
 
 - Added analytic straight/left/right 100 m route fixtures with shared sampling,

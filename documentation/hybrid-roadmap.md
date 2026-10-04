@@ -1,6 +1,7 @@
 # Active roadmap: physical research cars, economical background traffic
 
-Updated: October 4, 2026. Status: physical lane-following subset verified;
+Updated: October 4, 2026. Status: physical lane following and bounded visible
+LiDAR-braking subset verified;
 scene-lifecycle reliability and full shared-map integration **in progress**.
 This is the active development order, replacing the old immediate-next-step
 sections in the preserved [implementation roadmap](../experiments/ROADMAP.md)
@@ -24,9 +25,10 @@ represents all five ratios exactly. AV labels alone do not implement an AV drive
 The final research goal remains reproducible evidence about efficiency, safety,
 and fairness of coordinated traffic. Simple visuals are sufficient while that
 foundation is built. Detailed road/environment art is the teammate's scope;
-prepared vehicle assets, overview/follow cameras, path overlays, and ovrtx remain
-later integration work. A separate small all-Isaac scenario must ultimately run
-without SUMO; the scalable hybrid mode need not eliminate SUMO.
+prepared detailed vehicle assets and ovrtx remain later integration work.
+Basic overview/follow cameras and path overlays now exist in the separate
+one-car physical demo. It already runs without SUMO; the two-physical-car target
+still needs validation. The scalable hybrid mode need not eliminate SUMO.
 
 ## Existing foundation, not yet a physical traffic fleet
 
@@ -97,8 +99,13 @@ vehicle's gains.
 
 Step 6's analytic geometry and step 7's nominal 3 m/s lane-following subset now
 have [recorded evidence](lane-following-results.json). SUMO route correspondence,
-physical fault-injection/perturbed-start robustness, lane changes and steps 8–13
-remain unverified. The driver uses known maps and simulator state, not LiDAR.
+physical perturbed-start robustness and lane changes remain unverified. The
+[visible physical-car fixture](physics-lidar-view.md) advances a bounded subset
+of step 8: known-map steering plus RTX-return emergency braking, an explicit
+physics/render clock and sensor-loss testing. Overview/follow cameras and planned
+path overlays bring forward a small part of step 20 without detailed assets.
+The full step-8 60-s sensing/reset gate and steps 9–13 remain open; this is not
+LiDAR road perception, general avoidance or a hybrid fleet.
 
 | Step | Deliverable | Measurable exit gate |
 | ---: | --- | --- |
