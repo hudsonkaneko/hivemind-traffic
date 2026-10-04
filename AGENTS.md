@@ -26,3 +26,16 @@ elsewhere, but all prepared assets and project outputs belong under this root.
 - Preserve historical manifests as evidence; their old absolute paths describe where those runs happened, not the current workspace.
 - Keep SUMO/PettingZoo/PPO and Isaac runtime dependencies isolated. Use the portable launcher and documented environments; never install the traffic requirements into Isaac's Python.
 - Commit and push tested meaningful changes. Do not commit local configuration, installed runtimes, generated scans, or checkpoints accidentally.
+
+## Development continuity
+
+- Follow `documentation/workflow.md`: feature branches, code/tests/documentation
+  together, tested GitHub checkpoints, and pull-request review before merging.
+- The active plan is `documentation/hybrid-roadmap.md`. Older roadmap text is
+  historical; preserve experiment evidence rather than rewriting its meaning.
+- Update `documentation/CHANGELOG.md` and the relevant evidence/learning note for
+  each meaningful milestone. Keep the Google engineering guide aligned when
+  authorized and connected; report sync status honestly.
+- Preserve the working SUMO-motion demos. The new physical-car foundation is
+  separate: `documentation/physics-vehicle-foundation.md` states what is verified
+  and which reset, sensing, training and hybrid-integration gates remain open.

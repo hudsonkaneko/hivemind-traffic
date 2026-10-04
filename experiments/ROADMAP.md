@@ -1,5 +1,10 @@
 # Hivemind Traffic implementation roadmap
 
+> Historical implementation plan retained for continuity. The active development
+> sequence is now the [hybrid 20-step roadmap](../documentation/hybrid-roadmap.md).
+> Statements below describe their original milestones, not the current status of
+> every subsystem. Existing baselines and experiment evidence remain unchanged.
+
 ## Committed architecture
 
 Isaac Sim with RTX lidar is a required project stage, not an optional visualization

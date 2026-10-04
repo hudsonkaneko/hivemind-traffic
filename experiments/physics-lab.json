@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "study": "physics_vehicle_lab_compatibility",
+  "seed": 101,
+  "physics_hz": 120,
+  "control_hz": 60,
+  "repeats": 3,
+  "target_speed_m_s": 3.0,
+  "drive_torque_per_front_wheel_nm": 700.0,
+  "brake_torque_per_wheel_nm": 1500.0,
+  "command_ttl_ticks": 12,
+  "max_process_seconds": 180,
+  "phases": [["settle", 2.0], ["straight", 4.0], ["brake", 2.0]],
+  "acceptance": {
+    "repeat_position_tolerance_m": 0.001,
+    "repeat_speed_tolerance_m_s": 0.001,
+    "reset_position_tolerance_m": 0.001,
+    "reset_speed_tolerance_m_s": 0.001,
+    "minimum_forward_progress_m": 3.0,
+    "stopped_speed_max_m_s": 0.05
+  }
+}
