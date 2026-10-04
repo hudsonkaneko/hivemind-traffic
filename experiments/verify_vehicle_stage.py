@@ -16,6 +16,7 @@ STAGES = {
     'reset-control': ('physics-reset-control.json', 'probe_vehicle_resets.py'),
     'dynamics': ('physics-dynamics.json', 'probe_vehicle_dynamics.py'),
     'lab': ('physics-lab.json', 'probe_vehicle_lab.py'),
+    'lane-following': ('physics-lane-following.json', 'probe_lane_following.py'),
 }
 
 
@@ -30,6 +31,10 @@ def source_files(stage):
     if stage == 'lab':
         files.extend(['environments/__init__.py', 'environments/physics_vehicle_lab.py',
                       'environments/physics_vehicle_contract.py'])
+    if stage == 'lane-following':
+        files.extend(['traffic/lane_geometry.py', 'traffic/path_following.py', 'traffic/lane_validation.py',
+                      'traffic/vehicle_contacts.py', 'traffic/dynamics_validation.py',
+                      'scenarios/physics-road/routes.json'])
     return files
 
 
@@ -59,6 +64,8 @@ def main():
         from traffic.dynamics_validation import validate_config
     elif args.stage == 'lab':
         from environments.physics_vehicle_contract import validate_config
+    elif args.stage == 'lane-following':
+        from traffic.lane_validation import validate_config
     else:
         from scripts.probe_vehicle_resets import validate_config
     validate_config(config)
@@ -96,6 +103,7 @@ def main():
         warning_count = log_text.count('Unexpected reference count')
         result.update(exit_code=child.returncode, stop_reason=reason,
                       usd_reference_warning_count=warning_count,
+                      runtime_error_lines=[line for line in log_text.splitlines() if '[Error]' in line],
                       wall_process_seconds=time.perf_counter()-start,
                       gpu_peak_mib=max((r['used_mib'] for r in monitor.rows), default=None),
                       gpu_scope='Whole GPU including desktop; roughly 1 Hz sampling',

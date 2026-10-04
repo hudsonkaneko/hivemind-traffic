@@ -4,6 +4,27 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-04 — Physical lane-following subset verified
+
+- Added analytic straight/left/right 100 m route fixtures with shared sampling,
+  coordinate transforms and explicit chassis-center versus rear-axle references.
+- Added separate scripted behavior, timestamped route selection and pure-pursuit
+  steering/speed/brake control. This uses known maps and simulator state, not
+  LiDAR, learned control, a new road mesh or a new GUI.
+- Added strict lane/stop/footprint/support/repeat gates and copied PhysX contact
+  reports, including a barrier positive control. Review hardened wrong-spawn,
+  malformed wheel-support and settling-departure false positives before running.
+- **603 CPU tests passed.** Six physical cases passed: curve RMS 0.01841 m,
+  max error 0.04866 m, zero normal-route contacts/departures, five-second holds,
+  identical recorded local repeats. Overall supervisor remains **failed** because
+  one retained scene-reference warning persists; no thresholds were relaxed.
+- Source-captured attempt `20261004T194416Z-42992541` and earlier experiments are
+  preserved. Independent review verified raw metrics and artifact/source hashes.
+  See [learning note](lane-following.md) and [compact evidence](lane-following-results.json).
+- Saved the user's preference to participate directly before Isaac Lab policy
+  training. Agree observations/actions/rewards/algorithm/budget/evaluation together.
+  No training, dependency installation or runtime edits occurred.
+
 ## 2026-10-03 — Hybrid physics foundation: in progress
 
 Next validation increment (same feature branch, not merged to main):

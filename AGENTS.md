@@ -39,3 +39,8 @@ elsewhere, but all prepared assets and project outputs belong under this root.
 - Preserve the working SUMO-motion demos. The new physical-car foundation is
   separate: `documentation/physics-vehicle-foundation.md` states what is verified
   and which reset, sensing, training and hybrid-integration gates remain open.
+- User preference (2026-10-04): involve the user directly when reaching Isaac Lab
+  policy training. Explain and agree on observations, actions, rewards, algorithm,
+  training budget and evaluation before launching training. Scripted controllers,
+  environment plumbing and bounded validation may proceed now; do not interpret
+  that authorization as permission to begin unattended training.

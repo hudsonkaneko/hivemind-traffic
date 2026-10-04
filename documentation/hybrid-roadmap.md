@@ -1,6 +1,7 @@
 # Active roadmap: physical research cars, economical background traffic
 
-Updated: October 3, 2026. Status: first physics-vehicle foundation **in progress**.
+Updated: October 4, 2026. Status: physical lane-following subset verified;
+scene-lifecycle reliability and full shared-map integration **in progress**.
 This is the active development order, replacing the old immediate-next-step
 sections in the preserved [implementation roadmap](../experiments/ROADMAP.md)
 and [capacity study](scaling-foundations.md). Historical evidence is unchanged.
@@ -72,8 +73,11 @@ the standalone reset/dynamics supervisors remain failed overall because one USD
 reference-count warning persists. Two candidate lifecycle fixes did not remove
 it. The Lab task passed without that warning. Stage A is still not fully closed;
 do not label scene rebuilding, highway speeds, GUI endurance or sensors clean.
-The next implementation work is shared lanes and scripted path following,
-followed by physical-car LiDAR; keep the lifecycle investigation visible.
+The [lane-following increment](lane-following.md) now adds analytic geometry and
+a scripted driver: all six 100 m straight/curved physical cases passed, with
+curved-route RMS about 0.01841 m and max error 0.04866 m. The same lifecycle warning
+still fails the separate overall gate. Next is physical-car LiDAR, while retaining
+the lifecycle investigation and unimplemented SUMO/Isaac map-correspondence check.
 
 | Step | Deliverable | Measurable exit gate |
 | ---: | --- | --- |
@@ -91,7 +95,10 @@ vehicle's gains.
 
 ### Stage B — Road following, sensing, and two interacting cars
 
-All steps below are planned until their own evidence is recorded.
+Step 6's analytic geometry and step 7's nominal 3 m/s lane-following subset now
+have [recorded evidence](lane-following-results.json). SUMO route correspondence,
+physical fault-injection/perturbed-start robustness, lane changes and steps 8–13
+remain unverified. The driver uses known maps and simulator state, not LiDAR.
 
 | Step | Deliverable | Measurable exit gate |
 | ---: | --- | --- |
@@ -122,6 +129,12 @@ separate from claims about the number of validated physical agents.
 
 ### Stage D — Learning and presentation
 
+**User participation gate:** before starting Isaac Lab policy training, work with
+the user to explain and agree on observations, actions, rewards, algorithm,
+training budget and held-out evaluation. Scripted plumbing/validation may proceed;
+do not launch unattended training under the current authorization. Existing
+single-environment Lab compatibility evidence is not a trained driving policy.
+
 | Step | Deliverable | Measurable exit gate |
 | ---: | --- | --- |
 | 19 | Isaac Lab training and held-out evaluation | Pass task reset/step/space/termination checks and single-environment smoke before vectorized training. Train independent control before coordinated control. Freeze checkpoint selection and compare to scripted drivers on unseen matched seeds, with safety/fairness/compute reports and explicit privileged-state versus sensor-derived observations. Old SUMO policy weights are not claimed transferable without re-evaluation or retraining. |
@@ -146,9 +159,10 @@ Initial design targets, to be resolved in each fixture configuration:
   Steering hold/centering rules and braking limits are declared per vehicle and
   tested, not guessed by the bridge.
 
-These are proposed separations, not a claim that the current runner implements
-the scheduler. Never hide control rate or sensor fidelity changes inside an
-AV-ratio experiment.
+The lane fixture implements the 10/10/60/120 Hz subset with timestamped immutable
+route references (not a general time-parameterized trajectory optimizer).
+The integrated SUMO/sensor scheduler and its step-9 endurance gates remain planned.
+Never hide control rate or sensor fidelity changes inside an AV-ratio experiment.
 
 ## First useful implementation and open decisions
 

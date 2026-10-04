@@ -1,6 +1,6 @@
 # Highway Sim documentation
 
-Updated: October 3, 2026. The only active local workspace is
+Updated: October 4, 2026. The only active local workspace is
 `C:\Users\hudso\Documents\highwaysim`; its remote is
 `hudsonkaneko/hivemind-traffic`. See [locations](locations.md) and the
 [consolidation record](consolidation-2026-10-02.md).
@@ -23,6 +23,7 @@ mixed-traffic, statistics, and visualization goals.
 | [Active 20-step roadmap](hybrid-roadmap.md) | Development order, acceptance gates, and what is not validated yet |
 | [Physics-vehicle foundation](physics-vehicle-foundation.md) | First low-speed physical-car fixture, verified subset, and remaining gates |
 | [Dynamics, resets and Isaac Lab](physics-validation.md) | Expanded physical checks, real Lab reset/step compatibility, and retained warning investigation |
+| [Scripted lane following](lane-following.md) | Straight/curved 100 m physical routes, driver layers, measured tracking/stop/contact checks, and future user-led training setup |
 | [Hybrid motion-authority decision](decisions/001-hybrid-motion-authority.md) | Who moves each vehicle, responsibilities transferred from SUMO, and comparison limits |
 | [Change log](CHANGELOG.md) | Meaningful changes, reasons, and evidence pointers |
 | [Contribution and documentation workflow](workflow.md) | Branches, tests, commits, GitHub review, and learning-document updates |
