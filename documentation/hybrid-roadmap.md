@@ -62,8 +62,18 @@ The first bounded physics/control subset now has passing evidence: two fresh-sta
 matching recorded trajectory repeats. See the [foundation report](physics-vehicle-foundation.md)
 and [recorded results](physics-vehicle-results.json). This does not close the full
 ten-reset, turn-radius, later 6 m/s, Isaac Lab compatibility, or reset/memory
-reliability gates. A stage-rebuild USD reference-count warning remains under
-investigation; do not label that lifecycle path fully clean.
+reliability gates at that historical checkpoint.
+
+The [next validation increment](physics-validation.md) now verifies braking at
+1/3/6 m/s, left/right turn radius, five-second holds, two matching dynamics
+repeats, ten-repeat final-state/cache/memory subchecks, and three real single-env
+Isaac Lab episodes with automatic resets. All twelve dynamics cases passed, but
+the standalone reset/dynamics supervisors remain failed overall because one USD
+reference-count warning persists. Two candidate lifecycle fixes did not remove
+it. The Lab task passed without that warning. Stage A is still not fully closed;
+do not label scene rebuilding, highway speeds, GUI endurance or sensors clean.
+The next implementation work is shared lanes and scripted path following,
+followed by physical-car LiDAR; keep the lifecycle investigation visible.
 
 | Step | Deliverable | Measurable exit gate |
 | ---: | --- | --- |

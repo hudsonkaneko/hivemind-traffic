@@ -6,6 +6,26 @@ authority for historical measurements and failures.
 
 ## 2026-10-03 — Hybrid physics foundation: in progress
 
+Next validation increment (same feature branch, not merged to main):
+
+- Added strict, portable stage supervisors, complete raw evidence and compact
+  hash-verified reports for resets, expanded dynamics and Isaac Lab compatibility.
+- Added a one-environment native-PhysX `DirectRLEnv`, using a `RigidObject` for
+  chassis reset and explicit wheel commands for motion. Lazy imports keep SUMO
+  dependencies out of this Isaac-only task.
+- **434 tests passed.** Twelve dynamics cases passed their physical/repeatability
+  subchecks, including 1/3/6 m/s braking, both turn directions and five-second holds.
+- Three real Lab episodes passed action/observation/reset checks with identical
+  recorded position/speed repeats. No training or LiDAR was added.
+- Two ten-reset attempts passed physical/cache/provisional-memory subchecks but
+  failed the overall zero-warning gate. Disabling authoring tools and draining
+  stage-open events did not eliminate the first-stage reference warning. Dynamics
+  also remains failed overall on that warning; the Lab probe did not emit it.
+- Preserved all five attempts and the original foundation results. See the
+  [validation note](physics-validation.md) and [evidence](physics-validation-results.json).
+
+Original foundation checkpoint:
+
 - Repaired the documentation index: removed missing historical-page links and
   distinguished the active traffic experiment from the preserved RC-scale
   Leatherback prototype.

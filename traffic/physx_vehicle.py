@@ -16,8 +16,10 @@ class PhysxVehicle:
 
     def __init__(self, stage, physics_hz=120):
         import omni.physx
-        from omni.physxvehicle.scripts.helpers import Factory
+        from traffic.physics_session import vehicle_factory
         from pxr import PhysxSchema, UsdGeom, UsdPhysics
+
+        Factory = vehicle_factory()
 
         self.stage = stage
         root = UsdGeom.Xform.Define(stage, '/World')
