@@ -1,12 +1,35 @@
 # Engineering guide synchronization
 
-Last verified: October 3, 2026.
+Last verified: October 4, 2026.
 
-Latest source milestone: commit `03e9b3e`, published on `codex/physics-vehicle-foundation`.
+Latest source milestone: commit `e4404d3`, published on `codex/physics-vehicle-foundation`.
 [Pull request #1](https://github.com/hudsonkaneko/hivemind-traffic/pull/1) records
 the implementation, tests, evidence and remaining gates. `main` is unchanged.
 
-## Latest update: dynamics, resets and Isaac Lab
+## Latest update: scripted lane following
+
+Added **28 Scripted lane following**, tab `t.70inmvd9orgv`, to the
+[same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.70inmvd9orgv).
+It explains geometry, behavioral/planning/control separation, privileged-state
+versus sensor inputs, rates/expiry, the contact-report positive control, measured
+lane/stop/repeatability outcomes and the retained failed lifecycle gate. It also
+records the user's direct participation before future Isaac Lab policy training.
+
+Refreshed **00 Start here** to point to tabs 25–28. Native connector verification
+confirmed 29 tabs, unchanged topology/body contents for all 27 earlier milestone
+tabs (01–27), ten title/heading paragraphs, three shaded Consolas portable commands,
+eleven highlighted term spans, and five hyperlinks with preserved typography.
+The text matched the intended insertion. Native content and styles were checked;
+rendered pagination was not visually inspected. Commands remain code-style text,
+not native executable widgets. No training was started.
+
+Trusted read: local ignored `outputs/doc-sync/trusted-read-05`; no protected
+controls were detected. Final revision:
+`ANLCKQn7R_dFfdVathqyfvSAiHO69l8gfoU_x6aCmvQdFX_2irh7TmpOPYYfVOgt2sSagF0fmAy7T9Hp6V_odFrcw5nz7_EMhzSKd-SNqyc`.
+Repository code and raw evidence remain authoritative; previous milestone tabs
+retain their historical statements rather than being rewritten as current status.
+
+## Previous synchronization: dynamics, resets and Isaac Lab (03e9b3e)
 
 Added **27 Dynamics, resets and Isaac Lab**, tab `t.egh5rmb516m4`, to the
 [same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.egh5rmb516m4).

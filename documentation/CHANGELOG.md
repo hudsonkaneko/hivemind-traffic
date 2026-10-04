@@ -24,6 +24,9 @@ authority for historical measurements and failures.
 - Saved the user's preference to participate directly before Isaac Lab policy
   training. Agree observations/actions/rewards/algorithm/budget/evaluation together.
   No training, dependency installation or runtime edits occurred.
+- Added Google guide tab 28 with three shaded portable commands, definitions,
+  results and limitations; updated the overview. Native verification confirmed
+  29 tabs and preserved all 27 prior milestone bodies. See [sync record](learning-guide-sync.md).
 
 ## 2026-10-03 — Hybrid physics foundation: in progress
 
