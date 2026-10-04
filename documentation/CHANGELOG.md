@@ -23,6 +23,9 @@ Next validation increment (same feature branch, not merged to main):
   also remains failed overall on that warning; the Lab probe did not emit it.
 - Preserved all five attempts and the original foundation results. See the
   [validation note](physics-validation.md) and [evidence](physics-validation-results.json).
+- Added Google learning-guide tab 27 with shaded portable commands, definitions,
+  measurements, failed attempts and source links; refreshed its overview and
+  verified all 26 earlier milestone tab bodies remained unchanged.
 
 Original foundation checkpoint:
 
