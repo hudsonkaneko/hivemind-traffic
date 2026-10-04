@@ -2,11 +2,35 @@
 
 Last verified: October 4, 2026.
 
-Latest source milestone: commit `e4404d3`, published on `codex/physics-vehicle-foundation`.
+Latest source milestone: commit `531f748`, published on `codex/physics-vehicle-foundation`.
 [Pull request #1](https://github.com/hudsonkaneko/hivemind-traffic/pull/1) records
 the implementation, tests, evidence and remaining gates. `main` is unchanged.
 
-## Latest update: scripted lane following
+## Latest update: visible physical car and LiDAR view
+
+Added **29 Physics car and LiDAR view**, tab `t.rb5nks6ogqck`, to the
+[same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.rb5nks6ogqck).
+It explains the visible road/cameras/path/points, control-versus-physics boundary,
+privileged map/odometry versus sensor inputs, multi-rate clock, raw-scan safety,
+retained timing/serialization/writer/display failures, independently audited
+braking results, performance limits and user participation before training.
+
+Refreshed the three relevant **00 Start here** paragraphs and preserved their
+existing styles. Native verification confirmed 30 tabs, unchanged topology and
+body contents for all 28 earlier milestone tabs, exact inserted text, 11
+title/heading paragraphs, four shaded Consolas commands, 11 highlighted spans,
+and five full-label hyperlinks with preserved effective typography. Inherited
+Arial/11-point/black/un-underlined styles were checked against NORMAL_TEXT.
+Native content/styles were verified; rendered Google Docs pagination was not
+visually inspected. Simulator viewport captures were inspected separately.
+
+Trusted read: local ignored `outputs/doc-sync/trusted-read-06`; no protected
+controls detected. Final revision:
+`ANLCKQlj7SWapZ_gsiS8MfphCwTClixXLTc-WI36rf7LE1BCqINHIRSR1k_XX0_sa-EsO0T2go0dGASt7IRLzElJS7DecKMT_wBKkIVD7Pc`.
+Repository evidence remains authoritative; raw outputs are local and not part
+of a clone. No training, dependency installation or external-runtime edit occurred.
+
+## Previous synchronization: scripted lane following (e4404d3)
 
 Added **28 Scripted lane following**, tab `t.70inmvd9orgv`, to the
 [same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.70inmvd9orgv).

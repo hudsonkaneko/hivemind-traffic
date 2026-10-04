@@ -28,6 +28,9 @@ authority for historical measurements and failures.
 - The headless full case achieved RTF 0.675, not real time. Full sensing/reset,
   hybrid traffic, multi-car communication and endurance gates remain open.
   See the [learning and reproduction note](physics-lidar-view.md).
+- Added Google guide tab 29 with four shaded portable commands and refreshed
+  the overview. Native verification preserved all 28 earlier milestone bodies;
+  see the [sync record](learning-guide-sync.md).
 
 ## 2026-10-04 — Physical lane-following subset verified
 
