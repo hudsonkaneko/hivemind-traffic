@@ -18,6 +18,13 @@ authority for historical measurements and failures.
 - **823 CPU tests passed, 10 skipped; 37 Isaac CPU view/wheel tests passed.**
   See [explanation, commands and limits](obstacle-bypass.md) for runtime evidence
   and the distinction between a bounded static fixture and general autonomy.
+- Accepted headless/GUI passes retained 2.14471 m body clearance. Blocked-road
+  and frozen-scan stops passed, with dropout braking at control tick 1452.
+  The old 40-s curved braking demo also passed. [Ten retained attempts](obstacle-bypass-results.json)
+  include five failures; one was a native GUI startup crash, followed by a passing
+  unchanged-code retry. GUI RTF was 0.358, not real time.
+- Added verified guide tab 31: five shaded portable commands, six highlighted
+  definitions and preserved earlier tabs. No unattended training was launched.
 
 ## 2026-10-04 — Correct physical-car wheel orientation
 

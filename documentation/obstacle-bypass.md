@@ -134,6 +134,43 @@ One subsequent GUI process crashed during Isaac startup before creating the
 scene or a probe result. Its original log and failed summary remain local;
 startup reliability cannot be inferred from the accepted headless run.
 
+The unchanged-code GUI retry `20261005T042723Z-89b6cbf4` passed every gate and its
+fresh approach/pass/return screenshots were inspected. It reproduced the same
+physical outcome and clearance. Its loop took 139.85 wall seconds (RTF 0.358),
+with 6,548 MiB whole-GPU peak; a working visual window is not a real-time claim.
+No external runtime setting or dependency was changed to obtain that retry.
+All 6,000 recorded positions, velocities, speeds, headings and clearances were
+bit-identical between the accepted GUI and headless runs; their captured source
+hashes were identical. Delivered sensor-frame counts still differed (956/959),
+so this is not a claim that all RTX delivery timing is deterministic.
+
+The blocked-road run `20261005T042235Z-f99b290a` passed all checks, stopping at
+X=37.03959 m with 4.46184 m minimum clearance. The frozen-scan run
+`20261005T042427Z-0e7e7d64` also passed, including the oldest-return braking
+deadline, stopping at X=28.02843 m with 13.43378 m clearance. Neither fault case
+had contact or left the road, and each completed the full 50-s trace and hold.
+
+An independent raw-scan replay reproduced the accepted planner's two decisions
+and adopted route exactly without barrier ground truth. Source/artifact hashes
+verified. Its 6,000 positions, velocities, speeds, headings and clearances also
+exactly matched the previous complete run before the wheel-measurement repair;
+only the wheel evidence module changed. This is a measured repeat for these
+runs, not a universal guarantee of bitwise RTX determinism.
+
+The preserved old curved-road stop demo also passed its full 40-s regression
+(`vehicle_visual_lidar/20261005T042604Z-5458527f`): no contact, final barrier gap
+4.19742 m, lane RMS 0.02120 m and all 760 sensor poses matched. Its timing-related
+stop distance need not be bit-identical to an older RTX run to meet the existing
+acceptance criteria. No prior evidence was rewritten.
+
+[Ten hash-verified attempts](obstacle-bypass-results.json) include all nine new
+bypass attempts (four accepted, five failed) and the accepted old-demo regression.
+The five failures are one conservative detection stop, one short-ribbon error,
+two incorrect axle-comparison failures, and one native GUI startup crash.
+Final code checks: **823 CPU tests passed, 10 skipped; all 37 view/wheel tests
+passed under Isaac's Python.** Native Google guide tab 31 mirrors this milestone;
+its prior 31 tabs are preserved.
+
 ## Next boundary
 
 Add moving traffic and occupancy checks before claiming a safe occupied-lane

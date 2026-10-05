@@ -2,11 +2,34 @@
 
 Last verified: October 4, 2026.
 
-Latest source milestone: commit `252c6de`, published on `codex/physics-vehicle-foundation`.
+Latest source milestone: commit `07a373b`, published on `codex/physics-vehicle-foundation`.
 [Pull request #1](https://github.com/hudsonkaneko/hivemind-traffic/pull/1) records
 the implementation, tests, evidence and remaining gates. `main` is unchanged.
 
-## Latest update: wheel orientation correction
+## Latest update: adaptive obstacle bypass
+
+Added **31 Adaptive obstacle bypass**, tab `t.cbgq2dwnrach`, to the
+[same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.cbgq2dwnrach).
+It explains LiDAR-triggered route selection, cyan driver-path preview, driver
+versus physics roles, privileged odometry/known-map/extent-prior assumptions,
+fault cases, actual metrics, retained failures, portability and training limits.
+
+Native readback verified exact text, 32 tabs, ten title/heading paragraphs,
+five shaded Consolas command blocks, six highlighted definitions and two full
+source hyperlinks with matching effective typography. All 31 prior tab bodies,
+titles, order and parents remain unchanged. Simulator captures were inspected;
+Google Docs pagination was not visually inspected.
+
+Trusted read: ignored `outputs/doc-sync/trusted-read-08`; no protected controls.
+Verified revision:
+`ANLCKQlHXiCPFPbOTDaTUveFDi2GR6nwQFk13xZewjJD0mYw5yUSqDq2aqGuWg_OvYswRaJ9Zhf3sg40h5GVvP7XY5nxWAm2kEsbHTQFUsw`.
+The final appended evidence sentence records the passing unchanged-code GUI
+retry, its measured RTF near 0.36, and the old-demo regression. Text and prior
+tab preservation were verified again after that insertion.
+Implementation source links use immutable `07a373b`; the PR carries later
+validation updates. Bulk simulation evidence remains local and ignored by Git.
+
+## Previous synchronization: wheel orientation correction (252c6de)
 
 Added **30 Wheel orientation fix**, tab `t.ivzd9eyrxgjj`, to the
 [same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.ivzd9eyrxgjj).
