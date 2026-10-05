@@ -24,6 +24,7 @@ from traffic.lidar_braking import LidarBrakeConfig,LidarEmergencyBrake
 from traffic.path_following import FollowerConfig,PathFollower,PathPlanner,ScriptedCruiseBehavior,VehicleState
 from traffic.physical_lidar import PhysicalLidar,packet_to_scan,rotation_matrix
 from traffic.visual_lidar_validation import assess_visual_lidar,barrier_plane_gap,validate_config
+from traffic.wheel_geometry import assess_wheel_geometry,sample_wheel_geometry
 
 
 def author_barrier(stage,route,config):
@@ -73,7 +74,7 @@ def main():
     episode='visual-'+output.name
     app=session=vehicle=lidar=view=monitor=window=label=None
     rows=[];render_checks=[];pose_errors=[];scan_records=[];contact_events=[];history={}
-    captures=[];captured=set();saved_scans=set();last_packet_stamp=None;frozen_packet=None
+    captures=[];captured=set();saved_scans=set();last_packet_stamp=None;frozen_packet=None;wheel_rows=[]
     result=dict(passed=False,no_sumo=True,no_training=True,observation_source='Known map and odometry for steering; RTX returns for emergency braking')
     started=time.perf_counter()
     try:
@@ -166,6 +167,7 @@ def main():
                 footprint_lateral_bound_m=footprint_lateral_bound(state,projection,[4.8,1.8,1.4],maximum_curvature),
                 barrier_gap_m=barrier_plane_gap(state,barrier),physics_wall_ms=(time.perf_counter()-step_started)*1000,**state)
             rows.append(row)
+            if (tick+1)%4==0:wheel_rows.extend(sample_wheel_geometry(vehicle,tick+1))
             if contact_events or row['footprint_lateral_bound_m']>1.8 or state['upright_z']<.99:
                 raise RuntimeError('Contact, road departure or instability: demo stopped')
             if (tick+1)%4==0:
@@ -218,7 +220,8 @@ def main():
         result.update(loop_wall_s=time.perf_counter()-loop_started,clock_end=session.snapshot(),
             packet_count=lidar.packet_count,static_road_unchanged=view.static_layer.ExportToString()==static_before,
             sensor_errors=lidar.errors,preview_files=[p.name for p in output.glob('preview-*.png')])
-        result['passed']=bool(result['passed'] and result['static_road_unchanged'])
+        result['wheel_geometry']=assess_wheel_geometry(wheel_rows,vehicle.wheel_paths,len(rows))
+        result['passed']=bool(result['passed'] and result['static_road_unchanged'] and result['wheel_geometry']['passed'])
         # Drain pending captures without advancing physics.
         for _ in range(3):session.render()
     except Exception as error:
@@ -229,6 +232,7 @@ def main():
             write_json(output/'trajectory.json',rows)
             write_json(output/'sensor-frames.json',scan_records)
             write_json(output/'contacts.json',contact_events)
+            write_json(output/'wheel-geometry.json',wheel_rows)
         except Exception as error:
             result.update(passed=False,evidence_write_error=repr(error))
         if lidar:

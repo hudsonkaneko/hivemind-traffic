@@ -29,6 +29,8 @@ prepared detailed vehicle assets and ovrtx remain later integration work.
 Basic overview/follow cameras and path overlays now exist in the separate
 one-car physical demo. It already runs without SUMO; the two-physical-car target
 still needs validation. The scalable hybrid mode need not eliminate SUMO.
+The [wheel orientation fix](wheel-orientation.md) adds visual-geometry regression
+checks without changing the driver or closing any additional fleet/highway gate.
 
 ## Existing foundation, not yet a physical traffic fleet
 

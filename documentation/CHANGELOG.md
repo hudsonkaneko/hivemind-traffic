@@ -4,6 +4,19 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-04 — Correct physical-car wheel orientation
+
+- Fixed the horizontal/tumbling-wheel visual by authoring an explicit cylinder
+  axle basis before simulation. PhysX still owns all wheel and chassis movement;
+  no changes to driver control, torque, tire or suspension tuning.
+- Added full wheel-geometry evidence and 0.1-degree alignment/pose gates. Final
+  40-s test passed with identical 4,800-step physical/control traces to the prior
+  obstacle baseline, zero contacts and unchanged 4.24599-m final stop gap.
+- Preserved the original visual failure and one failed diagnostic-frame test.
+  **786 CPU tests passed, 4 skipped; 4 Isaac wheel tests passed.**
+  See [cause and reproduction](wheel-orientation.md) and
+  [four retained attempts](wheel-geometry-results.json).
+
 ## 2026-10-04 — Visible physical car with RTX emergency braking
 
 - Added a separate SUMO-free GUI demo with a marked curved road, overview/follow

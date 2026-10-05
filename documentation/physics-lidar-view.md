@@ -155,6 +155,10 @@ were still identical. Acquisition/render delivery is not claimed bit-identical.
 
 ## Source map and next gates
 
+Follow-up: [wheel orientation correction](wheel-orientation.md) fixes tumbling
+tires and adds composed-geometry checks. The older runs above did not contain
+that regression gate; their original physical/sensor measurements are preserved.
+
 - `scripts/demo_physics_lidar.py`: portable launcher, deadline/GPU guards and evidence.
 - `scripts/physics_lidar_drive.py`: visible fixture, multi-rate loop, UI and recording.
 - `traffic/rendered_physics_session.py`: single physics clock and render-only checks.

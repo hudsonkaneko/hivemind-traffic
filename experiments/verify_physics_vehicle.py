@@ -18,7 +18,7 @@ def main():
     runtime = isaac_runtime(ROOT, load_config(ROOT))
     source = ['experiments/physics-vehicle-smoke.json', 'experiments/verify_physics_vehicle.py',
               'experiments/probe_support.py', 'scripts/probe_physics_vehicle.py',
-              'traffic/driver_control.py', 'traffic/physx_vehicle.py', 'traffic/physics_session.py',
+              'traffic/driver_control.py', 'traffic/physx_vehicle.py', 'traffic/wheel_geometry.py', 'traffic/physics_session.py',
               'hivemind/launcher.py']
     config = json.loads((ROOT/source[0]).read_text())
     if config['repeats'] != 2 or config['physics_hz'] != 120 or config['control_hz'] != 60:

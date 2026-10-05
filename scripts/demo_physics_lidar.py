@@ -42,7 +42,7 @@ def main():
         config['route_file'],config['driver_config'],'traffic/lane_geometry.py','traffic/path_following.py',
         'traffic/driver_control.py','traffic/physx_vehicle.py','traffic/physics_session.py','traffic/rendered_physics_session.py',
         'traffic/lidar_braking.py','traffic/physical_lidar.py','traffic/vehicle_contacts.py','traffic/lane_validation.py',
-        'traffic/visual_lidar_validation.py','visualization/physics_road_view.py',
+        'traffic/visual_lidar_validation.py','traffic/wheel_geometry.py','visualization/physics_road_view.py',
         'experiments/probe_support.py','experiments/verify_physics_vehicle.py','hivemind/launcher.py']
     if args.check:
         print(json.dumps(dict(runtime=str(runtime),config=config,sources=sources,sumo_required=False,no_training=True),indent=2))

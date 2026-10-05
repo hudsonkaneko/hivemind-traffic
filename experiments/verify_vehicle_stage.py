@@ -25,7 +25,7 @@ def source_files(stage):
     files = [f'experiments/{config}', f'scripts/{script}',
              'experiments/verify_vehicle_stage.py', 'experiments/probe_support.py',
              'experiments/verify_physics_vehicle.py', 'hivemind/launcher.py',
-             'traffic/physx_vehicle.py', 'traffic/driver_control.py', 'traffic/physics_session.py']
+             'traffic/physx_vehicle.py', 'traffic/wheel_geometry.py', 'traffic/driver_control.py', 'traffic/physics_session.py']
     if stage == 'dynamics':
         files.append('traffic/dynamics_validation.py')
     if stage == 'lab':

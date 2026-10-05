@@ -32,6 +32,8 @@ class PhysxVehicle:
             wheelAttachmentPathsOut=wheels)
         self.path = paths[0]
         self.wheel_paths = wheels[0]
+        from traffic.wheel_geometry import author_explicit_wheel_axes
+        author_explicit_wheel_axes(stage, self.wheel_paths)
         self.controllers = [PhysxSchema.PhysxVehicleWheelControllerAPI(stage.GetPrimAtPath(p))
                             for p in self.wheel_paths]
         self.physx = omni.physx.get_physx_interface()
@@ -49,6 +51,7 @@ class PhysxVehicle:
             center_of_mass_from_root_m=list(mass.GetCenterOfMassAttr().Get()),
             chassis_collision_dimensions_m=[4.8, 1.8, 1.4],
             wheelbase_m=self.wheelbase_m, track_m=self.track_m, wheel_radius_m=0.35,
+            wheel_geometry='X-axis cylinder with explicit local Z+90deg; lateral Y axle',
             gravity_m_s2=9.81, world_frame='right-handed X forward, Y left, Z up; meters',
             pose_reference='chassis prim origin; NOT SUMO front bumper',
             quaternion_order='xyzw', movement_authority='isaac_physx',
