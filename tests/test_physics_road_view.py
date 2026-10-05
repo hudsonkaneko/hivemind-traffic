@@ -8,6 +8,7 @@ from traffic.lane_geometry import load_routes
 from visualization.physics_road_view import (
     author_physics_road, build_road_geometry, camera_pose_follow, camera_pose_overview,
     route_ribbon, target_ring,
+    lane_divider_geometry,
 )
 
 
@@ -152,3 +153,72 @@ def test_usd_reference_toggle_and_endpoint_update(routes):
     assert UsdGeom.Imageable(stage.GetPrimAtPath('/World/PhysicsRoad/Debug/UpcomingPath')).GetVisibilityAttr().Get() == 'invisible'
     assert UsdGeom.Imageable(stage.GetPrimAtPath('/World/PhysicsRoad/Debug/PursuitTarget')).GetVisibilityAttr().Get() == 'invisible'
     with pytest.raises(ValueError): author_physics_road(stage, routes['straight100'])
+
+
+def test_lane_divider_has_actual_dash_gaps_and_relative_offset():
+    from traffic.lane_geometry import LaneRoute, RouteSegment
+    road = LaneRoute('two-lane', 7.2, (RouteSegment(100),), origin_xy_m=(0, 1.8))
+    mesh = lane_divider_geometry(road, 0)
+    assert all(p[2] == .04 for p in mesh.points)
+    assert all(1.74 <= p[1] <= 1.86 for p in mesh.points)
+    for face in range(len(mesh.face_counts)):
+        xs = [mesh.points[i][0] for i in mesh.face_indices[4*face:4*face+4]]
+        assert int(min(xs) // 6) == int((max(xs) - 1e-9) // 6)
+        assert max(xs) % 6 <= 3 + 1e-9
+    with pytest.raises(ValueError): lane_divider_geometry(road, 3.6)
+
+
+def test_usd_actual_detour_preview_and_optional_static_divider():
+    from traffic.lane_geometry import LaneRoute, RouteSegment
+    stage = _usd_stage()
+    from pxr import UsdGeom, UsdPhysics
+    road = LaneRoute('two-lane', 7.2, (RouteSegment(100),), origin_xy_m=(0, 1.8))
+    angle = 2 * math.atan(3.6 / 20)
+    radius = 10 / math.sin(angle)
+    detour = LaneRoute('detour', 3.6, (RouteSegment(10), RouteSegment(radius*angle, 1/radius),
+                       RouteSegment(radius*angle, -1/radius), RouteSegment(70)))
+    view = author_physics_road(stage, road, lane_dividers_m=(0,), show_reference_centerline=False)
+    before = view.static_layer.ExportToString()
+    state = dict(position_m=[10, 0, 1])
+    view.update(state, target_xy=(30, 3.6), planned_route=detour, preview_distance_m=35)
+    mesh = UsdGeom.Mesh(stage.GetPrimAtPath('/World/PhysicsRoad/Debug/UpcomingPath'))
+    expected = route_ribbon(detour, 10, 45, width_m=.16, z_m=.07)
+    for actual, wanted in zip(mesh.GetPointsAttr().Get(), expected.points):
+        assert tuple(actual) == pytest.approx(wanted, abs=2e-6)
+    assert len(mesh.GetPointsAttr().Get()) == len(expected.points)
+    assert max(p[1] for p in mesh.GetPointsAttr().Get()) > 3.6
+    reference = UsdGeom.Imageable(stage.GetPrimAtPath('/World/PhysicsRoad/Debug/ReferenceCenterline'))
+    assert reference.GetVisibilityAttr().Get() == 'invisible'
+    assert stage.GetPrimAtPath('/World/PhysicsRoad/Static/LaneDivider0')
+    assert view.static_layer.ExportToString() == before
+    assert all(not prim.HasAPI(UsdPhysics.CollisionAPI) for prim in stage.Traverse())
+    view.update(state)
+    default = route_ribbon(road, 10, 35, width_m=.16, z_m=.07)
+    for actual, wanted in zip(mesh.GetPointsAttr().Get(), default.points):
+        assert tuple(actual) == pytest.approx(wanted, abs=2e-6)
+    assert reference.GetVisibilityAttr().Get() == 'invisible'
+    for bad in (0, -1, math.nan):
+        with pytest.raises(ValueError): view.update(state, preview_distance_m=bad)
+
+
+@pytest.mark.parametrize('remaining_m,faces', [(2., 4), (1.5, 3), (.5, 1), (0., 0)])
+def test_usd_preview_shrinks_to_short_typed_arrays_at_endpoint(routes, remaining_m, faces):
+    stage = _usd_stage()
+    from pxr import UsdGeom, Vt
+    route = routes['straight100']
+    view = author_physics_road(stage, route)
+    static_before = view.static_layer.ExportToString()
+    view.update(dict(position_m=[route.length_m - remaining_m, 0, 1]))
+    mesh = UsdGeom.Mesh(stage.GetPrimAtPath('/World/PhysicsRoad/Debug/UpcomingPath'))
+    counts = mesh.GetFaceVertexCountsAttr().Get()
+    assert isinstance(counts, Vt.IntArray)
+    assert isinstance(mesh.GetFaceVertexIndicesAttr().Get(), Vt.IntArray)
+    assert isinstance(mesh.GetPointsAttr().Get(), Vt.Vec3fArray)
+    if faces:
+        assert len(counts) == faces
+        assert list(counts) == [4] * faces
+        assert len(mesh.GetFaceVertexIndicesAttr().Get()) == 4 * faces
+        assert mesh.GetVisibilityAttr().Get() == 'inherited'
+    else:
+        assert mesh.GetVisibilityAttr().Get() == 'invisible'
+    assert view.static_layer.ExportToString() == static_before

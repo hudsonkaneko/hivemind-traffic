@@ -109,6 +109,13 @@ path overlays bring forward a small part of step 20 without detailed assets.
 The full step-8 60-s sensing/reset gate and steps 9–13 remain open; this is not
 LiDAR road perception, general avoidance or a hybrid fleet.
 
+The [adaptive obstacle-path increment](obstacle-bypass.md) adds a separate
+single-car scripted bypass fixture: fresh RTX bounds select a left detour and
+return, and the cyan preview is that actual driver path. It relies on a known
+straight road, privileged odometry, an empty adjacent corridor and explicit
+static-object extent priors. Its bounded checks do not close moving-obstacle,
+occupied-lane-change, multi-car or real-time gates.
+
 | Step | Deliverable | Measurable exit gate |
 | ---: | --- | --- |
 | 6 | Shared lane and route geometry, independent of road art | Centerlines, widths, curvature, and coordinate transforms are fixture-tested. SUMO/Isaac route correspondence is within 0.05 m on sampled reference points; static road rendering does not redefine the driving map. |

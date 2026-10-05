@@ -112,6 +112,21 @@ def build_road_geometry(route, *, endpoint_padding_m=5.0):
     }
 
 
+def lane_divider_geometry(route, lateral_offset_m):
+    """Three-metre white dashes with three-metre gaps on the static road."""
+    offset = _number(lateral_offset_m, 'lane_divider_m')
+    if abs(offset) + 0.06 >= route.width_m / 2:
+        raise ValueError('Lane divider must lie inside the road edges')
+    points, counts, indices = [], [], []
+    for start in range(0, math.ceil(route.length_m), 6):
+        dash = route_ribbon(route, start, min(start + 3.0, route.length_m),
+                            width_m=0.12, lateral_offset_m=offset, z_m=0.04)
+        indices.extend(index + len(points) for index in dash.face_indices)
+        points.extend(dash.points)
+        counts.extend(dash.face_counts)
+    return MeshData(tuple(points), tuple(counts), tuple(indices))
+
+
 def camera_pose_overview(route):
     """Oblique camera framing the entire padded route in a typical 16:9 view."""
     points = build_road_geometry(route)['Asphalt'].points
@@ -139,9 +154,6 @@ def camera_pose_follow(position_m, yaw_rad):
 def _author_mesh(stage, path, geometry, color, material_path, *, purpose='default', emissive=False):
     from pxr import Gf, Sdf, UsdGeom, UsdShade
     mesh = UsdGeom.Mesh.Define(stage, path)
-    mesh.CreatePointsAttr(geometry.points)
-    mesh.CreateFaceVertexCountsAttr(geometry.face_counts)
-    mesh.CreateFaceVertexIndicesAttr(geometry.face_indices)
     mesh.CreateSubdivisionSchemeAttr(UsdGeom.Tokens.none)
     mesh.CreateDoubleSidedAttr(True)
     mesh.CreateDisplayColorAttr([Gf.Vec3f(*color)])
@@ -160,10 +172,12 @@ def _author_mesh(stage, path, geometry, color, material_path, *, purpose='defaul
 
 
 def _update_mesh(mesh, geometry):
-    from pxr import Gf
-    mesh.GetPointsAttr().Set(geometry.points)
-    mesh.GetFaceVertexCountsAttr().Set(geometry.face_counts)
-    mesh.GetFaceVertexIndicesAttr().Set(geometry.face_indices)
+    from pxr import Gf, Vt
+    # Short Python tuples can be inferred as Gf vectors rather than USD arrays.
+    # Explicit array types also keep shrinking previews valid near route ends.
+    mesh.CreatePointsAttr().Set(Vt.Vec3fArray([Gf.Vec3f(*p) for p in geometry.points]))
+    mesh.CreateFaceVertexCountsAttr().Set(Vt.IntArray(geometry.face_counts))
+    mesh.CreateFaceVertexIndicesAttr().Set(Vt.IntArray(geometry.face_indices))
     minimum = [min(p[i] for p in geometry.points) for i in range(3)]
     maximum = [max(p[i] for p in geometry.points) for i in range(3)]
     mesh.CreateExtentAttr().Set([Gf.Vec3f(*minimum), Gf.Vec3f(*maximum)])
@@ -184,13 +198,18 @@ class PhysicsRoadView:
                              endpoint_padding_m=5.0,
                              static_layer=static_layer.identifier, dynamic_layer=dynamic_layer.identifier)
 
-    def update(self, state, target_xy=None, show_reference=True):
+    def update(self, state, target_xy=None, show_reference=True, planned_route=None,
+               preview_distance_m=25.0):
         """Consume a plain observed state and optional planner target; never move it."""
         from pxr import Usd, UsdGeom
         position = _position(state['position_m'], 3, 'position_m')
-        station = self.route.project(*position[:2]).s_m
-        begin = max(0.0, min(self.route.length_m, station))
-        end = min(self.route.length_m, begin + 25.0)
+        route = self.route if planned_route is None else planned_route
+        distance = _number(preview_distance_m, 'preview_distance_m')
+        if distance <= 0:
+            raise ValueError('Preview distance must be positive')
+        station = route.project(*position[:2]).s_m
+        begin = max(0.0, min(route.length_m, station))
+        end = min(route.length_m, begin + distance)
         debug_root = self.root_path + '/Debug'
         with Usd.EditContext(self.stage, self.dynamic_layer):
             root = UsdGeom.Imageable(self.stage.GetPrimAtPath(debug_root))
@@ -198,7 +217,7 @@ class PhysicsRoadView:
             path_mesh = UsdGeom.Mesh(self.stage.GetPrimAtPath(debug_root + '/UpcomingPath'))
             path_mesh.CreateVisibilityAttr().Set('inherited' if end > begin else 'invisible')
             if end > begin:
-                _update_mesh(path_mesh, route_ribbon(self.route, begin, end, width_m=0.16, z_m=0.07))
+                _update_mesh(path_mesh, route_ribbon(route, begin, end, width_m=0.16, z_m=0.07))
             target_mesh = UsdGeom.Mesh(self.stage.GetPrimAtPath(debug_root + '/PursuitTarget'))
             target_mesh.CreateVisibilityAttr().Set('inherited' if target_xy is not None else 'invisible')
             if target_xy is not None:
@@ -212,7 +231,8 @@ class PhysicsRoadView:
         raise ValueError('Camera mode must be overview, or follow with an observed state')
 
 
-def author_physics_road(stage, route, root_path='/World/PhysicsRoad'):
+def author_physics_road(stage, route, root_path='/World/PhysicsRoad',
+                        lane_dividers_m=(), show_reference_centerline=True):
     """Attach independent anonymous artwork/debug layers, preserving the edit target.
 
     Does not save existing files, change the stage unit/up-axis contract, add
@@ -226,6 +246,7 @@ def author_physics_road(stage, route, root_path='/World/PhysicsRoad'):
         raise ValueError('View root already exists; do not overwrite existing scene opinions')
     if UsdGeom.GetStageUpAxis(stage) != UsdGeom.Tokens.z or not math.isclose(UsdGeom.GetStageMetersPerUnit(stage), 1.0):
         raise ValueError('The physical-road view requires an existing Z-up, metre stage')
+    dividers = [lane_divider_geometry(route, offset) for offset in lane_dividers_m]
     static = Sdf.Layer.CreateAnonymous('physics-road-static.usda')
     dynamic = Sdf.Layer.CreateAnonymous('physics-road-debug.usda')
     old_sublayers = list(stage.GetRootLayer().subLayerPaths)
@@ -240,11 +261,15 @@ def author_physics_road(stage, route, root_path='/World/PhysicsRoad'):
                                 ('LeftEdge', (0.92, 0.92, 0.85)), ('RightEdge', (0.92, 0.92, 0.85))]:
                 _author_mesh(stage, root_path + '/Static/' + name, geometry[name], color,
                              root_path + '/Materials/' + name)
+            for index, divider in enumerate(dividers):
+                _author_mesh(stage, root_path + f'/Static/LaneDivider{index}', divider,
+                             (0.92, 0.92, 0.92), root_path + '/Materials/LaneDivider')
             debug = UsdGeom.Xform.Define(stage, root_path + '/Debug')
             debug.CreatePurposeAttr(UsdGeom.Tokens.default_)
-            _author_mesh(stage, root_path + '/Debug/ReferenceCenterline',
+            reference = _author_mesh(stage, root_path + '/Debug/ReferenceCenterline',
                          route_ribbon(route, 0, route.length_m, width_m=0.06, z_m=0.05),
                          (0.0, 0.36, 0.45), root_path + '/Materials/Reference', emissive=True)
+            reference.CreateVisibilityAttr().Set('inherited' if show_reference_centerline else 'invisible')
         with Usd.EditContext(stage, dynamic):
             _author_mesh(stage, root_path + '/Debug/UpcomingPath',
                          route_ribbon(route, 0, min(25.0, route.length_m), width_m=0.16, z_m=0.07),

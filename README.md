@@ -45,6 +45,14 @@ python scripts/demo_physics_lidar.py --points
 
 This opens the bounded physics-car demonstration using the configured external
 Isaac runtime. It is scripted control, not a trained driving policy.
+The separate [adaptive obstacle bypass](documentation/obstacle-bypass.md) makes
+one physical car pass a static barrier and return, with the cyan line showing its
+LiDAR-triggered planned route:
+
+```text
+python scripts/demo_obstacle_bypass.py
+```
+
 See the [documentation index](documentation/README.md) and
 [development workflow](documentation/workflow.md) for changes, evidence and review.
 

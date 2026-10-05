@@ -8,7 +8,7 @@ import pytest
 from traffic.driver_control import DriverControlGate
 from traffic.lane_geometry import LaneRoute, load_routes
 from traffic.path_following import (
-    FRAME, SOURCE, BehaviorIntent, FollowerConfig, PathFollower, PathPlanner,
+    FRAME, SOURCE, SENSOR_PATH_SOURCE, BehaviorIntent, FollowerConfig, PathFollower, PathPlanner,
     PathReference, ScriptedCruiseBehavior, VehicleState,
 )
 
@@ -206,6 +206,20 @@ def test_physics_state_adapter_does_not_reinterpret_sumo_pose():
     adapted = VehicleState.from_physics(sample, episode_id='e', vehicle_id='v', tick=10)
     assert (adapted.x_m, adapted.y_m, adapted.yaw_rad) == (1, 2, 0.5)
     assert adapted.frame == FRAME and adapted.source == SOURCE
+
+
+def test_sensor_path_keeps_ego_odometry_provenance_explicit(routes):
+    follower = PathFollower(routes, 'episode', 'ego')
+    command = follower.command(state(), 0, reference(source=SENSOR_PATH_SOURCE))
+    assert command.throttle > 0
+    assert follower.last_diagnostics['fallback'] is False
+    assert follower.last_diagnostics['state_source'] == SOURCE
+    assert follower.last_diagnostics['path_source'] == SENSOR_PATH_SOURCE
+    follower = PathFollower(routes, 'episode', 'ego')
+    invalid = follower.command(state(source=SENSOR_PATH_SOURCE), 0,
+                               reference(source=SENSOR_PATH_SOURCE))
+    assert invalid.throttle == 0 and invalid.brake == 1
+    assert follower.last_diagnostics['fallback'] is True
 
 
 def test_configuration_is_plain_serializable_and_bounded():

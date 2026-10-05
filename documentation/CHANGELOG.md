@@ -4,6 +4,21 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-04 — LiDAR-triggered physical obstacle bypass
+
+- Added a separate one-car, two-lane fixture with a sensed static-obstacle
+  detour and return. Cyan now previews the actual driver route; simple visuals,
+  corrected wheels, follow/overview cameras and the old stop demo remain.
+- Added explicit extent priors, two-scan confirmation, reference-road footprint
+  bounds, fresh point-cloud body-envelope braking, blocked-road and frozen-scan
+  modes. PhysX owns movement; no SUMO connection, training or runtime installation.
+- Retained failed detection, short-ribbon USD conversion and ground-plane versus
+  3D-axle comparison attempts. Corrected the latter measurement without changing
+  wheel geometry or the 0.1-degree threshold; records identify the new reference.
+- **823 CPU tests passed, 10 skipped; 37 Isaac CPU view/wheel tests passed.**
+  See [explanation, commands and limits](obstacle-bypass.md) for runtime evidence
+  and the distinction between a bounded static fixture and general autonomy.
+
 ## 2026-10-04 — Correct physical-car wheel orientation
 
 - Fixed the horizontal/tumbling-wheel visual by authoring an explicit cylinder

@@ -1,7 +1,9 @@
-"""Scripted behavior -> known-map path reference -> physical wheel commands.
+"""Scripted behavior -> explicit path reference -> physical wheel commands.
 
 This CPU-only module neither simulates nor teleports cars. State and map inputs
-are privileged simulator data, NOT LiDAR perception. Isaac/PhysX owns movement;
+are privileged simulator data by default, NOT LiDAR perception. A separate
+planner may label a sensed detour with SENSOR_PATH_SOURCE; ego state stays
+explicitly privileged. Isaac/PhysX owns movement;
 the caller feeds returned DriverCommand objects through DriverControlGate once
 per physics tick. Suggested rates: behavior/planning 10 Hz, control 60 Hz,
 physics 120 Hz. Every timestamp is an integer physics tick in one episode.
@@ -22,6 +24,7 @@ from traffic.lane_geometry import LaneRoute
 
 FRAME = 'xy_m_z_up_yaw_ccw_rad'
 SOURCE = 'privileged_simulator_state_and_known_map'
+SENSOR_PATH_SOURCE = 'lidar_derived_path_with_privileged_odometry'
 
 
 def _finite(value):
@@ -95,7 +98,7 @@ class BehaviorIntent:
 
 @dataclass(frozen=True)
 class PathReference:
-    """Reference to an immutable known route, not a pose command or trajectory.
+    """Reference to an immutable registered route, not a pose command or trajectory.
 
     ``stop_s_m`` is the chassis-center station at which to stop. Validity is
     exclusive at expires_tick and cannot outlive the issuing behavior intent.
@@ -249,7 +252,7 @@ class PathFollower:
             return 'missing_or_invalid_reference'
         if reference.episode_id != self.episode_id or reference.vehicle_id != self.vehicle_id:
             return 'reference_identity_mismatch'
-        if reference.frame != FRAME or reference.source != SOURCE:
+        if reference.frame != FRAME or reference.source not in (SOURCE, SENSOR_PATH_SOURCE):
             return 'reference_frame_or_source_mismatch'
         if not _identity(reference.path_id) or reference.path_id not in self.routes:
             return 'unknown_path'
@@ -326,6 +329,7 @@ class PathFollower:
             throttle, brake, reason = 0.0, 0.0, 'speed_coasting'
         self.last_diagnostics = dict(
             reason=reason, is_fallback=False, fallback=False, source=SOURCE, path_id=reference.path_id,
+            state_source=state.source, path_source=reference.source,
             center_progress_m=center.s_m, rear_progress_m=rear.s_m,
             center_lateral_error_m=center.lateral_error_m, heading_error_rad=heading_error,
             remaining_m=remaining, stop_s_m=reference.stop_s_m, endpoint_latched=at_endpoint,

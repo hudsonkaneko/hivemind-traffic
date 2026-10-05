@@ -58,12 +58,38 @@ def test_quaternion_comparison_detects_basis_bug_and_ignores_sign_and_scale():
 
 
 def test_wheel_gate_requires_complete_unique_finite_aligned_evidence():
-    from traffic.wheel_geometry import assess_wheel_geometry
+    from traffic.wheel_geometry import AXIS_REFERENCE, assess_wheel_geometry
     paths = ['FL', 'FR', 'RL', 'RR']
-    rows = [dict(tick=tick, path=path, axis_error_deg=0, native_pose_error_deg=0)
+    rows = [dict(tick=tick, path=path, axis_error_deg=0, native_pose_error_deg=0, axis_reference=AXIS_REFERENCE)
             for tick in (4, 8) for path in paths]
     assert assess_wheel_geometry(rows, paths, 8)['passed']
     for bad in [[], rows[:-1], rows + rows[:1],
                 rows[:-1] + [dict(rows[-1], axis_error_deg=90)],
+                rows[:-1] + [dict(rows[-1], axis_reference='tire_contact_direction')],
+                [{k:v for k,v in r.items() if k != 'axis_reference'} for r in rows],
                 rows[:-1] + [dict(rows[-1], native_pose_error_deg=float('nan'))]]:
         assert not assess_wheel_geometry(bad, paths, 8)['passed']
+
+
+def test_tilted_steered_spinning_axle_matches_native_not_ground_contact():
+    pytest.importorskip('pxr.Gf')
+    from pxr import Gf
+    from traffic.wheel_geometry import direction_error_deg, native_axle_world
+    def xyzw(q): return [*q.GetImaginary(), q.GetReal()]
+    body = Gf.Rotation(Gf.Vec3d(0,0,1), 31).GetQuat() * Gf.Rotation(Gf.Vec3d(1,0,0), 2).GetQuat()
+    wheel = Gf.Rotation(Gf.Vec3d(0,0,1), 12).GetQuat() * Gf.Rotation(Gf.Vec3d(0,1,0), 83).GetQuat()
+    basis = Gf.Rotation(Gf.Vec3d(0,0,1), 90).GetQuat()
+    rendered = Gf.Rotation(body * wheel * basis).TransformDir(Gf.Vec3d(1,0,0))
+    expected = native_axle_world(xyzw(body), xyzw(wheel))
+    assert direction_error_deg(rendered, expected) < 1e-5
+    contact = (expected[0], expected[1], 0.)
+    assert direction_error_deg(rendered, contact) > .1
+    # The old implicit Y cylinder under a folded Z90 shape basis points sideways.
+    pizza = Gf.Rotation(body * wheel * basis).TransformDir(Gf.Vec3d(0,1,0))
+    assert direction_error_deg(pizza, expected) == pytest.approx(90, abs=1e-5)
+
+
+@pytest.mark.parametrize('bad', [(0,0,0), (0,float('nan'),1), (1,2)])
+def test_invalid_axle_directions_fail_closed(bad):
+    from traffic.wheel_geometry import direction_error_deg
+    with pytest.raises(ValueError): direction_error_deg(bad, (0,1,0))
