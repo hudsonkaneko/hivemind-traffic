@@ -2,11 +2,30 @@
 
 Last verified: October 4, 2026.
 
-Latest source milestone: commit `531f748`, published on `codex/physics-vehicle-foundation`.
+Latest source milestone: commit `252c6de`, published on `codex/physics-vehicle-foundation`.
 [Pull request #1](https://github.com/hudsonkaneko/hivemind-traffic/pull/1) records
 the implementation, tests, evidence and remaining gates. `main` is unchanged.
 
-## Latest update: visible physical car and LiDAR view
+## Latest update: wheel orientation correction
+
+Added **30 Wheel orientation fix**, tab `t.ivzd9eyrxgjj`, to the
+[same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.ivzd9eyrxgjj).
+It explains the cylinder/attachment basis mismatch, explicit axle correction,
+unchanged physical/control traces, corrected coordinate-frame test, retained
+failed attempt, measured errors, scope limits and restart instructions.
+
+Native readback verified 31 tabs, exact inserted text, eight title/heading
+paragraphs, three shaded Consolas commands, four highlighted definitions and
+three source hyperlinks with preserved effective typography. All 30 earlier
+tab bodies, titles, order and parents remained unchanged. Google Docs pagination
+was not visually inspected; simulator captures were inspected separately.
+
+Trusted read: ignored `outputs/doc-sync/trusted-read-07`; no protected controls.
+Final verified revision:
+`AHj4eMTpDBPYwDNssfWSW2hfDlFaOA1ObNBPOyhMqQeJi900Hj5KWmLHKxUHIVAFoLDjMCEmLcwAY4SWpa85ySBe7nsGS561JqFSMRNZJP8`.
+Source links point to immutable `252c6de`; raw simulation evidence remains local.
+
+## Previous synchronization: visible physical car and LiDAR view (531f748)
 
 Added **29 Physics car and LiDAR view**, tab `t.rb5nks6ogqck`, to the
 [same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.rb5nks6ogqck).

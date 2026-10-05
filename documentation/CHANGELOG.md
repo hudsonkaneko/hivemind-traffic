@@ -16,6 +16,8 @@ authority for historical measurements and failures.
   **786 CPU tests passed, 4 skipped; 4 Isaac wheel tests passed.**
   See [cause and reproduction](wheel-orientation.md) and
   [four retained attempts](wheel-geometry-results.json).
+- Added verified Google guide tab 30 with three styled portable commands and
+  four highlighted definitions; all 30 earlier tab bodies remain unchanged.
 
 ## 2026-10-04 — Visible physical car with RTX emergency braking
 

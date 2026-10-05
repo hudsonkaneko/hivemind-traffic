@@ -67,4 +67,3 @@ def test_wheel_gate_requires_complete_unique_finite_aligned_evidence():
                 rows[:-1] + [dict(rows[-1], axis_error_deg=90)],
                 rows[:-1] + [dict(rows[-1], native_pose_error_deg=float('nan'))]]:
         assert not assess_wheel_geometry(bad, paths, 8)['passed']
-
