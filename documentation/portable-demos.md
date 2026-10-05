@@ -149,6 +149,20 @@ mean the strict lidar acceptance tests pass; lidar still does not control PPO.
 
 ## Verification and learning exercise
 
+For the newer, separate **physics-driven car** with curved road, overview/follow
+cameras, planned path and LiDAR emergency braking, see the
+[physical LiDAR view](physics-lidar-view.md). It does not require SUMO:
+
+```text
+python scripts/demo_physics_lidar.py --check
+python scripts/demo_physics_lidar.py --points
+```
+
+The command is portable runtime discovery, not a bundled simulator: a compatible
+Isaac installation and NVIDIA RTX hardware are still required. This new path is
+validated on the recorded Windows/Isaac 6 installation, not every operating system
+or Isaac release. Its current simple scripted car is not a learned policy.
+
 Local verification for this change: all 65 automated tests passed. Setup checks
 passed for sumo, trained, lidar, replay and ovrtx. After CMD activation, the exact
 `python -m hivemind` entry point completed scripted and trained headless rollouts

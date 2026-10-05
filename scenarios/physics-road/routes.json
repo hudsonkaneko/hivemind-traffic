@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "frame": "xy_m_z_up_yaw_ccw_rad",
+  "description": "Analytic lane geometry only; no simulator or visual-asset dependency. Curve lengths are arc lengths. All routes are 100 m with tangent endpoint extensions.",
+  "routes": [
+    {
+      "route_id": "straight100",
+      "width_m": 3.6,
+      "origin_xy_m": [0.0, 0.0],
+      "initial_yaw_rad": 0.0,
+      "segments": [{"length_m": 100.0, "curvature_rad_m": 0.0}]
+    },
+    {
+      "route_id": "left_r60",
+      "width_m": 3.6,
+      "origin_xy_m": [0.0, 0.0],
+      "initial_yaw_rad": 0.0,
+      "segments": [
+        {"length_m": 20.0, "curvature_rad_m": 0.0},
+        {"length_m": 60.0, "curvature_rad_m": 0.016666666666666666},
+        {"length_m": 20.0, "curvature_rad_m": 0.0}
+      ]
+    },
+    {
+      "route_id": "right_r60",
+      "width_m": 3.6,
+      "origin_xy_m": [0.0, 0.0],
+      "initial_yaw_rad": 0.0,
+      "segments": [
+        {"length_m": 20.0, "curvature_rad_m": 0.0},
+        {"length_m": 60.0, "curvature_rad_m": -0.016666666666666666},
+        {"length_m": 20.0, "curvature_rad_m": 0.0}
+      ]
+    }
+  ]
+}

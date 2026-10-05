@@ -30,6 +30,32 @@ Isaac's bundled Python.
 Vehicle asset iterations belong in `vehicles/sim_ready/<vehicle-name>/v01`, etc.
 Archived experiment results remain historical evidence, not fresh validation.
 
+## Active development: hybrid vehicle physics
+
+The [current 20-step roadmap](documentation/hybrid-roadmap.md) assigns evaluated
+cars to Isaac/PhysX and lightweight background traffic to SUMO. This is a staged
+migration: the existing traffic demos remain SUMO-driven. The separate one-car
+[physical LiDAR view](documentation/physics-lidar-view.md) adds a marked curved
+road, overview/follow cameras, planned-path overlays and scripted LiDAR braking.
+It needs no SUMO; a two-way traffic bridge and physics-based training remain future work.
+
+```text
+python scripts/demo_physics_lidar.py --points
+```
+
+This opens the bounded physics-car demonstration using the configured external
+Isaac runtime. It is scripted control, not a trained driving policy.
+The separate [adaptive obstacle bypass](documentation/obstacle-bypass.md) makes
+one physical car pass a static barrier and return, with the cyan line showing its
+LiDAR-triggered planned route:
+
+```text
+python scripts/demo_obstacle_bypass.py
+```
+
+See the [documentation index](documentation/README.md) and
+[development workflow](documentation/workflow.md) for changes, evidence and review.
+
 ## Scaling foundations and workstation measurements
 
 The October 3 capacity study separates cheap SUMO background traffic from

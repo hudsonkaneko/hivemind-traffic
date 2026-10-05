@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "study": "physics_vehicle_reset_control",
+  "seed": 101,
+  "physics_hz": 120,
+  "control_hz": 60,
+  "repeats": 2,
+  "disable_authoring_tools": false,
+  "target_speed_m_s": 1.0,
+  "drive_torque_per_front_wheel_nm": 700.0,
+  "brake_torque_per_wheel_nm": 1500.0,
+  "command_ttl_ticks": 12,
+  "max_process_seconds": 90,
+  "phases": [["settle", 1.0], ["straight", 3.0], ["brake", 2.0]],
+  "acceptance": {
+    "entry_speed_min_m_s": 0.8,
+    "entry_speed_max_m_s": 1.2,
+    "stopped_speed_max_m_s": 0.05,
+    "minimum_upright_z": 0.95,
+    "repeat_position_tolerance_m": 0.1,
+    "repeat_speed_tolerance_m_s": 0.05,
+    "memory_warmup_episodes": 1,
+    "post_warmup_rss_growth_max_mib": 256.0
+  }
+}
