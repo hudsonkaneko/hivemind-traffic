@@ -4,6 +4,18 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-06 — Required OpenUSD scene-authoring conventions
+
+- Recorded the user's clean-hierarchy requirement in AGENTS.md and the workflow.
+- Added [scene/asset conventions](../usd/SCENE_STRUCTURE.md): stable descriptive
+  names, explicit component boundaries, references for reusable assets, payloads
+  where selective loading helps, and appropriate layer/instancing boundaries.
+- Documented the existing physical-prototype gaps and the replay exporter's
+  existing references; defined migration and physics/sensor regression checks.
+- Policy/documentation only: no runtime hierarchy changes, scene execution,
+  dependency installation, asset conversion or training. Existing results and
+  unrelated highway/vehicle work are preserved. Google guide sync is pending.
+
 ## 2026-10-06 — Measured preview pacing (GUI timing still open)
 
 - Added optional `--real-time` 1x-target pacing, lighter RGB settings and 20-Hz

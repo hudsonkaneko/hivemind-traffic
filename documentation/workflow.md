@@ -23,6 +23,9 @@ GitHub. An uncommitted file is not backed up by pushing another commit.
    push or silently reset a dirty checkout.
 2. Identify the roadmap step, intended behavior, and acceptance rule before
    running the experiment. Keep the old demo and its evidence available.
+   For USD scene/asset changes, apply [scene conventions](../usd/SCENE_STRUCTURE.md),
+   inspect both hierarchy and composition, and include path/asset-resolution and
+   physics/sensor regression checks appropriate to the change.
 3. Implement the smallest useful change with targeted tests. Separate runtime
    environments: traffic packages must not be installed into Isaac's Python.
 4. Run CPU/schema tests first, then a bounded simulator smoke test. Run GPU tests
