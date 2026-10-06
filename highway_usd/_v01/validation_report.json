@@ -1,0 +1,52 @@
+{
+  "passed": true,
+  "stage_sha256": "9f051ca2756127ac222bc99b786bcccf7dcc9b675a920dd9738ed7831a352058",
+  "usd_version": "0.26.8",
+  "prim_count": 108,
+  "lane_count": 9,
+  "route_edge_count": 16,
+  "spawn_count": 20,
+  "relationship_target_count": 129,
+  "all_routes_continue": true,
+  "auxiliary_and_ramps_strongly_connected": true,
+  "ramp_metrics": {
+    "East": {
+      "length_m": 495.7444571589387,
+      "min_sampled_radius_m": 23.365543681207882,
+      "exit_gap_m": 0.0,
+      "merge_gap_m": 0.0
+    },
+    "North": {
+      "length_m": 495.7444571589375,
+      "min_sampled_radius_m": 23.36554368120497,
+      "exit_gap_m": 0.0,
+      "merge_gap_m": 0.0
+    },
+    "West": {
+      "length_m": 495.7444571589379,
+      "min_sampled_radius_m": 23.365543681204958,
+      "exit_gap_m": 0.0,
+      "merge_gap_m": 0.0
+    },
+    "South": {
+      "length_m": 495.7444571589384,
+      "min_sampled_radius_m": 23.365543681214486,
+      "exit_gap_m": 0.0,
+      "merge_gap_m": 0.0
+    }
+  },
+  "maximum_endpoint_gap_m": 0.0,
+  "maximum_join_tangent_error_deg": 0.031245740684404662,
+  "maximum_waypoint_spacing_m": 0.858046812844821,
+  "maximum_usd_float_error_m": 1.52546983827051e-05,
+  "collision_mesh_watertight": true,
+  "road_triangle_overlap_area_m2": -4.5838532969355583e-10,
+  "render_collision_difference_area_m2": 0.009934704502121148,
+  "road_area_m2": 28688.56812088305,
+  "collider_face_count": 37540,
+  "usd_validator_count": 28,
+  "usd_compliance_errors": [],
+  "usd_compliance_failed_checks": [],
+  "usd_compliance_warnings": [],
+  "scope": "Static USD/schema, sampled geometry and route graph. No vehicle/controller acceptance implied."
+}

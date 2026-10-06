@@ -7,6 +7,12 @@ This is the active development order, replacing the old immediate-next-step
 sections in the preserved [implementation roadmap](../experiments/ROADMAP.md)
 and [capacity study](scaling-foundations.md). Historical evidence is unchanged.
 
+October 6 environment increment: the separate [four-leaf highway USD draft](highway-usd-v01.md)
+now has verified static geometry and a closed navigation graph, plus versioned
+screenshots. Stationary contact checks passed; the strict simulator gate remains
+failed on a stage-close warning. This does not advance vehicle-driving, shared-map
+integration, training, or runtime lifecycle gates below.
+
 ## Destination and boundaries
 
 Isaac Sim/PhysX will determine research-car motion from explicit steering,
