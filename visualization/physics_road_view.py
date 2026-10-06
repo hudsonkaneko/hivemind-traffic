@@ -188,6 +188,12 @@ class PhysicsRoadView:
 
     def __init__(self, stage, route, root_path, static_layer, dynamic_layer):
         self.stage, self.route, self.root_path = stage, route, root_path
+        # Routes are immutable. Cache only this view's road framing, not vehicle
+        # poses or LiDAR/control state; overview previously rebuilt road meshes.
+        self._overview_route = route
+        self._overview_camera = camera_pose_overview(route)
+        self._displayed_full_route = None
+        self._target_translation = None
         self.static_layer, self.dynamic_layer = static_layer, dynamic_layer
         self.metadata = dict(route_id=route.route_id, route_length_m=route.length_m,
                              lane_width_m=route.width_m, movement_authority='unchanged_isaac_physx',
@@ -199,33 +205,48 @@ class PhysicsRoadView:
                              static_layer=static_layer.identifier, dynamic_layer=dynamic_layer.identifier)
 
     def update(self, state, target_xy=None, show_reference=True, planned_route=None,
-               preview_distance_m=25.0):
+               preview_distance_m=25.0, full_plan=False):
         """Consume a plain observed state and optional planner target; never move it."""
-        from pxr import Usd, UsdGeom
+        from pxr import Gf, Usd, UsdGeom
         position = _position(state['position_m'], 3, 'position_m')
         route = self.route if planned_route is None else planned_route
         distance = _number(preview_distance_m, 'preview_distance_m')
         if distance <= 0:
             raise ValueError('Preview distance must be positive')
-        station = route.project(*position[:2]).s_m
+        station = 0. if full_plan else route.project(*position[:2]).s_m
         begin = max(0.0, min(route.length_m, station))
-        end = min(route.length_m, begin + distance)
+        end = route.length_m if full_plan else min(route.length_m, begin + distance)
         debug_root = self.root_path + '/Debug'
         with Usd.EditContext(self.stage, self.dynamic_layer):
             root = UsdGeom.Imageable(self.stage.GetPrimAtPath(debug_root))
             root.CreateVisibilityAttr().Set('inherited' if show_reference else 'invisible')
             path_mesh = UsdGeom.Mesh(self.stage.GetPrimAtPath(debug_root + '/UpcomingPath'))
             path_mesh.CreateVisibilityAttr().Set('inherited' if end > begin else 'invisible')
-            if end > begin:
+            if end > begin and (not full_plan or self._displayed_full_route != route):
                 _update_mesh(path_mesh, route_ribbon(route, begin, end, width_m=0.16, z_m=0.07))
+            self._displayed_full_route = route if full_plan else None
             target_mesh = UsdGeom.Mesh(self.stage.GetPrimAtPath(debug_root + '/PursuitTarget'))
             target_mesh.CreateVisibilityAttr().Set('inherited' if target_xy is not None else 'invisible')
             if target_xy is not None:
-                _update_mesh(target_mesh, target_ring(target_xy))
+                if full_plan:
+                    if self._target_translation is None:
+                        _update_mesh(target_mesh, target_ring((0.,0.)))
+                        self._target_translation = target_mesh.AddTranslateOp()
+                    xy = _position(target_xy, 2, 'target_xy')
+                    self._target_translation.Set(Gf.Vec3d(*xy,0.))
+                else:
+                    if self._target_translation is not None:
+                        self._target_translation.Set(Gf.Vec3d(0.,0.,0.))
+                        self._target_translation = None
+                        target_mesh.ClearXformOpOrder()
+                    _update_mesh(target_mesh, target_ring(target_xy))
 
     def camera_pose(self, mode, state=None):
         if mode == 'overview':
-            return camera_pose_overview(self.route)
+            if self.route != self._overview_route:
+                self._overview_route = self.route
+                self._overview_camera = camera_pose_overview(self.route)
+            return self._overview_camera
         if mode == 'follow' and state is not None:
             return camera_pose_follow(state['position_m'], state['yaw_rad'])
         raise ValueError('Camera mode must be overview, or follow with an observed state')

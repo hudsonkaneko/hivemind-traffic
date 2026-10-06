@@ -29,13 +29,20 @@ def main():
     parser.add_argument('--points', action='store_true')
     parser.add_argument('--capture', action='store_true')
     parser.add_argument('--unpaced', action='store_true')
+    parser.add_argument('--real-time', action='store_true',
+                        help='Lighter graphics and best-effort 1x pacing; measured lag can still fail the timing gate')
     args = parser.parse_args()
+    if args.real_time and args.unpaced:
+        parser.error('--real-time requires pacing; omit --unpaced')
     config = json.loads((ROOT/'experiments/physics-obstacle-bypass.json').read_text())
     validate_config(config)
     config.update(mode=args.mode, gui=not args.headless, camera=args.camera,
                   points=args.points, capture=args.capture, paced=not args.unpaced,
+                  real_time=args.real_time,
                   braking=asdict(LidarBrakeConfig()), follower=asdict(FollowerConfig()),
                   planner=asdict(BypassConfig()))
+    if args.real_time:
+        config['render_hz'] = 20
     validate_config(config, resolved=True)
     runtime = isaac_runtime(ROOT, load_config(ROOT))
     sources = ['scripts/demo_obstacle_bypass.py', 'scripts/physics_obstacle_bypass.py',
@@ -47,7 +54,8 @@ def main():
         'traffic/physx_vehicle.py', 'traffic/wheel_geometry.py', 'traffic/physics_session.py',
         'traffic/rendered_physics_session.py', 'traffic/physical_lidar.py', 'traffic/lidar_braking.py',
         'traffic/runtime_profile.py', 'traffic/evidence_chunks.py',
-        'traffic/vehicle_contacts.py', 'visualization/physics_road_view.py']
+        'traffic/vehicle_contacts.py', 'visualization/physics_road_view.py',
+        'visualization/preview_timing.py']
     if args.check:
         print(json.dumps(dict(runtime=str(runtime), config=config, sources=sources, no_training=True), indent=2))
         return 0

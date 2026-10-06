@@ -16,10 +16,15 @@ FIXTURE = dict(schema_version=1, seed=101, physics_hz=120, control_hz=60,
 
 def validate_config(config, *, resolved=False):
     expected = dict(FIXTURE)
+    if resolved and config.get('real_time') is True:
+        expected['render_hz'] = 20
     if resolved:
         expected.update(braking=asdict(LidarBrakeConfig()), follower=asdict(FollowerConfig()),
                         planner=asdict(BypassConfig()))
     options = {'mode', 'gui', 'camera', 'points', 'capture', 'paced'} if resolved else set()
+    # Old resolved evidence remains readable; omission means the original RGB profile.
+    if resolved and 'real_time' in config:
+        options.add('real_time')
     if set(config) != set(expected) | options:
         raise ValueError('Unexpected or missing bounded bypass settings')
     for key, value in expected.items():
@@ -30,4 +35,8 @@ def validate_config(config, *, resolved=False):
             raise ValueError('Unsupported bypass mode/camera')
         if any(type(config[key]) is not bool for key in ('gui', 'points', 'capture', 'paced')):
             raise ValueError('Expected boolean viewer settings')
+        if type(config.get('real_time', False)) is not bool:
+            raise ValueError('Expected boolean real-time setting')
+        if config.get('real_time', False) and not config['paced']:
+            raise ValueError('Real-time preview requires pacing')
     return config

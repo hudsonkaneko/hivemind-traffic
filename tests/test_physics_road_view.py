@@ -87,6 +87,25 @@ def test_follow_camera_matches_offsets_at_cardinal_headings():
     assert pose.target == pytest.approx((10, 30, 1))
 
 
+def test_overview_cache_reuses_pose_and_invalidates_if_route_replaced(routes, monkeypatch):
+    import visualization.physics_road_view as module
+    from types import SimpleNamespace
+    calls = []
+    actual = module.camera_pose_overview
+    def recording(route):
+        calls.append(route.route_id)
+        return actual(route)
+    monkeypatch.setattr(module, 'camera_pose_overview', recording)
+    layer = SimpleNamespace(identifier='test-layer')
+    view = module.PhysicsRoadView(None, routes['straight100'], '/World/Test', layer, layer)
+    first = view.camera_pose('overview')
+    assert view.camera_pose('overview') is first
+    assert calls == ['straight100']
+    view.route = routes['left_r60']
+    assert view.camera_pose('overview') == actual(routes['left_r60'])
+    assert calls == ['straight100', 'left_r60']
+
+
 @pytest.mark.parametrize('bad', [math.nan, math.inf, True, '1'])
 def test_nonfinite_camera_and_geometry_inputs_rejected(routes, bad):
     with pytest.raises(ValueError): camera_pose_follow((0, 0, 1), bad)
@@ -153,6 +172,39 @@ def test_usd_reference_toggle_and_endpoint_update(routes):
     assert UsdGeom.Imageable(stage.GetPrimAtPath('/World/PhysicsRoad/Debug/UpcomingPath')).GetVisibilityAttr().Get() == 'invisible'
     assert UsdGeom.Imageable(stage.GetPrimAtPath('/World/PhysicsRoad/Debug/PursuitTarget')).GetVisibilityAttr().Get() == 'invisible'
     with pytest.raises(ValueError): author_physics_road(stage, routes['straight100'])
+
+
+def test_usd_full_plan_caches_geometry_and_moves_target_with_transform(routes, monkeypatch):
+    stage = _usd_stage()
+    import visualization.physics_road_view as module
+    from pxr import Gf, UsdGeom
+    view = author_physics_road(stage, routes['straight100'])
+    before = view.static_layer.ExportToString()
+    calls = []
+    original = module._update_mesh
+    def record(mesh, geometry):
+        calls.append(str(mesh.GetPath()))
+        original(mesh, geometry)
+    monkeypatch.setattr(module, '_update_mesh', record)
+    view.update(dict(position_m=[10,0,1]), target_xy=(15,2), full_plan=True)
+    assert len(calls) == 2
+    view.update(dict(position_m=[20,0,1]), target_xy=(25,3), full_plan=True)
+    assert len(calls) == 2
+    target = stage.GetPrimAtPath('/World/PhysicsRoad/Debug/PursuitTarget')
+    translation = UsdGeom.Xformable(target).ComputeLocalToWorldTransform(0).ExtractTranslation()
+    assert translation == Gf.Vec3d(25,3,0)
+    mesh = UsdGeom.Mesh(stage.GetPrimAtPath('/World/PhysicsRoad/Debug/UpcomingPath'))
+    assert max(p[0] for p in mesh.GetPointsAttr().Get()) == pytest.approx(100)
+    view.update(dict(position_m=[20,0,1]), planned_route=routes['left_r60'], full_plan=True)
+    assert len(calls) == 3
+    # Switching profiles must not retain an old target translation or double it.
+    target = UsdGeom.Mesh(stage.GetPrimAtPath('/World/PhysicsRoad/Debug/PursuitTarget'))
+    view.update(dict(position_m=[20,0,1]), target_xy=(25,3), full_plan=False)
+    assert not target.GetOrderedXformOps()
+    view.update(dict(position_m=[20,0,1]), target_xy=(26,4), full_plan=True)
+    assert len(target.GetOrderedXformOps()) == 1
+    assert target.GetOrderedXformOps()[0].Get() == Gf.Vec3d(26,4,0)
+    assert view.static_layer.ExportToString() == before
 
 
 def test_lane_divider_has_actual_dash_gaps_and_relative_offset():
