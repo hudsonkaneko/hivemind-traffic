@@ -155,12 +155,16 @@ configured traffic Python, these additional bounded launchers preserve old runs:
 
 ```text
 python scripts/demo_obstacle_bypass.py
+python scripts/demo_obstacle_bypass.py --real-time
 python scripts/demo_waypoint.py --gui --capture
 python -m experiments.demo_sumo_readiness --headless
 ```
 
 The obstacle bypass is a scripted full-size physical car with RTX LiDAR, not
-RL. The waypoint demo evaluates the existing RC-scale Leatherback PPO, not a
+RL. Its optional `--real-time` mode uses lighter graphics, 20-Hz rendering and
+measured 1x-target pacing; the GUI is **not yet consistently real time**.
+See [preview commands, timing gates and actual results](realtime-preview.md).
+The waypoint demo evaluates the existing RC-scale Leatherback PPO, not a
 full-size highway policy. It needs a compatible Isaac Lab installation (set
 `ISAACLAB_PATH` when it is not in your Documents/IsaacLab folder) and a trusted
 local `outputs/training_v2/policy.zip`, or an explicit `--checkpoint` override.

@@ -36,6 +36,16 @@ traffic demo. Its recent GUI and headless measurements, limits, and PNG previews
 are in the [physics demo performance report](demo-physics-performance.md); setup
 and controller details are in [obstacle bypass](obstacle-bypass.md).
 
+Optional lighter, measured 1x-target preview:
+
+```text
+python scripts/demo_obstacle_bypass.py --real-time
+```
+
+The GUI still accumulates lag during driving; this is not a verified real-time
+mode. The HUD shows playback rate/lag, and the timing gate is separate from
+driving correctness. See [current preview results](realtime-preview.md).
+
 ## 3. Isaac Lab: existing waypoint PPO
 
 ```text

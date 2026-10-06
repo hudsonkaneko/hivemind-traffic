@@ -24,6 +24,7 @@ from traffic.path_following import FollowerConfig, PathFollower, PathReference, 
 from traffic.physical_lidar import PhysicalLidar, packet_to_scan, rotation_matrix
 from traffic.runtime_profile import RuntimeProfiler
 from traffic.wheel_geometry import assess_wheel_geometry, sample_wheel_geometry
+from visualization.preview_timing import PreviewClock, rendering_profile
 
 
 def route_data(route):
@@ -44,7 +45,7 @@ def author_barrier(stage, box):
 
 def controls(ui_state):
     import omni.ui as ui
-    window = ui.Window('Highway Sim | Adaptive obstacle path', width=510, height=220)
+    window = ui.Window('Highway Sim | Adaptive obstacle path', width=510, height=250)
     def camera(mode): ui_state['camera'] = mode
     def toggle(key): ui_state[key] = not ui_state[key]
     with window.frame:
@@ -79,7 +80,7 @@ def main():
     captures, captured, saved = [], set(), set()
     profile = RuntimeProfiler()
     profile_overhead = profile.calibrate_overhead()
-    chunk_writer = None
+    chunk_writer = preview_clock = None
     previous_stamp = frozen_packet = None
     result = dict(passed=False, no_sumo=True, no_training=True,
         controller_source='LiDAR XYZ bounds + known straight road + privileged odometry + explicit maximum obstacle size prior',
@@ -88,8 +89,20 @@ def main():
     try:
         chunk_writer = EvidenceChunkWriter(output)
         from isaacsim import SimulationApp
-        app = SimulationApp({'headless':not cfg['gui'], 'width':1280, 'height':800,
+        graphics = rendering_profile(cfg.get('real_time', False))
+        result['rendering_profile'] = graphics
+        app = SimulationApp({**graphics, 'headless':not cfg['gui'],
                              'enable_motion_bvh':True, 'disable_viewport_updates':False})
+        import carb
+        settings = carb.settings.get_settings()
+        result['observed_render_settings'] = {key:settings.get(key) for key in (
+            '/rtx/rendermode', '/rtx/minimal/mode', '/app/vsync', '/app/window/hideUi',
+            '/plugins/carb.tasking.plugin/threadCount', '/plugins/omni.tbb.globalcontrol/maxThreadCount',
+            '/app/runLoops/main/syncToPresent', '/app/runLoops/main/rateLimitEnabled',
+            '/app/runLoopsGlobal/syncToPresent', '/app/runLoops/rendering_0/syncToPresent',
+            '/app/runLoops/rendering_1/syncToPresent', '/app/runLoops/present/rateLimitEnabled',
+            '/app/runLoops/rendering_0/rateLimitEnabled',
+            '/app/asyncRendering', '/omni/replicator/asyncRendering')}
         from traffic.physics_session import prepare_vehicle_runtime
         from traffic.rendered_physics_session import RenderedPhysicsSession
         from traffic.physx_vehicle import PhysxVehicle
@@ -98,7 +111,7 @@ def main():
         from isaacsim.core.utils.viewports import set_camera_view
         from omni.kit.viewport.utility import get_active_viewport, capture_viewport_to_file
         result['runtime_setup'] = prepare_vehicle_runtime()
-        session = RenderedPhysicsSession(120,30)
+        session = RenderedPhysicsSession(120,cfg['render_hz'])
         vehicle = PhysxVehicle(session.stage,120)
         view = author_physics_road(session.stage,road,lane_dividers_m=(0.,),show_reference_centerline=False)
         author_barrier(session.stage, obstacle)
@@ -109,7 +122,7 @@ def main():
         if cfg['gui']: window,label = controls(ui_state)
         viewport = get_active_viewport()
         if viewport is None: raise RuntimeError('No viewport available')
-        viewport.resolution = (1280,800)
+        viewport.resolution = (graphics['width'],graphics['height'])
         static_before = view.static_layer.ExportToString()
         view.static_layer.Export(str(output/'road-static.usda'))
         session.stage.Flatten().Export(str(output/'scene-initial.usda'))
@@ -122,12 +135,15 @@ def main():
         safety = RouteSafetyBrake(episode,'ego',LidarBrakeConfig(**cfg['braking']))
         vehicle.apply(AppliedControl(0,0,1,'initial_hold',None,False),700,1500)
         session.start()
+        result['observed_render_settings_after_start'] = {
+            key:settings.get(key) for key in result['observed_render_settings']}
         epoch = session.absolute_time_s
         result['clock_start'] = session.snapshot()
         state = vehicle.state(); history[0] = state
         decision = plan = reference = None
         driver = {}; plan_tick = 0; previous_plan_id = 'nominal'
         loop_started = time.perf_counter(); paused_wall = 0
+        preview_clock = PreviewClock(paced=cfg['paced'])
         result['startup_wall_s'] = loop_started-started
         for tick in range(6000):
             profile.begin_iteration()
@@ -220,16 +236,22 @@ def main():
             if (tick+1)%4==0:
                 with profile.measure('wheel_geometry'):
                     wheel_rows.extend(sample_wheel_geometry(vehicle,tick+1))
+            if (tick+1)%session.render_every_steps==0:
                 with profile.measure('view_update'):
                     view.update(state,target_xy=driver.get('target_xy_m'),show_reference=ui_state['path'],
-                                planned_route=plan.route,preview_distance_m=35.)
+                                planned_route=plan.route,preview_distance_m=35.,
+                                full_plan=cfg.get('real_time', False))
                     camera=view.camera_pose(ui_state['camera'],state)
                     set_camera_view(eye=np.array(camera.eye),target=np.array(camera.target))
                     lidar.set_points(ui_state['points'])
                     if label:
+                        timing = preview_clock.frames[-1] if preview_clock.frames else None
+                        pace_text = (f"{timing['rtf']:.2f}x | lag {timing['lag_s']:.2f}s"
+                                     if timing else 'Measuring playback rate...')
                         label.text=(f"{ui_state['camera'].upper()} | {row['sim_time_s']:.1f}s | {state['speed_m_s']:.2f} m/s\n"
                             f"Planner: {plan.status.upper()} | Safety: {safety_status.upper()}\n"
-                            f"Path error {projected.lateral_error_m:+.2f}m | progress {state['position_m'][0]:.1f}/90m")
+                            f"Path error {projected.lateral_error_m:+.2f}m | progress {state['position_m'][0]:.1f}/90m\n"
+                            f"Playback: {pace_text}")
                 with profile.measure('render'):
                     before=session.snapshot();session.render();after=session.snapshot()
                 render_checks.append(before['physics_steps']==after['physics_steps'] and before['absolute_time_s']==after['absolute_time_s'])
@@ -254,19 +276,23 @@ def main():
                         for second in (1,9,14,18,23,30,40):
                             if row['sim_time_s']>=second and second not in captured:
                                 captures.append(capture_viewport_to_file(viewport,str(output/f'preview-{second:02d}s-{ui_state["camera"]}.png')))
+                                if cfg['gui'] and second == 14:
+                                    import omni.kit.renderer_capture
+                                    omni.kit.renderer_capture.acquire_renderer_capture_interface().capture_next_frame_swapchain(
+                                        str(output/'preview-window.png'))
                                 captured.add(second)
-                if cfg['paced']:
-                    delay=loop_started+paused_wall+row['sim_time_s']-time.perf_counter()
-                    if delay>0:
-                        with profile.measure('pace_wait'):
-                            time.sleep(min(delay,1/30))
             if (tick+1)%120==0:
                 with profile.measure('evidence'):
                     chunk_writer.write_checkpoint(rows,plans)
                 if (tick+1)%600==0:
                     with profile.measure('reporting'):
                         print(f"BYPASS_TIME={row['sim_time_s']:.1f} X={state['position_m'][0]:.2f} Y={state['position_m'][1]:.2f} PLAN={plan.status} SAFETY={safety_status}",flush=True)
+            if (tick+1)%session.render_every_steps==0:
+                with profile.measure('pace_wait'):
+                    preview_clock.finish_frame(row['sim_time_s'],paused_wall)
             profile.finish_iteration()
+        result['observed_render_settings_after_episode'] = {
+            key:settings.get(key) for key in result['observed_render_settings']}
         result.update(assess_bypass(rows,mode=cfg['mode'],obstacle=obstacle))
         post_frames=[f for f in frames if f['delivery_tick']>240]
         active=[r for r in rows if r['tick']>240]
@@ -296,6 +322,18 @@ def main():
         result['runtime_profile']=dict(
             **profile.summary(simulation_time_s=simulated_time_s),
             instrumentation_overhead=profile.estimate_overhead_for_run(profile_overhead))
+        if preview_clock:
+            result['preview_timing']=preview_clock.summary(
+                expected_simulation_time_s=cfg['duration_s'],
+                expected_frames=cfg['duration_s']*cfg['render_hz'])
+            try:write_json(output/'preview-timing.json',preview_clock.frames)
+            except Exception as error:result.update(passed=False,timing_write_error=repr(error))
+            # A completed physics experiment and a real-time preview are distinct
+            # outcomes. Never mark the preview verified solely on physical safety.
+            if cfg.get('real_time', False):
+                timing_pass = result['preview_timing']['soft_realtime_passed']
+                result.setdefault('gates', {})['soft_realtime'] = timing_pass
+                result['passed'] = bool(result['passed'] and timing_pass)
         if chunk_writer:
             result['checkpoint_evidence']=chunk_writer.summary()
         try:
@@ -315,7 +353,8 @@ def main():
         result.update(total_wall_s=time.perf_counter()-started,process=process_sample(),
             limitations=['One low-speed physical car; empty adjacent corridor and static obstacle with explicit maximum size prior',
                 'Known road and privileged odometry; no learned policy, moving-obstacle tracking, free-space proof, or traffic-rule negotiation',
-                'Geometric path-envelope braking, not a calibrated reachable-set guarantee; no real-time or highway-speed claim'])
+                'Geometric path-envelope braking, not a calibrated reachable-set guarantee; no highway-speed claim',
+                'Real-time status is the measured preview_timing gate for this run, not a hard-deadline or cross-machine guarantee'])
         try:
             write_json(output/'probe-result.json',result)
             print('BYPASS_RESULT='+json.dumps(result),flush=True)

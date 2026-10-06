@@ -218,3 +218,12 @@ or train a controller before a physical baseline is trustworthy.
 Use the [workflow](workflow.md) and [iteration record](templates/iteration.md) to
 link each accepted gate to source, configuration, measurements, failures, GitHub
 review, and the Google learning-document update.
+
+## Preview timing checkpoint (October 6)
+
+The [optional lightweight preview](realtime-preview.md) now exposes 1x-target
+pacing and measured lag. Physics and safety regressions pass, but consistent
+real-time GUI playback remains **in progress**. The next performance task is a
+native window/render trace with matched desktop load, not larger timesteps or
+weaker sensor/safety gates. This does not advance physical-fleet, shared-map,
+highway-speed or new-training milestones above.

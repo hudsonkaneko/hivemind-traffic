@@ -2,12 +2,36 @@
 
 Last verified: October 6, 2026.
 
-Latest source milestone: commit `703961b`, published on `codex/demo-readiness`.
-[Pull request #3](https://github.com/hudsonkaneko/hivemind-traffic/pull/3) records
-the implementation, tests, evidence and remaining gates. It is stacked on the
-separate highway-asset draft branch; `main` is unchanged.
+Latest source milestone: commit `e74b574`, published on `codex/realtime-preview`.
+[Pull request #5](https://github.com/hudsonkaneko/hivemind-traffic/pull/5) records
+the implementation, tests, evidence and open GUI timing gate. It is stacked on
+`codex/demo-readiness`; `main` is unchanged.
 
-## Latest update: demo readiness and profiling
+## Latest update: live preview timing
+
+Added **33 Live preview timing**, tab `t.e9ctk5gfkhg`, to the
+[same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.e9ctk5gfkhg).
+It includes portable launch commands, demo controls, rendering/physics/sensor
+boundaries, real-time-factor and lag definitions, actual passing/failing
+measurements and the next profiling task. It explicitly states that consistent
+real-time GUI playback is not yet verified; a headless pass is not a GUI claim.
+
+Native readback verified exact text, all **34 tabs**, eight title/heading
+paragraphs, six shaded Consolas command blocks, five highlighted terms/status
+spans and one immutable source hyperlink. Link typography was checked using
+local style plus inherited NORMAL_TEXT: Arial 11, black, not underlined.
+All 33 earlier tab bodies, titles, order and parents remain unchanged.
+The simulator GUI capture was inspected separately; Google Docs pagination
+was not visually inspected. No existing tab was rewritten to hide older results.
+
+Trusted read: ignored `outputs/doc-sync/trusted-read-realtime-01`, with verified
+byte/hash persistence through the supported Windows fileIO adapter. No protected
+controls were detected in the preceding milestone scope. Verification:
+`outputs/doc-sync/realtime-preview-verification.json`. Final revision:
+`ANLCKQn0vDAW1c7kCqA3j88pZRQfW_qjhd9k3iuEzla63iNIi_kIy95J_jCfmn-qvhNHHzvAdbDpPzDCTmmfM6eoLByAn39zoqm2vboWoBc`.
+Raw evidence remains local and ignored by Git. No new training was started.
+
+## Previous synchronization: demo readiness and profiling
 
 Added **32 Demo readiness and profiling**, tab `t.9wkfs52ky6df`, to the
 [same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.9wkfs52ky6df).

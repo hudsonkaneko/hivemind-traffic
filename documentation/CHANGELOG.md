@@ -4,6 +4,19 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-06 — Measured preview pacing (GUI timing still open)
+
+- Added optional `--real-time` 1x-target pacing, lighter RGB settings and 20-Hz
+  rendering. Physics/control/planning/LiDAR rates remain 120/60/10/20 Hz.
+- Added playback-rate/lag HUD, per-frame timing evidence, full-episode gates,
+  cached overview/path geometry and a transformed steering-target marker.
+- Preserved all 15 run packages, including a startup crash. GUI runs still
+  fail the timing gate; a headless pass is not a live-window guarantee.
+- Verified 880 CPU tests (11 skips), 31 Isaac USD tests, physical/sensor gates
+  for blocked/stale-scan cases, and the original-profile runtime regression.
+- See [commands, measurements and remaining work](realtime-preview.md).
+  No training or dependency installation; historical results are unchanged.
+
 ## 2026-10-06 — Measured demo speedup and frozen-policy rehearsals
 
 - Added bounded, matched-seed SUMO readiness checks: eight completed episodes,

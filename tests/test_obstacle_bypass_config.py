@@ -39,3 +39,14 @@ def test_resolved_settings_are_reproducible_and_bounded():
         config[key] = value
         with pytest.raises(ValueError):
             validate_config(config, resolved=True)
+
+
+def test_optional_realtime_profile_preserves_old_evidence_and_rejects_unpaced():
+    config = resolved()
+    assert validate_config(config, resolved=True)  # Historical omission.
+    config.update(real_time=True, paced=True, render_hz=20)
+    assert validate_config(config, resolved=True)
+    for update in [dict(real_time=1), dict(paced=False), dict(render_hz=30),
+                   dict(render_hz=10), dict(physics_hz=60), dict(control_hz=30)]:
+        with pytest.raises(ValueError):
+            validate_config(dict(config, **update), resolved=True)
