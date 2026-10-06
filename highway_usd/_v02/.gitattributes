@@ -1,0 +1,8 @@
+# Keep manifest hashes stable on Windows and on fresh checkouts.
+*.py text eol=lf
+# Native USD exports conventionally end with an extra blank line.
+*.usda text eol=lf whitespace=-blank-at-eof
+*.json text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.png -text

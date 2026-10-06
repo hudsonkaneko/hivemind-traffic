@@ -4,6 +4,18 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-06 — Outer collector highway USD v02
+
+- Added a separate `_v02` with 500 m innermost main-lane radius, 535 m collector,
+  four gradual exits and four returns. V01 files remain unchanged.
+- Added seeded exit/re-entry plans and a four-choice route diagram; geometry
+  stays fixed while choices vary. Minimum connector radius is 379.386 m.
+- All 28 USD validators, 1,280 seeded trips and four route-policy tests passed.
+  All 47 stationary contact checks passed, but the strict smoke gate remains
+  failed on an unresolved stage-close reference-count warning.
+- Saved top, angled and exit-detail RTX screenshots with hashes. See the
+  [v02 evidence and limitations](highway-usd-v02.md).
+
 ## 2026-10-06 — Versioned four-leaf highway USD draft
 
 - Added `highway_usd/_v01` with a reproducible generator, circular four-lane

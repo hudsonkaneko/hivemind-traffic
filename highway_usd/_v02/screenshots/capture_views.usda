@@ -1,0 +1,111 @@
+#usda 1.0
+(
+    metersPerUnit = 1
+    subLayers = [
+        @../highway_v02.usda@
+    ]
+    upAxis = "Z"
+)
+
+over "World"
+{
+    over "Navigation"
+    {
+        token visibility = "invisible"
+    }
+
+    over "Debug"
+    {
+        token visibility = "invisible"
+    }
+
+    over "Physics"
+    {
+        over "RoadCollider"
+        {
+            token visibility = "invisible"
+        }
+    }
+}
+
+def "Render"
+{
+    def "top"
+    {
+        def Camera "Camera"
+        {
+            float2 clippingRange = (0.1, 5000)
+            float horizontalAperture = 11542.275
+            token projection = "orthographic"
+            float verticalAperture = 11542.275
+            matrix4d xformOp:transform = ( (1, 0, 0, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, -0, 1288.44, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def RenderProduct "Product"
+        {
+            rel camera = </Render/top/Camera>
+            rel orderedVars = </Render/top/Color>
+            uniform int2 resolution = (1800, 1800)
+        }
+
+        def RenderVar "Color"
+        {
+            uniform token dataType = "color4f"
+            uniform string sourceName = "LdrColor"
+        }
+    }
+
+    def "angled"
+    {
+        def Camera "Camera"
+        {
+            float2 clippingRange = (0.1, 5000)
+            float focalLength = 36
+            float horizontalAperture = 36
+            float verticalAperture = 28
+            matrix4d xformOp:transform = ( (0.7808688094430305, 0.6246950475544244, 0, 0), (-0.4039739589266409, 0.5049674486583011, 0.7627666198154339, -0), (0.47649652983852986, -0.5956206622981624, 0.646673861923719, 0), (751.5899999999999, -939.4875000000001, 1020.0150000000001, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def RenderProduct "Product"
+        {
+            rel camera = </Render/angled/Camera>
+            rel orderedVars = </Render/angled/Color>
+            uniform int2 resolution = (1800, 1400)
+        }
+
+        def RenderVar "Color"
+        {
+            uniform token dataType = "color4f"
+            uniform string sourceName = "LdrColor"
+        }
+    }
+
+    def "east_diverge"
+    {
+        def Camera "Camera"
+        {
+            float2 clippingRange = (0.1, 5000)
+            float focalLength = 45
+            float horizontalAperture = 36
+            float verticalAperture = 24
+            matrix4d xformOp:transform = ( (0.7437620990064323, 0.6684444180943887, 5.551115123125783e-17, 0), (-0.49104135102983326, 0.5463699539627721, 0.6784970633580623, -0), (0.4535375746951315, -0.5046404000128928, 0.7346031139428186, 0), (573.9666856556992, 85.64692419017945, 115, 1) )
+            uniform token[] xformOpOrder = ["xformOp:transform"]
+        }
+
+        def RenderProduct "Product"
+        {
+            rel camera = </Render/east_diverge/Camera>
+            rel orderedVars = </Render/east_diverge/Color>
+            uniform int2 resolution = (1800, 1200)
+        }
+
+        def RenderVar "Color"
+        {
+            uniform token dataType = "color4f"
+            uniform string sourceName = "LdrColor"
+        }
+    }
+}
+

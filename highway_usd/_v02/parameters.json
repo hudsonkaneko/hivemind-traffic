@@ -1,0 +1,12 @@
+{
+  "inner_radius_m": 498.15,
+  "lane_width_m": 3.7,
+  "collector_radius_m": 535.0,
+  "connector_span_deg": 42.0,
+  "circle_samples": 3600,
+  "connector_samples": 640,
+  "target_speed_m_s": 29.0576,
+  "maximum_design_lateral_g": 0.25,
+  "road_thickness_m": 0.3,
+  "ground_margin_m": 40.0
+}

@@ -13,6 +13,11 @@ screenshots. Stationary contact checks passed; the strict simulator gate remains
 failed on a stage-close warning. This does not advance vehicle-driving, shared-map
 integration, training, or runtime lifecycle gates below.
 
+October 6 collector iteration: [highway USD v02](highway-usd-v02.md) enlarges
+the inner circle, adds a gentle outer collector and implements seeded re-entry
+planning. Static geometry/routes and stationary contacts pass; moving-car
+handling and the runtime lifecycle gate remain unverified. V01 is preserved.
+
 ## Destination and boundaries
 
 Isaac Sim/PhysX will determine research-car motion from explicit steering,
