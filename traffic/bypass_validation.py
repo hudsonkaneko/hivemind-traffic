@@ -6,6 +6,7 @@ free space. Its sampled box envelope is padded by route sample spacing.
 """
 from dataclasses import dataclass, replace
 import math
+import numpy as np
 from traffic.lidar_braking import LidarEmergencyBrake
 
 
@@ -150,22 +151,32 @@ class RouteSafetyBrake:
             if traveled < decision.stopping_distance_m:
                 return stop('route_shorter_than_stopping_horizon')
             cfg = self.brake.config
-            for x,y,z in scan.points:
-                if not cfg.min_height_m <= z <= cfg.max_height_m:
-                    continue
-                # Ignore only points strictly inside the current own footprint.
-                if abs(x) < 2.4 and abs(y) < .9:
-                    continue
-                for box,padding in boxes:
-                    c,s = math.cos(box.yaw_rad),math.sin(box.yaw_rad)
-                    dx,dy = x-box.x_m,y-box.y_m
-                    if (abs(c*dx+s*dy) <= 2.4+padding+cfg.lateral_margin_m
-                            and abs(-s*dx+c*dy) <= .9+padding+cfg.lateral_margin_m):
-                        self._route_latched = True
-                        return stop('lidar_hit_in_predicted_body_envelope','obstacle')
+            if points_hit_route(scan.points, boxes, cfg):
+                self._route_latched = True
+                return stop('lidar_hit_in_predicted_body_envelope','obstacle')
         except (TypeError,ValueError,OverflowError):
             return stop('invalid_predicted_route')
         return decision
+
+
+def points_hit_route(points, boxes, cfg):
+    """Same inclusive box predicate, batched over already-validated returns.
+
+    The straight brake validates every coordinate first. Process one box at a
+    time to avoid allocating a points-by-route matrix. No scan downsampling,
+    changed envelope, timing relaxation, or hidden obstacle state is involved.
+    """
+    cloud = np.asarray(points, dtype=np.float64)
+    keep = ((cloud[:, 2] >= cfg.min_height_m) & (cloud[:, 2] <= cfg.max_height_m)
+            & ~((np.abs(cloud[:, 0]) < 2.4) & (np.abs(cloud[:, 1]) < .9)))
+    xy = cloud[keep, :2]
+    for box, padding in boxes:
+        c, s = math.cos(box.yaw_rad), math.sin(box.yaw_rad)
+        dx, dy = xy[:, 0]-box.x_m, xy[:, 1]-box.y_m
+        if np.any((np.abs(c*dx+s*dy) <= 2.4+padding+cfg.lateral_margin_m)
+                  & (np.abs(-s*dx+c*dy) <= .9+padding+cfg.lateral_margin_m)):
+            return True
+    return False
 
 
 def assess_bypass(rows, *, mode='pass', obstacle=None, physics_hz=120):

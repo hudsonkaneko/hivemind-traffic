@@ -149,6 +149,26 @@ mean the strict lidar acceptance tests pass; lidar still does not control PPO.
 
 ## Verification and learning exercise
 
+For the current presentation-ready entry points and their distinct controller
+boundaries, see [demo readiness](demo-readiness.md). After activating your
+configured traffic Python, these additional bounded launchers preserve old runs:
+
+```text
+python scripts/demo_obstacle_bypass.py
+python scripts/demo_waypoint.py --gui --capture
+python -m experiments.demo_sumo_readiness --headless
+```
+
+The obstacle bypass is a scripted full-size physical car with RTX LiDAR, not
+RL. The waypoint demo evaluates the existing RC-scale Leatherback PPO, not a
+full-size highway policy. It needs a compatible Isaac Lab installation (set
+`ISAACLAB_PATH` when it is not in your Documents/IsaacLab folder) and a trusted
+local `outputs/training_v2/policy.zip`, or an explicit `--checkpoint` override.
+Checkpoints are not included in Git. Add `--check` to either script for a
+non-launching setup check. On this workstation the configured traffic Python is
+`.venv-traffic/Scripts/python.exe`; environment directory names may differ on a
+new clone. Do not install traffic packages into Isaac's Python.
+
 For the newer, separate **physics-driven car** with curved road, overview/follow
 cameras, planned path and LiDAR emergency braking, see the
 [physical LiDAR view](physics-lidar-view.md). It does not require SUMO:
