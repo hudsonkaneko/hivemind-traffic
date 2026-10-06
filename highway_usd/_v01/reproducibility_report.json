@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "checks": {
+    "highway_v01.usda": true,
+    "navigation.json": true,
+    "parameters.json": true
+  },
+  "stage_sha256": "9f051ca2756127ac222bc99b786bcccf7dcc9b675a920dd9738ed7831a352058",
+  "evidence": "outputs/highway_usd/v01-repro-20261006-03"
+}

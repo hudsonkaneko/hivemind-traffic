@@ -4,6 +4,18 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-06 — Versioned four-leaf highway USD draft
+
+- Added `highway_usd/_v01` with a reproducible generator, circular four-lane
+  highway, continuous outer auxiliary lane, and four symmetric return petals.
+- Added lane/route data, spawn and merge/diverge metadata, a welded road collider,
+  box ground, static validator, regression checks, and version documentation.
+- All 28 USD validators and three corruption checks passed; every ramp rejoins
+  with zero endpoint gap. Both 26-sphere contact probes passed, but their strict
+  overall gates remain failed on the known class of stage-close warning.
+- Added actual USD/RTX screenshots and a capture workflow for every version.
+  See [scope, evidence and limitations](highway-usd-v01.md).
+
 ## 2026-10-04 — LiDAR-triggered physical obstacle bypass
 
 - Added a separate one-car, two-lane fixture with a sensed static-obstacle

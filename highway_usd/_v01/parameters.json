@@ -1,0 +1,15 @@
+{
+  "inner_radius_m": 180.0,
+  "lane_width_m": 3.7,
+  "main_lanes": 4,
+  "leaf_extension_m": 180.0,
+  "leaf_half_angle_deg": 32.0,
+  "circle_samples": 1440,
+  "ramp_samples": 1024,
+  "road_top_m": 0.0,
+  "road_thickness_m": 0.3,
+  "ground_margin_m": 35.0,
+  "main_speed_hint_m_s": 15.0,
+  "auxiliary_speed_hint_m_s": 10.0,
+  "ramp_speed_hint_m_s": 8.0
+}
