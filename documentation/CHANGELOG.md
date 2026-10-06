@@ -25,6 +25,10 @@ authority for historical measurements and failures.
   requires the user's participation; shared-loop driving and physical fleets
   are not claimed complete. The temporary presentation checklist was not added
   as a new long-term roadmap or memory goal.
+- Added and verified Google guide tab 32 with eight shaded commands, six
+  highlighted definitions, matched heading/link typography and all 32 prior
+  tabs unchanged. [Sync evidence](learning-guide-sync.md) records the Windows
+  transport workaround and the unverified pagination limit.
 
 ## 2026-10-06 — Versioned four-leaf highway USD draft
 

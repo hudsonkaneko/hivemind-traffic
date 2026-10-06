@@ -1,12 +1,39 @@
 # Engineering guide synchronization
 
-Last verified: October 4, 2026.
+Last verified: October 6, 2026.
 
-Latest source milestone: commit `07a373b`, published on `codex/physics-vehicle-foundation`.
-[Pull request #1](https://github.com/hudsonkaneko/hivemind-traffic/pull/1) records
-the implementation, tests, evidence and remaining gates. `main` is unchanged.
+Latest source milestone: commit `703961b`, published on `codex/demo-readiness`.
+[Pull request #3](https://github.com/hudsonkaneko/hivemind-traffic/pull/3) records
+the implementation, tests, evidence and remaining gates. It is stacked on the
+separate highway-asset draft branch; `main` is unchanged.
 
-## Latest update: adaptive obstacle bypass
+## Latest update: demo readiness and profiling
+
+Added **32 Demo readiness and profiling**, tab `t.9wkfs52ky6df`, to the
+[same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.9wkfs52ky6df).
+It separates SUMO/frozen PPO, full-size scripted PhysX/RTX bypass, and RC-scale
+Leatherback PPO inference; explains the measured logging/safety speedup; records
+matched seeds, failure tests, startup and GUI timing limits; and preserves the
+user-participation gate before new training.
+
+Native readback verified exact text, 33 tabs, nine title/heading paragraphs,
+eight shaded Consolas command blocks, six highlighted definitions and three
+source hyperlinks with matching effective typography. All 32 prior tab bodies,
+titles, order and parents remain unchanged. Representative simulator captures
+were inspected; Google Docs pagination was not visually inspected.
+
+The required read initially failed because the checked bridge's POSIX/TTY file
+transport did not work on Windows. No document write occurred during those
+failures. Its supported local fileIO adapter subsequently persisted byte/hash-
+verified artifacts without changing the trusted detector or external skill.
+Trusted read: ignored `outputs/doc-sync/trusted-read-10`; no protected controls.
+Verification: `outputs/doc-sync/demo-readiness-verification.json`.
+Verified revision:
+`ANLCKQkGgQ3HvawyKnhFxNMtsxFtVz9Bls41TgOVCmztFLBL1S-Hd408f-qrBjCqkvh7wMrJ2h-oVtj-UyGR_XWK4aTOzy9bjZwOQLlfr3o`.
+The source hyperlinks use immutable commit `703961b`. Raw simulation and
+document-read artifacts remain local and ignored by Git.
+
+## Previous synchronization: adaptive obstacle bypass
 
 Added **31 Adaptive obstacle bypass**, tab `t.cbgq2dwnrach`, to the
 [same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.cbgq2dwnrach).
