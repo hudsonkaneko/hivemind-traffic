@@ -46,6 +46,7 @@ def main():
         'traffic/driver_control.py', 'traffic/path_following.py', 'traffic/lane_geometry.py',
         'traffic/physx_vehicle.py', 'traffic/wheel_geometry.py', 'traffic/physics_session.py',
         'traffic/rendered_physics_session.py', 'traffic/physical_lidar.py', 'traffic/lidar_braking.py',
+        'traffic/runtime_profile.py', 'traffic/evidence_chunks.py',
         'traffic/vehicle_contacts.py', 'visualization/physics_road_view.py']
     if args.check:
         print(json.dumps(dict(runtime=str(runtime), config=config, sources=sources, no_training=True), indent=2))

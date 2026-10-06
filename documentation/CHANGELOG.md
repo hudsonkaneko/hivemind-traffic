@@ -4,6 +4,32 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-06 — Measured demo speedup and frozen-policy rehearsals
+
+- Added bounded, matched-seed SUMO readiness checks: eight completed episodes,
+  zero collisions, exact repeat fingerprints, saved source/checkpoint hashes,
+  child deadlines and stdout/stderr capture. Both SUMO GUI modes also completed.
+- Profiled the physical obstacle demo before optimizing it. Immutable evidence
+  chunks replace repeated full-log rewrites; NumPy batches the unchanged safety
+  predicates. The measured headless loop fell from 92.58 to 45.49 wall seconds
+  per 50 simulated seconds. GUI loops remain 64.65–67.19 seconds, not real time.
+- Rechecked all pass/blocked/stale-scan gates, wheel geometry and sensor timing.
+  Three optimized pass-mode starts and both failure cases passed. Preserved all
+  earlier evidence and full final JSON outputs; added fresh follow/overview PNGs.
+- Added an inference-only, bounded launcher for the existing Isaac Lab
+  Leatherback PPO. Three starts each completed 20 waypoint episodes with no
+  failures/timeouts. No training, simulator installation, or environment change.
+- Final CPU verification: **870 passed, 10 skipped**. See the
+  [demo handoff](demo-readiness.md), [SUMO evidence](demo-sumo-results.md), and
+  [timing/equivalence analysis](demo-physics-performance.md). New training still
+  requires the user's participation; shared-loop driving and physical fleets
+  are not claimed complete. The temporary presentation checklist was not added
+  as a new long-term roadmap or memory goal.
+- Added and verified Google guide tab 32 with eight shaded commands, six
+  highlighted definitions, matched heading/link typography and all 32 prior
+  tabs unchanged. [Sync evidence](learning-guide-sync.md) records the Windows
+  transport workaround and the unverified pagination limit.
+
 ## 2026-10-06 — Versioned four-leaf highway USD draft
 
 - Added `highway_usd/_v01` with a reproducible generator, circular four-lane

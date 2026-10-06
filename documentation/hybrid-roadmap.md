@@ -15,6 +15,13 @@ integration, training, or runtime lifecycle gates below.
 
 ## Destination and boundaries
 
+Demo-readiness checkpoint: [SUMO matched-seed checks](demo-sumo-results.md),
+[physical-demo profiling](demo-physics-performance.md), and the
+[existing Isaac Lab waypoint policy rehearsal](demo-readiness.md) are recorded
+separately. These harden existing demos without changing this roadmap's stage
+order. They do not close the shared-highway, physical-fleet, or new-training
+gates. The temporary presentation checklist is not a new long-term roadmap.
+
 Isaac Sim/PhysX will determine research-car motion from explicit steering,
 propulsion, and braking commands. SUMO will remain the inexpensive background
 traffic backend and a preserved baseline. A two-way bridge will publish SUMO

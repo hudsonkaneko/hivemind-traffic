@@ -18,6 +18,8 @@ from dataclasses import dataclass
 import math
 from numbers import Real
 
+import numpy as np
+
 VEHICLE_FRAME = 'vehicle_local_chassis_x_forward_y_left_z_up_m'
 
 
@@ -190,7 +192,25 @@ class LidarEmergencyBrake:
             return self._invalid('excessive_point_count')
         nearest, corridor_count = None, 0
         try:
-            for point in points:
+            # RTX packets arrive as float arrays. Preserve the scalar validation
+            # path for arbitrary inputs (including mixed booleans/objects).
+            if (type(points) is np.ndarray and points.ndim == 2
+                    and points.shape[1] == 3
+                    and points.dtype in (np.dtype('float32'), np.dtype('float64'))):
+                if not np.isfinite(points).all():
+                    return self._invalid('nonfinite_or_invalid_point')
+                cloud = points.astype(np.float64, copy=False)
+                mask = ((cloud[:, 0] > cfg.front_bumper_offset_m)
+                        & (np.abs(cloud[:, 1]) <= cfg.half_width_m+cfg.lateral_margin_m)
+                        & (cloud[:, 2] >= cfg.min_height_m)
+                        & (cloud[:, 2] <= cfg.max_height_m))
+                corridor_count = int(np.count_nonzero(mask))
+                if corridor_count:
+                    nearest = float(np.min(cloud[mask, 0])-cfg.front_bumper_offset_m)
+                scalar_points = ()
+            else:
+                scalar_points = points
+            for point in scalar_points:
                 if isinstance(point, (str, bytes, dict)) or len(point) != 3:
                     return self._invalid('invalid_point_cloud_shape')
                 if not all(_finite(v) for v in point):
