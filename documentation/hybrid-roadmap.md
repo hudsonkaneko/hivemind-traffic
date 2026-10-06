@@ -227,3 +227,12 @@ real-time GUI playback remains **in progress**. The next performance task is a
 native window/render trace with matched desktop load, not larger timesteps or
 weaker sensor/safety gates. This does not advance physical-fleet, shared-map,
 highway-speed or new-training milestones above.
+
+## Scene-authoring requirement (October 6)
+
+All future scene/asset work follows [OpenUSD conventions](../usd/SCENE_STRUCTURE.md).
+Before expanding the current physical prototype, migrate its generated hierarchy
+to explicit reusable asset boundaries and a versioned path interface. Preserve
+the current demo/evidence and verify wheels, controller paths, collision/sensor
+relationships and timing after restructuring. The convention is recorded now;
+the existing runtime's migration and automated structure validators are pending.

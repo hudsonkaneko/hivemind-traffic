@@ -44,3 +44,29 @@ elsewhere, but all prepared assets and project outputs belong under this root.
   training budget and evaluation before launching training. Scripted controllers,
   environment plumbing and bounded validation may proceed now; do not interpret
   that authorization as permission to begin unattended training.
+
+## Required OpenUSD authoring discipline
+
+User requirement (2026-10-06): always maintain a clean, clearly named scene
+hierarchy and standard OpenUSD/Omniverse composition workflows, including during
+prototyping. Follow `usd/SCENE_STRUCTURE.md` before creating or changing stages,
+asset generators, importers, exporters, vehicle packages, or viewer scenes.
+
+- Separate Environment, Vehicles, Lighting, Cameras, Physics and Debug concerns.
+  Use stable vehicle identities and descriptive component names; avoid anonymous
+  mesh dumps, incidental creation-order names, and scattered hardcoded prim paths.
+- Reference reusable vehicle/environment/prop assets. Use payloads for heavy,
+  selectively loadable content, not indiscriminately on every small prim.
+- Keep asset geometry/materials, physics/sensor configuration, scene assembly,
+  and live/replay/debug opinions in appropriate separate layers. Keep published
+  sources immutable during simulation. Preserve composition in authored stages;
+  flattened diagnostic snapshots are explicitly labeled exceptions.
+- Use valid defaultPrim, units/axes, model kinds and portable asset paths. Do not
+  blindly instance mutable physics, wheel, joint or sensor hierarchies. Required
+  collision and sensing content must stay loaded while a simulation is active.
+- Existing prim paths are integration contracts: migrate relationships, runtime
+  handles, sensor mounts, ID mappings and tests together. Do not rearrange prims
+  in a running physics stage or rewrite historical results for cosmetic cleanup.
+- Inspect the composed hierarchy AND layer/composition structure before calling
+  a scene finished; add appropriate structure/regression checks with each scene
+  implementation. Document runtime-owned namespace exceptions explicitly.
