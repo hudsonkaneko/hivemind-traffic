@@ -8,7 +8,8 @@ from dataclasses import dataclass
 import math
 
 from traffic.lane_geometry import LaneRoute, RouteSegment
-from traffic.lidar_braking import LidarEmergencyBrake
+from traffic.lidar_braking import LidarEmergencyBrake, LidarBrakeConfig
+from traffic.speed_profiles import speed_limit
 from traffic.path_following import VehicleState, FRAME, SOURCE, _finite, _tick
 
 PLANNER_SOURCE = 'lidar_sensed_bounds_known_road_and_explicit_extent_prior'
@@ -32,14 +33,15 @@ class BypassConfig:
     min_hits: int = 3
     confirmation_scans: int = 2
     max_confirmation_ticks: int = 120
+    speed_profile: str = 'low-speed'
 
     def __post_init__(self):
-        values = vars(self)
+        values = {k:v for k,v in vars(self).items() if k != 'speed_profile'}
         if not all(_finite(v) for v in values.values()):
             raise ValueError('Bypass configuration must be finite')
         if (not all(_tick(v) and v > 0 for v in (self.min_hits, self.confirmation_scans, self.max_confirmation_ticks))
                 or self.confirmation_scans < 2 or self.min_hits < 3
-                or not 0 < self.target_speed_m_s <= 3
+                or not 0 < self.target_speed_m_s <= speed_limit(self.speed_profile)
                 or self.road_min_y_m >= 0 or self.road_max_y_m <= self.passing_y_m
                 or any(values[k] <= 0 for k in ('passing_y_m', 'shift_x_m',
                     'detection_range_m', 'max_obstacle_length_m', 'max_obstacle_width_m',
@@ -97,7 +99,9 @@ class ObstacleBypassPlanner:
             raise ValueError('Bypass requires a straight +X nominal route at Y=0')
         self.episode_id, self.vehicle_id = episode_id, vehicle_id
         self.route = nominal_route
-        self._validator = LidarEmergencyBrake(episode_id, vehicle_id)
+        self._validator = LidarEmergencyBrake(episode_id, vehicle_id,
+            LidarBrakeConfig(speed_profile=self.config.speed_profile,
+                             max_speed_m_s=speed_limit(self.config.speed_profile)))
         self._candidate = None
         self._confirmations = 0
         self._last_scan_end = None
@@ -155,7 +159,7 @@ class ObstacleBypassPlanner:
                 or not _tick(state.tick) or state.tick != tick
                 or state.frame != FRAME or state.source != SOURCE
                 or not all(_finite(v) for v in (state.x_m, state.y_m, state.yaw_rad, state.speed_m_s))
-                or not 0 <= state.speed_m_s <= 3):
+                or not 0 <= state.speed_m_s <= speed_limit(self.config.speed_profile)):
             return self._decision('stale_invalid', 'invalid_ego_odometry')
         validated = self._validator.evaluate(scan, tick=tick, speed_m_s=state.speed_m_s)
         if validated.status == 'stale_invalid':

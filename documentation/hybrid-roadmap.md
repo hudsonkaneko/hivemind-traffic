@@ -13,6 +13,11 @@ screenshots. Stationary contact checks passed; the strict simulator gate remains
 failed on a stage-close warning. This does not advance vehicle-driving, shared-map
 integration, training, or runtime lifecycle gates below.
 
+October 8 speed increment: the separate [35 mph physical profile](physical-35mph.md)
+extends the one-car LiDAR bypass road, turn geometry and sensing horizon while
+preserving the 3 m/s baseline. Validation is in progress; this does not advance
+mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
+
 ## Destination and boundaries
 
 Demo-readiness checkpoint: [SUMO matched-seed checks](demo-sumo-results.md),

@@ -58,7 +58,13 @@ def validate_config(config):
             resolved = factory(**config[k])
         except (TypeError,ValueError) as error:
             raise ValueError(f'Invalid {k} settings') from error
-        if asdict(resolved) != config[k]:
+        if resolved.speed_profile != 'low-speed':
+            raise ValueError('The preserved visual fixture requires the low-speed profile')
+        settings = asdict(resolved)
+        # Historical resolved evidence omits the later-added profile field.
+        if 'speed_profile' not in config[k]:
+            settings.pop('speed_profile')
+        if settings != config[k]:
             raise ValueError(f'Every {k} setting must be resolved')
     fixed = dict(physics_hz=120,max_speed_m_s=3.,front_bumper_offset_m=2.4,half_width_m=.9,
         lateral_margin_m=.25,min_height_m=-.6,max_height_m=.6,planning_deceleration_m_s2=1.5,

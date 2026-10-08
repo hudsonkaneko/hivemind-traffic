@@ -4,6 +4,19 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-08 — Bounded 35 mph physical-car profile
+
+- Added a named 15.6464 m/s cruise profile with a 550 m road, gentler 70 m
+  lane shifts, longer detection/stopping preview and denser 20-Hz LiDAR scans.
+- Preserved the original 3 m/s fixture as `--profile low-speed`, default
+  low-speed controller guards and historical resolved configuration support.
+- Added sustained-speed, high-speed fault braking, endpoint and full-road
+  checks. [A full dropout run passed](physical-35mph.md), but overlapping work
+  excludes it from isolated acceptance. Obstacle-pass validation is pending.
+- Two partial GPU runs were retained after stopping only this task's children
+  when unrelated vehicle tests launched concurrently. No training or dependency
+  changes; Google guide sync pending. This is a development-preview checkpoint.
+
 ## 2026-10-08 — Referenced one-car physical scene
 
 - Migrated the scripted LiDAR bypass demo to named Environment, Vehicles,

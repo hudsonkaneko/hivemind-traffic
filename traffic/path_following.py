@@ -21,6 +21,7 @@ from typing import Mapping
 
 from traffic.driver_control import DriverCommand
 from traffic.lane_geometry import LaneRoute
+from traffic.speed_profiles import speed_limit
 
 FRAME = 'xy_m_z_up_yaw_ccw_rad'
 SOURCE = 'privileged_simulator_state_and_known_map'
@@ -193,6 +194,7 @@ class FollowerConfig:
     max_heading_error_rad: float = 1.0
     state_max_age_ticks: int = 2
     command_ttl_ticks: int = 12
+    speed_profile: str = 'low-speed'
 
     def __post_init__(self):
         values = (self.wheelbase_m, self.rear_axle_offset_m, self.max_steering_rad,
@@ -203,8 +205,8 @@ class FollowerConfig:
             raise ValueError('Controller geometry/gains/limits must be finite and positive')
         if not self.rear_axle_offset_m <= self.wheelbase_m:
             raise ValueError('Rear-axle offset must not exceed wheelbase')
-        if self.max_steering_rad > 0.5 or self.max_speed_m_s > 3 or self.max_heading_error_rad >= math.pi / 2:
-            raise ValueError('This low-speed controller supports at most 3 m/s and 0.5 rad steering')
+        if self.max_steering_rad > 0.5 or self.max_speed_m_s > speed_limit(self.speed_profile) or self.max_heading_error_rad >= math.pi / 2:
+            raise ValueError('Controller limits exceed the selected speed profile or steering envelope')
         if not _tick(self.state_max_age_ticks) or self.state_max_age_ticks > 2:
             raise ValueError('State maximum age must be 0..2 physics ticks')
         if not _tick(self.command_ttl_ticks) or not 1 <= self.command_ttl_ticks <= 12:

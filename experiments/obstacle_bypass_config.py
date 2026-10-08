@@ -1,9 +1,10 @@
-"""Frozen low-speed fixture settings; these are not general tuning knobs."""
+"""Named, frozen physical fixtures; not arbitrary speed/geometry tuning knobs."""
 from dataclasses import asdict
 
 from traffic.lidar_braking import LidarBrakeConfig
 from traffic.obstacle_bypass import BypassConfig
 from traffic.path_following import FollowerConfig
+from traffic.speed_profiles import TARGET_35_MPH_M_S, speed_limit
 
 
 FIXTURE = dict(schema_version=1, seed=101, physics_hz=120, control_hz=60,
@@ -14,13 +15,35 @@ FIXTURE = dict(schema_version=1, seed=101, physics_hz=120, control_hz=60,
     sensor_pose_error_max_m=.05, hold_s=5)
 
 
+FIXTURE_35 = dict(FIXTURE, schema_version=2, speed_profile='35mph',
+    duration_s=60, dropout_at_s=15, road_length_m=550, nominal_stop_x_m=500,
+    barrier_x_m=300, target_speed_m_s=TARGET_35_MPH_M_S)
+
+
+def controller_settings(profile='low-speed'):
+    limit = speed_limit(profile)
+    if profile == 'low-speed':
+        return dict(braking=asdict(LidarBrakeConfig()), follower=asdict(FollowerConfig()),
+                    planner=asdict(BypassConfig()))
+    return dict(braking=asdict(LidarBrakeConfig(speed_profile=profile,max_speed_m_s=limit)),
+        follower=asdict(FollowerConfig(speed_profile=profile,max_speed_m_s=limit)),
+        planner=asdict(BypassConfig(speed_profile=profile,target_speed_m_s=TARGET_35_MPH_M_S,
+            stop_x_m=500,shift_x_m=70,longitudinal_clearance_m=60,detection_range_m=160)))
+
+
 def validate_config(config, *, resolved=False):
-    expected = dict(FIXTURE)
+    profile = config.get('speed_profile','low-speed')
+    speed_limit(profile)
+    expected = dict(FIXTURE if profile == 'low-speed' else FIXTURE_35)
     if resolved and config.get('real_time') is True:
         expected['render_hz'] = 20
     if resolved:
-        expected.update(braking=asdict(LidarBrakeConfig()), follower=asdict(FollowerConfig()),
-                        planner=asdict(BypassConfig()))
+        expected.update(controller_settings(profile))
+        # Preserve validation of historical low-speed resolved evidence.
+        if profile == 'low-speed':
+            for name in ('braking','follower','planner'):
+                if isinstance(config.get(name),dict) and 'speed_profile' not in config[name]:
+                    expected[name].pop('speed_profile')
     options = {'mode', 'gui', 'camera', 'points', 'capture', 'paced'} if resolved else set()
     # Old resolved evidence remains readable; omission means the original RGB profile.
     if resolved and 'real_time' in config:

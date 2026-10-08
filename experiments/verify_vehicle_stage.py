@@ -33,6 +33,7 @@ def source_files(stage):
                       'environments/physics_vehicle_contract.py'])
     if stage == 'lane-following':
         files.extend(['traffic/lane_geometry.py', 'traffic/path_following.py', 'traffic/lane_validation.py',
+                      'traffic/speed_profiles.py',
                       'traffic/vehicle_contacts.py', 'traffic/dynamics_validation.py',
                       'scenarios/physics-road/routes.json'])
     return files
