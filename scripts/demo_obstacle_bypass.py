@@ -55,7 +55,7 @@ def main():
         'traffic/rendered_physics_session.py', 'traffic/physical_lidar.py', 'traffic/lidar_braking.py',
         'traffic/runtime_profile.py', 'traffic/evidence_chunks.py',
         'traffic/vehicle_contacts.py', 'visualization/physics_road_view.py',
-        'visualization/preview_timing.py']
+        'visualization/preview_timing.py', 'usd/physical_scene.py', 'usd/scene_validation.py']
     if args.check:
         print(json.dumps(dict(runtime=str(runtime), config=config, sources=sources, no_training=True), indent=2))
         return 0

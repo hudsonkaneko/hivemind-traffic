@@ -1,7 +1,9 @@
 """Decorative road and driver-reference view; never writes vehicle physics state.
 
-Static road artwork and live debug overlays occupy separate anonymous USD
-layers. All geometry uses the existing analytic lane map. No collision, mass,
+Static road artwork and live debug overlays occupy separate USD layers. The
+optional clean layout references a reusable, file-backed road asset; its debug
+layer remains anonymous during live updates. All geometry uses the existing
+analytic lane map. No collision, mass,
 rigid-body, sensor or actuator API is authored here. Debug prims use default
 render purpose so they are visible without enabling every physics guide mesh.
 They are NOT sensor-excluded and can enter raw RTX LiDAR scans. Their surfaces
@@ -16,6 +18,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 import math
 from numbers import Real
+from pathlib import Path
+
+
+LEGACY_ROAD_ROOT = '/World/PhysicsRoad'
+CLEAN_ROAD_ROOT = '/World/Environment/Highway'
+CLEAN_DEBUG_ROOT = '/World/Debug/Route'
 
 
 @dataclass(frozen=True, slots=True)
@@ -186,8 +194,13 @@ def _update_mesh(mesh, geometry):
 class PhysicsRoadView:
     """Updates view-only debug opinions; has no vehicle/control/physics handle."""
 
-    def __init__(self, stage, route, root_path, static_layer, dynamic_layer):
+    def __init__(self, stage, route, root_path, static_layer, dynamic_layer, *,
+                 debug_root_path=None, asset_path=None, assembly_path=None):
         self.stage, self.route, self.root_path = stage, route, root_path
+        self.debug_root_path = debug_root_path or root_path + '/Debug'
+        self.asset_path = asset_path
+        self.assembly_path = assembly_path
+        self.clean_layout = asset_path is not None
         # Routes are immutable. Cache only this view's road framing, not vehicle
         # poses or LiDAR/control state; overview previously rebuilt road meshes.
         self._overview_route = route
@@ -201,8 +214,14 @@ class PhysicsRoadView:
                              debug_sensor_exclusion_verified=False, debug_z_max_m=0.085,
                              debug_sensor_visibility='Renderable geometry; may enter raw RTX LiDAR scans',
                              debug_roi_handling='Ground-level surfaces; braking-height exclusion must be checked by the runner',
-                             endpoint_padding_m=5.0,
+                             endpoint_padding_m=5.0, clean_layout=self.clean_layout,
+                             road_root_path=root_path, debug_root_path=self.debug_root_path,
                              static_layer=static_layer.identifier, dynamic_layer=dynamic_layer.identifier)
+        if self.clean_layout:
+            self.metadata.update(road_asset_path=str(asset_path),
+                                 road_assembly_path=str(assembly_path),
+                                 road_asset_default_prim='/Highway',
+                                 road_asset_reference=asset_path.relative_to(assembly_path.parent).as_posix())
 
     def update(self, state, target_xy=None, show_reference=True, planned_route=None,
                preview_distance_m=25.0, full_plan=False):
@@ -216,7 +235,7 @@ class PhysicsRoadView:
         station = 0. if full_plan else route.project(*position[:2]).s_m
         begin = max(0.0, min(route.length_m, station))
         end = route.length_m if full_plan else min(route.length_m, begin + distance)
-        debug_root = self.root_path + '/Debug'
+        debug_root = self.debug_root_path
         with Usd.EditContext(self.stage, self.dynamic_layer):
             root = UsdGeom.Imageable(self.stage.GetPrimAtPath(debug_root))
             root.CreateVisibilityAttr().Set('inherited' if show_reference else 'invisible')
@@ -252,13 +271,124 @@ class PhysicsRoadView:
         raise ValueError('Camera mode must be overview, or follow with an observed state')
 
 
-def author_physics_road(stage, route, root_path='/World/PhysicsRoad',
-                        lane_dividers_m=(), show_reference_centerline=True):
-    """Attach independent anonymous artwork/debug layers, preserving the edit target.
+def _author_clean_road(stage, route, dividers, show_reference_centerline, asset_directory):
+    """Publish an immutable decorative road asset and compose its placement."""
+    from pxr import Kind, Sdf, Usd, UsdGeom
+    asset_path = asset_directory / 'road.usda'
+    assembly_path = asset_directory.parent / 'road-layout.usda'
+    for output in (asset_path, assembly_path):
+        if output.exists():
+            raise FileExistsError(f'Road export already exists; choose a new scene directory: {output}')
+    if stage.GetPrimAtPath(CLEAN_DEBUG_ROOT):
+        raise ValueError('Debug route root already exists; do not overwrite existing scene opinions')
+
+    # Author at the asset boundary first so every material target is internal
+    # and USD can remap it when the asset is placed at another namespace path.
+    asset = Usd.Stage.CreateInMemory('road-asset.usda')
+    UsdGeom.SetStageUpAxis(asset, UsdGeom.Tokens.z)
+    UsdGeom.SetStageMetersPerUnit(asset, 1.0)
+    asset.SetTimeCodesPerSecond(stage.GetTimeCodesPerSecond())
+    root = UsdGeom.Xform.Define(asset, '/Highway').GetPrim()
+    asset.SetDefaultPrim(root)
+    Usd.ModelAPI(root).SetKind(Kind.Tokens.component)
+    root.SetAssetInfoByKey('name', 'Highway')
+    root.SetAssetInfoByKey('identifier', Sdf.AssetPath('road.usda'))
+    root.SetAssetInfoByKey('version', '1')
+    root.SetCustomDataByKey('route_id', route.route_id)
+    root.SetCustomDataByKey('decorative_only', True)
+    UsdGeom.Scope.Define(asset, '/Highway/Geometry')
+    UsdGeom.Scope.Define(asset, '/Highway/Looks')
+    geometry = build_road_geometry(route)
+    for source_name, name, color in [('Asphalt', 'RoadSurface', (0.035, 0.047, 0.060)),
+                                     ('LeftEdge', 'LeftEdge', (0.92, 0.92, 0.85)),
+                                     ('RightEdge', 'RightEdge', (0.92, 0.92, 0.85))]:
+        _author_mesh(asset, '/Highway/Geometry/' + name, geometry[source_name], color,
+                     '/Highway/Looks/' + name)
+    for index, divider in enumerate(dividers):
+        _author_mesh(asset, f'/Highway/Geometry/LaneDivider_{index + 1:03d}', divider,
+                     (0.92, 0.92, 0.92), '/Highway/Looks/LaneDivider')
+
+    old_sublayers = list(stage.GetRootLayer().subLayerPaths)
+    created_outputs = []
+    try:
+        # A relative reference must belong to a file-backed layer; an anonymous
+        # layer would resolve it against a process-dependent working directory.
+        if not asset.GetRootLayer().Export(str(asset_path)):
+            raise RuntimeError(f'Could not export road asset: {asset_path}')
+        created_outputs.append(asset_path)
+        static = Sdf.Layer.CreateNew(str(assembly_path))
+        if static is None:
+            raise RuntimeError(f'Could not create road assembly layer: {assembly_path}')
+        created_outputs.append(assembly_path)
+        assembly = Usd.Stage.Open(static)
+        UsdGeom.SetStageUpAxis(assembly, UsdGeom.Tokens.z)
+        UsdGeom.SetStageMetersPerUnit(assembly, 1.0)
+        assembly.SetTimeCodesPerSecond(stage.GetTimeCodesPerSecond())
+        world = UsdGeom.Xform.Define(assembly, '/World').GetPrim()
+        assembly.SetDefaultPrim(world)
+        Usd.ModelAPI(world).SetKind(Kind.Tokens.assembly)
+        environment = UsdGeom.Xform.Define(assembly, '/World/Environment').GetPrim()
+        Usd.ModelAPI(environment).SetKind(Kind.Tokens.group)
+        highway = UsdGeom.Xform.Define(assembly, CLEAN_ROAD_ROOT).GetPrim()
+        highway.GetReferences().AddReference(asset_path.relative_to(assembly_path.parent).as_posix())
+        if assembly.GetCompositionErrors():
+            raise RuntimeError(f'Road asset composition failed: {assembly.GetCompositionErrors()}')
+        if not static.Save():
+            raise RuntimeError(f'Could not save road assembly layer: {assembly_path}')
+
+        dynamic = Sdf.Layer.CreateAnonymous('physics-road-debug.usda')
+        stage.GetRootLayer().subLayerPaths = [dynamic.identifier, static.identifier] + old_sublayers
+        with Usd.EditContext(stage, dynamic):
+            UsdGeom.Scope.Define(stage, '/World/Debug')
+            debug = UsdGeom.Xform.Define(stage, CLEAN_DEBUG_ROOT)
+            debug.CreatePurposeAttr(UsdGeom.Tokens.default_)
+            UsdGeom.Scope.Define(stage, CLEAN_DEBUG_ROOT + '/Looks')
+            reference = _author_mesh(stage, CLEAN_DEBUG_ROOT + '/ReferenceCenterline',
+                         route_ribbon(route, 0, route.length_m, width_m=0.06, z_m=0.05),
+                         (0.0, 0.36, 0.45), CLEAN_DEBUG_ROOT + '/Looks/Reference', emissive=True)
+            reference.CreateVisibilityAttr().Set('inherited' if show_reference_centerline else 'invisible')
+            _author_mesh(stage, CLEAN_DEBUG_ROOT + '/UpcomingPath',
+                         route_ribbon(route, 0, min(25.0, route.length_m), width_m=0.16, z_m=0.07),
+                         (0.0, 0.95, 1.0), CLEAN_DEBUG_ROOT + '/Looks/Upcoming', emissive=True)
+            target = _author_mesh(stage, CLEAN_DEBUG_ROOT + '/PursuitTarget',
+                                 target_ring(route.evaluate(0).position_xy),
+                                 (1.0, 0.12, 0.65), CLEAN_DEBUG_ROOT + '/Looks/Target', emissive=True)
+            target.CreateVisibilityAttr().Set('invisible')
+        return PhysicsRoadView(stage, route, CLEAN_ROAD_ROOT, static, dynamic,
+                               debug_root_path=CLEAN_DEBUG_ROOT, asset_path=asset_path,
+                               assembly_path=assembly_path)
+    except Exception:
+        stage.GetRootLayer().subLayerPaths = old_sublayers
+        # Only new files belonging to this unsuccessful export are disposable.
+        for output in reversed(created_outputs):
+            output.unlink(missing_ok=True)
+        raise
+
+
+def author_physics_road(stage, route, root_path=LEGACY_ROAD_ROOT,
+                        lane_dividers_m=(), show_reference_centerline=True, *,
+                        clean_layout=False, asset_directory=None):
+    """Attach independent artwork/debug layers, preserving the edit target.
 
     Does not save existing files, change the stage unit/up-axis contract, add
-    lights or create collision geometry. A repeated occupied root is rejected.
+    lights or create collision geometry. Legacy mode retains anonymous layers
+    and the original namespace. ``clean_layout=True`` requires an existing,
+    fresh ``asset_directory`` and publishes ``road.usda`` plus its sibling
+    ``../road-layout.usda``. It places the road at ``/World/Environment/Highway``
+    and all debug content at ``/World/Debug/Route``. Existing prims or output
+    files are rejected. The caller owns final root/dynamic layer packaging.
     """
+    if clean_layout:
+        if root_path not in (LEGACY_ROAD_ROOT, CLEAN_ROAD_ROOT):
+            raise ValueError('clean_layout uses /World/Environment/Highway as its road root')
+        if asset_directory is None:
+            raise ValueError('clean_layout requires an existing asset_directory')
+        asset_directory = Path(asset_directory).resolve()
+        if not asset_directory.is_dir():
+            raise ValueError('asset_directory must be an existing directory')
+        root_path = CLEAN_ROAD_ROOT
+    elif asset_directory is not None:
+        raise ValueError('asset_directory is only supported with clean_layout=True')
     from pxr import Sdf, Usd, UsdGeom
     path = Sdf.Path(root_path)
     if not path.IsAbsolutePath() or not path.IsPrimPath() or path == Sdf.Path.absoluteRootPath:
@@ -268,6 +398,8 @@ def author_physics_road(stage, route, root_path='/World/PhysicsRoad',
     if UsdGeom.GetStageUpAxis(stage) != UsdGeom.Tokens.z or not math.isclose(UsdGeom.GetStageMetersPerUnit(stage), 1.0):
         raise ValueError('The physical-road view requires an existing Z-up, metre stage')
     dividers = [lane_divider_geometry(route, offset) for offset in lane_dividers_m]
+    if clean_layout:
+        return _author_clean_road(stage, route, dividers, show_reference_centerline, asset_directory)
     static = Sdf.Layer.CreateAnonymous('physics-road-static.usda')
     dynamic = Sdf.Layer.CreateAnonymous('physics-road-debug.usda')
     old_sublayers = list(stage.GetRootLayer().subLayerPaths)

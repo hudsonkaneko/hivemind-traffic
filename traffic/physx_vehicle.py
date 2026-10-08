@@ -14,7 +14,7 @@ from traffic.driver_control import ackermann_steering, wheel_torques
 class PhysxVehicle:
     """One pose authority: PhysX. Runtime commands touch wheel actuators only."""
 
-    def __init__(self, stage, physics_hz=120):
+    def __init__(self, stage, physics_hz=120, *, scene_directory=None):
         import omni.physx
         from traffic.physics_session import vehicle_factory
         from pxr import PhysxSchema, UsdGeom, UsdPhysics
@@ -22,25 +22,35 @@ class PhysxVehicle:
         Factory = vehicle_factory()
 
         self.stage = stage
-        root = UsdGeom.Xform.Define(stage, '/World')
-        stage.SetDefaultPrim(root.GetPrim())
-        paths, wheels = [], []
-        Factory.create4WheeledCarsScenario(
-            stage, 1.0, 1, driveMode=Factory.DRIVE_NONE,
-            axes=Factory.AxesIndices(2, 0, 1), timeStepsPerSecond=physics_hz,
-            createCollisionShapesForWheels=True, vehiclePathsOut=paths,
-            wheelAttachmentPathsOut=wheels)
-        self.path = paths[0]
-        self.wheel_paths = wheels[0]
-        from traffic.wheel_geometry import author_explicit_wheel_axes
-        author_explicit_wheel_axes(stage, self.wheel_paths)
+        self.scene_composition = None
+        if scene_directory is not None:
+            from usd.physical_scene import PATHS, compose_factory_vehicle
+            self.scene_composition = compose_factory_vehicle(stage, Factory, physics_hz, scene_directory)
+            self.path, self.wheel_paths = PATHS.chassis, PATHS.wheels
+            self.physics_scene_path = PATHS.physics
+        else:
+            # Preserved low-level fixtures and the separate Leatherback/Lab work
+            # retain their original namespace and evidence contract.
+            root = UsdGeom.Xform.Define(stage, '/World')
+            stage.SetDefaultPrim(root.GetPrim())
+            paths, wheels = [], []
+            Factory.create4WheeledCarsScenario(
+                stage, 1.0, 1, driveMode=Factory.DRIVE_NONE,
+                axes=Factory.AxesIndices(2, 0, 1), timeStepsPerSecond=physics_hz,
+                createCollisionShapesForWheels=True, vehiclePathsOut=paths,
+                wheelAttachmentPathsOut=wheels)
+            self.path = paths[0]
+            self.wheel_paths = wheels[0]
+            from traffic.wheel_geometry import author_explicit_wheel_axes
+            author_explicit_wheel_axes(stage, self.wheel_paths)
+            self.physics_scene_path = '/World/PhysicsScene'
         self.controllers = [PhysxSchema.PhysxVehicleWheelControllerAPI(stage.GetPrimAtPath(p))
                             for p in self.wheel_paths]
         self.physx = omni.physx.get_physx_interface()
         self.body = UsdPhysics.RigidBodyAPI(stage.GetPrimAtPath(self.path))
         # Factory ordering FL, FR, RL, RR: Z-up/X-forward => left is +Y.
         self.wheelbase_m, self.track_m = 3.2, 1.6
-        scene = UsdPhysics.Scene(stage.GetPrimAtPath('/World/PhysicsScene'))
+        scene = UsdPhysics.Scene(stage.GetPrimAtPath(self.physics_scene_path))
         scene.GetGravityMagnitudeAttr().Set(9.81)
         mass = UsdPhysics.MassAPI(stage.GetPrimAtPath(self.path))
         self.metadata = dict(
@@ -60,6 +70,8 @@ class PhysxVehicle:
             suspension_spring_n_m=45000, suspension_damper_n_s_m=4500, suspension_travel_m=0.2,
             ground='Infinite collision plane; sample visible ground is only 30 x 30 m',
             sumo_required=False, lidar_enabled=False, isaac_lab_validated=False)
+        if self.scene_composition:
+            self.metadata['scene_composition'] = self.scene_composition
 
     def apply(self, control, drive_torque_nm, brake_torque_nm):
         angles = ackermann_steering(control.steering_rad, self.wheelbase_m, self.track_m)

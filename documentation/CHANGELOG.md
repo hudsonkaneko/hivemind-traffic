@@ -4,6 +4,18 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-08 — Referenced one-car physical scene
+
+- Migrated the scripted LiDAR bypass demo to named Environment, Vehicles,
+  Physics, Lighting, Cameras and Debug branches with referenced assets.
+- Added separate vehicle geometry/physics and scene layers, versioned paths,
+  exact Factory-contract checks, static-asset guards and portable scene export.
+- Preserved legacy SUMO, low-level physics and Lab fixtures. No installation or
+  training; new learned control still requires the user's involvement.
+- Retained setup failures and a native shutdown crash alongside subsequent
+  successful runs. See [scope, evidence and remaining checks](physical-scene-composition.md).
+- Google learning-document sync is pending a Windows trusted-reader issue.
+
 ## 2026-10-06 — Required OpenUSD scene-authoring conventions
 
 - Recorded the user's clean-hierarchy requirement in AGENTS.md and the workflow.
