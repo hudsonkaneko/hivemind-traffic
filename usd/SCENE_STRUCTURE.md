@@ -1,8 +1,9 @@
 # OpenUSD scene and asset conventions
 
-Status: required for new and modified scene-authoring work. The current physical
-prototype has **not yet been migrated**; this document is a policy and migration
-contract, not a claim that existing assets already pass it.
+Status: required for new and modified scene-authoring work. The one-car LiDAR
+obstacle-bypass demo now opts into the composed scene described in
+[migration evidence](../documentation/physical-scene-composition.md).
+Legacy low-level, Lab and vehicle-specific fixtures have not been migrated.
 
 The user's requirement is legible hierarchies, properly named components and
 reusable OpenUSD/Omniverse composition, even with simple development visuals.
@@ -119,20 +120,20 @@ make names/hierarchy clean, and payloads do not guarantee a real-time speedup.
 
 ## Current implementation and migration order
 
-- `traffic/physx_vehicle.py` builds the installed Factory vehicle into the stage.
-  The session currently expects `/World/PhysicsScene`; several consumers bind
-  directly to the generated vehicle/wheel paths.
-- `scripts/physics_obstacle_bypass.py` authors `/World/Barrier` and
-  `/World/DemoLight` directly and saves a flattened `scene-initial.usda` diagnostic.
-- `visualization/physics_road_view.py` already separates static and debug layers,
-  but its `/World/PhysicsRoad` namespace needs alignment with the new convention.
+- `traffic/physx_vehicle.py` keeps its original low-level default and adds an
+  explicit composed-scene option. `usd/physical_scene.py` owns versioned paths,
+  asset extraction, scene bindings, export and structure checks.
+- `scripts/physics_obstacle_bypass.py` uses that option: referenced vehicle,
+  road, ground and barrier, named cameras/lights, separate physics and debug.
+  It saves `scene/world.usda` with composition intact, not a flattened stage.
+- `visualization/physics_road_view.py` preserves its legacy default while the
+  migrated demo uses `/World/Environment/Highway` and `/World/Debug/Route`.
 - `scripts/replay_export.py` already references `vehicle.usda` and instances the
   Model subtree, with separate road/motion layers. The whole project is not
   reference-free. Preserve its SUMO/front-bumper contract during any migration.
 
-Next authoring milestone: inventory actual composed prims and dependency arcs;
-establish a versioned path interface; extract a reusable simple vehicle and
-environment; compose a clean one-car stage; then adapt the runtime and tests.
+Next authoring milestones: interactive Stage/layer inspection, reusable-library
+promotion, and scoped migration of additional consumers when needed.
 Do not retrofit published evidence or globally rename live-stage prims. Imported
 vendor content may remain internally intact behind a documented asset wrapper
 until a dedicated asset-normalization migration is tested.
@@ -153,8 +154,9 @@ until a dedicated asset-normalization migration is tested.
    LiDAR identity/frame/timestamp, reset and repeatability checks after migration.
    Capture an expanded hierarchy screenshot and retain before/after manifests.
 
-These are required acceptance checks, not newly implemented validators. This
-policy-only change does not start simulations, install dependencies or train.
+These are required acceptance checks. The linked migration report distinguishes
+implemented automated validators and actual runtime evidence from remaining
+interactive checks; it does not imply all historical scenes now comply.
 
 ## Primary guidance
 

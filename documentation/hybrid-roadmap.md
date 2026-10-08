@@ -234,5 +234,17 @@ All future scene/asset work follows [OpenUSD conventions](../usd/SCENE_STRUCTURE
 Before expanding the current physical prototype, migrate its generated hierarchy
 to explicit reusable asset boundaries and a versioned path interface. Preserve
 the current demo/evidence and verify wheels, controller paths, collision/sensor
-relationships and timing after restructuring. The convention is recorded now;
-the existing runtime's migration and automated structure validators are pending.
+relationships and timing after restructuring.
+
+October 8: the [one-car bypass migration](physical-scene-composition.md) now has
+referenced assets, a versioned path interface, exact pre-runtime preservation
+checks and bounded physical/sensor evidence. Other physical/Lab fixtures retain
+their legacy contracts; historical results are untouched. Interactive Stage/layer
+inspection and camera/point controls remain to be checked in the editor.
+
+Next: finish that interactive inspection, profile live-window timing under matched
+desktop load, then reuse the validated scene/control boundary for the next
+two-car/hybrid gate. Library promotion and Lab cloning/reset tests must precede
+learned control; agree on observations/actions/rewards and budget with the user
+before launching new Isaac Lab training. This scene milestone does not advance
+highway-speed, physical-fleet or hivemind-effectiveness claims.

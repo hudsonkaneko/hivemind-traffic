@@ -82,7 +82,8 @@ class RenderedPhysicsSession:
 
     _active = None
 
-    def __init__(self, physics_hz=120, render_hz=30):
+    def __init__(self, physics_hz=120, render_hz=30, *, physics_scene_path='/World/PhysicsScene'):
+        self.physics_scene_path = physics_scene_path
         self.physics_hz = _positive_rate(physics_hz, 'physics_hz')
         self.render_hz = _positive_rate(render_hz, 'render_hz')
         if physics_hz % render_hz:
@@ -194,9 +195,9 @@ class RenderedPhysicsSession:
         authored = sorted(str(p.GetPath()) for p in self.stage.Traverse()
                           if p.IsA(UsdPhysics.Scene))
         registered = sorted(scene.path for scene in self.manager.get_physics_scenes())
-        if authored != ['/World/PhysicsScene'] or registered != authored:
+        if authored != [self.physics_scene_path] or registered != authored:
             raise RuntimeError(
-                'Expected one registered Factory scene /World/PhysicsScene; '
+                f'Expected one registered physics scene {self.physics_scene_path}; '
                 f'authored={authored}, registered={registered}')
         self.manager.setup_simulation(dt=self.dt, device='cpu')
         actual_dt = self.manager.get_physics_scenes()[0].get_dt()

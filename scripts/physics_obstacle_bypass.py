@@ -25,22 +25,13 @@ from traffic.physical_lidar import PhysicalLidar, packet_to_scan, rotation_matri
 from traffic.runtime_profile import RuntimeProfiler
 from traffic.wheel_geometry import assess_wheel_geometry, sample_wheel_geometry
 from visualization.preview_timing import PreviewClock, rendering_profile
+from usd.physical_scene import (PATHS, author_scene_details, validate_scene,
+                                save_composed_scene, asset_hashes)
 
 
 def route_data(route):
     return dict(route_id=route.route_id, width_m=route.width_m, origin_xy_m=route.origin_xy_m,
                 initial_yaw_rad=route.initial_yaw_rad, segments=[asdict(s) for s in route.segments])
-
-
-def author_barrier(stage, box):
-    from pxr import Gf, UsdGeom, UsdPhysics, UsdLux
-    cube = UsdGeom.Cube.Define(stage, '/World/Barrier')
-    cube.CreateSizeAttr(1.)
-    cube.AddTranslateOp().Set(Gf.Vec3d(box.x_m, box.y_m, .75))
-    cube.AddScaleOp().Set(Gf.Vec3f(box.length_m, box.width_m, 1.5))
-    cube.CreateDisplayColorAttr([Gf.Vec3f(.95, .23, .06)])
-    UsdPhysics.CollisionAPI.Apply(cube.GetPrim())
-    UsdLux.DomeLight.Define(stage, '/World/DemoLight').CreateIntensityAttr(1000)
 
 
 def controls(ui_state):
@@ -111,21 +102,32 @@ def main():
         from isaacsim.core.utils.viewports import set_camera_view
         from omni.kit.viewport.utility import get_active_viewport, capture_viewport_to_file
         result['runtime_setup'] = prepare_vehicle_runtime()
-        session = RenderedPhysicsSession(120,cfg['render_hz'])
-        vehicle = PhysxVehicle(session.stage,120)
-        view = author_physics_road(session.stage,road,lane_dividers_m=(0.,),show_reference_centerline=False)
-        author_barrier(session.stage, obstacle)
+        scene_directory = output/'scene'
+        session = RenderedPhysicsSession(120,cfg['render_hz'], physics_scene_path=PATHS.physics)
+        vehicle = PhysxVehicle(session.stage,120,scene_directory=scene_directory)
+        view = author_physics_road(session.stage,road,lane_dividers_m=(0.,),
+            show_reference_centerline=False,clean_layout=True,asset_directory=scene_directory/'assets')
+        author_scene_details(session.stage, scene_directory, obstacle)
         monitor = VehicleContactMonitor(session.stage, vehicle.path)
         lidar = PhysicalLidar(vehicle.path, episode_id=episode, vehicle_id='ego',
-                              tick_source=lambda:session.physics_steps, points=cfg['points'])
+                              tick_source=lambda:session.physics_steps, points=cfg['points'], sensor_path=PATHS.lidar)
         ui_state = dict(camera=cfg['camera'],path=True,points=cfg['points'],paused=False)
         if cfg['gui']: window,label = controls(ui_state)
         viewport = get_active_viewport()
         if viewport is None: raise RuntimeError('No viewport available')
         viewport.resolution = (graphics['width'],graphics['height'])
+        for mode, camera_path in (('follow',PATHS.follow_camera),('overview',PATHS.overview_camera)):
+            camera = view.camera_pose(mode, dict(position_m=[0.,0.,1.],yaw_rad=0.))
+            set_camera_view(eye=np.array(camera.eye),target=np.array(camera.target),camera_prim_path=camera_path)
+        viewport.camera_path = PATHS.follow_camera if ui_state['camera']=='follow' else PATHS.overview_camera
         static_before = view.static_layer.ExportToString()
-        view.static_layer.Export(str(output/'road-static.usda'))
-        session.stage.Flatten().Export(str(output/'scene-initial.usda'))
+        result['scene_structure'] = validate_scene(session.stage)
+        write_json(output/'scene-structure.json', result['scene_structure'])
+        result['composed_scene'] = save_composed_scene(session.stage,scene_directory,view.dynamic_layer)
+        published_before = asset_hashes(scene_directory)
+        static_layers = [layer for layer in session.stage.GetUsedLayers() if not layer.anonymous]
+        static_contents = {layer.identifier:layer.ExportToString() for layer in static_layers}
+        write_json(output/'scene-assets.json', published_before)
         write_json(output/'scene-contract.json',dict(vehicle=vehicle.metadata,sensor=lidar.metadata,
             view=view.metadata,nominal=route_data(nominal),road=route_data(road),
             evaluation_only_obstacle=asdict(obstacle),physics_authority='PhysX'))
@@ -242,7 +244,9 @@ def main():
                                 planned_route=plan.route,preview_distance_m=35.,
                                 full_plan=cfg.get('real_time', False))
                     camera=view.camera_pose(ui_state['camera'],state)
-                    set_camera_view(eye=np.array(camera.eye),target=np.array(camera.target))
+                    camera_path = PATHS.follow_camera if ui_state['camera']=='follow' else PATHS.overview_camera
+                    viewport.camera_path = camera_path
+                    set_camera_view(eye=np.array(camera.eye),target=np.array(camera.target),camera_prim_path=camera_path)
                     lidar.set_points(ui_state['points'])
                     if label:
                         timing = preview_clock.frames[-1] if preview_clock.frames else None
@@ -298,6 +302,9 @@ def main():
         active=[r for r in rows if r['tick']>240]
         wheel_result=assess_wheel_geometry(wheel_rows,vehicle.wheel_paths,6000)
         extra=dict(complete=len(rows)==6000,render_clock=bool(render_checks) and all(render_checks),
+            composed_scene=validate_scene(session.stage)['passed'],
+            asset_files_unchanged=asset_hashes(scene_directory)==published_before,
+            asset_layers_unchanged=all(layer.ExportToString()==static_contents[layer.identifier] for layer in static_layers),
             no_sensor_errors=not lidar.errors,static_road_unchanged=view.static_layer.ExportToString()==static_before,
             driver_valid=all(not r['driver']['fallback'] and not r['control']['is_fallback'] for r in active),
             tracking_error=max(abs(r['tracking_error_m']) for r in rows)<=cfg['tracking_error_max_m'],
@@ -340,11 +347,23 @@ def main():
             for name,value in [('trajectory',rows),('planner',plans),('sensor-frames',frames),('contacts',contacts),('wheel-geometry',wheel_rows)]:
                 write_json(output/(name+'.json'),value)
         except Exception as error:result.update(passed=False,evidence_write_error=repr(error))
+        # Preserve completed physics gates even if native shutdown fails. This
+        # is explicitly provisional; only probe-result + supervisor gates pass.
+        try:write_json(output/'pre-close-result.json',dict(result,cleanup_verified=False))
+        except Exception as error:result.update(passed=False,pre_close_write_error=repr(error))
+        if session and session.started:
+            try:
+                # Release the viewport's project-camera binding before deleting
+                # the stage. Return to Kit's runtime-owned camera and drain it.
+                viewport.camera_path = '/OmniverseKit_Persp'
+                session.render()
+            except Exception as error:result.update(passed=False,camera_close_error=repr(error))
         if lidar:
             try:lidar.close()
             except Exception as error:result.update(passed=False,sensor_close_error=repr(error))
         if window:window.visible=False
         window=label=lidar=view=monitor=vehicle=None
+        static_layers = None
         if session:
             try:session.close()
             except Exception as error:result.update(passed=False,session_close_error=repr(error))
