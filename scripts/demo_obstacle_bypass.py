@@ -1,6 +1,5 @@
 """Portable, bounded LiDAR-triggered physical obstacle bypass. No training."""
 import argparse
-from dataclasses import asdict
 import hashlib
 import json
 import os
@@ -13,17 +12,16 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from experiments.probe_support import GpuMonitor, finish, gpu_sample, run_package, write_json
 from experiments.verify_physics_vehicle import stop_child
-from experiments.obstacle_bypass_config import validate_config
+from experiments.obstacle_bypass_config import validate_config, controller_settings
 from hivemind.launcher import isaac_runtime, load_config
-from traffic.lidar_braking import LidarBrakeConfig
-from traffic.obstacle_bypass import BypassConfig
-from traffic.path_following import FollowerConfig
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--headless', action='store_true')
     parser.add_argument('--check', action='store_true')
+    parser.add_argument('--profile', choices=['low-speed', '35mph'], default='35mph',
+                        help='Physical driving fixture; low-speed preserves the original 3 m/s demo')
     parser.add_argument('--mode', choices=['pass', 'blocked', 'dropout'], default='pass')
     parser.add_argument('--camera', choices=['follow', 'overview'], default='follow')
     parser.add_argument('--points', action='store_true')
@@ -34,19 +32,20 @@ def main():
     args = parser.parse_args()
     if args.real_time and args.unpaced:
         parser.error('--real-time requires pacing; omit --unpaced')
-    config = json.loads((ROOT/'experiments/physics-obstacle-bypass.json').read_text())
+    config_path = ('experiments/physics-obstacle-bypass-35mph.json' if args.profile == '35mph'
+                   else 'experiments/physics-obstacle-bypass.json')
+    config = json.loads((ROOT/config_path).read_text())
     validate_config(config)
     config.update(mode=args.mode, gui=not args.headless, camera=args.camera,
                   points=args.points, capture=args.capture, paced=not args.unpaced,
                   real_time=args.real_time,
-                  braking=asdict(LidarBrakeConfig()), follower=asdict(FollowerConfig()),
-                  planner=asdict(BypassConfig()))
+                  **controller_settings(args.profile))
     if args.real_time:
         config['render_hz'] = 20
     validate_config(config, resolved=True)
     runtime = isaac_runtime(ROOT, load_config(ROOT))
     sources = ['scripts/demo_obstacle_bypass.py', 'scripts/physics_obstacle_bypass.py',
-        'experiments/physics-obstacle-bypass.json', 'experiments/probe_support.py',
+        config_path, 'experiments/probe_support.py', 'traffic/speed_profiles.py',
         'experiments/verify_physics_vehicle.py', 'hivemind/launcher.py',
         'experiments/obstacle_bypass_config.py',
         'traffic/obstacle_bypass.py', 'traffic/bypass_validation.py',

@@ -24,6 +24,7 @@ from traffic.path_following import FollowerConfig, PathFollower, PathReference, 
 from traffic.physical_lidar import PhysicalLidar, packet_to_scan, rotation_matrix
 from traffic.runtime_profile import RuntimeProfiler
 from traffic.wheel_geometry import assess_wheel_geometry, sample_wheel_geometry
+from traffic.speed_profiles import MPH_TO_M_S, speed_limit
 from visualization.preview_timing import PreviewClock, rendering_profile
 from usd.physical_scene import (PATHS, author_scene_details, validate_scene,
                                 save_composed_scene, asset_hashes)
@@ -62,9 +63,15 @@ def main():
         parser.error('Use the supervisor with a fresh output directory')
     cfg = json.loads((output/'resolved-config.json').read_text())
     validate_config(cfg, resolved=True)
-    nominal = LaneRoute('nominal', 3.6, (RouteSegment(90),))
-    road = LaneRoute('two_lane_test_road', 7.2, (RouteSegment(100),), origin_xy_m=(0,1.8))
-    obstacle = OrientedBox(45., 1.8 if cfg['mode']=='blocked' else 0., 0., 2., 7.2 if cfg['mode']=='blocked' else 1.6)
+    speed_profile = cfg.get('speed_profile', 'low-speed')
+    physics_hz = cfg['physics_hz']
+    total_ticks = cfg['duration_s']*physics_hz
+    settle_ticks = cfg['settle_s']*physics_hz
+    hold_tick = (cfg['duration_s']-cfg['hold_s'])*physics_hz
+    nominal = LaneRoute('nominal', 3.6, (RouteSegment(cfg['nominal_stop_x_m']),))
+    road = LaneRoute('two_lane_test_road', 7.2, (RouteSegment(cfg.get('road_length_m',100)),), origin_xy_m=(0,1.8))
+    obstacle = OrientedBox(cfg['barrier_x_m'], 1.8 if cfg['mode']=='blocked' else 0., 0.,
+        cfg['barrier_dimensions_m'][0], 7.2 if cfg['mode']=='blocked' else cfg['barrier_dimensions_m'][1])
     episode = 'bypass-'+output.name
     app = session = vehicle = lidar = view = monitor = window = label = None
     rows, wheel_rows, frames, contacts, render_checks, plans, history = [], [], [], [], [], [], {}
@@ -110,7 +117,8 @@ def main():
         author_scene_details(session.stage, scene_directory, obstacle)
         monitor = VehicleContactMonitor(session.stage, vehicle.path)
         lidar = PhysicalLidar(vehicle.path, episode_id=episode, vehicle_id='ego',
-                              tick_source=lambda:session.physics_steps, points=cfg['points'], sensor_path=PATHS.lidar)
+                              tick_source=lambda:session.physics_steps, points=cfg['points'], sensor_path=PATHS.lidar,
+                              speed_profile=speed_profile)
         ui_state = dict(camera=cfg['camera'],path=True,points=cfg['points'],paused=False)
         if cfg['gui']: window,label = controls(ui_state)
         viewport = get_active_viewport()
@@ -147,7 +155,7 @@ def main():
         loop_started = time.perf_counter(); paused_wall = 0
         preview_clock = PreviewClock(paced=cfg['paced'])
         result['startup_wall_s'] = loop_started-started
-        for tick in range(6000):
+        for tick in range(total_ticks):
             profile.begin_iteration()
             if time.perf_counter()-started>cfg['max_process_seconds']-20:
                 raise TimeoutError('Bounded demo deadline')
@@ -157,11 +165,11 @@ def main():
                     raise RuntimeError('Paused demo closed or timed out')
                 pause_start=time.perf_counter();session.render();time.sleep(.02)
                 paused_wall+=time.perf_counter()-pause_start
-            phase = 'settle' if tick<240 else ('hold' if tick>=5400 else 'drive')
+            phase = 'settle' if tick<settle_ticks else ('hold' if tick>=hold_tick else 'drive')
             command = None
             if tick%2==0:
                 packet = lidar.latest
-                if cfg['mode']=='dropout' and tick>=1440:
+                if cfg['mode']=='dropout' and tick>=cfg['dropout_at_s']*physics_hz:
                     if frozen_packet is None: frozen_packet=packet
                     packet=frozen_packet
                 with profile.measure('scan'):
@@ -195,7 +203,7 @@ def main():
                 reference=PathReference(episode,'ego',plan.route.route_id,plan_tick,plan_tick+24,
                     0. if phase=='settle' else plan.target_speed_m_s,plan.stop_s_m,source=SENSOR_PATH_SOURCE)
                 with profile.measure('safety'):
-                    preview=predicted_route_poses(plan.route,state,state['speed_m_s'])
+                    preview=predicted_route_poses(plan.route,state,state['speed_m_s'],config=safety.brake.config)
                     decision=safety.evaluate(scan,tick=tick,speed_m_s=state['speed_m_s'],predicted_route=preview,
                         requested_target_speed_m_s=reference.target_speed_m_s)
                 with profile.measure('control'):
@@ -221,7 +229,7 @@ def main():
                 contacts.extend(monitor.sample(session.sim,tick+1))
                 car_box=OrientedBox(*state['position_m'][:2],state['yaw_rad'])
                 clearance=box_clearance(car_box,obstacle)
-                road_inside=footprint_within_road(car_box)
+                road_inside=footprint_within_road(car_box, x_min_m=-5., x_max_m=road.length_m+5.)
                 projected=plan.route.project(*state['position_m'][:2])
             safety_status='no_safe_route' if plan.status=='stop' else ('stale_invalid' if plan.status=='stale_invalid' else decision.status)
             row=dict(tick=tick+1,sim_time_s=(tick+1)/120,absolute_sim_time_s=clock['absolute_time_s'],
@@ -241,7 +249,7 @@ def main():
             if (tick+1)%session.render_every_steps==0:
                 with profile.measure('view_update'):
                     view.update(state,target_xy=driver.get('target_xy_m'),show_reference=ui_state['path'],
-                                planned_route=plan.route,preview_distance_m=35.,
+                                planned_route=plan.route,preview_distance_m=100. if speed_profile=='35mph' else 35.,
                                 full_plan=cfg.get('real_time', False))
                     camera=view.camera_pose(ui_state['camera'],state)
                     camera_path = PATHS.follow_camera if ui_state['camera']=='follow' else PATHS.overview_camera
@@ -252,9 +260,9 @@ def main():
                         timing = preview_clock.frames[-1] if preview_clock.frames else None
                         pace_text = (f"{timing['rtf']:.2f}x | lag {timing['lag_s']:.2f}s"
                                      if timing else 'Measuring playback rate...')
-                        label.text=(f"{ui_state['camera'].upper()} | {row['sim_time_s']:.1f}s | {state['speed_m_s']:.2f} m/s\n"
+                        label.text=(f"{ui_state['camera'].upper()} | {row['sim_time_s']:.1f}s | {state['speed_m_s']/MPH_TO_M_S:.1f} mph ({state['speed_m_s']:.2f} m/s)\n"
                             f"Planner: {plan.status.upper()} | Safety: {safety_status.upper()}\n"
-                            f"Path error {projected.lateral_error_m:+.2f}m | progress {state['position_m'][0]:.1f}/90m\n"
+                            f"Path error {projected.lateral_error_m:+.2f}m | progress {state['position_m'][0]:.1f}/{cfg['nominal_stop_x_m']}m\n"
                             f"Playback: {pace_text}")
                 with profile.measure('render'):
                     before=session.snapshot();session.render();after=session.snapshot()
@@ -297,11 +305,16 @@ def main():
             profile.finish_iteration()
         result['observed_render_settings_after_episode'] = {
             key:settings.get(key) for key in result['observed_render_settings']}
-        result.update(assess_bypass(rows,mode=cfg['mode'],obstacle=obstacle))
-        post_frames=[f for f in frames if f['delivery_tick']>240]
-        active=[r for r in rows if r['tick']>240]
-        wheel_result=assess_wheel_geometry(wheel_rows,vehicle.wheel_paths,6000)
-        extra=dict(complete=len(rows)==6000,render_clock=bool(render_checks) and all(render_checks),
+        result.update(assess_bypass(rows,mode=cfg['mode'],obstacle=obstacle,
+            max_speed_m_s=speed_limit(speed_profile),stop_x_m=cfg['nominal_stop_x_m'],
+            adoption_before_x_m=(cfg['barrier_x_m']-cfg['planner']['shift_x_m']-cfg['planner']['longitudinal_clearance_m']-5
+                                 if speed_profile=='35mph' else 30.),
+            dropout_at_s=cfg['dropout_at_s'],target_speed_m_s=cfg['target_speed_m_s'],require_cruise=speed_profile=='35mph',
+            road_length_m=road.length_m))
+        post_frames=[f for f in frames if f['delivery_tick']>settle_ticks]
+        active=[r for r in rows if r['tick']>settle_ticks]
+        wheel_result=assess_wheel_geometry(wheel_rows,vehicle.wheel_paths,total_ticks)
+        extra=dict(complete=len(rows)==total_ticks,render_clock=bool(render_checks) and all(render_checks),
             composed_scene=validate_scene(session.stage)['passed'],
             asset_files_unchanged=asset_hashes(scene_directory)==published_before,
             asset_layers_unchanged=all(layer.ExportToString()==static_contents[layer.identifier] for layer in static_layers),
@@ -370,7 +383,7 @@ def main():
             try:write_json(output/'lifecycle.json',session.lifecycle)
             except Exception as error:result.update(passed=False,lifecycle_write_error=repr(error))
         result.update(total_wall_s=time.perf_counter()-started,process=process_sample(),
-            limitations=['One low-speed physical car; empty adjacent corridor and static obstacle with explicit maximum size prior',
+            limitations=[f'One physical car, {speed_profile} fixture; empty adjacent corridor and static obstacle with explicit maximum size prior',
                 'Known road and privileged odometry; no learned policy, moving-obstacle tracking, free-space proof, or traffic-rule negotiation',
                 'Geometric path-envelope braking, not a calibrated reachable-set guarantee; no highway-speed claim',
                 'Real-time status is the measured preview_timing gate for this run, not a hard-deadline or cross-machine guarantee'])

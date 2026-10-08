@@ -19,6 +19,7 @@ import math
 from numbers import Real
 
 import numpy as np
+from traffic.speed_profiles import speed_limit
 
 VEHICLE_FRAME = 'vehicle_local_chassis_x_forward_y_left_z_up_m'
 
@@ -79,6 +80,7 @@ class LidarBrakeConfig:
     max_scan_age_ticks: int = 24
     max_scan_span_ticks: int = 24
     max_points: int = 500_000
+    speed_profile: str = 'low-speed'
 
     def __post_init__(self):
         if not _tick(self.physics_hz) or not 1 <= self.physics_hz <= 1000:
@@ -97,8 +99,8 @@ class LidarBrakeConfig:
         if (not _finite(self.min_height_m) or not _finite(self.max_height_m)
                 or self.min_height_m >= self.max_height_m):
             raise ValueError('Vertical filter bounds must be finite and increasing')
-        if self.max_speed_m_s > 3:
-            raise ValueError('This uncalibrated short-corridor stop fixture is limited to 3 m/s')
+        if self.max_speed_m_s > speed_limit(self.speed_profile):
+            raise ValueError('Speed exceeds the explicitly selected brake profile')
 
 
 @dataclass(frozen=True)

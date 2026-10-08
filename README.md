@@ -53,6 +53,11 @@ LiDAR-triggered planned route:
 python scripts/demo_obstacle_bypass.py
 ```
 
+The [35 mph profile](documentation/physical-35mph.md) extends the road and
+LiDAR-triggered maneuver for a 15.6464 m/s cruise target. Use `--profile low-speed`
+to retain the original 3 m/s fixture. See the profile note for validation status;
+vehicle speed is distinct from the measured real-time playback rate.
+
 See the [documentation index](documentation/README.md) and
 [development workflow](documentation/workflow.md) for changes, evidence and review.
 

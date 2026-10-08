@@ -8,6 +8,7 @@ import math
 import re
 from numbers import Integral
 import numpy as np
+from traffic.speed_profiles import speed_limit
 
 
 SENSOR_RATE_HZ = 20
@@ -97,8 +98,9 @@ def packet_to_scan(packet, state, *, episode_id, vehicle_id, tick, epoch_s=0.0, 
         delivery_tick=int(delivery), coordinate_reference_tick=int(tick), points=points)
 
 
-def _configure_rotary_profile(prim):
+def _configure_rotary_profile(prim, speed_profile='low-speed'):
     """Author and read back both rates: installed tick_rate does NOT set scan rate."""
+    speed_limit(speed_profile)
     for attr in prim.GetAttributes():
         if attr.GetName().startswith('omni:sensor:Core:emitterState:s001:'):
             value = attr.Get()
@@ -109,7 +111,7 @@ def _configure_rotary_profile(prim):
         'omni:sensor:tickRate': float(SENSOR_RATE_HZ),
         'omni:sensor:Core:scanRateBaseHz': SENSOR_RATE_HZ,
         'omni:sensor:Core:numberOfEmitters': 32,
-        'omni:sensor:Core:patternFiringRateHz': 7200.0,
+        'omni:sensor:Core:patternFiringRateHz': 72000.0 if speed_profile == '35mph' else 7200.0,
         'omni:sensor:Core:elementsCoordsType': 'CARTESIAN',
         'omni:sensor:Core:outputFrameOfReference': 'WORLD',
         'omni:sensor:Core:outputMotionCompensationState': 'NONCOMPENSATED',
@@ -127,7 +129,8 @@ def _configure_rotary_profile(prim):
 
 class PhysicalLidar:
     """Bounded latest-packet sink and switchable RTX debug writer."""
-    def __init__(self, vehicle_path, *, episode_id, vehicle_id, tick_source, points=False, sensor_path=None):
+    def __init__(self, vehicle_path, *, episode_id, vehicle_id, tick_source, points=False,
+                 sensor_path=None, speed_profile='low-speed'):
         import omni.replicator.core as rep
         from isaacsim.sensors.experimental.rtx import Lidar, LidarSensor, parse_generic_model_output_data
         from isaacsim.core.experimental.utils.app import enable_extension
@@ -178,12 +181,12 @@ class PhysicalLidar:
         self.lidar = Lidar.create(self.path, config='Example_Rotary', translations=np.array(self.mount_translation_m),
                                  aux_output_level='FULL', accumulate_outputs=True, tick_rate=SENSOR_RATE_HZ)
         prim = self.lidar.prims[0]
-        frequencies = _configure_rotary_profile(prim)
+        frequencies = _configure_rotary_profile(prim, speed_profile)
         render_dt = float(RenderingManager.get_dt())
         if not math.isfinite(render_dt) or render_dt <= 0:
             raise RuntimeError('Rendering cadence must be configured before the physical LiDAR')
         frequencies['render'] = 1.0 / render_dt
-        self.metadata = dict(path=self.path, mount_translation_m=self.mount_translation_m,
+        self.metadata = dict(path=self.path, mount_translation_m=self.mount_translation_m, speed_profile=speed_profile,
             frame='CARTESIAN WORLD NONCOMPENSATED', chassis_quaternion='xyzw',
             labels_used=False, trace_labels_used=False, obstacle_ground_truth_used=False,
             odometry_source='simulator_chassis_pose', frequencies_hz=frequencies,

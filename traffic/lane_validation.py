@@ -31,9 +31,15 @@ def validate_config(config):
     from traffic.path_following import FollowerConfig
     from dataclasses import asdict
     follower = FollowerConfig(**config['follower'])
-    if asdict(follower) != config['follower']:
+    resolved_follower = asdict(follower)
+    # Historical lane fixtures predate named speed profiles; omission means
+    # the original low-speed limits, not permission to opt into faster driving.
+    if 'speed_profile' not in config['follower']:
+        resolved_follower.pop('speed_profile')
+    if resolved_follower != config['follower']:
         raise ValueError('Resolve every follower setting before source capture')
-    if (follower.wheelbase_m != 3.2 or follower.rear_axle_offset_m != 1.6
+    if (follower.speed_profile != 'low-speed'
+            or follower.wheelbase_m != 3.2 or follower.rear_axle_offset_m != 1.6
             or follower.max_speed_m_s > 3 or follower.max_steering_rad > .5
             or follower.command_ttl_ticks != config['command_ttl_ticks']):
         raise ValueError('Follower does not match this bounded physical vehicle')
