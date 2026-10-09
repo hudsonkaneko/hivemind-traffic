@@ -6,18 +6,24 @@ authority for historical measurements and failures.
 
 ## 2026-10-09 — Versioned loop traffic showcase
 
-- Added a separate presentation branch with numbered showcase milestones,
-  one supplied native-PhysX main vehicle and twelve referenced kinematic block
-  cars. Existing roads, assets, SUMO demos and research results are preserved.
-- Verified the v01 integration, including moving obstacles, road support,
-  braking/hold, unchanged asset hashes and an actual follow-camera capture.
-  Source assets remain local-only; Git contains the generic integration code.
-- Added tested moving-object gap planning, smooth lane-change references and
-  live presentation controls. Higher-speed passing and presentation qualification
-  are tracked in the [showcase report](loop-traffic-showcase.md), not inferred
-  from CPU tests. First-frame rendering is separated from live pacing.
-- Postponed Isaac Lab work for the user's same-day showcase. No training or
-  dependency installation. Google learning-guide synchronization is pending.
+- Integrated the supplied Americano v07 as a native-PhysX main car with twelve
+  slower referenced block cars, scripted moving-object passing, follow/overhead
+  cameras, cyan planned path and live status controls. Sources stay unchanged
+  and local-only; Git contains generic code and versioned milestone notes.
+- Qualified the corrected v04 GUI: 252 simulated seconds in 252.0003424 live
+  wall seconds, twelve complete passes, five lane changes, zero contacts,
+  1.5808 m minimum clearance and safe final braking/hold. Clean native shutdown.
+- Two fresh 110-second drives matched exactly across 14,640 physical samples,
+  with complete visual/native pose checks and source/evidence hash verification.
+- Fixed stale kinematic visuals using measured-pose render proxies, normalized
+  display rotations, and a guarded process-local workaround for an unused
+  scripting extension's stage-close crash. Failed attempts are preserved and
+  their historical physical-versus-visual scope is explicitly corrected.
+- Verified 1,333 CPU tests (92 optional tests skipped; 15 subtests passed) and
+  67 USD tests. See [showcase evidence and commands](loop-traffic-showcase.md).
+  Existing experiments and the research roadmap remain intact. Isaac Lab work
+  is postponed; no training or installation. Google guide sync is pending the
+  required Windows trusted-reader failure, confirmed again for this milestone.
 
 ## 2026-10-08 — Continuous physical highway mentor branch
 

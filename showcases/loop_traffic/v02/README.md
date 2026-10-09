@@ -1,6 +1,8 @@
 # v02 — moving-object passing
 
-Status: verified in the bounded 90-second driving fixture. Use the same asset/road/traffic ownership as v01. Add 10 Hz
+Status: physical passing verified in the bounded 90-second driving fixture;
+historical background visuals failed qualification (corrected in v04).
+Use the same asset/road/traffic ownership as v01. Add 10 Hz
 adjacent-lane gap selection, smooth quintic lane changes and 60 Hz steering/speed
 control through the existing 120 Hz command gate. Target 35 mph, subject to
 physical checks. A 90 s drive must finish at least three distinct passes and two
@@ -15,7 +17,7 @@ requested detailed car were visually inspected.
 
 Renderer preparation now happens before the live clock (zero added physics
 ticks). This unpaced run achieved 1.0305x across 102 simulated seconds. A paced
-GUI test is still required for v03; unpaced speed alone is not that test.
+GUI test is recorded separately in v04; unpaced speed alone is not that test.
 
 ```text
 python scripts/demo_loop_showcase.py --version v02 --capture

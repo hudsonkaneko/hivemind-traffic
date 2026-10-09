@@ -1,6 +1,7 @@
 # v01 — vehicle and traffic integration
 
-Status: verified within the bounded integration scope. Preserve the supplied prepared vehicle and V02 highway.
+Status: physical integration verified; historical background visuals failed
+qualification (corrected in v04). Preserve the supplied prepared vehicle and V02 highway.
 Assemble one physics-driven main car and twelve deterministic block cars through
 references. Initial check: 30 s driving at 6 m/s, then an explicit brake/hold.
 No passing claim is required at this stage.
@@ -16,7 +17,7 @@ fixed it and now has a regression test. Both attempts are preserved locally.
 
 Unpaced playback measured 0.878x including first-frame renderer warm-up; it is
 **not** a real-time qualification. Separate renderer readiness from the live
-window, then verify v03 pacing. Source and captures are under
+window, then verify v04 pacing. Source and captures are under
 `outputs/loop_showcase/<run-id>/`; these ignored artifacts are not on GitHub.
 
 ```text

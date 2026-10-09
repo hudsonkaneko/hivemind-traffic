@@ -1,11 +1,17 @@
 # Highway Sim documentation
 
-Updated: October 4, 2026. The only active local workspace is
+Updated: October 9, 2026. The only active local workspace is
 `C:\Users\hudso\Documents\highwaysim`; its remote is
 `hudsonkaneko/hivemind-traffic`. See [locations](locations.md) and the
 [consolidation record](consolidation-2026-10-02.md).
 
 ## Start here
+
+For the same-day presentation branch, start with the
+[loop traffic showcase](loop-traffic-showcase.md) and its
+[version folders](../showcases/loop_traffic/README.md). It uses the supplied
+physics-driven main car and scripted moving block traffic. It is separate from
+the SUMO/research experiments below; Isaac Lab work is currently postponed.
 
 The working traffic demonstrations currently use **SUMO-owned movement** with
 Isaac Sim rendering, RTX LiDAR, scripted obstacle avoidance, and two-car V2V.
@@ -30,6 +36,7 @@ mixed-traffic, statistics, and visualization goals.
 | [35 mph physical profile](physical-35mph.md) | Extended-road speed target, longer stopping/turning geometry, denser LiDAR, validation status and preserved low-speed mode |
 | [Mentor-guided branch roadmap](mentor-loop-roadmap.md) | Separate continuous-loop progression; preserves the main plan and requires user involvement before training |
 | [Continuous physical highway loop](continuous-highway-loop.md) | Referenced V02 road, periodic scripted driver, physical acceptance, follow/overview preview and rerunnable evidence |
+| [Loop traffic showcase](loop-traffic-showcase.md) | Prepared main car, moving block obstacles, scripted safe passing, version records and measured demonstration gates |
 | [Hybrid motion-authority decision](decisions/001-hybrid-motion-authority.md) | Who moves each vehicle, responsibilities transferred from SUMO, and comparison limits |
 | [Change log](CHANGELOG.md) | Meaningful changes, reasons, and evidence pointers |
 | [Contribution and documentation workflow](workflow.md) | Branches, tests, commits, GitHub review, and learning-document updates |

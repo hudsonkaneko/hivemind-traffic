@@ -3,6 +3,12 @@
 Separate, same-day presentation branch; the research roadmap and SUMO demos
 remain available. Isaac Lab task/training work is postponed for this showcase.
 
+**Ready to demonstrate:** v04 passed a full, real-time GUI circuit with the
+prepared Americano: twelve overtakes, five lane changes, no contacts and a clean
+stop/shutdown. Run `python scripts/demo_loop_showcase.py --version v04` from the
+configured traffic environment at the repository root. See v04 for measured
+evidence, repeat and failure tests; the supplied vehicle remains a local prerequisite.
+
 ## Version folders
 
 These are deliverable milestones, not copies of the repository. Exact code is
