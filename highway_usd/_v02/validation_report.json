@@ -1,0 +1,48 @@
+{
+  "passed": true,
+  "stage_sha256": "8ab855aa553e9ab4576ee8266140553312a004b3616b3ea29ad6400eadbf95a8",
+  "usd_validator_count": 28,
+  "prim_count": 143,
+  "relationship_targets": 191,
+  "lane_count": 14,
+  "edge_count": 28,
+  "spawn_count": 24,
+  "strongly_connected_auxiliary_collector": true,
+  "all_routes_continue": true,
+  "connector_metrics": {
+    "exit": {
+      "min_radius_m": 379.3856959321021,
+      "max_lateral_g_at_65mph": 0.22686605662150053
+    },
+    "return": {
+      "min_radius_m": 379.3856959321021,
+      "max_lateral_g_at_65mph": 0.22686605662150053
+    }
+  },
+  "sampled_connector_minimum_radii_m": {
+    "EastExit": 379.38686004654477,
+    "EastReturn": 379.3868600282624,
+    "NorthExit": 379.3868600653997,
+    "NorthReturn": 379.3868600161772,
+    "WestExit": 379.3868600355265,
+    "WestReturn": 379.38686001537445,
+    "SouthExit": 379.3868600651237,
+    "SouthReturn": 379.3868600298727
+  },
+  "maximum_tangent_error_deg": 0.032884381196260186,
+  "maximum_waypoint_spacing_m": 0.9337510313021093,
+  "maximum_usd_float_error_m": 3.0489067626149335e-05,
+  "watertight_collision": true,
+  "render_collision_difference_m2": 0.03321042539956596,
+  "collision_faces": 62960,
+  "seeded_return_plans_checked": 1280,
+  "return_opportunities": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "main_lap_seconds_at_65mph": 108.11604033333079,
+  "collector_lap_seconds_at_65mph": 115.68416315666396,
+  "scope": "Static geometry, route planning and theoretical unbanked lateral acceleration. No vehicle handling or traffic-controller acceptance."
+}

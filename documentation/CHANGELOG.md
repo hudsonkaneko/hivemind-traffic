@@ -4,6 +4,26 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-08 — Continuous physical highway mentor branch
+
+- Preserved the existing V02 road/navigation source and added a portable,
+  referenced highway assembly with one physics scene and finite-road support.
+- Added periodic scripted driving, true-lap accounting, expiring wheel commands,
+  follow/overview previews and immutable run evidence; existing demos are unchanged.
+- Passed 3 m/s, 6 m/s and 35 mph driving/braking checks, command-loss fallback,
+  two matched full-lap runs, a three-lap / 9.93 km run and a paced 35 mph GUI
+  preview. The 28,200 aligned
+  samples from the full-lap pair matched exactly on the recorded runtime.
+- Fixed a visually detected stale follow camera using explicit session-layer
+  ownership and post-render pose checks. Earlier visual failures remain recorded.
+- Verified 1,165 CPU tests and 18 USD-specific tests. See the
+  [implementation/evidence note](continuous-highway-loop.md) and separate
+  [mentor roadmap](mentor-loop-roadmap.md). Main roadmap, vehicle preparation,
+  SUMO baselines and prior results remain unchanged by this task.
+- No dependency installation or training; user involvement is required before
+  the first new Isaac Lab training run. Google guide sync remains pending the
+  Windows trusted-reader issue, explicitly recorded in the sync note.
+
 ## 2026-10-08 — Bounded 35 mph physical-car profile
 
 - Added a named 15.6464 m/s cruise profile with a 550 m road, gentler 70 m

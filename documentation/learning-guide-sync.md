@@ -1,5 +1,14 @@
 # Engineering guide synchronization
 
+## Pending: mentor-guided continuous highway loop
+
+The local [loop implementation and evidence note](continuous-highway-loop.md)
+and [branch roadmap](mentor-loop-roadmap.md) are the current source for this new
+milestone. Existing Google tabs were not modified. A fresh attempt to use the
+required file-backed reader failed with `workspaceRoot must be an absolute path`
+for the canonical Windows directory. Native write/format/readback verification
+therefore remains pending; the verified synchronization below is historical.
+
 Last verified: October 6, 2026.
 
 Latest source milestone: commit `e74b574`, published on `codex/realtime-preview`.

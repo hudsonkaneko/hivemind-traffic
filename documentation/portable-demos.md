@@ -208,3 +208,20 @@ runtime validation. See the change's test record in the learning guide.
 Explain why one command can stay portable while the executable it selects changes
 between machines. Then deliberately configure a missing interpreter and run
 `--check`: it should report setup guidance without launching or modifying a scene.
+
+## Mentor branch: continuous physical highway loop
+
+Separate known-map scripted PhysX fixture, with no SUMO, LiDAR or RL:
+
+```text
+python scripts/demo_highway_loop.py --check
+python scripts/demo_highway_loop.py --profile seam3
+python scripts/demo_highway_loop.py --profile seam35
+python scripts/demo_highway_loop.py --profile lap35
+```
+
+Use the configured traffic Python to launch; the supervisor discovers Isaac.
+The GUI defaults to light graphics and best-effort real-time pacing. It has
+follow/overview and pause controls. Runs are bounded and close on completion.
+See [acceptance results and limitations](continuous-highway-loop.md) before
+equating a short preview with full-lap, multi-car or learned-control validation.

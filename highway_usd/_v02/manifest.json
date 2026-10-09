@@ -1,0 +1,14 @@
+{
+  "version": "_v02",
+  "usd_version": "0.26.8",
+  "shapely_version": "2.1.2",
+  "files": {
+    "highway_v02.usda": "8ab855aa553e9ab4576ee8266140553312a004b3616b3ea29ad6400eadbf95a8",
+    "navigation.json": "6a6b3708af48773ecb2d35d684fe16822f36365ca7e0fe4ece0df7c828766855",
+    "parameters.json": "374d19f77563f6d84ff6c1293ac4bfe9bcb12285572dbedbd9ff2587e16d0593",
+    "route_examples.json": "72745cb1f54c3d193da81f2c008bda4ec2aa01b54cead16f45d0e70d7cb59bbc",
+    "generate_highway.py": "897e2a75c1dd6550e93d9fe5fc835bf7f7d8ceb89ae4388950deb002c4b997ed",
+    "route_policy.py": "72cbe3e30383f027f50d4d2dab7d67fe417f215c0daefa2561cf0ead814e2e24",
+    "usd_helpers.py": "c50cd598198580d817fd5f47bb4f6956c7de3939049df741d76dc1983b4992d3"
+  }
+}
