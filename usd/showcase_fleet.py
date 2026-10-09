@@ -215,7 +215,8 @@ class KinematicFleet:
             proxy.SetCustomDataByKey('vehicle_id', spec.vehicle_id)
             proxy_xform = UsdGeom.Xformable(proxy)
             proxy_xform.AddTranslateOp().Set(Gf.Vec3d(*initial['position_m']))
-            proxy_xform.AddOrientOp().Set(Gf.Quatf(w, x, y, z))
+            proxy_xform.AddOrientOp(precision=UsdGeom.XformOp.PrecisionDouble).Set(
+                Gf.Quatd(w, x, y, z).GetNormalized())
             proxy_xform.SetResetXformStack(True)
             palette = ((.18, .42, .63), (.46, .55, .62), (.72, .46, .18), (.30, .50, .39))
             layout.GetPrimAtPath(spec.chassis_path + '/Visuals/Body').GetAttribute('primvars:displayColor').Set([palette[index % len(palette)]])
@@ -264,6 +265,7 @@ class KinematicFleet:
             visual_publication='caller publishes measured native pose after physics, before each rendered frame',
             visual_cadence_note='wheel_visual_hz is maximum; publication also bounded by caller render cadence',
             render_proxy_policy='nonphysical geometry-only reference; original chassis invisible but collidable',
+            render_orientation='double precision unit quaternion normalized from measured native quaternion',
             physics_scope='one dynamic ego plus collidable kinematic backgrounds; not all-physical traffic',
             collision_group=BACKGROUND_GROUP, road_support_policy='background excluded from suspension queries',
             specs=[asdict(s) for s in self.specs],
@@ -365,7 +367,15 @@ class KinematicFleet:
                 x, y, z, qx, qy, qz, qw = map(float, pose)
                 translate, orient = self._render_attributes[spec.vehicle_id]
                 translate.Set(Gf.Vec3d(x, y, z))
-                orient.Set(Gf.Quatf(qw, qx, qy, qz))
+                # PhysX returns float32 quaternion components. Their norm can
+                # differ slightly from one; Gf's quaternion-to-rotation path
+                # amplifies scalar-component rounding near identity. Normalize
+                # in double precision before USD converts it to a matrix.
+                # This changes rendering only, never the native body or tracks.
+                orientation = Gf.Quatd(qw, qx, qy, qz)
+                if abs(orientation.GetLength() - 1.) > .001:
+                    raise RuntimeError('Native quaternion is not approximately unit length')
+                orient.Set(orientation.GetNormalized())
                 if self._target_count % self.wheel_update_every == 0:
                     # Decorative wheel angle only; chassis visuals use measured
                     # native pose, never fleet_pose's requested target.

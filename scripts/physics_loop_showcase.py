@@ -57,6 +57,20 @@ def main():
         from omni.kit.viewport.utility import get_active_viewport,capture_viewport_to_file
         from pxr import Sdf,Usd
         result['runtime_setup']=prepare_vehicle_runtime()
+        # No embedded USD behaviors are part of this explicitly controlled
+        # showcase. Isolate the installed optional scripting stage-close
+        # consumer before it can attach to our long-lived owned stage.
+        from traffic.showcase_runtime import (inspect_behavior_free_stage,
+            disable_unused_behavior_scripting,assert_behavior_scripting_disabled)
+        import omni.kit.app
+        extension_manager=omni.kit.app.get_app().get_extension_manager()
+        behavior_sources={}
+        for name,path in (('vehicle',ROOT/cfg['vehicle_directory']/'world.usda'),
+                          ('highway',ROOT/cfg['source_directory']/'highway_v02.usda')):
+            inspected_stage=Usd.Stage.Open(str(path))
+            behavior_sources[name]=inspect_behavior_free_stage(inspected_stage)
+            inspected_stage=None
+        result['behavior_runtime']=disable_unused_behavior_scripting(extension_manager,behavior_sources)
         source_hashes=package_hashes(ROOT/cfg['vehicle_directory'])
         scene_directory=output/'scene'
         session=RenderedPhysicsSession(cfg['physics_hz'],cfg['render_hz'],physics_scene_path=PATHS.physics)
@@ -95,6 +109,8 @@ def main():
         write_json(output/'scene-contract.json',dict(vehicle=model,source_vehicle_hashes=source_hashes,
             fleet=fleet.metadata,controller=asdict(controller_config),environment=result['environment'],spawn=result['spawn']))
         gate=DriverControlGate(episode,'ego');progress=LoopProgress(route)
+        result['behavior_runtime']['composed_scene_check']=inspect_behavior_free_stage(session.stage)
+        result['behavior_runtime']['pre_play_state']=assert_behavior_scripting_disabled(extension_manager)
         session.start();fleet.bind(session.manager.get_physics_simulation_view())
         result['clock_start']=session.snapshot();state=vehicle.state()
         progress.update(route.project(*state['position_m'][:2]).s_m % route.length_m)
@@ -206,6 +222,7 @@ def main():
             static_layers_unchanged=all(layer.ExportToString()==static_text[layer.identifier] for layer in static_layers),
             source_vehicle_unchanged=package_hashes(ROOT/cfg['vehicle_directory'])==source_hashes)
         result['gates'].update(extra);result['passed']=all(result['gates'].values())
+        result['behavior_runtime']['post_run_state']=assert_behavior_scripting_disabled(extension_manager)
         result.update(clock_end=session.snapshot(),passes=passed_records)
         for _ in range(3):session.render()
     except Exception as error:

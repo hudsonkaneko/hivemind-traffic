@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 from experiments import loop_showcase_repeatability as repeat
-from experiments.loop_showcase_config import assess,make_config
+from experiments.loop_showcase_config import assess,fleet_specs,make_config
 from tests.test_loop_showcase_config import valid_rows
 
 
@@ -44,6 +44,8 @@ def test_exact_repeats_pass_despite_different_git_labels(pair):
     assert result['passed'],result
     assert result['max_position_difference_m']==result['max_speed_difference_m_s']==0
     assert result['samples']==3240
+    assert result['qualification']=='physical_only'
+    assert result['background_visual_sync_qualified'] is False
 
 
 @pytest.mark.parametrize('field,value,passes',[('position',.01,True),('position',.0201,False),
@@ -99,6 +101,8 @@ def materialize(tmp_path,monkeypatch,evidence):
     source=directory/'source/fixture.py';source.parent.mkdir();source.write_bytes(b'source')
     documents={'summary.json':evidence['summary'],'trajectory.json':evidence['trajectory'],
         'resolved-config.json':evidence['config'],'scene-contract.json':evidence['scene_contract']}
+    if 'background_visual_checks' in evidence:
+        documents[repeat.VISUAL_FILE]=evidence['background_visual_checks']
     for name,document in documents.items():(directory/name).write_text(json.dumps(document),encoding='utf-8')
     (directory/'extra.txt').write_bytes(b'also hashed')
     manifest=deepcopy(evidence['manifest'])
@@ -147,3 +151,101 @@ def test_wrong_study_or_root_input_rejected(tmp_path,monkeypatch,pair):
     with pytest.raises(ValueError):repeat.resolve_run(directory.parent)
     other=tmp_path/'outputs/other_study/run';other.mkdir(parents=True)
     with pytest.raises(ValueError):repeat.resolve_run(other)
+
+
+@pytest.fixture
+def visual_pair(pair):
+    for run in pair:
+        cfg=make_config('v04',gui=False,paced=False,drive_s=15)
+        rows=valid_rows(cfg)
+        for row in rows:row.update(completed_passes=0,completed_lane_changes=0)
+        run['config']=cfg;run['manifest']['config']=deepcopy(cfg);run['trajectory']=rows
+        run['summary']=dict(assess(rows,cfg,0,[],0),exit_code=0,source_changed_during_run=[],
+                            clock_end=dict(physics_steps=len(rows)))
+        run['summary']['gates']['background_visual_sync']=True
+        specs=fleet_specs(cfg)
+        run['scene_contract']['fleet']=dict(count=len(specs),specs=specs)
+        interval=cfg['physics_hz']//cfg['render_hz']
+        run['background_visual_checks']=[dict(tick=(i+1)*interval,passed=True,
+            max_position_error_m=0.,max_yaw_error_rad=0.,all_proxies_visible=True,count=len(specs),
+            native_target_time_s=(i+1)*interval/cfg['physics_hz'],publications=i+2)
+            for i in range(cfg['duration_s']*cfg['render_hz'])]
+    return pair
+
+
+def test_v04_complete_visual_native_evidence_qualifies(visual_pair):
+    result=repeat.compare_evidence(*visual_pair)
+    assert result['passed'],result
+    assert result['qualification']=='physical_and_composed_visual_sync'
+    assert result['background_visual_sync_qualified'] is True
+    assert result['input_metrics']['first']['background_visual_sync']['frames']==540
+
+
+def test_v03_remains_physical_only_without_later_visual_claims(pair):
+    for run in pair:
+        cfg=make_config('v03',gui=False,paced=False,drive_s=15)
+        run['config']=cfg;run['manifest']['config']=deepcopy(cfg)
+        # A later wrapper adding a visual boolean must not upgrade old evidence.
+        run['summary']['gates']['background_visual_sync']=True
+    result=repeat.compare_evidence(*pair)
+    assert result['passed'],result
+    assert result['qualification']=='physical_only'
+    assert result['background_visual_sync_qualified'] is False
+    assert result['input_metrics']['first']['background_visual_sync']['qualified'] is False
+
+
+@pytest.mark.parametrize('change',['missing','empty','truncated','stale_time','missing_time','nan_time',
+    'wrong_tick','duplicate_tick','missing_count','wrong_count','bool_count','stale_publication',
+    'hidden_proxy','numeric_visible','claimed_failed','nan_position','infinite_yaw','negative_position',
+    'position_tolerance','yaw_tolerance','missing_summary_gate','wrong_fleet_count','wrong_fleet_specs',
+    'missing_native_clock','wrong_native_steps'])
+def test_v04_visual_failures_cannot_hide_behind_passed_summary(visual_pair,change):
+    run=visual_pair[1];checks=run['background_visual_checks'];row=checks[10]
+    if change=='missing':run.pop('background_visual_checks')
+    elif change=='empty':run['background_visual_checks']=[]
+    elif change=='truncated':checks.pop()
+    elif change=='stale_time':row['native_target_time_s']-=1/120
+    elif change=='missing_time':row.pop('native_target_time_s')
+    elif change=='nan_time':row['native_target_time_s']=float('nan')
+    elif change=='wrong_tick':row['tick']+=1
+    elif change=='duplicate_tick':row['tick']=checks[9]['tick']
+    elif change=='missing_count':row.pop('count')
+    elif change=='wrong_count':row['count']=11
+    elif change=='bool_count':row['count']=True
+    elif change=='stale_publication':row['publications']-=1
+    elif change=='hidden_proxy':row['all_proxies_visible']=False
+    elif change=='numeric_visible':row['all_proxies_visible']=1
+    elif change=='claimed_failed':row['passed']=False
+    elif change=='nan_position':row['max_position_error_m']=float('nan')
+    elif change=='infinite_yaw':row['max_yaw_error_rad']=float('inf')
+    elif change=='negative_position':row['max_position_error_m']=-.001
+    elif change=='position_tolerance':row['max_position_error_m']=.00201
+    elif change=='yaw_tolerance':row['max_yaw_error_rad']=.000101
+    elif change=='missing_summary_gate':run['summary']['gates'].pop('background_visual_sync')
+    elif change=='wrong_fleet_count':run['scene_contract']['fleet']['count']=11
+    elif change=='wrong_fleet_specs':run['scene_contract']['fleet']['specs'][0]['speed_m_s']=99
+    elif change=='missing_native_clock':run['summary'].pop('clock_end')
+    elif change=='wrong_native_steps':run['summary']['clock_end']['physics_steps']-=1
+    result=repeat.compare_evidence(*visual_pair)
+    assert not result['passed'],change
+    assert result['background_visual_sync_qualified'] is False
+
+
+def test_v04_loader_requires_and_hashes_visual_file(tmp_path,monkeypatch,visual_pair):
+    directory=materialize(tmp_path,monkeypatch,visual_pair[0])
+    loaded=repeat.load_run(directory)
+    assert not loaded['load_errors']
+    assert repeat.VISUAL_FILE in loaded['file_hashes']
+    assert len(loaded['background_visual_checks'])==540
+    (directory/repeat.VISUAL_FILE).unlink()
+    loaded=repeat.load_run(directory)
+    assert loaded['load_errors']
+    assert not repeat.compare_evidence(loaded,visual_pair[1])['passed']
+
+
+def test_v04_visual_file_requires_manifest_hash(tmp_path,monkeypatch,visual_pair):
+    directory=materialize(tmp_path,monkeypatch,visual_pair[0])
+    manifest=json.loads((directory/'manifest.json').read_text())
+    manifest['output_hashes'].pop(repeat.VISUAL_FILE)
+    (directory/'manifest.json').write_text(json.dumps(manifest))
+    assert repeat.load_run(directory)['load_errors']

@@ -279,6 +279,58 @@ class FleetUsdTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'must not contain physics'):
             self.fleet.validate()
 
+    def test_near_identity_float32_quaternion_has_precise_render_orientation(self):
+        """Reproduce the long-run near-zero yaw failure without a GPU.
+
+        Native float32 normalization can round w a few ULPs from the requested
+        target. This barely changes atan2 yaw but breaks unnormalized Gf orient
+        matrix conversion near w=1. Keep the original 0.0001-rad gate unchanged.
+        """
+        from types import SimpleNamespace
+        from experiments.loop_showcase_config import fleet_specs, make_config
+        specs = [FleetSpec(**s) for s in fleet_specs(make_config('v04'))]
+        stage = Usd.Stage.CreateInMemory()
+        UsdGeom.Xform.Define(stage, '/World')
+        UsdPhysics.Scene.Define(stage, PATHS.physics)
+        fleet = KinematicFleet(stage, self.directory/'quaternion-regression', specs,
+                               episode_id='quaternion-regression', wheel_update_every=6)
+        bodies = FakeBodies(specs)
+        fleet.bind(SimpleNamespace(create_rigid_body_view=lambda pattern: bodies))
+        self.assertEqual(stage.GetPrimAtPath(specs[0].render_path).GetAttribute('xformOp:orient').GetTypeName(),
+                         Sdf.ValueTypeNames.Quatd)
+        legacy_stage = Usd.Stage.CreateInMemory()
+        legacy = UsdGeom.Xform.Define(legacy_stage, '/LegacyFloatOrientation')
+        legacy_op = legacy.AddOrientOp()
+        worst_legacy = 0.
+        worst_corrected = 0.
+        times = sorted(set([0., 101.3, 101.35, 101.4, 101.5487, 240., 252., 1800.]
+                           + [float(t) for t in range(0, 301, 10)]))
+        for time_s in times:
+            for ulps in (-2, 0, 2):
+                for index, spec in enumerate(bodies.specs):
+                    expected = fleet_pose(spec, time_s)
+                    pose = np.asarray((*expected['position_m'], *expected['quaternion_xyzw']), dtype=np.float32)
+                    direction = np.float32(math.inf if ulps > 0 else -math.inf)
+                    for _ in range(abs(ulps)):
+                        pose[6] = np.nextafter(pose[6], direction)
+                    bodies.values[index] = pose
+                    qx, qy, qz, qw = map(float, pose[3:])
+                    native_yaw = math.atan2(2*(qw*qz+qx*qy), 1-2*(qy*qy+qz*qz))
+                    legacy_op.Set(Gf.Quatf(qw, qx, qy, qz))
+                    forward = legacy.ComputeLocalToWorldTransform(Usd.TimeCode.Default()).TransformDir(Gf.Vec3d(1, 0, 0))
+                    error = math.atan2(forward[1], forward[0])-native_yaw
+                    worst_legacy = max(worst_legacy, abs(math.atan2(math.sin(error), math.cos(error))))
+                report = fleet.publish_visuals()
+                self.assertTrue(report['passed'], (time_s, ulps, report))
+                worst_corrected = max(worst_corrected, report['max_yaw_error_rad'])
+        self.assertGreater(worst_legacy, .0001)
+        self.assertLess(worst_corrected, .000001)
+        self.assertTrue(fleet.static_assets_unchanged())
+        bodies.values[0, 3:] = [0, 0, 0, 0]
+        with self.assertRaisesRegex(RuntimeError, 'approximately unit'):
+            fleet.publish_visuals()
+        fleet.release()
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -20,10 +20,29 @@ SOURCES=['scripts/demo_loop_showcase.py','scripts/physics_loop_showcase.py',
  'hivemind/launcher.py','traffic/loop_showcase_control.py','traffic/loop_driving.py',
  'traffic/driver_control.py','traffic/path_following.py','traffic/lane_geometry.py','traffic/speed_profiles.py',
  'traffic/bypass_validation.py','traffic/lidar_braking.py','traffic/physx_vehicle.py','traffic/wheel_geometry.py',
- 'traffic/physics_session.py','traffic/rendered_physics_session.py','traffic/vehicle_contacts.py','traffic/evidence_chunks.py',
+ 'traffic/physics_session.py','traffic/rendered_physics_session.py','traffic/vehicle_contacts.py','traffic/evidence_chunks.py','traffic/showcase_runtime.py',
  'visualization/loop_showcase_view.py','visualization/highway_loop_view.py','visualization/preview_timing.py',
  'usd/physical_scene.py','usd/highway_loop_scene.py','usd/showcase_vehicle.py','usd/showcase_fleet.py','usd/scene_validation.py',
  'highway_usd/_v02/highway_v02.usda','highway_usd/_v02/navigation.json','highway_usd/_v02/manifest.json','highway_usd/_v02/parameters.json']
+
+
+def read_probe_result(output):
+    """Keep pre-close diagnostics after a native crash, but never accept them."""
+    completed=output/'probe-result.json'
+    if completed.is_file():
+        return json.loads(completed.read_text())
+    partial=output/'pre-close-result.json'
+    if partial.is_file():
+        result=json.loads(partial.read_text())
+        result.update(passed=False,cleanup_verified=False,
+            incomplete_result_source='pre-close-result.json',
+            completion_error='Native process did not publish its post-cleanup probe result')
+        return result
+    return dict(passed=False,error='No probe result')
+
+
+def runtime_failure_lines(log):
+    return [line for line in log.splitlines() if '[Error]' in line or '[Fatal]' in line]
 
 
 def main():
@@ -61,11 +80,10 @@ def main():
                 elif monitor.rows and monitor.rows[-1]['used_mib']/monitor.rows[-1]['total_mib']>=cfg['max_gpu_fraction']:reason='GPU memory guard'
                 if reason:stop_child(child);break
                 time.sleep(.2)
-        path=output/'probe-result.json'
-        result=json.loads(path.read_text()) if path.is_file() else dict(passed=False,error='No probe result')
+        result=read_probe_result(output)
         log=(output/'runtime.log').read_text(encoding='utf-8',errors='replace')
         result.update(exit_code=child.returncode,stop_reason=reason,
-            runtime_error_lines=[line for line in log.splitlines() if '[Error]' in line],
+            runtime_error_lines=runtime_failure_lines(log),
             usd_reference_warning_count=log.count('Unexpected reference count'),
             gpu_peak_mib=max((r['used_mib'] for r in monitor.rows),default=None),gpu_monitor_errors=monitor.errors,
             gpu_scope='Whole desktop GPU at approximately 1 Hz',wall_process_s=time.perf_counter()-start)

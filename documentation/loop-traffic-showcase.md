@@ -34,6 +34,28 @@ Kinematic targets use the installed native tensor API, isolated to background
 bodies; they must not share a body view with the dynamic main car. See
 [NVIDIA's kinematic-target API](https://docs.omniverse.nvidia.com/kit/docs/omni_physics/108.0/extensions/runtime/source/omni.physics.tensors/docs/api/python.html).
 
+## How to explain the demonstration
+
+1. **Observe:** read actual car positions and speeds from PhysX with a stable
+   vehicle ID and physics tick. This is ground-truth object tracking, not LiDAR
+   perception; the controller already knows the road's circular geometry.
+2. **Decide:** compare the slower lead vehicle and adjacent-lane traffic. Check
+   predicted gaps throughout a candidate lane change, not just at its endpoint.
+   If no adjacent lane is clear, follow at a reduced speed instead of forcing a pass.
+3. **Plan:** freeze a smooth radial transition over 80 m. The cyan line displays
+   this actual driving reference; it is not a separate decorative animation.
+4. **Control:** a rear-axle pure-pursuit controller requests steering; speed error
+   produces throttle/brake requests. The command gate limits steering changes
+   and brakes on expired commands. PhysX determines the main car's movement.
+5. **Present and verify:** measured obstacle poses drive separate display proxies.
+   Contacts, clearance, support, timestamps and visible/native pose agreement
+   are checked independently of the controller's own success counters.
+
+The twelve slower cars travel roughly 15–19 mph; the main car requests 35 mph
+when safe. It need not weave continuously: staying in a clear lane is an allowed,
+safer result. This demonstrates scripted motion planning/control and integration,
+not learned driving, sensor competence, communicating AVs or traffic optimization.
+
 ## Predeclared acceptance
 
 - Every owned tick advances exactly once; render-only calls advance zero ticks.
@@ -124,6 +146,20 @@ the visible side-by-side pass. Full-duration GUI and repeat qualification remain
 pending. Each attempt gets a fresh directory under `outputs/loop_showcase/`.
 Version folders under `showcases/loop_traffic/` record meaningful progressions;
 source versioning remains Git, not duplicated project copies.
+
+The first long GUI attempt `20261009T175756Z-b08d6609` is **failed**, retained:
+at t=101.35 the unchanged visual-heading gate detected 0.00011182 rad error
+(position error zero). Near-zero yaw amplified float32 quaternion scalar rounding
+in USD's rotation conversion. Rendering now uses a double-precision normalized
+quaternion; native motion and controller observations are unchanged. A regression
+reproduces the failure and verifies <0.000001 rad with perturbed native float32
+components; the acceptance tolerance was not widened.
+
+That attempt also crashed during stage teardown in the unused installed Behavior
+ScriptManager's Fabric-stage destructor. Its pre-close files and partial timing
+remain diagnostic evidence, not completion. The supervisor rejects missing final
+results and fatal logs even if the runtime batch wrapper returns zero. Its partial
+101.3-second 1x window does not qualify the intended 252-second GUI run.
 
 ## Learning document synchronization
 

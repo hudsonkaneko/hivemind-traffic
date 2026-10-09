@@ -13,7 +13,7 @@ import json
 import math
 from pathlib import Path
 
-from experiments.loop_showcase_config import assess, validate_config
+from experiments.loop_showcase_config import assess, fleet_specs, validate_config
 from experiments.probe_support import ROOT, finish, run_package
 
 
@@ -22,6 +22,13 @@ SOURCES=['experiments/loop_showcase_repeatability.py','experiments/loop_showcase
          'experiments/probe_support.py']
 POSITION_TOLERANCE_M=.02
 SPEED_TOLERANCE_M_S=.02
+VISUAL_FILE='background-visual-checks.json'
+VISUAL_POSITION_TOLERANCE_M=.002
+VISUAL_YAW_TOLERANCE_RAD=.0001
+
+
+def _requires_visual_checks(config):
+    return isinstance(config,dict) and config.get('version')=='v04'
 
 
 def _digest(data):
@@ -64,6 +71,15 @@ def load_run(path):
         data=_contained_file(directory,name).read_bytes()
         documents[name]=json.loads(data);fingerprints[name]=_digest(data)
         verified[name]=fingerprints[name]
+    required_files=list(INPUT_FILES)
+    if _requires_visual_checks(documents['resolved-config.json']):
+        required_files.append(VISUAL_FILE)
+        try:
+            data=_contained_file(directory,VISUAL_FILE).read_bytes()
+            documents[VISUAL_FILE]=json.loads(data);fingerprints[VISUAL_FILE]=_digest(data)
+            verified[VISUAL_FILE]=fingerprints[VISUAL_FILE]
+        except (OSError,ValueError) as error:
+            errors.append('Required v04 visual evidence: '+str(error))
     manifest=documents['manifest.json']
     if not isinstance(manifest,dict):
         errors.append('Manifest must be an object')
@@ -71,8 +87,8 @@ def load_run(path):
         outputs=manifest.get('output_hashes')
         if not _hashes(outputs):errors.append('Output hashes are missing or malformed')
         else:
-            for name in INPUT_FILES:
-                if name!='manifest.json' and outputs.get(name)!=fingerprints[name]:
+            for name in required_files:
+                if name!='manifest.json' and (name not in fingerprints or outputs.get(name)!=fingerprints[name]):
                     errors.append('Missing/mismatched required output hash: '+name)
             for name,expected in outputs.items():
                 try:
@@ -96,6 +112,7 @@ def load_run(path):
     return dict(run_id=directory.name,relative_path=directory.relative_to(ROOT).as_posix(),
         summary=documents['summary.json'],manifest=manifest,trajectory=documents['trajectory.json'],
         config=documents['resolved-config.json'],scene_contract=documents['scene-contract.json'],
+        background_visual_checks=documents.get(VISUAL_FILE),
         file_hashes=fingerprints,load_errors=errors,verified_output_count=len(verified))
 
 
@@ -113,6 +130,60 @@ def _runtime_identity(run):
     if not _hashes({'factory':identity['prepared_vehicle_factory_sha256']}):
         raise ValueError('Malformed prepared vehicle build Factory hash')
     return identity
+
+
+def _visual_metrics(run):
+    """Recompute per-render gates instead of trusting summary booleans.
+
+    These checks concern composed USD proxies versus native body poses. They do
+    not replace inspection of actual RTX screenshots. Historical v01-v03 runs
+    cannot acquire visual qualification from a later evaluator.
+    """
+    cfg=run['config']
+    if not _requires_visual_checks(cfg):
+        return dict(qualified=False,scope='Historical physical-only comparison; background visual synchronization not qualified')
+    checks=run.get('background_visual_checks')
+    expected_frames=cfg['duration_s']*cfg['render_hz']
+    if not isinstance(checks,list) or len(checks)!=expected_frames or not checks:
+        raise ValueError('v04 visual checks must cover every configured rendered frame')
+    if run['summary'].get('gates',{}).get('background_visual_sync') is not True:
+        raise ValueError('v04 summary lacks the passed background visual synchronization gate')
+    expected_fleet=fleet_specs(cfg)
+    fleet=run['scene_contract'].get('fleet')
+    if (not isinstance(fleet,dict) or type(fleet.get('count')) is not int
+            or fleet['count']!=len(expected_fleet) or not _same(fleet.get('specs'),expected_fleet)):
+        raise ValueError('v04 fleet count/specification is inconsistent with resolved settings')
+    clock=run['summary'].get('clock_end')
+    if (not isinstance(clock,dict) or type(clock.get('physics_steps')) is not int
+            or clock['physics_steps']!=len(run['trajectory'])):
+        raise ValueError('v04 final native clock does not cover the complete trajectory')
+    interval=cfg['physics_hz']//cfg['render_hz']
+    position_errors=[];yaw_errors=[]
+    finite=lambda value:type(value) in (int,float) and math.isfinite(value)
+    for index,check in enumerate(checks):
+        tick=(index+1)*interval
+        if (not isinstance(check,dict) or type(check.get('tick')) is not int or check['tick']!=tick
+                or type(check.get('count')) is not int or check['count']!=len(expected_fleet)
+                or type(check.get('publications')) is not int or check['publications']!=index+2):
+            raise ValueError('v04 visual tick, native fleet count or publication sequence mismatch at frame '+str(index+1))
+        # Exactly one initial publication precedes loop render frames. Warm-up,
+        # paused render-only calls and final cleanup do not increment this log.
+        native_time=check.get('native_target_time_s')
+        trajectory_time=run['trajectory'][tick-1]['sim_time_s']
+        if (not finite(native_time) or not math.isclose(native_time,tick/cfg['physics_hz'],rel_tol=0,abs_tol=1e-6)
+                or not math.isclose(native_time,trajectory_time,rel_tol=0,abs_tol=1e-6)):
+            raise ValueError('v04 visual/native timestamp is stale or misaligned at frame '+str(index+1))
+        pos=check.get('max_position_error_m');yaw=check.get('max_yaw_error_rad')
+        if (not finite(pos) or not 0<=pos<=VISUAL_POSITION_TOLERANCE_M
+                or not finite(yaw) or not 0<=yaw<=VISUAL_YAW_TOLERANCE_RAD):
+            raise ValueError('v04 visual/native pose error is nonfinite or exceeds tolerance at frame '+str(index+1))
+        if check.get('passed') is not True or check.get('all_proxies_visible') is not True:
+            raise ValueError('v04 visual proxies are hidden or failed at frame '+str(index+1))
+        position_errors.append(pos);yaw_errors.append(yaw)
+    return dict(qualified=True,scope='Composed visible proxy/native pose synchronization; actual RTX screenshot review remains separate',
+        frames=expected_frames,fleet_count=len(expected_fleet),render_hz=cfg['render_hz'],
+        maximum_position_error_m=max(position_errors),maximum_yaw_error_rad=max(yaw_errors),
+        position_tolerance_m=VISUAL_POSITION_TOLERANCE_M,yaw_tolerance_rad=VISUAL_YAW_TOLERANCE_RAD)
 
 
 def compare_evidence(first,second):
@@ -164,9 +235,10 @@ def compare_evidence(first,second):
                 if (any(type(v) is not int or v<0 for v in counts) or counts[-1]!=expected
                         or any(b<a for a,b in zip(counts,counts[1:]))):
                     raise ValueError('Trajectory event counter mismatch: '+name)
+            visual=_visual_metrics(run)
             identities[label]=_runtime_identity(run)
             metrics[label]=dict(samples=len(rows),completed_passes=len(passes),passed_vehicle_ids=sorted(passes),
-                completed_lane_changes=changes,distance_m=rows[-1]['traveled_distance_m'])
+                completed_lane_changes=changes,distance_m=rows[-1]['traveled_distance_m'],background_visual_sync=visual)
         except (KeyError,TypeError,ValueError,OverflowError,AttributeError) as error:
             failures.append(label+': '+str(error))
     if len(identities)==2 and identities['first']!=identities['second']:
@@ -178,6 +250,8 @@ def compare_evidence(first,second):
         acceptance=dict(position_tolerance_m=POSITION_TOLERANCE_M,speed_tolerance_m_s=SPEED_TOLERANCE_M_S),
         scope='Two fresh supervised showcase processes, same full configuration and actual captured source/asset hashes plus recorded runtime/hardware; not cross-platform determinism',
         git_policy='Git commit labels may differ only because equality is based on exact captured source hashes')
+    result['qualification']='physical_and_composed_visual_sync' if _requires_visual_checks(first.get('config')) else 'physical_only'
+    result['background_visual_sync_qualified']=False
     if failures:return result
     position=[math.dist(a['position_m'],b['position_m']) for a,b in zip(first['trajectory'],second['trajectory'])]
     speed=[abs(a['speed_m_s']-b['speed_m_s']) for a,b in zip(first['trajectory'],second['trajectory'])]
@@ -186,6 +260,7 @@ def compare_evidence(first,second):
     result.update(passed=not failures,samples=len(position),physics_hz=first['config']['physics_hz'],
         max_position_difference_m=max(position),max_speed_difference_m_s=max(speed),
         max_position_difference_tick=position.index(max(position))+1,max_speed_difference_tick=speed.index(max(speed))+1)
+    result['background_visual_sync_qualified']=not failures and all(m['background_visual_sync']['qualified'] for m in metrics.values())
     return result
 
 
