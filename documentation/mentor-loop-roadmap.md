@@ -35,7 +35,10 @@ same-process reset soak. Those distinctions remain explicit in status reports.
 No Isaac Lab training, dependency installation, detailed vehicle-asset migration,
 or main-roadmap rewrite is part of this checkpoint.
 
-**Next implementation:** step 5, the Isaac Lab task/episode-reset plumbing and a
-scripted baseline using the same physical/control contract. Validate a single
-environment before any clone scaling. Do not launch policy training: step 7
+**Immediate priority (October 9):** the user-requested
+[loop traffic showcase](loop-traffic-showcase.md): prepared main vehicle,
+slower block cars, scripted safe passing and a live camera/path presentation.
+This is a branch-off, not a replacement for the numbered research milestones.
+Step 5 and subsequent Isaac Lab work are postponed until after this showcase.
+When resumed, validate a single environment before clone scaling. Step 7 still
 requires direct user review of observations, actions, rewards, budget and evaluation.

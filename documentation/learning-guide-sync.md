@@ -1,5 +1,20 @@
 # Engineering guide synchronization
 
+## Pending: loop traffic showcase
+
+The [showcase record](loop-traffic-showcase.md) and
+[version folders](../showcases/loop_traffic/README.md) contain the current plan,
+commands, explanations, physical tests and failure fixes. This milestone uses a
+scripted controller, privileged object positions, one dynamic prepared car and
+kinematic background cars; it does not introduce RL or LiDAR perception.
+Isaac Lab work is postponed for the requested presentation. Google tabs have
+not been edited for this milestone. A fresh required trusted-reader attempt on
+October 9, 2026 failed with `workspaceRoot must be an absolute path`, despite the
+canonical absolute Windows path. No cloud write was attempted. The Google Docs
+skill requires that structural inspection before editing the existing guide.
+Repository/GitHub documentation is updated
+independently, and a cloud-sync success is not claimed.
+
 ## Pending: mentor-guided continuous highway loop
 
 The local [loop implementation and evidence note](continuous-highway-loop.md)

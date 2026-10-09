@@ -4,6 +4,27 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-09 — Versioned loop traffic showcase
+
+- Integrated the supplied Americano v07 as a native-PhysX main car with twelve
+  slower referenced block cars, scripted moving-object passing, follow/overhead
+  cameras, cyan planned path and live status controls. Sources stay unchanged
+  and local-only; Git contains generic code and versioned milestone notes.
+- Qualified the corrected v04 GUI: 252 simulated seconds in 252.0003424 live
+  wall seconds, twelve complete passes, five lane changes, zero contacts,
+  1.5808 m minimum clearance and safe final braking/hold. Clean native shutdown.
+- Two fresh 110-second drives matched exactly across 14,640 physical samples,
+  with complete visual/native pose checks and source/evidence hash verification.
+- Fixed stale kinematic visuals using measured-pose render proxies, normalized
+  display rotations, and a guarded process-local workaround for an unused
+  scripting extension's stage-close crash. Failed attempts are preserved and
+  their historical physical-versus-visual scope is explicitly corrected.
+- Verified 1,333 CPU tests (92 optional tests skipped; 15 subtests passed) and
+  67 USD tests. See [showcase evidence and commands](loop-traffic-showcase.md).
+  Existing experiments and the research roadmap remain intact. Isaac Lab work
+  is postponed; no training or installation. Google guide sync is pending the
+  required Windows trusted-reader failure, confirmed again for this milestone.
+
 ## 2026-10-08 — Continuous physical highway mentor branch
 
 - Preserved the existing V02 road/navigation source and added a portable,

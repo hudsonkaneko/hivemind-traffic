@@ -225,3 +225,53 @@ The GUI defaults to light graphics and best-effort real-time pacing. It has
 follow/overview and pause controls. Runs are bounded and close on completion.
 See [acceptance results and limitations](continuous-highway-loop.md) before
 equating a short preview with full-lap, multi-car or learned-control validation.
+
+## Prepared-car loop traffic showcase
+
+Use the configured traffic environment from the repository root. The supervisor
+discovers the installed Isaac runtime; it does not install it or require SUMO.
+This demonstration also requires the separately supplied local prepared vehicle
+at `vehicles/sim_ready/americano-i7-ev/v07/world.usda`. That asset is **not in
+GitHub** and is not downloaded automatically; copying the repository alone does
+not supply its unverified redistribution rights.
+
+```text
+python scripts/demo_loop_showcase.py --check
+python scripts/demo_loop_showcase.py --version v04
+```
+
+The v04 default is a bounded four-minute driving preview plus settling and
+braking. It closes on completion. Follow, traffic overhead, whole-loop overview,
+pause and path-visibility controls are in the showcase window. Main-car motion
+is PhysX, slower traffic is scripted kinematic, and object observations come
+from simulator state—not LiDAR or RL. Pacing never skips physics ticks.
+
+Shorter presentation and repeatable headless test:
+
+```text
+python scripts/demo_loop_showcase.py --version v04 --drive-seconds 90
+python scripts/demo_loop_showcase.py --version v04 --drive-seconds 90 --headless --unpaced --capture
+```
+
+Start with a closer traffic-overhead camera by adding `--camera traffic`.
+`--capture` saves actual viewport images in the fresh local output directory;
+`--headless` hides the window but this showcase still renders, so it still
+requires RTX hardware. The displayed path is the controller's reference.
+
+Separate fault checks (not the presentation):
+
+```text
+python scripts/demo_loop_showcase.py --version v04 --mode blocked --drive-seconds 45 --headless --unpaced
+python scripts/demo_loop_showcase.py --version v04 --mode dropout --drive-seconds 45 --headless --unpaced
+```
+
+The development-only `--mode contact-check --drive-seconds 15` deliberately
+hits a background collider to prove contact reporting is active. Do not show
+that fixture as successful obstacle avoidance.
+
+Earlier milestone profiles remain selectable with `--version v01`, `v02`, or
+`v03`, using the current corrected implementation. Their historical source is
+preserved by Git; version folders record the original evidence and limitations.
+See the [showcase evidence](loop-traffic-showcase.md) for the exact tested runs,
+camera captures, physical versus real-time status, and retained failures. Close
+other simulation runs before starting; memory measurements include the desktop.
