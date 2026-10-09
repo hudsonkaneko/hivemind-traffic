@@ -78,6 +78,11 @@ bodies; they must not share a body view with the dynamic main car. See
 - v01 unpaced rendering was 0.878x including a 7 s first-frame stall. Physical
   success is distinct from real-time success. Renderer warm-up and live timing
   will be measured separately for the presentation stage.
+- v02 physical passing passed in `20261009T173945Z-0a63009b`: 7 distinct passes,
+  2 completed lane changes, minimum measured body clearance 1.6594 m, no contact,
+  intact road/support/command/source gates. 102 simulated seconds in 98.9794 s
+  live window, unpaced. Four render-only preparation frames now precede that
+  window and are reported separately; they add no physics ticks.
 
 ## Commands and evidence
 

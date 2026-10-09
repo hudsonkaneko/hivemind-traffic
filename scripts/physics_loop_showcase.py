@@ -101,6 +101,11 @@ def main():
             station=route.project(t.x_m,t.y_m).s_m % route.length_m
             peers[t.vehicle_id]=station
             last_peer_stations[t.vehicle_id]=station
+        # Compile/load the first visible frame before the live clock begins.
+        # Each render verifies zero physics advancement; report readiness cost.
+        warmup_started=time.perf_counter()
+        for _ in range(4):session.render()
+        result['renderer_warmup_s']=time.perf_counter()-warmup_started
         writer=EvidenceChunkWriter(output);preview=PreviewClock(paced=cfg['paced'])
         result['startup_wall_s']=time.perf_counter()-started
         hz=cfg['physics_hz'];brake_tick=(cfg['settle_s']+cfg['drive_s'])*hz
