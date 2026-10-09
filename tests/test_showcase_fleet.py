@@ -21,6 +21,10 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class FleetGeometryTests(unittest.TestCase):
+    def test_names_do_not_duplicate_background_prefix(self):
+        self.assertEqual(FleetSpec('background_000',0,0,6).chassis_path,
+            '/World/Vehicles/vehicle_background_000/Chassis')
+
     def test_initial_station_is_shared_base_circle_station(self):
         a = fleet_pose(FleetSpec('one', 0, 25., 6.), 0.)
         b = fleet_pose(FleetSpec('two', 3, 25., 6.), 0.)
@@ -64,6 +68,7 @@ class FakeBodies:
                                   for s in self.specs], dtype=np.float32)
         self.velocities = np.zeros((len(specs), 6), dtype=np.float32)
         self.targets = None
+        self.target_calls = 0
 
     def get_transforms(self):
         return self.values
@@ -74,6 +79,7 @@ class FakeBodies:
     def set_kinematic_targets(self, values, indices):
         assert values.dtype == np.float32 and indices.dtype == np.uint32
         self.targets = values.copy()
+        self.target_calls += 1
 
     def step(self, dt):
         self.velocities[:, :3] = (self.targets[:, :3] - self.values[:, :3]) / dt
@@ -194,6 +200,46 @@ class FleetUsdTests(unittest.TestCase):
             self.assertTrue(reopened.GetPrimAtPath(spec.vehicle_path).HasAuthoredReferences())
         self.assertEqual(UsdGeom.GetStageUpAxis(reopened), 'Z')
         self.assertEqual(UsdGeom.GetStageMetersPerUnit(reopened), 1.)
+
+    def test_visual_cadence_does_not_reduce_native_target_frequency(self):
+        from types import SimpleNamespace
+        stage = Usd.Stage.CreateInMemory()
+        UsdGeom.Xform.Define(stage, '/World')
+        UsdPhysics.Scene.Define(stage, PATHS.physics)
+        fleet = KinematicFleet(stage, self.directory/'cadence', self.specs,
+                               episode_id='cadence', wheel_update_every=6)
+        bodies = FakeBodies(self.specs)
+        fleet.bind(SimpleNamespace(create_rigid_body_view=lambda pattern: bodies))
+        wheel_path = self.specs[0].chassis_path + '/FrontLeftWheel.xformOp:rotateY:spin'
+        for tick in range(1, 19):
+            fleet.update(tick/120)
+            self.assertEqual(bodies.target_calls, tick)
+            bodies.step(1/120)
+            self.assertTrue(fleet.pose_check()['passed'])
+            opinion = fleet.dynamic_layer.GetPropertyAtPath(wheel_path)
+            if tick < 6:
+                self.assertFalse(opinion)
+            else:
+                last_visual_time = (tick//6)*6/120
+                self.assertAlmostEqual(opinion.default, fleet_pose(self.specs[0], last_visual_time)['wheel_spin_deg'], places=5)
+            self.assertEqual(fleet._visual_update_count, tick//6)
+        self.assertEqual(fleet.metadata['native_target_hz'], 120)
+        self.assertEqual(fleet.metadata['wheel_visual_hz'], 20.)
+        self.assertTrue(fleet.static_assets_unchanged())
+        self.assertTrue(fleet._wheel_attributes)
+        fleet.release()
+        self.assertFalse(fleet._wheel_attributes)
+        self.assertIsNone(fleet._view)
+        self.assertIsNone(fleet.stage)
+        self.assertIsNone(fleet.dynamic_layer)
+        self.assertIsNone(fleet._float_tensor)
+
+    def test_invalid_wheel_visual_cadence_rejected_before_authoring(self):
+        for every in (True, 0, -1, .5, 7, 121):
+            with self.assertRaisesRegex(ValueError, 'positive integer divisor'):
+                KinematicFleet(self.stage, self.directory/'invalid-cadence', self.specs,
+                               wheel_update_every=every)
+        self.assertFalse((self.directory/'invalid-cadence').exists())
 
 
 if __name__ == '__main__':

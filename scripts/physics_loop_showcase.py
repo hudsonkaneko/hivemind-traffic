@@ -65,11 +65,12 @@ def main():
         result['spawn']=spawn_vehicle_on_loop(session.stage,0.,radius_m=500+3.7*cfg['initial_lane'])
         # Local publication's point light was for an asset inspection, not a 1 km road.
         session.stage.GetPrimAtPath('/World/Lighting/Key').SetActive(False)
-        fleet=KinematicFleet(session.stage,scene_directory,fleet_specs(cfg),episode_id=episode)
+        fleet=KinematicFleet(session.stage,scene_directory,fleet_specs(cfg),episode_id=episode,
+            wheel_update_every=6 if cfg['version']=='v03' else 1)
         monitor=VehicleContactMonitor(session.stage,vehicle.path)
         view=LoopShowcaseView(session.stage,route)
         ui_state=dict(camera=cfg['camera'],paused=False)
-        if cfg['gui']:window,label=make_controls(ui_state)
+        if cfg['gui']:window,label=make_controls(ui_state,view=view)
         viewport=get_active_viewport()
         if viewport is None:raise RuntimeError('No viewport is available')
         viewport.resolution=(graphics['width'],graphics['height'])

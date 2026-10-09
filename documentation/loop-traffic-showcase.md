@@ -83,6 +83,20 @@ bodies; they must not share a body view with the dynamic main car. See
   intact road/support/command/source gates. 102 simulated seconds in 98.9794 s
   live window, unpaced. Four render-only preparation frames now precede that
   window and are reported separately; they add no physics ticks.
+- v03 safety probes passed: a deliberate collision in
+  `20261009T174337Z-1dc5b510` produced native contact reports; this is an expected
+  failure-injection fixture, not a safe-driving demonstration. Four-lane blocked
+  traffic in `20261009T174407Z-bee78c8a` produced zero lane changes, following
+  at traffic speed and minimum clearance 10.4050 m. Command loss in
+  `20261009T174525Z-33fc5235` triggered gate braking and stopped safely.
+- Background wheel visual writes were reduced from 120 to 20 Hz while every
+  native kinematic collision target still updates at 120 Hz. Cached USD handles
+  are released at shutdown; no stale state cache or skipped physics ticks.
+  Follow framing now retains the whole main car and nearby traffic, with a
+  separate traffic-overhead view, whole-loop overview and a path-visibility toggle.
+- The final scene uses readable `vehicle_background_000` names, avoiding a
+  duplicate background prefix. Identity mapping is explicit; prior run scenes
+  remain unchanged. New composed scenes use the same referenced collision asset.
 
 ## Commands and evidence
 

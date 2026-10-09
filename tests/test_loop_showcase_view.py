@@ -78,12 +78,12 @@ class LoopShowcaseViewTests(unittest.TestCase):
             report = self.view.camera_check()
             self.assertTrue(report['passed'], report)
             self.assertLess(math.dist(report['actual_position_m'],
-                (x - 20 * math.cos(yaw), y - 20 * math.sin(yaw), 13.98)), 1e-8)
+                (x - 20 * math.cos(yaw), y - 20 * math.sin(yaw), 17.98)), 1e-8)
             self.assertLess(report['direction_error'], 1e-8)
 
     def test_camera_toggle_selects_expected_world_eyes_and_paths(self):
         expected = {
-            'follow': (PATHS.follow_camera, (500., -20., 14.)),
+            'follow': (PATHS.follow_camera, (500., -20., 18.)),
             'traffic': (PATHS.follow_camera, (499., 29., 90.)),
             'overview': (PATHS.overview_camera, (0., -850., 950.)),
         }
@@ -94,6 +94,8 @@ class LoopShowcaseViewTests(unittest.TestCase):
             self.assertTrue(report['passed'], report)
             self.assertLess(math.dist(report['actual_position_m'], eye), 1e-8)
             self.assertEqual(report['mode'], mode)
+        with self.assertRaises(ValueError):
+            self.view.update_showcase(self.state,0.,'unknown',points_for_shift(3.7))
 
     def test_updates_do_not_edit_static_root_or_referenced_vehicle_asset(self):
         root_before = self.stage.GetRootLayer().ExportToString()
@@ -102,11 +104,15 @@ class LoopShowcaseViewTests(unittest.TestCase):
             state = dict(position_m=[500 * math.cos(index / 100), 500 * math.sin(index / 100), 1.],
                          yaw_rad=index / 100 + math.pi / 2)
             mode = ('follow', 'traffic', 'overview')[index % 3]
+            self.view.set_path_visible(index % 2 == 0)
             self.view.update_showcase(state, index * 5, mode, points_for_shift(3.7 * (index % 3)))
+            self.assertEqual(self.view.path.ComputeVisibility(),'inherited' if index % 2 == 0 else 'invisible')
         self.assertEqual(root_before, self.stage.GetRootLayer().ExportToString())
         self.assertEqual(asset_before, self.asset.GetRootLayer().ExportToString())
         self.assertTrue(self.view.dynamic_layer.GetPropertyAtPath('/World/Debug/Route/ProjectedPath.points'))
+        self.assertTrue(self.view.dynamic_layer.GetPropertyAtPath('/World/Debug/Route/ProjectedPath.visibility'))
         self.assertFalse(self.stage.GetRootLayer().GetPropertyAtPath('/World/Debug/Route/ProjectedPath.points'))
+        with self.assertRaises(ValueError):self.view.set_path_visible('no')
 
     def test_session_competing_pose_is_detected_then_corrected_by_toggle(self):
         self.view.update_showcase(self.state, 0., 'follow', points_for_shift(3.7))
@@ -137,12 +143,23 @@ class LoopShowcaseViewTests(unittest.TestCase):
         self.view.update_showcase(self.state, 0., 'follow', points_for_shift(3.7))
         camera = UsdGeom.Camera(self.stage.GetPrimAtPath(PATHS.follow_camera)).GetCamera(Usd.TimeCode.Default())
         matrix = camera.frustum.ComputeViewMatrix() * camera.frustum.ComputeProjectionMatrix()
+        body_ndc=[]
         for dx in (-1.11, 1.11):
             for dy in (-2.5, 2.5):
                 for dz in (-.81, .81):
                     point = matrix.Transform(Gf.Vec3d(500 + dx, dy, 1 + dz))
+                    body_ndc.append(point)
                     self.assertLess(abs(point[0]), .99)
                     self.assertLess(abs(point[1]), .99)
+        # The whole car has room below it; the previous shallower framing put
+        # it on the bottom edge. Nearby traffic is also inside this frustum.
+        self.assertGreater(min(point[1] for point in body_ndc),-.90)
+        for ahead in (20.,40.,60.):
+            point=matrix.Transform(Gf.Vec3d(503.7,ahead,1.))
+            self.assertLess(abs(point[0]),.99)
+            self.assertLess(abs(point[1]),.99)
+        horizon=matrix.Transform(Gf.Vec3d(500,1000000,1))
+        self.assertGreater(horizon[1],1.)
 
 
 if __name__ == '__main__':

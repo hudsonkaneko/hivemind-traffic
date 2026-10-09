@@ -43,7 +43,8 @@ class FleetSpec:
 
     @property
     def chassis_path(self):
-        return '/World/Vehicles/vehicle_background_' + self.vehicle_id + '/Chassis'
+        key=self.vehicle_id if self.vehicle_id.startswith('background_') else 'background_'+self.vehicle_id
+        return '/World/Vehicles/vehicle_' + key + '/Chassis'
 
     @property
     def vehicle_path(self):
@@ -147,11 +148,15 @@ class KinematicFleet:
     must follow each physics step to detect stale/misbound targets. No hidden
     stepping, timeline changes, installed-runtime edits or background threads.
     """
-    def __init__(self, stage, scene_directory, specs, *, episode_id='showcase'):
+    def __init__(self, stage, scene_directory, specs, *, episode_id='showcase', wheel_update_every=1):
         from pxr import Gf, Sdf, Usd, UsdGeom, UsdPhysics
+        if (isinstance(wheel_update_every, bool) or not isinstance(wheel_update_every, int)
+                or wheel_update_every <= 0 or wheel_update_every > 120 or 120 % wheel_update_every):
+            raise ValueError('Wheel visual update interval must be a positive integer divisor of 120')
         self.stage = stage
         self.directory = Path(scene_directory).resolve()
         self.episode_id = episode_id
+        self.wheel_update_every = wheel_update_every
         self.specs = []
         for spec in specs:
             if isinstance(spec, dict):
@@ -162,7 +167,8 @@ class KinematicFleet:
             if not isinstance(spec, FleetSpec):
                 raise ValueError('Fleet entries must be FleetSpec values or matching dictionaries')
             self.specs.append(spec)
-        if not self.specs or len({s.vehicle_id for s in self.specs}) != len(self.specs):
+        if (not self.specs or len({s.vehicle_id for s in self.specs}) != len(self.specs)
+                or len({s.chassis_path for s in self.specs}) != len(self.specs)):
             raise ValueError('Fleet must contain at least one uniquely identified car')
         if not isinstance(episode_id, str) or not episode_id:
             raise ValueError('A nonempty episode identity is required')
@@ -226,6 +232,7 @@ class KinematicFleet:
         self._ordered_specs = None
         self._target_time_s = 0.
         self._target_count = 0
+        self._visual_update_count = 0
         self._last_track_tick = None
         self.metadata = dict(schema_version=1, count=len(self.specs), episode_id=episode_id,
             motion_authority='native PhysX kinematic targets; scripted nonreactive backgrounds',
@@ -233,12 +240,20 @@ class KinematicFleet:
             pose_contract='metres; Z-up; +X forward; yaw CCW from +X; chassis center; quaternion XYZW',
             base_radius_m=BASE_RADIUS_M, lane_width_m=LANE_WIDTH_M,
             length_m=LENGTH_M, width_m=WIDTH_M, sumo_required=False,
+            native_target_hz=120, wheel_visual_update_every_steps=wheel_update_every,
+            wheel_visual_hz=120 / wheel_update_every,
             physics_scope='one dynamic ego plus collidable kinematic backgrounds; not all-physical traffic',
             collision_group=BACKGROUND_GROUP, road_support_policy='background excluded from suspension queries',
             specs=[asdict(s) for s in self.specs],
             identity_mapping={s.vehicle_id: s.vehicle_path for s in self.specs},
             asset_hashes=self._hashes, layout='showcase-fleet-layout.usda')
         self.validate()
+        # Retain attribute handles instead of resolving 48 paths every physics
+        # tick. All writes still target the disposable dynamic layer. These
+        # handles are explicitly released before the runtime closes its stage.
+        self._wheel_attributes = {spec.vehicle_id: tuple(
+            stage.GetPrimAtPath(spec.chassis_path + '/' + name).GetAttribute('xformOp:rotateY:spin')
+            for name in WHEEL_NAMES) for spec in self.specs}
 
     def validate(self):
         from pxr import Usd, UsdGeom, UsdPhysics
@@ -298,10 +313,15 @@ class KinematicFleet:
         targets = np.asarray([(*p['position_m'], *p['quaternion_xyzw']) for p in poses], dtype=np.float32)
         self._view.set_kinematic_targets(self._float_tensor(targets),
             self._index_tensor(np.arange(len(poses), dtype=np.uint32)))
-        with Usd.EditContext(self.stage, self.dynamic_layer):
-            for spec, pose in zip(self._ordered_specs, poses):
-                for name in WHEEL_NAMES:
-                    self.stage.GetPrimAtPath(spec.chassis_path + '/' + name).GetAttribute('xformOp:rotateY:spin').Set(pose['wheel_spin_deg'])
+        if (self._target_count + 1) % self.wheel_update_every == 0:
+            # Visual wheel rotation does not participate in collision, tire
+            # queries or tracking. Do not wrap Usd.Attribute.Set in an Sdf
+            # ChangeBlock: that API permits only direct Sdf operations inside.
+            with Usd.EditContext(self.stage, self.dynamic_layer):
+                for spec, pose in zip(self._ordered_specs, poses):
+                    for attribute in self._wheel_attributes[spec.vehicle_id]:
+                        attribute.Set(pose['wheel_spin_deg'])
+            self._visual_update_count += 1
         self._target_time_s = float(sim_time_s)
         self._target_count += 1
 
@@ -364,5 +384,6 @@ class KinematicFleet:
         self._view = None
         self._ordered_specs = None
         self._float_tensor = self._index_tensor = None
+        self._wheel_attributes.clear()
         self.stage = None
         self.dynamic_layer = None
