@@ -100,8 +100,28 @@ bodies; they must not share a body view with the dynamic main car. See
 
 ## Commands and evidence
 
-Pending implementation and measured runs. Do not treat proposed commands as
-verified. Each attempt gets a fresh directory under `outputs/loop_showcase/`.
+### Rejected visual qualification and v04 correction
+
+The v03 fresh-process pair (`20261009T174736Z-e4f828b5`,
+`20261009T174856Z-d6a48d83`) matched exactly across 12,240 samples:
+comparison `20261009T175035Z-e187a731`. **That is a physics result, not a
+finished visual result.** Image/native-state review found the background
+visuals stayed at spawn while the measured colliders moved. At t=20 the nearest
+native peer was 3.79 m from ego, but its visible block was not there.
+
+v04 separates a hidden collidable kinematic chassis from a referenced,
+nonphysical `RenderProxy`. Before each display frame, measured native poses are
+published only to those display transforms. After rendering, composed USD and
+native positions/headings must match within 0.002 m / 0.0001 rad. Neither proxy
+poses nor camera edits can command the physical ego or background bodies.
+Native motion still advances at 120 Hz; visualization at 20 Hz. Original failed
+images and their historical pass flags are retained, with this scope correction.
+
+The corrected short v04 run `20261009T175702Z-57369b07` passed: 37 simulated
+seconds, one full pass, one lane change, 1.6908 m minimum clearance, no contacts,
+and 740 displayed-frame synchronization checks. Its t=20 overhead image confirms
+the visible side-by-side pass. Full-duration GUI and repeat qualification remain
+pending. Each attempt gets a fresh directory under `outputs/loop_showcase/`.
 Version folders under `showcases/loop_traffic/` record meaningful progressions;
 source versioning remains Git, not duplicated project copies.
 

@@ -28,7 +28,7 @@ SOURCES=['scripts/demo_loop_showcase.py','scripts/physics_loop_showcase.py',
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--version',choices=VERSIONS,default='v03')
+    parser.add_argument('--version',choices=VERSIONS,default='v04')
     parser.add_argument('--mode',choices=MODES,default='showcase')
     parser.add_argument('--headless',action='store_true');parser.add_argument('--unpaced',action='store_true')
     parser.add_argument('--camera',choices=['follow','traffic','overview'],default='follow')

@@ -39,7 +39,7 @@ def main():
     cfg=json.loads((output/'resolved-config.json').read_text());validate_config(cfg)
     route=CircularLoop();episode='showcase-'+output.name
     app=session=vehicle=fleet=monitor=view=window=label=viewport=writer=preview=None
-    static_layers=None;rows=[];plans=[];contacts=[];camera_checks=[];captures=[];captured=set()
+    static_layers=None;rows=[];plans=[];contacts=[];camera_checks=[];visual_checks=[];captures=[];captured=set()
     passed=set();passed_records=[];seen_ahead=set();peers={};last_peer_stations={}
     started=time.perf_counter();result=dict(passed=False,no_training=True,no_lidar=True,no_sumo=True,
         observations=cfg['observations'],main_motion='dynamic_physx',background_motion='scripted_kinematic_physx')
@@ -66,7 +66,7 @@ def main():
         # Local publication's point light was for an asset inspection, not a 1 km road.
         session.stage.GetPrimAtPath('/World/Lighting/Key').SetActive(False)
         fleet=KinematicFleet(session.stage,scene_directory,fleet_specs(cfg),episode_id=episode,
-            wheel_update_every=6 if cfg['version']=='v03' else 1)
+            wheel_update_every=6 if cfg['version'] in ('v03','v04') else 1)
         monitor=VehicleContactMonitor(session.stage,vehicle.path)
         view=LoopShowcaseView(session.stage,route)
         ui_state=dict(camera=cfg['camera'],paused=False)
@@ -105,6 +105,7 @@ def main():
         # Compile/load the first visible frame before the live clock begins.
         # Each render verifies zero physics advancement; report readiness cost.
         warmup_started=time.perf_counter()
+        fleet.publish_visuals()
         for _ in range(4):session.render()
         result['renderer_warmup_s']=time.perf_counter()-warmup_started
         writer=EvidenceChunkWriter(output);preview=PreviewClock(paced=cfg['paced'])
@@ -176,6 +177,7 @@ def main():
             if cfg['mode']!='contact-check' and (events or row['overlap'] or (phase!='settle' and (not in_road or state['upright_z']<.9))):
                 raise RuntimeError('Contact/overlap/road/attitude safety guard')
             if (tick+1)%session.render_every_steps==0:
+                fleet.publish_visuals()
                 physical_state=VehicleState.from_physics(state,episode_id=episode,vehicle_id='ego',tick=tick+1)
                 viewport.camera_path=view.update_showcase(state,projection.s_m,ui_state['camera'],controller.path_points(physical_state))
                 if label:label.text=(f"{cfg['version']} | {phase} | {state['speed_m_s']/0.44704:.1f} mph | traffic 15–19 mph\n"
@@ -183,6 +185,8 @@ def main():
                     f"{row['controller_status']}: {row['controller_reason']} | {row['sim_time_s']:.0f}s")
                 session.render();check=view.camera_check();camera_checks.append(dict(tick=tick+1,**check))
                 if not check['passed']:raise RuntimeError('Camera pose ownership failed')
+                visual_check=fleet.visual_pose_check();visual_checks.append(dict(tick=tick+1,**visual_check))
+                if not visual_check['passed']:raise RuntimeError('Rendered background poses differ from native physics poses')
                 if cfg['capture']:
                     for second in (10,20,35,55,cfg['settle_s']+cfg['drive_s']-1):
                         if row['sim_time_s']>=second and second not in captured:
@@ -194,6 +198,7 @@ def main():
                 print(f"SHOWCASE t={row['sim_time_s']:.0f} speed={row['speed_m_s']:.2f} passes={len(passed)} lane_changes={max_lanes} gap={row['clearance_m']:.2f} state={row['controller_status']} {row['controller_reason']}",flush=True)
         result.update(assess(rows,cfg,len(contacts),passed,max_lanes))
         extra=dict(camera=bool(camera_checks) and all(c['passed'] for c in camera_checks),
+            background_visual_sync=bool(visual_checks) and all(c['passed'] for c in visual_checks),
             background_native_contract=bool(rows) and all(r['background_native_passed'] for r in rows),
             controller_valid=all(not r['controller_fallback'] for r in rows if r['phase']=='drive') if cfg['mode']!='contact-check' else True,
             scene_structure=validate_highway_loop_scene(session.stage)['passed'],
@@ -212,11 +217,14 @@ def main():
         if writer:result['checkpoint_evidence']=writer.summary()
         write_json(output/'trajectory.json',rows);write_json(output/'planner.json',plans)
         write_json(output/'contacts.json',contacts);write_json(output/'camera-checks.json',camera_checks)
+        write_json(output/'background-visual-checks.json',visual_checks)
         write_json(output/'pre-close-result.json',dict(result,cleanup_verified=False))
         if session and session.started and viewport:
             try:viewport.camera_path='/OmniverseKit_Persp';session.render()
             except Exception as error:result.update(passed=False,camera_close_error=repr(error))
-        if window:window.visible=False
+        if window:
+            window.visible=False
+            window.destroy()  # Release callbacks holding the USD-backed view.
         if fleet:fleet.release()
         window=label=view=monitor=vehicle=fleet=None;static_layers=None
         if session:

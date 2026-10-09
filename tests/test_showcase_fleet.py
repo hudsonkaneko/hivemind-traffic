@@ -120,8 +120,14 @@ class FleetUsdTests(unittest.TestCase):
             body = UsdPhysics.RigidBodyAPI(self.stage.GetPrimAtPath(spec.chassis_path))
             self.assertTrue(body.GetKinematicEnabledAttr().Get())
             self.assertEqual(body.GetSimulationOwnerRel().GetTargets(), [Sdf.Path(PATHS.physics)])
+            self.assertEqual(UsdGeom.Imageable(body.GetPrim()).GetVisibilityAttr().Get(), 'invisible')
+            proxy = self.stage.GetPrimAtPath(spec.render_path)
+            self.assertTrue(proxy.HasAuthoredReferences())
+            self.assertNotEqual(UsdGeom.Imageable(proxy).ComputeVisibility(), 'invisible')
+            self.assertFalse(any(name.startswith(('Physics', 'Physx'))
+                                 for prim in Usd.PrimRange(proxy) for name in prim.GetAppliedSchemas()))
             for name in WHEEL_NAMES:
-                self.assertEqual(UsdGeom.Cylinder(self.stage.GetPrimAtPath(spec.chassis_path+'/'+name+'/Tire')).GetAxisAttr().Get(), 'Y')
+                self.assertEqual(UsdGeom.Cylinder(self.stage.GetPrimAtPath(spec.render_path+'/'+name+'/Tire')).GetAxisAttr().Get(), 'Y')
 
     def test_query_filter_excludes_roofs_without_ground_or_ego_filter(self):
         filters = UsdPhysics.CollisionGroup(self.stage.GetPrimAtPath(QUERY_GROUP)).GetFilteredGroupsRel().GetTargets()
@@ -151,12 +157,14 @@ class FleetUsdTests(unittest.TestCase):
         static_text = {layer.identifier: layer.ExportToString() for layer in self.stage.GetUsedLayers()
                        if not layer.anonymous}
         self.fleet.update(1./120)
+        self.bodies.step(1./120)
+        self.assertTrue(self.fleet.publish_visuals()['passed'])
         self.assertTrue(self.fleet.static_assets_unchanged())
         self.assertEqual(static_text, {layer.identifier: layer.ExportToString() for layer in self.stage.GetUsedLayers()
                                      if not layer.anonymous})
         for spec in self.specs:
             for name in WHEEL_NAMES:
-                self.assertTrue(self.fleet.dynamic_layer.GetPropertyAtPath(spec.chassis_path+'/'+name+'.xformOp:rotateY:spin'))
+                self.assertTrue(self.fleet.dynamic_layer.GetPropertyAtPath(spec.render_path+'/'+name+'.xformOp:rotateY:spin'))
             self.assertFalse(self.fleet.dynamic_layer.GetPropertyAtPath(spec.chassis_path+'.xformOp:translate'))
 
     def test_track_and_target_negative_controls(self):
@@ -210,12 +218,14 @@ class FleetUsdTests(unittest.TestCase):
                                episode_id='cadence', wheel_update_every=6)
         bodies = FakeBodies(self.specs)
         fleet.bind(SimpleNamespace(create_rigid_body_view=lambda pattern: bodies))
-        wheel_path = self.specs[0].chassis_path + '/FrontLeftWheel.xformOp:rotateY:spin'
+        wheel_path = self.specs[0].render_path + '/FrontLeftWheel.xformOp:rotateY:spin'
         for tick in range(1, 19):
             fleet.update(tick/120)
             self.assertEqual(bodies.target_calls, tick)
             bodies.step(1/120)
             self.assertTrue(fleet.pose_check()['passed'])
+            if tick % 6 == 0:
+                self.assertTrue(fleet.publish_visuals()['passed'])
             opinion = fleet.dynamic_layer.GetPropertyAtPath(wheel_path)
             if tick < 6:
                 self.assertFalse(opinion)
@@ -229,6 +239,7 @@ class FleetUsdTests(unittest.TestCase):
         self.assertTrue(fleet._wheel_attributes)
         fleet.release()
         self.assertFalse(fleet._wheel_attributes)
+        self.assertFalse(fleet._render_attributes)
         self.assertIsNone(fleet._view)
         self.assertIsNone(fleet.stage)
         self.assertIsNone(fleet.dynamic_layer)
@@ -240,6 +251,33 @@ class FleetUsdTests(unittest.TestCase):
                 KinematicFleet(self.stage, self.directory/'invalid-cadence', self.specs,
                                wheel_update_every=every)
         self.assertFalse((self.directory/'invalid-cadence').exists())
+
+    def test_visible_proxy_follows_measured_body_not_unapplied_target(self):
+        self.bind()
+        self.assertTrue(self.fleet.visual_pose_check()['passed'])
+        self.fleet.update(1./120)
+        # The requested target is ahead, but native bodies have not stepped.
+        self.assertTrue(self.fleet.publish_visuals()['passed'])
+        proxy_before = UsdGeom.Xformable(self.stage.GetPrimAtPath(self.specs[0].render_path)).ComputeLocalToWorldTransform(Usd.TimeCode.Default())
+        self.bodies.step(1./120)
+        self.assertFalse(self.fleet.visual_pose_check()['passed'])
+        self.assertTrue(self.fleet.publish_visuals()['passed'])
+        proxy_after = UsdGeom.Xformable(self.stage.GetPrimAtPath(self.specs[0].render_path)).ComputeLocalToWorldTransform(Usd.TimeCode.Default())
+        self.assertNotEqual(proxy_before, proxy_after)
+        for spec in self.specs:
+            self.assertFalse(self.fleet.dynamic_layer.GetPropertyAtPath(spec.chassis_path+'.xformOp:translate'))
+            self.assertFalse(self.fleet.dynamic_layer.GetPropertyAtPath(spec.chassis_path+'.xformOp:orient'))
+
+    def test_render_proxy_physics_and_competing_pose_negative_controls(self):
+        self.bind()
+        self.fleet.publish_visuals()
+        proxy = self.stage.GetPrimAtPath(self.specs[0].render_path)
+        with Usd.EditContext(self.stage, self.stage.GetSessionLayer()):
+            proxy.GetAttribute('xformOp:translate').Set(Gf.Vec3d(0, 0, 0))
+        self.assertFalse(self.fleet.visual_pose_check()['passed'])
+        UsdPhysics.CollisionAPI.Apply(proxy)
+        with self.assertRaisesRegex(ValueError, 'must not contain physics'):
+            self.fleet.validate()
 
 
 if __name__ == '__main__':

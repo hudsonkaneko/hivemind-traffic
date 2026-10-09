@@ -39,7 +39,7 @@ def valid_rows(config):
 
 class ShowcaseConfigurationTests(unittest.TestCase):
     def test_version_profiles_are_explicit_and_portable(self):
-        for version, duration in (('v01',30),('v02',90),('v03',240)):
+        for version, duration in (('v01',30),('v02',90),('v03',240),('v04',240)):
             cfg=make_config(version)
             self.assertEqual(cfg['drive_s'],duration)
             self.assertEqual(cfg['duration_s'],cfg['settle_s']+duration+cfg['brake_s'])

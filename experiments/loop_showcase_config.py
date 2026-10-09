@@ -1,11 +1,11 @@
 """Bounded presentation fixtures, distinct from traffic-policy experiments."""
 import math
 
-VERSIONS = ('v01', 'v02', 'v03')
+VERSIONS = ('v01', 'v02', 'v03', 'v04')
 MODES = ('showcase', 'blocked', 'dropout', 'contact-check')
 
 
-def make_config(version='v03', *, mode='showcase', gui=True, paced=True,
+def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
                 camera='follow', capture=False, drive_s=None):
     if version not in VERSIONS or mode not in MODES or camera not in ('follow','traffic','overview'):
         raise ValueError('Unknown showcase version, mode or camera')

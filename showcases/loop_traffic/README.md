@@ -14,6 +14,12 @@ The requested prepared vehicle is local-only and is never uploaded to GitHub.
 | v01 | Prepared physics car plus referenced, slower block traffic | Loaded dependencies, stable wheel support, explicit movement ownership, source preservation, real moving colliders |
 | v02 | Object-aware scripted passing | At least 3 distinct complete passes and 2 completed lane changes in 90 s, no rigid contact or overlap, road containment and minimum 0.6 m planar body clearance |
 | v03 | Presentation and reliability | Follow/overview/adapting-path display; paced GUI within measured 1x tolerance; repeat test, blocked-lane and command-loss braking, longer circulation |
+| v04 | Correct native-to-visible background synchronization | Render-only referenced proxies mirror measured physics poses; check every displayed frame; repeat and paced GUI qualification on the corrected view |
+
+**Visual correction:** early v01–v03 runs proved physical obstacle motion, not
+visible obstacle motion. Screenshot review found static block visuals despite
+moving native colliders. Those old scenes remain as evidence; v04 addresses
+that defect and is the intended final presentation milestone.
 
 ## Scope
 

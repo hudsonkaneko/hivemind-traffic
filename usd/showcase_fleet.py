@@ -50,6 +50,10 @@ class FleetSpec:
     def vehicle_path(self):
         return self.chassis_path.rsplit('/', 1)[0]
 
+    @property
+    def render_path(self):
+        return self.vehicle_path + '/RenderProxy'
+
 
 def fleet_pose(spec, sim_time_s):
     """World chassis-center pose; initial station is measured on radius 500 m.
@@ -124,7 +128,7 @@ def _create_asset(assets):
     _metadata(asset, '/Vehicle', 'component')
     root = asset.GetDefaultPrim()
     Usd.ModelAPI(root).SetAssetName('ShowcaseBlockCar')
-    Usd.ModelAPI(root).SetAssetVersion('v01')
+    Usd.ModelAPI(root).SetAssetVersion('v02-render-proxy')
     root.SetCustomDataByKey('motion_authority', 'scripted_kinematic_targets')
     root.SetCustomDataByKey('position_reference', 'chassis center; metres; +X forward; Z up')
     asset.GetRootLayer().Save()
@@ -200,8 +204,22 @@ class KinematicFleet:
             x, y, z, w = initial['quaternion_xyzw']
             chassis.AddOrientOp().Set(Gf.Quatf(w, x, y, z))
             UsdPhysics.RigidBodyAPI(chassis.GetPrim()).CreateSimulationOwnerRel().SetTargets([PATHS.physics])
+            # In the installed USD-output pipeline, native kinematic targets
+            # move collision bodies without updating their authored USD poses.
+            # Hide only their rendering; collision and native motion stay on.
+            UsdGeom.Imageable(chassis.GetPrim()).CreateVisibilityAttr('invisible')
+            proxy = layout.DefinePrim(spec.render_path)
+            proxy.GetReferences().AddReference('./assets/showcase-block-car-geometry.usda', '/Vehicle/Chassis')
+            proxy.SetCustomDataByKey('pose_source', 'measured native body transform; render only')
+            proxy.SetCustomDataByKey('native_body_path', spec.chassis_path)
+            proxy.SetCustomDataByKey('vehicle_id', spec.vehicle_id)
+            proxy_xform = UsdGeom.Xformable(proxy)
+            proxy_xform.AddTranslateOp().Set(Gf.Vec3d(*initial['position_m']))
+            proxy_xform.AddOrientOp().Set(Gf.Quatf(w, x, y, z))
+            proxy_xform.SetResetXformStack(True)
             palette = ((.18, .42, .63), (.46, .55, .62), (.72, .46, .18), (.30, .50, .39))
             layout.GetPrimAtPath(spec.chassis_path + '/Visuals/Body').GetAttribute('primvars:displayColor').Set([palette[index % len(palette)]])
+            layout.GetPrimAtPath(spec.render_path + '/Visuals/Body').GetAttribute('primvars:displayColor').Set([palette[index % len(palette)]])
         group = UsdPhysics.CollisionGroup.Define(layout, BACKGROUND_GROUP)
         group.GetCollidersCollectionAPI().CreateIncludesRel().SetTargets([
             s.chassis_path + '/Colliders/Body' for s in self.specs])
@@ -214,7 +232,8 @@ class KinematicFleet:
                 filters.append(Sdf.Path(BACKGROUND_GROUP))
             layout.OverridePrim(QUERY_GROUP).CreateRelationship('physics:filteredGroups', custom=False).SetTargets(filters)
         layout.GetRootLayer().customLayerData = dict(
-            showcase_fleet_schema=1, motion_authority='scripted kinematic targets; ego excluded',
+            showcase_fleet_schema=2, motion_authority='scripted kinematic targets; ego excluded',
+            render_authority='nonphysical RenderProxy follows measured native body pose; no physics feedback',
             limitation='Constant-speed nonreactive background; not a human-driving or crash-dynamics model')
         layout.GetRootLayer().Save()
         stage.GetRootLayer().subLayerPaths.insert(0, layout.GetRootLayer().identifier)
@@ -234,7 +253,7 @@ class KinematicFleet:
         self._target_count = 0
         self._visual_update_count = 0
         self._last_track_tick = None
-        self.metadata = dict(schema_version=1, count=len(self.specs), episode_id=episode_id,
+        self.metadata = dict(schema_version=2, count=len(self.specs), episode_id=episode_id,
             motion_authority='native PhysX kinematic targets; scripted nonreactive backgrounds',
             observation_source='native measured body pose and velocity; privileged simulator state, not LiDAR',
             pose_contract='metres; Z-up; +X forward; yaw CCW from +X; chassis center; quaternion XYZW',
@@ -242,18 +261,25 @@ class KinematicFleet:
             length_m=LENGTH_M, width_m=WIDTH_M, sumo_required=False,
             native_target_hz=120, wheel_visual_update_every_steps=wheel_update_every,
             wheel_visual_hz=120 / wheel_update_every,
+            visual_publication='caller publishes measured native pose after physics, before each rendered frame',
+            visual_cadence_note='wheel_visual_hz is maximum; publication also bounded by caller render cadence',
+            render_proxy_policy='nonphysical geometry-only reference; original chassis invisible but collidable',
             physics_scope='one dynamic ego plus collidable kinematic backgrounds; not all-physical traffic',
             collision_group=BACKGROUND_GROUP, road_support_policy='background excluded from suspension queries',
             specs=[asdict(s) for s in self.specs],
             identity_mapping={s.vehicle_id: s.vehicle_path for s in self.specs},
+            render_identity_mapping={s.vehicle_id: s.render_path for s in self.specs},
             asset_hashes=self._hashes, layout='showcase-fleet-layout.usda')
         self.validate()
         # Retain attribute handles instead of resolving 48 paths every physics
         # tick. All writes still target the disposable dynamic layer. These
         # handles are explicitly released before the runtime closes its stage.
         self._wheel_attributes = {spec.vehicle_id: tuple(
-            stage.GetPrimAtPath(spec.chassis_path + '/' + name).GetAttribute('xformOp:rotateY:spin')
+            stage.GetPrimAtPath(spec.render_path + '/' + name).GetAttribute('xformOp:rotateY:spin')
             for name in WHEEL_NAMES) for spec in self.specs}
+        self._render_attributes = {spec.vehicle_id: (
+            stage.GetPrimAtPath(spec.render_path).GetAttribute('xformOp:translate'),
+            stage.GetPrimAtPath(spec.render_path).GetAttribute('xformOp:orient')) for spec in self.specs}
 
     def validate(self):
         from pxr import Usd, UsdGeom, UsdPhysics
@@ -265,11 +291,21 @@ class KinematicFleet:
                 errors.append('Background must be an editable referenced component: ' + spec.vehicle_id)
             if not chassis or not UsdPhysics.RigidBodyAPI(chassis).GetKinematicEnabledAttr().Get():
                 errors.append('Background requires a kinematic rigid body: ' + spec.vehicle_id)
+            if chassis and UsdGeom.Imageable(chassis).GetVisibilityAttr().Get() != 'invisible':
+                errors.append('Native chassis rendering must be hidden: ' + spec.vehicle_id)
+            proxy = self.stage.GetPrimAtPath(spec.render_path)
+            if (not proxy or not proxy.HasAuthoredReferences()
+                    or UsdGeom.Imageable(proxy).ComputeVisibility() == 'invisible'):
+                errors.append('Visible referenced render proxy missing: ' + spec.vehicle_id)
+            if proxy:
+                for prim in Usd.PrimRange(proxy):
+                    if any(name.startswith(('Physics', 'Physx')) for name in prim.GetAppliedSchemas()):
+                        errors.append('Render proxy must not contain physics APIs: ' + str(prim.GetPath()))
             collider = self.stage.GetPrimAtPath(spec.chassis_path + '/Colliders/Body')
             if not collider or not UsdPhysics.CollisionAPI(collider).GetCollisionEnabledAttr().Get():
                 errors.append('Background collider missing: ' + spec.vehicle_id)
             for name in WHEEL_NAMES:
-                wheel = UsdGeom.Cylinder(self.stage.GetPrimAtPath(spec.chassis_path + '/' + name + '/Tire'))
+                wheel = UsdGeom.Cylinder(self.stage.GetPrimAtPath(spec.render_path + '/' + name + '/Tire'))
                 if not wheel or wheel.GetAxisAttr().Get() != 'Y':
                     errors.append('Wheel axle must be local Y: ' + spec.vehicle_id + '/' + name)
         if errors:
@@ -308,22 +344,64 @@ class KinematicFleet:
         if not math.isfinite(sim_time_s) or sim_time_s < self._target_time_s:
             raise ValueError('Fleet target time must be finite and monotonic')
         import numpy as np
-        from pxr import Usd
         poses = [fleet_pose(s, sim_time_s) for s in self._ordered_specs]
         targets = np.asarray([(*p['position_m'], *p['quaternion_xyzw']) for p in poses], dtype=np.float32)
         self._view.set_kinematic_targets(self._float_tensor(targets),
             self._index_tensor(np.arange(len(poses), dtype=np.uint32)))
-        if (self._target_count + 1) % self.wheel_update_every == 0:
-            # Visual wheel rotation does not participate in collision, tire
-            # queries or tracking. Do not wrap Usd.Attribute.Set in an Sdf
-            # ChangeBlock: that API permits only direct Sdf operations inside.
-            with Usd.EditContext(self.stage, self.dynamic_layer):
-                for spec, pose in zip(self._ordered_specs, poses):
-                    for attribute in self._wheel_attributes[spec.vehicle_id]:
-                        attribute.Set(pose['wheel_spin_deg'])
-            self._visual_update_count += 1
         self._target_time_s = float(sim_time_s)
         self._target_count += 1
+
+    def publish_visuals(self):
+        """Mirror measured native state to nonphysical geometry before rendering.
+
+        Never write a Chassis transform: that would be a second kinematic input
+        and could feed a stale render pose back into the next physics step.
+        Visual geometry is not used as an observation or collision body.
+        """
+        from pxr import Gf, Usd
+        transforms, _ = self._measured()
+        with Usd.EditContext(self.stage, self.dynamic_layer):
+            for spec, pose in zip(self._ordered_specs, transforms):
+                x, y, z, qx, qy, qz, qw = map(float, pose)
+                translate, orient = self._render_attributes[spec.vehicle_id]
+                translate.Set(Gf.Vec3d(x, y, z))
+                orient.Set(Gf.Quatf(qw, qx, qy, qz))
+                if self._target_count % self.wheel_update_every == 0:
+                    # Decorative wheel angle only; chassis visuals use measured
+                    # native pose, never fleet_pose's requested target.
+                    spin = fleet_pose(spec, self._target_time_s)['wheel_spin_deg']
+                    for attribute in self._wheel_attributes[spec.vehicle_id]:
+                        attribute.Set(spin)
+        self._visual_update_count += 1
+        return self.visual_pose_check()
+
+    def visual_pose_check(self):
+        """Check composed visible proxy poses against actual native bodies.
+
+        Call again after rendering to catch competing USD opinions. Screenshots
+        are still required to prove RTX consumes the verified composed stage.
+        """
+        from pxr import Gf, Usd, UsdGeom
+        transforms, _ = self._measured()
+        cache = UsdGeom.XformCache(Usd.TimeCode.Default())
+        positions, angles, visible = [], [], []
+        for spec, pose in zip(self._ordered_specs, transforms):
+            prim = self.stage.GetPrimAtPath(spec.render_path)
+            matrix = cache.GetLocalToWorldTransform(prim)
+            position = matrix.ExtractTranslation()
+            forward = matrix.TransformDir(Gf.Vec3d(1, 0, 0)).GetNormalized()
+            qx, qy, qz, qw = map(float, pose[3:])
+            native_yaw = math.atan2(2*(qw*qz+qx*qy), 1-2*(qy*qy+qz*qz))
+            rendered_yaw = math.atan2(forward[1], forward[0])
+            positions.append(math.dist(position, pose[:3]))
+            angles.append(abs(math.atan2(math.sin(rendered_yaw-native_yaw), math.cos(rendered_yaw-native_yaw))))
+            visible.append(UsdGeom.Imageable(prim).ComputeVisibility() != 'invisible')
+        finite = all(math.isfinite(v) for v in positions+angles)
+        return dict(passed=finite and all(visible) and max(positions) <= .002 and max(angles) <= .0001,
+                    max_position_error_m=max(positions), max_yaw_error_rad=max(angles),
+                    all_proxies_visible=all(visible), count=len(self.specs),
+                    native_target_time_s=self._target_time_s, publications=self._visual_update_count,
+                    pose_source='actual native kinematic body transforms; nonphysical visible proxy')
 
     def _measured(self):
         if self._view is None:
@@ -385,5 +463,6 @@ class KinematicFleet:
         self._ordered_specs = None
         self._float_tensor = self._index_tensor = None
         self._wheel_attributes.clear()
+        self._render_attributes.clear()
         self.stage = None
         self.dynamic_layer = None
