@@ -22,7 +22,11 @@ their evidence remain intact. Workspace: the canonical `highwaysim` checkout.
 
 ## Current implementation checkpoint
 
-Steps 1–4 are being implemented in `codex/mentor-loop-driving`.
+Steps 1–4 passed their bounded one-car scope in `codex/mentor-loop-driving`:
+portable composition, periodic control, increasing-speed physical checks,
+command dropout, a real-time short GUI preview, two exactly matching full-lap
+fresh runs and a three-lap / 9.93 km run. No same-process reset-soak, traffic,
+LiDAR or learned-control qualification is implied.
 See [continuous highway loop](continuous-highway-loop.md) for exact commands,
 frozen gates and evidence. A static road validation is not a vehicle-driving
 pass; a seam crossing is not a full lap; a fresh-process repeat is not a
@@ -30,3 +34,8 @@ same-process reset soak. Those distinctions remain explicit in status reports.
 
 No Isaac Lab training, dependency installation, detailed vehicle-asset migration,
 or main-roadmap rewrite is part of this checkpoint.
+
+**Next implementation:** step 5, the Isaac Lab task/episode-reset plumbing and a
+scripted baseline using the same physical/control contract. Validate a single
+environment before any clone scaling. Do not launch policy training: step 7
+requires direct user review of observations, actions, rewards, budget and evaluation.

@@ -1,7 +1,8 @@
 # One physical car on the V02 continuous highway
 
-Status: implementation and qualification in progress. This note belongs to the
+Status: bounded one-car loop qualification passed. This note belongs to the
 [mentor branch](mentor-loop-roadmap.md); it does not replace the main roadmap.
+Implementation checkpoint: [9321cc0](https://github.com/hudsonkaneko/hivemind-traffic/commit/9321cc0f5cd75657cbedf79d67bf7e71bc814d0c).
 
 ## Purpose and responsibility
 
@@ -137,6 +138,17 @@ Fabric startup warnings are retained in the logs; this is not a warning-free cla
 | `20261009T020522Z-95214b37` | Lost driver commands, 35 mph; overview | 0.17101 / 0.34479 | 19.338 | Exact-expiry fallback, stopping/hold and footprint gates pass |
 | `20261009T020618Z-93d951a0` | 225 s driving, full lap A | 0.05058 / 0.05791 | 18.044 | Pass; 3,452.318 m, one complete circuit |
 | `20261009T020827Z-0310bc55` | Identical full lap B, fresh process | 0.05058 / 0.05791 | 18.044 | Pass; 3,452.318 m, one complete circuit |
+| `20261009T021106Z-a7df1458` | 640 s driving, three-lap run | 0.05141 / 0.05787 | 18.044 | Pass; 9,925.699 m, three complete circuits |
+
+The three-lap run completed 78,000 physics steps over 650 simulated seconds,
+including settling and braking. All 13,000 post-render camera checks passed;
+the final moving follow-view screenshot was inspected. The stop held for 5.70 s.
+Whole-GPU peak was 4,252 MiB. Its unpaced loop took 249.50 wall seconds through
+the final rendered frame (2.61×); total child runtime including setup/export/close
+was 266.30 s. This one-car, no-sensor workload does not predict fleet or LiDAR cost.
+
+There is no stochastic traffic in this fixture: seed 101 is recorded for the
+experiment identity, not evidence of randomized-driver coverage.
 
 The corrected GUI run completed 30 simulated seconds through its final rendered
 frame in 30.000106 wall seconds: RTF 0.999996, p95 lag 0.000520 s and peak lag

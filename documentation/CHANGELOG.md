@@ -11,7 +11,8 @@ authority for historical measurements and failures.
 - Added periodic scripted driving, true-lap accounting, expiring wheel commands,
   follow/overview previews and immutable run evidence; existing demos are unchanged.
 - Passed 3 m/s, 6 m/s and 35 mph driving/braking checks, command-loss fallback,
-  two matched full-lap runs and a paced 35 mph GUI preview. The 28,200 aligned
+  two matched full-lap runs, a three-lap / 9.93 km run and a paced 35 mph GUI
+  preview. The 28,200 aligned
   samples from the full-lap pair matched exactly on the recorded runtime.
 - Fixed a visually detected stale follow camera using explicit session-layer
   ownership and post-render pose checks. Earlier visual failures remain recorded.
