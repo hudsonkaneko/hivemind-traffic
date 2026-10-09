@@ -4,6 +4,21 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-09 — Versioned loop traffic showcase
+
+- Added a separate presentation branch with numbered showcase milestones,
+  one supplied native-PhysX main vehicle and twelve referenced kinematic block
+  cars. Existing roads, assets, SUMO demos and research results are preserved.
+- Verified the v01 integration, including moving obstacles, road support,
+  braking/hold, unchanged asset hashes and an actual follow-camera capture.
+  Source assets remain local-only; Git contains the generic integration code.
+- Added tested moving-object gap planning, smooth lane-change references and
+  live presentation controls. Higher-speed passing and presentation qualification
+  are tracked in the [showcase report](loop-traffic-showcase.md), not inferred
+  from CPU tests. First-frame rendering is separated from live pacing.
+- Postponed Isaac Lab work for the user's same-day showcase. No training or
+  dependency installation. Google learning-guide synchronization is pending.
+
 ## 2026-10-08 — Continuous physical highway mentor branch
 
 - Preserved the existing V02 road/navigation source and added a portable,
