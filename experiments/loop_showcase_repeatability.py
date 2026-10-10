@@ -28,7 +28,7 @@ VISUAL_YAW_TOLERANCE_RAD=.0001
 
 
 def _requires_visual_checks(config):
-    return isinstance(config,dict) and config.get('version')=='v04'
+    return isinstance(config,dict) and config.get('version') in ('v04','v05')
 
 
 def _digest(data):
@@ -79,7 +79,7 @@ def load_run(path):
             documents[VISUAL_FILE]=json.loads(data);fingerprints[VISUAL_FILE]=_digest(data)
             verified[VISUAL_FILE]=fingerprints[VISUAL_FILE]
         except (OSError,ValueError) as error:
-            errors.append('Required v04 visual evidence: '+str(error))
+            errors.append('Required visual synchronization evidence: '+str(error))
     manifest=documents['manifest.json']
     if not isinstance(manifest,dict):
         errors.append('Manifest must be an object')

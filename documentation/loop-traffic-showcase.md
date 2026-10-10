@@ -4,6 +4,10 @@ Date: October 9, 2026. Status: verified within the bounded v04 showcase scope.
 Branch: `codex/loop-traffic-showcase`.
 This presentation branch does not replace the research/hybrid roadmap.
 
+October 10 density follow-up: [v05 adds 80 staggered background cars](dense-loop-showcase.md).
+Its measurements and performance limitations are separate; the v04 evidence
+below remains historical and does not qualify the denser preset as real-time.
+
 ## Objective and boundaries
 
 Use the existing circular highway, one user-supplied prepared physics vehicle,
@@ -254,9 +258,10 @@ the presentation result. No training was launched.
 
 ## Learning document synchronization
 
-Repository record is authoritative. Google guide sync is pending: a fresh
-required trusted-read attempt again failed with `workspaceRoot must be an absolute
-path` for the canonical Windows path. No cloud update is claimed for this milestone.
+Repository record is authoritative. The October 9 sync attempt failed with a
+Windows trusted-reader error. On October 10, the current native Docs workflow
+succeeded: tab **34 Loop traffic showcase** now includes v04 and v05, verified
+command styling and preserved earlier tabs. See [sync record](learning-guide-sync.md).
 
 ## Implementation map
 

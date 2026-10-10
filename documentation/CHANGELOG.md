@@ -4,6 +4,28 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-10 — Denser 80-car loop showcase
+
+- Added opt-in v05 with 80 slower block cars in staggered pairs, keeping open
+  passing opportunities and preserving v04's lighter twelve-car default.
+- Full GUI physical/visual test passed: 46 overtakes, 23 lane changes, zero
+  contacts/overlaps, 1.5693 m minimum clearance and a safe final stop/hold.
+  The 252 simulated seconds took 335.4184 active wall seconds (0.7513x).
+  **v05 is not real-time qualified**; physics and control rates are unchanged.
+- Added exact clearance pruning, batched referenced visuals, native state
+  readback and explicit fleet rundown. A process-local legacy renderer fallback
+  avoids a dense-stage crash; the vendor root cause remains unproven. Failed
+  experiments and original vehicle/road assets are preserved.
+- Isolated an unused sensor-icon stage-close callback after a repeated shutdown
+  crash. Two fresh 90-second runs then passed and matched exactly across 12,240
+  physical samples and 1,020 visual frames; failed attempts remain recorded.
+- Verified 1,384 CPU tests (119 optional skips, 18 subtests) and 100 USD tests.
+  Final command-loss, blocked-lane and intentional-contact checks passed.
+  See [dense-showcase evidence](dense-loop-showcase.md) and version folder v05.
+- Synced Google guide tab **34 Loop traffic showcase** with v04/v05 explanations,
+  highlighted definitions and portable command blocks; older tabs preserved.
+  No dependency installation, training, roadmap replacement or asset publication.
+
 ## 2026-10-09 — Versioned loop traffic showcase
 
 - Integrated the supplied Americano v07 as a native-PhysX main car with twelve

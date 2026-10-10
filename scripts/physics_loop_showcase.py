@@ -12,7 +12,8 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from experiments.loop_showcase_config import assess,fleet_specs,validate_config
 from experiments.probe_support import process_sample,write_json
-from traffic.bypass_validation import OrientedBox,box_clearance
+from traffic.bypass_validation import OrientedBox
+from traffic.showcase_clearance import nearest_clearance
 from traffic.driver_control import AppliedControl,DriverCommand,DriverControlGate
 from traffic.evidence_chunks import EvidenceChunkWriter
 from traffic.loop_driving import CircularLoop,LoopProgress
@@ -46,6 +47,10 @@ def main():
     try:
         from isaacsim import SimulationApp
         graphics=rendering_profile(True)
+        if cfg['version']=='v05':
+            # Process-local fallback for this runtime's dense-Fabric crash.
+            graphics['extra_args']=[*graphics['extra_args'],'--/app/useFabricSceneDelegate=false']
+        result['graphics_profile']=graphics
         app=SimulationApp({**graphics,'headless':not cfg['gui'],'disable_viewport_updates':False})
         from traffic.physics_session import prepare_vehicle_runtime
         from traffic.rendered_physics_session import RenderedPhysicsSession
@@ -61,7 +66,8 @@ def main():
         # showcase. Isolate the installed optional scripting stage-close
         # consumer before it can attach to our long-lived owned stage.
         from traffic.showcase_runtime import (inspect_behavior_free_stage,
-            disable_unused_behavior_scripting,assert_behavior_scripting_disabled)
+            disable_unused_behavior_scripting,assert_behavior_scripting_disabled,
+            disable_unused_sensor_icons,assert_sensor_icons_disabled)
         import omni.kit.app
         extension_manager=omni.kit.app.get_app().get_extension_manager()
         behavior_sources={}
@@ -71,6 +77,8 @@ def main():
             behavior_sources[name]=inspect_behavior_free_stage(inspected_stage)
             inspected_stage=None
         result['behavior_runtime']=disable_unused_behavior_scripting(extension_manager,behavior_sources)
+        if cfg['version']=='v05':
+            result['sensor_icon_runtime']=disable_unused_sensor_icons(extension_manager)
         source_hashes=package_hashes(ROOT/cfg['vehicle_directory'])
         scene_directory=output/'scene'
         session=RenderedPhysicsSession(cfg['physics_hz'],cfg['render_hz'],physics_scene_path=PATHS.physics)
@@ -80,7 +88,8 @@ def main():
         # Local publication's point light was for an asset inspection, not a 1 km road.
         session.stage.GetPrimAtPath('/World/Lighting/Key').SetActive(False)
         fleet=KinematicFleet(session.stage,scene_directory,fleet_specs(cfg),episode_id=episode,
-            wheel_update_every=6 if cfg['version'] in ('v03','v04') else 1)
+            wheel_update_every=cfg['physics_hz']//cfg['render_hz'] if cfg['version'] in ('v03','v04','v05') else 1,
+            batch_visual_updates=cfg['version']=='v05',separate_visuals=cfg['version']=='v05')
         monitor=VehicleContactMonitor(session.stage,vehicle.path)
         view=LoopShowcaseView(session.stage,route)
         ui_state=dict(camera=cfg['camera'],paused=False)
@@ -111,8 +120,12 @@ def main():
         gate=DriverControlGate(episode,'ego');progress=LoopProgress(route)
         result['behavior_runtime']['composed_scene_check']=inspect_behavior_free_stage(session.stage)
         result['behavior_runtime']['pre_play_state']=assert_behavior_scripting_disabled(extension_manager)
+        if cfg['version']=='v05':
+            result['sensor_icon_runtime']['pre_play_state']=assert_sensor_icons_disabled(extension_manager)
         session.start();fleet.bind(session.manager.get_physics_simulation_view())
-        result['clock_start']=session.snapshot();state=vehicle.state()
+        if cfg['version']=='v05':
+            result['ego_state_readback']=vehicle.bind_native_state(session.manager.get_physics_simulation_view())
+        result['clock_start']=session.snapshot();state=vehicle.state(refresh_usd=cfg['version']!='v05')
         progress.update(route.project(*state['position_m'][:2]).s_m % route.length_m)
         for t in fleet.tracks(0):
             station=route.project(t.x_m,t.y_m).s_m % route.length_m
@@ -136,6 +149,8 @@ def main():
                     raise RuntimeError('Paused preview closed or bounded deadline reached')
                 before=time.perf_counter();session.render();time.sleep(.02);paused_wall+=time.perf_counter()-before
             phase='settle' if tick<cfg['settle_s']*hz else 'brake' if tick>=brake_tick else 'drive'
+            if cfg['version']=='v05' and tick==brake_tick:
+                result['fleet_rundown']=fleet.begin_stop()
             tracks=fleet.tracks(tick)
             command=None
             physical_state=VehicleState.from_physics(state,episode_id=episode,vehicle_id='ego',tick=tick)
@@ -155,13 +170,13 @@ def main():
             applied=gate.step(tick=tick,dt_s=1/hz,command=command)
             vehicle.apply(applied,cfg['drive_torque_nm'],cfg['brake_torque_nm'])
             fleet.update((tick+1)/hz)
-            session.step();old=state;state=vehicle.state()
+            session.step(publish_usd=cfg['version']!='v05');old=state;state=vehicle.state(refresh_usd=cfg['version']!='v05')
             traveled+=math.dist(old['position_m'][:2],state['position_m'][:2])
             events=monitor.sample(session.sim,tick+1);contacts.extend(events)
             tracks=fleet.tracks(tick+1);pose_check=fleet.pose_check((tick+1)/hz)
             projection=route.project(*state['position_m'][:2]);tracking=progress.update(projection.s_m % route.length_m)
             ego_box=body_box(state,model)
-            gaps=[box_clearance(ego_box,OrientedBox(t.x_m,t.y_m,t.yaw_rad,t.length_m,t.width_m)) for t in tracks]
+            clearance=nearest_clearance(ego_box,[OrientedBox(t.x_m,t.y_m,t.yaw_rad,t.length_m,t.width_m) for t in tracks])
             for t in tracks:
                 station=route.project(t.x_m,t.y_m).s_m % route.length_m
                 previous=last_peer_stations.get(t.vehicle_id)
@@ -179,7 +194,10 @@ def main():
                 position_m=state['position_m'],yaw_rad=state['yaw_rad'],speed_m_s=state['speed_m_s'],
                 upright_z=state['upright_z'],wheel_on_ground=state['wheel_on_ground'],
                 traveled_distance_m=traveled,progress_m=tracking['progress_m'],
-                clearance_m=min(g['clearance_m'] for g in gaps),overlap=any(g['overlap'] for g in gaps),
+                clearance_m=clearance['clearance_m'],overlap=clearance['overlap'],
+                clearance_exact_pairs=clearance['exact_pairs'],
+                nearby_traffic_100m=sum(math.hypot(t.x_m-ego_box.x_m,t.y_m-ego_box.y_m)<=100 for t in tracks),
+                background_max_speed_m_s=max(abs(t.speed_m_s) for t in tracks),
                 footprint_in_road=in_road,background_pose_error_m=pose_error,background_native_passed=pose_check['passed'],
                 throttle=applied.throttle,brake=applied.brake,steering_rad=applied.steering_rad,
                 fallback=applied.is_fallback,command_expires_tick=expires,
@@ -193,10 +211,11 @@ def main():
             if cfg['mode']!='contact-check' and (events or row['overlap'] or (phase!='settle' and (not in_road or state['upright_z']<.9))):
                 raise RuntimeError('Contact/overlap/road/attitude safety guard')
             if (tick+1)%session.render_every_steps==0:
+                if cfg['version']=='v05':session.publish_transforms()
                 fleet.publish_visuals()
                 physical_state=VehicleState.from_physics(state,episode_id=episode,vehicle_id='ego',tick=tick+1)
                 viewport.camera_path=view.update_showcase(state,projection.s_m,ui_state['camera'],controller.path_points(physical_state))
-                if label:label.text=(f"{cfg['version']} | {phase} | {state['speed_m_s']/0.44704:.1f} mph | traffic 15–19 mph\n"
+                if label:label.text=(f"{cfg['version']} | {phase} | {state['speed_m_s']/0.44704:.1f} mph | {len(tracks)} traffic cars\n"
                     f"Passes {len(passed)} | lane changes {max_lanes} | clearance {row['clearance_m']:.2f} m\n"
                     f"{row['controller_status']}: {row['controller_reason']} | {row['sim_time_s']:.0f}s")
                 session.render();check=view.camera_check();camera_checks.append(dict(tick=tick+1,**check))
@@ -223,6 +242,8 @@ def main():
             source_vehicle_unchanged=package_hashes(ROOT/cfg['vehicle_directory'])==source_hashes)
         result['gates'].update(extra);result['passed']=all(result['gates'].values())
         result['behavior_runtime']['post_run_state']=assert_behavior_scripting_disabled(extension_manager)
+        if cfg['version']=='v05':
+            result['sensor_icon_runtime']['post_run_state']=assert_sensor_icons_disabled(extension_manager)
         result.update(clock_end=session.snapshot(),passes=passed_records)
         for _ in range(3):session.render()
     except Exception as error:

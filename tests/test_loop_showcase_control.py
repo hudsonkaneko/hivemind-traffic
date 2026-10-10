@@ -87,6 +87,16 @@ def test_empty_road_cruise_returns_bounded_command_with_correct_identity_and_ttl
     assert not gate.step(tick=0, dt_s=1 / 120, command=cmd).is_fallback
 
 
+@pytest.mark.parametrize('stop,delta,valid',[(True,-.055,True),(False,-.055,False),
+                                         (True,.1,False),(True,-.2,False)])
+def test_bounded_background_braking_is_allowed_only_during_requested_stop(stop,delta,valid):
+    control=ShowcaseController('episode','ego')
+    control.command(state(speed=0),0,[track(station=200,lane=3)])
+    control.command(state(tick=2,speed=0),2,[track(tick=2,station=200+7*2/120*500/511.1,
+        lane=3,speed=7+delta)],stop=stop)
+    assert (control.diagnostics['reason']!='object_motion_contract_changed') is valid
+
+
 def test_slower_lead_causes_adjacent_lane_change_and_path_overlay_adapts():
     control = ShowcaseController('episode', 'ego')
     control.command(state(), 0, [track()])

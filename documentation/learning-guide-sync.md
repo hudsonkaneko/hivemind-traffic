@@ -1,19 +1,21 @@
 # Engineering guide synchronization
 
-## Pending: loop traffic showcase
+## Verified October 10: loop traffic showcase
 
-The [showcase record](loop-traffic-showcase.md) and
-[version folders](../showcases/loop_traffic/README.md) contain the current plan,
-commands, explanations, physical tests and failure fixes. This milestone uses a
-scripted controller, privileged object positions, one dynamic prepared car and
-kinematic background cars; it does not introduce RL or LiDAR perception.
-Isaac Lab work is postponed for the requested presentation. Google tabs have
-not been edited for this milestone. A fresh required trusted-reader attempt on
-October 9, 2026 failed with `workspaceRoot must be an absolute path`, despite the
-canonical absolute Windows path. No cloud write was attempted. The Google Docs
-skill requires that structural inspection before editing the existing guide.
-Repository/GitHub documentation is updated
-independently, and a cloud-sync success is not claimed.
+Added **34 Loop traffic showcase**, tab `t.9ah0315nta8b`, to the
+[Google engineering guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.9ah0315nta8b).
+It covers the verified v04 milestone and v05 density follow-up: purpose,
+movement ownership, scripted/privileged observation limitations, portable
+commands, highlighted definitions, measured evidence, real-time limitations,
+retained failures and the explicit fleet shutdown. PR #10 is linked.
+
+The current connected Google Docs workflow succeeded through structural native
+reads and a revision-guarded write; the older October 9 trusted-reader failure
+is historical. A full native readback confirmed the inserted text, title and
+heading styles, all five shaded Consolas command blocks, and that all 34 older
+tabs were unchanged. No pixel/pagination audit is claimed. Sources:
+[v04 record](loop-traffic-showcase.md), [dense v05 record](dense-loop-showcase.md)
+and [version folders](../showcases/loop_traffic/README.md). No training launched.
 
 ## Pending: mentor-guided continuous highway loop
 
@@ -24,14 +26,14 @@ required file-backed reader failed with `workspaceRoot must be an absolute path`
 for the canonical Windows directory. Native write/format/readback verification
 therefore remains pending; the verified synchronization below is historical.
 
-Last verified: October 6, 2026.
+Previous verified milestone: October 6, 2026.
 
 Latest source milestone: commit `e74b574`, published on `codex/realtime-preview`.
 [Pull request #5](https://github.com/hudsonkaneko/hivemind-traffic/pull/5) records
 the implementation, tests, evidence and open GUI timing gate. It is stacked on
 `codex/demo-readiness`; `main` is unchanged.
 
-## Latest update: live preview timing
+## Historical update: live preview timing
 
 Added **33 Live preview timing**, tab `t.e9ctk5gfkhg`, to the
 [same Google guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.e9ctk5gfkhg).

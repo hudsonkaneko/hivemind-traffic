@@ -239,8 +239,10 @@ class RenderedPhysicsSession:
                     render_hz=self.render_hz, origin_time_s=self._origin[1],
                     origin_physics_steps=self._origin[0])
 
-    def step(self):
-        """Advance precisely one physics tick, then publish the resulting USD pose."""
+    def step(self, *, publish_usd=True):
+        """Advance one physics tick; optionally defer USD display publication."""
+        if type(publish_usd) is not bool:
+            raise ValueError('USD publication flag must be boolean')
         self._assert_owned(running=True)
         before = self._assert_current_clock()
         self.manager.step(steps=1, update_fabric=False)
@@ -253,8 +255,19 @@ class RenderedPhysicsSession:
                             abs_tol=max(1e-6, expected * 1e-7)):
             raise RuntimeError('Accumulated physics clock drift exceeds the fixed-tick tolerance')
         self._last_clock = after
-        self.physx.update_transformations(False, True, True, False)
+        if publish_usd:self.physx.update_transformations(False, True, True, False)
         return self.snapshot()
+
+    def publish_transforms(self):
+        """Publish the current native tick for rendering without advancing it.
+
+        Deferred publication is valid only for consumers using native physics
+        observations between display frames, not stale authored USD state.
+        """
+        self._assert_owned(running=True)
+        before=self._assert_current_clock()
+        self.physx.update_transformations(False, True, True, False)
+        verify_clock_transition(before,self._clock(),steps=0,dt=self.dt)
 
     def render(self):
         """Pump RTX/UI with automatic simulation off, and prove no physics tick ran."""

@@ -6,6 +6,7 @@ from traffic.showcase_runtime import (
     BEHAVIOR_EXTENSION, REQUIRED_RUNTIME_EXTENSIONS,
     assert_behavior_scripting_disabled, disable_unused_behavior_scripting,
     inspect_behavior_free_stage,
+    SENSOR_ICON_EXTENSION, disable_unused_sensor_icons, assert_sensor_icons_disabled,
 )
 
 
@@ -53,6 +54,44 @@ def source_checks():
 
 
 class ShowcaseRuntimeTests(unittest.TestCase):
+    def test_sensor_icon_isolation_preserves_runtime_and_records_only_icon(self):
+        manager=FakeManager()
+        manager.enabled.add(SENSOR_ICON_EXTENSION)
+        report=disable_unused_sensor_icons(manager)
+        self.assertEqual(manager.calls,[(SENSOR_ICON_EXTENSION,False)])
+        self.assertTrue(report['enabled_before'])
+        self.assertFalse(report['enabled_after'])
+        self.assertEqual(report['disabled_extension_ids'],[SENSOR_ICON_EXTENSION+'-1.0'])
+        self.assertEqual(report['required_runtime_before'],report['required_runtime_after'])
+        self.assertTrue(manager.is_extension_enabled(BEHAVIOR_EXTENSION))
+
+    def test_sensor_icon_already_absent_is_noop(self):
+        manager=FakeManager()
+        report=disable_unused_sensor_icons(manager)
+        self.assertTrue(report['passed'])
+        self.assertEqual(manager.calls,[])
+
+    def test_sensor_icon_failure_or_runtime_loss_is_not_ignored(self):
+        for manager in (FakeManager(refuse=True),FakeManager(sticky=True),FakeManager(disable_required=True)):
+            manager.enabled.add(SENSOR_ICON_EXTENSION)
+            with self.subTest(manager=manager),self.assertRaises(RuntimeError):
+                disable_unused_sensor_icons(manager)
+
+    def test_sensor_icon_reactivation_is_detected(self):
+        manager=FakeManager()
+        manager.enabled.add(SENSOR_ICON_EXTENSION)
+        with self.assertRaises(RuntimeError):assert_sensor_icons_disabled(manager)
+
+    def test_sensor_icon_unexpected_dependency_loss_is_rejected(self):
+        manager=FakeManager()
+        manager.enabled.update([SENSOR_ICON_EXTENSION,'unrelated.extension'])
+        original=manager.set_extension_enabled_immediate
+        def disable(name,enabled):
+            manager.enabled.remove('unrelated.extension')
+            return original(name,enabled)
+        manager.set_extension_enabled_immediate=disable
+        with self.assertRaises(RuntimeError):disable_unused_sensor_icons(manager)
+
     def test_clean_composed_stage_reports_every_prim(self):
         report = inspect_behavior_free_stage(FakeStage([FakePrim(), FakePrim('/World/Vehicle', ['PhysicsRigidBodyAPI'])]))
         self.assertTrue(report['passed'])

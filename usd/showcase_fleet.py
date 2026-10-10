@@ -82,7 +82,21 @@ def _box(stage, path, dimensions, position, color):
     return cube
 
 
-def _create_asset(assets):
+def stopping_pose(spec, sim_time_s, stop_started_s=None):
+    """Same circle, with a 3 m/s2 base-lane deceleration during demo rundown."""
+    if stop_started_s is None or sim_time_s<=stop_started_s:
+        return fleet_pose(spec,sim_time_s)
+    deceleration=3.*(BASE_RADIUS_M+spec.lane*LANE_WIDTH_M)/BASE_RADIUS_M
+    elapsed=min(sim_time_s-stop_started_s,spec.speed_m_s/deceleration)
+    equivalent=stop_started_s+elapsed-(.5*deceleration*elapsed**2/spec.speed_m_s if spec.speed_m_s else 0.)
+    pose=fleet_pose(spec,equivalent)
+    speed=max(0.,spec.speed_m_s-deceleration*(sim_time_s-stop_started_s))
+    yaw=pose['yaw_rad']
+    pose['velocity_m_s']=(speed*math.cos(yaw),speed*math.sin(yaw),0.)
+    return pose
+
+
+def _create_asset(assets, separate_visuals=False):
     from pxr import Gf, Usd, UsdGeom, UsdPhysics
     geometry = _new_stage(assets / 'showcase-block-car-geometry.usda')
     UsdGeom.Xform.Define(geometry, '/Vehicle')
@@ -124,7 +138,9 @@ def _create_asset(assets):
     physics.GetRootLayer().Save()
 
     asset = _new_stage(assets / 'showcase-block-car.usda')
-    asset.GetRootLayer().subLayerPaths = ['./showcase-block-car-physics.usda', './showcase-block-car-geometry.usda']
+    asset.GetRootLayer().subLayerPaths = ['./showcase-block-car-physics.usda']
+    if not separate_visuals:
+        asset.GetRootLayer().subLayerPaths.append('./showcase-block-car-geometry.usda')
     _metadata(asset, '/Vehicle', 'component')
     root = asset.GetDefaultPrim()
     Usd.ModelAPI(root).SetAssetName('ShowcaseBlockCar')
@@ -152,7 +168,8 @@ class KinematicFleet:
     must follow each physics step to detect stale/misbound targets. No hidden
     stepping, timeline changes, installed-runtime edits or background threads.
     """
-    def __init__(self, stage, scene_directory, specs, *, episode_id='showcase', wheel_update_every=1):
+    def __init__(self, stage, scene_directory, specs, *, episode_id='showcase', wheel_update_every=1,
+                 batch_visual_updates=False, separate_visuals=False):
         from pxr import Gf, Sdf, Usd, UsdGeom, UsdPhysics
         if (isinstance(wheel_update_every, bool) or not isinstance(wheel_update_every, int)
                 or wheel_update_every <= 0 or wheel_update_every > 120 or 120 % wheel_update_every):
@@ -161,6 +178,12 @@ class KinematicFleet:
         self.directory = Path(scene_directory).resolve()
         self.episode_id = episode_id
         self.wheel_update_every = wheel_update_every
+        if type(batch_visual_updates) is not bool:
+            raise ValueError('Visual batching must be boolean')
+        self.batch_visual_updates = batch_visual_updates
+        if type(separate_visuals) is not bool:
+            raise ValueError('Visual separation must be boolean')
+        self.separate_visuals = separate_visuals
         self.specs = []
         for spec in specs:
             if isinstance(spec, dict):
@@ -187,7 +210,7 @@ class KinematicFleet:
         files.append(self.directory / 'showcase-fleet-layout.usda')
         if any(p.exists() for p in files):
             raise FileExistsError('Refusing to overwrite a fleet asset or layout')
-        _create_asset(assets)
+        _create_asset(assets,separate_visuals)
         layout = _new_stage(files[-1])
         UsdGeom.Xform.Define(layout, '/World')
         _metadata(layout, '/World', 'assembly')
@@ -219,7 +242,8 @@ class KinematicFleet:
                 Gf.Quatd(w, x, y, z).GetNormalized())
             proxy_xform.SetResetXformStack(True)
             palette = ((.18, .42, .63), (.46, .55, .62), (.72, .46, .18), (.30, .50, .39))
-            layout.GetPrimAtPath(spec.chassis_path + '/Visuals/Body').GetAttribute('primvars:displayColor').Set([palette[index % len(palette)]])
+            if not separate_visuals:
+                layout.GetPrimAtPath(spec.chassis_path + '/Visuals/Body').GetAttribute('primvars:displayColor').Set([palette[index % len(palette)]])
             layout.GetPrimAtPath(spec.render_path + '/Visuals/Body').GetAttribute('primvars:displayColor').Set([palette[index % len(palette)]])
         group = UsdPhysics.CollisionGroup.Define(layout, BACKGROUND_GROUP)
         group.GetCollidersCollectionAPI().CreateIncludesRel().SetTargets([
@@ -251,6 +275,7 @@ class KinematicFleet:
         self._view = None
         self._ordered_specs = None
         self._target_time_s = 0.
+        self._stop_time_s = None
         self._target_count = 0
         self._visual_update_count = 0
         self._last_track_tick = None
@@ -282,6 +307,20 @@ class KinematicFleet:
         self._render_attributes = {spec.vehicle_id: (
             stage.GetPrimAtPath(spec.render_path).GetAttribute('xformOp:translate'),
             stage.GetPrimAtPath(spec.render_path).GetAttribute('xformOp:orient')) for spec in self.specs}
+        self._visual_specs = {}
+        if batch_visual_updates:
+            # Collect composed values BEFORE the Sdf block. Only Sdf writes are
+            # permitted inside it: USD queries cannot see partially applied edits.
+            attributes=[a for values in (*self._render_attributes.values(),*self._wheel_attributes.values()) for a in values]
+            initial=[(a.GetPath(),a.GetTypeName(),a.Get()) for a in attributes]
+            with Sdf.ChangeBlock():
+                for path,type_name,value in initial:
+                    prim=Sdf.CreatePrimInLayer(self.dynamic_layer,path.GetPrimPath())
+                    attribute=Sdf.AttributeSpec(prim,path.name,type_name)
+                    attribute.default=value
+                    self._visual_specs[str(path)]=attribute
+        self.metadata['batched_visual_updates']=batch_visual_updates
+        self.metadata['separate_visuals']=separate_visuals
 
     def validate(self):
         from pxr import Usd, UsdGeom, UsdPhysics
@@ -340,13 +379,21 @@ class KinematicFleet:
 
     bind_physics = bind
 
+    def begin_stop(self):
+        """Explicit demo shutdown, not traffic intelligence or reactive driving."""
+        if self._view is None or self._stop_time_s is not None:
+            raise RuntimeError('Fleet rundown requires a bound, not-yet-stopping fleet')
+        self._stop_time_s=self._target_time_s
+        return dict(start_time_s=self._stop_time_s,base_lane_deceleration_m_s2=3.,
+                    scope='Coordinated end-of-demo rundown; not autonomous human response')
+
     def update(self, sim_time_s):
         if self._view is None:
             raise RuntimeError('Bind fleet after physics start and before commanding motion')
         if not math.isfinite(sim_time_s) or sim_time_s < self._target_time_s:
             raise ValueError('Fleet target time must be finite and monotonic')
         import numpy as np
-        poses = [fleet_pose(s, sim_time_s) for s in self._ordered_specs]
+        poses = [stopping_pose(s, sim_time_s,self._stop_time_s) for s in self._ordered_specs]
         targets = np.asarray([(*p['position_m'], *p['quaternion_xyzw']) for p in poses], dtype=np.float32)
         self._view.set_kinematic_targets(self._float_tensor(targets),
             self._index_tensor(np.arange(len(poses), dtype=np.uint32)))
@@ -360,13 +407,14 @@ class KinematicFleet:
         and could feed a stale render pose back into the next physics step.
         Visual geometry is not used as an observation or collision body.
         """
-        from pxr import Gf, Usd
+        from pxr import Gf, Sdf, Usd
         transforms, _ = self._measured()
+        pending=[]
         with Usd.EditContext(self.stage, self.dynamic_layer):
             for spec, pose in zip(self._ordered_specs, transforms):
                 x, y, z, qx, qy, qz, qw = map(float, pose)
                 translate, orient = self._render_attributes[spec.vehicle_id]
-                translate.Set(Gf.Vec3d(x, y, z))
+                pending.append((translate,Gf.Vec3d(x, y, z)))
                 # PhysX returns float32 quaternion components. Their norm can
                 # differ slightly from one; Gf's quaternion-to-rotation path
                 # amplifies scalar-component rounding near identity. Normalize
@@ -375,13 +423,19 @@ class KinematicFleet:
                 orientation = Gf.Quatd(qw, qx, qy, qz)
                 if abs(orientation.GetLength() - 1.) > .001:
                     raise RuntimeError('Native quaternion is not approximately unit length')
-                orient.Set(orientation.GetNormalized())
+                pending.append((orient,orientation.GetNormalized()))
                 if self._target_count % self.wheel_update_every == 0:
                     # Decorative wheel angle only; chassis visuals use measured
                     # native pose, never fleet_pose's requested target.
-                    spin = fleet_pose(spec, self._target_time_s)['wheel_spin_deg']
+                    spin = stopping_pose(spec, self._target_time_s,self._stop_time_s)['wheel_spin_deg']
                     for attribute in self._wheel_attributes[spec.vehicle_id]:
-                        attribute.Set(spin)
+                        pending.append((attribute,spin))
+            if self.batch_visual_updates:
+                edits=[(self._visual_specs[str(attribute.GetPath())],value) for attribute,value in pending]
+                with Sdf.ChangeBlock():
+                    for spec,value in edits:spec.default=value
+            else:
+                for attribute,value in pending:attribute.Set(value)
         self._visual_update_count += 1
         return self.visual_pose_check()
 
@@ -449,12 +503,12 @@ class KinematicFleet:
         transforms, velocities = self._measured()
         positions, angles, speed_errors = [], [], []
         for spec, pose, velocity in zip(self._ordered_specs, transforms, velocities):
-            expected = fleet_pose(spec, target_time_s)
+            expected = stopping_pose(spec, target_time_s,self._stop_time_s)
             positions.append(math.dist(pose[:3], expected['position_m']))
             qx, qy, qz, qw = map(float, pose[3:])
             yaw = math.atan2(2*(qw*qz + qx*qy), 1-2*(qy*qy+qz*qz))
             angles.append(abs(math.atan2(math.sin(yaw-expected['yaw_rad']), math.cos(yaw-expected['yaw_rad']))))
-            speed_errors.append(abs(math.hypot(*velocity[:2])-spec.speed_m_s))
+            speed_errors.append(abs(math.hypot(*velocity[:2])-math.hypot(*expected['velocity_m_s'][:2])))
         # Initial warm-up is stationary; commanded target motion must match its
         # configured speed after the first tick. Float32 poses at R500 quantize
         # finite-difference native velocities by a few millimetres/second.
@@ -474,5 +528,6 @@ class KinematicFleet:
         self._float_tensor = self._index_tensor = None
         self._wheel_attributes.clear()
         self._render_attributes.clear()
+        self._visual_specs.clear()
         self.stage = None
         self.dynamic_layer = None

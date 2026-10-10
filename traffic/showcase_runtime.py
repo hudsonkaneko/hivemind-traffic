@@ -12,6 +12,7 @@ omni.ext/omni.ext.ExtensionManager.html
 """
 
 BEHAVIOR_EXTENSION = 'omni.behavior.scripting.core'
+SENSOR_ICON_EXTENSION = 'isaacsim.gui.sensors.icon'
 REQUIRED_RUNTIME_EXTENSIONS = (
     'omni.physx',
     'isaacsim.core.simulation_manager',
@@ -47,6 +48,41 @@ def inspect_behavior_free_stage(stage):
 def _enabled_ids(manager):
     return {entry['id'] for entry in manager.get_extensions()
             if entry.get('enabled') and isinstance(entry.get('id'), str)}
+
+
+def assert_sensor_icons_disabled(manager):
+    if manager.is_extension_enabled(SENSOR_ICON_EXTENSION):
+        raise RuntimeError('Unused sensor-icon display unexpectedly remains enabled')
+    return dict(extension_id=SENSOR_ICON_EXTENSION, enabled=False, passed=True)
+
+
+def disable_unused_sensor_icons(manager):
+    """Isolate an optional viewport icon consumer, not sensor simulation.
+
+    The installed icon model crashes while releasing its USDRT handle in
+    _on_stage_closed. This scripted showcase needs no sensor identification
+    icons. Disable before composing its stage; retain dependency evidence and
+    fail if any required physics/rendering runtime is lost. Process-local only.
+    """
+    before = _enabled_ids(manager)
+    enabled_before = bool(manager.is_extension_enabled(SENSOR_ICON_EXTENSION))
+    required_before = {name: bool(manager.is_extension_enabled(name))
+                       for name in REQUIRED_RUNTIME_EXTENSIONS}
+    if enabled_before and not manager.set_extension_enabled_immediate(SENSOR_ICON_EXTENSION, False):
+        raise RuntimeError('The extension manager refused sensor-icon isolation')
+    status = assert_sensor_icons_disabled(manager)
+    after = _enabled_ids(manager)
+    required_after = {name: bool(manager.is_extension_enabled(name))
+                      for name in REQUIRED_RUNTIME_EXTENSIONS}
+    if any(was and not required_after[name] for name, was in required_before.items()):
+        raise RuntimeError('Sensor-icon isolation disabled a required physics/rendering runtime')
+    if any(not name.startswith(SENSOR_ICON_EXTENSION + '-') for name in before - after):
+        raise RuntimeError('Sensor-icon isolation unexpectedly disabled a dependent extension')
+    return dict(passed=True, extension_id=SENSOR_ICON_EXTENSION,
+                enabled_before=enabled_before, enabled_after=status['enabled'],
+                disabled_extension_ids=sorted(before-after), newly_enabled_extension_ids=sorted(after-before),
+                required_runtime_before=required_before, required_runtime_after=required_after,
+                scope='Process-local viewport icon isolation; no sensor computation or vendor edits')
 
 
 def assert_behavior_scripting_disabled(manager):

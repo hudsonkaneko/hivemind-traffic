@@ -153,10 +153,10 @@ def test_wrong_study_or_root_input_rejected(tmp_path,monkeypatch,pair):
     with pytest.raises(ValueError):repeat.resolve_run(other)
 
 
-@pytest.fixture
-def visual_pair(pair):
+@pytest.fixture(params=['v04','v05'])
+def visual_pair(pair,request):
     for run in pair:
-        cfg=make_config('v04',gui=False,paced=False,drive_s=15)
+        cfg=make_config(request.param,gui=False,paced=False,drive_s=15)
         rows=valid_rows(cfg)
         for row in rows:row.update(completed_passes=0,completed_lane_changes=0)
         run['config']=cfg;run['manifest']['config']=deepcopy(cfg);run['trajectory']=rows
@@ -178,7 +178,7 @@ def test_v04_complete_visual_native_evidence_qualifies(visual_pair):
     assert result['passed'],result
     assert result['qualification']=='physical_and_composed_visual_sync'
     assert result['background_visual_sync_qualified'] is True
-    assert result['input_metrics']['first']['background_visual_sync']['frames']==540
+    assert result['input_metrics']['first']['background_visual_sync']['frames']==27*visual_pair[0]['config']['render_hz']
 
 
 def test_v03_remains_physical_only_without_later_visual_claims(pair):
@@ -236,7 +236,7 @@ def test_v04_loader_requires_and_hashes_visual_file(tmp_path,monkeypatch,visual_
     loaded=repeat.load_run(directory)
     assert not loaded['load_errors']
     assert repeat.VISUAL_FILE in loaded['file_hashes']
-    assert len(loaded['background_visual_checks'])==540
+    assert len(loaded['background_visual_checks'])==27*visual_pair[0]['config']['render_hz']
     (directory/repeat.VISUAL_FILE).unlink()
     loaded=repeat.load_run(directory)
     assert loaded['load_errors']

@@ -83,7 +83,25 @@ class PhysxVehicle:
         return dict(**asdict(control), wheel_drive_nm=list(drive),
                     wheel_brake_nm=list(brake), front_steer_rad=list(angles))
 
-    def state(self):
+    def bind_native_state(self, simulation_view):
+        """Bind a checked native velocity view for render-decoupled readback."""
+        if getattr(self,'_native_state_view',None) is not None:
+            raise RuntimeError('Native ego state already bound')
+        view=simulation_view.create_rigid_body_view(self.path)
+        if list(view.prim_paths)!=[self.path]:
+            raise RuntimeError('Native ego state identity mismatch')
+        self._native_state_view=view
+        return dict(velocity_source='native rigid body tensor view',body_path=self.path)
+
+    def state(self, *, refresh_usd=True):
+        """Read native pose/wheels and either bound native or USD velocity.
+
+        Without a native velocity view, skip refresh only after an owned session
+        published this tick. A bound view permits render-decoupled observations.
+        Defaults preserve standalone/headless probe behavior.
+        """
+        if type(refresh_usd) is not bool:
+            raise ValueError('USD refresh flag must be boolean')
         from omni.physx.bindings._physx import VEHICLE_WHEEL_STATE_IS_ON_GROUND
         state = self.physx.get_rigidbody_transformation(self.path)
         if not state['ret_val']:
@@ -92,8 +110,17 @@ class PhysxVehicle:
         x, y, z, w = q
         yaw = math.atan2(2*(w*z+x*y), 1-2*(y*y+z*z))
         upright = 1-2*(x*x+y*y)
-        self.physx.update_transformations(False, True, True, False)
-        velocity = list(self.body.GetVelocityAttr().Get())
+        if refresh_usd:
+            self.physx.update_transformations(False, True, True, False)
+        view=getattr(self,'_native_state_view',None)
+        if view is not None:
+            values=view.get_velocities()
+            if hasattr(values,'detach'):values=values.detach().cpu()
+            if hasattr(values,'numpy'):values=values.numpy()
+            if values.shape!=(1,6):raise RuntimeError('Malformed native ego velocity')
+            velocity=list(map(float,values[0,:3]))
+        else:
+            velocity = list(self.body.GetVelocityAttr().Get())
         values = position + q + velocity
         if not all(math.isfinite(v) for v in values):
             raise RuntimeError('Non-finite PhysX state')

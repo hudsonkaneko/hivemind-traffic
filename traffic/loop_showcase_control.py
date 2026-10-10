@@ -203,7 +203,7 @@ class ShowcaseController:
     def last_diagnostics(self):
         return self.diagnostics
 
-    def _validate(self, state, tick, tracks):
+    def _validate(self, state, tick, tracks, allow_braking=False):
         cfg = self.config
         if (not isinstance(state, VehicleState) or state.episode_id != self.episode_id
                 or state.vehicle_id != self.vehicle_id or state.frame != FRAME or state.source != SOURCE
@@ -244,7 +244,9 @@ class ShowcaseController:
                 # Native float32 poses around R=500 m can quantise a 120 Hz
                 # finite-difference speed by a few mm/s. This tolerance covers
                 # that readback noise, not a changing background policy.
-                if (abs(obj.speed_m_s - previous.speed_m_s) > .05
+                speed_delta=obj.speed_m_s-previous.speed_m_s
+                speed_valid=(-3.2*elapsed_s-.02 <= speed_delta <= .02) if allow_braking else abs(speed_delta)<=.05
+                if (not speed_valid
                         or abs(obj.length_m - previous.length_m) > 1e-6
                         or abs(obj.width_m - previous.width_m) > 1e-6
                         or math.hypot(obj.x_m - predicted.x_m, obj.y_m - predicted.y_m) > .02):
@@ -377,7 +379,10 @@ class ShowcaseController:
         if not _tick(tick) or (self._last_tick is not None and tick <= self._last_tick):
             raise ValueError('Control ticks must strictly increase; stop physics on broken clock')
         self._last_tick = tick
-        invalid = self._validate(state, tick, tracks)
+        # Explicit final rundown allows bounded background deceleration, never
+        # acceleration or a changed circle/identity. Driving keeps the original
+        # constant-motion contract; stop still latches ego's full brake.
+        invalid = self._validate(state, tick, tracks,allow_braking=stop is True)
         if not isinstance(stop, bool):
             invalid = 'invalid_stop_request'
         if invalid:

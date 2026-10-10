@@ -228,6 +228,19 @@ equating a short preview with full-lap, multi-car or learned-control validation.
 
 ## Prepared-car loop traffic showcase
 
+For the denser 80-car preset, select **v05** explicitly:
+
+```text
+python scripts/demo_loop_showcase.py --version v05
+```
+
+This adds staggered traffic throughout the ring while retaining passing gaps.
+The main car still targets 35 mph; backgrounds travel about 15 mph. The dense
+preset is **not real-time qualified** on the measured workstation: the full
+GUI test achieved 0.751x, with display updates at 10 Hz of simulation time. Physics
+and controls remain 120/60 Hz. Use v04 for the previously qualified lighter
+real-time preview. See [dense-preset evidence](dense-loop-showcase.md).
+
 Use the configured traffic environment from the repository root. The supervisor
 discovers the installed Isaac runtime; it does not install it or require SUMO.
 This demonstration also requires the separately supplied local prepared vehicle

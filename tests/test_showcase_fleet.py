@@ -8,7 +8,7 @@ import numpy as np
 
 from usd.showcase_fleet import (
     BACKGROUND_GROUP, BASE_RADIUS_M, BODY_Z_M, FleetSpec, KinematicFleet,
-    LENGTH_M, QUERY_GROUP, WIDTH_M, WHEEL_NAMES, fleet_pose,
+    LENGTH_M, QUERY_GROUP, WIDTH_M, WHEEL_NAMES, fleet_pose, stopping_pose,
 )
 from usd.physical_scene import PATHS
 
@@ -21,6 +21,24 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class FleetGeometryTests(unittest.TestCase):
+    def test_rundown_preserves_pose_continuity_and_stops_without_reverse(self):
+        spec=FleetSpec('car',2,100,6.7056*(507.4/500))
+        start=fleet_pose(spec,90.)
+        self.assertEqual(start,stopping_pose(spec,90.,90.))
+        final=stopping_pose(spec,100.,90.)
+        self.assertEqual(final,stopping_pose(spec,200.,90.))
+        self.assertEqual(final['velocity_m_s'],(0.,0.,0.))
+        self.assertLess(math.dist(start['position_m'],final['position_m']),8.)
+        for tick in range(1,300):
+            a=stopping_pose(spec,90.+(tick-1)/120,90.)
+            b=stopping_pose(spec,90.+tick/120,90.)
+            va,vb=math.hypot(*a['velocity_m_s']),math.hypot(*b['velocity_m_s'])
+            self.assertTrue(0<=vb<=va)
+            self.assertLessEqual(va-vb,3.1/120)
+            deceleration=3.*507.4/500
+            moving_dt=min(1/120,va/deceleration)
+            expected_distance=va*moving_dt-.5*deceleration*moving_dt**2
+            self.assertAlmostEqual(math.dist(a['position_m'],b['position_m']),expected_distance,delta=1e-8)
     def test_names_do_not_duplicate_background_prefix(self):
         self.assertEqual(FleetSpec('background_000',0,0,6).chassis_path,
             '/World/Vehicles/vehicle_background_000/Chassis')
@@ -88,6 +106,8 @@ class FakeBodies:
 
 @unittest.skipIf(Usd is None, 'USD authoring runtime required')
 class FleetUsdTests(unittest.TestCase):
+    batch_visual_updates = False
+    separate_visuals = False
     def setUp(self):
         outputs = ROOT / 'outputs'
         outputs.mkdir(exist_ok=True)
@@ -103,7 +123,8 @@ class FleetUsdTests(unittest.TestCase):
         UsdPhysics.CollisionGroup.Define(self.stage, QUERY_GROUP).CreateFilteredGroupsRel().SetTargets([
             '/World/Physics/Resources/VehicleWheelCollisionGroup'])
         self.specs = [FleetSpec('slow_001', 0, 20., 6.), FleetSpec('slow_002', 2, 50., 7.)]
-        self.fleet = KinematicFleet(self.stage, self.directory, self.specs, episode_id='test')
+        self.fleet = KinematicFleet(self.stage, self.directory, self.specs, episode_id='test',
+                                   batch_visual_updates=self.batch_visual_updates,separate_visuals=self.separate_visuals)
 
     def bind(self):
         from types import SimpleNamespace
@@ -204,7 +225,8 @@ class FleetUsdTests(unittest.TestCase):
         reopened = Usd.Stage.Open(str(self.directory/'showcase-fleet-layout.usda'))
         self.assertFalse(reopened.GetCompositionErrors())
         for spec in self.specs:
-            self.assertTrue(reopened.GetPrimAtPath(spec.chassis_path+'/Visuals/Body'))
+            self.assertEqual(bool(reopened.GetPrimAtPath(spec.chassis_path+'/Visuals/Body')),not self.separate_visuals)
+            self.assertTrue(reopened.GetPrimAtPath(spec.render_path+'/Visuals/Body'))
             self.assertTrue(reopened.GetPrimAtPath(spec.vehicle_path).HasAuthoredReferences())
         self.assertEqual(UsdGeom.GetStageUpAxis(reopened), 'Z')
         self.assertEqual(UsdGeom.GetStageMetersPerUnit(reopened), 1.)
@@ -330,6 +352,28 @@ class FleetUsdTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, 'approximately unit'):
             fleet.publish_visuals()
         fleet.release()
+
+
+@unittest.skipIf(Usd is None, 'USD authoring runtime required')
+class BatchedFleetUsdTests(FleetUsdTests):
+    batch_visual_updates = True
+
+
+@unittest.skipIf(Usd is None, 'USD authoring runtime required')
+class LightweightFleetUsdTests(BatchedFleetUsdTests):
+    separate_visuals = True
+
+    def test_rundown_uses_real_targets_and_keeps_static_assets(self):
+        self.bind()
+        self.fleet.begin_stop()
+        with self.assertRaises(RuntimeError):self.fleet.begin_stop()
+        for tick in range(1,361):
+            self.fleet.update(tick/120)
+            self.bodies.step(1/120)
+            self.assertTrue(self.fleet.pose_check()['passed'])
+        self.assertTrue(self.fleet.publish_visuals()['passed'])
+        self.assertTrue(self.fleet.static_assets_unchanged())
+        self.assertTrue(all(t.speed_m_s==0 for t in self.fleet.tracks(360)))
 
 
 if __name__ == '__main__':

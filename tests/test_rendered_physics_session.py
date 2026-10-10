@@ -91,6 +91,21 @@ def test_one_step_and_render_have_one_motion_authority(running_session):
     assert result['render_count'] == 1
     assert len(usd_updates) == 4
     assert all(args == (False, True, True, False) for args in usd_updates)
+
+
+def test_native_steps_can_defer_usd_without_losing_clock(running_session):
+    session,native,settings,updates=running_session
+    for _ in range(12):session.step(publish_usd=False)
+    assert not updates
+    assert session.physics_steps==12
+    before=session.snapshot()
+    session.publish_transforms()
+    assert len(updates)==1
+    assert session.snapshot()==before
+    session.render()
+    assert native.count==14
+    for invalid in (0,1,None):
+        with pytest.raises(ValueError):session.step(publish_usd=invalid)
     assert settings['/app/player/playSimulations'] is True
 
 

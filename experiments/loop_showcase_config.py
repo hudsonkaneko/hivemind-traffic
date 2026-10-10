@@ -1,7 +1,7 @@
 """Bounded presentation fixtures, distinct from traffic-policy experiments."""
 import math
 
-VERSIONS = ('v01', 'v02', 'v03', 'v04')
+VERSIONS = ('v01', 'v02', 'v03', 'v04', 'v05')
 MODES = ('showcase', 'blocked', 'dropout', 'contact-check')
 
 
@@ -17,7 +17,7 @@ def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
     return dict(schema_version=1,version=version,mode=mode,seed=101,
         vehicle_directory='vehicles/sim_ready/americano-i7-ev/v07',
         source_directory='highway_usd/_v02', initial_lane=1,
-        physics_hz=120,control_hz=60,planner_hz=10,render_hz=20,
+        physics_hz=120,control_hz=60,planner_hz=10,render_hz=10 if version=='v05' else 20,
         settle_s=2,drive_s=duration,brake_s=10,duration_s=duration+12,
         target_speed_m_s=6.0 if version=='v01' else 15.6464,
         drive_torque_nm=700.,brake_torque_nm=1500.,command_ttl_ticks=12,
@@ -26,8 +26,8 @@ def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
         min_clearance_m=.6,max_background_pose_error_m=.02,
         min_upright_z=.98,max_speed_m_s=17.,stop_speed_m_s=.05,
         min_hold_s=5.,max_hold_drift_m=.05,
-        minimum_passes=3 if version!='v01' and mode=='showcase' and duration>=90 else 0,
-        minimum_lane_changes=2 if version!='v01' and mode=='showcase' and duration>=90 else 0,
+        minimum_passes=(6 if version=='v05' else 3) if version!='v01' and mode=='showcase' and duration>=90 else 0,
+        minimum_lane_changes=(4 if version=='v05' else 2) if version!='v01' and mode=='showcase' and duration>=90 else 0,
         observations='privileged timestamped simulator object tracks and chassis state; known circular map',
         no_sumo=True,no_lidar=True,no_training=True)
 
@@ -37,6 +37,21 @@ def fleet_specs(config):
         entries=[(lane,65.,6.7056) for lane in range(4)]
     elif config['mode']=='contact-check':
         entries=[(1,16.,0.)]
+    elif config['version']=='v05':
+        # Forty staggered pairs cover the whole ring, alternating lane pairs.
+        # Common angular speed preserves gaps: nonreactive cars must not run
+        # into one another after a few laps. Lane arc speeds remain explicit.
+        spacing=math.tau*500/40
+        entries=[]
+        for band in range(40):
+            lanes=(0,1) if band%2==0 else (2,3)
+            jitter=(-8.,0.,8.,4.,-4.)[band%5]
+            for offset,lane in enumerate(lanes):
+                # Point paired gaps toward the middle lanes. Identical +18 m
+                # staggers trap ego beside the neighbor at its follow gap.
+                stagger=18.*offset*(1 if band%2==0 else -1)
+                station=(78.+band*spacing+jitter+stagger)%(math.tau*500)
+                entries.append((lane,station,6.7056*(500+lane*3.7)/500))
     else:
         entries=[(1,80.,6.7056),(0,165.,6.7056),(1,255.,6.7056),
                  (2,345.,6.7056),(1,435.,6.7056),(0,525.,6.7056),
@@ -122,6 +137,10 @@ def assess(rows,config,contact_count,passes,lane_changes):
     if config['mode']=='dropout':
         expired=[r for r in stop if r['applied_tick']>=drive[-1]['command_expires_tick']] if drive else []
         gates['command_loss_braking']=bool(expired) and all(r['fallback'] and r['throttle']==0 and r['brake']==1 for r in expired)
+    if config['version']=='v05' and not positive:
+        end_hold=[r for r in stop if r['sim_time_s']>=config['duration_s']-5]
+        gates['background_rundown']=bool(end_hold) and all(finite(r.get('background_max_speed_m_s'))
+            and 0<=r['background_max_speed_m_s']<=.05 for r in end_hold)
     if positive:
         # A contact probe intentionally stops on its first contact, but its
         # clock, measurements and native background checks must still be valid.

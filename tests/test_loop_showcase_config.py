@@ -31,6 +31,7 @@ def valid_rows(config):
                          position_m=[distance, 0., 1.], clearance_m=3., overlap=False,
                          footprint_in_road=True, wheel_on_ground=[True]*4, upright_z=1.,
                          background_pose_error_m=0., command_expires_tick=expiry,
+                         background_max_speed_m_s=0. if phase=='brake' else 6.8,
                          fallback=config['mode']=='dropout' and index>=expiry,
                          throttle=0. if phase=='brake' else .2,
                          brake=1. if phase=='brake' else 0.))
@@ -39,7 +40,7 @@ def valid_rows(config):
 
 class ShowcaseConfigurationTests(unittest.TestCase):
     def test_version_profiles_are_explicit_and_portable(self):
-        for version, duration in (('v01',30),('v02',90),('v03',240),('v04',240)):
+        for version, duration in (('v01',30),('v02',90),('v03',240),('v04',240),('v05',240)):
             cfg=make_config(version)
             self.assertEqual(cfg['drive_s'],duration)
             self.assertEqual(cfg['duration_s'],cfg['settle_s']+duration+cfg['brake_s'])
@@ -90,6 +91,49 @@ class ShowcaseConfigurationTests(unittest.TestCase):
         blocked=fleet_specs(make_config(mode='blocked'))
         self.assertEqual(sorted(v['lane'] for v in blocked),list(range(4)))
         self.assertEqual(len({v['station_m'] for v in blocked}),1)
+
+    def test_dense_fleet_keeps_reproducible_gaps_all_around_the_ring(self):
+        fleet=fleet_specs(make_config('v05'))
+        self.assertEqual(fleet,fleet_specs(make_config('v05')))
+        self.assertEqual(len(fleet),80)
+        self.assertEqual(len({v['vehicle_id'] for v in fleet}),80)
+        self.assertEqual([sum(v['lane']==lane for v in fleet) for lane in range(4)],[20]*4)
+        circumference=math.tau*500
+        # All share angular velocity: these nonreactive backgrounds cannot
+        # close a same-lane gap on subsequent laps.
+        rates=[v['speed_m_s']/(500+v['lane']*3.7) for v in fleet]
+        self.assertLess(max(rates)-min(rates),1e-15)
+        for lane in range(4):
+            stations=sorted(v['station_m'] for v in fleet if v['lane']==lane)
+            gaps=[(b-a)%circumference for a,b in zip(stations,stations[1:]+stations[:1])]
+            self.assertGreater(min(gaps),130)
+            self.assertLess(max(gaps),180)
+        stations=sorted(v['station_m'] for v in fleet)
+        all_gaps=[(b-a)%circumference for a,b in zip(stations,stations[1:]+stations[:1])]
+        self.assertGreaterEqual(min(all_gaps),18-1e-9)
+        self.assertLess(max(all_gaps),110)
+        starting_lane=[v['station_m'] for v in fleet if v['lane']==1]
+        self.assertGreater(min(min(s,circumference-s) for s in starting_lane),50)
+
+    def test_dense_profile_does_not_change_prior_or_fault_fixtures(self):
+        self.assertEqual(len(fleet_specs(make_config('v04'))),12)
+        for mode in ('blocked','contact-check'):
+            self.assertEqual(fleet_specs(make_config('v05',mode=mode)),
+                             fleet_specs(make_config('v04',mode=mode)))
+        self.assertEqual(fleet_specs(make_config('v05',mode='dropout')),fleet_specs(make_config('v05')))
+
+    def test_dense_fleet_remains_separated_through_many_laps(self):
+        from traffic.bypass_validation import OrientedBox
+        from traffic.showcase_clearance import nearest_clearance
+        from usd.showcase_fleet import FleetSpec,fleet_pose,LENGTH_M,WIDTH_M
+        specs=[FleetSpec(**v) for v in fleet_specs(make_config('v05'))]
+        for time_s in (0.,252.,1800.,3600.):
+            poses=[fleet_pose(spec,time_s) for spec in specs]
+            boxes=[OrientedBox(*p['position_m'][:2],p['yaw_rad'],LENGTH_M,WIDTH_M) for p in poses]
+            for index,box in enumerate(boxes):
+                result=nearest_clearance(box,boxes[:index]+boxes[index+1:])
+                self.assertFalse(result['overlap'])
+                self.assertGreater(result['clearance_m'],13.)
 
 
 class ShowcaseAssessmentTests(unittest.TestCase):
@@ -199,6 +243,16 @@ class ShowcaseAssessmentTests(unittest.TestCase):
         rows=valid_rows(cfg)[:250]
         self.assertFalse(self.assess(rows=rows,cfg=cfg,contacts=0)['passed'])
         self.assertTrue(self.assess(rows=rows,cfg=cfg,contacts=1)['passed'])
+
+    def test_dense_rundown_needs_measured_background_stop(self):
+        cfg=make_config('v05',drive_s=15)
+        rows=valid_rows(cfg)
+        self.assertTrue(self.assess(rows=rows,cfg=cfg)['passed'])
+        for value in (1.,-.1,float('nan'),None,True):
+            bad=deepcopy(rows);bad[-1]['background_max_speed_m_s']=value
+            result=self.assess(rows=bad,cfg=cfg)
+            self.assertFalse(result['passed'])
+            self.assertFalse(result['gates']['background_rundown'])
 
 
 if __name__=='__main__':
