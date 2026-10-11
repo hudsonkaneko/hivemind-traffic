@@ -49,7 +49,7 @@ def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
                    decorative_wheel_distance_m=150.)
     if version == 'v07':
         cfg.update(evidence_profile=evidence or 'presentation',render_hz=render_hz or 30,
-                   decorative_wheel_distance_m=150.,ui_profile=ui_profile or 'showcase',
+                   decorative_wheel_distance_m=150.,ui_profile=ui_profile or 'editor',
                    statistics_hz=5,frame_generation=False,cpu_threads=cpu_threads or 8,
                    profile_render=profile_render,instance_visuals=True)
     return cfg

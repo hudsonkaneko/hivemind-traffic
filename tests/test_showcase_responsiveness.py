@@ -9,6 +9,22 @@ from visualization.showcase_responsiveness import display_qualification_exclusio
 
 
 class ResponsiveTests(unittest.TestCase):
+    def test_regular_editor_default_keeps_optimizations_and_legacy_option(self):
+        default=make_config('v07')
+        minimal=make_config('v07',ui_profile='showcase')
+        self.assertEqual(default,make_config('v07',ui_profile='editor'))
+        self.assertEqual(default['ui_profile'],'editor')
+        self.assertEqual({k for k in default if default[k]!=minimal[k]},{'ui_profile'})
+        self.assertEqual(fleet_specs(default),fleet_specs(minimal))
+        for key,value in dict(instance_visuals=True,evidence_profile='presentation',
+                physics_hz=120,control_hz=60,planner_hz=10,render_hz=30,
+                statistics_hz=5,cpu_threads=8,frame_generation=False).items():
+            self.assertEqual(default[key],value)
+        # Saved minimal-app configurations remain valid after changing the default.
+        validate_config(default)
+        validate_config(minimal)
+        self.assertEqual(make_config()['version'],'v04')
+
     def test_gui_qualification_excludes_diagnostics_pauses_and_headless(self):
         self.assertEqual(display_qualification_exclusions(make_config('v07'),0),[])
         self.assertEqual(display_qualification_exclusions(make_config('v07',gui=False,profile_render=True),1),

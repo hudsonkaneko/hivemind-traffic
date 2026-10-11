@@ -20,8 +20,11 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
 
-October 10 responsiveness increment: [v07](showcase-responsiveness.md) adds a
-small showcase app and shared immutable fleet visuals. Two 30-Hz GUI drives
+October 10 responsiveness increment: [v07](showcase-responsiveness.md) adds
+an optional small showcase app and shared immutable fleet visuals. The regular
+editor is now the v07 default at the user's request, retaining the optimizations;
+its fresh 90-second driving check passed physical/scene/process gates at 0.9513x
+real time, with strict smoothness still open. Two original minimal-app 30-Hz GUI drives
 held average real time and repeated exactly; rare hitches and 60 FPS remain
 unqualified. Outcomes are recorded in that evidence note. Physics,
 sensing/training boundaries and roadmap order below

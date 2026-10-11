@@ -4,7 +4,8 @@ Separate, same-day presentation branch; the research roadmap and SUMO demos
 remain available. Isaac Lab task/training work is postponed for this showcase.
 
 **Responsive option:** [v07](v07/README.md) adds shared immutable fleet visuals,
-a smaller single-viewport Kit app and explicit native-frame/UI timings. The
+an optional smaller single-viewport Kit app and explicit native-frame/UI timings.
+The regular editor UI is now the v07 default. The original minimal-app
 30-Hz GUI runs held real-time speed and repeated exactly, but rare hitches remain;
 60 FPS is experimental. See the
 [responsive-showcase evidence](../../documentation/showcase-responsiveness.md)

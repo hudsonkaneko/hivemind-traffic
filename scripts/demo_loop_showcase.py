@@ -55,7 +55,7 @@ def main():
     parser.add_argument('--capture',action='store_true');parser.add_argument('--drive-seconds',type=int)
     parser.add_argument('--evidence',choices=['presentation','full'],help='v06/v07 only; presentation keeps safety traces but samples optional audits')
     parser.add_argument('--render-hz',type=int,choices=[10,20,30,60],help='v06/v07 display cadence; 60 Hz requires v07; never physics cadence')
-    parser.add_argument('--ui-profile',choices=['showcase','editor'],help='v07 only; project showcase app or original editor experience')
+    parser.add_argument('--ui-profile',choices=['showcase','editor'],help='v07 only; regular editor (default) or optional minimal showcase app')
     parser.add_argument('--cpu-threads',type=int,choices=[4,8,16,32],help='v07 worker-count experiment; does not alter physics cadence')
     parser.add_argument('--profile-render',action='store_true',help='v07 bounded renderer diagnosis; not an FPS qualification run')
     parser.add_argument('--check',action='store_true')

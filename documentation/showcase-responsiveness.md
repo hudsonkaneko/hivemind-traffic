@@ -5,6 +5,46 @@ Strict hitch-free display and 60 FPS remain open, October 10, 2026 (Pacific).
 Preserve v04-v06, all historical results and the supplied vehicle source. This
 is a sensor-free scripted showcase, not training or a research traffic result.
 
+## Interface preference follow-up — October 10, 2026
+
+At the user's request, v07 now defaults to the regular Isaac Sim editor
+experience. Stage/Properties and the standard editor tools stay available,
+alongside the existing follow/traffic/overview and path controls. The minimal
+app is retained as `--ui-profile showcase`; explicit `--ui-profile editor`
+still works. Previously resolved configurations remain valid.
+
+This changes the UI profile only: immutable visual instancing, cached camera/
+path updates, 5 Hz statistics, 8 workers, 30 Hz presentation, 120 Hz physics,
+60 Hz controls, 10 Hz planning and all 80 background colliders are unchanged.
+The regular editor keeps its own renderer-result gathering behavior; the
+minimal app's single-viewport shortcut is not imposed on the full editor.
+No persistent editor layout/settings are rewritten.
+
+Acceptance for this follow-up: regression checks prove that the two v07 UI
+profiles differ only in `ui_profile`; a fresh default-editor paced GUI run
+must retain the physical/scene/process gates and enabled editor panels.
+Report timing against the existing strict thresholds without inheriting the
+minimal app's results or claiming mouse-latency qualification.
+
+Verified: **247 targeted tests passed**. Default-editor paced GUI run
+`20261011T032144Z-ca68b556` passed all physical/scene/process gates: 16 passes,
+8 lane changes, zero contacts, 1.56927 m minimum clearance, safe braking/hold,
+unchanged sources and clean shutdown. The extension inventory confirms the
+standard Stage, Property and Toolbar panels enabled; result gathering remains
+enabled. No interactive hover/click or custom user-layout verification is claimed.
+
+The 102 simulated seconds took **107.225 wall seconds (0.9513x)**, delivering
+28.54 native renderer notifications/s. P95 notification interval was 39.68 ms;
+the strict display/real-time gates remain open. Peak whole-desktop GPU memory
+was 4,469 MiB. The regular interface is retained as requested despite this
+measured overhead. This one 90-second driving check is not a long-run repeat or
+sensor-performance qualification. The following original study and run IDs
+are historical minimal-app evidence unless a row explicitly identifies the editor.
+
+Google guide tab 36 mirrors this preference change, portable commands and
+measured overhead. Native readback verified exact updated text, all five
+Consolas/shaded command blocks and all 36 older tabs unchanged.
+
 ## Predeclared scope
 
 Keep the same 80 kinematic backgrounds, dynamic PhysX ego, seed 101, 35 mph
@@ -176,7 +216,7 @@ a local prerequisite, not something included by cloning GitHub.
 
 ```text
 python scripts/demo_loop_showcase.py --version v07
-python scripts/demo_loop_showcase.py --version v07 --ui-profile editor
+python scripts/demo_loop_showcase.py --version v07 --ui-profile showcase
 python scripts/demo_loop_showcase.py --version v07 --evidence full --drive-seconds 90
 python scripts/demo_loop_showcase.py --version v07 --render-hz 60 --drive-seconds 15
 python scripts/demo_loop_showcase.py --version v07 --profile-render --drive-seconds 15

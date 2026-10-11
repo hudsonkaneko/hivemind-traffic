@@ -4,6 +4,22 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-10 — Regular editor UI with v07 optimizations
+
+- Made the regular Isaac Sim editor the v07 default at the user's request;
+  the minimal interface remains available with `--ui-profile showcase`.
+  Retained visual instancing, cached updates, 5 Hz statistics and every
+  physical/control/safety setting. Earlier versions and saved configs remain valid.
+- Verified 247 targeted tests and a default-editor paced 90-second driving run,
+  `20261011T032144Z-ca68b556`: 16 passes, 8 lane changes, no contacts, safe
+  stop/hold, editor panels enabled and clean source/process checks.
+- Regular UI measured 0.9513x real time and 28.54 renderer notifications/s;
+  strict smoothness remains open. See [evidence](showcase-responsiveness.md).
+  No claim of unchanged FPS or measured click latency; no runtime installation.
+- Updated portable commands and the existing v07 milestone, not a new physical
+  version. Google guide tab 36 synced and verified; command styling and all
+  36 older tabs preserved.
+
 ## 2026-10-10 — Instanced v07 responsive showcase
 
 - Added a project-owned single-viewport Kit experience, immutable OpenUSD

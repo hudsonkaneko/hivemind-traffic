@@ -229,18 +229,21 @@ equating a short preview with full-lap, multi-car or learned-control validation.
 ## Prepared-car loop traffic showcase
 
 The newer opt-in **v07** keeps 80 background cars and introduces shared visual
-geometry and a small showcase app. Two long 30-Hz GUI runs held average real-time
+geometry with the regular Isaac Sim editor UI by default and an optional small
+showcase app. Two long minimal-app 30-Hz GUI runs held average real-time
 speed and repeated exactly, but rare 126–128 ms hitches keep strict smoothness
 unqualified. Consult the [current evidence](showcase-responsiveness.md).
 The 60-Hz override is experimental, not a guarantee.
 
 ```text
 python scripts/demo_loop_showcase.py --version v07
-python scripts/demo_loop_showcase.py --version v07 --ui-profile editor
+python scripts/demo_loop_showcase.py --version v07 --ui-profile showcase
 ```
 
-The first uses the smaller showcase app; the second restores editor panels and
-does not inherit the smaller app's measured display result. Use `--evidence full`
+The first keeps the regular editor panels; the second selects the smaller app.
+Both retain instanced visuals, cached updates and the 30-Hz display default.
+Editor timing is measured separately, not inherited from the smaller app.
+Use `--evidence full`
 for more complete diagnostics at additional cost. Existing defaults/versions
 below are preserved, and all commands require the same local prepared vehicle.
 
