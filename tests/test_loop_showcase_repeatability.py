@@ -9,6 +9,7 @@ import pytest
 from experiments import loop_showcase_repeatability as repeat
 from experiments.loop_showcase_config import assess,fleet_specs,make_config
 from tests.test_loop_showcase_config import valid_rows
+from traffic.showcase_performance import audit_schedule
 
 
 @pytest.fixture(scope='module')
@@ -155,8 +156,12 @@ def test_wrong_study_or_root_input_rejected(tmp_path,monkeypatch,pair):
 
 @pytest.fixture(params=['v04','v05'])
 def visual_pair(pair,request):
+    return with_visual_evidence(pair,make_config(request.param,gui=False,paced=False,drive_s=15))
+
+
+def with_visual_evidence(pair,config):
     for run in pair:
-        cfg=make_config(request.param,gui=False,paced=False,drive_s=15)
+        cfg=deepcopy(config)
         rows=valid_rows(cfg)
         for row in rows:row.update(completed_passes=0,completed_lane_changes=0)
         run['config']=cfg;run['manifest']['config']=deepcopy(cfg);run['trajectory']=rows
@@ -166,10 +171,13 @@ def visual_pair(pair,request):
         specs=fleet_specs(cfg)
         run['scene_contract']['fleet']=dict(count=len(specs),specs=specs)
         interval=cfg['physics_hz']//cfg['render_hz']
-        run['background_visual_checks']=[dict(tick=(i+1)*interval,passed=True,
+        ticks=([tick for tick in range(1,cfg['duration_s']*cfg['physics_hz']+1)
+                if audit_schedule(cfg,tick)['visual']] if cfg['version']=='v06'
+               else range(interval,cfg['duration_s']*cfg['physics_hz']+1,interval))
+        run['background_visual_checks']=[dict(tick=tick,passed=True,
             max_position_error_m=0.,max_yaw_error_rad=0.,all_proxies_visible=True,count=len(specs),
-            native_target_time_s=(i+1)*interval/cfg['physics_hz'],publications=i+2)
-            for i in range(cfg['duration_s']*cfg['render_hz'])]
+            native_target_time_s=tick/cfg['physics_hz'],publications=tick//interval+1)
+            for tick in ticks]
     return pair
 
 
@@ -248,4 +256,66 @@ def test_v04_visual_file_requires_manifest_hash(tmp_path,monkeypatch,visual_pair
     manifest=json.loads((directory/'manifest.json').read_text())
     manifest['output_hashes'].pop(repeat.VISUAL_FILE)
     (directory/'manifest.json').write_text(json.dumps(manifest))
+    assert repeat.load_run(directory)['load_errors']
+
+
+@pytest.fixture(params=[(profile,hz) for profile in ('full','presentation') for hz in (10,20,30)])
+def v06_pair(pair,request):
+    profile,hz=request.param
+    return with_visual_evidence(pair,make_config('v06',gui=False,paced=False,drive_s=15,
+                                                evidence=profile,render_hz=hz))
+
+
+def test_v06_exact_schedule_and_explicit_qualification(v06_pair):
+    result=repeat.compare_evidence(*v06_pair)
+    assert result['passed'],result
+    cfg=v06_pair[0]['config'];sampled=cfg['evidence_profile']=='presentation'
+    metrics=result['input_metrics']['first']['background_visual_sync']
+    assert metrics['frames']==(cfg['duration_s']+1 if sampled else cfg['duration_s']*cfg['render_hz'])
+    assert metrics['audit_coverage']==('sampled_1hz_plus_first_frame' if sampled else 'every_render')
+    assert result['qualification']==('physical_and_sampled_composed_visual_sync' if sampled
+                                      else 'physical_and_composed_visual_sync')
+    assert result['every_render_visual_sync_qualified'] is (not sampled)
+    assert result['background_visual_sync_qualified'] is True
+
+
+@pytest.mark.parametrize('change',['missing_first','missing_final','wrong_tick','audit_index_publications',
+                                  'missing_time','hidden_proxy','wrong_source'])
+def test_v06_schedule_corruption_fails(v06_pair,change):
+    run=v06_pair[1];checks=run['background_visual_checks']
+    if change=='missing_first':checks.pop(0)
+    elif change=='missing_final':checks.pop()
+    elif change=='wrong_tick':checks[1]['tick']+=1
+    elif change=='audit_index_publications':checks[1]['publications']=0
+    elif change=='missing_time':checks[1].pop('native_target_time_s')
+    elif change=='hidden_proxy':checks[1]['all_proxies_visible']=False
+    elif change=='wrong_source':run['manifest']['source_hashes']['fixture.py']='b'*64
+    result=repeat.compare_evidence(*v06_pair)
+    assert not result['passed'],change
+    assert result['background_visual_sync_qualified'] is False
+    assert result['every_render_visual_sync_qualified'] is False
+
+
+def test_v06_sampled_publications_are_render_indices_not_audit_indices(pair):
+    runs=with_visual_evidence(pair,make_config('v06',gui=False,paced=False,drive_s=15))
+    for run in runs:
+        for index,check in enumerate(run['background_visual_checks']):check['publications']=index+2
+    assert not repeat.compare_evidence(*runs)['passed']
+
+
+def test_v06_profiles_cannot_be_relaxed_in_strict_repeat_comparison(pair):
+    runs=with_visual_evidence(pair,make_config('v06',gui=False,paced=False,drive_s=15))
+    with_visual_evidence((runs[1],),make_config('v06',gui=False,paced=False,drive_s=15,evidence='full'))
+    result=repeat.compare_evidence(*runs)
+    assert not result['passed']
+    assert 'Full resolved configurations differ' in result['failures']
+
+
+def test_v06_loader_requires_visual_evidence(tmp_path,monkeypatch,pair):
+    runs=with_visual_evidence(pair,make_config('v06',gui=False,paced=False,drive_s=15))
+    directory=materialize(tmp_path,monkeypatch,runs[0])
+    loaded=repeat.load_run(directory)
+    assert not loaded['load_errors']
+    assert len(loaded['background_visual_checks'])==28
+    (directory/repeat.VISUAL_FILE).unlink()
     assert repeat.load_run(directory)['load_errors']

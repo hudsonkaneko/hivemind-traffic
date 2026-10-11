@@ -17,8 +17,9 @@ from traffic.showcase_clearance import nearest_clearance
 from traffic.driver_control import AppliedControl,DriverCommand,DriverControlGate
 from traffic.evidence_chunks import EvidenceChunkWriter
 from traffic.loop_driving import CircularLoop,LoopProgress
-from traffic.loop_showcase_control import ShowcaseConfig,ShowcaseController
+from traffic.loop_showcase_control import ShowcaseConfig,ShowcaseController,circular_station
 from traffic.path_following import VehicleState
+from traffic.showcase_performance import SequentialProfiler,audit_schedule
 from visualization.preview_timing import PreviewClock,rendering_profile
 from usd.physical_scene import PATHS
 from usd.showcase_vehicle import package_hashes
@@ -38,16 +39,21 @@ def main():
     if not output.is_relative_to(ROOT/'outputs') or not output.is_dir() or (output/'probe-result.json').exists():
         parser.error('Fresh supervisor-created output directory required')
     cfg=json.loads((output/'resolved-config.json').read_text());validate_config(cfg)
+    optimized=cfg['version']=='v06';dense=cfg['version'] in ('v05','v06')
+    presentation=cfg.get('evidence_profile')=='presentation'
+    profile=SequentialProfiler()
+    calibration=profile.calibrate_overhead()
     route=CircularLoop();episode='showcase-'+output.name
     app=session=vehicle=fleet=monitor=view=window=label=viewport=writer=preview=None
     static_layers=None;rows=[];plans=[];contacts=[];camera_checks=[];visual_checks=[];captures=[];captured=set()
     passed=set();passed_records=[];seen_ahead=set();peers={};last_peer_stations={}
+    native_audit_ticks=[];last_native_audit_tick=0
     started=time.perf_counter();result=dict(passed=False,no_training=True,no_lidar=True,no_sumo=True,
         observations=cfg['observations'],main_motion='dynamic_physx',background_motion='scripted_kinematic_physx')
     try:
         from isaacsim import SimulationApp
         graphics=rendering_profile(True)
-        if cfg['version']=='v05':
+        if dense:
             # Process-local fallback for this runtime's dense-Fabric crash.
             graphics['extra_args']=[*graphics['extra_args'],'--/app/useFabricSceneDelegate=false']
         result['graphics_profile']=graphics
@@ -77,7 +83,7 @@ def main():
             behavior_sources[name]=inspect_behavior_free_stage(inspected_stage)
             inspected_stage=None
         result['behavior_runtime']=disable_unused_behavior_scripting(extension_manager,behavior_sources)
-        if cfg['version']=='v05':
+        if dense:
             result['sensor_icon_runtime']=disable_unused_sensor_icons(extension_manager)
         source_hashes=package_hashes(ROOT/cfg['vehicle_directory'])
         scene_directory=output/'scene'
@@ -88,12 +94,12 @@ def main():
         # Local publication's point light was for an asset inspection, not a 1 km road.
         session.stage.GetPrimAtPath('/World/Lighting/Key').SetActive(False)
         fleet=KinematicFleet(session.stage,scene_directory,fleet_specs(cfg),episode_id=episode,
-            wheel_update_every=cfg['physics_hz']//cfg['render_hz'] if cfg['version'] in ('v03','v04','v05') else 1,
-            batch_visual_updates=cfg['version']=='v05',separate_visuals=cfg['version']=='v05')
+            wheel_update_every=cfg['physics_hz']//cfg['render_hz'] if cfg['version'] in ('v03','v04','v05','v06') else 1,
+            batch_visual_updates=dense,separate_visuals=dense,cache_readback=optimized)
         monitor=VehicleContactMonitor(session.stage,vehicle.path)
-        view=LoopShowcaseView(session.stage,route)
+        view=LoopShowcaseView(session.stage,route,optimized=optimized)
         ui_state=dict(camera=cfg['camera'],paused=False)
-        if cfg['gui']:window,label=make_controls(ui_state,view=view)
+        if cfg['gui']:window,label=make_controls(ui_state,view=view if optimized else None)
         viewport=get_active_viewport()
         if viewport is None:raise RuntimeError('No viewport is available')
         viewport.resolution=(graphics['width'],graphics['height'])
@@ -103,7 +109,8 @@ def main():
             ego_length_m=model['chassis_collision_dimensions_m'][0],
             ego_width_m=model['chassis_collision_dimensions_m'][1],
             ego_collision_offset_x_m=model['chassis_collision_center_m'][0])
-        controller=ShowcaseController(episode,'ego',controller_config,initial_lane=cfg['initial_lane'])
+        controller=ShowcaseController(episode,'ego',controller_config,initial_lane=cfg['initial_lane'],optimized=optimized)
+        peer_station=circular_station if optimized else lambda x,y:route.project(x,y).s_m % route.length_m
         initial=dict(position_m=result['spawn']['position_m'],yaw_rad=math.pi/2,speed_m_s=0.)
         initial_state=VehicleState.from_physics(initial,episode_id=episode,vehicle_id='ego',tick=0)
         viewport.camera_path=view.update_showcase(initial,0.,cfg['camera'],controller.path_points(initial_state))
@@ -120,15 +127,15 @@ def main():
         gate=DriverControlGate(episode,'ego');progress=LoopProgress(route)
         result['behavior_runtime']['composed_scene_check']=inspect_behavior_free_stage(session.stage)
         result['behavior_runtime']['pre_play_state']=assert_behavior_scripting_disabled(extension_manager)
-        if cfg['version']=='v05':
+        if dense:
             result['sensor_icon_runtime']['pre_play_state']=assert_sensor_icons_disabled(extension_manager)
         session.start();fleet.bind(session.manager.get_physics_simulation_view())
-        if cfg['version']=='v05':
+        if dense:
             result['ego_state_readback']=vehicle.bind_native_state(session.manager.get_physics_simulation_view())
-        result['clock_start']=session.snapshot();state=vehicle.state(refresh_usd=cfg['version']!='v05')
+        result['clock_start']=session.snapshot();state=vehicle.state(refresh_usd=not dense)
         progress.update(route.project(*state['position_m'][:2]).s_m % route.length_m)
         for t in fleet.tracks(0):
-            station=route.project(t.x_m,t.y_m).s_m % route.length_m
+            station=peer_station(t.x_m,t.y_m)
             peers[t.vehicle_id]=station
             last_peer_stations[t.vehicle_id]=station
         # Compile/load the first visible frame before the live clock begins.
@@ -137,10 +144,12 @@ def main():
         fleet.publish_visuals()
         for _ in range(4):session.render()
         result['renderer_warmup_s']=time.perf_counter()-warmup_started
-        writer=EvidenceChunkWriter(output);preview=PreviewClock(paced=cfg['paced'])
+        writer=None if presentation else EvidenceChunkWriter(output)
+        preview=PreviewClock(paced=cfg['paced'])
         result['startup_wall_s']=time.perf_counter()-started
         hz=cfg['physics_hz'];brake_tick=(cfg['settle_s']+cfg['drive_s'])*hz
         traveled=0.;paused_wall=0.;expires=None;diagnostics={};max_lanes=0
+        pose_check=fleet.pose_check(0.)
         for tick in range(cfg['duration_s']*hz):
             if not app.is_running() or time.perf_counter()-started>cfg['max_process_seconds']-20:
                 raise RuntimeError('Preview closed or bounded deadline reached')
@@ -148,10 +157,13 @@ def main():
                 if not app.is_running() or time.perf_counter()-started>cfg['max_process_seconds']-20:
                     raise RuntimeError('Paused preview closed or bounded deadline reached')
                 before=time.perf_counter();session.render();time.sleep(.02);paused_wall+=time.perf_counter()-before
+            profile.begin_iteration()
+            schedule=audit_schedule(cfg,tick+1)
             phase='settle' if tick<cfg['settle_s']*hz else 'brake' if tick>=brake_tick else 'drive'
-            if cfg['version']=='v05' and tick==brake_tick:
+            if dense and tick==brake_tick:
                 result['fleet_rundown']=fleet.begin_stop()
             tracks=fleet.tracks(tick)
+            profile.mark('fleet_pre_read')
             command=None
             physical_state=VehicleState.from_physics(state,episode_id=episode,vehicle_id='ego',tick=tick)
             if tick%2==0:
@@ -166,19 +178,31 @@ def main():
                         command=DriverCommand(command.episode_id,command.vehicle_id,tick,command.issued_tick,
                             command.expires_tick,command.steering_rad,command.throttle,command.brake)
                     diagnostics=dict(controller.diagnostics)
+            profile.mark('controller')
             if command:expires=command.expires_tick
             applied=gate.step(tick=tick,dt_s=1/hz,command=command)
             vehicle.apply(applied,cfg['drive_torque_nm'],cfg['brake_torque_nm'])
+            profile.mark('actuation')
             fleet.update((tick+1)/hz)
-            session.step(publish_usd=cfg['version']!='v05');old=state;state=vehicle.state(refresh_usd=cfg['version']!='v05')
+            profile.mark('fleet_targets')
+            session.step(publish_usd=not dense)
+            profile.mark('physics')
+            old=state;state=vehicle.state(refresh_usd=not dense)
+            profile.mark('ego_state')
             traveled+=math.dist(old['position_m'][:2],state['position_m'][:2])
             events=monitor.sample(session.sim,tick+1);contacts.extend(events)
-            tracks=fleet.tracks(tick+1);pose_check=fleet.pose_check((tick+1)/hz)
+            tracks=fleet.tracks(tick+1)
+            profile.mark('contacts_and_fleet_read')
+            if schedule['native']:
+                pose_check=fleet.pose_check((tick+1)/hz)
+                last_native_audit_tick=tick+1;native_audit_ticks.append(tick+1)
+                if not pose_check['passed']:raise RuntimeError('Native background motion contract failed')
+            profile.mark('native_pose_audit')
             projection=route.project(*state['position_m'][:2]);tracking=progress.update(projection.s_m % route.length_m)
             ego_box=body_box(state,model)
             clearance=nearest_clearance(ego_box,[OrientedBox(t.x_m,t.y_m,t.yaw_rad,t.length_m,t.width_m) for t in tracks])
             for t in tracks:
-                station=route.project(t.x_m,t.y_m).s_m % route.length_m
+                station=peer_station(t.x_m,t.y_m)
                 previous=last_peer_stations.get(t.vehicle_id)
                 if previous is not None:peers[t.vehicle_id]+=(station-previous+route.length_m/2)%route.length_m-route.length_m/2
                 last_peer_stations[t.vehicle_id]=station
@@ -205,32 +229,50 @@ def main():
                 controller_status=('changing_lane' if diagnostics.get('maneuver_active') else 'following'),controller_reason=diagnostics.get('reason','settle'),
                 lane=diagnostics.get('lane',cfg['initial_lane']),completed_lane_changes=max_lanes,
                 completed_passes=len(passed))
+            if optimized:row['background_native_audit_tick']=last_native_audit_tick
             rows.append(row)
-            if (tick+1)%12==0:plans.append(dict(tick=tick+1,diagnostics=diagnostics,objects=[asdict(t) for t in tracks]))
-            if cfg['mode']=='contact-check' and events:break
+            profile.mark('safety_and_metrics')
+            if schedule['objects']:plans.append(dict(tick=tick+1,diagnostics=diagnostics,objects=[asdict(t) for t in tracks]))
+            profile.mark('object_recording')
+            if cfg['mode']=='contact-check' and events:
+                profile.finish_iteration();break
             if cfg['mode']!='contact-check' and (events or row['overlap'] or (phase!='settle' and (not in_road or state['upright_z']<.9))):
                 raise RuntimeError('Contact/overlap/road/attitude safety guard')
             if (tick+1)%session.render_every_steps==0:
-                if cfg['version']=='v05':session.publish_transforms()
-                fleet.publish_visuals()
+                if dense:session.publish_transforms()
+                if optimized:
+                    fleet.publish_visuals(verify=not presentation,
+                        focus_position_xy=state['position_m'][:2],wheel_distance_m=cfg['decorative_wheel_distance_m'])
+                else:fleet.publish_visuals()
+                profile.mark('visual_publication')
                 physical_state=VehicleState.from_physics(state,episode_id=episode,vehicle_id='ego',tick=tick+1)
-                viewport.camera_path=view.update_showcase(state,projection.s_m,ui_state['camera'],controller.path_points(physical_state))
+                path_points=controller.path_points(physical_state) if not optimized or view.path_visible else None
+                viewport.camera_path=view.update_showcase(state,projection.s_m,ui_state['camera'],path_points)
                 if label:label.text=(f"{cfg['version']} | {phase} | {state['speed_m_s']/0.44704:.1f} mph | {len(tracks)} traffic cars\n"
                     f"Passes {len(passed)} | lane changes {max_lanes} | clearance {row['clearance_m']:.2f} m\n"
                     f"{row['controller_status']}: {row['controller_reason']} | {row['sim_time_s']:.0f}s")
-                session.render();check=view.camera_check();camera_checks.append(dict(tick=tick+1,**check))
+                profile.mark('camera_overlay_ui')
+                session.render()
+                profile.mark('render')
+                check=view.camera_check();camera_checks.append(dict(tick=tick+1,**check))
                 if not check['passed']:raise RuntimeError('Camera pose ownership failed')
-                visual_check=fleet.visual_pose_check();visual_checks.append(dict(tick=tick+1,**visual_check))
-                if not visual_check['passed']:raise RuntimeError('Rendered background poses differ from native physics poses')
+                if schedule['visual']:
+                    visual_check=fleet.visual_pose_check();visual_checks.append(dict(tick=tick+1,**visual_check))
+                    if not visual_check['passed']:raise RuntimeError('Rendered background poses differ from native physics poses')
+                profile.mark('visual_audit')
                 if cfg['capture']:
                     for second in (10,20,35,55,cfg['settle_s']+cfg['drive_s']-1):
                         if row['sim_time_s']>=second and second not in captured:
                             captures.append(capture_viewport_to_file(viewport,str(output/f'preview-{second:03d}s-{ui_state["camera"]}.png')))
                             captured.add(second)
+                profile.mark('capture')
                 preview.finish_frame(row['sim_time_s'],paused_wall)
-            if (tick+1)%hz==0:writer.write_checkpoint(rows,plans)
+                profile.mark('pace_wait')
+            if schedule['checkpoint']:writer.write_checkpoint(rows,plans)
+            profile.mark('checkpoint_and_tail')
             if (tick+1)%(hz*10)==0:
                 print(f"SHOWCASE t={row['sim_time_s']:.0f} speed={row['speed_m_s']:.2f} passes={len(passed)} lane_changes={max_lanes} gap={row['clearance_m']:.2f} state={row['controller_status']} {row['controller_reason']}",flush=True)
+            profile.finish_iteration()
         result.update(assess(rows,cfg,len(contacts),passed,max_lanes))
         extra=dict(camera=bool(camera_checks) and all(c['passed'] for c in camera_checks),
             background_visual_sync=bool(visual_checks) and all(c['passed'] for c in visual_checks),
@@ -240,17 +282,40 @@ def main():
             static_files_unchanged=package_hashes(scene_directory)==static_hashes,
             static_layers_unchanged=all(layer.ExportToString()==static_text[layer.identifier] for layer in static_layers),
             source_vehicle_unchanged=package_hashes(ROOT/cfg['vehicle_directory'])==source_hashes)
+        if cfg['mode']!='contact-check':
+            extra['optional_audit_coverage']=(native_audit_ticks==[t for t in range(1,len(rows)+1) if audit_schedule(cfg,t)['native']]
+                and [r['tick'] for r in visual_checks]==[t for t in range(1,len(rows)+1) if audit_schedule(cfg,t)['visual']])
         result['gates'].update(extra);result['passed']=all(result['gates'].values())
         result['behavior_runtime']['post_run_state']=assert_behavior_scripting_disabled(extension_manager)
-        if cfg['version']=='v05':
+        if dense:
             result['sensor_icon_runtime']['post_run_state']=assert_sensor_icons_disabled(extension_manager)
         result.update(clock_end=session.snapshot(),passes=passed_records)
         for _ in range(3):session.render()
     except Exception as error:
         result.update(passed=False,error=repr(error),traceback=traceback.format_exc());traceback.print_exc()
     finally:
+        if profile.iteration_active:profile.finish_iteration()
+        result['runtime_profile']=profile.summary(simulation_time_s=len(rows)/cfg['physics_hz'])
+        result['profiling_overhead']=profile.estimate_overhead_for_run(calibration)
+        write_json(output/'runtime-profile.json',result['runtime_profile'])
+        result['evidence_policy']=dict(profile=cfg.get('evidence_profile','full'),
+            native_audit_count=len(native_audit_ticks),visual_audit_count=len(visual_checks),
+            native_audit_ticks=native_audit_ticks,full_object_records=len(plans),
+            trajectory_hz=cfg['physics_hz'],durable_per_second_checkpoints=not presentation,
+            limitation='Presentation audits are sampled; native-crash trajectory recovery is not guaranteed' if presentation else None)
+        result['gate_scope']=dict(
+            background_native_contract='sampled 1 Hz plus first tick' if presentation else 'every physics tick',
+            background_pose='last scheduled native audit, not a new audit on every row' if presentation else 'every physics tick',
+            background_visual_sync='sampled 1 Hz plus first display' if presentation else 'every displayed frame',
+            safety='contact, clearance, road, attitude and measured body state every physics tick',
+            passed='physical/scene/process acceptance; does not imply real-time display',
+            smooth_display_passed='separate pacing and frame-interval gate; must be true for display qualification')
+        if fleet:result['fleet_work_counts']=dict(native_readbacks=fleet.readback_count,track_constructions=fleet.track_construction_count)
         if preview:
             result['preview_timing']=preview.summary(expected_simulation_time_s=cfg['duration_s'],expected_frames=cfg['duration_s']*cfg['render_hz'])
+            result['smooth_display_passed']=bool(result['preview_timing']['soft_realtime_passed']
+                and result['preview_timing']['p95_frame_interval_s']<=1.5/cfg['render_hz']
+                and result['preview_timing']['max_frame_interval_s']<=.2)
             write_json(output/'preview-timing.json',preview.frames)
         if writer:result['checkpoint_evidence']=writer.summary()
         write_json(output/'trajectory.json',rows);write_json(output/'planner.json',plans)

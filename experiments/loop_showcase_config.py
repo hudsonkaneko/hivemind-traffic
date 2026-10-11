@@ -1,20 +1,26 @@
 """Bounded presentation fixtures, distinct from traffic-policy experiments."""
 import math
 
-VERSIONS = ('v01', 'v02', 'v03', 'v04', 'v05')
+VERSIONS = ('v01', 'v02', 'v03', 'v04', 'v05', 'v06')
 MODES = ('showcase', 'blocked', 'dropout', 'contact-check')
 
 
 def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
-                camera='follow', capture=False, drive_s=None):
+                camera='follow', capture=False, drive_s=None, evidence=None, render_hz=None):
     if version not in VERSIONS or mode not in MODES or camera not in ('follow','traffic','overview'):
         raise ValueError('Unknown showcase version, mode or camera')
     if any(type(v) is not bool for v in (gui,paced,capture)):
         raise ValueError('Flags must be boolean')
+    if version != 'v06' and (evidence is not None or render_hz is not None):
+        raise ValueError('Presentation/evidence and display overrides require v06')
+    if evidence is not None and evidence not in ('full','presentation'):
+        raise ValueError('Unknown evidence profile')
+    if render_hz is not None and (type(render_hz) is not int or render_hz not in (10,20,30)):
+        raise ValueError('Display rate must be 10, 20 or 30 Hz')
     duration = drive_s if drive_s is not None else (30 if version=='v01' else 90 if version=='v02' else 240)
     if type(duration) is not int or not 15 <= duration <= 1800:
         raise ValueError('Drive duration must be an integer in [15,1800] s')
-    return dict(schema_version=1,version=version,mode=mode,seed=101,
+    cfg = dict(schema_version=1,version=version,mode=mode,seed=101,
         vehicle_directory='vehicles/sim_ready/americano-i7-ev/v07',
         source_directory='highway_usd/_v02', initial_lane=1,
         physics_hz=120,control_hz=60,planner_hz=10,render_hz=10 if version=='v05' else 20,
@@ -26,10 +32,14 @@ def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
         min_clearance_m=.6,max_background_pose_error_m=.02,
         min_upright_z=.98,max_speed_m_s=17.,stop_speed_m_s=.05,
         min_hold_s=5.,max_hold_drift_m=.05,
-        minimum_passes=(6 if version=='v05' else 3) if version!='v01' and mode=='showcase' and duration>=90 else 0,
-        minimum_lane_changes=(4 if version=='v05' else 2) if version!='v01' and mode=='showcase' and duration>=90 else 0,
+        minimum_passes=(6 if version in ('v05','v06') else 3) if version!='v01' and mode=='showcase' and duration>=90 else 0,
+        minimum_lane_changes=(4 if version in ('v05','v06') else 2) if version!='v01' and mode=='showcase' and duration>=90 else 0,
         observations='privileged timestamped simulator object tracks and chassis state; known circular map',
         no_sumo=True,no_lidar=True,no_training=True)
+    if version == 'v06':
+        cfg.update(evidence_profile=evidence or 'presentation',render_hz=render_hz or 10,
+                   decorative_wheel_distance_m=150.)
+    return cfg
 
 
 def fleet_specs(config):
@@ -37,7 +47,7 @@ def fleet_specs(config):
         entries=[(lane,65.,6.7056) for lane in range(4)]
     elif config['mode']=='contact-check':
         entries=[(1,16.,0.)]
-    elif config['version']=='v05':
+    elif config['version'] in ('v05','v06'):
         # Forty staggered pairs cover the whole ring, alternating lane pairs.
         # Common angular speed preserves gaps: nonreactive cars must not run
         # into one another after a few laps. Lane arc speeds remain explicit.
@@ -63,7 +73,8 @@ def fleet_specs(config):
 
 def validate_config(cfg):
     expected=make_config(cfg['version'],mode=cfg['mode'],gui=cfg['gui'],paced=cfg['paced'],
-        camera=cfg['camera'],capture=cfg['capture'],drive_s=cfg['drive_s'])
+        camera=cfg['camera'],capture=cfg['capture'],drive_s=cfg['drive_s'],
+        evidence=cfg.get('evidence_profile'),render_hz=cfg['render_hz'] if cfg['version']=='v06' else None)
     if cfg!=expected:raise ValueError('Resolved showcase settings differ from declared profile')
 
 
@@ -137,7 +148,7 @@ def assess(rows,config,contact_count,passes,lane_changes):
     if config['mode']=='dropout':
         expired=[r for r in stop if r['applied_tick']>=drive[-1]['command_expires_tick']] if drive else []
         gates['command_loss_braking']=bool(expired) and all(r['fallback'] and r['throttle']==0 and r['brake']==1 for r in expired)
-    if config['version']=='v05' and not positive:
+    if config['version'] in ('v05','v06') and not positive:
         end_hold=[r for r in stop if r['sim_time_s']>=config['duration_s']-5]
         gates['background_rundown']=bool(end_hold) and all(finite(r.get('background_max_speed_m_s'))
             and 0<=r['background_max_speed_m_s']<=.05 for r in end_hold)

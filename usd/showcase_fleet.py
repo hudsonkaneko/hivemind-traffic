@@ -167,14 +167,25 @@ class KinematicFleet:
     tick. Calling it before physics binding intentionally fails. ``pose_check``
     must follow each physics step to detect stale/misbound targets. No hidden
     stepping, timeline changes, installed-runtime edits or background threads.
+
+    Readback caching is opt-in for a single-owned-scene lifetime: the caller
+    must call update(), then step physics, before any measured-state consumer.
+    No other owner may step or mutate native bodies between those consumers.
     """
     def __init__(self, stage, scene_directory, specs, *, episode_id='showcase', wheel_update_every=1,
-                 batch_visual_updates=False, separate_visuals=False):
+                 batch_visual_updates=False, separate_visuals=False, cache_readback=False):
         from pxr import Gf, Sdf, Usd, UsdGeom, UsdPhysics
         if (isinstance(wheel_update_every, bool) or not isinstance(wheel_update_every, int)
                 or wheel_update_every <= 0 or wheel_update_every > 120 or 120 % wheel_update_every):
             raise ValueError('Wheel visual update interval must be a positive integer divisor of 120')
         self.stage = stage
+        if type(cache_readback) is not bool:
+            raise ValueError('Readback caching must be boolean')
+        self.cache_readback = cache_readback
+        self.readback_count = 0
+        self.track_construction_count = 0
+        self._measured_cache = None
+        self._track_cache = None
         self.directory = Path(scene_directory).resolve()
         self.episode_id = episode_id
         self.wheel_update_every = wheel_update_every
@@ -321,6 +332,7 @@ class KinematicFleet:
                     self._visual_specs[str(path)]=attribute
         self.metadata['batched_visual_updates']=batch_visual_updates
         self.metadata['separate_visuals']=separate_visuals
+        self.metadata['cache_readback']=cache_readback
 
     def validate(self):
         from pxr import Usd, UsdGeom, UsdPhysics
@@ -356,6 +368,7 @@ class KinematicFleet:
     def bind(self, simulation_view):
         if self._view is not None:
             raise RuntimeError('Fleet is already bound to native physics')
+        self._invalidate_caches()
         view = simulation_view.create_rigid_body_view('/World/Vehicles/vehicle_background_*/Chassis')
         mapping = {s.chassis_path: s for s in self.specs}
         paths = list(view.prim_paths)
@@ -399,14 +412,31 @@ class KinematicFleet:
             self._index_tensor(np.arange(len(poses), dtype=np.uint32)))
         self._target_time_s = float(sim_time_s)
         self._target_count += 1
+        self._invalidate_caches()
 
-    def publish_visuals(self):
+    def publish_visuals(self, *, verify=True, focus_position_xy=None, wheel_distance_m=None):
         """Mirror measured native state to nonphysical geometry before rendering.
 
         Never write a Chassis transform: that would be a second kinematic input
         and could feed a stale render pose back into the next physics step.
         Visual geometry is not used as an observation or collision body.
+        Distance culling skips decorative wheel spins only; all body poses are
+        published. verify=False requires the caller to schedule pose checks.
         """
+        if type(verify) is not bool:
+            raise ValueError('Visual verification must be boolean')
+        if (focus_position_xy is None) != (wheel_distance_m is None):
+            raise ValueError('Wheel distance and focus position must be supplied together')
+        if wheel_distance_m is not None:
+            try:
+                valid = (not isinstance(wheel_distance_m, bool)
+                         and math.isfinite(wheel_distance_m) and wheel_distance_m >= 0
+                         and len(focus_position_xy) == 2
+                         and all(not isinstance(v, bool) and math.isfinite(v) for v in focus_position_xy))
+            except (TypeError, ValueError):
+                valid = False
+            if not valid:
+                raise ValueError('Wheel distance and XY focus must be finite, with nonnegative distance')
         from pxr import Gf, Sdf, Usd
         transforms, _ = self._measured()
         pending=[]
@@ -424,7 +454,9 @@ class KinematicFleet:
                 if abs(orientation.GetLength() - 1.) > .001:
                     raise RuntimeError('Native quaternion is not approximately unit length')
                 pending.append((orient,orientation.GetNormalized()))
-                if self._target_count % self.wheel_update_every == 0:
+                near_focus = (wheel_distance_m is None
+                              or math.dist((x, y), focus_position_xy) <= wheel_distance_m)
+                if self._target_count % self.wheel_update_every == 0 and near_focus:
                     # Decorative wheel angle only; chassis visuals use measured
                     # native pose, never fleet_pose's requested target.
                     spin = stopping_pose(spec, self._target_time_s,self._stop_time_s)['wheel_spin_deg']
@@ -437,7 +469,8 @@ class KinematicFleet:
             else:
                 for attribute,value in pending:attribute.Set(value)
         self._visual_update_count += 1
-        return self.visual_pose_check()
+        return self.visual_pose_check() if verify else dict(
+            verified=False, publications=self._visual_update_count, count=len(self.specs))
 
     def visual_pose_check(self):
         """Check composed visible proxy poses against actual native bodies.
@@ -470,13 +503,24 @@ class KinematicFleet:
     def _measured(self):
         if self._view is None:
             raise RuntimeError('Measured fleet state requires a bound native body view')
+        if self.cache_readback and self._measured_cache is not None:
+            return self._measured_cache
         transforms = _array(self._view.get_transforms()).copy()
         velocities = _array(self._view.get_velocities()).copy()
         import numpy as np
         if (transforms.shape != (len(self.specs), 7) or velocities.shape != (len(self.specs), 6)
                 or not np.isfinite(transforms).all() or not np.isfinite(velocities).all()):
             raise RuntimeError('Native fleet body state is malformed or nonfinite')
+        self.readback_count += 1
+        if self.cache_readback:
+            transforms.setflags(write=False)
+            velocities.setflags(write=False)
+            self._measured_cache = (transforms, velocities)
         return transforms, velocities
+
+    def _invalidate_caches(self):
+        self._measured_cache = None
+        self._track_cache = None
 
     def tracks(self, tick):
         from traffic.loop_showcase_control import ObjectTrack
@@ -484,6 +528,8 @@ class KinematicFleet:
             raise ValueError('Object track tick must be nonnegative integer')
         if self._last_track_tick is not None and tick < self._last_track_tick:
             raise ValueError('Object track ticks cannot go backwards')
+        if self.cache_readback and self._track_cache is not None and self._track_cache[0] == tick:
+            return list(self._track_cache[1])
         transforms, velocities = self._measured()
         result = []
         for spec, pose, velocity in zip(self._ordered_specs, transforms, velocities):
@@ -494,6 +540,9 @@ class KinematicFleet:
                 speed_m_s=float(velocity[0]*math.cos(yaw)+velocity[1]*math.sin(yaw)),
                 length_m=LENGTH_M, width_m=WIDTH_M))
         self._last_track_tick = tick
+        self.track_construction_count += 1
+        if self.cache_readback:
+            self._track_cache = (tick, tuple(result))
         return result
 
     def pose_check(self, target_time_s=None):
@@ -523,6 +572,7 @@ class KinematicFleet:
         return actual == self._hashes
 
     def release(self):
+        self._invalidate_caches()
         self._view = None
         self._ordered_specs = None
         self._float_tensor = self._index_tensor = None

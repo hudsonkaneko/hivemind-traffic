@@ -1,5 +1,21 @@
 # Engineering guide synchronization
 
+## Verified October 10: showcase performance
+
+Added **35 Showcase performance**, tab `t.dwsxfv73kedy`, to the
+[Google engineering guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.dwsxfv73kedy).
+It explains v06's shared reads, exact-math reuse and lighter display work;
+presentation versus full evidence; profiling/RTF definitions; portable shaded
+commands; repeated physical results; failures and the still-open smooth timing
+gate. No earlier result was rewritten to imply improved timing.
+
+Revision-guarded native writes and final readback confirmed exact inserted text,
+headings, four shaded Consolas command blocks, the PR #10 link, and all 35
+previous tabs unchanged. The document now has 36 tabs. Simulator screenshot
+inspection was separate; Google pagination/pixel verification is not claimed.
+Local ignored verification: `outputs/doc-sync/showcase-performance-verification.json`.
+Source: [v06 performance evidence](showcase-performance.md). No training started.
+
 ## Verified October 10: loop traffic showcase
 
 Added **34 Loop traffic showcase**, tab `t.9ah0315nta8b`, to the

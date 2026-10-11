@@ -1,13 +1,14 @@
 """CPU contracts and geometry only; runtime PhysX qualification is separate."""
 from dataclasses import replace
 import math
+import random
 
 import pytest
 
 from traffic.driver_control import DriverControlGate
 from traffic.loop_showcase_control import (
     ObjectTrack, RadialPath, ShowcaseConfig, ShowcaseController,
-    signed_station_gap, track_prediction,
+    circular_station, signed_station_gap, track_prediction,
 )
 from traffic.path_following import FRAME, SOURCE, VehicleState
 
@@ -89,8 +90,9 @@ def test_empty_road_cruise_returns_bounded_command_with_correct_identity_and_ttl
 
 @pytest.mark.parametrize('stop,delta,valid',[(True,-.055,True),(False,-.055,False),
                                          (True,.1,False),(True,-.2,False)])
-def test_bounded_background_braking_is_allowed_only_during_requested_stop(stop,delta,valid):
-    control=ShowcaseController('episode','ego')
+@pytest.mark.parametrize('optimized', [False, True])
+def test_bounded_background_braking_is_allowed_only_during_requested_stop(stop,delta,valid,optimized):
+    control=ShowcaseController('episode','ego',optimized=optimized)
     control.command(state(speed=0),0,[track(station=200,lane=3)])
     control.command(state(tick=2,speed=0),2,[track(tick=2,station=200+7*2/120*500/511.1,
         lane=3,speed=7+delta)],stop=stop)
@@ -238,3 +240,111 @@ def test_deterministic_controller_repeats_identical_commands():
             result.append(c.command(ego, tick, [track(tick, station=80 + 7 * tick / 120)]))
         return result
     assert run() == run()
+
+
+def test_station_only_projection_is_exact_at_boundaries_and_random_points():
+    from traffic.loop_driving import CircularLoop
+    route = CircularLoop()
+    points = [(x, y) for x in (-511.1, -500., -0., 0., 500., 511.1)
+              for y in (-511.1, -500., -0., 0., 500., 511.1) if math.hypot(x, y) > 1e-9]
+    points += [(500., math.nextafter(0., side)) for side in (-math.inf, math.inf)]
+    points += [(500., -1e-13), (1e300, -1e300), (math.nextafter(1e-9, math.inf), 0.)]
+    rng = random.Random(101)
+    points += [(rng.uniform(-600, 600), rng.uniform(-600, 600)) for _ in range(2000)]
+    for x, y in points:
+        assert circular_station(x, y) == route.project(x, y).s_m % route.length_m
+    for point in ((0., 0.), (1e-9, 0.), (math.nan, 500.), (500., math.inf), (True, 500.), ('x', 500.)):
+        with pytest.raises(ValueError):
+            circular_station(*point)
+        with pytest.raises(ValueError):
+            route.project(*point)
+
+
+def test_optimized_flag_requires_bool_and_legacy_is_default():
+    assert not ShowcaseController('episode', 'ego').optimized
+    for value in (1, 0, None, 'true'):
+        with pytest.raises(ValueError):
+            ShowcaseController('episode', 'ego', optimized=value)
+
+
+def test_optimized_candidate_envelopes_match_randomized_and_ulp_boundaries():
+    from types import SimpleNamespace
+    rng = random.Random(101)
+    legacy = ShowcaseController('episode', 'ego')
+    optimized = ShowcaseController('episode', 'ego', optimized=True)
+    decisions = set()
+    for case in range(240):
+        station = rng.choice((0., math.tau*500-1e-12, rng.uniform(-4000, 4000)))
+        lane = rng.randrange(4)
+        other_lane = lane + 1 if lane == 0 else lane - 1 if lane == 3 else lane + rng.choice((-1, 1))
+        ego = state(station=station, lane=lane, speed=rng.choice((0., 1., 15.6464, 19., rng.uniform(0, 20))))
+        legacy._unwrapped_s = optimized._unwrapped_s = station
+        path = RadialPath(lane, other_lane, station + 2., 80.)
+        objects = [track(station=station+rng.uniform(-180, 250), lane=rng.randrange(4),
+                         speed=rng.uniform(0, 20), identity=f'car_{i}') for i in range(12)]
+        # Near the first sample's exact longitudinal/radial envelope edges.
+        cfg = legacy.config
+        speed = 7.
+        longitudinal = ((cfg.ego_length_m+4.8)/2+cfg.prediction_clearance_m
+                        +cfg.prediction_tracking_margin_m+(cfg.max_observed_speed_m_s+speed)*cfg.prediction_step_s/2)
+        radial_half = (cfg.ego_width_m/2+cfg.ego_length_m/2*(1.875*cfg.lane_width_m/path.length_m)
+                       +cfg.prediction_tracking_margin_m+.02)
+        radius = 500+lane*3.7 + radial_half+.9+cfg.prediction_clearance_m
+        for direction in (-math.inf, math.inf):
+            gap = math.nextafter(longitudinal, direction)
+            angle = (station+gap)/500
+            r = math.nextafter(radius, direction)
+            objects.append(ObjectTrack('episode', f'edge_{direction}', 0,
+                r*math.cos(angle), r*math.sin(angle), angle+math.pi/2, speed))
+        samples = [[], []]
+        def recording_path(index):
+            def radius(station_m):
+                samples[index].append(station_m)
+                return path.radius_and_derivative(station_m)
+            return SimpleNamespace(end_s_m=path.end_s_m, length_m=path.length_m,
+                                   radius_and_derivative=radius)
+        baseline = legacy._candidate_safe(recording_path(0), ego, objects)
+        assert baseline == optimized._candidate_safe(recording_path(1), ego, objects)
+        assert samples[0] == samples[1]  # Same sampled stations and early exit.
+        decisions.add(baseline)
+        geometry = {obj.vehicle_id: (math.hypot(obj.x_m, obj.y_m),
+            signed_station_gap(station, circular_station(obj.x_m, obj.y_m))) for obj in objects}
+        assert legacy._candidate_safe(path, ego, objects) == optimized._candidate_safe(path, ego, objects, geometry)
+    assert decisions == {False, True}
+
+
+@pytest.mark.parametrize('fixture', ['passing', 'blocked', 'rundown', 'empty'])
+def test_optimized_commands_and_all_diagnostics_match_legacy_each_frame(fixture):
+    legacy = ShowcaseController('episode', 'ego', initial_lane=1)
+    optimized = ShowcaseController('episode', 'ego', initial_lane=1, optimized=True)
+    start = math.tau*500-30
+    for tick in range(0, 700, 2):
+        station = start + 15*tick/120
+        pose = legacy.path.pose(station)
+        ego = VehicleState('episode', 'ego', tick, *pose, 15.)
+        objects = [] if fixture == 'empty' else [
+            track(tick, station=start+80+i*105+7*tick/120, lane=i%4,
+                  speed=7*(500+(i%4)*3.7)/500, identity=f'car_{i}') for i in range(80)]
+        if fixture == 'blocked':
+            objects += [track(tick, station=start+60+7*tick/120, lane=lane,
+                              speed=7*(500+lane*3.7)/500, identity=f'block_{lane}') for lane in range(4)]
+        stop = fixture == 'rundown' and tick >= 240
+        assert legacy.command(ego, tick, objects, stop=stop) == optimized.command(ego, tick, objects, stop=stop)
+        assert legacy.diagnostics == optimized.diagnostics
+        assert legacy.path == optimized.path
+        assert legacy.path_points(ego) == optimized.path_points(ego)
+
+
+@pytest.mark.parametrize('bad_frame', [None, [], 'missing', 'duplicate', 'stale', 'nan', 'circle', 'heading', 'identity'])
+def test_optimized_validation_and_latched_brakes_match_legacy(bad_frame):
+    controls = [ShowcaseController('episode', 'ego', optimized=value) for value in (False, True)]
+    for control in controls:
+        control.command(state(speed=0), 0, [track(station=200)])
+    obj = track(2, station=200+7*2/120)
+    frames = {'duplicate': [obj, obj], 'stale': [replace(obj, tick=0)],
+              'nan': [replace(obj, x_m=math.nan)], 'circle': [replace(obj, x_m=0, y_m=0)],
+              'heading': [replace(obj, yaw_rad=0)], 'identity': [replace(obj, vehicle_id='changed')]}
+    frame = frames.get(bad_frame, bad_frame) if isinstance(bad_frame, str) else bad_frame
+    commands = [control.command(state(2, speed=0), 2, frame) for control in controls]
+    assert commands[0] == commands[1]
+    assert controls[0].diagnostics == controls[1].diagnostics

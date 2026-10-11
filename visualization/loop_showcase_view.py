@@ -5,16 +5,64 @@ from usd.physical_scene import PATHS
 
 
 class LoopShowcaseView(HighwayLoopView):
+    def __init__(self,stage,route,*,optimized=False):
+        super().__init__(stage,route)
+        self.optimized=optimized
+        self._path_visible=True
+
+    @property
+    def path_visible(self):
+        """Whether the caller needs to generate the next overlay points."""
+        return self._path_visible
+
     def set_path_visible(self,visible):
         """Toggle only the disposable overlay, never a vehicle or static asset."""
         from pxr import Usd,UsdGeom
         if not isinstance(visible,bool):raise ValueError('Path visibility must be bool')
         with Usd.EditContext(self.stage,self.dynamic_layer):
             self.path.GetVisibilityAttr().Set(UsdGeom.Tokens.inherited if visible else UsdGeom.Tokens.invisible)
+        self._path_visible=visible
+
+    def _update_optimized(self,state,station_m,mode,path_points):
+        """Author the final pose once per layer, without a nominal-path pass."""
+        from pxr import Gf,Sdf,Usd,UsdGeom
+        if not all(math.isfinite(value) for value in (*state['position_m'],state['yaw_rad'],station_m)):
+            raise ValueError('Camera state and station must be finite')
+        if self.path_visible:
+            with Usd.EditContext(self.stage,self.dynamic_layer):
+                self.path.GetCurveVertexCountsAttr().Set([len(path_points)])
+                self.path.GetPointsAttr().Set(path_points)
+                self.path.GetWidthsAttr().Set([.20])
+        x,y,z=state['position_m'];yaw=state['yaw_rad'];c,s=math.cos(yaw),math.sin(yaw)
+        if mode=='overview':
+            eye=(0.,-850.,950.);target=(0.,0.,0.);path=PATHS.overview_camera
+        elif mode=='traffic':
+            target=(x+30*c,y+30*s,0.);eye=(target[0]-1,target[1]-1,90.);path=PATHS.follow_camera
+        else:
+            eye=(x-20*c,y-20*s,z+17);target=(x+12*c,y+12*s,z+.15);path=PATHS.follow_camera
+        matrix=Gf.Matrix4d(1).SetLookAt(Gf.Vec3d(*eye),Gf.Vec3d(*target),Gf.Vec3d(0,0,1)).GetInverse()
+        interest=matrix.GetInverse().Transform(Gf.Vec3d(*target))
+        camera=self.stage.GetPrimAtPath(path)
+        for layer in (self.dynamic_layer,self.camera_layer):
+            with Usd.EditContext(self.stage,layer):
+                xform=UsdGeom.Xformable(camera)
+                attribute=camera.GetAttribute('xformOp:transform:highwayLoopCamera')
+                op=(UsdGeom.XformOp(attribute) if attribute
+                    else xform.AddTransformOp(opSuffix='highwayLoopCamera'))
+                op.Set(matrix)
+                # Reassert even an unchanged pose: viewport tools can replace
+                # the strongest transform order between display updates.
+                xform.SetXformOpOrder([op],resetXformStack=True)
+                camera.CreateAttribute('omni:kit:centerOfInterest',Sdf.ValueTypeNames.Vector3d,
+                    custom=True,variability=Sdf.VariabilityUniform).Set(interest)
+        self._camera_requested=dict(path=path,mode=mode,eye=tuple(eye),target=tuple(target))
+        self.camera_check()
+        return path
 
     def update_showcase(self,state,station_m,mode,path_points):
         from pxr import Gf,Usd,UsdGeom
         if mode not in ('follow','traffic','overview'):raise ValueError('Unknown showcase camera mode: '+str(mode))
+        if self.optimized:return self._update_optimized(state,station_m,mode,path_points)
         super().update(state,station_m,'overview' if mode=='overview' else 'follow')
         with Usd.EditContext(self.stage,self.dynamic_layer):
             self.path.GetCurveVertexCountsAttr().Set([len(path_points)])

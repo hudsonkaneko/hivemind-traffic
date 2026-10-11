@@ -153,6 +153,22 @@ def signed_station_gap(a_m, b_m, radius_m=500.0):
     return (b_m - a_m + length / 2) % length - length / 2
 
 
+def circular_station(x_m, y_m):
+    """Exact station-only projection for this showcase's R500 origin circle.
+
+    Matches CircularLoop().project(x, y).s_m % length, including its centre
+    rejection and seam rounding, without building unused route-point objects.
+    This is not a projection for arbitrary route radii or centres.
+    """
+    if not all(_finite(v) for v in (x_m, y_m)):
+        raise ValueError('Projection coordinates must be finite metres')
+    dx, dy = x_m - 0.0, y_m - 0.0
+    radial = math.hypot(dx, dy)
+    if not math.isfinite(radial) or radial <= 1e-9:
+        raise ValueError('Circle-centre projection is undefined')
+    return ((math.atan2(dy, dx) % math.tau) * 500.0) % (math.tau * 500.0)
+
+
 def track_prediction(track, elapsed_s):
     """Exact constant-angular-speed circular prediction for declared backgrounds."""
     if not _finite(elapsed_s) or elapsed_s < 0:
@@ -173,7 +189,10 @@ class ShowcaseController:
     speed. A committed lane change is never jerkily replaced by its opposite.
     """
 
-    def __init__(self, episode_id, vehicle_id, config=None, initial_lane=0):
+    def __init__(self, episode_id, vehicle_id, config=None, initial_lane=0, *, optimized=False):
+        if type(optimized) is not bool:
+            raise ValueError('Controller optimization must be boolean')
+        self.optimized = optimized
         if not _identity(episode_id) or not _identity(vehicle_id):
             raise ValueError('Episode and vehicle identities are required')
         if not _tick(initial_lane) or initial_lane >= 4:
@@ -270,22 +289,25 @@ class ShowcaseController:
     def _station(self, x, y):
         # atan2(-epsilon, +radius) may round to exactly tau after modulo;
         # normalise again after scaling so the seam stays in [0,length).
-        return self.base.project(x, y).s_m % self.base.length_m
+        return circular_station(x, y) if self.optimized else self.base.project(x, y).s_m % self.base.length_m
 
-    def _lane_ahead(self, lane, state, tracks):
+    def _lane_ahead(self, lane, state, tracks, geometry=None):
         cfg = self.config
         result = (math.inf, None)
         radius = cfg.radius_m + lane * cfg.lane_width_m
         for obj in tracks:
-            if abs(math.hypot(obj.x_m, obj.y_m) - radius) > cfg.lane_width_m / 2:
+            obj_radius = math.hypot(obj.x_m, obj.y_m) if geometry is None else geometry[obj.vehicle_id][0]
+            if abs(obj_radius - radius) > cfg.lane_width_m / 2:
                 continue
-            gap = signed_station_gap(self._unwrapped_s, self._station(obj.x_m, obj.y_m)) * radius / cfg.radius_m
+            station_gap = (signed_station_gap(self._unwrapped_s, self._station(obj.x_m, obj.y_m))
+                           if geometry is None else geometry[obj.vehicle_id][1])
+            gap = station_gap * radius / cfg.radius_m
             bumper = gap - (cfg.ego_length_m + obj.length_m) / 2
             if gap > 0 and bumper < result[0]:
                 result = bumper, obj
         return result
 
-    def _candidate_safe(self, path, state, tracks):
+    def _candidate_safe(self, path, state, tracks, geometry=None):
         """Conservative station/radius envelope over plausible acceleration.
 
         Ego future station lies between holding its current speed and reaching
@@ -294,6 +316,8 @@ class ShowcaseController:
         cover body length, tracking error and half a prediction sample's travel.
         This assumes the declared constant-speed circular background model.
         """
+        if self.optimized:
+            return self._candidate_safe_optimized(path, state, tracks, geometry)
         cfg = self.config
         speed = max(state.speed_m_s, 1.0)
         horizon = min(12.0, max(6.0, (path.end_s_m - self._unwrapped_s) / speed + 1.0))
@@ -327,7 +351,45 @@ class ShowcaseController:
                     return False
         return True
 
-    def _plan(self, state, tick, tracks):
+    def _candidate_safe_optimized(self, path, state, tracks, geometry):
+        """Identical samples/expressions; hoist only time-invariant arithmetic."""
+        cfg = self.config
+        speed = max(state.speed_m_s, 1.0)
+        horizon = min(12.0, max(6.0, (path.end_s_m - self._unwrapped_s) / speed + 1.0))
+        count = math.ceil(horizon / cfg.prediction_step_s)
+        current_radius = math.hypot(state.x_m, state.y_m)
+        low_speed = min(state.speed_m_s, cfg.target_speed_m_s)
+        to_cruise = max(0.0, cfg.target_speed_m_s - low_speed) / 3.0
+        max_lateral_slope = 1.875 * cfg.lane_width_m / path.length_m
+        ego_radial_half = (cfg.ego_width_m / 2 + cfg.ego_length_m / 2 * max_lateral_slope
+                           + cfg.prediction_tracking_margin_m + .02)
+        envelopes = []
+        for obj in tracks:
+            obj_radius, gap = (geometry[obj.vehicle_id] if geometry is not None else
+                (math.hypot(obj.x_m, obj.y_m),
+                 signed_station_gap(self._unwrapped_s, self._station(obj.x_m, obj.y_m))))
+            sample_pad = (cfg.max_observed_speed_m_s + obj.speed_m_s) * cfg.prediction_step_s / 2
+            longitudinal = ((cfg.ego_length_m + obj.length_m) / 2 + cfg.prediction_clearance_m
+                            + cfg.prediction_tracking_margin_m + sample_pad)
+            lateral = ego_radial_half + obj.width_m / 2 + cfg.prediction_clearance_m
+            envelopes.append((obj, obj_radius, gap, longitudinal, lateral))
+        for index in range(count + 1):
+            t = horizon * index / count
+            accelerating = min(t, to_cruise)
+            dist_low = low_speed * t
+            dist_high = low_speed * accelerating + 1.5 * accelerating ** 2 + cfg.target_speed_m_s * max(0., t - accelerating)
+            if state.speed_m_s > cfg.target_speed_m_s:
+                dist_high = state.speed_m_s * t
+            s_low = self._unwrapped_s + dist_low * cfg.radius_m / current_radius
+            s_high = self._unwrapped_s + dist_high * cfg.radius_m / current_radius
+            radial = [path.radius_and_derivative(s)[0] for s in (s_low, s_high)]
+            for obj, obj_radius, gap, longitudinal, lateral in envelopes:
+                obj_s = self._unwrapped_s + gap + obj.speed_m_s * t * cfg.radius_m / obj_radius
+                if s_low - longitudinal <= obj_s <= s_high + longitudinal and min(radial) - lateral <= obj_radius <= max(radial) + lateral:
+                    return False
+        return True
+
+    def _plan(self, state, tick, tracks, geometry=None):
         cfg = self.config
         if self._maneuver and self._unwrapped_s >= self.path.end_s_m:
             self.current_lane = self.path.to_lane
@@ -337,7 +399,7 @@ class ShowcaseController:
                                    cfg.lane_change_length_m)
         self._target_speed = cfg.target_speed_m_s
         reason = 'cruise'
-        lead_gap, lead = self._lane_ahead(self.current_lane, state, tracks)
+        lead_gap, lead = self._lane_ahead(self.current_lane, state, tracks, geometry)
         if self._maneuver:
             reason = 'committed_lane_change'
         elif lead is not None and lead_gap < cfg.obstacle_trigger_m and lead.speed_m_s < cfg.target_speed_m_s - .5:
@@ -347,8 +409,8 @@ class ShowcaseController:
                     continue
                 path = RadialPath(self.current_lane, lane,
                     self._unwrapped_s + cfg.lane_change_lead_m, cfg.lane_change_length_m)
-                ahead, _ = self._lane_ahead(lane, state, tracks)
-                if ahead > lead_gap + 12 and self._candidate_safe(path, state, tracks):
+                ahead, _ = self._lane_ahead(lane, state, tracks, geometry)
+                if ahead > lead_gap + 12 and self._candidate_safe(path, state, tracks, geometry):
                     candidates.append((min(ahead, 500.), -lane, path))
             if candidates:
                 self.path = max(candidates, key=lambda item: item[:2])[2]
@@ -360,9 +422,11 @@ class ShowcaseController:
         # During a lane change this also protects the old lane until separated.
         radius = math.hypot(state.x_m, state.y_m)
         for obj in tracks:
-            if abs(math.hypot(obj.x_m, obj.y_m) - radius) > (cfg.ego_width_m + obj.width_m) / 2 + .25:
+            obj_radius = math.hypot(obj.x_m, obj.y_m) if geometry is None else geometry[obj.vehicle_id][0]
+            if abs(obj_radius - radius) > (cfg.ego_width_m + obj.width_m) / 2 + .25:
                 continue
-            gap = signed_station_gap(self._unwrapped_s, self._station(obj.x_m, obj.y_m))
+            gap = (signed_station_gap(self._unwrapped_s, self._station(obj.x_m, obj.y_m))
+                   if geometry is None else geometry[obj.vehicle_id][1])
             if gap <= 0:
                 continue
             bumper = gap - (cfg.ego_length_m + obj.length_m) / 2 - abs(cfg.ego_collision_offset_x_m)
@@ -410,13 +474,19 @@ class ShowcaseController:
         if stop:
             self._stop_latched = self._stop_latched or 'requested_stop'
         cfg = self.config
+        # Owned by this validated command only: never reuse across native ticks,
+        # changed identities, or new ego progress. Each object remains present.
+        geometry = ({obj.vehicle_id: (math.hypot(obj.x_m, obj.y_m),
+            signed_station_gap(self._unwrapped_s, self._station(obj.x_m, obj.y_m)))
+            for obj in tracks} if self.optimized else None)
         actual = self._ego_box((state.x_m, state.y_m, state.yaw_rad))
         if any(not cfg.radius_m - cfg.lane_width_m / 2 < math.hypot(x, y) < cfg.radius_m + (cfg.lane_count - .5) * cfg.lane_width_m for x, y in actual.corners()):
             self._stop_latched = 'outside_road_footprint'
         minimum_clearance = math.inf
         for obj in tracks:
             other = OrientedBox(obj.x_m, obj.y_m, obj.yaw_rad, obj.length_m, obj.width_m)
-            gap = signed_station_gap(self._unwrapped_s, self._station(obj.x_m, obj.y_m))
+            gap = (signed_station_gap(self._unwrapped_s, self._station(obj.x_m, obj.y_m))
+                   if geometry is None else geometry[obj.vehicle_id][1])
             if abs(gap) < 30:
                 minimum_clearance = min(minimum_clearance, box_clearance(actual, other)['clearance_m'])
             if 10 < gap < 500:
@@ -427,7 +497,7 @@ class ShowcaseController:
             self._stop_latched = 'object_clearance_emergency'
         reason = self.diagnostics.get('planner_reason', 'cruise')
         if not self._stop_latched and (self._last_planning_tick is None or tick - self._last_planning_tick >= cfg.planning_interval_ticks):
-            reason = self._plan(state, tick, tracks)
+            reason = self._plan(state, tick, tracks, geometry)
         rear_x = state.x_m - cfg.rear_axle_offset_m * math.cos(state.yaw_rad)
         rear_y = state.y_m - cfg.rear_axle_offset_m * math.sin(state.yaw_rad)
         rear_s = self._unwrapped_s + signed_station_gap(station, self._station(rear_x, rear_y))

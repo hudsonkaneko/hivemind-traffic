@@ -87,11 +87,15 @@ class FakeBodies:
         self.velocities = np.zeros((len(specs), 6), dtype=np.float32)
         self.targets = None
         self.target_calls = 0
+        self.transform_reads = 0
+        self.velocity_reads = 0
 
     def get_transforms(self):
+        self.transform_reads += 1
         return self.values
 
     def get_velocities(self):
+        self.velocity_reads += 1
         return self.velocities
 
     def set_kinematic_targets(self, values, indices):
@@ -149,6 +153,79 @@ class FleetUsdTests(unittest.TestCase):
                                  for prim in Usd.PrimRange(proxy) for name in prim.GetAppliedSchemas()))
             for name in WHEEL_NAMES:
                 self.assertEqual(UsdGeom.Cylinder(self.stage.GetPrimAtPath(spec.render_path+'/'+name+'/Tire')).GetAxisAttr().Get(), 'Y')
+
+    def test_cached_readback_and_track_frames_invalidate_after_update(self):
+        from types import SimpleNamespace
+        stage = Usd.Stage.CreateInMemory()
+        UsdGeom.Xform.Define(stage, '/World')
+        UsdPhysics.Scene.Define(stage, PATHS.physics)
+        fleet = KinematicFleet(stage, self.directory/'cached', self.specs, cache_readback=True)
+        bodies = FakeBodies(self.specs)
+        fleet.bind(SimpleNamespace(create_rigid_body_view=lambda pattern: bodies))
+        initial = fleet.tracks(0)
+        reads = bodies.transform_reads, bodies.velocity_reads
+        constructions = fleet.track_construction_count
+        self.assertEqual(initial, fleet.tracks(0))
+        fleet.pose_check()
+        fleet.publish_visuals()
+        self.assertEqual(reads, (bodies.transform_reads, bodies.velocity_reads))
+        self.assertEqual(fleet.track_construction_count, constructions)
+        # A returned list cannot corrupt the retained track frame.
+        fleet.tracks(0).clear()
+        self.assertEqual(initial, fleet.tracks(0))
+        fleet.update(1/120)
+        bodies.step(1/120)
+        actual = fleet.tracks(1)
+        self.assertNotEqual(initial, actual)
+        self.assertEqual(fleet.readback_count, 2)
+        self.assertEqual((bodies.transform_reads, bodies.velocity_reads), (reads[0]+1, reads[1]+1))
+        self.assertEqual(actual, fleet.tracks(1))
+        self.assertTrue(fleet.pose_check()['passed'])
+        # Compare the cached native frame to the unchanged legacy path.
+        fleet.cache_readback = False
+        self.assertEqual(actual, fleet.tracks(1))
+        fleet.cache_readback = True
+        fleet.update(2/120)
+        bodies.step(1/120)
+        self.assertNotEqual(actual, fleet.tracks(1))
+        with self.assertRaises(ValueError):
+            fleet.tracks(0)
+        fleet.release()
+        self.assertIsNone(fleet._measured_cache)
+        self.assertIsNone(fleet._track_cache)
+
+    def test_distant_wheels_skip_only_decorative_spin(self):
+        self.bind()
+        self.fleet.update(1/120)
+        self.bodies.step(1/120)
+        focus = fleet_pose(self.specs[0], 1/120)['position_m'][:2]
+        checks = []
+        original = self.fleet.visual_pose_check
+        self.fleet.visual_pose_check = lambda: checks.append(True) or original()
+        report = self.fleet.publish_visuals(verify=False, focus_position_xy=focus, wheel_distance_m=2.)
+        self.assertFalse(report['verified'])
+        self.assertEqual(checks, [])
+        self.assertTrue(original()['passed'])
+        for index, spec in enumerate(self.specs):
+            wheel = self.stage.GetPrimAtPath(spec.render_path+'/FrontLeftWheel').GetAttribute('xformOp:rotateY:spin')
+            self.assertAlmostEqual(wheel.Get(), fleet_pose(spec, 1/120)['wheel_spin_deg'] if index == 0 else 0., places=5)
+        tracks = self.fleet.tracks(1)
+        self.fleet.publish_visuals()
+        self.assertEqual(checks, [True])
+        self.assertEqual(tracks, self.fleet.tracks(1))
+        self.assertTrue(self.fleet.static_assets_unchanged())
+
+    def test_invalid_visual_distance_configuration(self):
+        self.bind()
+        for options in (dict(verify=1), dict(focus_position_xy=(0, 0)), dict(wheel_distance_m=1),
+                        dict(focus_position_xy=(0, 0), wheel_distance_m=-1),
+                        dict(focus_position_xy=(0, math.nan), wheel_distance_m=1),
+                        dict(focus_position_xy=(0,), wheel_distance_m=1),
+                        dict(focus_position_xy=(0, 0), wheel_distance_m=True)):
+            with self.assertRaises(ValueError):
+                self.fleet.publish_visuals(**options)
+        with self.assertRaisesRegex(ValueError, 'caching must be boolean'):
+            KinematicFleet(self.stage, self.directory/'bad-cache', self.specs, cache_readback=1)
 
     def test_query_filter_excludes_roofs_without_ground_or_ego_filter(self):
         filters = UsdPhysics.CollisionGroup(self.stage.GetPrimAtPath(QUERY_GROUP)).GetFilteredGroupsRel().GetTargets()

@@ -15,11 +15,12 @@ from pathlib import Path
 
 from experiments.loop_showcase_config import assess, fleet_specs, validate_config
 from experiments.probe_support import ROOT, finish, run_package
+from traffic.showcase_performance import audit_schedule
 
 
 INPUT_FILES=('summary.json','manifest.json','trajectory.json','resolved-config.json','scene-contract.json')
 SOURCES=['experiments/loop_showcase_repeatability.py','experiments/loop_showcase_config.py',
-         'experiments/probe_support.py']
+         'experiments/probe_support.py','traffic/showcase_performance.py','traffic/runtime_profile.py']
 POSITION_TOLERANCE_M=.02
 SPEED_TOLERANCE_M_S=.02
 VISUAL_FILE='background-visual-checks.json'
@@ -28,7 +29,7 @@ VISUAL_YAW_TOLERANCE_RAD=.0001
 
 
 def _requires_visual_checks(config):
-    return isinstance(config,dict) and config.get('version') in ('v04','v05')
+    return isinstance(config,dict) and config.get('version') in ('v04','v05','v06')
 
 
 def _digest(data):
@@ -133,7 +134,7 @@ def _runtime_identity(run):
 
 
 def _visual_metrics(run):
-    """Recompute per-render gates instead of trusting summary booleans.
+    """Recompute scheduled visual gates instead of trusting summary booleans.
 
     These checks concern composed USD proxies versus native body poses. They do
     not replace inspection of actual RTX screenshots. Historical v01-v03 runs
@@ -143,9 +144,14 @@ def _visual_metrics(run):
     if not _requires_visual_checks(cfg):
         return dict(qualified=False,scope='Historical physical-only comparison; background visual synchronization not qualified')
     checks=run.get('background_visual_checks')
-    expected_frames=cfg['duration_s']*cfg['render_hz']
+    interval=cfg['physics_hz']//cfg['render_hz']
+    expected_ticks=([tick for tick in range(1,cfg['duration_s']*cfg['physics_hz']+1)
+                     if audit_schedule(cfg,tick)['visual']] if cfg['version']=='v06'
+                    else list(range(interval,cfg['duration_s']*cfg['physics_hz']+1,interval)))
+    expected_frames=len(expected_ticks)
+    sampled=cfg['version']=='v06' and cfg['evidence_profile']=='presentation'
     if not isinstance(checks,list) or len(checks)!=expected_frames or not checks:
-        raise ValueError('v04 visual checks must cover every configured rendered frame')
+        raise ValueError('Visual checks must cover every scheduled audit tick')
     if run['summary'].get('gates',{}).get('background_visual_sync') is not True:
         raise ValueError('v04 summary lacks the passed background visual synchronization gate')
     expected_fleet=fleet_specs(cfg)
@@ -157,14 +163,13 @@ def _visual_metrics(run):
     if (not isinstance(clock,dict) or type(clock.get('physics_steps')) is not int
             or clock['physics_steps']!=len(run['trajectory'])):
         raise ValueError('v04 final native clock does not cover the complete trajectory')
-    interval=cfg['physics_hz']//cfg['render_hz']
     position_errors=[];yaw_errors=[]
     finite=lambda value:type(value) in (int,float) and math.isfinite(value)
     for index,check in enumerate(checks):
-        tick=(index+1)*interval
+        tick=expected_ticks[index]
         if (not isinstance(check,dict) or type(check.get('tick')) is not int or check['tick']!=tick
                 or type(check.get('count')) is not int or check['count']!=len(expected_fleet)
-                or type(check.get('publications')) is not int or check['publications']!=index+2):
+                or type(check.get('publications')) is not int or check['publications']!=tick//interval+1):
             raise ValueError('v04 visual tick, native fleet count or publication sequence mismatch at frame '+str(index+1))
         # Exactly one initial publication precedes loop render frames. Warm-up,
         # paused render-only calls and final cleanup do not increment this log.
@@ -180,7 +185,11 @@ def _visual_metrics(run):
         if check.get('passed') is not True or check.get('all_proxies_visible') is not True:
             raise ValueError('v04 visual proxies are hidden or failed at frame '+str(index+1))
         position_errors.append(pos);yaw_errors.append(yaw)
-    return dict(qualified=True,scope='Composed visible proxy/native pose synchronization; actual RTX screenshot review remains separate',
+    scope=('Sampled composed visible proxy/native pose synchronization at 1 Hz plus first rendered frame; not every-render qualification'
+           if sampled else 'Composed visible proxy/native pose synchronization at every rendered frame')
+    return dict(qualified=True,scope=scope+'; actual RTX screenshot review remains separate',
+        audit_coverage='sampled_1hz_plus_first_frame' if sampled else 'every_render',
+        every_render_qualified=not sampled,
         frames=expected_frames,fleet_count=len(expected_fleet),render_hz=cfg['render_hz'],
         maximum_position_error_m=max(position_errors),maximum_yaw_error_rad=max(yaw_errors),
         position_tolerance_m=VISUAL_POSITION_TOLERANCE_M,yaw_tolerance_rad=VISUAL_YAW_TOLERANCE_RAD)
@@ -250,8 +259,12 @@ def compare_evidence(first,second):
         acceptance=dict(position_tolerance_m=POSITION_TOLERANCE_M,speed_tolerance_m_s=SPEED_TOLERANCE_M_S),
         scope='Two fresh supervised showcase processes, same full configuration and actual captured source/asset hashes plus recorded runtime/hardware; not cross-platform determinism',
         git_policy='Git commit labels may differ only because equality is based on exact captured source hashes')
-    result['qualification']='physical_and_composed_visual_sync' if _requires_visual_checks(first.get('config')) else 'physical_only'
+    sampled=(isinstance(first.get('config'),dict) and first['config'].get('version')=='v06'
+             and first['config'].get('evidence_profile')=='presentation')
+    result['qualification']=('physical_and_sampled_composed_visual_sync' if sampled else
+        'physical_and_composed_visual_sync' if _requires_visual_checks(first.get('config')) else 'physical_only')
     result['background_visual_sync_qualified']=False
+    result['every_render_visual_sync_qualified']=False
     if failures:return result
     position=[math.dist(a['position_m'],b['position_m']) for a,b in zip(first['trajectory'],second['trajectory'])]
     speed=[abs(a['speed_m_s']-b['speed_m_s']) for a,b in zip(first['trajectory'],second['trajectory'])]
@@ -261,6 +274,8 @@ def compare_evidence(first,second):
         max_position_difference_m=max(position),max_speed_difference_m_s=max(speed),
         max_position_difference_tick=position.index(max(position))+1,max_speed_difference_tick=speed.index(max(speed))+1)
     result['background_visual_sync_qualified']=not failures and all(m['background_visual_sync']['qualified'] for m in metrics.values())
+    result['every_render_visual_sync_qualified']=not failures and all(
+        m['background_visual_sync'].get('every_render_qualified',False) for m in metrics.values())
     return result
 
 

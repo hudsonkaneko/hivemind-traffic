@@ -20,6 +20,12 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
 
+October 10 showcase performance: [v06](showcase-performance.md) preserves the
+80-car presentation with reduced redundant work and separate evidence modes.
+Physical/repeat/failure checks passed; strict smooth-playback timing is still
+open. This isolated presentation branch does not advance research-fleet,
+sensor-driving or training gates and does not replace the roadmap below.
+
 Demo-readiness checkpoint: [SUMO matched-seed checks](demo-sumo-results.md),
 [physical-demo profiling](demo-physics-performance.md), and the
 [existing Isaac Lab waypoint policy rehearsal](demo-readiness.md) are recorded

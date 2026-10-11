@@ -4,6 +4,25 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-10 — Profiled v06 showcase presentation
+
+- Added exclusive phase timings, shared native fleet snapshots, single-pass
+  camera/path updates, distant decorative-wheel reduction and exact-math reuse.
+  Full-rate physics, controls, safety guards and all 80 colliders remain intact.
+- Added explicit presentation/full evidence profiles and opt-in display rates.
+  Presentation samples optional audits and buffers records; full mode keeps
+  every-tick/every-display audits and durable checkpoints. v04 stays default.
+- Two full GUI drives repeated exactly across 30,240 samples: 46 passes,
+  23 changes, zero contacts, safe braking/hold and clean shutdown. Full evidence
+  and command-loss, blocked-lane and contact-positive checks passed separately.
+- Strict smooth playback remains unqualified despite approximately 1x average
+  speed: lag and maximum frame intervals exceeded unchanged gates. Retained
+  timing failures, competing-GPU run and short blocked-fixture failure.
+- Verified 1,483 general tests (140 optional skips, 18 subtests) and 76 USD
+  fleet/view tests. See [performance evidence](showcase-performance.md) and v06.
+  Google guide tab **35 Showcase performance** added with native readback;
+  all 35 older tabs preserved. No training, installation or asset publication.
+
 ## 2026-10-10 — Denser 80-car loop showcase
 
 - Added opt-in v05 with 80 slower block cars in staggered pairs, keeping open

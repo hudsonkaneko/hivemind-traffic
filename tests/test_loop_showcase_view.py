@@ -2,6 +2,7 @@
 import math
 from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 try:
     from pxr import Gf, Usd, UsdGeom
@@ -30,6 +31,8 @@ def points_for_shift(shift_m, count=61):
 
 @unittest.skipIf(Usd is None, 'USD authoring runtime required')
 class LoopShowcaseViewTests(unittest.TestCase):
+    optimized = False
+
     def setUp(self):
         self.stage = Usd.Stage.CreateInMemory()
         world = UsdGeom.Xform.Define(self.stage, '/World')
@@ -43,7 +46,7 @@ class LoopShowcaseViewTests(unittest.TestCase):
         UsdGeom.Xform.Define(self.stage, '/World/Vehicles')
         car = self.stage.DefinePrim('/World/Vehicles/vehicle_ego')
         car.GetReferences().AddReference(self.asset.GetRootLayer().identifier)
-        self.view = LoopShowcaseView(self.stage, CircleFixture())
+        self.view = LoopShowcaseView(self.stage, CircleFixture(), optimized=self.optimized)
         self.state = dict(position_m=[500., 0., 1.], yaw_rad=math.pi / 2)
 
     def assert_points_equal(self, expected):
@@ -160,6 +163,61 @@ class LoopShowcaseViewTests(unittest.TestCase):
             self.assertLess(abs(point[1]),.99)
         horizon=matrix.Transform(Gf.Vec3d(500,1000000,1))
         self.assertGreater(horizon[1],1.)
+
+
+class OptimizedLoopShowcaseViewTests(LoopShowcaseViewTests):
+    optimized = True
+
+    def test_only_final_camera_and_path_are_updated(self):
+        points = points_for_shift(3.7)
+        with patch.object(self.view.route, 'evaluate', side_effect=AssertionError('nominal path evaluated')), \
+             patch.object(self.view, 'camera_check', wraps=self.view.camera_check) as check:
+            self.view.update_showcase(self.state, 0., 'follow', points)
+        self.assertEqual(check.call_count, 1)
+        self.assertTrue(self.view.camera_check()['passed'])
+        self.assert_points_equal(points)
+        for layer in (self.view.dynamic_layer, self.view.camera_layer):
+            spec = layer.GetPropertyAtPath(PATHS.follow_camera + '.xformOp:transform:highwayLoopCamera')
+            self.assertLess(math.dist(spec.default.ExtractTranslation(), (500., -20., 18.)), 1e-8)
+            interest = layer.GetPropertyAtPath(PATHS.follow_camera + '.omni:kit:centerOfInterest')
+            self.assertLess(abs(interest.default[0]), 1e-8)
+            self.assertLess(abs(interest.default[1]), 1e-8)
+            self.assertLess(interest.default[2], 0.)
+
+    def test_hidden_path_skips_updates_and_reshow_uses_fresh_points(self):
+        self.assertTrue(self.view.path_visible)
+        original = points_for_shift(0.)
+        self.view.update_showcase(self.state, 0., 'follow', original)
+        self.view.set_path_visible(False)
+        self.assertFalse(self.view.path_visible)
+        before = self.view.dynamic_layer.GetPrimAtPath('/World/Debug/Route/ProjectedPath').GetAsText()
+        self.view.update_showcase(self.state, 20., 'traffic', None)
+        after = self.view.dynamic_layer.GetPrimAtPath('/World/Debug/Route/ProjectedPath').GetAsText()
+        self.assertEqual(before, after)
+        self.assertTrue(self.view.camera_check()['passed'])
+        self.view.set_path_visible(True)
+        changed = points_for_shift(7.4, count=41)
+        self.view.update_showcase(self.state, 25., 'follow', changed)
+        self.assert_points_equal(changed)
+
+    def test_nonfinite_state_rejected_without_layer_edits(self):
+        before = self.view.dynamic_layer.ExportToString()
+        state = dict(self.state, yaw_rad=float('nan'))
+        with self.assertRaises(ValueError):
+            self.view.update_showcase(state, 0., 'follow', points_for_shift(0.))
+        self.assertEqual(before, self.view.dynamic_layer.ExportToString())
+
+    def test_unchanged_mode_repairs_competing_session_transform(self):
+        points = points_for_shift(3.7)
+        self.view.update_showcase(self.state, 0., 'follow', points)
+        with Usd.EditContext(self.stage, self.view.camera_layer):
+            camera = UsdGeom.Xformable(self.stage.GetPrimAtPath(PATHS.follow_camera))
+            op = camera.AddTranslateOp(opSuffix='sameModeViewport')
+            op.Set(Gf.Vec3d(0, 0, 1000))
+            camera.SetXformOpOrder([op], resetXformStack=True)
+        self.assertFalse(self.view.camera_check()['passed'])
+        self.view.update_showcase(self.state, 0., 'follow', points)
+        self.assertTrue(self.view.camera_check()['passed'])
 
 
 if __name__ == '__main__':
