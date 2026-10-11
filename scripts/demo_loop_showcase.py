@@ -21,7 +21,7 @@ SOURCES=['scripts/demo_loop_showcase.py','scripts/physics_loop_showcase.py',
  'traffic/driver_control.py','traffic/path_following.py','traffic/lane_geometry.py','traffic/speed_profiles.py',
  'traffic/bypass_validation.py','traffic/showcase_clearance.py','traffic/lidar_braking.py','traffic/physx_vehicle.py','traffic/wheel_geometry.py',
  'traffic/physics_session.py','traffic/rendered_physics_session.py','traffic/vehicle_contacts.py','traffic/evidence_chunks.py','traffic/showcase_runtime.py',
- 'traffic/runtime_profile.py','traffic/showcase_performance.py',
+ 'traffic/runtime_profile.py','traffic/showcase_performance.py','visualization/showcase_responsiveness.py',
  'visualization/loop_showcase_view.py','visualization/highway_loop_view.py','visualization/preview_timing.py',
  'usd/physical_scene.py','usd/highway_loop_scene.py','usd/showcase_vehicle.py','usd/showcase_fleet.py','usd/scene_validation.py',
  'highway_usd/_v02/highway_v02.usda','highway_usd/_v02/navigation.json','highway_usd/_v02/manifest.json','highway_usd/_v02/parameters.json']
@@ -53,18 +53,23 @@ def main():
     parser.add_argument('--headless',action='store_true');parser.add_argument('--unpaced',action='store_true')
     parser.add_argument('--camera',choices=['follow','traffic','overview'],default='follow')
     parser.add_argument('--capture',action='store_true');parser.add_argument('--drive-seconds',type=int)
-    parser.add_argument('--evidence',choices=['presentation','full'],help='v06 only; presentation keeps safety traces but samples optional audits')
-    parser.add_argument('--render-hz',type=int,choices=[10,20,30],help='v06 only; display cadence, never physics cadence')
+    parser.add_argument('--evidence',choices=['presentation','full'],help='v06/v07 only; presentation keeps safety traces but samples optional audits')
+    parser.add_argument('--render-hz',type=int,choices=[10,20,30,60],help='v06/v07 display cadence; 60 Hz requires v07; never physics cadence')
+    parser.add_argument('--ui-profile',choices=['showcase','editor'],help='v07 only; project showcase app or original editor experience')
+    parser.add_argument('--cpu-threads',type=int,choices=[4,8,16,32],help='v07 worker-count experiment; does not alter physics cadence')
+    parser.add_argument('--profile-render',action='store_true',help='v07 bounded renderer diagnosis; not an FPS qualification run')
     parser.add_argument('--check',action='store_true')
     args=parser.parse_args()
     cfg=make_config(args.version,mode=args.mode,gui=not args.headless,paced=not args.unpaced,
-        camera=args.camera,capture=args.capture,drive_s=args.drive_seconds,evidence=args.evidence,render_hz=args.render_hz)
+        camera=args.camera,capture=args.capture,drive_s=args.drive_seconds,evidence=args.evidence,render_hz=args.render_hz,
+        ui_profile=args.ui_profile,cpu_threads=args.cpu_threads,profile_render=args.profile_render)
     runtime=isaac_runtime(ROOT,load_config(ROOT))
     if args.check:
         print(json.dumps(dict(runtime=str(runtime),config=cfg,vehicle_available=(ROOT/cfg['vehicle_directory']/'world.usda').is_file()),indent=2));return 0
     if not (ROOT/cfg['vehicle_directory']/'world.usda').is_file():
         parser.error('This showcase requires the separately supplied local prepared vehicle; it is not distributed by Git')
     sources=SOURCES+[p.relative_to(ROOT).as_posix() for p in (ROOT/cfg['vehicle_directory']).rglob('*') if p.is_file()]
+    if cfg['version']=='v07':sources.extend(('visualization/highwaysim.showcase.kit','visualization/showcase_render_profile.py'))
     output,manifest=run_package('loop_showcase',cfg,sources)
     command=[str(runtime),str(ROOT/'scripts/physics_loop_showcase.py'),'--output',str(output)]
     child=None;result=dict(passed=False);start=time.perf_counter()

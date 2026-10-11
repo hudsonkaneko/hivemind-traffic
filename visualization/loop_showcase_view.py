@@ -5,10 +5,18 @@ from usd.physical_scene import PATHS
 
 
 class LoopShowcaseView(HighwayLoopView):
-    def __init__(self,stage,route,*,optimized=False):
+    def __init__(self,stage,route,*,optimized=False,responsive=False):
         super().__init__(stage,route)
         self.optimized=optimized
+        self.responsive=responsive
         self._path_visible=True
+        if responsive:
+            self._path_attributes=(self.path.GetCurveVertexCountsAttr(),
+                self.path.GetPointsAttr(),self.path.GetWidthsAttr())
+            self._path_count=None
+            self._path_width_initialized=False
+            self._camera_attributes={}
+            self._overview_pose=None
 
     @property
     def path_visible(self):
@@ -22,6 +30,57 @@ class LoopShowcaseView(HighwayLoopView):
         with Usd.EditContext(self.stage,self.dynamic_layer):
             self.path.GetVisibilityAttr().Set(UsdGeom.Tokens.inherited if visible else UsdGeom.Tokens.invisible)
         self._path_visible=visible
+
+    def _update_responsive(self,state,station_m,mode,path_points):
+        """Reuse handles and skip unchanged opinions, checking camera ownership."""
+        from pxr import Gf,Sdf,Usd,UsdGeom,Vt
+        if not all(math.isfinite(value) for value in (*state['position_m'],state['yaw_rad'],station_m)):
+            raise ValueError('Camera state and station must be finite')
+        if self.path_visible:
+            counts,points,widths=self._path_attributes
+            count=len(path_points)
+            with Usd.EditContext(self.stage,self.dynamic_layer):
+                if count!=self._path_count:
+                    counts.Set([count]);self._path_count=count
+                points.Set(path_points)
+                if not self._path_width_initialized:
+                    widths.Set([.20]);self._path_width_initialized=True
+        x,y,z=state['position_m'];yaw=state['yaw_rad'];c,s=math.cos(yaw),math.sin(yaw)
+        if mode=='overview':
+            eye=(0.,-850.,950.);target=(0.,0.,0.);path=PATHS.overview_camera
+        elif mode=='traffic':
+            target=(x+30*c,y+30*s,0.);eye=(target[0]-1,target[1]-1,90.);path=PATHS.follow_camera
+        else:
+            eye=(x-20*c,y-20*s,z+17);target=(x+12*c,y+12*s,z+.15);path=PATHS.follow_camera
+        if mode=='overview' and self._overview_pose is not None:
+            matrix,interest=self._overview_pose
+        else:
+            matrix=Gf.Matrix4d(1).SetLookAt(Gf.Vec3d(*eye),Gf.Vec3d(*target),Gf.Vec3d(0,0,1)).GetInverse()
+            interest=matrix.GetInverse().Transform(Gf.Vec3d(*target))
+            if mode=='overview':self._overview_pose=(matrix,interest)
+        if path not in self._camera_attributes:
+            with Usd.EditContext(self.stage,self.dynamic_layer):
+                camera=self.stage.GetPrimAtPath(path)
+                xform=UsdGeom.Xformable(camera)
+                transform=camera.GetAttribute('xformOp:transform:highwayLoopCamera')
+                if not transform:transform=xform.AddTransformOp(opSuffix='highwayLoopCamera').GetAttr()
+                order=xform.GetXformOpOrderAttr()
+                center=camera.CreateAttribute('omni:kit:centerOfInterest',Sdf.ValueTypeNames.Vector3d,
+                    custom=True,variability=Sdf.VariabilityUniform)
+                desired_order=Vt.TokenArray(['!resetXformStack!',transform.GetName()])
+                self._camera_attributes[path]=(transform,order,center,desired_order)
+        transform,order,center,desired_order=self._camera_attributes[path]
+        for layer in (self.dynamic_layer,self.camera_layer):
+            with Usd.EditContext(self.stage,layer):
+                for attribute,value in ((transform,matrix),(order,desired_order),(center,interest)):
+                    # Compare each owning layer, not only the composed value:
+                    # a viewport can replace an unchanged pose/order/interest,
+                    # and the portable preview must stay correct independently.
+                    spec=layer.GetPropertyAtPath(attribute.GetPath())
+                    if spec is None or spec.default!=value:attribute.Set(value)
+        self._camera_requested=dict(path=path,mode=mode,eye=tuple(eye),target=tuple(target))
+        self.camera_check()
+        return path
 
     def _update_optimized(self,state,station_m,mode,path_points):
         """Author the final pose once per layer, without a nominal-path pass."""
@@ -62,6 +121,7 @@ class LoopShowcaseView(HighwayLoopView):
     def update_showcase(self,state,station_m,mode,path_points):
         from pxr import Gf,Usd,UsdGeom
         if mode not in ('follow','traffic','overview'):raise ValueError('Unknown showcase camera mode: '+str(mode))
+        if self.responsive:return self._update_responsive(state,station_m,mode,path_points)
         if self.optimized:return self._update_optimized(state,station_m,mode,path_points)
         super().update(state,station_m,'overview' if mode=='overview' else 'follow')
         with Usd.EditContext(self.stage,self.dynamic_layer):

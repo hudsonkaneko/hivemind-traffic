@@ -3,6 +3,14 @@
 Separate, same-day presentation branch; the research roadmap and SUMO demos
 remain available. Isaac Lab task/training work is postponed for this showcase.
 
+**Responsive option:** [v07](v07/README.md) adds shared immutable fleet visuals,
+a smaller single-viewport Kit app and explicit native-frame/UI timings. The
+30-Hz GUI runs held real-time speed and repeated exactly, but rare hitches remain;
+60 FPS is experimental. See the
+[responsive-showcase evidence](../../documentation/showcase-responsiveness.md)
+for longer-run results and limitations. Run
+`python scripts/demo_loop_showcase.py --version v07`; the default stays v04.
+
 **Performance option:** [v06](v06/README.md) keeps the same 80-car physical
 scenario with shared reads, less redundant display work and an explicit light
 evidence profile. Two full GUI drives repeated exactly and averaged 1x, but
@@ -36,6 +44,7 @@ The requested prepared vehicle is local-only and is never uploaded to GitHub.
 | v04 | Correct native-to-visible background synchronization | Render-only referenced proxies mirror measured physics poses; check every displayed frame; repeat and paced GUI qualification on the corrected view |
 | v05 | 80-car staggered traffic and explicit fleet rundown | At least 6 passes/4 changes in 90 s, original clearance/contact gates, synchronized visuals, repeated physical result and stopped background fleet; timing reported separately |
 | v06 | Profiled, lighter presentation of the same 80-car scenario | Same physical motion/safety, strict same-source repeat, explicitly sampled versus full audits; smooth real-time remains a separate open gate |
+| v07 | Immutable visual instancing, small Kit app and native-frame/UI timing | Same physics and colliders, matched repeats, physical failure controls, and separate strict 30/60-Hz display gates; see measured evidence |
 
 **Visual correction:** early v01–v03 runs proved physical obstacle motion, not
 visible obstacle motion. Screenshot review found static block visuals despite

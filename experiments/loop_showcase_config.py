@@ -1,22 +1,30 @@
 """Bounded presentation fixtures, distinct from traffic-policy experiments."""
 import math
 
-VERSIONS = ('v01', 'v02', 'v03', 'v04', 'v05', 'v06')
+VERSIONS = ('v01', 'v02', 'v03', 'v04', 'v05', 'v06', 'v07')
 MODES = ('showcase', 'blocked', 'dropout', 'contact-check')
 
 
 def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
-                camera='follow', capture=False, drive_s=None, evidence=None, render_hz=None):
+                camera='follow', capture=False, drive_s=None, evidence=None, render_hz=None,
+                ui_profile=None,cpu_threads=None,profile_render=False):
     if version not in VERSIONS or mode not in MODES or camera not in ('follow','traffic','overview'):
         raise ValueError('Unknown showcase version, mode or camera')
-    if any(type(v) is not bool for v in (gui,paced,capture)):
+    if any(type(v) is not bool for v in (gui,paced,capture,profile_render)):
         raise ValueError('Flags must be boolean')
-    if version != 'v06' and (evidence is not None or render_hz is not None):
-        raise ValueError('Presentation/evidence and display overrides require v06')
+    if profile_render and version!='v07':
+        raise ValueError('Renderer diagnosis requires v07')
+    if version not in ('v06','v07') and (evidence is not None or render_hz is not None):
+        raise ValueError('Presentation/evidence and display overrides require v06/v07')
+    if ui_profile is not None and (version != 'v07' or ui_profile not in ('showcase','editor')):
+        raise ValueError('UI profile requires v07 and showcase/editor')
+    if cpu_threads is not None and (version!='v07' or type(cpu_threads) is not int or cpu_threads not in (4,8,16,32)):
+        raise ValueError('CPU worker override requires v07 and 4/8/16/32')
     if evidence is not None and evidence not in ('full','presentation'):
         raise ValueError('Unknown evidence profile')
-    if render_hz is not None and (type(render_hz) is not int or render_hz not in (10,20,30)):
-        raise ValueError('Display rate must be 10, 20 or 30 Hz')
+    rates=(10,20,30,60) if version=='v07' else (10,20,30)
+    if render_hz is not None and (type(render_hz) is not int or render_hz not in rates):
+        raise ValueError('Display rate must be one of '+str(rates))
     duration = drive_s if drive_s is not None else (30 if version=='v01' else 90 if version=='v02' else 240)
     if type(duration) is not int or not 15 <= duration <= 1800:
         raise ValueError('Drive duration must be an integer in [15,1800] s')
@@ -32,13 +40,18 @@ def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
         min_clearance_m=.6,max_background_pose_error_m=.02,
         min_upright_z=.98,max_speed_m_s=17.,stop_speed_m_s=.05,
         min_hold_s=5.,max_hold_drift_m=.05,
-        minimum_passes=(6 if version in ('v05','v06') else 3) if version!='v01' and mode=='showcase' and duration>=90 else 0,
-        minimum_lane_changes=(4 if version in ('v05','v06') else 2) if version!='v01' and mode=='showcase' and duration>=90 else 0,
+        minimum_passes=(6 if version in ('v05','v06','v07') else 3) if version!='v01' and mode=='showcase' and duration>=90 else 0,
+        minimum_lane_changes=(4 if version in ('v05','v06','v07') else 2) if version!='v01' and mode=='showcase' and duration>=90 else 0,
         observations='privileged timestamped simulator object tracks and chassis state; known circular map',
         no_sumo=True,no_lidar=True,no_training=True)
     if version == 'v06':
         cfg.update(evidence_profile=evidence or 'presentation',render_hz=render_hz or 10,
                    decorative_wheel_distance_m=150.)
+    if version == 'v07':
+        cfg.update(evidence_profile=evidence or 'presentation',render_hz=render_hz or 30,
+                   decorative_wheel_distance_m=150.,ui_profile=ui_profile or 'showcase',
+                   statistics_hz=5,frame_generation=False,cpu_threads=cpu_threads or 8,
+                   profile_render=profile_render,instance_visuals=True)
     return cfg
 
 
@@ -47,7 +60,7 @@ def fleet_specs(config):
         entries=[(lane,65.,6.7056) for lane in range(4)]
     elif config['mode']=='contact-check':
         entries=[(1,16.,0.)]
-    elif config['version'] in ('v05','v06'):
+    elif config['version'] in ('v05','v06','v07'):
         # Forty staggered pairs cover the whole ring, alternating lane pairs.
         # Common angular speed preserves gaps: nonreactive cars must not run
         # into one another after a few laps. Lane arc speeds remain explicit.
@@ -74,7 +87,8 @@ def fleet_specs(config):
 def validate_config(cfg):
     expected=make_config(cfg['version'],mode=cfg['mode'],gui=cfg['gui'],paced=cfg['paced'],
         camera=cfg['camera'],capture=cfg['capture'],drive_s=cfg['drive_s'],
-        evidence=cfg.get('evidence_profile'),render_hz=cfg['render_hz'] if cfg['version']=='v06' else None)
+        evidence=cfg.get('evidence_profile'),render_hz=cfg['render_hz'] if cfg['version'] in ('v06','v07') else None,
+        ui_profile=cfg.get('ui_profile'),cpu_threads=cfg.get('cpu_threads'),profile_render=cfg.get('profile_render',False))
     if cfg!=expected:raise ValueError('Resolved showcase settings differ from declared profile')
 
 
@@ -148,7 +162,7 @@ def assess(rows,config,contact_count,passes,lane_changes):
     if config['mode']=='dropout':
         expired=[r for r in stop if r['applied_tick']>=drive[-1]['command_expires_tick']] if drive else []
         gates['command_loss_braking']=bool(expired) and all(r['fallback'] and r['throttle']==0 and r['brake']==1 for r in expired)
-    if config['version'] in ('v05','v06') and not positive:
+    if config['version'] in ('v05','v06','v07') and not positive:
         end_hold=[r for r in stop if r['sim_time_s']>=config['duration_s']-5]
         gates['background_rundown']=bool(end_hold) and all(finite(r.get('background_max_speed_m_s'))
             and 0<=r['background_max_speed_m_s']<=.05 for r in end_hold)

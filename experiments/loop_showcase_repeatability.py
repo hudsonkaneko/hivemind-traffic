@@ -29,7 +29,7 @@ VISUAL_YAW_TOLERANCE_RAD=.0001
 
 
 def _requires_visual_checks(config):
-    return isinstance(config,dict) and config.get('version') in ('v04','v05','v06')
+    return isinstance(config,dict) and config.get('version') in ('v04','v05','v06','v07')
 
 
 def _digest(data):
@@ -146,10 +146,10 @@ def _visual_metrics(run):
     checks=run.get('background_visual_checks')
     interval=cfg['physics_hz']//cfg['render_hz']
     expected_ticks=([tick for tick in range(1,cfg['duration_s']*cfg['physics_hz']+1)
-                     if audit_schedule(cfg,tick)['visual']] if cfg['version']=='v06'
+                     if audit_schedule(cfg,tick)['visual']] if cfg['version'] in ('v06','v07')
                     else list(range(interval,cfg['duration_s']*cfg['physics_hz']+1,interval)))
     expected_frames=len(expected_ticks)
-    sampled=cfg['version']=='v06' and cfg['evidence_profile']=='presentation'
+    sampled=cfg['version'] in ('v06','v07') and cfg['evidence_profile']=='presentation'
     if not isinstance(checks,list) or len(checks)!=expected_frames or not checks:
         raise ValueError('Visual checks must cover every scheduled audit tick')
     if run['summary'].get('gates',{}).get('background_visual_sync') is not True:
@@ -259,7 +259,7 @@ def compare_evidence(first,second):
         acceptance=dict(position_tolerance_m=POSITION_TOLERANCE_M,speed_tolerance_m_s=SPEED_TOLERANCE_M_S),
         scope='Two fresh supervised showcase processes, same full configuration and actual captured source/asset hashes plus recorded runtime/hardware; not cross-platform determinism',
         git_policy='Git commit labels may differ only because equality is based on exact captured source hashes')
-    sampled=(isinstance(first.get('config'),dict) and first['config'].get('version')=='v06'
+    sampled=(isinstance(first.get('config'),dict) and first['config'].get('version') in ('v06','v07')
              and first['config'].get('evidence_profile')=='presentation')
     result['qualification']=('physical_and_sampled_composed_visual_sync' if sampled else
         'physical_and_composed_visual_sync' if _requires_visual_checks(first.get('config')) else 'physical_only')

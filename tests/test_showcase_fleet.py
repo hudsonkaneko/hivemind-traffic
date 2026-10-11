@@ -112,6 +112,7 @@ class FakeBodies:
 class FleetUsdTests(unittest.TestCase):
     batch_visual_updates = False
     separate_visuals = False
+    instance_visuals = False
     def setUp(self):
         outputs = ROOT / 'outputs'
         outputs.mkdir(exist_ok=True)
@@ -128,7 +129,8 @@ class FleetUsdTests(unittest.TestCase):
             '/World/Physics/Resources/VehicleWheelCollisionGroup'])
         self.specs = [FleetSpec('slow_001', 0, 20., 6.), FleetSpec('slow_002', 2, 50., 7.)]
         self.fleet = KinematicFleet(self.stage, self.directory, self.specs, episode_id='test',
-                                   batch_visual_updates=self.batch_visual_updates,separate_visuals=self.separate_visuals)
+                                   batch_visual_updates=self.batch_visual_updates,separate_visuals=self.separate_visuals,
+                                   instance_visuals=self.instance_visuals)
 
     def bind(self):
         from types import SimpleNamespace
@@ -150,9 +152,11 @@ class FleetUsdTests(unittest.TestCase):
             self.assertTrue(proxy.HasAuthoredReferences())
             self.assertNotEqual(UsdGeom.Imageable(proxy).ComputeVisibility(), 'invisible')
             self.assertFalse(any(name.startswith(('Physics', 'Physx'))
-                                 for prim in Usd.PrimRange(proxy) for name in prim.GetAppliedSchemas()))
+                                 for prim in Usd.PrimRange(proxy, Usd.TraverseInstanceProxies())
+                                 for name in prim.GetAppliedSchemas()))
             for name in WHEEL_NAMES:
-                self.assertEqual(UsdGeom.Cylinder(self.stage.GetPrimAtPath(spec.render_path+'/'+name+'/Tire')).GetAxisAttr().Get(), 'Y')
+                self.assertEqual(UsdGeom.Cylinder(self.stage.GetPrimAtPath(
+                    self.fleet.wheel_geometry_path(spec,name)+'/Tire')).GetAxisAttr().Get(), 'Y')
 
     def test_cached_readback_and_track_frames_invalidate_after_update(self):
         from types import SimpleNamespace
@@ -451,6 +455,134 @@ class LightweightFleetUsdTests(BatchedFleetUsdTests):
         self.assertTrue(self.fleet.publish_visuals()['passed'])
         self.assertTrue(self.fleet.static_assets_unchanged())
         self.assertTrue(all(t.speed_m_s==0 for t in self.fleet.tracks(360)))
+
+
+@unittest.skipIf(Usd is None, 'USD authoring runtime required')
+class InstancedFleetUsdTests(LightweightFleetUsdTests):
+    instance_visuals = True
+
+    def test_full_fleet_shares_five_prototypes_with_all_colliders_and_geometry(self):
+        from types import SimpleNamespace
+        from experiments.loop_showcase_config import fleet_specs, make_config
+        specs = [FleetSpec(**spec) for spec in fleet_specs(make_config('v07'))]
+        stage = Usd.Stage.CreateInMemory()
+        UsdGeom.Xform.Define(stage, '/World')
+        UsdPhysics.Scene.Define(stage, PATHS.physics)
+        fleet = KinematicFleet(stage, self.directory/'eighty-cars', specs,
+            separate_visuals=True, batch_visual_updates=True, instance_visuals=True)
+        bodies = FakeBodies(specs)
+        fleet.bind(SimpleNamespace(create_rigid_body_view=lambda pattern: bodies))
+        self.assertEqual(len(fleet.metadata['native_binding_paths']), 80)
+        self.assertEqual(set(fleet.metadata['native_binding_paths']), {spec.chassis_path for spec in specs})
+        collider_paths = {prim.GetPath() for prim in stage.Traverse() if prim.HasAPI(UsdPhysics.CollisionAPI)}
+        self.assertEqual(collider_paths, {Sdf.Path(spec.chassis_path+'/Colliders/Body') for spec in specs})
+        prototypes = set()
+        geometry_count = 0
+        for spec in specs:
+            proxy = stage.GetPrimAtPath(spec.render_path)
+            self.assertFalse(proxy.IsInstance())
+            self.assertFalse(stage.GetPrimAtPath(spec.chassis_path).IsInstance())
+            roots = [stage.GetPrimAtPath(spec.render_path+'/Visuals')] + [
+                stage.GetPrimAtPath(fleet.wheel_geometry_path(spec,name)) for name in WHEEL_NAMES]
+            self.assertTrue(all(prim.IsInstance() for prim in roots))
+            prototypes.update(prim.GetPrototype().GetPath() for prim in roots)
+            geometry = [prim for prim in Usd.PrimRange(proxy, Usd.TraverseInstanceProxies())
+                        if prim.IsA(UsdGeom.Gprim)]
+            self.assertEqual(len(geometry), 16)
+            geometry_count += len(geometry)
+        self.assertEqual(geometry_count, 1280)
+        self.assertEqual(len(prototypes), 5)
+        self.assertEqual(len(stage.GetPrototypes()), 5)
+        for tick in range(1, 5):
+            fleet.update(tick/120)
+            bodies.step(1/120)
+            self.assertTrue(fleet.pose_check()['passed'])
+            self.assertTrue(fleet.publish_visuals()['passed'])
+        self.assertEqual(bodies.target_calls, 4)
+        self.assertTrue(fleet.static_assets_unchanged())
+
+    def test_composed_geometry_colors_poses_and_original_assets_match_legacy(self):
+        from types import SimpleNamespace
+        legacy_stage = Usd.Stage.CreateInMemory()
+        UsdGeom.Xform.Define(legacy_stage, '/World')
+        UsdPhysics.Scene.Define(legacy_stage, PATHS.physics)
+        legacy = KinematicFleet(legacy_stage, self.directory/'legacy', self.specs,
+            episode_id='test', separate_visuals=True, batch_visual_updates=True)
+        for filename in ('showcase-block-car.usda','showcase-block-car-physics.usda',
+                         'showcase-block-car-geometry.usda'):
+            self.assertEqual((self.directory/'assets'/filename).read_bytes(),
+                             (legacy.directory/'assets'/filename).read_bytes())
+        self.bind()
+        old_bodies = FakeBodies(self.specs)
+        legacy.bind(SimpleNamespace(create_rigid_body_view=lambda pattern: old_bodies))
+        for tick in (1, 2, 3):
+            for fleet, bodies in ((self.fleet,self.bodies),(legacy,old_bodies)):
+                fleet.update(tick/120)
+                bodies.step(1/120)
+                self.assertTrue(fleet.publish_visuals()['passed'])
+            self.assertEqual(self.fleet.tracks(tick), legacy.tracks(tick))
+            for spec in self.specs:
+                proxy = self.stage.GetPrimAtPath(spec.render_path)
+                for actual in Usd.PrimRange(proxy, Usd.TraverseInstanceProxies()):
+                    if not actual.IsA(UsdGeom.Gprim):continue
+                    expected = legacy_stage.GetPrimAtPath(str(actual.GetPath()).replace('/Geometry/','/'))
+                    self.assertEqual(actual.GetTypeName(), expected.GetTypeName())
+                    names = ('primvars:displayColor','size') if actual.IsA(UsdGeom.Cube) else (
+                        'primvars:displayColor','radius','height','axis')
+                    for name in names:
+                        self.assertEqual(actual.GetAttribute(name).Get(),expected.GetAttribute(name).Get())
+                    a = UsdGeom.Xformable(actual).ComputeLocalToWorldTransform(Usd.TimeCode.Default())
+                    b = UsdGeom.Xformable(expected).ComputeLocalToWorldTransform(Usd.TimeCode.Default())
+                    self.assertLess(max(abs(a[i][j]-b[i][j]) for i in range(4) for j in range(4)),1e-10)
+        self.assertTrue(self.fleet.static_assets_unchanged())
+
+    def test_wheel_spin_pivots_are_independently_editable_over_shared_geometry(self):
+        wheels = [self.stage.GetPrimAtPath(self.fleet.wheel_geometry_path(spec,'FrontLeftWheel'))
+                  for spec in self.specs]
+        self.assertEqual(wheels[0].GetPrototype(), wheels[1].GetPrototype())
+        pivot_paths = [spec.render_path+'/FrontLeftWheel' for spec in self.specs]
+        for path in pivot_paths:
+            pivot = self.stage.GetPrimAtPath(path)
+            self.assertFalse(pivot.IsInstance())
+            self.assertFalse(pivot.IsInstanceProxy())
+        with Usd.EditContext(self.stage,self.fleet.dynamic_layer):
+            self.stage.GetPrimAtPath(pivot_paths[0]).GetAttribute('xformOp:rotateY:spin').Set(87.)
+        self.assertEqual(self.stage.GetPrimAtPath(pivot_paths[0]).GetAttribute('xformOp:rotateY:spin').Get(),87.)
+        self.assertEqual(self.stage.GetPrimAtPath(pivot_paths[1]).GetAttribute('xformOp:rotateY:spin').Get(),0.)
+        self.assertEqual(wheels[0].GetPrototype(), wheels[1].GetPrototype())
+        self.assertTrue(self.fleet.static_assets_unchanged())
+
+    def test_palette_reference_is_per_vehicle_and_all_sources_remain_immutable(self):
+        paths = [spec.render_path+'/Visuals' for spec in self.specs]
+        before = [self.stage.GetPrimAtPath(path+'/Body').GetAttribute('primvars:displayColor').Get()
+                  for path in paths]
+        self.assertNotEqual(before[0],before[1])
+        with Usd.EditContext(self.stage,self.fleet.dynamic_layer):
+            self.stage.GetPrimAtPath(paths[0]).GetReferences().SetReferences([Sdf.Reference(
+                str(self.directory/'assets/showcase-block-car-visual-library.usda'),'/VisualLibrary/BodySilver')])
+        self.assertEqual(self.stage.GetPrimAtPath(paths[0]+'/Body').GetAttribute('primvars:displayColor').Get(),before[1])
+        self.assertEqual(self.stage.GetPrimAtPath(paths[1]+'/Body').GetAttribute('primvars:displayColor').Get(),before[1])
+        self.assertTrue(self.fleet.static_assets_unchanged())
+
+    def test_instancing_metadata_and_portable_composition_are_explicit(self):
+        self.assertTrue(self.fleet.metadata['instance_visuals'])
+        self.assertEqual(self.fleet.metadata['wheel_geometry_child'],'Geometry')
+        self.assertEqual(self.fleet.metadata['visual_library'],'assets/showcase-block-car-visual-library.usda')
+        self.assertEqual(len(self.fleet.metadata['asset_hashes']),6)
+        reopened = Usd.Stage.Open(str(self.directory/'showcase-fleet-layout.usda'))
+        self.assertFalse(reopened.GetCompositionErrors())
+        for spec in self.specs:
+            self.assertTrue(reopened.GetPrimAtPath(spec.render_path+'/Visuals/Body').IsInstanceProxy())
+            for name in WHEEL_NAMES:
+                geometry = reopened.GetPrimAtPath(self.fleet.wheel_geometry_path(spec,name))
+                self.assertTrue(geometry.IsInstance())
+                self.assertEqual(UsdGeom.Xformable(geometry).GetOrderedXformOps(),[])
+                self.assertEqual(UsdGeom.Cylinder(geometry.GetChild('Tire')).GetAxisAttr().Get(),'Y')
+
+    def test_invalid_instancing_flag_fails_before_authoring(self):
+        with self.assertRaisesRegex(ValueError,'instancing must be boolean'):
+            KinematicFleet(self.stage,self.directory/'invalid-instancing',self.specs,instance_visuals=1)
+        self.assertFalse((self.directory/'invalid-instancing').exists())
 
 
 if __name__ == '__main__':

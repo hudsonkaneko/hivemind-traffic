@@ -4,6 +4,26 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-10 — Instanced v07 responsive showcase
+
+- Added a project-owned single-viewport Kit experience, immutable OpenUSD
+  visual instancing, cached camera/path metadata, and 5 Hz statistics updates.
+  All 80 background colliders, editable wheel pivots, 120 Hz physics/safety,
+  60 Hz controls and 10 Hz planning remain; prior versions/assets are preserved.
+- Added native application/delivered-frame timing and opt-in bounded CPU/GPU
+  diagnosis, with explicit exclusion of profiling/paused runs from qualification.
+- Two 30-Hz GUI drives held real-time speed with exact 30,240-sample physical
+  repeats (46 passes, 23 changes, zero contacts). Rare 126–128 ms intervals keep
+  strict smoothness open; 60 Hz remained below real time at about 50 completion
+  notifications/s. See [v07 responsiveness](showcase-responsiveness.md).
+- Final general suite: 1,575 passed, 179 optional skips, 18 subtests; 115 USD
+  fleet/view checks passed. Review fixes also exclude headless/paused/profiling
+  runs from GUI qualification and keep profiling bounded while paused.
+- Full evidence, command-expiry braking, blocked following, contact-positive
+  detection and the optional editor launch passed. Google guide tab **36
+  Responsive showcase** is synced with native readback and all older tabs intact.
+- No training, runtime installation, persistent settings or raw-asset publication.
+
 ## 2026-10-10 — Profiled v06 showcase presentation
 
 - Added exclusive phase timings, shared native fleet snapshots, single-pass

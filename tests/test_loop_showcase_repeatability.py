@@ -172,7 +172,7 @@ def with_visual_evidence(pair,config):
         run['scene_contract']['fleet']=dict(count=len(specs),specs=specs)
         interval=cfg['physics_hz']//cfg['render_hz']
         ticks=([tick for tick in range(1,cfg['duration_s']*cfg['physics_hz']+1)
-                if audit_schedule(cfg,tick)['visual']] if cfg['version']=='v06'
+                if audit_schedule(cfg,tick)['visual']] if cfg['version'] in ('v06','v07')
                else range(interval,cfg['duration_s']*cfg['physics_hz']+1,interval))
         run['background_visual_checks']=[dict(tick=tick,passed=True,
             max_position_error_m=0.,max_yaw_error_rad=0.,all_proxies_visible=True,count=len(specs),
@@ -276,6 +276,18 @@ def test_v06_exact_schedule_and_explicit_qualification(v06_pair):
     assert result['qualification']==('physical_and_sampled_composed_visual_sync' if sampled
                                       else 'physical_and_composed_visual_sync')
     assert result['every_render_visual_sync_qualified'] is (not sampled)
+    assert result['background_visual_sync_qualified'] is True
+
+
+@pytest.mark.parametrize('profile,hz',[(p,h) for p in ('full','presentation') for h in (30,60)])
+def test_v07_keeps_sampled_qualification_explicit(pair,profile,hz):
+    runs=with_visual_evidence(pair,make_config('v07',gui=False,paced=False,drive_s=15,
+                                             evidence=profile,render_hz=hz))
+    result=repeat.compare_evidence(*runs)
+    assert result['passed'],result
+    assert result['qualification']==('physical_and_sampled_composed_visual_sync'
+        if profile=='presentation' else 'physical_and_composed_visual_sync')
+    assert result['every_render_visual_sync_qualified'] is (profile=='full')
     assert result['background_visual_sync_qualified'] is True
 
 

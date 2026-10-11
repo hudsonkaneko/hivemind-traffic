@@ -1,0 +1,59 @@
+[package]
+title = "Highway Sim Showcase"
+description = "Single-viewport scripted vehicle showcase; no editor tool bundle"
+version = "0.1.0"
+
+[dependencies]
+"isaacsim.core.simulation_manager" = {}
+"isaacsim.core.rendering_manager" = {}
+"isaacsim.simulation_app" = {}
+"omni.isaac.core_archive" = {}
+"omni.kit.loop-isaac" = {}
+"omni.kit.mainwindow" = {}
+"omni.kit.viewport.window" = {}
+"omni.kit.viewport.utility" = {}
+"omni.kit.manipulator.camera" = {}
+"omni.hydra.rtx" = {}
+"omni.hydra.scene_delegate" = {}
+"omni.physics.physx" = {}
+"omni.physics.stageupdate" = {}
+"omni.physx.tensors" = {}
+
+[settings]
+app.name = "Highway Sim Showcase"
+app.window.title = "Highway Sim | Responsive showcase"
+app.settings.persistent = false
+app.content.emptyStageOnStart = true
+app.file.ignoreUnsavedStage = true
+app.fastShutdown = true
+app.vulkan = true
+app.enableDeveloperWarnings = false
+app.runLoops.main.rateLimitEnabled = false
+app.runLoops.main.manualModeEnabled = true
+app.player.useFixedTimeStepping = false
+app.asyncRendering = false
+app.asyncRenderingLowLatency = false
+app.gatherRenderResults = false # Single viewport only; compare against first strict trial.
+app.settings.fabricDefaultStageFrameHistoryCount = 3
+app.renderer.skipWhileMinimized = false
+app.renderer.sleepMsOnFocus = 0
+app.renderer.sleepMsOutOfFocus = 0
+app.useFabricSceneDelegate = false
+app.events.qualifiedNames = true
+renderer.asyncInit = true
+renderer.gpuEnumeration.glInterop.enabled = false
+rtx-transient.dlssg.enabled = false
+rtx.hydra.mdlMaterialWarmup = true
+rtx.hydra.supportMultiTickRate = true
+rtx.rendering.perSensorTickTlas = true
+omni.replicator.asyncRendering = false
+exts."omni.usd".locking.onClose = false
+exts."omni.ui".raster.default_rasterpolicy_enabled = true
+exts."omni.kit.renderer.core".present.enabled = false
+physics.autoPopupSimulationOutputWindow = false
+persistent.physics.visualizationDisplayJoints = false
+persistent.physics.visualizationSimulationOutput = false
+persistent.physics.resetOnStop = true
+persistent.app.stage.upAxis = "Z"
+persistent.simulation.defaultMetersPerUnit = 1.0
+persistent.renderer.startupMessageDisplayed = true

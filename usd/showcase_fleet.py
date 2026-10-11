@@ -23,6 +23,8 @@ WHEEL_RADIUS_M = 0.35
 BACKGROUND_GROUP = '/World/Physics/Resources/ShowcaseBackgroundCollisionGroup'
 QUERY_GROUP = '/World/Physics/Resources/VehicleGroundQueryGroup'
 WHEEL_NAMES = ('FrontLeftWheel', 'FrontRightWheel', 'RearLeftWheel', 'RearRightWheel')
+BODY_PALETTE = ((.18, .42, .63), (.46, .55, .62), (.72, .46, .18), (.30, .50, .39))
+BODY_STYLE_NAMES = ('Blue', 'Silver', 'Gold', 'Green')
 
 
 @dataclass(frozen=True)
@@ -150,6 +152,44 @@ def _create_asset(assets, separate_visuals=False):
     asset.GetRootLayer().Save()
 
 
+def _create_instanced_visual_assets(assets):
+    """Share immutable geometry below separately editable poses and wheel spins."""
+    from pxr import Gf, Usd, UsdGeom
+    library = _new_stage(assets / 'showcase-block-car-visual-library.usda')
+    UsdGeom.Xform.Define(library, '/VisualLibrary')
+    for name, color in zip(BODY_STYLE_NAMES, BODY_PALETTE):
+        path = '/VisualLibrary/Body' + name
+        body = library.DefinePrim(path)
+        body.GetReferences().AddReference('./showcase-block-car-geometry.usda', '/Vehicle/Chassis/Visuals')
+        Usd.ModelAPI(body).SetKind('subcomponent')
+        library.GetPrimAtPath(path + '/Body').GetAttribute('primvars:displayColor').Set([color])
+    wheel = library.DefinePrim('/VisualLibrary/Wheel')
+    wheel.GetReferences().AddReference('./showcase-block-car-geometry.usda', '/Vehicle/Chassis/FrontLeftWheel')
+    # The reusable source includes a placement/spin pivot. Those operations
+    # belong to each car's editable parent, not the shared geometry subtree.
+    UsdGeom.Xformable(wheel).SetXformOpOrder([])
+    Usd.ModelAPI(wheel).SetKind('subcomponent')
+    _metadata(library, '/VisualLibrary', 'component')
+    library.GetRootLayer().Save()
+
+    geometry = _new_stage(assets / 'showcase-block-car-instanced-geometry.usda')
+    UsdGeom.Xform.Define(geometry, '/Vehicle')
+    UsdGeom.Xform.Define(geometry, '/Vehicle/Chassis')
+    body = geometry.DefinePrim('/Vehicle/Chassis/Visuals')
+    body.GetReferences().AddReference('./showcase-block-car-visual-library.usda', '/VisualLibrary/BodyBlue')
+    body.SetInstanceable(True)
+    for name, x, y in zip(WHEEL_NAMES, (1.6, 1.6, -1.6, -1.6), (.80, -.80, .80, -.80)):
+        path = '/Vehicle/Chassis/' + name
+        pivot = UsdGeom.Xform.Define(geometry, path)
+        pivot.AddTranslateOp().Set(Gf.Vec3d(x, y, -.4))
+        pivot.AddRotateYOp(opSuffix='spin').Set(0.)
+        wheel = geometry.DefinePrim(path + '/Geometry')
+        wheel.GetReferences().AddReference('./showcase-block-car-visual-library.usda', '/VisualLibrary/Wheel')
+        wheel.SetInstanceable(True)
+    _metadata(geometry, '/Vehicle', 'component')
+    geometry.GetRootLayer().Save()
+
+
 def _array(value):
     """Native tensor frontend may be numpy, Warp or Torch in this runtime."""
     if hasattr(value, 'detach'):
@@ -173,7 +213,8 @@ class KinematicFleet:
     No other owner may step or mutate native bodies between those consumers.
     """
     def __init__(self, stage, scene_directory, specs, *, episode_id='showcase', wheel_update_every=1,
-                 batch_visual_updates=False, separate_visuals=False, cache_readback=False):
+                 batch_visual_updates=False, separate_visuals=False, cache_readback=False,
+                 instance_visuals=False):
         from pxr import Gf, Sdf, Usd, UsdGeom, UsdPhysics
         if (isinstance(wheel_update_every, bool) or not isinstance(wheel_update_every, int)
                 or wheel_update_every <= 0 or wheel_update_every > 120 or 120 % wheel_update_every):
@@ -195,6 +236,9 @@ class KinematicFleet:
         if type(separate_visuals) is not bool:
             raise ValueError('Visual separation must be boolean')
         self.separate_visuals = separate_visuals
+        if type(instance_visuals) is not bool:
+            raise ValueError('Visual instancing must be boolean')
+        self.instance_visuals = instance_visuals
         self.specs = []
         for spec in specs:
             if isinstance(spec, dict):
@@ -218,10 +262,15 @@ class KinematicFleet:
         assets.mkdir(parents=True, exist_ok=True)
         files = [assets / ('showcase-block-car' + suffix + '.usda')
                  for suffix in ('', '-physics', '-geometry')]
+        if instance_visuals:
+            files.extend(assets / ('showcase-block-car' + suffix + '.usda')
+                         for suffix in ('-visual-library', '-instanced-geometry'))
         files.append(self.directory / 'showcase-fleet-layout.usda')
         if any(p.exists() for p in files):
             raise FileExistsError('Refusing to overwrite a fleet asset or layout')
         _create_asset(assets,separate_visuals)
+        if instance_visuals:
+            _create_instanced_visual_assets(assets)
         layout = _new_stage(files[-1])
         UsdGeom.Xform.Define(layout, '/World')
         _metadata(layout, '/World', 'assembly')
@@ -243,7 +292,9 @@ class KinematicFleet:
             # Hide only their rendering; collision and native motion stay on.
             UsdGeom.Imageable(chassis.GetPrim()).CreateVisibilityAttr('invisible')
             proxy = layout.DefinePrim(spec.render_path)
-            proxy.GetReferences().AddReference('./assets/showcase-block-car-geometry.usda', '/Vehicle/Chassis')
+            visual_asset = ('showcase-block-car-instanced-geometry.usda' if instance_visuals
+                            else 'showcase-block-car-geometry.usda')
+            proxy.GetReferences().AddReference('./assets/' + visual_asset, '/Vehicle/Chassis')
             proxy.SetCustomDataByKey('pose_source', 'measured native body transform; render only')
             proxy.SetCustomDataByKey('native_body_path', spec.chassis_path)
             proxy.SetCustomDataByKey('vehicle_id', spec.vehicle_id)
@@ -252,10 +303,14 @@ class KinematicFleet:
             proxy_xform.AddOrientOp(precision=UsdGeom.XformOp.PrecisionDouble).Set(
                 Gf.Quatd(w, x, y, z).GetNormalized())
             proxy_xform.SetResetXformStack(True)
-            palette = ((.18, .42, .63), (.46, .55, .62), (.72, .46, .18), (.30, .50, .39))
             if not separate_visuals:
-                layout.GetPrimAtPath(spec.chassis_path + '/Visuals/Body').GetAttribute('primvars:displayColor').Set([palette[index % len(palette)]])
-            layout.GetPrimAtPath(spec.render_path + '/Visuals/Body').GetAttribute('primvars:displayColor').Set([palette[index % len(palette)]])
+                layout.GetPrimAtPath(spec.chassis_path + '/Visuals/Body').GetAttribute('primvars:displayColor').Set([BODY_PALETTE[index % len(BODY_PALETTE)]])
+            if instance_visuals:
+                body = layout.GetPrimAtPath(spec.render_path + '/Visuals')
+                body.GetReferences().SetReferences([Sdf.Reference('./assets/showcase-block-car-visual-library.usda',
+                    '/VisualLibrary/Body' + BODY_STYLE_NAMES[index % len(BODY_STYLE_NAMES)])])
+            else:
+                layout.GetPrimAtPath(spec.render_path + '/Visuals/Body').GetAttribute('primvars:displayColor').Set([BODY_PALETTE[index % len(BODY_PALETTE)]])
         group = UsdPhysics.CollisionGroup.Define(layout, BACKGROUND_GROUP)
         group.GetCollidersCollectionAPI().CreateIncludesRel().SetTargets([
             s.chassis_path + '/Colliders/Body' for s in self.specs])
@@ -333,6 +388,16 @@ class KinematicFleet:
         self.metadata['batched_visual_updates']=batch_visual_updates
         self.metadata['separate_visuals']=separate_visuals
         self.metadata['cache_readback']=cache_readback
+        if instance_visuals:
+            self.metadata.update(instance_visuals=True,
+                visual_instance_policy='shared immutable body palettes and wheel Geometry; editable proxy and spin pivots',
+                wheel_geometry_child='Geometry', visual_library='assets/showcase-block-car-visual-library.usda')
+
+    def wheel_geometry_path(self, spec, name):
+        """Resolve visual geometry while preserving the public wheel spin pivot."""
+        if name not in WHEEL_NAMES:
+            raise ValueError('Unknown showcase wheel: ' + str(name))
+        return spec.render_path + '/' + name + ('/Geometry' if self.instance_visuals else '')
 
     def validate(self):
         from pxr import Usd, UsdGeom, UsdPhysics
@@ -351,16 +416,27 @@ class KinematicFleet:
                     or UsdGeom.Imageable(proxy).ComputeVisibility() == 'invisible'):
                 errors.append('Visible referenced render proxy missing: ' + spec.vehicle_id)
             if proxy:
-                for prim in Usd.PrimRange(proxy):
+                for prim in Usd.PrimRange(proxy, Usd.TraverseInstanceProxies()):
                     if any(name.startswith(('Physics', 'Physx')) for name in prim.GetAppliedSchemas()):
                         errors.append('Render proxy must not contain physics APIs: ' + str(prim.GetPath()))
             collider = self.stage.GetPrimAtPath(spec.chassis_path + '/Colliders/Body')
             if not collider or not UsdPhysics.CollisionAPI(collider).GetCollisionEnabledAttr().Get():
                 errors.append('Background collider missing: ' + spec.vehicle_id)
             for name in WHEEL_NAMES:
-                wheel = UsdGeom.Cylinder(self.stage.GetPrimAtPath(spec.render_path + '/' + name + '/Tire'))
+                wheel = UsdGeom.Cylinder(self.stage.GetPrimAtPath(self.wheel_geometry_path(spec, name) + '/Tire'))
                 if not wheel or wheel.GetAxisAttr().Get() != 'Y':
                     errors.append('Wheel axle must be local Y: ' + spec.vehicle_id + '/' + name)
+            if self.instance_visuals:
+                immutable_paths = [spec.render_path + '/Visuals'] + [self.wheel_geometry_path(spec, name)
+                    for name in WHEEL_NAMES]
+                for path in immutable_paths:
+                    prim = self.stage.GetPrimAtPath(path)
+                    if not prim or not prim.IsInstance():
+                        errors.append('Immutable visual subtree must share a prototype: ' + path)
+                for path in [spec.render_path] + [spec.render_path + '/' + name for name in WHEEL_NAMES]:
+                    prim = self.stage.GetPrimAtPath(path)
+                    if not prim or prim.IsInstance() or prim.IsInstanceProxy():
+                        errors.append('Proxy and wheel spin pivots must remain editable: ' + path)
         if errors:
             raise ValueError('Invalid showcase fleet: ' + '; '.join(errors))
         return dict(passed=True, count=len(self.specs), errors=[])

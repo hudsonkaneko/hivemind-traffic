@@ -3,6 +3,7 @@ import argparse
 from dataclasses import asdict
 import json
 import math
+import os
 from pathlib import Path
 import sys
 import time
@@ -32,6 +33,12 @@ def body_box(state,metadata):
     return OrientedBox(x+c*ox-s*oy,y+s*ox+c*oy,a,length,width)
 
 
+def render_frame(session,render_probe=None):
+    """Service both active and paused frames through the same bounded probe."""
+    session.render()
+    if render_probe:render_probe.after_render()
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,required=True)
@@ -39,25 +46,35 @@ def main():
     if not output.is_relative_to(ROOT/'outputs') or not output.is_dir() or (output/'probe-result.json').exists():
         parser.error('Fresh supervisor-created output directory required')
     cfg=json.loads((output/'resolved-config.json').read_text());validate_config(cfg)
-    optimized=cfg['version']=='v06';dense=cfg['version'] in ('v05','v06')
+    responsive=cfg['version']=='v07'
+    optimized=cfg['version'] in ('v06','v07');dense=cfg['version'] in ('v05','v06','v07')
     presentation=cfg.get('evidence_profile')=='presentation'
     profile=SequentialProfiler()
     calibration=profile.calibrate_overhead()
     route=CircularLoop();episode='showcase-'+output.name
-    app=session=vehicle=fleet=monitor=view=window=label=viewport=writer=preview=None
+    app=session=vehicle=fleet=monitor=view=window=label=viewport=writer=preview=ui_probe=render_probe=None
     static_layers=None;rows=[];plans=[];contacts=[];camera_checks=[];visual_checks=[];captures=[];captured=set()
     passed=set();passed_records=[];seen_ahead=set();peers={};last_peer_stations={}
-    native_audit_ticks=[];last_native_audit_tick=0
+    native_audit_ticks=[];last_native_audit_tick=0;paused_wall=0.
     started=time.perf_counter();result=dict(passed=False,no_training=True,no_lidar=True,no_sumo=True,
         observations=cfg['observations'],main_motion='dynamic_physx',background_motion='scripted_kinematic_physx')
     try:
         from isaacsim import SimulationApp
         graphics=rendering_profile(True)
+        if responsive:graphics['limit_cpu_threads']=cfg['cpu_threads']
+        if cfg.get('profile_render'):
+            graphics['extra_args']=[*graphics['extra_args'],'--enable','omni.hydra.engine.stats']
+        if responsive and cfg['ui_profile']=='showcase':
+            # Runtime-owned libraries stay outside the project; never hardcode
+            # the workstation path or resolve them relative to this .kit file.
+            graphics['extra_args']=[*graphics['extra_args'],'--ext-folder',str(Path(os.environ['ISAAC_PATH'])/'extscache'),
+                                   '--ext-folder',str(Path(os.environ['ISAAC_PATH'])/'extsDeprecated')]
         if dense:
             # Process-local fallback for this runtime's dense-Fabric crash.
             graphics['extra_args']=[*graphics['extra_args'],'--/app/useFabricSceneDelegate=false']
         result['graphics_profile']=graphics
-        app=SimulationApp({**graphics,'headless':not cfg['gui'],'disable_viewport_updates':False})
+        experience=str(ROOT/'visualization/highwaysim.showcase.kit') if responsive and cfg['ui_profile']=='showcase' else ''
+        app=SimulationApp({**graphics,'headless':not cfg['gui'],'disable_viewport_updates':False},experience=experience)
         from traffic.physics_session import prepare_vehicle_runtime
         from traffic.rendered_physics_session import RenderedPhysicsSession
         from traffic.vehicle_contacts import VehicleContactMonitor
@@ -65,9 +82,9 @@ def main():
         from usd.showcase_fleet import KinematicFleet
         from usd.highway_loop_scene import install_highway_loop,spawn_vehicle_on_loop,validate_highway_loop_scene,save_highway_loop_scene
         from visualization.loop_showcase_view import LoopShowcaseView,make_controls
-        from omni.kit.viewport.utility import get_active_viewport,capture_viewport_to_file
+        from omni.kit.viewport.utility import get_active_viewport,capture_viewport_to_file,get_num_viewports
         from pxr import Sdf,Usd
-        result['runtime_setup']=prepare_vehicle_runtime()
+        if not responsive:result['runtime_setup']=prepare_vehicle_runtime()
         # No embedded USD behaviors are part of this explicitly controlled
         # showcase. Isolate the installed optional scripting stage-close
         # consumer before it can attach to our long-lived owned stage.
@@ -76,6 +93,10 @@ def main():
             disable_unused_sensor_icons,assert_sensor_icons_disabled)
         import omni.kit.app
         extension_manager=omni.kit.app.get_app().get_extension_manager()
+        if responsive:
+            from visualization.showcase_responsiveness import (KitResponsiveness,assess_responsiveness,
+                prepared_runtime_inventory,display_qualification_exclusions)
+            result['runtime_setup']=prepared_runtime_inventory(extension_manager)
         behavior_sources={}
         for name,path in (('vehicle',ROOT/cfg['vehicle_directory']/'world.usda'),
                           ('highway',ROOT/cfg['source_directory']/'highway_v02.usda')):
@@ -94,14 +115,24 @@ def main():
         # Local publication's point light was for an asset inspection, not a 1 km road.
         session.stage.GetPrimAtPath('/World/Lighting/Key').SetActive(False)
         fleet=KinematicFleet(session.stage,scene_directory,fleet_specs(cfg),episode_id=episode,
-            wheel_update_every=cfg['physics_hz']//cfg['render_hz'] if cfg['version'] in ('v03','v04','v05','v06') else 1,
-            batch_visual_updates=dense,separate_visuals=dense,cache_readback=optimized)
+            wheel_update_every=cfg['physics_hz']//cfg['render_hz'] if cfg['version'] in ('v03','v04','v05','v06','v07') else 1,
+            batch_visual_updates=dense,separate_visuals=dense,cache_readback=optimized,
+            instance_visuals=cfg.get('instance_visuals',False))
         monitor=VehicleContactMonitor(session.stage,vehicle.path)
-        view=LoopShowcaseView(session.stage,route,optimized=optimized)
+        view=LoopShowcaseView(session.stage,route,optimized=optimized,responsive=responsive)
         ui_state=dict(camera=cfg['camera'],paused=False)
         if cfg['gui']:window,label=make_controls(ui_state,view=view if optimized else None)
         viewport=get_active_viewport()
         if viewport is None:raise RuntimeError('No viewport is available')
+        if responsive:
+            import carb
+            result['viewport_count']=get_num_viewports()
+            if not carb.settings.get_settings().get('/app/gatherRenderResults') and result['viewport_count']!=1:
+                raise RuntimeError('No-gather showcase requires exactly one viewport')
+            result['effective_render_settings']={key:carb.settings.get_settings().get(key) for key in (
+                '/app/gatherRenderResults','/app/hydraEngine/waitIdle','/app/asyncRendering',
+                '/app/runLoops/main/rateLimitEnabled','/app/renderer/sleepMsOnFocus',
+                '/app/renderer/sleepMsOutOfFocus','/app/useFabricSceneDelegate','/rtx-transient/dlssg/enabled')}
         viewport.resolution=(graphics['width'],graphics['height'])
         model=vehicle.metadata
         controller_config=ShowcaseConfig(target_speed_m_s=cfg['target_speed_m_s'],
@@ -144,6 +175,11 @@ def main():
         fleet.publish_visuals()
         for _ in range(4):session.render()
         result['renderer_warmup_s']=time.perf_counter()-warmup_started
+        if responsive:
+            ui_probe=KitResponsiveness();ui_probe.start()
+            if cfg['profile_render']:
+                from visualization.showcase_render_profile import RenderProfile
+                render_probe=RenderProfile(viewport)
         writer=None if presentation else EvidenceChunkWriter(output)
         preview=PreviewClock(paced=cfg['paced'])
         result['startup_wall_s']=time.perf_counter()-started
@@ -156,7 +192,8 @@ def main():
             while ui_state['paused']:
                 if not app.is_running() or time.perf_counter()-started>cfg['max_process_seconds']-20:
                     raise RuntimeError('Paused preview closed or bounded deadline reached')
-                before=time.perf_counter();session.render();time.sleep(.02);paused_wall+=time.perf_counter()-before
+                before=time.perf_counter();render_frame(session,render_probe)
+                time.sleep(.02);paused_wall+=time.perf_counter()-before
             profile.begin_iteration()
             schedule=audit_schedule(cfg,tick+1)
             phase='settle' if tick<cfg['settle_s']*hz else 'brake' if tick>=brake_tick else 'drive'
@@ -247,12 +284,13 @@ def main():
                 profile.mark('visual_publication')
                 physical_state=VehicleState.from_physics(state,episode_id=episode,vehicle_id='ego',tick=tick+1)
                 path_points=controller.path_points(physical_state) if not optimized or view.path_visible else None
-                viewport.camera_path=view.update_showcase(state,projection.s_m,ui_state['camera'],path_points)
-                if label:label.text=(f"{cfg['version']} | {phase} | {state['speed_m_s']/0.44704:.1f} mph | {len(tracks)} traffic cars\n"
+                camera_path=view.update_showcase(state,projection.s_m,ui_state['camera'],path_points)
+                if not responsive or viewport.camera_path!=camera_path:viewport.camera_path=camera_path
+                if label and (not responsive or tick+1==session.render_every_steps or (tick+1)%(hz//cfg['statistics_hz'])==0):label.text=(f"{cfg['version']} | {phase} | {state['speed_m_s']/0.44704:.1f} mph | {len(tracks)} traffic cars\n"
                     f"Passes {len(passed)} | lane changes {max_lanes} | clearance {row['clearance_m']:.2f} m\n"
                     f"{row['controller_status']}: {row['controller_reason']} | {row['sim_time_s']:.0f}s")
                 profile.mark('camera_overlay_ui')
-                session.render()
+                render_frame(session,render_probe)
                 profile.mark('render')
                 check=view.camera_check();camera_checks.append(dict(tick=tick+1,**check))
                 if not check['passed']:raise RuntimeError('Camera pose ownership failed')
@@ -273,6 +311,8 @@ def main():
             if (tick+1)%(hz*10)==0:
                 print(f"SHOWCASE t={row['sim_time_s']:.0f} speed={row['speed_m_s']:.2f} passes={len(passed)} lane_changes={max_lanes} gap={row['clearance_m']:.2f} state={row['controller_status']} {row['controller_reason']}",flush=True)
             profile.finish_iteration()
+        if ui_probe:ui_probe.stop()
+        if render_probe:render_probe.close()
         result.update(assess(rows,cfg,len(contacts),passed,max_lanes))
         extra=dict(camera=bool(camera_checks) and all(c['passed'] for c in camera_checks),
             background_visual_sync=bool(visual_checks) and all(c['passed'] for c in visual_checks),
@@ -295,6 +335,12 @@ def main():
         result.update(passed=False,error=repr(error),traceback=traceback.format_exc());traceback.print_exc()
     finally:
         if profile.iteration_active:profile.finish_iteration()
+        if ui_probe:ui_probe.stop()
+        if render_probe:
+            try:render_probe.close()
+            except Exception as error:result.update(passed=False,render_profiler_close_error=repr(error))
+            result['render_diagnosis']=render_probe.summary()
+            write_json(output/'render-diagnosis.json',result['render_diagnosis'])
         result['runtime_profile']=profile.summary(simulation_time_s=len(rows)/cfg['physics_hz'])
         result['profiling_overhead']=profile.estimate_overhead_for_run(calibration)
         write_json(output/'runtime-profile.json',result['runtime_profile'])
@@ -317,11 +363,20 @@ def main():
                 and result['preview_timing']['p95_frame_interval_s']<=1.5/cfg['render_hz']
                 and result['preview_timing']['max_frame_interval_s']<=.2)
             write_json(output/'preview-timing.json',preview.frames)
+            if ui_probe:
+                result['responsiveness']=assess_responsiveness(ui_probe.frames,ui_probe.completed,
+                    wall_s=result['preview_timing']['active_wall_s'],simulation_s=len(rows)/cfg['physics_hz'],
+                    render_hz=cfg['render_hz'],complete=len(rows)==cfg['duration_s']*cfg['physics_hz'])
+                result['display_qualification_exclusions']=display_qualification_exclusions(cfg,paused_wall)
+                result['smooth_display_passed']=bool(result['smooth_display_passed'] and result['responsiveness']['passed']
+                    and not result['display_qualification_exclusions'])
+                write_json(output/'ui-event-timing.json',dict(application_frames=ui_probe.frames,native_completions=ui_probe.completed))
         if writer:result['checkpoint_evidence']=writer.summary()
         write_json(output/'trajectory.json',rows);write_json(output/'planner.json',plans)
         write_json(output/'contacts.json',contacts);write_json(output/'camera-checks.json',camera_checks)
         write_json(output/'background-visual-checks.json',visual_checks)
         write_json(output/'pre-close-result.json',dict(result,cleanup_verified=False))
+        if ui_probe:ui_probe.close();ui_probe=None
         if session and session.started and viewport:
             try:viewport.camera_path='/OmniverseKit_Persp';session.render()
             except Exception as error:result.update(passed=False,camera_close_error=repr(error))

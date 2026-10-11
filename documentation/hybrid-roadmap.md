@@ -20,6 +20,13 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
 
+October 10 responsiveness increment: [v07](showcase-responsiveness.md) adds a
+small showcase app and shared immutable fleet visuals. Two 30-Hz GUI drives
+held average real time and repeated exactly; rare hitches and 60 FPS remain
+unqualified. Outcomes are recorded in that evidence note. Physics,
+sensing/training boundaries and roadmap order below
+remain unchanged; this does not qualify LiDAR or mixed-traffic research.
+
 October 10 showcase performance: [v06](showcase-performance.md) preserves the
 80-car presentation with reduced redundant work and separate evidence modes.
 Physical/repeat/failure checks passed; strict smooth-playback timing is still

@@ -22,10 +22,53 @@ REQUIRED_COMMON_SOURCES=frozenset(('traffic/driver_control.py','traffic/path_fol
     'traffic/loop_driving.py','traffic/physx_vehicle.py','traffic/physics_session.py',
     'traffic/rendered_physics_session.py','traffic/vehicle_contacts.py','traffic/showcase_clearance.py',
     'usd/physical_scene.py','usd/showcase_vehicle.py'))
+RESPONSIVE_CONFIG_DIFFERENCES=CONFIG_DIFFERENCES|frozenset(('ui_profile','statistics_hz','frame_generation',
+    'cpu_threads','profile_render','instance_visuals'))
+RESPONSIVE_SOURCE_DIFFERENCES=frozenset(('scripts/demo_loop_showcase.py','scripts/physics_loop_showcase.py',
+    'experiments/loop_showcase_config.py','visualization/loop_showcase_view.py',
+    'visualization/showcase_responsiveness.py','visualization/highwaysim.showcase.kit',
+    'visualization/showcase_render_profile.py','usd/showcase_fleet.py'))
+RESPONSIVE_COMMON_SOURCES=REQUIRED_COMMON_SOURCES|frozenset(('traffic/loop_showcase_control.py',
+    'usd/showcase_fleet.py'))
+RESPONSIVE_ADDED_SOURCES=frozenset(('visualization/showcase_responsiveness.py',
+    'visualization/highwaysim.showcase.kit','visualization/showcase_render_profile.py'))
 CONTROL_FIELDS=('phase','throttle','brake','steering_rad','fallback','command_expires_tick',
     'controller_fallback','controller_status','controller_reason','lane',
     'completed_lane_changes','completed_passes')
 FLEET_PRESENTATION_FIELDS=frozenset(('episode_id','cache_readback','wheel_visual_update_every_steps','wheel_visual_hz'))
+REQUIRED_FLEET_ASSETS=frozenset(('assets/showcase-block-car.usda','assets/showcase-block-car-physics.usda',
+    'assets/showcase-block-car-geometry.usda'))
+INSTANCED_FLEET_ASSETS=frozenset(('assets/showcase-block-car-visual-library.usda',
+    'assets/showcase-block-car-instanced-geometry.usda'))
+FLEET_LAYOUT_ASSET='showcase-fleet-layout.usda'
+INSTANCED_FLEET_METADATA=dict(instance_visuals=True,
+    visual_instance_policy='shared immutable body palettes and wheel Geometry; editable proxy and spin pivots',
+    wheel_geometry_child='Geometry',visual_library='assets/showcase-block-car-visual-library.usda')
+
+
+def _responsive_fleet_contract(run):
+    """Only declared immutable visual assets/layout may differ from v06."""
+    fleet=deepcopy(run['scene_contract']['fleet'])
+    recorded=fleet.get('asset_hashes')
+    if not repeat._hashes(recorded):raise ValueError('Missing or invalid fleet asset hashes')
+    hashes={}
+    for path,digest in recorded.items():
+        name=path.replace('\\','/')
+        if name in hashes:raise ValueError('Duplicate normalized fleet asset path: '+name)
+        hashes[name]=digest
+    instanced=run['config'].get('instance_visuals',False)
+    expected=REQUIRED_FLEET_ASSETS|{FLEET_LAYOUT_ASSET}|(INSTANCED_FLEET_ASSETS if instanced else set())
+    if set(hashes)!=expected:
+        raise ValueError('Fleet assets do not match bounded known paths; missing='+repr(sorted(expected-set(hashes)))
+            +'; unexpected='+repr(sorted(set(hashes)-expected)))
+    metadata={name:fleet[name] for name in INSTANCED_FLEET_METADATA if name in fleet}
+    if not repeat._same(metadata,INSTANCED_FLEET_METADATA if instanced else {}):
+        raise ValueError('Fleet visual instancing metadata differs from its declared configuration')
+    for name in INSTANCED_FLEET_METADATA:fleet.pop(name,None)
+    # Retain all three original entry/physics/geometry hashes in the exact
+    # physical comparison. A filename suffix is never sufficient for exclusion.
+    fleet['asset_hashes']={name:hashes[name] for name in REQUIRED_FLEET_ASSETS}
+    return fleet,hashes,metadata
 
 
 def _physical_contract(run):
@@ -65,16 +108,26 @@ def compare_motion(left,right):
                           if source_maps[0].get(name)!=source_maps[1].get(name))
     config_changes=sorted(name for name in set(configs[0])|set(configs[1])
                           if not repeat._same(configs[0].get(name),configs[1].get(name)))
-    if any(cfg.get('version') not in ('v05','v06') for cfg in configs):
-        failures.append('Cross-profile assessment requires v05/v06 showcase runs')
-    if set(config_changes)-CONFIG_DIFFERENCES:
-        failures.append('Unmatched physical or timing settings: '+repr(sorted(set(config_changes)-CONFIG_DIFFERENCES)))
-    if set(source_changes)-SOURCE_DIFFERENCES:
-        failures.append('Undeclared source differences: '+repr(sorted(set(source_changes)-SOURCE_DIFFERENCES)))
+    versions={cfg.get('version') for cfg in configs}
+    responsive='v07' in versions
+    allowed_config=RESPONSIVE_CONFIG_DIFFERENCES if responsive else CONFIG_DIFFERENCES
+    allowed_sources=RESPONSIVE_SOURCE_DIFFERENCES if responsive else SOURCE_DIFFERENCES
+    common_sources=RESPONSIVE_COMMON_SOURCES if responsive else REQUIRED_COMMON_SOURCES
+    if not (versions<=({'v06','v07'} if responsive else {'v05','v06'})):
+        failures.append('Cross-profile assessment requires v05/v06 or v06/v07 showcase runs')
+    if set(config_changes)-allowed_config:
+        failures.append('Unmatched physical or timing settings: '+repr(sorted(set(config_changes)-allowed_config)))
+    if set(source_changes)-allowed_sources:
+        failures.append('Undeclared source differences: '+repr(sorted(set(source_changes)-allowed_sources)))
     for label,run,sources in zip(('first','second'),(first,second),source_maps):
+        if (run['config'].get('profile_render') is True
+                or 'native_profiler_enabled' in run['summary'].get('display_qualification_exclusions',[])):
+            failures.append(label+': native render profiling runs are diagnostic and cannot qualify performance')
         if not repeat._hashes(sources):failures.append(label+': invalid source hashes')
-        if not REQUIRED_COMMON_SOURCES.issubset(sources):
+        if not common_sources.issubset(sources):
             failures.append(label+': missing required common physics source snapshots')
+        if run['config'].get('version')=='v07' and not RESPONSIVE_ADDED_SOURCES.issubset(sources):
+            failures.append(label+': missing required v07 presentation source snapshots')
         asset=run['scene_contract'].get('source_vehicle_hashes')
         if not repeat._hashes(asset):failures.append(label+': missing prepared vehicle asset hashes')
         if not repeat._hashes(run['scene_contract'].get('fleet',{}).get('asset_hashes')):
@@ -87,6 +140,19 @@ def compare_motion(left,right):
                 or not repeat._same(contracts[0][field],contracts[1][field])):
             failures.append('Scene physical contract differs or is missing: '+field)
     fleets=[run['scene_contract'].get('fleet') for run in (first,second)]
+    fleet_asset_changes=[];fleet_visual_changes=[]
+    if responsive:
+        try:
+            normalized=[_responsive_fleet_contract(run) for run in (first,second)]
+            fleets=[item[0] for item in normalized]
+            first_assets,second_assets=normalized[0][1],normalized[1][1]
+            fleet_asset_changes=[dict(path=name,first=first_assets.get(name),second=second_assets.get(name))
+                for name in sorted(set(first_assets)|set(second_assets)) if first_assets.get(name)!=second_assets.get(name)]
+            first_visual,second_visual=normalized[0][2],normalized[1][2]
+            fleet_visual_changes=[dict(field=name,first=first_visual.get(name),second=second_visual.get(name))
+                for name in sorted(INSTANCED_FLEET_METADATA) if not repeat._same(first_visual.get(name),second_visual.get(name))]
+        except (KeyError,TypeError,ValueError,AttributeError) as error:
+            failures.append('Fleet visual provenance: '+str(error))
     if (not all(isinstance(fleet,dict) for fleet in fleets) or not repeat._same(
             {k:v for k,v in fleets[0].items() if k not in FLEET_PRESENTATION_FIELDS},
             {k:v for k,v in fleets[1].items() if k not in FLEET_PRESENTATION_FIELDS})):
@@ -95,6 +161,8 @@ def compare_motion(left,right):
         run_ids=[first['run_id'],second['run_id']],failures=failures,
         config_differences=config_changes,source_differences=[dict(path=name,first=source_maps[0].get(name),
             second=source_maps[1].get(name)) for name in source_changes],
+        allowed_config_differences=sorted(allowed_config),allowed_source_differences=sorted(allowed_sources),
+        fleet_asset_differences=fleet_asset_changes,fleet_visual_differences=fleet_visual_changes,
         acceptance=dict(position_tolerance_m=.01,speed_tolerance_m_s=.01,control_decisions='exact every physics tick'),
         input_metrics=validation.get('input_metrics'),runtime_identities=validation.get('runtime_identities'))
     if failures:return result

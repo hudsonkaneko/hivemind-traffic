@@ -32,6 +32,7 @@ def points_for_shift(shift_m, count=61):
 @unittest.skipIf(Usd is None, 'USD authoring runtime required')
 class LoopShowcaseViewTests(unittest.TestCase):
     optimized = False
+    responsive = False
 
     def setUp(self):
         self.stage = Usd.Stage.CreateInMemory()
@@ -46,7 +47,8 @@ class LoopShowcaseViewTests(unittest.TestCase):
         UsdGeom.Xform.Define(self.stage, '/World/Vehicles')
         car = self.stage.DefinePrim('/World/Vehicles/vehicle_ego')
         car.GetReferences().AddReference(self.asset.GetRootLayer().identifier)
-        self.view = LoopShowcaseView(self.stage, CircleFixture(), optimized=self.optimized)
+        self.view = LoopShowcaseView(self.stage, CircleFixture(), optimized=self.optimized,
+                                     responsive=self.responsive)
         self.state = dict(position_m=[500., 0., 1.], yaw_rad=math.pi / 2)
 
     def assert_points_equal(self, expected):
@@ -218,6 +220,78 @@ class OptimizedLoopShowcaseViewTests(LoopShowcaseViewTests):
         self.assertFalse(self.view.camera_check()['passed'])
         self.view.update_showcase(self.state, 0., 'follow', points)
         self.assertTrue(self.view.camera_check()['passed'])
+
+
+class ResponsiveLoopShowcaseViewTests(OptimizedLoopShowcaseViewTests):
+    # The new opt-in is sufficient by itself; neither older default changes.
+    optimized = False
+    responsive = True
+
+    def test_unchanged_overview_and_path_constants_are_not_reauthored(self):
+        points = points_for_shift(3.7)
+        self.view.update_showcase(self.state, 0., 'overview', points)
+        writes = []
+        original_set = Usd.Attribute.Set
+
+        def record_set(attribute, value, *args, **kwargs):
+            writes.append((self.stage.GetEditTarget().GetLayer(), str(attribute.GetPath())))
+            return original_set(attribute, value, *args, **kwargs)
+
+        with patch.object(Usd.Attribute, 'Set', new=record_set):
+            for station in (5., 10., 15.):
+                self.view.update_showcase(self.state, station, 'overview', points)
+        self.assertEqual(writes, [(self.view.dynamic_layer,
+            '/World/Debug/Route/ProjectedPath.points')] * 3)
+        writes.clear()
+        changed = points_for_shift(7.4, count=41)
+        with patch.object(Usd.Attribute, 'Set', new=record_set):
+            self.view.update_showcase(self.state, 20., 'overview', changed)
+        self.assertEqual(writes, [(self.view.dynamic_layer,
+            '/World/Debug/Route/ProjectedPath.curveVertexCounts'), (self.view.dynamic_layer,
+            '/World/Debug/Route/ProjectedPath.points')])
+        self.assert_points_equal(changed)
+
+    def test_each_camera_owner_repairs_matrix_order_and_interest_when_unchanged(self):
+        points = points_for_shift(3.7)
+        self.view.update_showcase(self.state, 0., 'overview', points)
+        camera = self.stage.GetPrimAtPath(PATHS.overview_camera)
+        names = ('xformOp:transform:highwayLoopCamera', 'xformOpOrder', 'omni:kit:centerOfInterest')
+        expected = {name: camera.GetAttribute(name).Get() for name in names}
+        for layer in (self.view.dynamic_layer, self.view.camera_layer):
+            with self.subTest(layer=layer.identifier):
+                with Usd.EditContext(self.stage, layer):
+                    camera.GetAttribute(names[0]).Set(Gf.Matrix4d(1))
+                    camera.GetAttribute(names[1]).Set([])
+                    camera.GetAttribute(names[2]).Set(Gf.Vec3d(1, 2, 3))
+                self.view.update_showcase(self.state, 5., 'overview', points)
+                for name in names:
+                    self.assertEqual(layer.GetPropertyAtPath(PATHS.overview_camera + '.' + name).default,
+                                     expected[name])
+                self.assertTrue(self.view.camera_check()['passed'])
+
+    def test_responsive_layers_and_camera_reports_match_v06_exactly(self):
+        previous_stage = Usd.Stage.CreateInMemory()
+        UsdGeom.Xform.Define(previous_stage, '/World')
+        previous = LoopShowcaseView(previous_stage, CircleFixture(), optimized=True)
+        for i, mode in enumerate(('follow', 'traffic', 'overview', 'overview', 'follow', 'traffic')):
+            state = dict(position_m=[500. - i, 20. * i, 1.], yaw_rad=.5 * i)
+            points = points_for_shift(3.7 * (i % 3), count=41 if i % 2 else 61)
+            self.assertEqual(self.view.update_showcase(state, i * 20., mode, points),
+                             previous.update_showcase(state, i * 20., mode, points))
+            self.assertEqual(self.view.camera_check(), previous.camera_check())
+            self.assertEqual(self.view.dynamic_layer.ExportToString(), previous.dynamic_layer.ExportToString())
+            self.assertEqual(self.view.camera_layer.ExportToString(), previous.camera_layer.ExportToString())
+
+    def test_wheel_transforms_and_vehicle_opinions_are_untouched(self):
+        wheel_path = '/World/Vehicles/vehicle_ego/FrontLeftWheel'
+        wheel = UsdGeom.Xform.Define(self.stage, wheel_path)
+        wheel.AddRotateXYZOp().Set((12., 90., 4.))
+        expected = wheel.ComputeLocalToWorldTransform(Usd.TimeCode.Default())
+        for mode in ('follow', 'overview', 'traffic', 'overview'):
+            self.view.update_showcase(self.state, 0., mode, points_for_shift(7.4))
+        self.assertEqual(wheel.ComputeLocalToWorldTransform(Usd.TimeCode.Default()), expected)
+        for layer in (self.view.dynamic_layer, self.view.camera_layer):
+            self.assertFalse(layer.GetPrimAtPath('/World/Vehicles'))
 
 
 if __name__ == '__main__':
