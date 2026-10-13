@@ -4,6 +4,25 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-12 — Native sidebar and live traffic tuning (v08/v09)
+
+- Added a docked regular-editor sidebar with live viewing controls, validated
+  settings and 26 disabled, explicitly display-only future sliders. Preserved
+  v08's safe-stop/restart workflow as a separate milestone.
+- v09 adds live 4–80 background-car targets, bounded speed/following-gap ramps,
+  remote rate-limited entry/exit, generation-aware identity and an 80-slot native
+  pool without rebuilding USD or physics bindings. Rendering settings still
+  restart explicitly. Existing versions, source assets and results are preserved.
+- Two native live-change runs passed and repeated exactly across 12,240 physics
+  samples; population reached 80→12→40→12 without relaunch. Final general suite:
+  1,593 passed, 180 optional skips, 18 subtests; separate USD suites: 122 passed.
+  GUI docking/interaction were checked separately. Smoothness and exhaustive
+  parameter combinations remain unqualified; failed trials are preserved.
+- See [implementation, evidence and limits](showcase-live-controls.md). No
+  training, dependency installation, SUMO migration or sensor changes.
+- Google guide tab **37 Live showcase controls** synced and native-readback
+  verified, including command styling; all 37 older tab bodies unchanged.
+
 ## 2026-10-10 — Regular editor UI with v07 optimizations
 
 - Made the regular Isaac Sim editor the v07 default at the user's request;

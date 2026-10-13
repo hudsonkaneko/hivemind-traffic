@@ -482,13 +482,19 @@ class KinematicFleet:
         if not math.isfinite(sim_time_s) or sim_time_s < self._target_time_s:
             raise ValueError('Fleet target time must be finite and monotonic')
         import numpy as np
-        poses = [stopping_pose(s, sim_time_s,self._stop_time_s) for s in self._ordered_specs]
+        poses = [self.expected_pose(s, sim_time_s) for s in self._ordered_specs]
         targets = np.asarray([(*p['position_m'], *p['quaternion_xyzw']) for p in poses], dtype=np.float32)
         self._view.set_kinematic_targets(self._float_tensor(targets),
             self._index_tensor(np.arange(len(poses), dtype=np.uint32)))
         self._target_time_s = float(sim_time_s)
         self._target_count += 1
         self._invalidate_caches()
+
+    def expected_pose(self, spec, time_s):return stopping_pose(spec,time_s,self._stop_time_s)
+
+    def is_active(self, spec):return True
+
+    def logical_identity(self, spec):return spec.vehicle_id
 
     def publish_visuals(self, *, verify=True, focus_position_xy=None, wheel_distance_m=None):
         """Mirror measured native state to nonphysical geometry before rendering.
@@ -535,7 +541,7 @@ class KinematicFleet:
                 if self._target_count % self.wheel_update_every == 0 and near_focus:
                     # Decorative wheel angle only; chassis visuals use measured
                     # native pose, never fleet_pose's requested target.
-                    spin = stopping_pose(spec, self._target_time_s,self._stop_time_s)['wheel_spin_deg']
+                    spin = self.expected_pose(spec, self._target_time_s)['wheel_spin_deg']
                     for attribute in self._wheel_attributes[spec.vehicle_id]:
                         pending.append((attribute,spin))
             if self.batch_visual_updates:
@@ -557,7 +563,7 @@ class KinematicFleet:
         from pxr import Gf, Usd, UsdGeom
         transforms, _ = self._measured()
         cache = UsdGeom.XformCache(Usd.TimeCode.Default())
-        positions, angles, visible = [], [], []
+        positions, angles, visible, visibility_matches = [], [], [], []
         for spec, pose in zip(self._ordered_specs, transforms):
             prim = self.stage.GetPrimAtPath(spec.render_path)
             matrix = cache.GetLocalToWorldTransform(prim)
@@ -569,10 +575,11 @@ class KinematicFleet:
             positions.append(math.dist(position, pose[:3]))
             angles.append(abs(math.atan2(math.sin(rendered_yaw-native_yaw), math.cos(rendered_yaw-native_yaw))))
             visible.append(UsdGeom.Imageable(prim).ComputeVisibility() != 'invisible')
+            visibility_matches.append(visible[-1]==self.is_active(spec))
         finite = all(math.isfinite(v) for v in positions+angles)
-        return dict(passed=finite and all(visible) and max(positions) <= .002 and max(angles) <= .0001,
+        return dict(passed=finite and all(visibility_matches) and max(positions) <= .002 and max(angles) <= .0001,
                     max_position_error_m=max(positions), max_yaw_error_rad=max(angles),
-                    all_proxies_visible=all(visible), count=len(self.specs),
+                    all_proxies_visible=all(visible), visibility_matches_active=all(visibility_matches), count=len(self.specs),
                     native_target_time_s=self._target_time_s, publications=self._visual_update_count,
                     pose_source='actual native kinematic body transforms; nonphysical visible proxy')
 
@@ -609,9 +616,10 @@ class KinematicFleet:
         transforms, velocities = self._measured()
         result = []
         for spec, pose, velocity in zip(self._ordered_specs, transforms, velocities):
+            if not self.is_active(spec):continue
             x, y, z, qx, qy, qz, qw = map(float, pose)
             yaw = math.atan2(2*(qw*qz + qx*qy), 1-2*(qy*qy+qz*qz))
-            result.append(ObjectTrack(episode_id=self.episode_id, vehicle_id=spec.vehicle_id,
+            result.append(ObjectTrack(episode_id=self.episode_id, vehicle_id=self.logical_identity(spec),
                 tick=tick, x_m=x, y_m=y, yaw_rad=yaw,
                 speed_m_s=float(velocity[0]*math.cos(yaw)+velocity[1]*math.sin(yaw)),
                 length_m=LENGTH_M, width_m=WIDTH_M))
@@ -628,7 +636,7 @@ class KinematicFleet:
         transforms, velocities = self._measured()
         positions, angles, speed_errors = [], [], []
         for spec, pose, velocity in zip(self._ordered_specs, transforms, velocities):
-            expected = stopping_pose(spec, target_time_s,self._stop_time_s)
+            expected = self.expected_pose(spec, target_time_s)
             positions.append(math.dist(pose[:3], expected['position_m']))
             qx, qy, qz, qw = map(float, pose[3:])
             yaw = math.atan2(2*(qw*qz + qx*qy), 1-2*(qy*qy+qz*qz))

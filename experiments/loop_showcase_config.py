@@ -1,24 +1,35 @@
 """Bounded presentation fixtures, distinct from traffic-policy experiments."""
 import math
 
-VERSIONS = ('v01', 'v02', 'v03', 'v04', 'v05', 'v06', 'v07')
+VERSIONS = ('v01', 'v02', 'v03', 'v04', 'v05', 'v06', 'v07', 'v08', 'v09')
 MODES = ('showcase', 'blocked', 'dropout', 'contact-check')
 
 
 def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
                 camera='follow', capture=False, drive_s=None, evidence=None, render_hz=None,
-                ui_profile=None,cpu_threads=None,profile_render=False):
+                ui_profile=None,cpu_threads=None,profile_render=False,controls=None,panel_hidden=False,control_smoke=False):
+    sidebar=version in ('v08','v09')
+    if sidebar:
+        from experiments.showcase_controls import defaults,validate_settings
+        controls=validate_settings(defaults() if controls is None else controls)
+        if mode!='showcase' or ui_profile not in (None,'editor') or profile_render:
+            raise ValueError('Sidebar uses the regular editor and showcase mode without profiling')
+        if render_hz is not None and render_hz!=controls['render_hz']:
+            raise ValueError('Use sidebar settings for display cadence')
+        render_hz=controls['render_hz']
+    elif controls is not None or panel_hidden or control_smoke:
+        raise ValueError('Sidebar settings require v08')
     if version not in VERSIONS or mode not in MODES or camera not in ('follow','traffic','overview'):
         raise ValueError('Unknown showcase version, mode or camera')
-    if any(type(v) is not bool for v in (gui,paced,capture,profile_render)):
+    if any(type(v) is not bool for v in (gui,paced,capture,profile_render,panel_hidden,control_smoke)):
         raise ValueError('Flags must be boolean')
     if profile_render and version!='v07':
         raise ValueError('Renderer diagnosis requires v07')
-    if version not in ('v06','v07') and (evidence is not None or render_hz is not None):
+    if version not in ('v06','v07','v08','v09') and (evidence is not None or render_hz is not None):
         raise ValueError('Presentation/evidence and display overrides require v06/v07')
-    if ui_profile is not None and (version != 'v07' or ui_profile not in ('showcase','editor')):
+    if ui_profile is not None and (version not in ('v07','v08','v09') or ui_profile not in ('showcase','editor')):
         raise ValueError('UI profile requires v07 and showcase/editor')
-    if cpu_threads is not None and (version!='v07' or type(cpu_threads) is not int or cpu_threads not in (4,8,16,32)):
+    if cpu_threads is not None and (version not in ('v07','v08','v09') or type(cpu_threads) is not int or cpu_threads not in (4,8,16,32)):
         raise ValueError('CPU worker override requires v07 and 4/8/16/32')
     if evidence is not None and evidence not in ('full','presentation'):
         raise ValueError('Unknown evidence profile')
@@ -47,11 +58,23 @@ def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
     if version == 'v06':
         cfg.update(evidence_profile=evidence or 'presentation',render_hz=render_hz or 10,
                    decorative_wheel_distance_m=150.)
-    if version == 'v07':
+    if version in ('v07','v08','v09'):
         cfg.update(evidence_profile=evidence or 'presentation',render_hz=render_hz or 30,
                    decorative_wheel_distance_m=150.,ui_profile=ui_profile or 'editor',
                    statistics_hz=5,frame_generation=False,cpu_threads=cpu_threads or 8,
                    profile_render=profile_render,instance_visuals=True)
+    if sidebar:
+        cfg.update(controls=controls,panel_hidden=panel_hidden,control_smoke=control_smoke,
+                   target_speed_m_s=controls['ego_mph']*.44704,statistics_hz=controls['statistics_hz'],
+                   decorative_wheel_distance_m=controls['wheel_distance_m'],
+                   minimum_passes=0,minimum_lane_changes=0,
+                   experiment_kind='interactive exploration; not a fixed overtaking benchmark')
+        if version=='v08' and control_smoke and (not gui or panel_hidden):
+            raise ValueError('Control smoke requires a visible GUI sidebar')
+        if version=='v09' and control_smoke and not gui and not panel_hidden:
+            raise ValueError('Headless live control smoke requires --panel-hidden')
+        if version=='v09' and control_smoke and duration<90:
+            raise ValueError('Live control smoke requires at least 90 driving seconds')
     return cfg
 
 
@@ -60,13 +83,16 @@ def fleet_specs(config):
         entries=[(lane,65.,6.7056) for lane in range(4)]
     elif config['mode']=='contact-check':
         entries=[(1,16.,0.)]
-    elif config['version'] in ('v05','v06','v07'):
+    elif config['version'] in ('v05','v06','v07','v08','v09'):
         # Forty staggered pairs cover the whole ring, alternating lane pairs.
         # Common angular speed preserves gaps: nonreactive cars must not run
         # into one another after a few laps. Lane arc speeds remain explicit.
-        spacing=math.tau*500/40
+        count=config['controls']['traffic_count'] if config['version']=='v08' else 80
+        bands=(count+1)//2
+        speed=config['controls']['traffic_mph']*.44704 if config['version'] in ('v08','v09') else 6.7056
+        spacing=math.tau*500/bands
         entries=[]
-        for band in range(40):
+        for band in range(bands):
             lanes=(0,1) if band%2==0 else (2,3)
             jitter=(-8.,0.,8.,4.,-4.)[band%5]
             for offset,lane in enumerate(lanes):
@@ -74,7 +100,7 @@ def fleet_specs(config):
                 # staggers trap ego beside the neighbor at its follow gap.
                 stagger=18.*offset*(1 if band%2==0 else -1)
                 station=(78.+band*spacing+jitter+stagger)%(math.tau*500)
-                entries.append((lane,station,6.7056*(500+lane*3.7)/500))
+                if len(entries)<count:entries.append((lane,station,speed*(500+lane*3.7)/500))
     else:
         entries=[(1,80.,6.7056),(0,165.,6.7056),(1,255.,6.7056),
                  (2,345.,6.7056),(1,435.,6.7056),(0,525.,6.7056),
@@ -87,8 +113,9 @@ def fleet_specs(config):
 def validate_config(cfg):
     expected=make_config(cfg['version'],mode=cfg['mode'],gui=cfg['gui'],paced=cfg['paced'],
         camera=cfg['camera'],capture=cfg['capture'],drive_s=cfg['drive_s'],
-        evidence=cfg.get('evidence_profile'),render_hz=cfg['render_hz'] if cfg['version'] in ('v06','v07') else None,
-        ui_profile=cfg.get('ui_profile'),cpu_threads=cfg.get('cpu_threads'),profile_render=cfg.get('profile_render',False))
+        evidence=cfg.get('evidence_profile'),render_hz=cfg['render_hz'] if cfg['version'] in ('v06','v07','v08','v09') else None,
+        ui_profile=cfg.get('ui_profile'),cpu_threads=cfg.get('cpu_threads'),profile_render=cfg.get('profile_render',False),
+        controls=cfg.get('controls'),panel_hidden=cfg.get('panel_hidden',False),control_smoke=cfg.get('control_smoke',False))
     if cfg!=expected:raise ValueError('Resolved showcase settings differ from declared profile')
 
 
@@ -162,7 +189,7 @@ def assess(rows,config,contact_count,passes,lane_changes):
     if config['mode']=='dropout':
         expired=[r for r in stop if r['applied_tick']>=drive[-1]['command_expires_tick']] if drive else []
         gates['command_loss_braking']=bool(expired) and all(r['fallback'] and r['throttle']==0 and r['brake']==1 for r in expired)
-    if config['version'] in ('v05','v06','v07') and not positive:
+    if config['version'] in ('v05','v06','v07','v08','v09') and not positive:
         end_hold=[r for r in stop if r['sim_time_s']>=config['duration_s']-5]
         gates['background_rundown']=bool(end_hold) and all(finite(r.get('background_max_speed_m_s'))
             and 0<=r['background_max_speed_m_s']<=.05 for r in end_hold)

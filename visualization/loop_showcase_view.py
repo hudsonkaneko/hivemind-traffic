@@ -9,6 +9,8 @@ class LoopShowcaseView(HighwayLoopView):
         super().__init__(stage,route)
         self.optimized=optimized
         self.responsive=responsive
+        self.follow_distance_m=20.
+        self.follow_height_m=17.
         self._path_visible=True
         if responsive:
             self._path_attributes=(self.path.GetCurveVertexCountsAttr(),
@@ -51,7 +53,7 @@ class LoopShowcaseView(HighwayLoopView):
         elif mode=='traffic':
             target=(x+30*c,y+30*s,0.);eye=(target[0]-1,target[1]-1,90.);path=PATHS.follow_camera
         else:
-            eye=(x-20*c,y-20*s,z+17);target=(x+12*c,y+12*s,z+.15);path=PATHS.follow_camera
+            eye=(x-self.follow_distance_m*c,y-self.follow_distance_m*s,z+self.follow_height_m);target=(x+12*c,y+12*s,z+.15);path=PATHS.follow_camera
         if mode=='overview' and self._overview_pose is not None:
             matrix,interest=self._overview_pose
         else:

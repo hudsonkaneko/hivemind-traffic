@@ -46,6 +46,8 @@ The requested prepared vehicle is local-only and is never uploaded to GitHub.
 | v05 | 80-car staggered traffic and explicit fleet rundown | At least 6 passes/4 changes in 90 s, original clearance/contact gates, synchronized visuals, repeated physical result and stopped background fleet; timing reported separately |
 | v06 | Profiled, lighter presentation of the same 80-car scenario | Same physical motion/safety, strict same-source repeat, explicitly sampled versus full audits; smooth real-time remains a separate open gate |
 | v07 | Immutable visual instancing, small Kit app and native-frame/UI timing | Same physics and colliders, matched repeats, physical failure controls, and separate strict 30/60-Hz display gates; see measured evidence |
+| v08 | Native sidebar, live display controls and supervised next-run settings | Native callback/disabled-control checks, safe stop/restart and preserved evidence |
+| v09 | Live density, speed targets and following gap using a fixed pool | Repeated same-process count changes, native identity/visibility, physical safety and clean process gates; see [live controls](../../documentation/showcase-live-controls.md) |
 
 **Visual correction:** early v01–v03 runs proved physical obstacle motion, not
 visible obstacle motion. Screenshot review found static block visuals despite

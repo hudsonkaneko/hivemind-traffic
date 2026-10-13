@@ -1,6 +1,6 @@
 """Supervised live showcase; launch through demo_loop_showcase.py."""
 import argparse
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import json
 import math
 import os
@@ -46,13 +46,17 @@ def main():
     if not output.is_relative_to(ROOT/'outputs') or not output.is_dir() or (output/'probe-result.json').exists():
         parser.error('Fresh supervisor-created output directory required')
     cfg=json.loads((output/'resolved-config.json').read_text());validate_config(cfg)
-    responsive=cfg['version']=='v07'
-    optimized=cfg['version'] in ('v06','v07');dense=cfg['version'] in ('v05','v06','v07')
+    sidebar_enabled=cfg['version'] in ('v08','v09')
+    live_driving=cfg['version']=='v09';live=None
+    responsive=cfg['version'] in ('v07','v08','v09')
+    optimized=cfg['version'] in ('v06','v07','v08','v09');dense=cfg['version'] in ('v05','v06','v07','v08','v09')
     presentation=cfg.get('evidence_profile')=='presentation'
     profile=SequentialProfiler()
     calibration=profile.calibrate_overhead()
     route=CircularLoop();episode='showcase-'+output.name
     app=session=vehicle=fleet=monitor=view=window=label=viewport=writer=preview=ui_probe=render_probe=None
+    sidebar=None;restart_config=None;restart_values=None;smoke_done=False;next_stats_tick=0
+    live_settings=cfg.get('controls',{})
     static_layers=None;rows=[];plans=[];contacts=[];camera_checks=[];visual_checks=[];captures=[];captured=set()
     passed=set();passed_records=[];seen_ahead=set();peers={};last_peer_stations={}
     native_audit_ticks=[];last_native_audit_tick=0;paused_wall=0.
@@ -61,6 +65,9 @@ def main():
     try:
         from isaacsim import SimulationApp
         graphics=rendering_profile(True)
+        if sidebar_enabled:
+            scale=cfg['controls']['resolution_percent']/100
+            graphics.update(width=round(960*scale),height=round(600*scale))
         if responsive:graphics['limit_cpu_threads']=cfg['cpu_threads']
         if cfg.get('profile_render'):
             graphics['extra_args']=[*graphics['extra_args'],'--enable','omni.hydra.engine.stats']
@@ -114,14 +121,30 @@ def main():
         result['spawn']=spawn_vehicle_on_loop(session.stage,0.,radius_m=500+3.7*cfg['initial_lane'])
         # Local publication's point light was for an asset inspection, not a 1 km road.
         session.stage.GetPrimAtPath('/World/Lighting/Key').SetActive(False)
-        fleet=KinematicFleet(session.stage,scene_directory,fleet_specs(cfg),episode_id=episode,
-            wheel_update_every=cfg['physics_hz']//cfg['render_hz'] if cfg['version'] in ('v03','v04','v05','v06','v07') else 1,
+        fleet_class=KinematicFleet;fleet_extra={}
+        if live_driving:
+            from traffic.live_showcase import LiveTraffic,LiveShowcaseController
+            from usd.live_showcase_fleet import LiveKinematicFleet
+            live=LiveTraffic(fleet_specs(cfg),cfg['controls'])
+            fleet_class=LiveKinematicFleet;fleet_extra={'live':live}
+        fleet=fleet_class(session.stage,scene_directory,fleet_specs(cfg),episode_id=episode,**fleet_extra,
+            wheel_update_every=cfg['physics_hz']//cfg['render_hz'] if cfg['version'] in ('v03','v04','v05','v06','v07','v08','v09') else 1,
             batch_visual_updates=dense,separate_visuals=dense,cache_readback=optimized,
             instance_visuals=cfg.get('instance_visuals',False))
         monitor=VehicleContactMonitor(session.stage,vehicle.path)
         view=LoopShowcaseView(session.stage,route,optimized=optimized,responsive=responsive)
-        ui_state=dict(camera=cfg['camera'],paused=False)
-        if cfg['gui']:window,label=make_controls(ui_state,view=view if optimized else None)
+        ui_state=dict(camera=cfg['camera'],paused=False,show_path=True)
+        # Hidden native-model smoke still needs real widgets/subscriptions;
+        # ordinary headless runs avoid constructing the interactive panel.
+        if cfg['gui'] or (sidebar_enabled and cfg['control_smoke']):
+            if sidebar_enabled:
+                from visualization.showcase_sidebar import ShowcaseSidebar
+                sidebar=ShowcaseSidebar(ui_state,cfg['controls'],visible=not cfg['panel_hidden'],live_driving=live_driving)
+                label=sidebar.telemetry
+            else:window,label=make_controls(ui_state,view=view if optimized else None)
+        if sidebar_enabled:
+            view.follow_distance_m=live_settings['camera_distance_m']
+            view.follow_height_m=live_settings['camera_height_m']
         viewport=get_active_viewport()
         if viewport is None:raise RuntimeError('No viewport is available')
         if responsive:
@@ -136,11 +159,13 @@ def main():
         viewport.resolution=(graphics['width'],graphics['height'])
         model=vehicle.metadata
         controller_config=ShowcaseConfig(target_speed_m_s=cfg['target_speed_m_s'],
+            desired_time_gap_s=cfg['controls']['following_s'] if sidebar_enabled else 1.8,
             wheelbase_m=vehicle.wheelbase_m,rear_axle_offset_m=vehicle.wheelbase_m/2,
             ego_length_m=model['chassis_collision_dimensions_m'][0],
             ego_width_m=model['chassis_collision_dimensions_m'][1],
             ego_collision_offset_x_m=model['chassis_collision_center_m'][0])
-        controller=ShowcaseController(episode,'ego',controller_config,initial_lane=cfg['initial_lane'],optimized=optimized)
+        controller_class=LiveShowcaseController if live_driving else ShowcaseController
+        controller=controller_class(episode,'ego',controller_config,initial_lane=cfg['initial_lane'],optimized=optimized)
         peer_station=circular_station if optimized else lambda x,y:route.project(x,y).s_m % route.length_m
         initial=dict(position_m=result['spawn']['position_m'],yaw_rad=math.pi/2,speed_m_s=0.)
         initial_state=VehicleState.from_physics(initial,episode_id=episode,vehicle_id='ego',tick=0)
@@ -174,6 +199,9 @@ def main():
         warmup_started=time.perf_counter()
         fleet.publish_visuals()
         for _ in range(4):session.render()
+        if sidebar:
+            sidebar.dock()
+            for _ in range(2):session.render()
         result['renderer_warmup_s']=time.perf_counter()-warmup_started
         if responsive:
             ui_probe=KitResponsiveness();ui_probe.start()
@@ -194,6 +222,25 @@ def main():
                     raise RuntimeError('Paused preview closed or bounded deadline reached')
                 before=time.perf_counter();render_frame(session,render_probe)
                 time.sleep(.02);paused_wall+=time.perf_counter()-before
+            if sidebar:
+                # In-memory only; widget callbacks never step physics or author USD.
+                if cfg['control_smoke'] and live_driving:
+                    sidebar.live_smoke_action(tick,hz);smoke_done=sidebar.smoke_stage
+                elif cfg['control_smoke'] and not smoke_done and tick>=5*hz:
+                    sidebar.smoke_action();smoke_done=True
+                changes=sidebar.settings.consume_live(tick)
+                live_settings=sidebar.settings.active
+                if live and changes:live.configure(live_settings)
+                if sidebar.settings.restart_request is not None and restart_config is None:
+                    from experiments.showcase_controls import restart_assessment_config
+                    drive_s=min(cfg['drive_s'],max(15,math.ceil(tick/hz)-cfg['settle_s']))
+                    restart_config=restart_assessment_config(cfg,drive_s)
+                    restart_values=dict(sidebar.settings.restart_request)
+                    brake_tick=(cfg['settle_s']+drive_s)*hz
+                    result['restart_requested_at_tick']=tick
+                if view.path_visible!=ui_state['show_path']:view.set_path_visible(ui_state['show_path'])
+                view.follow_distance_m=live_settings['camera_distance_m']
+                view.follow_height_m=live_settings['camera_height_m']
             profile.begin_iteration()
             schedule=audit_schedule(cfg,tick+1)
             phase='settle' if tick<cfg['settle_s']*hz else 'brake' if tick>=brake_tick else 'drive'
@@ -204,6 +251,13 @@ def main():
             command=None
             physical_state=VehicleState.from_physics(state,episode_id=episode,vehicle_id='ego',tick=tick)
             if tick%2==0:
+                if live:
+                    controller.accept_lifecycle(tracks,live.pending_lifecycle)
+                    live.pending_lifecycle.clear()
+                    live.prepare_control(2/hz,maneuver=controller._maneuver)
+                    controller.config=replace(controller.config,target_speed_m_s=live.ego_target_m_s,desired_time_gap_s=live.following_s)
+                    controller.changing_traffic_speed=live.ramping
+                    controller.traffic_transition_pending=len(live.active)!=live.settings['traffic_count']
                 if phase=='settle':command=DriverCommand(episode,'ego',tick,tick,tick+12,0,0,1)
                 elif not (phase=='brake' and cfg['mode']=='dropout'):
                     command=controller.command(physical_state,tick,tracks,stop=phase=='brake')
@@ -220,6 +274,9 @@ def main():
             applied=gate.step(tick=tick,dt_s=1/hz,command=command)
             vehicle.apply(applied,cfg['drive_torque_nm'],cfg['brake_torque_nm'])
             profile.mark('actuation')
+            if live:
+                fleet.maneuver=controller._maneuver
+                if phase=='drive':fleet.reconcile(tick,state['position_m'][:2],maneuver=controller._maneuver)
             fleet.update((tick+1)/hz)
             profile.mark('fleet_targets')
             session.step(publish_usd=not dense)
@@ -242,6 +299,7 @@ def main():
                 station=peer_station(t.x_m,t.y_m)
                 previous=last_peer_stations.get(t.vehicle_id)
                 if previous is not None:peers[t.vehicle_id]+=(station-previous+route.length_m/2)%route.length_m-route.length_m/2
+                else:peers[t.vehicle_id]=tracking['progress_m']+(station-projection.s_m+route.length_m/2)%route.length_m-route.length_m/2
                 last_peer_stations[t.vehicle_id]=station
                 relative=peers[t.vehicle_id]-tracking['progress_m']
                 if relative>=(ego_box.length_m+t.length_m)/2+2:seen_ahead.add(t.vehicle_id)
@@ -267,6 +325,9 @@ def main():
                 lane=diagnostics.get('lane',cfg['initial_lane']),completed_lane_changes=max_lanes,
                 completed_passes=len(passed))
             if optimized:row['background_native_audit_tick']=last_native_audit_tick
+            if live:row.update(active_background_count=len(tracks),requested_background_count=live.settings['traffic_count'],
+                               applied_ego_target_m_s=live.ego_target_m_s,applied_traffic_speed_m_s=live.speed_m_s,
+                               applied_following_s=live.following_s)
             rows.append(row)
             profile.mark('safety_and_metrics')
             if schedule['objects']:plans.append(dict(tick=tick+1,diagnostics=diagnostics,objects=[asdict(t) for t in tracks]))
@@ -279,16 +340,21 @@ def main():
                 if dense:session.publish_transforms()
                 if optimized:
                     fleet.publish_visuals(verify=not presentation,
-                        focus_position_xy=state['position_m'][:2],wheel_distance_m=cfg['decorative_wheel_distance_m'])
+                        focus_position_xy=state['position_m'][:2],wheel_distance_m=live_settings['wheel_distance_m'] if sidebar_enabled else cfg['decorative_wheel_distance_m'])
                 else:fleet.publish_visuals()
                 profile.mark('visual_publication')
                 physical_state=VehicleState.from_physics(state,episode_id=episode,vehicle_id='ego',tick=tick+1)
-                path_points=controller.path_points(physical_state) if not optimized or view.path_visible else None
+                path_points=controller.path_points(physical_state,**({'horizon_m':live_settings['path_horizon_m']} if sidebar_enabled else {})) if not optimized or view.path_visible else None
                 camera_path=view.update_showcase(state,projection.s_m,ui_state['camera'],path_points)
                 if not responsive or viewport.camera_path!=camera_path:viewport.camera_path=camera_path
-                if label and (not responsive or tick+1==session.render_every_steps or (tick+1)%(hz//cfg['statistics_hz'])==0):label.text=(f"{cfg['version']} | {phase} | {state['speed_m_s']/0.44704:.1f} mph | {len(tracks)} traffic cars\n"
+                refresh_stats=(tick+1>=next_stats_tick) if sidebar_enabled else (not responsive or tick+1==session.render_every_steps or (tick+1)%(hz//cfg['statistics_hz'])==0)
+                if label and refresh_stats:label.text=(f"{cfg['version']} | {phase} | {state['speed_m_s']/0.44704:.1f} mph | {len(tracks)} traffic cars\n"
                     f"Passes {len(passed)} | lane changes {max_lanes} | clearance {row['clearance_m']:.2f} m\n"
                     f"{row['controller_status']}: {row['controller_reason']} | {row['sim_time_s']:.0f}s")
+                if sidebar_enabled and refresh_stats:next_stats_tick=tick+1+hz/live_settings['statistics_hz']
+                if live and sidebar and refresh_stats:
+                    sidebar.live_status=f'Actual: {len(tracks)} cars | traffic {live.speed_m_s/.44704:.1f} mph'
+                    sidebar.refresh_status()
                 profile.mark('camera_overlay_ui')
                 render_frame(session,render_probe)
                 profile.mark('render')
@@ -311,9 +377,10 @@ def main():
             if (tick+1)%(hz*10)==0:
                 print(f"SHOWCASE t={row['sim_time_s']:.0f} speed={row['speed_m_s']:.2f} passes={len(passed)} lane_changes={max_lanes} gap={row['clearance_m']:.2f} state={row['controller_status']} {row['controller_reason']}",flush=True)
             profile.finish_iteration()
+            if restart_config and tick+1>=restart_config['duration_s']*hz:break
         if ui_probe:ui_probe.stop()
         if render_probe:render_probe.close()
-        result.update(assess(rows,cfg,len(contacts),passed,max_lanes))
+        result.update(assess(rows,restart_config or cfg,len(contacts),passed,max_lanes))
         extra=dict(camera=bool(camera_checks) and all(c['passed'] for c in camera_checks),
             background_visual_sync=bool(visual_checks) and all(c['passed'] for c in visual_checks),
             background_native_contract=bool(rows) and all(r['background_native_passed'] for r in rows),
@@ -326,6 +393,11 @@ def main():
             extra['optional_audit_coverage']=(native_audit_ticks==[t for t in range(1,len(rows)+1) if audit_schedule(cfg,t)['native']]
                 and [r['tick'] for r in visual_checks]==[t for t in range(1,len(rows)+1) if audit_schedule(cfg,t)['visual']])
         result['gates'].update(extra);result['passed']=all(result['gates'].values())
+        if restart_config:
+            result.update(restart_ready=result['passed'],passed=False,
+                run_status='stopped_for_requested_restart',full_scenario_completed=False,
+                restart_settings=restart_values,stop_assessment_config=restart_config,
+                qualification_eligible=False)
         result['behavior_runtime']['post_run_state']=assert_behavior_scripting_disabled(extension_manager)
         if dense:
             result['sensor_icon_runtime']['post_run_state']=assert_sensor_icons_disabled(extension_manager)
@@ -341,6 +413,26 @@ def main():
             except Exception as error:result.update(passed=False,render_profiler_close_error=repr(error))
             result['render_diagnosis']=render_probe.summary()
             write_json(output/'render-diagnosis.json',result['render_diagnosis'])
+        if sidebar:
+            result['sidebar']=dict(active=sidebar.settings.active,pending=sidebar.settings.pending,
+                display_events=sidebar.settings.events,event_count=len(sidebar.settings.events),
+                future_controls_enabled=any(w.enabled for w in sidebar.future_widgets),
+                future_control_count=len(sidebar.future_widgets),docked=sidebar.docked,
+                widget_model_smoke=smoke_done,mouse_latency_qualified=False)
+            panel_ok=not result['sidebar']['future_controls_enabled'] and (cfg['panel_hidden'] or sidebar.docked)
+            result.setdefault('gates',{})['sidebar_contract']=panel_ok
+            result['passed']=bool(result.get('passed') and panel_ok)
+            if result.get('restart_ready'):result['restart_ready']=panel_ok
+            write_json(output/'control-events.json',sidebar.settings.events)
+        if live:
+            result['live_traffic']=dict(capacity=live.capacity,active_count=len(live.active),lifecycle_events=live.events,
+                no_process_restart=restart_config is None,final_settings=live.settings)
+            write_json(output/'traffic-lifecycle.json',live.events)
+            if cfg['control_smoke']:
+                from traffic.live_showcase import assess_live_smoke
+                result['live_smoke']=assess_live_smoke(rows,live.events,smoke_done,restart_config is not None)
+                result.setdefault('gates',{})['live_smoke']=result['live_smoke']['passed']
+                result['passed']=bool(result.get('passed') and result['live_smoke']['passed'])
         result['runtime_profile']=profile.summary(simulation_time_s=len(rows)/cfg['physics_hz'])
         result['profiling_overhead']=profile.estimate_overhead_for_run(calibration)
         write_json(output/'runtime-profile.json',result['runtime_profile'])
@@ -368,6 +460,8 @@ def main():
                     wall_s=result['preview_timing']['active_wall_s'],simulation_s=len(rows)/cfg['physics_hz'],
                     render_hz=cfg['render_hz'],complete=len(rows)==cfg['duration_s']*cfg['physics_hz'])
                 result['display_qualification_exclusions']=display_qualification_exclusions(cfg,paused_wall)
+                if sidebar and (sidebar.settings.events or restart_config or cfg['control_smoke']):
+                    result['display_qualification_exclusions'].append('interactive_display_changes_or_restart')
                 result['smooth_display_passed']=bool(result['smooth_display_passed'] and result['responsiveness']['passed']
                     and not result['display_qualification_exclusions'])
                 write_json(output/'ui-event-timing.json',dict(application_frames=ui_probe.frames,native_completions=ui_probe.completed))
@@ -383,17 +477,21 @@ def main():
         if window:
             window.visible=False
             window.destroy()  # Release callbacks holding the USD-backed view.
+        if sidebar:sidebar.close();sidebar=None
         if fleet:fleet.release()
         window=label=view=monitor=vehicle=fleet=None;static_layers=None
         if session:
             try:session.close()
             except Exception as error:result.update(passed=False,session_close_error=repr(error))
             write_json(output/'lifecycle.json',session.lifecycle)
+        if sidebar_enabled:
+            result['cleanup_verified']=bool(session and session.lifecycle[-1]['event']=='closed'
+                and not any(v for k,v in result.items() if k=='error' or k.endswith('_error')))
         result.update(total_wall_s=time.perf_counter()-started,process=process_sample(),preview_files=[p.name for p in output.glob('preview-*.png')])
         write_json(output/'probe-result.json',result)
         print('SHOWCASE_RESULT='+json.dumps(dict(passed=result['passed'],output=str(output),error=result.get('error'))),flush=True)
         if app:app.close()
-    return 0 if result['passed'] else 1
+    return 0 if result['passed'] or (result.get('restart_ready') and result.get('cleanup_verified')) else 1
 
 
 if __name__=='__main__':raise SystemExit(main())

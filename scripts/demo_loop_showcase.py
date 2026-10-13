@@ -59,17 +59,62 @@ def main():
     parser.add_argument('--cpu-threads',type=int,choices=[4,8,16,32],help='v07 worker-count experiment; does not alter physics cadence')
     parser.add_argument('--profile-render',action='store_true',help='v07 bounded renderer diagnosis; not an FPS qualification run')
     parser.add_argument('--check',action='store_true')
+    parser.add_argument('--traffic-count',type=int,help='v08/v09 background cars, 4–80')
+    parser.add_argument('--ego-mph',type=float,help='v08/v09 main-car target, 5–35 mph')
+    parser.add_argument('--traffic-mph',type=float,help='v08/v09 inner-lane traffic speed, 5–25 mph')
+    parser.add_argument('--following-gap',type=float,help='v08/v09 preferred following gap, 1.8–3 s')
+    parser.add_argument('--panel-hidden',action='store_true',help='v08/v09 matched UI-overhead test')
+    parser.add_argument('--control-smoke',action='store_true',help='Native-model test: v08 restart, v09 live changes (use 90 s drive); not mouse latency or FPS qualification')
     args=parser.parse_args()
+    controls=None
+    overrides={'traffic_count':args.traffic_count,'ego_mph':args.ego_mph,
+               'traffic_mph':args.traffic_mph,'following_s':args.following_gap}
+    if args.version in ('v08','v09'):
+        from experiments.showcase_controls import defaults
+        controls={**defaults(),**{k:v for k,v in overrides.items() if v is not None}}
+        if args.render_hz is not None:controls['render_hz']=args.render_hz
+    elif any(v is not None for v in overrides.values()):parser.error('Traffic/driving overrides require v08 or v09')
     cfg=make_config(args.version,mode=args.mode,gui=not args.headless,paced=not args.unpaced,
         camera=args.camera,capture=args.capture,drive_s=args.drive_seconds,evidence=args.evidence,render_hz=args.render_hz,
-        ui_profile=args.ui_profile,cpu_threads=args.cpu_threads,profile_render=args.profile_render)
+        ui_profile=args.ui_profile,cpu_threads=args.cpu_threads,profile_render=args.profile_render,
+        controls=controls,panel_hidden=args.panel_hidden,control_smoke=args.control_smoke)
     runtime=isaac_runtime(ROOT,load_config(ROOT))
     if args.check:
         print(json.dumps(dict(runtime=str(runtime),config=cfg,vehicle_available=(ROOT/cfg['vehicle_directory']/'world.usda').is_file()),indent=2));return 0
     if not (ROOT/cfg['vehicle_directory']/'world.usda').is_file():
         parser.error('This showcase requires the separately supplied local prepared vehicle; it is not distributed by Git')
+    for episode in range(11):
+        result=run_once(cfg,runtime)
+        if not result.get('restart_verified'):return 0 if result['passed'] else 1
+        if episode==10:
+            print('Restart limit reached. Relaunch the command for a fresh session.',flush=True)
+            return 0
+        cfg=next_run_config(cfg,result['restart_settings'])
+        print('Safe stop and clean shutdown verified. Starting requested settings in a fresh process.',flush=True)
+
+
+def next_run_config(cfg,values):
+    if cfg['version'] not in ('v08','v09'):raise ValueError('Only sidebar versions support requested restarts')
+    return make_config(cfg['version'],gui=cfg['gui'],paced=cfg['paced'],camera=cfg['camera'],capture=cfg['capture'],
+        drive_s=cfg['drive_s'],evidence=cfg['evidence_profile'],cpu_threads=cfg['cpu_threads'],
+        controls=values,panel_hidden=cfg['panel_hidden'],control_smoke=False)
+
+
+def can_restart(result):
+    return bool(result.get('restart_ready') and result.get('run_status')=='stopped_for_requested_restart'
+        and result.get('exit_code')==0 and result.get('cleanup_verified') is True
+        and result.get('gates') and all(result['gates'].values())
+        and not result.get('stop_reason') and not result.get('runtime_error_lines')
+        and not result.get('usd_reference_warning_count') and not result.get('gpu_monitor_errors')
+        and result.get('gpu_peak_mib') is not None and not result.get('source_changed_during_run')
+        and not any(v for k,v in result.items() if k=='error' or k.endswith('_error')))
+
+
+def run_once(cfg,runtime):
     sources=SOURCES+[p.relative_to(ROOT).as_posix() for p in (ROOT/cfg['vehicle_directory']).rglob('*') if p.is_file()]
-    if cfg['version']=='v07':sources.extend(('visualization/highwaysim.showcase.kit','visualization/showcase_render_profile.py'))
+    if cfg['version'] in ('v07','v08','v09'):sources.extend(('visualization/highwaysim.showcase.kit','visualization/showcase_render_profile.py'))
+    if cfg['version'] in ('v08','v09'):sources.extend(('experiments/showcase_controls.py','visualization/showcase_sidebar.py'))
+    if cfg['version']=='v09':sources.extend(('traffic/live_showcase.py','usd/live_showcase_fleet.py'))
     output,manifest=run_package('loop_showcase',cfg,sources)
     command=[str(runtime),str(ROOT/'scripts/physics_loop_showcase.py'),'--output',str(output)]
     child=None;result=dict(passed=False);start=time.perf_counter()
@@ -103,10 +148,11 @@ def main():
         if child and child.poll() is None:stop_child(child)
         changed=[p for p,h in manifest['source_hashes'].items() if not (ROOT/p).is_file() or hashlib.sha256((ROOT/p).read_bytes()).hexdigest()!=h]
         result['source_changed_during_run']=changed;result['passed']=bool(result.get('passed') and not changed)
+        result['restart_verified']=can_restart(result) if cfg['version'] in ('v08','v09') else False
         finish(output,manifest,result)
     print(json.dumps(dict(output=str(output),**{key:result.get(key) for key in ('passed','gates','completed_passes',
         'completed_lane_changes','min_clearance_m','preview_timing','error','runtime_error_lines','source_changed_during_run')}),indent=2),flush=True)
-    return 0 if result['passed'] else 1
+    return result
 
 
 if __name__=='__main__':raise SystemExit(main())

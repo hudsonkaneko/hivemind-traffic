@@ -307,3 +307,16 @@ preserved by Git; version folders record the original evidence and limitations.
 See the [showcase evidence](loop-traffic-showcase.md) for the exact tested runs,
 camera captures, physical versus real-time status, and retained failures. Close
 other simulation runs before starting; memory measurements include the desktop.
+
+### Live density and speed controls (v09)
+
+```text
+python scripts/demo_loop_showcase.py --version v09
+```
+
+The regular Isaac editor includes a docked Highway Sim Controls panel. Density,
+main/background speed targets and following gap apply gradually without
+restarting. Requested and actual density differ while remote cars enter/leave.
+Rendering rate/resolution still need the explicit restart button; disabled
+future sliders have no effect. These are scripted exploratory controls, not
+LiDAR, learned driving or hivemind modes. See [behavior and evidence](showcase-live-controls.md).
