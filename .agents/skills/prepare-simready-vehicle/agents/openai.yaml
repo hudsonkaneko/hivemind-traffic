@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prepare SimReady Vehicle"
+  short_description: "Prepare vehicle assets and prove simulation readiness"
+  default_prompt: "Use $prepare-simready-vehicle to inspect one vehicle asset, prepare the requested simulation mode, and validate its readiness with reproducible evidence."

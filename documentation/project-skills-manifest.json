@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-10-12",
+  "source_kind": "User-managed Codex domain skills; installed originals unchanged",
+  "hash_convention": "source_sha256 hashes original source bytes before LF normalization and documented edits",
+  "notes": [
+    "All SKILL.md copies add the Highway Sim repository-scope paragraph.",
+    "prepare-simready-vehicle/SKILL.md replaces the private case-study link with an explicit exclusion.",
+    "Only text instructions, UI metadata and reusable references are included; no runtime, asset, connector, credential or training artifact is bundled.",
+    "No upstream LICENSE or NOTICE file was present in the selected source directories; no new license grant is asserted."
+  ],
+  "files": [
+    {
+      "path": ".agents/skills/sumo-traci-traffic/SKILL.md",
+      "source_sha256": "12ea244cbbaecee37c42480877fa9f90e471cb0c20c2c97f25eb530642c86791",
+      "changes": [
+        "repository-scope paragraph"
+      ]
+    },
+    {
+      "path": ".agents/skills/sumo-traci-traffic/agents/openai.yaml",
+      "source_sha256": "d42403e11475c16b29b0b587eb87fa32fc1254babd86f0009abba662c6f3d810",
+      "changes": []
+    },
+    {
+      "path": ".agents/skills/pettingzoo-multiagent-traffic/SKILL.md",
+      "source_sha256": "704300a3834f513856f00f1dc5e86d860802d3d2b225cbec208d4f634630d6b8",
+      "changes": [
+        "repository-scope paragraph"
+      ]
+    },
+    {
+      "path": ".agents/skills/pettingzoo-multiagent-traffic/agents/openai.yaml",
+      "source_sha256": "389c396db0ad7dcacb4873eca25b567c5257c1f333fdaa5242f04934c08cf0ab",
+      "changes": []
+    },
+    {
+      "path": ".agents/skills/train-hivemind-marl/SKILL.md",
+      "source_sha256": "53c310e3136df2aac8508f11da5ec3c43ebe7c8b31b34e43d66e5aa464927d14",
+      "changes": [
+        "repository-scope paragraph"
+      ]
+    },
+    {
+      "path": ".agents/skills/train-hivemind-marl/agents/openai.yaml",
+      "source_sha256": "7339dc2384486354a9f336ea2041015a8bd729d6c1f90d551f79a81264da139d",
+      "changes": []
+    },
+    {
+      "path": ".agents/skills/stream-traffic-openusd/SKILL.md",
+      "source_sha256": "7b4d6a011e66cec3f893eb5508ff0930a28011c858f5e52ada4d49623b23aac4",
+      "changes": [
+        "repository-scope paragraph"
+      ]
+    },
+    {
+      "path": ".agents/skills/stream-traffic-openusd/agents/openai.yaml",
+      "source_sha256": "298c52e2aa8d8da56b141263af392078c35cae61fcbd8ed947e1d4a64096c0ed",
+      "changes": []
+    },
+    {
+      "path": ".agents/skills/build-omniverse-traffic-viewer/SKILL.md",
+      "source_sha256": "eff5307b0df7ae4babed95edc59dc87901737e67897d64e8d0268b5afd53f9fa",
+      "changes": [
+        "repository-scope paragraph"
+      ]
+    },
+    {
+      "path": ".agents/skills/build-omniverse-traffic-viewer/agents/openai.yaml",
+      "source_sha256": "063746d7eb79fd9523a71f908e6f34906594a6762cd7d6df5365e72d5e664321",
+      "changes": []
+    },
+    {
+      "path": ".agents/skills/validate-av-isaac-lab/SKILL.md",
+      "source_sha256": "ea6fc1a87669562841a55745a904a4d78a474d10b34a60c57254752503557f94",
+      "changes": [
+        "repository-scope paragraph"
+      ]
+    },
+    {
+      "path": ".agents/skills/validate-av-isaac-lab/agents/openai.yaml",
+      "source_sha256": "2824ad030168b74a951c0fd69ebc93e9f865a229417b70a9c018723867fa4934",
+      "changes": []
+    },
+    {
+      "path": ".agents/skills/run-reproducible-av-experiments/SKILL.md",
+      "source_sha256": "8ab77c4444286c6119cd15a631d26dca2e246171a5693cdffef2f5ff998f091a",
+      "changes": [
+        "repository-scope paragraph"
+      ]
+    },
+    {
+      "path": ".agents/skills/run-reproducible-av-experiments/agents/openai.yaml",
+      "source_sha256": "0356e063fd268bcc2bd487d84f28a36a4c6626c8d905734082006fc4c28644d8",
+      "changes": []
+    },
+    {
+      "path": ".agents/skills/prepare-simready-vehicle/SKILL.md",
+      "source_sha256": "f51524d17b49553bfa296fa07ffc62a8c671c1912a31eb76063c1d946036db23",
+      "changes": [
+        "repository-scope paragraph",
+        "private case-study exclusion"
+      ]
+    },
+    {
+      "path": ".agents/skills/prepare-simready-vehicle/agents/openai.yaml",
+      "source_sha256": "aedf8480de06ce7211bfd9a176d9093161174672c4354fb1f6cc88ef90091154",
+      "changes": []
+    },
+    {
+      "path": ".agents/skills/prepare-simready-vehicle/references/isaac-lab-readiness.md",
+      "source_sha256": "063eea0a251bcef94e827920a04b3316d445403838ce63e83e7bf813773e297c",
+      "changes": []
+    },
+    {
+      "path": ".agents/skills/prepare-simready-vehicle/references/preparation-and-validation.md",
+      "source_sha256": "2cfd9e310da83445fc7afffb33ec567b5f1195638fa2d2df340667fd90b3f05c",
+      "changes": []
+    }
+  ],
+  "excluded": [
+    {
+      "path": "prepare-simready-vehicle/references/highway-sim-case-study.md",
+      "reason": "Private local-only asset case study and machine-specific paths; preserve installed original but do not publish."
+    }
+  ]
+}

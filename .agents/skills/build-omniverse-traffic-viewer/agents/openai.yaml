@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Omniverse Traffic Viewer"
+  short_description: "Build an interactive or headless RTX viewer"
+  default_prompt: "Use $build-omniverse-traffic-viewer to choose and build a Kit or ovstage plus ovrtx traffic viewer."

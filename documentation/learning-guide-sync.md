@@ -1,5 +1,18 @@
 # Engineering guide synchronization
 
+## Verified October 12: project-local skills
+
+Added **38 Project skills in GitHub**, tab `t.124coz3q4xks`, to the
+[Google engineering guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.124coz3q4xks).
+It explains the eight repo-local domain skills, use/discovery, provenance,
+architecture and training boundaries, private-data exclusions and validation.
+
+Revision-guarded writes and native readback verified exact inserted text,
+title/headings, two shaded Consolas examples and two source links. All 38
+previous tab bodies, titles and order were preserved; there are now 39 tabs.
+No rendered pagination audit is claimed. Source: [skill bundle](project-skills.md).
+No runtime, asset, simulation or training changes accompanied this publication.
+
 ## Verified October 10: showcase performance
 
 Added **35 Showcase performance**, tab `t.dwsxfv73kedy`, to the

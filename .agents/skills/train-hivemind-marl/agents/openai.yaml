@@ -1,0 +1,4 @@
+interface:
+  display_name: "Train Hive-Mind MARL"
+  short_description: "Train coordinated multi-agent driving policies"
+  default_prompt: "Use $train-hivemind-marl to design and evaluate a safe shared-policy MAPPO experiment for our vehicle fleet."

@@ -4,6 +4,18 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-12 — Repository-local project skills
+
+- Added eight domain skills under `.agents/skills`, their UI metadata and two
+  reusable vehicle-preparation references, with source hashes and usage guidance.
+- Scoped older SUMO-first instructions to the applicable baseline; current PhysX
+  ownership, local-only asset boundaries and user-led training gates remain.
+- Excluded private asset case-study history and bundled/unrelated personal skills.
+  Installed skill originals, simulation code, assets and results are unchanged.
+- See [inventory, validation and publication scope](project-skills.md).
+- Six bundle checks and all eight skill-creator validations passed. Google guide
+  tab 38 synced and native-readback verified; all 38 older tabs preserved.
+
 ## 2026-10-12 — Native sidebar and live traffic tuning (v08/v09)
 
 - Added a docked regular-editor sidebar with live viewing controls, validated

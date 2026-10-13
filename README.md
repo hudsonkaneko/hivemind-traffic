@@ -74,6 +74,10 @@ Multi-agent highway traffic simulation combining SUMO/TraCI, PettingZoo, PPO com
 
 ## Repository boundaries
 
+Eight project-domain agent skills are versioned in [`.agents/skills`](.agents/skills).
+See [skill usage and scope](documentation/project-skills.md) for discovery,
+current architecture boundaries, provenance and intentionally excluded local data.
+
 | Directory | Responsibility |
 |---|---|
 | `scenarios/` | SUMO networks, routes, demand, and configurations |

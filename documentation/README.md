@@ -40,6 +40,7 @@ mixed-traffic, statistics, and visualization goals.
 | [Hybrid motion-authority decision](decisions/001-hybrid-motion-authority.md) | Who moves each vehicle, responsibilities transferred from SUMO, and comparison limits |
 | [Change log](CHANGELOG.md) | Meaningful changes, reasons, and evidence pointers |
 | [Contribution and documentation workflow](workflow.md) | Branches, tests, commits, GitHub review, and learning-document updates |
+| [Project-local agent skills](project-skills.md) | Eight versioned domain workflows, usage, provenance and publication boundaries |
 | [Iteration template](templates/iteration.md) | Purpose, implementation, commands, evidence, failures, and next gate |
 | [Portable demonstrations](portable-demos.md) | Launch commands and environment configuration |
 | [Learning guide](LEARNING_GUIDE.md) | Technology explanations and the earlier implementation narrative |
