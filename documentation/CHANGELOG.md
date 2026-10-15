@@ -4,6 +4,17 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-14 — Main integration checkpoint
+
+- Joined the published collector-v02 and showcase histories for the requested
+  main promotion; retained both sides of documentation conflicts and all commits.
+- Fresh checks: 1,599 general tests passed, 180 optional skips, 34 subtests;
+  134 USD checks, four route checks and v09 launch preflight passed.
+- No simulation/asset changes, installation, new runtime benchmark or training.
+  Private local notes/assets remain excluded; existing acceptance limits remain.
+- See [review, invocation failures and merge scope](main-integration-2026-10-14.md)
+  and PR 10 for the GitHub merge outcome.
+
 ## 2026-10-12 — Repository-local project skills
 
 - Added eight domain skills under `.agents/skills`, their UI metadata and two
@@ -228,6 +239,18 @@ authority for historical measurements and failures.
   highlighted definitions, matched heading/link typography and all 32 prior
   tabs unchanged. [Sync evidence](learning-guide-sync.md) records the Windows
   transport workaround and the unverified pagination limit.
+
+## 2026-10-06 — Outer collector highway USD v02
+
+- Added a separate `_v02` with 500 m innermost main-lane radius, 535 m collector,
+  four gradual exits and four returns. V01 files remain unchanged.
+- Added seeded exit/re-entry plans and a four-choice route diagram; geometry
+  stays fixed while choices vary. Minimum connector radius is 379.386 m.
+- All 28 USD validators, 1,280 seeded trips and four route-policy tests passed.
+  All 47 stationary contact checks passed, but the strict smoke gate remains
+  failed on an unresolved stage-close reference-count warning.
+- Saved top, angled and exit-detail RTX screenshots with hashes. See the
+  [v02 evidence and limitations](highway-usd-v02.md).
 
 ## 2026-10-06 — Versioned four-leaf highway USD draft
 
