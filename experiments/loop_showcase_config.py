@@ -7,7 +7,10 @@ MODES = ('showcase', 'blocked', 'dropout', 'contact-check')
 
 def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
                 camera='follow', capture=False, drive_s=None, evidence=None, render_hz=None,
-                ui_profile=None,cpu_threads=None,profile_render=False,controls=None,panel_hidden=False,control_smoke=False):
+                ui_profile=None,cpu_threads=None,profile_render=False,controls=None,panel_hidden=False,control_smoke=False,
+                vehicle='prepared'):
+    if vehicle not in ('prepared','public'):
+        raise ValueError('Vehicle must be prepared or public')
     sidebar=version in ('v08','v09')
     if sidebar:
         from experiments.showcase_controls import defaults,validate_settings
@@ -75,6 +78,10 @@ def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
             raise ValueError('Headless live control smoke requires --panel-hidden')
         if version=='v09' and control_smoke and duration<90:
             raise ValueError('Live control smoke requires at least 90 driving seconds')
+    if vehicle == 'public':
+        # Opt-in model change, never an invisible substitution for the local car.
+        # Keep historical prepared profiles byte-for-byte equivalent as mappings.
+        cfg.update(vehicle_profile='public',vehicle_directory=None)
     return cfg
 
 
@@ -115,7 +122,8 @@ def validate_config(cfg):
         camera=cfg['camera'],capture=cfg['capture'],drive_s=cfg['drive_s'],
         evidence=cfg.get('evidence_profile'),render_hz=cfg['render_hz'] if cfg['version'] in ('v06','v07','v08','v09') else None,
         ui_profile=cfg.get('ui_profile'),cpu_threads=cfg.get('cpu_threads'),profile_render=cfg.get('profile_render',False),
-        controls=cfg.get('controls'),panel_hidden=cfg.get('panel_hidden',False),control_smoke=cfg.get('control_smoke',False))
+        controls=cfg.get('controls'),panel_hidden=cfg.get('panel_hidden',False),control_smoke=cfg.get('control_smoke',False),
+        vehicle=cfg.get('vehicle_profile','prepared'))
     if cfg!=expected:raise ValueError('Resolved showcase settings differ from declared profile')
 
 

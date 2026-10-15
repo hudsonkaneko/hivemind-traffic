@@ -6,6 +6,7 @@ from dataclasses import asdict, dataclass
 import os
 from pathlib import Path
 import shutil
+import sys
 from typing import Mapping
 from uuid import uuid4
 
@@ -40,6 +41,7 @@ def find_sumo_binary(*, gui: bool = False) -> Path:
     candidates: list[Path] = []
     if value := os.environ.get("SUMO_BINARY"):
         candidates.append(Path(value))
+    candidates.append(Path(sys.executable).parent / executable)
     if value := shutil.which(program):
         candidates.append(Path(value))
     if value := os.environ.get("SUMO_HOME"):

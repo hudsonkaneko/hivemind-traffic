@@ -25,6 +25,11 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
 
+October 15 portability increment: [clean-clone readiness](clean-clone.md) adds
+Windows CPU/SUMO CI and an opt-in procedural public car for the loop showcase.
+This verifies installation and demo entry points separately from private assets;
+it does not advance sensing, mixed-traffic research or learned-control gates.
+
 October 12 interactive increment: [v08/v09 live controls](showcase-live-controls.md)
 adds a regular-editor sidebar and a fixed native pool for live traffic density,
 speed and following-gap requests. Rendering changes still restart explicitly;

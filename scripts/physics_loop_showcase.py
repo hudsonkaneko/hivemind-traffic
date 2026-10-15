@@ -91,7 +91,8 @@ def main():
         from visualization.loop_showcase_view import LoopShowcaseView,make_controls
         from omni.kit.viewport.utility import get_active_viewport,capture_viewport_to_file,get_num_viewports
         from pxr import Sdf,Usd
-        if not responsive:result['runtime_setup']=prepare_vehicle_runtime()
+        public_vehicle=cfg.get('vehicle_profile')=='public'
+        if not responsive or public_vehicle:result['runtime_setup']=prepare_vehicle_runtime()
         # No embedded USD behaviors are part of this explicitly controlled
         # showcase. Isolate the installed optional scripting stage-close
         # consumer before it can attach to our long-lived owned stage.
@@ -104,19 +105,41 @@ def main():
             from visualization.showcase_responsiveness import (KitResponsiveness,assess_responsiveness,
                 prepared_runtime_inventory,display_qualification_exclusions)
             result['runtime_setup']=prepared_runtime_inventory(extension_manager)
+            if public_vehicle:
+                result['runtime_setup']['prepared_asset_runtime']=False
         behavior_sources={}
-        for name,path in (('vehicle',ROOT/cfg['vehicle_directory']/'world.usda'),
-                          ('highway',ROOT/cfg['source_directory']/'highway_v02.usda')):
+        if public_vehicle:
+            # Inspect the actual generated Factory source on an unattached stage
+            # BEFORE disabling the optional behavior consumer. The composed live
+            # scene is independently inspected again before physics starts.
+            from traffic.physics_session import vehicle_factory
+            from pxr import UsdGeom
+            factory=vehicle_factory()
+            inspected_stage=Usd.Stage.CreateInMemory('public-vehicle-behavior-check.usda')
+            inspected_stage.SetDefaultPrim(UsdGeom.Xform.Define(inspected_stage,'/World').GetPrim())
+            factory.create4WheeledCarsScenario(inspected_stage,1.,1,driveMode=factory.DRIVE_NONE,
+                axes=factory.AxesIndices(2,0,1),timeStepsPerSecond=cfg['physics_hz'],createCollisionShapesForWheels=True)
+            behavior_sources['vehicle']=inspect_behavior_free_stage(inspected_stage)
+            inspected_stage=None
+        input_stages=[('highway',ROOT/cfg['source_directory']/'highway_v02.usda')]
+        if not public_vehicle:input_stages.append(('vehicle',ROOT/cfg['vehicle_directory']/'world.usda'))
+        for name,path in input_stages:
             inspected_stage=Usd.Stage.Open(str(path))
             behavior_sources[name]=inspect_behavior_free_stage(inspected_stage)
             inspected_stage=None
         result['behavior_runtime']=disable_unused_behavior_scripting(extension_manager,behavior_sources)
         if dense:
             result['sensor_icon_runtime']=disable_unused_sensor_icons(extension_manager)
-        source_hashes=package_hashes(ROOT/cfg['vehicle_directory'])
+        source_hashes={} if public_vehicle else package_hashes(ROOT/cfg['vehicle_directory'])
         scene_directory=output/'scene'
         session=RenderedPhysicsSession(cfg['physics_hz'],cfg['render_hz'],physics_scene_path=PATHS.physics)
-        vehicle=compose_prepared_vehicle(session.stage,scene_directory,ROOT/cfg['vehicle_directory'],cfg['physics_hz'])
+        if public_vehicle:
+            from traffic.physx_vehicle import PhysxVehicle
+            vehicle=PhysxVehicle(session.stage,cfg['physics_hz'],scene_directory=scene_directory)
+            vehicle.metadata['chassis_collision_center_m']=[0.,0.,0.]
+            vehicle.metadata['asset_profile']='public procedural block car; installed NVIDIA Factory sample'
+        else:
+            vehicle=compose_prepared_vehicle(session.stage,scene_directory,ROOT/cfg['vehicle_directory'],cfg['physics_hz'])
         result['environment']=install_highway_loop(session.stage,scene_directory,ROOT/cfg['source_directory'])
         result['spawn']=spawn_vehicle_on_loop(session.stage,0.,radius_m=500+3.7*cfg['initial_lane'])
         # Local publication's point light was for an asset inspection, not a 1 km road.
@@ -388,7 +411,7 @@ def main():
             scene_structure=validate_highway_loop_scene(session.stage)['passed'],
             static_files_unchanged=package_hashes(scene_directory)==static_hashes,
             static_layers_unchanged=all(layer.ExportToString()==static_text[layer.identifier] for layer in static_layers),
-            source_vehicle_unchanged=package_hashes(ROOT/cfg['vehicle_directory'])==source_hashes)
+            source_vehicle_unchanged=public_vehicle or package_hashes(ROOT/cfg['vehicle_directory'])==source_hashes)
         if cfg['mode']!='contact-check':
             extra['optional_audit_coverage']=(native_audit_ticks==[t for t in range(1,len(rows)+1) if audit_schedule(cfg,t)['native']]
                 and [r['tick'] for r in visual_checks]==[t for t in range(1,len(rows)+1) if audit_schedule(cfg,t)['visual']])

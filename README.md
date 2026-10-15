@@ -1,8 +1,36 @@
 # Hivemind Traffic
 
+## Start from a fresh clone
+
+See [clean-clone setup and validation](documentation/clean-clone.md). The supported
+automated profile starts with **Windows x64 / Python 3.11 / SUMO 1.27.1**.
+Cloning does not include Isaac Sim, private car assets, recordings or checkpoints.
+
+```text
+git clone https://github.com/hudsonkaneko/hivemind-traffic.git highwaysim
+cd highwaysim
+py -3.11 -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements-ci.txt
+.venv\Scripts\python.exe -m pytest -q
+.venv\Scripts\python.exe -m hivemind demo sumo
+```
+
+With a compatible external Isaac installation configured, the loop showcase has
+an explicit public block-car option; no Americano download or checkpoint is needed:
+
+```text
+python scripts/demo_loop_showcase.py --version v09 --vehicle public --traffic-count 12 --check
+python scripts/demo_loop_showcase.py --version v09 --vehicle public --traffic-count 12
+```
+
+`python` here is a normal Python 3.11+ interpreter, not Isaac's bundled Python.
+The launcher starts the configured Isaac runtime in a separate process. This is
+scripted PhysX driving with kinematic background cars, not trained autonomy or
+LiDAR-based perception. The prepared vehicle remains the default for existing commands.
+
 ## One active workspace
 
-The canonical local checkout is `C:\Users\hudso\Documents\highwaysim`.
+The maintainer's canonical local checkout is `C:\Users\hudso\Documents\highwaysim`.
 Its GitHub repository is **hudsonkaneko/hivemind-traffic**; the different local
 folder name does not mean a second project. Older working folders are archived
 under `C:\Users\hudso\Documents\expired_highwaysim` and are not active workspaces.

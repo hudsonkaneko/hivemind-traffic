@@ -14,10 +14,12 @@ from experiments.loop_showcase_config import MODES,VERSIONS,make_config
 from experiments.probe_support import GpuMonitor,finish,gpu_sample,run_package,write_json
 from experiments.verify_physics_vehicle import stop_child
 from hivemind.launcher import isaac_runtime,load_config
+from hivemind.launcher import SetupError
+from hivemind.showcase_setup import check_showcase
 
 SOURCES=['scripts/demo_loop_showcase.py','scripts/physics_loop_showcase.py',
  'experiments/loop_showcase_config.py','experiments/probe_support.py','experiments/verify_physics_vehicle.py',
- 'hivemind/launcher.py','traffic/loop_showcase_control.py','traffic/loop_driving.py',
+ 'hivemind/launcher.py','hivemind/showcase_setup.py','traffic/loop_showcase_control.py','traffic/loop_driving.py',
  'traffic/driver_control.py','traffic/path_following.py','traffic/lane_geometry.py','traffic/speed_profiles.py',
  'traffic/bypass_validation.py','traffic/showcase_clearance.py','traffic/lidar_braking.py','traffic/physx_vehicle.py','traffic/wheel_geometry.py',
  'traffic/physics_session.py','traffic/rendered_physics_session.py','traffic/vehicle_contacts.py','traffic/evidence_chunks.py','traffic/showcase_runtime.py',
@@ -59,6 +61,8 @@ def main():
     parser.add_argument('--cpu-threads',type=int,choices=[4,8,16,32],help='v07 worker-count experiment; does not alter physics cadence')
     parser.add_argument('--profile-render',action='store_true',help='v07 bounded renderer diagnosis; not an FPS qualification run')
     parser.add_argument('--check',action='store_true')
+    parser.add_argument('--vehicle',choices=['prepared','public'],default='prepared',
+                        help='prepared: local Americano; public: procedural PhysX block car, no private asset')
     parser.add_argument('--traffic-count',type=int,help='v08/v09 background cars, 4–80')
     parser.add_argument('--ego-mph',type=float,help='v08/v09 main-car target, 5–35 mph')
     parser.add_argument('--traffic-mph',type=float,help='v08/v09 inner-lane traffic speed, 5–25 mph')
@@ -77,12 +81,13 @@ def main():
     cfg=make_config(args.version,mode=args.mode,gui=not args.headless,paced=not args.unpaced,
         camera=args.camera,capture=args.capture,drive_s=args.drive_seconds,evidence=args.evidence,render_hz=args.render_hz,
         ui_profile=args.ui_profile,cpu_threads=args.cpu_threads,profile_render=args.profile_render,
-        controls=controls,panel_hidden=args.panel_hidden,control_smoke=args.control_smoke)
-    runtime=isaac_runtime(ROOT,load_config(ROOT))
+        controls=controls,panel_hidden=args.panel_hidden,control_smoke=args.control_smoke,vehicle=args.vehicle)
+    try:
+        runtime,setup=check_showcase(ROOT,cfg,load_config(ROOT))
+    except (SetupError,OSError,ValueError) as error:
+        print('Setup needed: '+str(error),file=sys.stderr);return 2
     if args.check:
-        print(json.dumps(dict(runtime=str(runtime),config=cfg,vehicle_available=(ROOT/cfg['vehicle_directory']/'world.usda').is_file()),indent=2));return 0
-    if not (ROOT/cfg['vehicle_directory']/'world.usda').is_file():
-        parser.error('This showcase requires the separately supplied local prepared vehicle; it is not distributed by Git')
+        print(json.dumps(dict(**setup,config=cfg),indent=2));return 0
     for episode in range(11):
         result=run_once(cfg,runtime)
         if not result.get('restart_verified'):return 0 if result['passed'] else 1
@@ -97,7 +102,8 @@ def next_run_config(cfg,values):
     if cfg['version'] not in ('v08','v09'):raise ValueError('Only sidebar versions support requested restarts')
     return make_config(cfg['version'],gui=cfg['gui'],paced=cfg['paced'],camera=cfg['camera'],capture=cfg['capture'],
         drive_s=cfg['drive_s'],evidence=cfg['evidence_profile'],cpu_threads=cfg['cpu_threads'],
-        controls=values,panel_hidden=cfg['panel_hidden'],control_smoke=False)
+        controls=values,panel_hidden=cfg['panel_hidden'],control_smoke=False,
+        vehicle=cfg.get('vehicle_profile','prepared'))
 
 
 def can_restart(result):
@@ -111,7 +117,9 @@ def can_restart(result):
 
 
 def run_once(cfg,runtime):
-    sources=SOURCES+[p.relative_to(ROOT).as_posix() for p in (ROOT/cfg['vehicle_directory']).rglob('*') if p.is_file()]
+    sources=list(SOURCES)
+    if cfg['vehicle_directory']:
+        sources += [p.relative_to(ROOT).as_posix() for p in (ROOT/cfg['vehicle_directory']).rglob('*') if p.is_file()]
     if cfg['version'] in ('v07','v08','v09'):sources.extend(('visualization/highwaysim.showcase.kit','visualization/showcase_render_profile.py'))
     if cfg['version'] in ('v08','v09'):sources.extend(('experiments/showcase_controls.py','visualization/showcase_sidebar.py'))
     if cfg['version']=='v09':sources.extend(('traffic/live_showcase.py','usd/live_showcase_fleet.py'))

@@ -88,6 +88,16 @@ def test_headless_and_configured_sumo(project):
     assert env["SUMO_BINARY"] == str(path)
 
 
+def test_venv_sumo_discovery_without_activation(project):
+    import os
+    binary = cli.venv_python(project, '.venv').parent / ('sumo.exe' if os.name == 'nt' else 'sumo')
+    binary.touch()
+    assert cli.sumo_runtime(project, {}, False) == binary.resolve()
+    explicit = project / 'selected-sumo'
+    explicit.touch()
+    assert cli.sumo_runtime(project, {'sumo_binary': str(explicit)}, False) == explicit
+
+
 def test_trained_requires_checkpoint(project):
     with pytest.raises(cli.SetupError, match="No checkpoint"):
         cli.plan(args("trained"), project, {})
