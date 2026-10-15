@@ -1,0 +1,1598 @@
+{
+  "schema_version": 1,
+  "attempts": [
+    {
+      "run_id": "20261004T000718Z-a18344b9",
+      "local_evidence": "outputs/vehicle_reset_control/20261004T000718Z-a18344b9",
+      "manifest_sha256": "529f7d61dea89c628108913cd1679b4b1d0167902dc794e523de97fe88eddbc1",
+      "artifact_hashes_verified": true,
+      "verified_artifact_count": 23,
+      "git_commit": "757961b0fae93d7409196a0c5f7b7459cbbf2eef",
+      "working_tree_dirty": true,
+      "source_hashes": {
+        "experiments/physics-reset-control.json": "29540dcc2857243389958be5c88f70f0616bd6c03c927a1dcd59b9177dc0649e",
+        "scripts/probe_vehicle_resets.py": "f5992bd13c2085ad800ae88543f6645c42e5eb2581792a08814d5e6ec49d0215",
+        "experiments/verify_vehicle_stage.py": "894943cca21679ef382d17781d68a360fa9de8ef3937e5e78b4a3b236317cc43",
+        "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+        "experiments/verify_physics_vehicle.py": "12340e97cf2f5fd6a92ae3b35e63075bce7795894352f97c0806c5869e05a713",
+        "hivemind/launcher.py": "ed700479851bf3c8a88aa2b2d3bc7d542d9ea7077c5ce4a40e4ce151560eb231",
+        "traffic/physx_vehicle.py": "14a36f86da3c33ae179a2e5a893157a77ff4bd270989dd056ef696829923e67c",
+        "traffic/driver_control.py": "f8f5c9c211b7ddea997742b7ee3bdadcff8d211100cb9b1044865b978cfbcad1",
+        "traffic/physics_session.py": "d6c152ca2f8b529d3725d64d6ac2a0fe947e432ce82472e21b242dc8ffdb1ced"
+      },
+      "configuration": {
+        "schema_version": 1,
+        "study": "physics_vehicle_reset_control",
+        "seed": 101,
+        "physics_hz": 120,
+        "control_hz": 60,
+        "repeats": 2,
+        "disable_authoring_tools": false,
+        "target_speed_m_s": 1.0,
+        "drive_torque_per_front_wheel_nm": 700.0,
+        "brake_torque_per_wheel_nm": 1500.0,
+        "command_ttl_ticks": 12,
+        "max_process_seconds": 90,
+        "phases": [
+          [
+            "settle",
+            1.0
+          ],
+          [
+            "straight",
+            3.0
+          ],
+          [
+            "brake",
+            2.0
+          ]
+        ],
+        "acceptance": {
+          "entry_speed_min_m_s": 0.8,
+          "entry_speed_max_m_s": 1.2,
+          "stopped_speed_max_m_s": 0.05,
+          "minimum_upright_z": 0.95,
+          "repeat_position_tolerance_m": 0.1,
+          "repeat_speed_tolerance_m_s": 0.05,
+          "memory_warmup_episodes": 1,
+          "post_warmup_rss_growth_max_mib": 256.0
+        }
+      },
+      "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+      "hardware": {
+        "wall": 1466.4356142,
+        "name": "NVIDIA GeForce RTX 5070",
+        "total_mib": 12227.0,
+        "used_mib": 4809.0,
+        "utilization_percent": 37.0,
+        "driver": "610.74"
+      },
+      "result": {
+        "passed": true,
+        "gates": {
+          "complete": true,
+          "dynamics": true,
+          "repeat_position": true,
+          "repeat_speed": true,
+          "stage_cache_bounded": true,
+          "closed_stage_absent": true,
+          "memory_available": true,
+          "provisional_rss_bound": true
+        },
+        "maximum_repeat_position_difference_m": 0.0,
+        "maximum_repeat_speed_difference_m_s": 0.0,
+        "post_warmup_rss_growth_mib": 13.74609375,
+        "post_close_cache_counts": [
+          0,
+          0
+        ],
+        "episodes": [
+          {
+            "episode": 0,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5147799552,
+              "peak_rss_bytes": 5267374080,
+              "cpu_seconds": 60.34375
+            }
+          },
+          {
+            "episode": 1,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5162213376,
+              "peak_rss_bytes": 5318385664,
+              "cpu_seconds": 100.6875
+            }
+          }
+        ],
+        "repeats": 2,
+        "runtime": {
+          "core_physx_enabled": true,
+          "authoring_tools_enabled": true,
+          "factory_path": "c:/isaacsim/extscache/omni.physx.vehicle-110.1.13+110.1.2.wx64.r.cp312.u7f4/omni/physxvehicle/scripts/helpers/Factory.py"
+        },
+        "python": "3.12.13",
+        "total_wall_s": 19.963551000000052,
+        "no_sumo": true,
+        "no_lidar": true,
+        "limitations": [
+          "Ten short fresh-stage episodes are not a long-run memory-leak proof",
+          "RSS gate is a provisional 256 MiB post-warmup budget, not calibrated scaling",
+          "No Isaac Lab reset/vectorization, sensor lifecycle or GUI endurance validation"
+        ],
+        "exit_code": 0,
+        "stop_reason": null,
+        "usd_reference_warning_count": 1,
+        "wall_process_seconds": 20.83729970000013,
+        "gpu_peak_mib": 4997.0,
+        "gpu_scope": "Whole GPU including desktop; roughly 1 Hz sampling",
+        "gpu_monitor_errors": [],
+        "source_changed_during_run": []
+      }
+    },
+    {
+      "run_id": "20261004T000757Z-f4c03ae5",
+      "local_evidence": "outputs/vehicle_resets/20261004T000757Z-f4c03ae5",
+      "manifest_sha256": "d07f9b1b2cc6035053c06729e91aab73cfe42489c14399dcf39eb1dc0a86ecaf",
+      "artifact_hashes_verified": true,
+      "verified_artifact_count": 39,
+      "git_commit": "757961b0fae93d7409196a0c5f7b7459cbbf2eef",
+      "working_tree_dirty": true,
+      "source_hashes": {
+        "experiments/physics-resets.json": "d7c306373f077f65c2f2c06f5b6c00e9a48dd4212579f016cf2e243db8bb8e58",
+        "scripts/probe_vehicle_resets.py": "f5992bd13c2085ad800ae88543f6645c42e5eb2581792a08814d5e6ec49d0215",
+        "experiments/verify_vehicle_stage.py": "894943cca21679ef382d17781d68a360fa9de8ef3937e5e78b4a3b236317cc43",
+        "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+        "experiments/verify_physics_vehicle.py": "12340e97cf2f5fd6a92ae3b35e63075bce7795894352f97c0806c5869e05a713",
+        "hivemind/launcher.py": "ed700479851bf3c8a88aa2b2d3bc7d542d9ea7077c5ce4a40e4ce151560eb231",
+        "traffic/physx_vehicle.py": "14a36f86da3c33ae179a2e5a893157a77ff4bd270989dd056ef696829923e67c",
+        "traffic/driver_control.py": "f8f5c9c211b7ddea997742b7ee3bdadcff8d211100cb9b1044865b978cfbcad1",
+        "traffic/physics_session.py": "d6c152ca2f8b529d3725d64d6ac2a0fe947e432ce82472e21b242dc8ffdb1ced"
+      },
+      "configuration": {
+        "schema_version": 1,
+        "study": "physics_vehicle_resets",
+        "seed": 101,
+        "physics_hz": 120,
+        "control_hz": 60,
+        "repeats": 10,
+        "disable_authoring_tools": true,
+        "target_speed_m_s": 1.0,
+        "drive_torque_per_front_wheel_nm": 700.0,
+        "brake_torque_per_wheel_nm": 1500.0,
+        "command_ttl_ticks": 12,
+        "max_process_seconds": 180,
+        "phases": [
+          [
+            "settle",
+            1.0
+          ],
+          [
+            "straight",
+            3.0
+          ],
+          [
+            "brake",
+            2.0
+          ]
+        ],
+        "acceptance": {
+          "entry_speed_min_m_s": 0.8,
+          "entry_speed_max_m_s": 1.2,
+          "stopped_speed_max_m_s": 0.05,
+          "minimum_upright_z": 0.95,
+          "repeat_position_tolerance_m": 0.1,
+          "repeat_speed_tolerance_m_s": 0.05,
+          "memory_warmup_episodes": 2,
+          "post_warmup_rss_growth_max_mib": 256.0
+        }
+      },
+      "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+      "hardware": {
+        "wall": 1505.3405406,
+        "name": "NVIDIA GeForce RTX 5070",
+        "total_mib": 12227.0,
+        "used_mib": 3423.0,
+        "utilization_percent": 18.0,
+        "driver": "610.74"
+      },
+      "result": {
+        "passed": false,
+        "gates": {
+          "complete": true,
+          "dynamics": true,
+          "repeat_position": true,
+          "repeat_speed": true,
+          "stage_cache_bounded": true,
+          "closed_stage_absent": true,
+          "memory_available": true,
+          "provisional_rss_bound": true
+        },
+        "maximum_repeat_position_difference_m": 0.0,
+        "maximum_repeat_speed_difference_m_s": 0.0,
+        "post_warmup_rss_growth_mib": 19.00390625,
+        "post_close_cache_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "episodes": [
+          {
+            "episode": 0,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5183844352,
+              "peak_rss_bytes": 5299339264,
+              "cpu_seconds": 60.265625
+            }
+          },
+          {
+            "episode": 1,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5185081344,
+              "peak_rss_bytes": 5426270208,
+              "cpu_seconds": 98.40625
+            }
+          },
+          {
+            "episode": 2,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5199364096,
+              "peak_rss_bytes": 5426270208,
+              "cpu_seconds": 138.125
+            }
+          },
+          {
+            "episode": 3,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5201825792,
+              "peak_rss_bytes": 5426270208,
+              "cpu_seconds": 179.046875
+            }
+          },
+          {
+            "episode": 4,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5199499264,
+              "peak_rss_bytes": 5476073472,
+              "cpu_seconds": 216.90625
+            }
+          },
+          {
+            "episode": 5,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5201854464,
+              "peak_rss_bytes": 5482143744,
+              "cpu_seconds": 254.0
+            }
+          },
+          {
+            "episode": 6,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5205008384,
+              "peak_rss_bytes": 5482143744,
+              "cpu_seconds": 293.6875
+            }
+          },
+          {
+            "episode": 7,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5179691008,
+              "peak_rss_bytes": 5482143744,
+              "cpu_seconds": 335.921875
+            }
+          },
+          {
+            "episode": 8,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5138329600,
+              "peak_rss_bytes": 5482143744,
+              "cpu_seconds": 376.53125
+            }
+          },
+          {
+            "episode": 9,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5143035904,
+              "peak_rss_bytes": 5482143744,
+              "cpu_seconds": 413.0625
+            }
+          }
+        ],
+        "repeats": 10,
+        "runtime": {
+          "core_physx_enabled": true,
+          "authoring_tools_enabled": false,
+          "factory_path": "c:/isaacsim/extscache/omni.physx.vehicle-110.1.13+110.1.2.wx64.r.cp312.u7f4/omni/physxvehicle/scripts/helpers/Factory.py"
+        },
+        "python": "3.12.13",
+        "total_wall_s": 48.59255320000011,
+        "no_sumo": true,
+        "no_lidar": true,
+        "limitations": [
+          "Ten short fresh-stage episodes are not a long-run memory-leak proof",
+          "RSS gate is a provisional 256 MiB post-warmup budget, not calibrated scaling",
+          "No Isaac Lab reset/vectorization, sensor lifecycle or GUI endurance validation"
+        ],
+        "exit_code": 0,
+        "stop_reason": null,
+        "usd_reference_warning_count": 1,
+        "wall_process_seconds": 49.27956949999998,
+        "gpu_peak_mib": 5006.0,
+        "gpu_scope": "Whole GPU including desktop; roughly 1 Hz sampling",
+        "gpu_monitor_errors": [],
+        "lifecycle_warning_gate_failed": true,
+        "source_changed_during_run": []
+      }
+    },
+    {
+      "run_id": "20261004T001205Z-dbc29de5",
+      "local_evidence": "outputs/vehicle_resets/20261004T001205Z-dbc29de5",
+      "manifest_sha256": "11793475be80ca02e2ecfca36b4b135eb22d508169a10eadcb729fcfda945fa5",
+      "artifact_hashes_verified": true,
+      "verified_artifact_count": 39,
+      "git_commit": "757961b0fae93d7409196a0c5f7b7459cbbf2eef",
+      "working_tree_dirty": true,
+      "source_hashes": {
+        "experiments/physics-resets.json": "d7c306373f077f65c2f2c06f5b6c00e9a48dd4212579f016cf2e243db8bb8e58",
+        "scripts/probe_vehicle_resets.py": "b52a74ffdfcb2a2d64cb4e138c9877251c797cf710b9373278cbbeeb21c2ae73",
+        "experiments/verify_vehicle_stage.py": "8542c809ddac8ed2f00167eaab37843705cddb566cc3b728f5db72c29e63440f",
+        "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+        "experiments/verify_physics_vehicle.py": "12340e97cf2f5fd6a92ae3b35e63075bce7795894352f97c0806c5869e05a713",
+        "hivemind/launcher.py": "ed700479851bf3c8a88aa2b2d3bc7d542d9ea7077c5ce4a40e4ce151560eb231",
+        "traffic/physx_vehicle.py": "14a36f86da3c33ae179a2e5a893157a77ff4bd270989dd056ef696829923e67c",
+        "traffic/driver_control.py": "f8f5c9c211b7ddea997742b7ee3bdadcff8d211100cb9b1044865b978cfbcad1",
+        "traffic/physics_session.py": "346856dcb5afb918bd2dcea9d59bc8d8ab7dd52e74d726bfbde9f6fe711ef2ca"
+      },
+      "configuration": {
+        "schema_version": 1,
+        "study": "physics_vehicle_resets",
+        "seed": 101,
+        "physics_hz": 120,
+        "control_hz": 60,
+        "repeats": 10,
+        "disable_authoring_tools": true,
+        "target_speed_m_s": 1.0,
+        "drive_torque_per_front_wheel_nm": 700.0,
+        "brake_torque_per_wheel_nm": 1500.0,
+        "command_ttl_ticks": 12,
+        "max_process_seconds": 180,
+        "phases": [
+          [
+            "settle",
+            1.0
+          ],
+          [
+            "straight",
+            3.0
+          ],
+          [
+            "brake",
+            2.0
+          ]
+        ],
+        "acceptance": {
+          "entry_speed_min_m_s": 0.8,
+          "entry_speed_max_m_s": 1.2,
+          "stopped_speed_max_m_s": 0.05,
+          "minimum_upright_z": 0.95,
+          "repeat_position_tolerance_m": 0.1,
+          "repeat_speed_tolerance_m_s": 0.05,
+          "memory_warmup_episodes": 2,
+          "post_warmup_rss_growth_max_mib": 256.0
+        }
+      },
+      "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+      "hardware": {
+        "wall": 1753.3826887,
+        "name": "NVIDIA GeForce RTX 5070",
+        "total_mib": 12227.0,
+        "used_mib": 3453.0,
+        "utilization_percent": 4.0,
+        "driver": "610.74"
+      },
+      "result": {
+        "passed": false,
+        "gates": {
+          "complete": true,
+          "dynamics": true,
+          "repeat_position": true,
+          "repeat_speed": true,
+          "stage_cache_bounded": true,
+          "closed_stage_absent": true,
+          "memory_available": true,
+          "provisional_rss_bound": true
+        },
+        "maximum_repeat_position_difference_m": 0.0,
+        "maximum_repeat_speed_difference_m_s": 0.0,
+        "post_warmup_rss_growth_mib": 0.0,
+        "post_close_cache_counts": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "episodes": [
+          {
+            "episode": 0,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5235892224,
+              "peak_rss_bytes": 5371580416,
+              "cpu_seconds": 52.0
+            }
+          },
+          {
+            "episode": 1,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5280858112,
+              "peak_rss_bytes": 5423042560,
+              "cpu_seconds": 90.421875
+            }
+          },
+          {
+            "episode": 2,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5144272896,
+              "peak_rss_bytes": 5423042560,
+              "cpu_seconds": 127.109375
+            }
+          },
+          {
+            "episode": 3,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5149679616,
+              "peak_rss_bytes": 5423042560,
+              "cpu_seconds": 161.9375
+            }
+          },
+          {
+            "episode": 4,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5148426240,
+              "peak_rss_bytes": 5423042560,
+              "cpu_seconds": 197.15625
+            }
+          },
+          {
+            "episode": 5,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5141012480,
+              "peak_rss_bytes": 5425610752,
+              "cpu_seconds": 234.828125
+            }
+          },
+          {
+            "episode": 6,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5153083392,
+              "peak_rss_bytes": 5425610752,
+              "cpu_seconds": 278.3125
+            }
+          },
+          {
+            "episode": 7,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5153210368,
+              "peak_rss_bytes": 5425610752,
+              "cpu_seconds": 322.234375
+            }
+          },
+          {
+            "episode": 8,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5154713600,
+              "peak_rss_bytes": 5425610752,
+              "cpu_seconds": 359.546875
+            }
+          },
+          {
+            "episode": 9,
+            "brake_entry_speed_m_s": 0.9875159263610841,
+            "minimum_upright_z": 0.99996850949438,
+            "passed": true,
+            "process_after_discard": {
+              "available": true,
+              "rss_bytes": 5143515136,
+              "peak_rss_bytes": 5425610752,
+              "cpu_seconds": 395.40625
+            }
+          }
+        ],
+        "repeats": 10,
+        "runtime": {
+          "core_physx_enabled": true,
+          "authoring_tools_enabled": false,
+          "factory_path": "c:/isaacsim/extscache/omni.physx.vehicle-110.1.13+110.1.2.wx64.r.cp312.u7f4/omni/physxvehicle/scripts/helpers/Factory.py"
+        },
+        "python": "3.12.13",
+        "total_wall_s": 51.746355499999936,
+        "no_sumo": true,
+        "no_lidar": true,
+        "limitations": [
+          "Ten short fresh-stage episodes are not a long-run memory-leak proof",
+          "RSS gate is a provisional 256 MiB post-warmup budget, not calibrated scaling",
+          "No Isaac Lab reset/vectorization, sensor lifecycle or GUI endurance validation"
+        ],
+        "exit_code": 0,
+        "stop_reason": null,
+        "usd_reference_warning_count": 1,
+        "wall_process_seconds": 52.48802570000021,
+        "gpu_peak_mib": 7316.0,
+        "gpu_scope": "Whole GPU including desktop; roughly 1 Hz sampling",
+        "gpu_monitor_errors": [],
+        "lifecycle_warning_gate_failed": true,
+        "source_changed_during_run": []
+      }
+    },
+    {
+      "run_id": "20261004T001311Z-59439425",
+      "local_evidence": "outputs/vehicle_lab/20261004T001311Z-59439425",
+      "manifest_sha256": "f1f10a88c681dab6c7fc729ac1e4bf922b79348dc19b7948fd3843b275db8f4f",
+      "artifact_hashes_verified": true,
+      "verified_artifact_count": 23,
+      "git_commit": "757961b0fae93d7409196a0c5f7b7459cbbf2eef",
+      "working_tree_dirty": true,
+      "source_hashes": {
+        "experiments/physics-lab.json": "03ab00d9e4a3346a642d56eadc9d28d59cb0c3d61d7ea7f8a1a1374e9c8d1ebe",
+        "scripts/probe_vehicle_lab.py": "d9f4912c4db30a6cc46b6bbf2e27708aabfd89061d98f7e04da927bf193c1ad8",
+        "experiments/verify_vehicle_stage.py": "8542c809ddac8ed2f00167eaab37843705cddb566cc3b728f5db72c29e63440f",
+        "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+        "experiments/verify_physics_vehicle.py": "12340e97cf2f5fd6a92ae3b35e63075bce7795894352f97c0806c5869e05a713",
+        "hivemind/launcher.py": "ed700479851bf3c8a88aa2b2d3bc7d542d9ea7077c5ce4a40e4ce151560eb231",
+        "traffic/physx_vehicle.py": "14a36f86da3c33ae179a2e5a893157a77ff4bd270989dd056ef696829923e67c",
+        "traffic/driver_control.py": "f8f5c9c211b7ddea997742b7ee3bdadcff8d211100cb9b1044865b978cfbcad1",
+        "traffic/physics_session.py": "346856dcb5afb918bd2dcea9d59bc8d8ab7dd52e74d726bfbde9f6fe711ef2ca",
+        "environments/__init__.py": "99e4401d9cbd9709c2220c6f7428a524117c2b16148655a1c928a6bef821d1f6",
+        "environments/physics_vehicle_lab.py": "6dc10f3327f1a62987d253a80b432687a3f84b49d8896d86ced4249b85b05e75",
+        "environments/physics_vehicle_contract.py": "bd1bda7bfe23efae76a964cab55a36366799be0b6ebf4408d59544ae8457626d"
+      },
+      "configuration": {
+        "schema_version": 1,
+        "study": "physics_vehicle_lab_compatibility",
+        "seed": 101,
+        "physics_hz": 120,
+        "control_hz": 60,
+        "repeats": 3,
+        "target_speed_m_s": 3.0,
+        "drive_torque_per_front_wheel_nm": 700.0,
+        "brake_torque_per_wheel_nm": 1500.0,
+        "command_ttl_ticks": 12,
+        "max_process_seconds": 180,
+        "phases": [
+          [
+            "settle",
+            2.0
+          ],
+          [
+            "straight",
+            4.0
+          ],
+          [
+            "brake",
+            2.0
+          ]
+        ],
+        "acceptance": {
+          "repeat_position_tolerance_m": 0.001,
+          "repeat_speed_tolerance_m_s": 0.001,
+          "reset_position_tolerance_m": 0.001,
+          "reset_speed_tolerance_m_s": 0.001,
+          "minimum_forward_progress_m": 3.0,
+          "stopped_speed_max_m_s": 0.05
+        }
+      },
+      "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+      "hardware": {
+        "wall": 1819.1498067,
+        "name": "NVIDIA GeForce RTX 5070",
+        "total_mib": 12227.0,
+        "used_mib": 3973.0,
+        "utilization_percent": 17.0,
+        "driver": "610.74"
+      },
+      "result": {
+        "passed": true,
+        "isaac_lab_direct_rl_env": true,
+        "episodes": [
+          {
+            "passed": true,
+            "gates": {
+              "physical_progress": true,
+              "stopped": true,
+              "finite_reward": true,
+              "automatic_reset": true,
+              "reset_count": true
+            },
+            "forward_progress_m": 9.462386239640182,
+            "final_speed_m_s": 4.812470063322959e-06
+          },
+          {
+            "passed": true,
+            "gates": {
+              "physical_progress": true,
+              "stopped": true,
+              "finite_reward": true,
+              "automatic_reset": true,
+              "reset_count": true
+            },
+            "forward_progress_m": 9.462386239640182,
+            "final_speed_m_s": 4.812470063322959e-06
+          },
+          {
+            "passed": true,
+            "gates": {
+              "physical_progress": true,
+              "stopped": true,
+              "finite_reward": true,
+              "automatic_reset": true,
+              "reset_count": true
+            },
+            "forward_progress_m": 9.462386239640182,
+            "final_speed_m_s": 4.812470063322959e-06
+          }
+        ],
+        "reset_ok": true,
+        "repeatable": true,
+        "all_trace_values_finite": true,
+        "runtime": {
+          "isaaclab_module_file": "C:\\Users\\hudso\\Documents\\IsaacLab\\source\\isaaclab\\isaaclab\\__init__.py",
+          "python_version": "3.12.13",
+          "torch_version": "2.10.0+cu128",
+          "isaaclab_git_commit": "0603cb1710dcda13087665f63abf9ac483b63c05",
+          "isaaclab_checkout": "C:\\Users\\hudso\\Documents\\IsaacLab",
+          "isaaclab_git_dirty": false
+        },
+        "maximum_repeat_position_difference_m": 0.0,
+        "maximum_repeat_speed_difference_m_s": 0.0,
+        "python": "3.12.13",
+        "total_wall_s": 16.956940199999963,
+        "process": {
+          "available": true,
+          "rss_bytes": 2545758208,
+          "peak_rss_bytes": 2546806784,
+          "cpu_seconds": 15.515625
+        },
+        "no_sumo": true,
+        "no_lidar": true,
+        "no_training": true,
+        "limitations": [
+          "One CPU-physics environment only; no replication or multi-agent claim",
+          "Simulator-state observations, not sensor-derived observations",
+          "No training objective, policy training or highway-speed calibration"
+        ],
+        "exit_code": 0,
+        "stop_reason": null,
+        "usd_reference_warning_count": 0,
+        "wall_process_seconds": 17.628270399999792,
+        "gpu_peak_mib": 4676.0,
+        "gpu_scope": "Whole GPU including desktop; roughly 1 Hz sampling",
+        "gpu_monitor_errors": [],
+        "source_changed_during_run": []
+      }
+    },
+    {
+      "run_id": "20261004T001358Z-d7d5d04e",
+      "local_evidence": "outputs/vehicle_dynamics/20261004T001358Z-d7d5d04e",
+      "manifest_sha256": "1bc634256aa22149e93bbc51709c561634ce29d76e570aceab5abf4300823eb6",
+      "artifact_hashes_verified": true,
+      "verified_artifact_count": 43,
+      "git_commit": "757961b0fae93d7409196a0c5f7b7459cbbf2eef",
+      "working_tree_dirty": true,
+      "source_hashes": {
+        "experiments/physics-dynamics.json": "70278ab4503f22e97a754f4f824e4aa9f735a6ba636dbc36c091784422617e16",
+        "scripts/probe_vehicle_dynamics.py": "82100326e9867cb5551e13ae9cce696171b26dfa389634246b202fc57e856eed",
+        "experiments/verify_vehicle_stage.py": "8542c809ddac8ed2f00167eaab37843705cddb566cc3b728f5db72c29e63440f",
+        "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+        "experiments/verify_physics_vehicle.py": "12340e97cf2f5fd6a92ae3b35e63075bce7795894352f97c0806c5869e05a713",
+        "hivemind/launcher.py": "ed700479851bf3c8a88aa2b2d3bc7d542d9ea7077c5ce4a40e4ce151560eb231",
+        "traffic/physx_vehicle.py": "14a36f86da3c33ae179a2e5a893157a77ff4bd270989dd056ef696829923e67c",
+        "traffic/driver_control.py": "f8f5c9c211b7ddea997742b7ee3bdadcff8d211100cb9b1044865b978cfbcad1",
+        "traffic/physics_session.py": "346856dcb5afb918bd2dcea9d59bc8d8ab7dd52e74d726bfbde9f6fe711ef2ca",
+        "traffic/dynamics_validation.py": "1fa18a2a10e65043f829377ad39973be7208aea9944f35f5f8665e74fe15f648"
+      },
+      "configuration": {
+        "schema_version": 1,
+        "study": "physics_vehicle_dynamics",
+        "seed": 101,
+        "physics_hz": 120,
+        "control_hz": 60,
+        "repeats": 2,
+        "drive_torque_per_front_wheel_nm": 700.0,
+        "brake_torque_per_wheel_nm": 1500.0,
+        "command_ttl_ticks": 12,
+        "speed_proportional_gain": 0.7,
+        "max_process_seconds": 300,
+        "max_total_simulated_seconds": 300,
+        "cases": [
+          {
+            "name": "straight_1",
+            "kind": "straight",
+            "target_speed_m_s": 1.0,
+            "steering_rad": 0.0,
+            "braking_distance_max_m": 1.0,
+            "phases": [
+              [
+                "settle",
+                2.0
+              ],
+              [
+                "accelerate",
+                8.0
+              ],
+              [
+                "brake",
+                3.0
+              ],
+              [
+                "hold",
+                5.0
+              ]
+            ]
+          },
+          {
+            "name": "straight_3",
+            "kind": "straight",
+            "target_speed_m_s": 3.0,
+            "steering_rad": 0.0,
+            "braking_distance_max_m": 4.0,
+            "phases": [
+              [
+                "settle",
+                2.0
+              ],
+              [
+                "accelerate",
+                8.0
+              ],
+              [
+                "brake",
+                3.0
+              ],
+              [
+                "hold",
+                5.0
+              ]
+            ]
+          },
+          {
+            "name": "straight_6",
+            "kind": "straight",
+            "target_speed_m_s": 6.0,
+            "steering_rad": 0.0,
+            "braking_distance_max_m": 8.0,
+            "phases": [
+              [
+                "settle",
+                2.0
+              ],
+              [
+                "accelerate",
+                8.0
+              ],
+              [
+                "brake",
+                3.0
+              ],
+              [
+                "hold",
+                5.0
+              ]
+            ]
+          },
+          {
+            "name": "circle_left",
+            "kind": "circle",
+            "target_speed_m_s": 3.0,
+            "steering_rad": 0.2,
+            "braking_distance_max_m": 4.0,
+            "phases": [
+              [
+                "settle",
+                2.0
+              ],
+              [
+                "accelerate",
+                8.0
+              ],
+              [
+                "turn_warmup",
+                4.0
+              ],
+              [
+                "circle",
+                12.0
+              ],
+              [
+                "brake",
+                3.0
+              ],
+              [
+                "hold",
+                5.0
+              ]
+            ]
+          },
+          {
+            "name": "circle_right",
+            "kind": "circle",
+            "target_speed_m_s": 3.0,
+            "steering_rad": -0.2,
+            "braking_distance_max_m": 4.0,
+            "phases": [
+              [
+                "settle",
+                2.0
+              ],
+              [
+                "accelerate",
+                8.0
+              ],
+              [
+                "turn_warmup",
+                4.0
+              ],
+              [
+                "circle",
+                12.0
+              ],
+              [
+                "brake",
+                3.0
+              ],
+              [
+                "hold",
+                5.0
+              ]
+            ]
+          },
+          {
+            "name": "coast_3",
+            "kind": "coast",
+            "target_speed_m_s": 3.0,
+            "steering_rad": 0.0,
+            "braking_distance_max_m": 4.0,
+            "phases": [
+              [
+                "settle",
+                2.0
+              ],
+              [
+                "accelerate",
+                8.0
+              ],
+              [
+                "coast",
+                4.0
+              ],
+              [
+                "brake",
+                3.0
+              ],
+              [
+                "hold",
+                5.0
+              ]
+            ]
+          }
+        ],
+        "acceptance": {
+          "speed_tolerance_m_s": 0.35,
+          "straight_lateral_drift_max_m": 0.15,
+          "root_height_min_m": 0.5,
+          "root_height_max_m": 1.5,
+          "grounded_fraction_min": 0.99,
+          "stopped_speed_max_m_s": 0.05,
+          "hold_duration_min_s": 5.0,
+          "hold_drift_max_m": 0.05,
+          "upright_min_z": 0.9961946980917455,
+          "circle_radius_relative_tolerance": 0.1,
+          "circle_yaw_progress_min_rad": 1.0,
+          "circle_steering_tolerance_rad": 1e-06,
+          "repeat_position_tolerance_m": 0.001,
+          "repeat_speed_tolerance_m_s": 0.001,
+          "repeat_yaw_tolerance_rad": 0.001
+        }
+      },
+      "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+      "hardware": {
+        "wall": 1866.15839,
+        "name": "NVIDIA GeForce RTX 5070",
+        "total_mib": 12227.0,
+        "used_mib": 4109.0,
+        "utilization_percent": 16.0,
+        "driver": "610.74"
+      },
+      "result": {
+        "passed": false,
+        "no_sumo": true,
+        "no_lidar": true,
+        "isaac_lab_validated": false,
+        "runtime_setup": {
+          "core_physx_enabled": true,
+          "authoring_tools_enabled": false,
+          "factory_path": "c:/isaacsim/extscache/omni.physx.vehicle-110.1.13+110.1.2.wx64.r.cp312.u7f4/omni/physxvehicle/scripts/helpers/Factory.py"
+        },
+        "cases": [
+          {
+            "passed": true,
+            "case": "straight_1",
+            "samples": 2160,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "brake_entry_speed": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 0.997086097796758,
+              "acceleration_final_speed_m_s": 0.9970911741256714,
+              "straight_lateral_drift_m": 1.1432710883844868e-08,
+              "brake_entry_speed_m_s": 0.9970911741256714,
+              "brake_distance_m": 0.07536220550882683,
+              "brake_final_speed_m_s": 0.00015689211690296542,
+              "brake_stop_time_s": 0.13333333333333286,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 0.0004225680545507353,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.9999686994668906
+            },
+            "repeat": 0,
+            "episode_id": "dynamics-straight_1-0",
+            "trace": "trajectory-straight_1-0.json"
+          },
+          {
+            "passed": true,
+            "case": "straight_3",
+            "samples": 2160,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "brake_entry_speed": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 2.9912453552087146,
+              "acceleration_final_speed_m_s": 2.9912679195404053,
+              "straight_lateral_drift_m": 7.66171641022439e-09,
+              "brake_entry_speed_m_s": 2.9912679195404053,
+              "brake_distance_m": 0.6718692779778803,
+              "brake_final_speed_m_s": 1.1069326405445953e-05,
+              "brake_stop_time_s": 0.44166666666666643,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 0.0008431018144657329,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.9999313794144287
+            },
+            "repeat": 0,
+            "episode_id": "dynamics-straight_3-0",
+            "trace": "trajectory-straight_3-0.json"
+          },
+          {
+            "passed": true,
+            "case": "straight_6",
+            "samples": 2160,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "brake_entry_speed": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 5.982237958908081,
+              "acceleration_final_speed_m_s": 5.982433795928955,
+              "straight_lateral_drift_m": 3.1136551819100906e-08,
+              "brake_entry_speed_m_s": 5.982433795928955,
+              "brake_distance_m": 2.6747512817572145,
+              "brake_final_speed_m_s": 0.0001263510994927179,
+              "brake_stop_time_s": 0.8833333333333329,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 7.847947770756036e-06,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.999929114668441
+            },
+            "repeat": 0,
+            "episode_id": "dynamics-straight_6-0",
+            "trace": "trajectory-straight_6-0.json"
+          },
+          {
+            "passed": true,
+            "case": "circle_left",
+            "samples": 4080,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "brake_entry_speed": true,
+              "circle_turn_direction": true,
+              "circle_radius": true,
+              "circle_speed": true,
+              "circle_steering": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 2.9912453552087146,
+              "acceleration_final_speed_m_s": 2.9912679195404053,
+              "straight_lateral_drift_m": 7.66171641022439e-09,
+              "brake_entry_speed_m_s": 2.9891282875997187,
+              "brake_distance_m": 0.675246376659626,
+              "brake_final_speed_m_s": 0.0002424687992580946,
+              "brake_stop_time_s": 0.44166666666666643,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 0.0010547637939453125,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.9999195526152587,
+              "circle_signed_yaw_rad": 2.2333624530166185,
+              "rear_axle_arc_length_m": 35.676036233145346,
+              "measured_rear_axle_radius_m": 15.974136300606949,
+              "bicycle_radius_m": 15.78609560187806,
+              "radius_relative_error": 0.011911792723877707,
+              "circle_mean_speed_m_s": 2.989127146316459
+            },
+            "repeat": 0,
+            "episode_id": "dynamics-circle_left-0",
+            "trace": "trajectory-circle_left-0.json"
+          },
+          {
+            "passed": true,
+            "case": "circle_right",
+            "samples": 4080,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "brake_entry_speed": true,
+              "circle_turn_direction": true,
+              "circle_radius": true,
+              "circle_speed": true,
+              "circle_steering": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 2.9912453552087146,
+              "acceleration_final_speed_m_s": 2.9912679195404053,
+              "straight_lateral_drift_m": 7.66171641022439e-09,
+              "brake_entry_speed_m_s": 2.989127835350291,
+              "brake_distance_m": 0.6752463783493925,
+              "brake_final_speed_m_s": 0.0002669476102678571,
+              "brake_stop_time_s": 0.44166666666666643,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 0.000400543212890625,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.9999195526514555,
+              "circle_signed_yaw_rad": -2.2333624352060784,
+              "rear_axle_arc_length_m": 35.676034239209784,
+              "measured_rear_axle_radius_m": 15.974135535201594,
+              "bicycle_radius_m": 15.78609560187806,
+              "radius_relative_error": 0.01191174423783186,
+              "circle_mean_speed_m_s": 2.989126848191809
+            },
+            "repeat": 0,
+            "episode_id": "dynamics-circle_right-0",
+            "trace": "trajectory-circle_right-0.json"
+          },
+          {
+            "passed": true,
+            "case": "coast_3",
+            "samples": 2640,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "coast_zero_actuation": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 2.9912453552087146,
+              "acceleration_final_speed_m_s": 2.9912679195404053,
+              "straight_lateral_drift_m": 7.66171641022439e-09,
+              "brake_entry_speed_m_s": 2.93891978263855,
+              "brake_distance_m": 0.6486358642908748,
+              "brake_final_speed_m_s": 0.0002854458966730807,
+              "brake_stop_time_s": 0.43333333333333357,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 0.00010304706711742372,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.9999315898462015,
+              "coast_entry_speed_m_s": 2.9912679195404053,
+              "coast_final_speed_m_s": 2.93891978263855,
+              "coast_speed_change_m_s": -0.05234813690185547,
+              "coast_distance_m": 11.860145568847656,
+              "coast_interpretation": "Finite free rolling under the installed sample model; no real drag calibration claim"
+            },
+            "repeat": 0,
+            "episode_id": "dynamics-coast_3-0",
+            "trace": "trajectory-coast_3-0.json"
+          },
+          {
+            "passed": true,
+            "case": "straight_1",
+            "samples": 2160,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "brake_entry_speed": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 0.997086097796758,
+              "acceleration_final_speed_m_s": 0.9970911741256714,
+              "straight_lateral_drift_m": 1.1432710883844868e-08,
+              "brake_entry_speed_m_s": 0.9970911741256714,
+              "brake_distance_m": 0.07536220550882683,
+              "brake_final_speed_m_s": 0.00015689211690296542,
+              "brake_stop_time_s": 0.13333333333333286,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 0.0004225680545507353,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.9999686994668906
+            },
+            "repeat": 1,
+            "episode_id": "dynamics-straight_1-1",
+            "trace": "trajectory-straight_1-1.json"
+          },
+          {
+            "passed": true,
+            "case": "straight_3",
+            "samples": 2160,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "brake_entry_speed": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 2.9912453552087146,
+              "acceleration_final_speed_m_s": 2.9912679195404053,
+              "straight_lateral_drift_m": 7.66171641022439e-09,
+              "brake_entry_speed_m_s": 2.9912679195404053,
+              "brake_distance_m": 0.6718692779778803,
+              "brake_final_speed_m_s": 1.1069326405445953e-05,
+              "brake_stop_time_s": 0.44166666666666643,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 0.0008431018144657329,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.9999313794144287
+            },
+            "repeat": 1,
+            "episode_id": "dynamics-straight_3-1",
+            "trace": "trajectory-straight_3-1.json"
+          },
+          {
+            "passed": true,
+            "case": "straight_6",
+            "samples": 2160,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "brake_entry_speed": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 5.982237958908081,
+              "acceleration_final_speed_m_s": 5.982433795928955,
+              "straight_lateral_drift_m": 3.1136551819100906e-08,
+              "brake_entry_speed_m_s": 5.982433795928955,
+              "brake_distance_m": 2.6747512817572145,
+              "brake_final_speed_m_s": 0.0001263510994927179,
+              "brake_stop_time_s": 0.8833333333333329,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 7.847947770756036e-06,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.999929114668441
+            },
+            "repeat": 1,
+            "episode_id": "dynamics-straight_6-1",
+            "trace": "trajectory-straight_6-1.json"
+          },
+          {
+            "passed": true,
+            "case": "circle_left",
+            "samples": 4080,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "brake_entry_speed": true,
+              "circle_turn_direction": true,
+              "circle_radius": true,
+              "circle_speed": true,
+              "circle_steering": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 2.9912453552087146,
+              "acceleration_final_speed_m_s": 2.9912679195404053,
+              "straight_lateral_drift_m": 7.66171641022439e-09,
+              "brake_entry_speed_m_s": 2.9891282875997187,
+              "brake_distance_m": 0.675246376659626,
+              "brake_final_speed_m_s": 0.0002424687992580946,
+              "brake_stop_time_s": 0.44166666666666643,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 0.0010547637939453125,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.9999195526152587,
+              "circle_signed_yaw_rad": 2.2333624530166185,
+              "rear_axle_arc_length_m": 35.676036233145346,
+              "measured_rear_axle_radius_m": 15.974136300606949,
+              "bicycle_radius_m": 15.78609560187806,
+              "radius_relative_error": 0.011911792723877707,
+              "circle_mean_speed_m_s": 2.989127146316459
+            },
+            "repeat": 1,
+            "episode_id": "dynamics-circle_left-1",
+            "trace": "trajectory-circle_left-1.json"
+          },
+          {
+            "passed": true,
+            "case": "circle_right",
+            "samples": 4080,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "brake_entry_speed": true,
+              "circle_turn_direction": true,
+              "circle_radius": true,
+              "circle_speed": true,
+              "circle_steering": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 2.9912453552087146,
+              "acceleration_final_speed_m_s": 2.9912679195404053,
+              "straight_lateral_drift_m": 7.66171641022439e-09,
+              "brake_entry_speed_m_s": 2.989127835350291,
+              "brake_distance_m": 0.6752463783493925,
+              "brake_final_speed_m_s": 0.0002669476102678571,
+              "brake_stop_time_s": 0.44166666666666643,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 0.000400543212890625,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.9999195526514555,
+              "circle_signed_yaw_rad": -2.2333624352060784,
+              "rear_axle_arc_length_m": 35.676034239209784,
+              "measured_rear_axle_radius_m": 15.974135535201594,
+              "bicycle_radius_m": 15.78609560187806,
+              "radius_relative_error": 0.01191174423783186,
+              "circle_mean_speed_m_s": 2.989126848191809
+            },
+            "repeat": 1,
+            "episode_id": "dynamics-circle_right-1",
+            "trace": "trajectory-circle_right-1.json"
+          },
+          {
+            "passed": true,
+            "case": "coast_3",
+            "samples": 2640,
+            "gates": {
+              "trace_complete": true,
+              "finite_telemetry": true,
+              "tick_phase_order": true,
+              "target_speed": true,
+              "forward": true,
+              "straight_drift": true,
+              "braking": true,
+              "brake_commands": true,
+              "hold_duration": true,
+              "hold": true,
+              "upright": true,
+              "height": true,
+              "grounded": true,
+              "no_control_fallback": true,
+              "coast_zero_actuation": true
+            },
+            "metrics": {
+              "steady_acceleration_mean_speed_m_s": 2.9912453552087146,
+              "acceleration_final_speed_m_s": 2.9912679195404053,
+              "straight_lateral_drift_m": 7.66171641022439e-09,
+              "brake_entry_speed_m_s": 2.93891978263855,
+              "brake_distance_m": 0.6486358642908748,
+              "brake_final_speed_m_s": 0.0002854458966730807,
+              "brake_stop_time_s": 0.43333333333333357,
+              "hold_duration_s": 5.0,
+              "hold_drift_m": 0.00010304706711742372,
+              "all_wheels_grounded_fraction": 1.0,
+              "minimum_upright_z": 0.9999315898462015,
+              "coast_entry_speed_m_s": 2.9912679195404053,
+              "coast_final_speed_m_s": 2.93891978263855,
+              "coast_speed_change_m_s": -0.05234813690185547,
+              "coast_distance_m": 11.860145568847656,
+              "coast_interpretation": "Finite free rolling under the installed sample model; no real drag calibration claim"
+            },
+            "repeat": 1,
+            "episode_id": "dynamics-coast_3-1",
+            "trace": "trajectory-coast_3-1.json"
+          }
+        ],
+        "repeatability": {
+          "straight_1": {
+            "passed": true,
+            "matched_samples": true,
+            "finite_telemetry": true,
+            "maximum_position_difference_m": 0.0,
+            "maximum_speed_difference_m_s": 0.0,
+            "maximum_yaw_difference_rad": 0.0
+          },
+          "straight_3": {
+            "passed": true,
+            "matched_samples": true,
+            "finite_telemetry": true,
+            "maximum_position_difference_m": 0.0,
+            "maximum_speed_difference_m_s": 0.0,
+            "maximum_yaw_difference_rad": 0.0
+          },
+          "straight_6": {
+            "passed": true,
+            "matched_samples": true,
+            "finite_telemetry": true,
+            "maximum_position_difference_m": 0.0,
+            "maximum_speed_difference_m_s": 0.0,
+            "maximum_yaw_difference_rad": 0.0
+          },
+          "circle_left": {
+            "passed": true,
+            "matched_samples": true,
+            "finite_telemetry": true,
+            "maximum_position_difference_m": 0.0,
+            "maximum_speed_difference_m_s": 0.0,
+            "maximum_yaw_difference_rad": 0.0
+          },
+          "circle_right": {
+            "passed": true,
+            "matched_samples": true,
+            "finite_telemetry": true,
+            "maximum_position_difference_m": 0.0,
+            "maximum_speed_difference_m_s": 0.0,
+            "maximum_yaw_difference_rad": 0.0
+          },
+          "coast_3": {
+            "passed": true,
+            "matched_samples": true,
+            "finite_telemetry": true,
+            "maximum_position_difference_m": 0.0,
+            "maximum_speed_difference_m_s": 0.0,
+            "maximum_yaw_difference_rad": 0.0
+          }
+        },
+        "repeats": 2,
+        "completed_cases": 12,
+        "expected_cases": 12,
+        "startup_wall_s": 9.826000099999874,
+        "python": "3.12.13",
+        "limitations": [
+          "Same-version local sample vehicle; not calibrated highway dynamics",
+          "Low-slip bicycle comparison is not a real-world tire-model validation",
+          "Coast telemetry does not establish realistic aerodynamic/rolling resistance",
+          "No lane following, sensors, V2V, traffic bridge or trained policy"
+        ],
+        "total_wall_s": 166.3823832999999,
+        "process": {
+          "available": true,
+          "rss_bytes": 5155209216,
+          "peak_rss_bytes": 5472243712,
+          "cpu_seconds": 1730.25
+        },
+        "exit_code": 0,
+        "stop_reason": null,
+        "usd_reference_warning_count": 1,
+        "wall_process_seconds": 167.2586796999999,
+        "gpu_peak_mib": 5696.0,
+        "gpu_scope": "Whole GPU including desktop; roughly 1 Hz sampling",
+        "gpu_monitor_errors": [],
+        "lifecycle_warning_gate_failed": true,
+        "source_changed_during_run": []
+      }
+    }
+  ]
+}

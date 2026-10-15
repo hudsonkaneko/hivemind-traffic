@@ -1,0 +1,5 @@
+# Isolated offline-authoring environment; never install into Isaac Sim.
+usd-core==26.8
+shapely==2.1.2
+matplotlib==3.11.2
+numpy==2.4.6

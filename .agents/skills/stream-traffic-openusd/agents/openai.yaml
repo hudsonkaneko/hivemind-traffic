@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stream Traffic to OpenUSD"
+  short_description: "Stream and replay traffic in layered USD"
+  default_prompt: "Use $stream-traffic-openusd to map SUMO vehicle state into a layered OpenUSD live stage and saved replay."

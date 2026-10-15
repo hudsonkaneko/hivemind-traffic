@@ -1,0 +1,504 @@
+{
+  "schema_version": 1,
+  "seed": 20261006,
+  "exit_probability": 0.65,
+  "vehicles": 24,
+  "network_sha256": "bf9f5b899ea7a5fad3f6932d16fdddc0613a2b78d8724cd04249d9815827ed1c",
+  "semantics": "Plans on existing edges; no geometry changes, speed control, lane-change, yielding or collision avoidance. Release delays are per-plan requests, not a traffic safety guarantee.",
+  "plans": [
+    {
+      "vehicle_id": "vehicle_0000",
+      "start_side": "South",
+      "take_exit": true,
+      "return_opportunity": 3,
+      "return_edge": "NorthReturn",
+      "desired_speed_m_s": 28.8725,
+      "release_delay_s": 1.02,
+      "edges": [
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "SouthExit",
+        "CollectorLane_SouthCollectorMerge_to_SouthCollectorDiverge",
+        "CollectorLane_SouthCollectorDiverge_to_EastCollectorMerge",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "NorthReturn",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge"
+      ],
+      "route_length_m": 2533.7300568283185
+    },
+    {
+      "vehicle_id": "vehicle_0001",
+      "start_side": "North",
+      "take_exit": true,
+      "return_opportunity": 1,
+      "return_edge": "NorthReturn",
+      "desired_speed_m_s": 27.0632,
+      "release_delay_s": 4.471,
+      "edges": [
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "NorthExit",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "NorthReturn",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge"
+      ],
+      "route_length_m": 852.9782004854238
+    },
+    {
+      "vehicle_id": "vehicle_0002",
+      "start_side": "East",
+      "take_exit": false,
+      "return_opportunity": null,
+      "return_edge": null,
+      "desired_speed_m_s": 27.8544,
+      "release_delay_s": 8.854,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "AuxiliaryLane_EastDiverge_to_EastMerge",
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "AuxiliaryLane_NorthDiverge_to_NorthMerge",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge",
+        "AuxiliaryLane_WestDiverge_to_WestMerge",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "AuxiliaryLane_SouthDiverge_to_SouthMerge",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge"
+      ],
+      "route_length_m": 3261.5382471365515
+    },
+    {
+      "vehicle_id": "vehicle_0003",
+      "start_side": "North",
+      "take_exit": true,
+      "return_opportunity": 2,
+      "return_edge": "WestReturn",
+      "desired_speed_m_s": 27.937,
+      "release_delay_s": 12.424,
+      "edges": [
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "NorthExit",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "CollectorLane_NorthCollectorDiverge_to_WestCollectorMerge",
+        "CollectorLane_WestCollectorMerge_to_WestCollectorDiverge",
+        "WestReturn",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge"
+      ],
+      "route_length_m": 1693.354128656869
+    },
+    {
+      "vehicle_id": "vehicle_0004",
+      "start_side": "North",
+      "take_exit": false,
+      "return_opportunity": null,
+      "return_edge": null,
+      "desired_speed_m_s": 28.2716,
+      "release_delay_s": 16.12,
+      "edges": [
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "AuxiliaryLane_NorthDiverge_to_NorthMerge",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge",
+        "AuxiliaryLane_WestDiverge_to_WestMerge",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "AuxiliaryLane_SouthDiverge_to_SouthMerge",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "AuxiliaryLane_EastDiverge_to_EastMerge",
+        "AuxiliaryLane_EastMerge_to_NorthDiverge"
+      ],
+      "route_length_m": 3261.538247136552
+    },
+    {
+      "vehicle_id": "vehicle_0005",
+      "start_side": "East",
+      "take_exit": false,
+      "return_opportunity": null,
+      "return_edge": null,
+      "desired_speed_m_s": 26.9632,
+      "release_delay_s": 21.904,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "AuxiliaryLane_EastDiverge_to_EastMerge",
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "AuxiliaryLane_NorthDiverge_to_NorthMerge",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge",
+        "AuxiliaryLane_WestDiverge_to_WestMerge",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "AuxiliaryLane_SouthDiverge_to_SouthMerge",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge"
+      ],
+      "route_length_m": 3261.5382471365515
+    },
+    {
+      "vehicle_id": "vehicle_0006",
+      "start_side": "East",
+      "take_exit": true,
+      "return_opportunity": 2,
+      "return_edge": "NorthReturn",
+      "desired_speed_m_s": 27.1777,
+      "release_delay_s": 24.714,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "EastExit",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "NorthReturn",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge"
+      ],
+      "route_length_m": 1693.3541286568673
+    },
+    {
+      "vehicle_id": "vehicle_0007",
+      "start_side": "East",
+      "take_exit": true,
+      "return_opportunity": 4,
+      "return_edge": "SouthReturn",
+      "desired_speed_m_s": 26.8225,
+      "release_delay_s": 29.374,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "EastExit",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "CollectorLane_NorthCollectorDiverge_to_WestCollectorMerge",
+        "CollectorLane_WestCollectorMerge_to_WestCollectorDiverge",
+        "CollectorLane_WestCollectorDiverge_to_SouthCollectorMerge",
+        "CollectorLane_SouthCollectorMerge_to_SouthCollectorDiverge",
+        "SouthReturn",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge"
+      ],
+      "route_length_m": 3374.1059849997587
+    },
+    {
+      "vehicle_id": "vehicle_0008",
+      "start_side": "North",
+      "take_exit": false,
+      "return_opportunity": null,
+      "return_edge": null,
+      "desired_speed_m_s": 27.0976,
+      "release_delay_s": 32.081,
+      "edges": [
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "AuxiliaryLane_NorthDiverge_to_NorthMerge",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge",
+        "AuxiliaryLane_WestDiverge_to_WestMerge",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "AuxiliaryLane_SouthDiverge_to_SouthMerge",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "AuxiliaryLane_EastDiverge_to_EastMerge",
+        "AuxiliaryLane_EastMerge_to_NorthDiverge"
+      ],
+      "route_length_m": 3261.538247136552
+    },
+    {
+      "vehicle_id": "vehicle_0009",
+      "start_side": "South",
+      "take_exit": true,
+      "return_opportunity": 2,
+      "return_edge": "EastReturn",
+      "desired_speed_m_s": 26.9128,
+      "release_delay_s": 37.426,
+      "edges": [
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "SouthExit",
+        "CollectorLane_SouthCollectorMerge_to_SouthCollectorDiverge",
+        "CollectorLane_SouthCollectorDiverge_to_EastCollectorMerge",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "EastReturn",
+        "AuxiliaryLane_EastMerge_to_NorthDiverge"
+      ],
+      "route_length_m": 1693.3541286568745
+    },
+    {
+      "vehicle_id": "vehicle_0010",
+      "start_side": "West",
+      "take_exit": false,
+      "return_opportunity": null,
+      "return_edge": null,
+      "desired_speed_m_s": 28.0085,
+      "release_delay_s": 41.625,
+      "edges": [
+        "AuxiliaryLane_NorthMerge_to_WestDiverge",
+        "AuxiliaryLane_WestDiverge_to_WestMerge",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "AuxiliaryLane_SouthDiverge_to_SouthMerge",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "AuxiliaryLane_EastDiverge_to_EastMerge",
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "AuxiliaryLane_NorthDiverge_to_NorthMerge",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge"
+      ],
+      "route_length_m": 3261.5382471365515
+    },
+    {
+      "vehicle_id": "vehicle_0011",
+      "start_side": "East",
+      "take_exit": true,
+      "return_opportunity": 4,
+      "return_edge": "SouthReturn",
+      "desired_speed_m_s": 27.2359,
+      "release_delay_s": 44.994,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "EastExit",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "CollectorLane_NorthCollectorDiverge_to_WestCollectorMerge",
+        "CollectorLane_WestCollectorMerge_to_WestCollectorDiverge",
+        "CollectorLane_WestCollectorDiverge_to_SouthCollectorMerge",
+        "CollectorLane_SouthCollectorMerge_to_SouthCollectorDiverge",
+        "SouthReturn",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge"
+      ],
+      "route_length_m": 3374.1059849997587
+    },
+    {
+      "vehicle_id": "vehicle_0012",
+      "start_side": "North",
+      "take_exit": true,
+      "return_opportunity": 1,
+      "return_edge": "NorthReturn",
+      "desired_speed_m_s": 27.1121,
+      "release_delay_s": 48.223,
+      "edges": [
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "NorthExit",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "NorthReturn",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge"
+      ],
+      "route_length_m": 852.9782004854238
+    },
+    {
+      "vehicle_id": "vehicle_0013",
+      "start_side": "East",
+      "take_exit": true,
+      "return_opportunity": 4,
+      "return_edge": "SouthReturn",
+      "desired_speed_m_s": 28.2618,
+      "release_delay_s": 52.967,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "EastExit",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "CollectorLane_NorthCollectorDiverge_to_WestCollectorMerge",
+        "CollectorLane_WestCollectorMerge_to_WestCollectorDiverge",
+        "CollectorLane_WestCollectorDiverge_to_SouthCollectorMerge",
+        "CollectorLane_SouthCollectorMerge_to_SouthCollectorDiverge",
+        "SouthReturn",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge"
+      ],
+      "route_length_m": 3374.1059849997587
+    },
+    {
+      "vehicle_id": "vehicle_0014",
+      "start_side": "North",
+      "take_exit": false,
+      "return_opportunity": null,
+      "return_edge": null,
+      "desired_speed_m_s": 28.8145,
+      "release_delay_s": 56.145,
+      "edges": [
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "AuxiliaryLane_NorthDiverge_to_NorthMerge",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge",
+        "AuxiliaryLane_WestDiverge_to_WestMerge",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "AuxiliaryLane_SouthDiverge_to_SouthMerge",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "AuxiliaryLane_EastDiverge_to_EastMerge",
+        "AuxiliaryLane_EastMerge_to_NorthDiverge"
+      ],
+      "route_length_m": 3261.538247136552
+    },
+    {
+      "vehicle_id": "vehicle_0015",
+      "start_side": "East",
+      "take_exit": false,
+      "return_opportunity": null,
+      "return_edge": null,
+      "desired_speed_m_s": 28.7815,
+      "release_delay_s": 61.187,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "AuxiliaryLane_EastDiverge_to_EastMerge",
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "AuxiliaryLane_NorthDiverge_to_NorthMerge",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge",
+        "AuxiliaryLane_WestDiverge_to_WestMerge",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "AuxiliaryLane_SouthDiverge_to_SouthMerge",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge"
+      ],
+      "route_length_m": 3261.5382471365515
+    },
+    {
+      "vehicle_id": "vehicle_0016",
+      "start_side": "East",
+      "take_exit": true,
+      "return_opportunity": 2,
+      "return_edge": "NorthReturn",
+      "desired_speed_m_s": 28.1847,
+      "release_delay_s": 64.21,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "EastExit",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "NorthReturn",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge"
+      ],
+      "route_length_m": 1693.3541286568673
+    },
+    {
+      "vehicle_id": "vehicle_0017",
+      "start_side": "East",
+      "take_exit": true,
+      "return_opportunity": 2,
+      "return_edge": "NorthReturn",
+      "desired_speed_m_s": 26.8736,
+      "release_delay_s": 68.805,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "EastExit",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "NorthReturn",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge"
+      ],
+      "route_length_m": 1693.3541286568673
+    },
+    {
+      "vehicle_id": "vehicle_0018",
+      "start_side": "South",
+      "take_exit": true,
+      "return_opportunity": 1,
+      "return_edge": "SouthReturn",
+      "desired_speed_m_s": 27.8775,
+      "release_delay_s": 72.13,
+      "edges": [
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "SouthExit",
+        "CollectorLane_SouthCollectorMerge_to_SouthCollectorDiverge",
+        "SouthReturn",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge"
+      ],
+      "route_length_m": 852.9782004854242
+    },
+    {
+      "vehicle_id": "vehicle_0019",
+      "start_side": "South",
+      "take_exit": true,
+      "return_opportunity": 4,
+      "return_edge": "WestReturn",
+      "desired_speed_m_s": 27.3321,
+      "release_delay_s": 77.57,
+      "edges": [
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "SouthExit",
+        "CollectorLane_SouthCollectorMerge_to_SouthCollectorDiverge",
+        "CollectorLane_SouthCollectorDiverge_to_EastCollectorMerge",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "CollectorLane_NorthCollectorDiverge_to_WestCollectorMerge",
+        "CollectorLane_WestCollectorMerge_to_WestCollectorDiverge",
+        "WestReturn",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge"
+      ],
+      "route_length_m": 3374.105984999763
+    },
+    {
+      "vehicle_id": "vehicle_0020",
+      "start_side": "South",
+      "take_exit": true,
+      "return_opportunity": 4,
+      "return_edge": "WestReturn",
+      "desired_speed_m_s": 28.2319,
+      "release_delay_s": 80.718,
+      "edges": [
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "SouthExit",
+        "CollectorLane_SouthCollectorMerge_to_SouthCollectorDiverge",
+        "CollectorLane_SouthCollectorDiverge_to_EastCollectorMerge",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "CollectorLane_NorthCollectorDiverge_to_WestCollectorMerge",
+        "CollectorLane_WestCollectorMerge_to_WestCollectorDiverge",
+        "WestReturn",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge"
+      ],
+      "route_length_m": 3374.105984999763
+    },
+    {
+      "vehicle_id": "vehicle_0021",
+      "start_side": "West",
+      "take_exit": false,
+      "return_opportunity": null,
+      "return_edge": null,
+      "desired_speed_m_s": 26.9659,
+      "release_delay_s": 84.89,
+      "edges": [
+        "AuxiliaryLane_NorthMerge_to_WestDiverge",
+        "AuxiliaryLane_WestDiverge_to_WestMerge",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "AuxiliaryLane_SouthDiverge_to_SouthMerge",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "AuxiliaryLane_EastDiverge_to_EastMerge",
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "AuxiliaryLane_NorthDiverge_to_NorthMerge",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge"
+      ],
+      "route_length_m": 3261.5382471365515
+    },
+    {
+      "vehicle_id": "vehicle_0022",
+      "start_side": "East",
+      "take_exit": false,
+      "return_opportunity": null,
+      "return_edge": null,
+      "desired_speed_m_s": 27.7271,
+      "release_delay_s": 89.808,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "AuxiliaryLane_EastDiverge_to_EastMerge",
+        "AuxiliaryLane_EastMerge_to_NorthDiverge",
+        "AuxiliaryLane_NorthDiverge_to_NorthMerge",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge",
+        "AuxiliaryLane_WestDiverge_to_WestMerge",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "AuxiliaryLane_SouthDiverge_to_SouthMerge",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge"
+      ],
+      "route_length_m": 3261.5382471365515
+    },
+    {
+      "vehicle_id": "vehicle_0023",
+      "start_side": "South",
+      "take_exit": true,
+      "return_opportunity": 4,
+      "return_edge": "WestReturn",
+      "desired_speed_m_s": 29.0243,
+      "release_delay_s": 92.966,
+      "edges": [
+        "AuxiliaryLane_WestMerge_to_SouthDiverge",
+        "SouthExit",
+        "CollectorLane_SouthCollectorMerge_to_SouthCollectorDiverge",
+        "CollectorLane_SouthCollectorDiverge_to_EastCollectorMerge",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "CollectorLane_NorthCollectorDiverge_to_WestCollectorMerge",
+        "CollectorLane_WestCollectorMerge_to_WestCollectorDiverge",
+        "WestReturn",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge"
+      ],
+      "route_length_m": 3374.105984999763
+    }
+  ]
+}

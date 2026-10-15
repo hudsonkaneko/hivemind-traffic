@@ -71,6 +71,11 @@ measurements, failures, assumptions, and evidence locations.
 
 ## Next integration gates
 
+These gates record the capacity study's original sequence. The subsequent
+[hybrid vehicle roadmap](hybrid-roadmap.md) now puts a one-car physical-control
+test before fleet integration. Measurements below still describe the original
+SUMO/RTX probes and must not be treated as physical-vehicle capacity estimates.
+
 1. Connect the shared state contract to the live fleet and scene adapters.
 2. Add 18 native SUMO background cars around the two independently sensed AVs.
    Preserve all cars as sensor-visible obstacles and handle spawn/removal explicitly.

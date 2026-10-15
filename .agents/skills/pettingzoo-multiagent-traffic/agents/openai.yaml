@@ -1,0 +1,4 @@
+interface:
+  display_name: "PettingZoo Multi-Agent Traffic"
+  short_description: "Wrap traffic simulation as a tested ParallelEnv"
+  default_prompt: "Use $pettingzoo-multiagent-traffic to build and validate a deterministic multi-agent traffic environment."

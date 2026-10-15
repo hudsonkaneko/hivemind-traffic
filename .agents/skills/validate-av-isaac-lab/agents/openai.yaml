@@ -1,0 +1,4 @@
+interface:
+  display_name: "Validate AV Policies in Isaac Lab"
+  short_description: "Validate AV policies with physics and sensors"
+  default_prompt: "Use $validate-av-isaac-lab to validate one trained SUMO fleet scenario with Isaac Lab physics and domain randomization."

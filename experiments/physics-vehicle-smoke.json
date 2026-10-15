@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "study": "physics_vehicle_foundation",
+  "seed": 101,
+  "physics_hz": 120,
+  "control_hz": 60,
+  "repeats": 2,
+  "target_speed_m_s": 3.0,
+  "steering_rad": 0.2,
+  "drive_torque_per_front_wheel_nm": 700.0,
+  "brake_torque_per_wheel_nm": 1500.0,
+  "command_ttl_ticks": 12,
+  "max_process_seconds": 180,
+  "phases": [["settle", 2.0], ["straight", 8.0], ["brake", 3.0], ["hold", 2.0], ["turn", 8.0], ["coast", 2.0], ["dropout", 3.0]],
+  "acceptance": {
+    "straight_speed_min_m_s": 2.5,
+    "straight_speed_max_m_s": 3.5,
+    "straight_lateral_drift_max_m": 0.15,
+    "straight_forward_progress_min_m": 15.0,
+    "root_height_min_m": 0.5,
+    "root_height_max_m": 1.5,
+    "grounded_fraction_min": 0.99,
+    "braking_distance_max_m": 4.0,
+    "stopped_speed_max_m_s": 0.05,
+    "hold_drift_max_m": 0.05,
+    "turn_yaw_min_rad": 0.3,
+    "upright_min_z": 0.95,
+    "repeat_position_tolerance_m": 0.001,
+    "repeat_speed_tolerance_m_s": 0.001
+  }
+}

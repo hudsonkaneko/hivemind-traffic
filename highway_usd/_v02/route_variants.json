@@ -1,0 +1,85 @@
+{
+  "seed": 65,
+  "plans": [
+    {
+      "vehicle_id": "vehicle_0011",
+      "start_side": "East",
+      "take_exit": true,
+      "return_opportunity": 1,
+      "return_edge": "EastReturn",
+      "desired_speed_m_s": 27.4215,
+      "release_delay_s": 44.907,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "EastExit",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "EastReturn",
+        "AuxiliaryLane_EastMerge_to_NorthDiverge"
+      ],
+      "route_length_m": 852.9782004854237
+    },
+    {
+      "vehicle_id": "vehicle_0003",
+      "start_side": "East",
+      "take_exit": true,
+      "return_opportunity": 2,
+      "return_edge": "NorthReturn",
+      "desired_speed_m_s": 28.6054,
+      "release_delay_s": 13.648,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "EastExit",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "NorthReturn",
+        "AuxiliaryLane_NorthMerge_to_WestDiverge"
+      ],
+      "route_length_m": 1693.3541286568673
+    },
+    {
+      "vehicle_id": "vehicle_0017",
+      "start_side": "East",
+      "take_exit": true,
+      "return_opportunity": 3,
+      "return_edge": "WestReturn",
+      "desired_speed_m_s": 28.0247,
+      "release_delay_s": 68.063,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "EastExit",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "CollectorLane_NorthCollectorDiverge_to_WestCollectorMerge",
+        "CollectorLane_WestCollectorMerge_to_WestCollectorDiverge",
+        "WestReturn",
+        "AuxiliaryLane_WestMerge_to_SouthDiverge"
+      ],
+      "route_length_m": 2533.730056828312
+    },
+    {
+      "vehicle_id": "vehicle_0014",
+      "start_side": "East",
+      "take_exit": true,
+      "return_opportunity": 4,
+      "return_edge": "SouthReturn",
+      "desired_speed_m_s": 27.1615,
+      "release_delay_s": 57.989,
+      "edges": [
+        "AuxiliaryLane_SouthMerge_to_EastDiverge",
+        "EastExit",
+        "CollectorLane_EastCollectorMerge_to_EastCollectorDiverge",
+        "CollectorLane_EastCollectorDiverge_to_NorthCollectorMerge",
+        "CollectorLane_NorthCollectorMerge_to_NorthCollectorDiverge",
+        "CollectorLane_NorthCollectorDiverge_to_WestCollectorMerge",
+        "CollectorLane_WestCollectorMerge_to_WestCollectorDiverge",
+        "CollectorLane_WestCollectorDiverge_to_SouthCollectorMerge",
+        "CollectorLane_SouthCollectorMerge_to_SouthCollectorDiverge",
+        "SouthReturn",
+        "AuxiliaryLane_SouthMerge_to_EastDiverge"
+      ],
+      "route_length_m": 3374.1059849997587
+    }
+  ]
+}

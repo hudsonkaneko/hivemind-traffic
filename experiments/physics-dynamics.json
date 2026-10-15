@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "study": "physics_vehicle_dynamics",
+  "seed": 101,
+  "physics_hz": 120,
+  "control_hz": 60,
+  "repeats": 2,
+  "drive_torque_per_front_wheel_nm": 700.0,
+  "brake_torque_per_wheel_nm": 1500.0,
+  "command_ttl_ticks": 12,
+  "speed_proportional_gain": 0.7,
+  "max_process_seconds": 300,
+  "max_total_simulated_seconds": 300,
+  "cases": [
+    {"name": "straight_1", "kind": "straight", "target_speed_m_s": 1.0, "steering_rad": 0.0, "braking_distance_max_m": 1.0, "phases": [["settle", 2.0], ["accelerate", 8.0], ["brake", 3.0], ["hold", 5.0]]},
+    {"name": "straight_3", "kind": "straight", "target_speed_m_s": 3.0, "steering_rad": 0.0, "braking_distance_max_m": 4.0, "phases": [["settle", 2.0], ["accelerate", 8.0], ["brake", 3.0], ["hold", 5.0]]},
+    {"name": "straight_6", "kind": "straight", "target_speed_m_s": 6.0, "steering_rad": 0.0, "braking_distance_max_m": 8.0, "phases": [["settle", 2.0], ["accelerate", 8.0], ["brake", 3.0], ["hold", 5.0]]},
+    {"name": "circle_left", "kind": "circle", "target_speed_m_s": 3.0, "steering_rad": 0.2, "braking_distance_max_m": 4.0, "phases": [["settle", 2.0], ["accelerate", 8.0], ["turn_warmup", 4.0], ["circle", 12.0], ["brake", 3.0], ["hold", 5.0]]},
+    {"name": "circle_right", "kind": "circle", "target_speed_m_s": 3.0, "steering_rad": -0.2, "braking_distance_max_m": 4.0, "phases": [["settle", 2.0], ["accelerate", 8.0], ["turn_warmup", 4.0], ["circle", 12.0], ["brake", 3.0], ["hold", 5.0]]},
+    {"name": "coast_3", "kind": "coast", "target_speed_m_s": 3.0, "steering_rad": 0.0, "braking_distance_max_m": 4.0, "phases": [["settle", 2.0], ["accelerate", 8.0], ["coast", 4.0], ["brake", 3.0], ["hold", 5.0]]}
+  ],
+  "acceptance": {
+    "speed_tolerance_m_s": 0.35,
+    "straight_lateral_drift_max_m": 0.15,
+    "root_height_min_m": 0.5,
+    "root_height_max_m": 1.5,
+    "grounded_fraction_min": 0.99,
+    "stopped_speed_max_m_s": 0.05,
+    "hold_duration_min_s": 5.0,
+    "hold_drift_max_m": 0.05,
+    "upright_min_z": 0.9961946980917455,
+    "circle_radius_relative_tolerance": 0.1,
+    "circle_yaw_progress_min_rad": 1.0,
+    "circle_steering_tolerance_rad": 0.000001,
+    "repeat_position_tolerance_m": 0.001,
+    "repeat_speed_tolerance_m_s": 0.001,
+    "repeat_yaw_tolerance_rad": 0.001
+  }
+}

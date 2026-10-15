@@ -1,0 +1,19 @@
+{
+  "passed": false,
+  "contact_checks_passed": true,
+  "returncode": 0,
+  "timed_out": false,
+  "runtime_error_lines": [
+    "2026-10-06T18:25:10Z [8,345ms] [Warning] [omni.usd] Unexpected reference count of 2 for UsdStage 'anon:000002782A249B20:World1.usd' while being closed in UsdContext (this may indicate it is still resident in memory)."
+  ],
+  "runtime_warning_count": 9,
+  "stage_unchanged": true,
+  "elapsed_seconds": 10.81199999999808,
+  "stage_sha256": "8ab855aa553e9ab4576ee8266140553312a004b3616b3ea29ad6400eadbf95a8",
+  "evidence": "outputs\\highway_usd\\v02-smoke-20261006-01",
+  "contact_count": 47,
+  "maximum_height_error_m": 0.0034086883068084606,
+  "simulation_seconds": 3.0,
+  "physics_hz": 120,
+  "scope": "47 stationary sphere drop contacts at main/aux lanes, ramps, all joins and ground; no vehicle driving, tire, yielding or traffic validation"
+}

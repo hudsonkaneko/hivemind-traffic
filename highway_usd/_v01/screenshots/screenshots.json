@@ -1,0 +1,90 @@
+{
+  "version": "_v01",
+  "source_scene": "highway_v01.usda",
+  "stage_sha256": "9f051ca2756127ac222bc99b786bcccf7dcc9b675a920dd9738ed7831a352058",
+  "source_unchanged": true,
+  "capture_method": "ovstage + ovrtx, actual USD render; static scene, no physics",
+  "frames": 24,
+  "views": {
+    "top": {
+      "eye": [
+        0,
+        0,
+        903.9599999999999
+      ],
+      "target": [
+        0,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ],
+      "resolution": [
+        1800,
+        1800
+      ],
+      "ortho_width_m": 809.7974999999999,
+      "image": "top.png",
+      "image_sha256": "b25ce9a891eabe11c2fe08aba99a22d116481ee8f2d5556abcfa180f3b30a31f"
+    },
+    "angled": {
+      "eye": [
+        527.31,
+        -659.1374999999999,
+        715.6349999999999
+      ],
+      "target": [
+        0,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "resolution": [
+        1800,
+        1400
+      ],
+      "focal_length_mm": 36,
+      "image": "angled.png",
+      "image_sha256": "4a28e7da33d13b8d2eeddee982505f470e858ce747b209dc810350d8556ccf5a"
+    },
+    "east_diverge": {
+      "eye": [
+        241.76865810916107,
+        -169.20862331145992,
+        115.0
+      ],
+      "target": [
+        170.76865810916107,
+        -90.20862331145992,
+        0.0
+      ],
+      "up": [
+        0,
+        0,
+        1
+      ],
+      "resolution": [
+        1800,
+        1200
+      ],
+      "focal_length_mm": 45,
+      "image": "east_diverge.png",
+      "image_sha256": "052366f73a8e6de98e2fe25f6e29883be15a68cc9254257a0b202054800d9228"
+    }
+  },
+  "runtime": {
+    "ovstage": "0.2.0.377349",
+    "ovrtx": "0.5.0.377615",
+    "usd-core": "26.8",
+    "numpy": "2.4.6",
+    "pillow": "12.3.0"
+  },
+  "elapsed_seconds": 13.125
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "SUMO + TraCI Traffic"
+  short_description: "Build reproducible traffic-control scenarios"
+  default_prompt: "Use $sumo-traci-traffic to build and verify a deterministic SUMO scenario controlled through TraCI."

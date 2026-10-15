@@ -1,0 +1,4 @@
+interface:
+  display_name: "Run Reproducible AV Experiments"
+  short_description: "Run traceable, repeatable AV evaluations"
+  default_prompt: "Use $run-reproducible-av-experiments to plan and package a reproducible comparison of our autonomous-vehicle policies."

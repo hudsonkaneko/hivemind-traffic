@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 import uuid
+import os
 
 
 def fingerprint(path):
@@ -36,7 +37,15 @@ class RunRecord:
         self.project = Path(project).resolve()
         now = datetime.now(timezone.utc)
         self.run_id = now.strftime("%Y-%m-%dT%H-%M-%SZ") + "_" + uuid.uuid4().hex[:8]
-        self.directory = self.project / "documentation" / "runs" / self.run_id
+        record_root = os.environ.get("HIGHWAYSIM_RUN_RECORD_ROOT")
+        if record_root:
+            requested_root = Path(record_root).expanduser().resolve()
+            allowed_root = (self.project / "outputs").resolve()
+            if not requested_root.is_relative_to(allowed_root):
+                raise ValueError("HIGHWAYSIM_RUN_RECORD_ROOT must resolve inside the project outputs directory")
+            self.directory = requested_root / self.run_id
+        else:
+            self.directory = self.project / "documentation" / "runs" / self.run_id
         self.directory.mkdir(parents=True, exist_ok=False)
         source_dir = self.directory / "source"
         source_dir.mkdir()

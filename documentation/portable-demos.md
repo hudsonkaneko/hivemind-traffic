@@ -149,6 +149,47 @@ mean the strict lidar acceptance tests pass; lidar still does not control PPO.
 
 ## Verification and learning exercise
 
+For the current presentation-ready entry points and their distinct controller
+boundaries, see [demo readiness](demo-readiness.md). After activating your
+configured traffic Python, these additional bounded launchers preserve old runs:
+
+```text
+python scripts/demo_obstacle_bypass.py
+python scripts/demo_obstacle_bypass.py --profile low-speed
+python scripts/demo_obstacle_bypass.py --real-time
+python scripts/demo_waypoint.py --gui --capture
+python -m experiments.demo_sumo_readiness --headless
+```
+
+The obstacle bypass is a scripted full-size physical car with RTX LiDAR, not
+RL. The [35 mph profile note](physical-35mph.md) records the faster fixture and
+its validation status; `--profile low-speed` retains the original 3 m/s demo.
+Its optional `--real-time` mode uses lighter graphics, 20-Hz rendering and
+measured 1x-target pacing; the GUI is **not yet consistently real time**.
+See [preview commands, timing gates and actual results](realtime-preview.md).
+The waypoint demo evaluates the existing RC-scale Leatherback PPO, not a
+full-size highway policy. It needs a compatible Isaac Lab installation (set
+`ISAACLAB_PATH` when it is not in your Documents/IsaacLab folder) and a trusted
+local `outputs/training_v2/policy.zip`, or an explicit `--checkpoint` override.
+Checkpoints are not included in Git. Add `--check` to either script for a
+non-launching setup check. On this workstation the configured traffic Python is
+`.venv-traffic/Scripts/python.exe`; environment directory names may differ on a
+new clone. Do not install traffic packages into Isaac's Python.
+
+For the newer, separate **physics-driven car** with curved road, overview/follow
+cameras, planned path and LiDAR emergency braking, see the
+[physical LiDAR view](physics-lidar-view.md). It does not require SUMO:
+
+```text
+python scripts/demo_physics_lidar.py --check
+python scripts/demo_physics_lidar.py --points
+```
+
+The command is portable runtime discovery, not a bundled simulator: a compatible
+Isaac installation and NVIDIA RTX hardware are still required. This new path is
+validated on the recorded Windows/Isaac 6 installation, not every operating system
+or Isaac release. Its current simple scripted car is not a learned policy.
+
 Local verification for this change: all 65 automated tests passed. Setup checks
 passed for sumo, trained, lidar, replay and ovrtx. After CMD activation, the exact
 `python -m hivemind` entry point completed scripted and trained headless rollouts
@@ -167,3 +208,115 @@ runtime validation. See the change's test record in the learning guide.
 Explain why one command can stay portable while the executable it selects changes
 between machines. Then deliberately configure a missing interpreter and run
 `--check`: it should report setup guidance without launching or modifying a scene.
+
+## Mentor branch: continuous physical highway loop
+
+Separate known-map scripted PhysX fixture, with no SUMO, LiDAR or RL:
+
+```text
+python scripts/demo_highway_loop.py --check
+python scripts/demo_highway_loop.py --profile seam3
+python scripts/demo_highway_loop.py --profile seam35
+python scripts/demo_highway_loop.py --profile lap35
+```
+
+Use the configured traffic Python to launch; the supervisor discovers Isaac.
+The GUI defaults to light graphics and best-effort real-time pacing. It has
+follow/overview and pause controls. Runs are bounded and close on completion.
+See [acceptance results and limitations](continuous-highway-loop.md) before
+equating a short preview with full-lap, multi-car or learned-control validation.
+
+## Prepared-car loop traffic showcase
+
+The newer opt-in **v07** keeps 80 background cars and introduces shared visual
+geometry with the regular Isaac Sim editor UI by default and an optional small
+showcase app. Two long minimal-app 30-Hz GUI runs held average real-time
+speed and repeated exactly, but rare 126–128 ms hitches keep strict smoothness
+unqualified. Consult the [current evidence](showcase-responsiveness.md).
+The 60-Hz override is experimental, not a guarantee.
+
+```text
+python scripts/demo_loop_showcase.py --version v07
+python scripts/demo_loop_showcase.py --version v07 --ui-profile showcase
+```
+
+The first keeps the regular editor panels; the second selects the smaller app.
+Both retain instanced visuals, cached updates and the 30-Hz display default.
+Editor timing is measured separately, not inherited from the smaller app.
+Use `--evidence full`
+for more complete diagnostics at additional cost. Existing defaults/versions
+below are preserved, and all commands require the same local prepared vehicle.
+
+For the denser 80-car preset, select **v05** explicitly:
+
+```text
+python scripts/demo_loop_showcase.py --version v05
+```
+
+This adds staggered traffic throughout the ring while retaining passing gaps.
+The main car still targets 35 mph; backgrounds travel about 15 mph. The dense
+preset is **not real-time qualified** on the measured workstation: the full
+GUI test achieved 0.751x, with display updates at 10 Hz of simulation time. Physics
+and controls remain 120/60 Hz. Use v04 for the previously qualified lighter
+real-time preview. See [dense-preset evidence](dense-loop-showcase.md).
+
+Use the configured traffic environment from the repository root. The supervisor
+discovers the installed Isaac runtime; it does not install it or require SUMO.
+This demonstration also requires the separately supplied local prepared vehicle
+at `vehicles/sim_ready/americano-i7-ev/v07/world.usda`. That asset is **not in
+GitHub** and is not downloaded automatically; copying the repository alone does
+not supply its unverified redistribution rights.
+
+```text
+python scripts/demo_loop_showcase.py --check
+python scripts/demo_loop_showcase.py --version v04
+```
+
+The v04 default is a bounded four-minute driving preview plus settling and
+braking. It closes on completion. Follow, traffic overhead, whole-loop overview,
+pause and path-visibility controls are in the showcase window. Main-car motion
+is PhysX, slower traffic is scripted kinematic, and object observations come
+from simulator state—not LiDAR or RL. Pacing never skips physics ticks.
+
+Shorter presentation and repeatable headless test:
+
+```text
+python scripts/demo_loop_showcase.py --version v04 --drive-seconds 90
+python scripts/demo_loop_showcase.py --version v04 --drive-seconds 90 --headless --unpaced --capture
+```
+
+Start with a closer traffic-overhead camera by adding `--camera traffic`.
+`--capture` saves actual viewport images in the fresh local output directory;
+`--headless` hides the window but this showcase still renders, so it still
+requires RTX hardware. The displayed path is the controller's reference.
+
+Separate fault checks (not the presentation):
+
+```text
+python scripts/demo_loop_showcase.py --version v04 --mode blocked --drive-seconds 45 --headless --unpaced
+python scripts/demo_loop_showcase.py --version v04 --mode dropout --drive-seconds 45 --headless --unpaced
+```
+
+The development-only `--mode contact-check --drive-seconds 15` deliberately
+hits a background collider to prove contact reporting is active. Do not show
+that fixture as successful obstacle avoidance.
+
+Earlier milestone profiles remain selectable with `--version v01`, `v02`, or
+`v03`, using the current corrected implementation. Their historical source is
+preserved by Git; version folders record the original evidence and limitations.
+See the [showcase evidence](loop-traffic-showcase.md) for the exact tested runs,
+camera captures, physical versus real-time status, and retained failures. Close
+other simulation runs before starting; memory measurements include the desktop.
+
+### Live density and speed controls (v09)
+
+```text
+python scripts/demo_loop_showcase.py --version v09
+```
+
+The regular Isaac editor includes a docked Highway Sim Controls panel. Density,
+main/background speed targets and following gap apply gradually without
+restarting. Requested and actual density differ while remote cars enter/leave.
+Rendering rate/resolution still need the explicit restart button; disabled
+future sliders have no effect. These are scripted exploratory controls, not
+LiDAR, learned driving or hivemind modes. See [behavior and evidence](showcase-live-controls.md).

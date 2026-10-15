@@ -1,0 +1,26 @@
+{
+  "version": "_v01",
+  "usd_version": "0.26.8",
+  "shapely_version": "2.1.2",
+  "parameters": {
+    "inner_radius_m": 180.0,
+    "lane_width_m": 3.7,
+    "main_lanes": 4,
+    "leaf_extension_m": 180.0,
+    "leaf_half_angle_deg": 32.0,
+    "circle_samples": 1440,
+    "ramp_samples": 1024,
+    "road_top_m": 0.0,
+    "road_thickness_m": 0.3,
+    "ground_margin_m": 35.0,
+    "main_speed_hint_m_s": 15.0,
+    "auxiliary_speed_hint_m_s": 10.0,
+    "ramp_speed_hint_m_s": 8.0
+  },
+  "files": {
+    "highway_v01.usda": "9f051ca2756127ac222bc99b786bcccf7dcc9b675a920dd9738ed7831a352058",
+    "navigation.json": "5d2cb6f49a4522f6dac3d9d9ee884a2f0882639d9da41dbe5b7015f006bdca77",
+    "parameters.json": "f70410a9058795542618edf1ec0cde4da2360ae88b6625c8490600e364637cd5",
+    "generate_highway.py": "c9099c013c9d388e408c87450b6619f834bda4ad25de069e39fad4e9fb4171f5"
+  }
+}

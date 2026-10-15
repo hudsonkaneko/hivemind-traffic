@@ -1,0 +1,51 @@
+{
+  "final_stage_sha256": "9f051ca2756127ac222bc99b786bcccf7dcc9b675a920dd9738ed7831a352058",
+  "static_validation_passed": true,
+  "final_contact_checks_passed": true,
+  "overall_smoke_passed": false,
+  "limitation": "Unresolved Isaac stage-close reference-count warning keeps the strict overall smoke gate failed. Fabric/renderer warnings remain. No vehicle-driving claim.",
+  "runs": [
+    {
+      "passed": false,
+      "contact_checks_passed": true,
+      "returncode": 0,
+      "timed_out": false,
+      "runtime_error_lines": [
+        "2026-10-06T08:22:32Z [8,797ms] [Warning] [omni.usd] Unexpected reference count of 2 for UsdStage 'anon:00000289206566E0:World1.usd' while being closed in UsdContext (this may indicate it is still resident in memory)."
+      ],
+      "runtime_warning_count": 10,
+      "stage_unchanged": true,
+      "elapsed_seconds": 11.15599999999904,
+      "stage_sha256": "5fccbc40d3b29ca31528e358986fe7c663dc1d28435f50d9337cc3e732128e8d",
+      "evidence": "outputs\\highway_usd\\v01-smoke-20261006-01",
+      "contact_count": 26,
+      "maximum_height_error_m": 5.543231964000306e-07,
+      "maximum_horizontal_drift_m": 6.577008724344039e-06,
+      "runtime_usd_version": "0.25.11",
+      "simulation_seconds": 3.0,
+      "steps": 360,
+      "physics_hz": 120
+    },
+    {
+      "passed": false,
+      "contact_checks_passed": true,
+      "returncode": 0,
+      "timed_out": false,
+      "runtime_error_lines": [
+        "2026-10-06T08:24:52Z [8,103ms] [Warning] [omni.usd] Unexpected reference count of 2 for UsdStage 'anon:000002EF2087EB60:World1.usd' while being closed in UsdContext (this may indicate it is still resident in memory)."
+      ],
+      "runtime_warning_count": 12,
+      "stage_unchanged": true,
+      "elapsed_seconds": 10.468999999999141,
+      "stage_sha256": "9f051ca2756127ac222bc99b786bcccf7dcc9b675a920dd9738ed7831a352058",
+      "evidence": "outputs\\highway_usd\\v01-smoke-20261006-02",
+      "contact_count": 26,
+      "maximum_height_error_m": 5.543231964000306e-07,
+      "maximum_horizontal_drift_m": 6.577008724344039e-06,
+      "runtime_usd_version": "0.25.11",
+      "simulation_seconds": 3.0,
+      "steps": 360,
+      "physics_hz": 120
+    }
+  ]
+}

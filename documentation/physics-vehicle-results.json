@@ -1,0 +1,205 @@
+{
+  "run_id": "20261003T092703Z-7806d7c0",
+  "local_evidence": "outputs/physics_vehicle/20261003T092703Z-7806d7c0",
+  "manifest_sha256": "406ca7f7e421e33c37bdd3fe027384fa2bdf770821464bda03705f46f5a62b43",
+  "artifact_hashes_verified": true,
+  "git_commit": "76c9c197c0be6b36991240ba25a05d0b1484d529",
+  "working_tree_dirty": true,
+  "source_hashes": {
+    "experiments/physics-vehicle-smoke.json": "618eb53d61ca04473c5e3ab9c5de3e958e38ddf084638bac1ec10b1c826cf2c8",
+    "experiments/verify_physics_vehicle.py": "cf1b58d15ef9b2398fa21f519c3322c77c6ac561754f0d0f3173699c4b1c8e5e",
+    "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+    "scripts/probe_physics_vehicle.py": "882ff5a7a948df1087f25e97065ba883053e77b5a15c344e9ac7e52bc502ff6a",
+    "traffic/driver_control.py": "f8f5c9c211b7ddea997742b7ee3bdadcff8d211100cb9b1044865b978cfbcad1",
+    "traffic/physx_vehicle.py": "703792a61e6c99cdc3f2008527c442b9eaf29b48f8f80b1c347a11f23613ebf8",
+    "hivemind/launcher.py": "ed700479851bf3c8a88aa2b2d3bc7d542d9ea7077c5ce4a40e4ce151560eb231"
+  },
+  "configuration": {
+    "schema_version": 1,
+    "study": "physics_vehicle_foundation",
+    "seed": 101,
+    "physics_hz": 120,
+    "control_hz": 60,
+    "repeats": 2,
+    "target_speed_m_s": 3.0,
+    "steering_rad": 0.2,
+    "drive_torque_per_front_wheel_nm": 700.0,
+    "brake_torque_per_wheel_nm": 1500.0,
+    "command_ttl_ticks": 12,
+    "max_process_seconds": 180,
+    "phases": [
+      [
+        "settle",
+        2.0
+      ],
+      [
+        "straight",
+        8.0
+      ],
+      [
+        "brake",
+        3.0
+      ],
+      [
+        "hold",
+        2.0
+      ],
+      [
+        "turn",
+        8.0
+      ],
+      [
+        "coast",
+        2.0
+      ],
+      [
+        "dropout",
+        3.0
+      ]
+    ],
+    "acceptance": {
+      "straight_speed_min_m_s": 2.5,
+      "straight_speed_max_m_s": 3.5,
+      "straight_lateral_drift_max_m": 0.15,
+      "straight_forward_progress_min_m": 15.0,
+      "root_height_min_m": 0.5,
+      "root_height_max_m": 1.5,
+      "grounded_fraction_min": 0.99,
+      "braking_distance_max_m": 4.0,
+      "stopped_speed_max_m_s": 0.05,
+      "hold_drift_max_m": 0.05,
+      "turn_yaw_min_rad": 0.3,
+      "upright_min_z": 0.95,
+      "repeat_position_tolerance_m": 0.001,
+      "repeat_speed_tolerance_m_s": 0.001
+    }
+  },
+  "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+  "hardware": {
+    "wall": 106437.6306434,
+    "name": "NVIDIA GeForce RTX 5070",
+    "total_mib": 12227.0,
+    "used_mib": 2504.0,
+    "utilization_percent": 0.0,
+    "driver": "610.74"
+  },
+  "model": {
+    "model": "installed omni.physx.vehicle Factory DRIVE_NONE",
+    "factory_sha256": "54559a0c1c11af20b0f7b51008dff3feae3c9fd8b5c988b9c30ad83626df8723",
+    "mass_kg": 1800.0,
+    "inertia_kg_m2": [
+      636.0,
+      3606.0,
+      3942.00048828125
+    ],
+    "center_of_mass_from_root_m": [
+      0.0,
+      0.0,
+      -0.25
+    ],
+    "chassis_collision_dimensions_m": [
+      4.8,
+      1.8,
+      1.4
+    ],
+    "wheelbase_m": 3.2,
+    "track_m": 1.6,
+    "wheel_radius_m": 0.35,
+    "gravity_m_s2": 9.81,
+    "world_frame": "right-handed X forward, Y left, Z up; meters",
+    "pose_reference": "chassis prim origin; NOT SUMO front bumper",
+    "quaternion_order": "xyzw",
+    "movement_authority": "isaac_physx",
+    "tire_contact": "Factory raycast suspension/tire model; not a deformable tire",
+    "tire_tarmac_friction": 0.75,
+    "rigid_static_friction": 0.9,
+    "rigid_dynamic_friction": 0.7,
+    "suspension_spring_n_m": 45000,
+    "suspension_damper_n_s_m": 4500,
+    "suspension_travel_m": 0.2,
+    "ground": "Infinite collision plane; sample visible ground is only 30 x 30 m",
+    "sumo_required": false,
+    "lidar_enabled": false,
+    "isaac_lab_validated": false
+  },
+  "result": {
+    "passed": true,
+    "episodes": [
+      {
+        "passed": true,
+        "gates": {
+          "target_speed": true,
+          "straight_drift": true,
+          "forward": true,
+          "braking": true,
+          "hold": true,
+          "turn_left": true,
+          "upright": true,
+          "height": true,
+          "grounded": true,
+          "expiry_stop": true
+        },
+        "straight_speed_m_s": 2.9912679195404053,
+        "straight_lateral_drift_m": 7.66171641022439e-09,
+        "brake_distance_m": 0.6718692779778803,
+        "brake_entry_speed_m_s": 2.9912679195404053,
+        "all_wheels_grounded_fraction": 1.0,
+        "brake_final_speed_m_s": 1.1069326405445953e-05,
+        "hold_drift_m": 0.00015643164615777427,
+        "turn_yaw_rad": 1.3348657797887538,
+        "dropout_final_speed_m_s": 0.00022620968633059712,
+        "minimum_upright_z": 0.9999313794144287
+      },
+      {
+        "passed": true,
+        "gates": {
+          "target_speed": true,
+          "straight_drift": true,
+          "forward": true,
+          "braking": true,
+          "hold": true,
+          "turn_left": true,
+          "upright": true,
+          "height": true,
+          "grounded": true,
+          "expiry_stop": true
+        },
+        "straight_speed_m_s": 2.9912679195404053,
+        "straight_lateral_drift_m": 7.66171641022439e-09,
+        "brake_distance_m": 0.6718692779778803,
+        "brake_entry_speed_m_s": 2.9912679195404053,
+        "all_wheels_grounded_fraction": 1.0,
+        "brake_final_speed_m_s": 1.1069326405445953e-05,
+        "hold_drift_m": 0.00015643164615777427,
+        "turn_yaw_rad": 1.3348657797887538,
+        "dropout_final_speed_m_s": 0.00022620968633059712,
+        "minimum_upright_z": 0.9999313794144287
+      }
+    ],
+    "repeats": 2,
+    "repeatable": true,
+    "maximum_repeat_position_difference_m": 0.0,
+    "maximum_repeat_speed_difference_m_s": 0.0,
+    "python": "3.12.13",
+    "total_wall_s": 31.972608299998683,
+    "process": {
+      "available": true,
+      "rss_bytes": 5428809728,
+      "peak_rss_bytes": 5449437184,
+      "cpu_seconds": 342.921875
+    },
+    "no_sumo": true,
+    "no_lidar": true,
+    "limitations": [
+      "Low-speed exploratory fixture, not highway calibration",
+      "Isaac Lab reset/vectorization not yet exercised",
+      "No lane following, dynamic obstacles or sensor synchronization"
+    ],
+    "exit_code": 0,
+    "stop_reason": null,
+    "gpu_peak_mib": 4070.0,
+    "gpu_scope": "Whole GPU including desktop; roughly 1 Hz sampling",
+    "gpu_monitor_errors": [],
+    "source_changed_during_run": []
+  }
+}
