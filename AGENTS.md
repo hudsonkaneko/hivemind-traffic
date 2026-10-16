@@ -1,6 +1,11 @@
 # Highway Sim workspace scope
 
-Treat `C:\Users\hudso\Documents\highwaysim` as the canonical root for this project.
+Use the root of the current Git checkout (containing this file) as the project
+root. On the maintainer's workstation, the canonical checkout remains
+`C:\Users\hudso\Documents\highwaysim`. Other contributors use their own clone's
+path; do not create that maintainer path on their machine. Temporary clean-clone
+validation sandboxes may live under this checkout's ignored `outputs/` directory;
+they are disposable test inputs, not competing active development workspaces.
 
 **ONLY use this directory as the active project workspace.** Before any project
 command or edit, verify the working directory resolves to this root or one of

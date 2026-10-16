@@ -42,6 +42,11 @@ not a GPU/driver, model-compatibility, or sensor-accuracy test.
 
 ## First-clone setup
 
+For the current tested installation profile and public block-car showcase, start
+with [clean-clone readiness](clean-clone.md). `requirements-ci.txt` includes the
+pinned SUMO executable distribution as well as the traffic Python dependencies.
+`requirements.txt` alone still requires a separate SUMO installation.
+
 Cloning Git does not install dependencies or include ignored results. Install
 SUMO separately using its supported installer/package manager. Follow README.md
 for this project's pinned Windows setup; do not assume all runtime packages

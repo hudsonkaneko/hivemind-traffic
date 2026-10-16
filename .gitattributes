@@ -1,2 +1,4 @@
 # Historical source snapshots are evidence; preserve their exact bytes.
 documentation/runs/**/source/** -text
+# Published highway manifests hash exact bytes, including line endings.
+highway_usd/** -text

@@ -1,0 +1,3 @@
+# CPU/SUMO clean-install profile; never install into Isaac's bundled Python.
+-r requirements.txt
+eclipse-sumo==1.27.1

@@ -91,6 +91,12 @@ def sumo_runtime(root: Path, config: dict, gui: bool) -> Path:
     # Match the backend's explicit override. Users must select the correct GUI/headless binary.
     if value := os.environ.get("SUMO_BINARY"):
         return require_file(resolve_path(value, root), hint)
+    # The optional eclipse-sumo wheel puts binaries beside the traffic Python.
+    # Explicit interpreter commands must work without activating a venv/PATH.
+    executable = program + (".exe" if os.name == "nt" else "")
+    bundled = python_runtime(root, config, "traffic").parent / executable
+    if bundled.is_file():
+        return bundled.resolve()
     if value := shutil.which(program):
         return Path(value).resolve()
     executable = program + (".exe" if os.name == "nt" else "")

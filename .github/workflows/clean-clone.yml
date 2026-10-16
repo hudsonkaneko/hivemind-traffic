@@ -1,0 +1,48 @@
+name: Clean clone
+
+on:
+  push:
+    branches: [main, 'codex/**']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: clean-clone-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows-cpu-sumo:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-ci.txt
+      - name: Install isolated traffic dependencies
+        run: python -m pip install -r requirements-ci.txt
+      - name: Resolve and exercise real SUMO (not a skipped mock)
+        run: |
+          python -m pip check
+          sumo --version
+          python -m hivemind demo sumo --headless --check
+          python -m pytest tests/test_sumo_backend.py -q --junitxml=outputs/ci/sumo.xml
+      - name: Full CPU suite (Isaac and USD-only skips remain explicit)
+        run: python -m pytest -q --junitxml=outputs/ci/tests.xml
+      - name: Preserve test reports even on failure
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: windows-py311-cpu-sumo
+          path: outputs/ci/*.xml
+          if-no-files-found: warn
+          retention-days: 14

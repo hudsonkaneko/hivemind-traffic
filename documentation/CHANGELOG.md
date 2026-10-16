@@ -4,6 +4,19 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-15 — Clean-clone readiness
+
+- Added an explicit public procedural PhysX car option, leaving the prepared
+  Americano default and private assets unchanged. Setup checks now reject missing
+  required inputs instead of printing success with an unavailable vehicle.
+- Added Windows/Python 3.11 CPU/SUMO CI, matching binary dependencies, venv-local
+  SUMO discovery, clone-relative contributor instructions and a fresh setup guide.
+- Removed pytest's shared/deleting temporary directory and an accidental test
+  assumption that temporary modules always lived inside this checkout. Published
+  highway bytes are protected from Git line-ending conversion.
+- See [clean-clone evidence and limits](clean-clone.md) for actual validation
+  outcomes, including retained failed attempts. No runtime upgrade or training.
+
 ## 2026-10-14 — Main integration checkpoint
 
 - Joined the published collector-v02 and showcase histories for the requested

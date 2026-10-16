@@ -85,18 +85,22 @@ def test_finite_trace_validates_controls_and_nested_arrays_not_only_observations
         require_finite_telemetry([row])
 
 
-def test_provenance_resolves_imported_runtime_not_machine_specific_path(tmp_path):
+def test_provenance_resolves_imported_runtime_not_machine_specific_path(tmp_path, monkeypatch):
     from types import SimpleNamespace
     from scripts.probe_vehicle_lab import lab_runtime_provenance
     module = tmp_path / 'package' / '__init__.py'
     module.parent.mkdir()
     module.touch()
+    (tmp_path / '.git').mkdir()
+    def fake_git(command, **kwargs):
+        assert command[1:3] == ['-C', str(tmp_path)]
+        return SimpleNamespace(stdout='a'*40 if command[3]=='rev-parse' else '')
+    monkeypatch.setattr('scripts.probe_vehicle_lab.subprocess.run', fake_git)
     result = lab_runtime_provenance(SimpleNamespace(__file__=str(module)),
                                     SimpleNamespace(__version__='test-version'))
     assert result['isaaclab_module_file'] == str(module.resolve())
     assert result['torch_version'] == 'test-version'
     assert result['python_version']
-    # Pytest artifacts intentionally live inside this repository, so discovery
-    # finds this checkout rather than assuming an IsaacLab installation path.
-    assert result['isaaclab_checkout'] == str(Path(__file__).resolve().parents[1])
+    # The imported package's checkout, independent of pytest's temp location.
+    assert result['isaaclab_checkout'] == str(tmp_path)
     assert len(result['isaaclab_git_commit']) == 40
