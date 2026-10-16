@@ -4,6 +4,23 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-16 — Showcase validation implementation
+
+- Added bounded native window/viewport/sidebar readiness with retained failure
+  evidence, plus an opt-in live endpoint, rapid-request, pause/resume, transition
+  and subsequent-passing validation scenario.
+- Added measured drive-only gap/headway, acceleration/jerk, near-miss proxies,
+  per-lifetime time loss and exposure-qualified fairness. Undefined quantities
+  remain null; laps are not completed trips.
+- Added eleven serial public-car benchmark cases and eight matched comparisons
+  for panel, display, recording and editor costs, with source/evidence integrity,
+  physical-equivalence checks and separate strict display qualification.
+- Frozen-source regression: 1,712 tests passed, 180 optional skips, 98 subtests;
+  independent agent review found no remaining actionable defects. Native runs
+  are blocked by competing simulator work; no new runtime or performance pass
+  is claimed. Existing demonstrations and private notes remain preserved.
+- See [implementation, protocol and evidence](showcase-validation.md).
+
 ## 2026-10-15 — Clean-clone readiness
 
 - Added an explicit public procedural PhysX car option, leaving the prepared

@@ -4,6 +4,12 @@ October 12, 2026. Canonical implementation: this repository. Purpose: explore
 traffic density and driving targets without repeatedly starting Isaac Sim.
 This is an opt-in presentation milestone, not training or a replacement roadmap.
 
+October 16 follow-up: [showcase validation](showcase-validation.md) adds bounded
+startup readiness, a separate `--control-validation endpoints` test and measured
+statistics (enabled by default by the v09 launcher, disabled with
+`--no-statistics`). Its CPU checks and native acceptance status are recorded
+separately; the historical v08/v09 results below are unchanged.
+
 ## What changed
 
 v08 adds a native `omni.ui` sidebar to the regular Isaac editor, with live camera

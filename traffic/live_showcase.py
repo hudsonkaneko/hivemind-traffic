@@ -85,14 +85,14 @@ class LiveTraffic:
             if gap>=self.exclusion_m:candidates.append((gap,key))
         if not candidates:return []
         if len(self.events)>=2048:raise RuntimeError('Live fleet lifecycle log limit reached')
-        _,key=max(candidates)
+        actual_gap,key=max(candidates)
         if adding:
             self.generations[key]+=1
             self.active.add(key)
         else:self.active.remove(key)
         event=dict(tick=tick,type='enter' if adding else 'exit',slot=key,
                    vehicle_id=self.identity(key),active_count=len(self.active),
-                   ego_exclusion_m=self.exclusion_m)
+                   ego_exclusion_m=self.exclusion_m,actual_arc_gap_m=actual_gap)
         self.events.append(event);self.pending_lifecycle.append(event)
         self._next_transition=tick+self.transition_interval_ticks
         return [event]
