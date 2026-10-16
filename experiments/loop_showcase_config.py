@@ -8,10 +8,21 @@ MODES = ('showcase', 'blocked', 'dropout', 'contact-check')
 def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
                 camera='follow', capture=False, drive_s=None, evidence=None, render_hz=None,
                 ui_profile=None,cpu_threads=None,profile_render=False,controls=None,panel_hidden=False,control_smoke=False,
-                vehicle='prepared'):
+                vehicle='prepared',statistics=False,control_validation=None):
     if vehicle not in ('prepared','public'):
         raise ValueError('Vehicle must be prepared or public')
     sidebar=version in ('v08','v09')
+    if type(statistics) is not bool:
+        raise ValueError('Statistics flag must be boolean')
+    if statistics and version not in ('v07','v08','v09'):
+        raise ValueError('Traffic statistics require v07 or later')
+    if statistics and mode=='contact-check':
+        raise ValueError('Traffic statistics require a positive free-flow reference; contact-check uses a stationary obstacle')
+    if control_validation is not None:
+        if version!='v09' or control_smoke or control_validation!='endpoints':
+            raise ValueError('Endpoint validation requires v09 without control smoke')
+        from experiments.showcase_control_validation import validation_initial_controls
+        controls=validation_initial_controls(control_validation,controls)
     if sidebar:
         from experiments.showcase_controls import defaults,validate_settings
         controls=validate_settings(defaults() if controls is None else controls)
@@ -82,6 +93,12 @@ def make_config(version='v04', *, mode='showcase', gui=True, paced=True,
         # Opt-in model change, never an invisible substitution for the local car.
         # Keep historical prepared profiles byte-for-byte equivalent as mappings.
         cfg.update(vehicle_profile='public',vehicle_directory=None)
+    # Omit opt-in additions from historical saved profiles.
+    if statistics:cfg['traffic_statistics']=True
+    if control_validation is not None:
+        if duration<180 or (not gui and not panel_hidden):
+            raise ValueError('Endpoint validation requires 180 driving seconds and a visible GUI or hidden panel')
+        cfg['control_validation']=control_validation
     return cfg
 
 
@@ -123,7 +140,8 @@ def validate_config(cfg):
         evidence=cfg.get('evidence_profile'),render_hz=cfg['render_hz'] if cfg['version'] in ('v06','v07','v08','v09') else None,
         ui_profile=cfg.get('ui_profile'),cpu_threads=cfg.get('cpu_threads'),profile_render=cfg.get('profile_render',False),
         controls=cfg.get('controls'),panel_hidden=cfg.get('panel_hidden',False),control_smoke=cfg.get('control_smoke',False),
-        vehicle=cfg.get('vehicle_profile','prepared'))
+        vehicle=cfg.get('vehicle_profile','prepared'),statistics=cfg.get('traffic_statistics',False),
+        control_validation=cfg.get('control_validation'))
     if cfg!=expected:raise ValueError('Resolved showcase settings differ from declared profile')
 
 

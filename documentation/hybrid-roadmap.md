@@ -25,6 +25,12 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
 
+October 16 validation increment: [showcase validation](showcase-validation.md)
+adds bounded native-window readiness, opt-in endpoint/pause/transition tests,
+descriptive traffic statistics and a matched display-cost protocol. CPU checks
+are passing; native execution is pending an available GPU. This does not advance
+sensor-driving, mixed-traffic, training or strict real-time acceptance gates.
+
 October 15 portability increment: [clean-clone readiness](clean-clone.md) adds
 Windows CPU/SUMO CI and an opt-in procedural public car for the loop showcase.
 This verifies installation and demo entry points separately from private assets;
