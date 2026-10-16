@@ -134,5 +134,17 @@ The endpoint command's filesystem-only preflight also passed; it establishes
 neither native imports nor runtime behavior. Native execution is still pending.
 
 Failed runs remain part of the record. Existing private changelog edits remain
-local and unstaged. Google engineering-guide synchronization is pending the
-verified milestone.
+local and unstaged. Implementation commit `3a8cea4` is published in
+[draft PR 12](https://github.com/hudsonkaneko/hivemind-traffic/pull/12). Independent
+review verified all 21 committed files, 62 recorded source/test hashes and the
+test-report hash; its local record is `independent-review.md` beside that report.
+GitHub clean-clone CI was in progress at this documentation checkpoint.
+
+The Google engineering guide's **40 Showcase validation** tab is
+[synced](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.lz1t1b5s17js)
+and native-readback verified. All 40 older tabs, including order, body and styles,
+remain exactly unchanged. The new tab contains 43 paragraphs, seven headings,
+six shaded command blocks and verified source/PR links. The guide records CPU
+success and native work blocked, without granting new runtime qualification.
+Verification is retained in `outputs/doc-sync/showcase-validation/verification.json`;
+PDF pagination was not inspected.
