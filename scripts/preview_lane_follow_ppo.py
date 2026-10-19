@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from experiments.probe_support import process_sample, write_json
 from experiments.lane_follow_ppo_protocol import checkpoint_identity, digest, load_protocol, verify_sources
-from experiments.preview_lane_follow_ppo import STUDY, compare_trace, preview_sources, resolve_preview
+from experiments.preview_lane_follow_ppo import STUDY, compare_trace, preview_sources, verify_preview_job
 from experiments.report_lane_follow_ppo import _read
 from experiments.verify_lane_following_lab import EXPECTED_ACCEPTANCE
 from scripts.run_lane_follow_ppo import deterministic_action, normalization_state, transition_record
@@ -90,8 +90,7 @@ def main():
     if manifest['status'] != 'running' or manifest['config'] != job or set(manifest['source_hashes']) != set(preview_sources()):
         raise ValueError('Preview requires its exact running supervisor package')
     verify_sources(manifest)
-    if job != resolve_preview(ROOT / job['training'], ROOT / job['heldout_report']):
-        raise ValueError('Preview evidence or fixed configuration changed')
+    verify_preview_job(job)
     with (output / 'worker-started.json').open('x', encoding='utf-8') as stream:
         json.dump({'checkpoint_identity': job['checkpoint_identity']}, stream)
     protocol = load_protocol()

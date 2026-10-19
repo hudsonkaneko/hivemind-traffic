@@ -141,24 +141,42 @@ def preview_fixture(root, monkeypatch):
     report_path.parent.mkdir()
     selected = dict(update=16, control_steps=32768, model_sha256='a' * 64, normalization_sha256='b' * 64)
     configs, packages = {}, []
+    def manifest(directory):
+        path = directory / 'manifest.json'
+        path.write_text(json.dumps({'fixture': directory.name}), encoding='utf-8')
+        return dict(path=directory.relative_to(root).as_posix(), manifest_sha256=preview.digest(path))
+    training_ref = manifest(training)
+    selection_packages = []
+    for update in (8, 16, 24, 32):
+        directory = root / 'outputs/lab_lane_ppo' / f'selection-{update}'
+        directory.mkdir()
+        selection_packages.append(manifest(directory))
     for policy in ('ppo', 'scripted'):
         for route in ('straight100', 'left_r60', 'right_r60'):
             directory = root / 'outputs/lab_lane_ppo' / f'{policy}-{route}'
             directory.mkdir()
-            packages.append(dict(path=directory.relative_to(root).as_posix(), manifest_sha256='c' * 64))
+            packages.append(manifest(directory))
             configs[directory / 'resolved-config.json'] = dict(controller=policy, route_id=route)
             if policy == 'ppo' and route == 'left_r60':
                 (directory / 'seed-4101-trajectory.json').write_text('[]', encoding='utf-8')
                 (directory / 'seed-4101-reset.json').write_text('{}', encoding='utf-8')
-    saved = dict(kind='heldout', report=dict(selected_checkpoint=selected), packages=packages,
-                 selection=dict(path='outputs/lab_lane_ppo/reports/selection.json'))
+    selection_path = report_path.with_name('selection.json')
+    selection = dict(kind='selection', report=dict(valid=True, selected_checkpoint=selected),
+                     training=training_ref, packages=selection_packages)
+    selection_path.write_text(json.dumps(selection), encoding='utf-8')
+    saved = dict(kind='heldout', report=dict(valid=True, selected_checkpoint=selected), packages=packages,
+                 training=training_ref, selection=dict(path=selection_path.relative_to(root).as_posix(),
+                     sha256=preview.digest(selection_path)))
     report_path.write_text(json.dumps(saved), encoding='utf-8')
     calls = []
     def assemble(training_path, selection_path, package_paths):
         calls.append((training_path, selection_path, package_paths))
         return deepcopy(saved)
     monkeypatch.setattr(preview, 'ROOT', root)
-    monkeypatch.setattr(preview, '_read', lambda path: deepcopy(saved if Path(path) == report_path else configs[Path(path)]))
+    def read(path):
+        path = Path(path)
+        return deepcopy(saved if path == report_path else selection if path == selection_path else configs[path])
+    monkeypatch.setattr(preview, '_read', read)
     monkeypatch.setattr(preview, 'assemble_held_out', assemble)
     monkeypatch.setattr(preview, 'checkpoint_identity', lambda directory: deepcopy(selected))
     return training, report_path, saved, configs, calls
@@ -177,6 +195,74 @@ def test_preview_recomputes_report_and_uses_only_fixed_selected_case(workspace, 
     assert job['capture_sim_seconds'] == [0, 2, 5, 10, 15, 20, 25, 30, 35]
     assert job['excluded_from_selection_and_evaluation_counts'] is True
     assert 'post-auto-reset' in job['terminal_capture_rule']
+    assert len(job['frozen_report_and_manifest_hashes']) == 13
+
+
+def test_native_job_rechecks_exact_frozen_evidence_without_reducing_in_new_python(workspace, monkeypatch):
+    training, path, _, _, calls = preview_fixture(workspace, monkeypatch)
+    job = preview.resolve_preview(training, path)
+    before = deepcopy(job)
+    def forbidden(*args, **kwargs):
+        raise AssertionError('Native worker must not numerically reassemble reports')
+    monkeypatch.setattr(preview, 'assemble_held_out', forbidden)
+    monkeypatch.setattr(preview, 'resolve_preview', forbidden)
+    assert preview.verify_preview_job(job) == before
+    assert job == before and len(calls) == 1
+    assert 'without cross-Python numerical re-reduction' in job['verification_contract']
+
+
+@pytest.mark.parametrize('mutation', [
+    'heldout_report_bytes', 'selection_report_bytes', 'training_manifest',
+    'selection_manifest', 'heldout_manifest', 'checkpoint_identity',
+    'reference_trajectory', 'reference_reset', 'seed', 'route_id', 'physics_hz',
+    'control_hz', 'optimizer_steps', 'max_control_steps', 'max_process_seconds',
+    'gpu_memory_fraction_stop', 'captures', 'missing_bound_hash', 'outside_training',
+    'outside_report', 'tiny_report_numeric_change',
+])
+def test_native_job_rejects_any_changed_bound_input_or_fixed_parameter(workspace, monkeypatch, mutation):
+    training, path, saved, _, _ = preview_fixture(workspace, monkeypatch)
+    job = preview.resolve_preview(training, path)
+    def forbidden(*args, **kwargs):
+        raise AssertionError('Unexpected numeric re-reduction')
+    monkeypatch.setattr(preview, 'assemble_held_out', forbidden)
+    append_path = None
+    if mutation == 'heldout_report_bytes':
+        append_path = path
+    elif mutation == 'selection_report_bytes':
+        append_path = workspace / saved['selection']['path']
+    elif mutation == 'training_manifest':
+        append_path = training / 'manifest.json'
+    elif mutation == 'selection_manifest':
+        append_path = workspace / 'outputs/lab_lane_ppo/selection-8/manifest.json'
+    elif mutation == 'heldout_manifest':
+        append_path = workspace / saved['packages'][0]['path'] / 'manifest.json'
+    elif mutation == 'checkpoint_identity':
+        monkeypatch.setattr(preview, 'checkpoint_identity', lambda directory: dict(update=8))
+    elif mutation == 'reference_trajectory':
+        append_path = workspace / job['reference_run'] / 'seed-4101-trajectory.json'
+    elif mutation == 'reference_reset':
+        append_path = workspace / job['reference_run'] / 'seed-4101-reset.json'
+    elif mutation == 'captures':
+        job['capture_sim_seconds'] = [0, 5]
+    elif mutation == 'missing_bound_hash':
+        job['frozen_report_and_manifest_hashes'].pop(next(iter(job['frozen_report_and_manifest_hashes'])))
+    elif mutation == 'outside_training':
+        job['training'] = str(workspace.parent)
+    elif mutation == 'outside_report':
+        job['heldout_report'] = str(workspace.parent / 'heldout.json')
+    elif mutation == 'tiny_report_numeric_change':
+        changed = deepcopy(saved)
+        changed['report']['metric'] = 1e-16
+        path.write_text(json.dumps(changed), encoding='utf-8')
+    else:
+        job[mutation] = {'seed':4102, 'route_id':'right_r60', 'physics_hz':60,
+            'control_hz':30, 'optimizer_steps':1, 'max_control_steps':2200,
+            'max_process_seconds':600, 'gpu_memory_fraction_stop':.99}[mutation]
+    if append_path is not None:
+        with append_path.open('a', encoding='utf-8') as stream:
+            stream.write('\n')
+    with pytest.raises(ValueError):
+        preview.verify_preview_job(job)
 
 
 @pytest.mark.parametrize('mutation', ['report_kind', 'recomputed_report', 'checkpoint', 'duplicate_reference'])

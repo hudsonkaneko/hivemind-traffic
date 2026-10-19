@@ -40,3 +40,14 @@ experiments/lane_follow_ppo_evaluation.py text eol=lf
 environments/lane_follow_ppo.py text eol=lf
 scripts/run_lane_follow_ppo.py text eol=lf
 documentation/evidence/lab-lane-following-20261019.json text eol=crlf
+# Report/replay and test-source fingerprints also use exact checkout bytes.
+experiments/report_lane_follow_ppo.py text eol=lf
+experiments/preview_lane_follow_ppo.py text eol=lf
+scripts/preview_lane_follow_ppo.py text eol=lf
+scripts/plot_lane_follow_ppo.py text eol=lf
+tests/test_lane_follow_ppo.py text eol=lf
+tests/test_lane_follow_ppo_evaluation.py text eol=lf
+tests/test_lane_follow_ppo_runner.py text eol=lf
+tests/test_plot_lane_follow_ppo.py text eol=lf
+tests/test_preview_lane_follow_ppo.py text eol=lf
+tests/test_report_lane_follow_ppo.py text eol=lf
