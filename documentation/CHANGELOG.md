@@ -10,11 +10,16 @@ authority for historical measurements and failures.
   fixed checkpoint-selection/held-out evaluation. The user approved one seed-2101
   run; it completed exactly 65,536 transitions and 5,120 optimizer steps.
 - Native zero-optimizer compatibility checks passed. All 31 complete training
-  episodes timed out. Selection chose update 24 under the declared failure-first
-  rule; held-out comparison and screenshots are in progress.
-- Added independent raw-state/action evaluation and bounded illustrative replay,
-  with 2,292 passing local tests, 187 optional skips and 116 passing subtests.
-  See the [pilot record](lab-lane-ppo-pilot.md) for scope and evidence.
+  episodes timed out. The fixed selection rule chose update 24; held-out PPO
+  achieved 0/15 successful drive-and-stop episodes against scripted control's
+  15/15. Mean progress was 0.040 m versus 59.877 m. No further training ran.
+- Published the complete selection/paired comparison, compact hash evidence,
+  measured-outcome plot and original native screenshots. The frozen illustrative
+  replay is excluded from evaluation totals and performed zero optimizer steps.
+- Full local validation passed 2,292 tests, 187 optional skips and 116 subtests;
+  subsequent preview-only checks passed 48 tests and chart checks passed five.
+  Independent agents audited training, all evaluation packages and native capture
+  completion. See the [pilot record](lab-lane-ppo-pilot.md) for results and limits.
 
 ## 2026-10-19 - Lane-task guide synchronization
 

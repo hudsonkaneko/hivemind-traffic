@@ -144,7 +144,7 @@ def render_chart(data, output, *, matplotlib_path=None):
     ax=axes[0,0]
     ax.plot([r['step'] for r in training],[r['progress_m'] for r in training],color='#c8ced8',lw=.8,zorder=1)
     groups=[('Successful stop',green,lambda r:r['success']),
-            ('Physical/task failure',orange,lambda r:r['failure']),
+            ('Physical guard termination',orange,lambda r:r['failure']),
             ('Timeout',blue,lambda r:r['reason']=='time_limit'),
             ('Stop below quality gate',gray,lambda r:r['reason']=='success' and not r['success'])]
     for label,color,predicate in groups:
@@ -158,8 +158,10 @@ def render_chart(data, output, *, matplotlib_path=None):
     bars=ax.bar(range(4),[r['progress_m'] for r in validation],yerr=[r['progress_std_m'] for r in validation],
                 color=['#3066be' if r['update']==data['selected_update'] else '#bcc9dd' for r in validation],capsize=4,width=.62)
     for bar,row in zip(bars,validation):
-        ax.annotate(f'{row["successes"]}/{row["count"]} success\n{row["failures"]} failures',
-            (bar.get_x()+bar.get_width()/2,max(0,bar.get_height())),xytext=(0,7),textcoords='offset points',ha='center',fontsize=8)
+        guards=f'{row["failures"]} guard termination'+('' if row['failures']==1 else 's')
+        ax.annotate(f'{row["successes"]}/{row["count"]} success\n{guards}',
+            (bar.get_x()+bar.get_width()/2,max(0,bar.get_height()+row['progress_std_m'])),
+            xytext=(0,7),textcoords='offset points',ha='center',fontsize=8)
     upper=max(1.,max(r['progress_m']+r['progress_std_m'] for r in validation))
     ax.set_ylim(min(-.1,min(r['progress_m']-r['progress_std_m'] for r in validation)),upper*1.35+.3)
     ax.set_xticks(range(4),[str(r['update'])+(' (selected)' if r['update']==data['selected_update'] else '') for r in validation])
@@ -168,6 +170,7 @@ def render_chart(data, output, *, matplotlib_path=None):
     pairs=data['pairs']
     successes={p:sum(row[p]['success'] for row in pairs) for p in ('ppo','scripted')}
     failures={p:sum(row[p]['failure'] for row in pairs) for p in ('ppo','scripted')}
+    timeouts={p:sum(row[p]['reason']=='time_limit' for row in pairs) for p in ('ppo','scripted')}
     for ax,metric,title,ylabel in [(axes[1,0],'progress_m','Held-out: matched route progress','Terminal route progress (m)'),
                                   (axes[1,1],'rms_m','Held-out: tracking on each observed episode','Post-settle lateral RMS (m)')]:
         missing={p:0 for p in ('ppo','scripted')}
@@ -189,14 +192,15 @@ def render_chart(data, output, *, matplotlib_path=None):
         ax.legend(handles=[Line2D([0],[0],marker='o',linestyle='none',color=blue,label='PPO'),
                            Line2D([0],[0],marker='o',linestyle='none',color=green,label='SCRIPTED')],
                   frameon=False,fontsize=8)
-        note='5 matched seeds per route; × = physical/task failure.' if metric=='progress_m' else f'No post-settle RMS: PPO {missing["ppo"]}, scripted {missing["scripted"]}; no values imputed.'
+        note='5 matched seeds per route; × = physical guard termination.' if metric=='progress_m' else f'No post-settle RMS: PPO {missing["ppo"]}, scripted {missing["scripted"]}; no values imputed.'
         ax.text(.02,-.24,note,transform=ax.transAxes,fontsize=8,color=gray)
     for ax in axes.flat:ax.grid(axis='y',alpha=.7);ax.set_axisbelow(True)
     figure.suptitle(data['title'],x=.07,ha='left',fontsize=20,fontweight='bold',y=.98)
     figure.text(.07,.93,f'Seed 2101 · 65,536 training transitions · selected update {data["selected_update"]} · 15 held-out episodes per controller',fontsize=10,color=gray)
     figure.text(.07,.065,f'Held-out successful stops — PPO {successes["ppo"]}/15; scripted {successes["scripted"]}/15.  '
-                f'Physical/task failures — PPO {failures["ppo"]}/15; scripted {failures["scripted"]}/15.',fontsize=10)
-    figure.text(.07,.025,'Low tracking error alone is not successful driving. Failed episodes remain included. Reward is not used as an improvement claim.',fontsize=9,color=gray)
+                f'Timeouts — PPO {timeouts["ppo"]}/15; scripted {timeouts["scripted"]}/15.',fontsize=10)
+    figure.text(.07,.04,f'Physical guard terminations — PPO {failures["ppo"]}/15; scripted {failures["scripted"]}/15.',fontsize=9,color=gray)
+    figure.text(.07,.015,'Low tracking error alone is not successful driving. All failed episodes remain included. Reward is not used as an improvement claim.',fontsize=9,color=gray)
     figure.subplots_adjust(left=.07,right=.98,top=.87,bottom=.17,wspace=.25,hspace=.57)
     output.parent.mkdir(parents=True,exist_ok=True)
     try:
