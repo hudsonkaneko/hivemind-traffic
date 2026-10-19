@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "pilot_id": "lane-follow-ppo-2101-v1",
+  "proposal": "experiments/lane-follow-ppo-proposal.json",
+  "proposal_sha256": "5999396ed15fbdd15f82a4f49779da8c2f3458e3118a477ce0219d908681dafd",
+  "authorization": {
+    "approved": true,
+    "date": "2026-10-19",
+    "user_message": "yes start training",
+    "scope": "The reviewed single-run PPO pilot, checkpoint selection and matched held-out evaluation; no automatic extension or resume."
+  },
+  "validation_evidence": "documentation/evidence/lab-lane-following-20261019.json",
+  "validation_evidence_sha256": "10fc4c221028683e9176fd34e9b6f4955f9afbe7109b13da70e785215caab9b2",
+  "smoke_process_limit_s": 300,
+  "training_process_limit_s": 3600,
+  "evaluation_process_limit_s": 600,
+  "training_entrypoint": "scripts/run_lane_follow_ppo.py"
+}
