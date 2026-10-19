@@ -2,3 +2,41 @@
 documentation/runs/**/source/** -text
 # Published highway manifests hash exact bytes, including line endings.
 highway_usd/** -text
+# The approved lane PPO pilot checks exact working-tree source hashes.
+# Pin checkout line endings without rewriting historical Git blob contents.
+experiments/lab-lane-following-validation.json text eol=lf
+experiments/verify_lane_following_lab.py text eol=lf
+experiments/lane_following_lab_validation.py text eol=lf
+experiments/probe_support.py text eol=lf
+experiments/verify_physics_vehicle.py text eol=crlf
+scripts/probe_lane_following_lab.py text eol=lf
+scripts/probe_vehicle_lab.py text eol=crlf
+hivemind/launcher.py text eol=crlf
+environments/__init__.py text eol=crlf
+environments/lane_following_contract.py text eol=lf
+environments/lane_following_lab.py text eol=crlf
+environments/lane_following_scene.py text eol=lf
+environments/lane_follow_sb3.py text eol=lf
+environments/physics_vehicle_contract.py text eol=crlf
+traffic/physx_vehicle.py text eol=crlf
+traffic/physics_session.py text eol=crlf
+traffic/wheel_geometry.py text eol=crlf
+traffic/driver_control.py text eol=crlf
+traffic/lane_geometry.py text eol=crlf
+traffic/path_following.py text eol=crlf
+traffic/speed_profiles.py text eol=crlf
+traffic/vehicle_contacts.py text eol=crlf
+traffic/lane_validation.py text eol=crlf
+traffic/dynamics_validation.py text eol=crlf
+usd/physical_scene.py text eol=crlf
+usd/scene_validation.py text eol=crlf
+visualization/physics_road_view.py text eol=crlf
+scenarios/physics-road/routes.json text eol=crlf
+experiments/lane-follow-ppo-pilot.json text eol=lf
+experiments/lane-follow-ppo-proposal.json text eol=crlf
+experiments/lane_follow_ppo_protocol.py text eol=lf
+experiments/run_lane_follow_ppo.py text eol=lf
+experiments/lane_follow_ppo_evaluation.py text eol=lf
+environments/lane_follow_ppo.py text eol=lf
+scripts/run_lane_follow_ppo.py text eol=lf
+documentation/evidence/lab-lane-following-20261019.json text eol=crlf

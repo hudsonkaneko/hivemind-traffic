@@ -4,6 +4,18 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-19 - Approved first lane PPO pilot
+
+- Added the guarded PPO runner, post-update checkpoints, immutable evidence and
+  fixed checkpoint-selection/held-out evaluation. The user approved one seed-2101
+  run; it completed exactly 65,536 transitions and 5,120 optimizer steps.
+- Native zero-optimizer compatibility checks passed. All 31 complete training
+  episodes timed out. Selection chose update 24 under the declared failure-first
+  rule; held-out comparison and screenshots are in progress.
+- Added independent raw-state/action evaluation and bounded illustrative replay,
+  with 2,292 passing local tests, 187 optional skips and 116 passing subtests.
+  See the [pilot record](lab-lane-ppo-pilot.md) for scope and evidence.
+
 ## 2026-10-19 - Lane-task guide synchronization
 
 - Added the lane task, original screenshot links and unapproved training proposal

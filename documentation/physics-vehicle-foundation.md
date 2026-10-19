@@ -6,8 +6,9 @@ spike; its measurements and retained warning below are unchanged.** The October 
 12-package scripted native matrix with a composed scene, bounded reset checks,
 terminal-state handling and contact/departure/timeout controls. That later result
 does not rewrite this report's lifecycle evidence or close full hybrid migration.
-Existing SUMO-motion demos and Leatherback results are unchanged. Training remains
-unapproved.
+Existing SUMO-motion demos and Leatherback results are unchanged. The user later
+approved the [first bounded lane PPO pilot](lab-lane-ppo-pilot.md); broader
+training and hybrid integration are outside that authorization.
 
 ## What changed and why
 
@@ -197,6 +198,6 @@ The 60 m task's one-second stop hold is a distinct protocol from the earlier
 100 m lane-following and five-second dynamics holds. Neither its bounded reset
 corners nor its repeat pairs establish general robustness. Shared SUMO/Isaac map
 and state conversion, multi-car interaction, cloning, long-run endurance and
-learned-policy evaluation remain separate work. Review the
-[unapproved training proposal](lab-lane-following-training-proposal.md) with the
-user before any optimizer step.
+learned-policy evaluation remain separate work. The
+[reviewed training proposal](lab-lane-following-training-proposal.md) subsequently
+received user approval for one run, documented in the [pilot record](lab-lane-ppo-pilot.md).

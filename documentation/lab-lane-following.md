@@ -3,7 +3,9 @@
 Status, October 19, 2026: the corrected native matrix passed **12 of 12 packages**,
 covering 16 episodes: 13 successful drive-and-stop episodes and three expected
 contact, departure and timeout controls. All three nominal repeat pairs passed.
-**Training remains UNAPPROVED and has not started; optimizer steps: zero.**
+At this scripted-validation checkpoint, training was unapproved and optimizer
+steps were zero. The user later approved the [first bounded PPO pilot](lab-lane-ppo-pilot.md);
+its execution and results are recorded separately.
 The [compact evidence](evidence/lab-lane-following-20261019.json) records the
 accepted matrix and retained attempts. The proposed setup is in
 [the training review](lab-lane-following-training-proposal.md) and its
@@ -248,8 +250,9 @@ The completed milestone validates one CPU-physics car, bounded resets and a
 scripted driver using privileged state on three fixed routes. Cloning, learned
 control, policy generalization, traffic interaction, perception, vehicle-model
 randomization and long-run memory/endurance remain unverified. The next decision
-is the user review of the proposed observations, actions, reward, PPO setup,
-budget and held-out evaluation. Passing this matrix does not authorize training.
+was the user review of the proposed observations, actions, reward, PPO setup,
+budget and held-out evaluation. The subsequent approval and run are recorded in
+the [pilot note](lab-lane-ppo-pilot.md). Passing this matrix alone did not authorize training.
 
 ## Engineering-guide synchronization and GitHub checkpoint
 
@@ -280,4 +283,5 @@ subsequently passed. Push CI recorded 2,036 passed tests, 188 optional skips and
 116 passed subtests, plus four real SUMO tests. The one additional skip versus
 the local suite is the optional installed Isaac Lab configuration-source check.
 Raw CI output is retained locally in `outputs/lab_lane_following/review/`.
-Training remains unapproved, with zero optimizer steps.
+The guide synchronized at that checkpoint recorded training as unapproved, with
+zero optimizer steps. The later [approved pilot](lab-lane-ppo-pilot.md) is a separate milestone.
