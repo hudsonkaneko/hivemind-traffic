@@ -250,3 +250,34 @@ control, policy generalization, traffic interaction, perception, vehicle-model
 randomization and long-run memory/endurance remain unverified. The next decision
 is the user review of the proposed observations, actions, reward, PPO setup,
 budget and held-out evaluation. Passing this matrix does not authorize training.
+
+## Engineering-guide synchronization and GitHub checkpoint
+
+The [Google engineering guide](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.k82ts3ro3qz9)
+received a new tab, `41 Isaac Lab lane task`, on October 19, 2026 at 19:19:01 UTC.
+Its results, proposed training setup and five original screenshot links are
+anchored to implementation commit `4166234197000459f9fa9b961c46117aa5281ddf`
+and [draft PR 13](https://github.com/hudsonkaneko/hivemind-traffic/pull/13).
+
+Native readback passed all 191 checks. All 41 existing tab objects, content,
+styles, identities and order were preserved; the guide now has 42 tabs. The
+addition contains eight native tables, three shaded command paragraphs and
+12 links, including the five original screenshots. Native structure and styles
+were checked; PDF pagination and rendered page fit were not assessed.
+
+Local proof is under `outputs/doc-sync/lab-lane-following-20261019/`:
+
+| File | SHA256 |
+| --- | --- |
+| `verification.json` | `db5e4925f1155831c78b196857506d90fa20dd63455de1d0b402da53164af9af` |
+| `guide-before.json` | `48bc20e2f5617084853a547a6a5fc23f472579dd4ec9b66a8f50adea55bdce7b` |
+| `guide-after.json` | `e0665ed267bfa78444c678451d35b671b13bf124914746e03836c7be38da2086` |
+
+The guide accurately recorded CI as pending at write time. Both implementation
+[push CI](https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39309204526)
+and [PR CI](https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39309213169)
+subsequently passed. Push CI recorded 2,036 passed tests, 188 optional skips and
+116 passed subtests, plus four real SUMO tests. The one additional skip versus
+the local suite is the optional installed Isaac Lab configuration-source check.
+Raw CI output is retained locally in `outputs/lab_lane_following/review/`.
+Training remains unapproved, with zero optimizer steps.

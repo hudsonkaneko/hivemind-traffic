@@ -1,7 +1,7 @@
 # One-car Isaac Lab training proposal
 
-**UNAPPROVED — training has not launched. No policy or optimizer has been created,
-no optimizer steps have run, and there is no trainer entrypoint.** This document
+**UNAPPROVED — training has not launched for this task. No policy or optimizer has
+been created, no optimizer steps have run, and there is no trainer entrypoint.** This document
 is the proposed setup for the user's review after bounded native validation.
 Passing environment tests does not authorize training.
 
