@@ -172,3 +172,8 @@ also passed, retaining its original trajectory and decisions (the new gap
 diagnostics are compared separately). Strict display timing failed and is not
 granted by these physical or control results. Earlier failed runs remain
 unchanged evidence.
+
+The separate [11-case display-cost matrix](showcase-benchmark-20261019.md) is
+complete with eight valid comparisons after a reviewed packaging-path evaluator
+correction. All 11 physical checks passed, while only the two light cases passed
+strict display timing. This distinction does not change endpoint acceptance.

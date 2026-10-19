@@ -4,7 +4,10 @@ October 19 continuation: three native startup smokes and the legacy live-control
 regression passed. After a remote-admission repair, a separately reviewed
 [bounded gap-creation controller](showcase-gap-creation.md) passed the original
 endpoint scenario twice, including all four targets and subsequent passing.
-Matched performance measurements remain pending; strict display timing still fails.
+The [11-case performance matrix](showcase-benchmark-20261019.md) is complete:
+all physical checks passed, and eight comparisons are valid after a separately
+reviewed packaging-path correction. The two light cases pass strict display
+timing; all nine dense cases fail. Original comparison failures are preserved.
 See the [measured results and original screenshots](showcase-validation-20261019.md).
 The October 16 implementation checkpoint and its evidence remain below.
 Branch: `codex/showcase-validation`.

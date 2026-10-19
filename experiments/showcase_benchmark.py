@@ -161,6 +161,27 @@ def _flatten(mapping, prefix=''):
     return result
 
 
+def _benchmark_physical_contract(run):
+    """Normalize the public Factory assembly's verified run-local packaging root.
+
+    The shared normalizer already handles prepared-car scene_directory and
+    runtime layer identifiers. The public Factory author records the equivalent
+    location as assembly_directory. Retain every other composition/physics/asset
+    field; a suffix match or an arbitrary external directory is never sufficient.
+    This follows the existing ROOT/relative_path contract for reassessment: moved
+    evidence with stale absolute paths must be explicitly resolved, not guessed.
+    """
+    scene = _physical_contract(run)
+    composition = scene.get('vehicle', {}).get('scene_composition', {})
+    if 'assembly_directory' in composition:
+        recorded = composition['assembly_directory']
+        expected = (repeat.ROOT / run['relative_path'] / 'scene').resolve().as_posix()
+        if not isinstance(recorded, str) or recorded.replace('\\', '/') != expected:
+            raise ValueError('Public vehicle assembly directory is outside its recorded run packaging')
+        composition['assembly_directory'] = 'scene/'
+    return scene
+
+
 def _load_run(path):
     run = repeat.load_run(path)
     directory = repeat.resolve_run(path)
@@ -329,7 +350,7 @@ def compare_pair(first, second, *, allowed_config_fields=(), first_load=None, se
             raise ValueError('Captured source hashes differ')
         if metrics['first']['runtime'] != metrics['second']['runtime']:
             raise ValueError('Runtime/machine identity differs')
-        contracts = [_physical_contract(run) for run in (first, second)]
+        contracts = [_benchmark_physical_contract(run) for run in (first, second)]
         for contract in contracts:
             fleet = contract.get('fleet', {})
             if not repeat._hashes(fleet.get('asset_hashes')):

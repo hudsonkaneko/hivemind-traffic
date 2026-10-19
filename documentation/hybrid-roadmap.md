@@ -28,9 +28,11 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 October 19 validation continuation: [native results and screenshots](showcase-validation-20261019.md)
 record three startup passes, a verified remote-admission repair and the first
 successful original endpoint and repeat after bounded gap creation. All four
-targets and subsequent passing now pass on that source; matched timing remains
-pending. Strict display still fails. This does not advance the research
-integration or training gates.
+targets and subsequent passing now pass on that source. The [matched display
+matrix](showcase-benchmark-20261019.md) completed 11 physical passes and eight
+valid comparisons after a reviewed evaluator correction. Two light cases pass
+strict timing; all nine dense cases fail. Dense runtime cost and periodic stalls
+remain open. This does not advance the research integration or training gates.
 
 October 16 validation increment: [showcase validation](showcase-validation.md)
 adds bounded native-window readiness, opt-in endpoint/pause/transition tests,

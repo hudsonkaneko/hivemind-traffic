@@ -117,6 +117,76 @@ def test_declared_pairs_accept_same_motion_even_when_timing_fails(left,right,all
     assert result['observed_wall_change_percent']==pytest.approx(20)
 
 
+def public_composition(run, *, windows_separators=False):
+    directory = (benchmark.repeat.ROOT / run['relative_path'] / 'scene').resolve().as_posix()
+    if windows_separators:
+        directory = directory.replace('/', '\\')
+    composition = dict(assembly_directory=directory,
+        factory_sha256='a'*64, factory_contract=dict(passed=True, prims=31, attributes=173),
+        paths=dict(chassis='/World/Vehicles/vehicle_ego/Chassis'),
+        wheel_paths=['/World/Vehicles/vehicle_ego/Chassis/FrontLeftWheel'],
+        references_not_instances=True)
+    run['scene_contract']['vehicle']['scene_composition'] = composition
+    run['scene_contract']['vehicle']['mass_kg'] = 1800.
+    return composition
+
+
+def test_public_assembly_packaging_normalization_preserves_inputs_and_semantics():
+    first, second = evidence('first'), evidence('second')
+    public_composition(first, windows_separators=True)
+    public_composition(second)
+    originals = deepcopy((first['scene_contract'], second['scene_contract']))
+    result = compare(first, second)
+    assert result['valid'], result
+    normalized = benchmark._benchmark_physical_contract(first)
+    normalized_composition = normalized['vehicle']['scene_composition']
+    assert normalized_composition['assembly_directory'] == 'scene/'
+    expected_composition = deepcopy(originals[0]['vehicle']['scene_composition'])
+    expected_composition['assembly_directory'] = 'scene/'
+    assert normalized_composition == expected_composition
+    assert (first['scene_contract'], second['scene_contract']) == originals
+
+
+@pytest.mark.parametrize('bad', ['other_run', 'outside', 'traversal', 'relative',
+                                'suffix', 'empty', 'null', 'number', 'missing'])
+def test_public_assembly_directory_is_not_blindly_discarded(bad):
+    first, second = evidence('first'), evidence('second')
+    first_composition = public_composition(first)
+    composition = public_composition(second)
+    correct = composition['assembly_directory']
+    if bad == 'other_run':composition['assembly_directory'] = first_composition['assembly_directory']
+    elif bad == 'outside':composition['assembly_directory'] = str(benchmark.repeat.ROOT.parent / 'foreign' / 'scene')
+    elif bad == 'traversal':composition['assembly_directory'] = correct + '/../scene'
+    elif bad == 'relative':composition['assembly_directory'] = second['relative_path'] + '/scene'
+    elif bad == 'suffix':composition['assembly_directory'] = correct + '-foreign'
+    elif bad == 'empty':composition['assembly_directory'] = ''
+    elif bad == 'null':composition['assembly_directory'] = None
+    elif bad == 'number':composition['assembly_directory'] = 7
+    elif bad == 'missing':composition.pop('assembly_directory')
+    result = compare(first, second)
+    assert not result['valid'], result
+    assert 'observed_wall_change_percent' not in result
+    if bad != 'missing':assert 'assembly directory' in result['failures'][0]
+
+
+@pytest.mark.parametrize('change', ['factory_hash', 'factory_contract', 'chassis_path',
+                                  'wheel_path', 'mass', 'references', 'unexpected_field'])
+def test_public_assembly_semantic_differences_remain_strict(change):
+    first, second = evidence('first'), evidence('second')
+    public_composition(first)
+    composition = public_composition(second)
+    if change == 'factory_hash':composition['factory_sha256'] = 'c'*64
+    elif change == 'factory_contract':composition['factory_contract']['attributes'] = 172
+    elif change == 'chassis_path':composition['paths']['chassis'] = '/World/Vehicles/different/Chassis'
+    elif change == 'wheel_path':composition['wheel_paths'][0] = '/World/Vehicles/different/FrontLeftWheel'
+    elif change == 'mass':second['scene_contract']['vehicle']['mass_kg'] = 1900.
+    elif change == 'references':composition['references_not_instances'] = False
+    elif change == 'unexpected_field':composition['new_physical_field'] = 'unmatched'
+    result = compare(first, second)
+    assert not result['valid'], result
+    assert result['failures'] == ['Physical scene/assets/fleet contract differs']
+
+
 @pytest.mark.parametrize('change',[
     'same_id','version','sources','runtime','collider','asset','fleet_cache','scene','control','live_target',
     'position','speed','truncated','runtime_error','cleanup','lifecycle','startup','pause','live_request',

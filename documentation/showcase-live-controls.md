@@ -18,6 +18,8 @@ subsequent passing failed. A separately reviewed [bounded gap-creation
 controller](showcase-gap-creation.md) then passed the original endpoint and repeat,
 including the settled passing tail. See
 [the retained failures and validation scope](showcase-control-validation.md#evidence).
+The [completed display-cost matrix](showcase-benchmark-20261019.md) qualifies only
+its two light-traffic timing cases; the dense variants still fail strict timing.
 The October 19 changes have not been synchronized to the Google guide.
 
 ## What changed

@@ -8,8 +8,9 @@ passing**. A separate bounded gap-creation change then passed the original
 endpoint, including settled-tail passing, followed by a successful endpoint
 repeat and legacy control smoke on the same frozen source. Independent statistics
 and lifetime audits passed. All nine documented runs failed the separate strict
-display timing checks. The matched performance matrix remains open; no
-performance improvement is established.
+display timing checks. The subsequent
+[11-case display matrix and corrected reassessment](showcase-benchmark-20261019.md)
+are documented separately; they do not change these nine historical run records.
 
 This continues the [declared validation protocol](showcase-validation.md).
 The [machine-readable evidence](evidence/showcase-validation-20261019.json)

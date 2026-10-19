@@ -4,6 +4,25 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-19 - Matched display matrix and evaluator correction
+
+- Completed all 11 declared native cases on one frozen source. All physical,
+  scene and cleanup checks passed. Only the two light-traffic cases passed
+  strict display timing; all nine dense variants failed their unchanged limits.
+- Repaired a comparator mismatch caused solely by the public scene's correct
+  per-run assembly directory. Validate the exact owning run before normalizing
+  that field; asset hashes, physics, geometry, motion and timing remain strict.
+- Preserved the original rejected comparison package. A separately versioned
+  reassessment accepts all eight matched pairs with zero measured motion
+  differences; no native captures were rewritten or rerun for this correction.
+- Full CPU validation passed 1,767 tests and 116 subtests, with 181 optional
+  runtime skips. Independent review verified the repair, input hashes and all
+  timing outcomes. The [matrix report](showcase-benchmark-20261019.md) records
+  directional observations and the limits of single samples.
+- Dense driving has sustained lag and recurring mid-run stalls. Lower display
+  cadence and the minimal app improve observed wall time but do not grant
+  strict qualification. Targeted timing diagnosis is the next performance step.
+
 ## 2026-10-19 - Bounded gap creation and repeated endpoint acceptance
 
 - Added a v09 slowdown/recovery supervisor with a 21-second attempt limit,

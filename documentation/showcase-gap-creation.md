@@ -2,8 +2,9 @@
 
 Status: experimental controller capability, with complete CPU regression,
 independent source review, the original native endpoint, its repeat and the
-legacy control smoke passed. Independent statistics and lifetime audits passed;
-**matched performance validation remains pending**.
+legacy control smoke passed. Independent statistics and lifetime audits passed.
+The subsequent [display matrix and corrected reassessment](showcase-benchmark-20261019.md)
+are complete; dense strict-display qualification remains unmet.
 Its purpose is to test whether a brief, guarded slowdown followed by ordinary
 acceleration can create a passing opportunity in the existing scripted scene.
 It does not promise that every blocked formation can be passed.
@@ -211,9 +212,9 @@ The reconstruction uses measured ego motion plus declared background angular
 motion and agrees with saved lead diagnostics; full lead tracks at every physics
 tick were not retained.
 Timing remains a separate result: this run failed strict display qualification
-with RTF 0.950207 and lag p95 10.782066 s. The matched display matrix must use one new
-frozen source snapshot across its cases; old admission-only runs cannot be
-substituted into those pairs. No forecast margin or endpoint threshold is reduced
+with RTF 0.950207 and lag p95 10.782066 s. The later display matrix retained frozen
+runtime source and recorded its evaluator correction separately; old admission-only
+runs were not substituted into those pairs. No forecast margin or endpoint threshold is reduced
 to make this experiment pass.
 
 Existing failed endpoint evidence and the [measured admission report](showcase-validation-20261019.md)
