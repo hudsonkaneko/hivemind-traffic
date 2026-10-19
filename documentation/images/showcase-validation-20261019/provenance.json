@@ -193,6 +193,50 @@
         }
       ],
       "runtime_source_sha256": "8642d0de38ade1194c6b2cd3e977fdc3e9933ea6a5e15084d9a59acc926a3bcf"
+    },
+    {
+      "id": "endpoint-gap-recovered-in-progress",
+      "source_relative_path": "outputs/showcase_validation/oct19-review/screenshots/showcase-gap-recovered-20261019.jpg",
+      "gallery_src": "showcase-gap-recovered-20261019.jpg",
+      "documentation_relative_path": "documentation/images/showcase-validation-20261019/showcase-gap-recovered-20261019.jpg",
+      "run_id": "20261019T170934Z-049ddcb3",
+      "capture_kind": "full application window",
+      "observed_sim_time_s": 156,
+      "time_basis": "Visible sidebar clock and retained provenance. saved_at_utc is the evidence-file save time, not an exact capture timestamp; exact native frame ID is unverified.",
+      "saved_at_utc": "2026-10-19T17:12:40.043Z",
+      "phase": "drive",
+      "actual_background_count": 80,
+      "requested_background_count": 80,
+      "observed_ego_mph": 34.9,
+      "observed_completed_passes": 6,
+      "observed_lane_changes": 3,
+      "displayed_clearance_m": 2.42,
+      "clearance_scope": "Current sidebar display at the observed frame; not the completed-run minimum clearance.",
+      "caption": "Endpoint validation in progress after bounded gap creation, observed at 156 simulated seconds: the full Isaac editor window shows 80 active background cars against a requested 80, 34.9 mph, six completed passes and three lane changes. The displayed clearance is 2.42 m at this frame, not the run minimum. This screenshot records an in-progress driving state and does not establish final endpoint acceptance or display-timing qualification.",
+      "provenance_relative_path": "outputs/showcase_validation/oct19-review/screenshots/showcase-gap-recovered-20261019.json",
+      "proposed_documentation_filename": "showcase-gap-recovered-20261019.jpg",
+      "width_px": 1442,
+      "height_px": 932,
+      "embedded_metadata_property_count": 2,
+      "sha256": "c4cd05f4d63088a88262e675b12f4ae66e0bff88d7c9066306fb7597a7f5a6b9",
+      "bytes": 131894,
+      "reviewed_actual_image": true,
+      "image_modified": false,
+      "privacy_visual_review": "No visible personal name, email, credentials, private prepared vehicle, or personal filesystem path. The public procedural cars, scene and standard Isaac UI are visible.",
+      "readability_review": "Main car, neighboring cars, road and cyan path are clear. Actual/requested count, observed time, speed, completed passes, lane changes and displayed clearance are readable at original size; lower controls extend below the saved view.",
+      "embedded_metadata_properties": [
+        {
+          "id_hex": "0x5091",
+          "type": 3,
+          "length": 128
+        },
+        {
+          "id_hex": "0x5090",
+          "type": 3,
+          "length": 128
+        }
+      ],
+      "runtime_source_sha256": "7b3778e9635422f7773f63cde5ecee308d5fb4f48a49312363913d245d0d4042"
     }
   ],
   "publication_notes": [

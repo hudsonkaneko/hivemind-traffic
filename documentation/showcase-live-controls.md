@@ -13,9 +13,11 @@ separately; the historical v08/v09 results below are unchanged.
 October 19 follow-up: the first native endpoint run exposed protected dormant
 slots that could prevent an 80-car request from completing. The admission repair
 below adds a bounded search for remote entry positions. CPU and OpenUSD tests
-with fake native views pass. The repaired native endpoint reaches all four
-population/speed/gap targets, but subsequent passing still fails. See
-[the retained failure and validation scope](showcase-control-validation.md#evidence).
+with fake native views pass. Admission alone reaches all four targets but leaves
+subsequent passing failed. A separately reviewed [bounded gap-creation
+controller](showcase-gap-creation.md) then passed the original endpoint and repeat,
+including the settled passing tail. See
+[the retained failures and validation scope](showcase-control-validation.md#evidence).
 The October 19 changes have not been synchronized to the Google guide.
 
 ## What changed

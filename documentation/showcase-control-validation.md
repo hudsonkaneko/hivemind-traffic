@@ -150,5 +150,25 @@ lane change do not satisfy that tail gate. Both failures remain in the
 [measured report](showcase-validation-20261019.md).
 
 The admission repair does not change the planner's conservative lane-change
-forecast. A separate bounded gap-creation improvement is under investigation;
-the original endpoint schedule and acceptance requirements remain unchanged.
+forecast. The separate [bounded gap-creation controller](showcase-gap-creation.md)
+also preserves that forecast, the endpoint schedule and acceptance requirements.
+
+### Bounded gap creation — native pass and repeat
+
+Frozen-source run `20261019T170934Z-049ddcb3` passed all 33 run gates, including
+the unchanged endpoint. It reached all four population/speed/gap deadlines and
+added eight passes and four lane changes during the settled 135–180 s tail.
+The whole run completed 11 passes and five lane changes, with zero rigid contacts
+and 1.779726 m minimum clearance. One deliberate gap attempt lasted 14.4 s
+within its 21 s budget and handed off to the ordinary planner.
+
+Independent source, runtime and statistics checks passed. The full CPU suite
+passed 1,750 tests and 116 subtests, with 181 optional skips. Repeat run
+`20261019T171541Z-e2c26f1d` also passed all 33 gates with the same final pass/lane
+counts and minimum clearance. Its 23,040 trajectory rows, lifecycle events,
+control events and validation result are byte-identical; all 192 saved planner
+frames match after removing episode identities. The 90-second legacy regression
+also passed, retaining its original trajectory and decisions (the new gap
+diagnostics are compared separately). Strict display timing failed and is not
+granted by these physical or control results. Earlier failed runs remain
+unchanged evidence.

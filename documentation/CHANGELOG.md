@@ -4,6 +4,23 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-19 - Bounded gap creation and repeated endpoint acceptance
+
+- Added a v09 slowdown/recovery supervisor with a 21-second attempt limit,
+  50 m added-lag budget and measured rear/tracking guards. The ordinary planner
+  retains its full-cruise forecast, front safety and lane-change authority.
+- The original 180-second endpoint and repeat passed all 33 gates, each with
+  11 passes and five lane changes. The settled tail added eight passes and four
+  lane changes. The 90-second legacy live-control regression also passed.
+- Full CPU validation passed 1,750 tests and 116 subtests, with 181 optional
+  runtime skips. Independent review covered stop/tracking handoffs and durable
+  failure diagnostics before native execution.
+- Preserved earlier failures and added a sixth original screenshot, bounded
+  controller design and native evidence to the [October 19 report](showcase-validation-20261019.md)
+  and [gap-creation note](showcase-gap-creation.md).
+- Strict display timing still fails. The matched 11-case matrix is the next
+  measurement; physical acceptance does not grant real-time qualification.
+
 ## 2026-10-19 — Native validation and remote traffic admission
 
 - Three fresh public-car startup smokes passed and produced matching viewport

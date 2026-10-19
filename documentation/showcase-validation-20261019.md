@@ -4,9 +4,12 @@ Three fresh startup smokes passed their startup, scene, physical and shutdown
 checks. The first 180-second endpoint **failed** population deadlines and
 subsequent passing. After a dormant-entry repair, the legacy control smoke passed
 and a new endpoint met every population deadline, but **still failed subsequent
-passing**. All six runs failed the separate strict display timing checks. The
-remaining planning behavior, endpoint repeat and matched performance matrix
-remain open; no performance improvement is established.
+passing**. A separate bounded gap-creation change then passed the original
+endpoint, including settled-tail passing, followed by a successful endpoint
+repeat and legacy control smoke on the same frozen source. Independent statistics
+and lifetime audits passed. All nine documented runs failed the separate strict
+display timing checks. The matched performance matrix remains open; no
+performance improvement is established.
 
 This continues the [declared validation protocol](showcase-validation.md).
 The [machine-readable evidence](evidence/showcase-validation-20261019.json)
@@ -292,10 +295,10 @@ the native contact and pose audits remain separate evidence.
 | Repaired endpoint | 201.520949 | 0.952755 | 10.268177 / 11.119149 | Failed |
 
 The smoke's near-one RTF does not override failed lag/frame checks. These remain
-interactive diagnostics rather than matched performance trials. The remaining
-planner behavior needs a separate bounded change and unchanged endpoint/repeat
-validation; neither the admission code review nor its population recovery grants
-that future result.
+interactive diagnostics rather than matched performance trials. At this admission
+checkpoint, the remaining planner behavior needed a separate bounded change and
+unchanged endpoint/repeat validation; neither the admission code review nor its
+population recovery granted that later result.
 
 ![First endpoint still below its population target](images/showcase-validation-20261019/showcase-endpoint-stalled-brake-20261019.jpg)
 
@@ -309,6 +312,169 @@ Admission-repaired endpoint at the observed 44-second driving state: 80/80 cars,
 34.9 mph, one pass and zero lane changes. This is an in-progress image; the final
 run still failed its settled passing tail. All five selected images are copied
 original bytes with recorded hashes and reviewed captions in the image provenance.
+
+## Bounded gap creation: original endpoint passes
+
+The [gap-creation design](showcase-gap-creation.md) adds a bounded longitudinal
+slowdown and ordinary recovery to v09. It preserves the existing planner,
+full-cruise forecasts, physical and geometry guards, endpoint schedule and
+acceptance thresholds. It changes no active background poses. The earlier two
+failed endpoints remain failed evidence for their own source snapshots.
+
+Run `20261019T170934Z-049ddcb3` used admission commit
+`396f7ef0b400752500a57f2e6d53251babb9f507` plus frozen controller SHA256
+`7b3778e9635422f7773f63cde5ecee308d5fb4f48a49312363913d245d0d4042`.
+All 47 captured runtime source hashes matched at the independent post-run audit.
+Its complete CPU checkpoint passed **1,750 tests, 181 optional skips and 116
+subtests in 71.74 s**; independent source review found no remaining blocking
+finding. The CPU result is retained under
+`outputs/showcase_validation/cpu-gap-20261019T170809Z/`, and the source review
+under `outputs/showcase_validation/oct19-review/gap-creation-source-review.json`.
+These are local source-specific results, not a claim about hosted CI.
+
+The native run passed **33/33 gates** and all nine control subgates, exited zero,
+verified cleanup and recorded zero contacts. Minimum observed clearance was
+**1.779726 m**. The whole run completed **11 passes and five lane changes**.
+Independent trajectory readback matched every expected field exactly at each
+deadline:
+
+| Deadline, s | Actual / requested backgrounds | Ego target, m/s | Traffic target, m/s | Preferred following gap, s |
+| ---: | ---: | ---: | ---: | ---: |
+| 14 | 4 / 4 | 2.2352 | 2.2352 | 3.0 |
+| 50 | 80 / 80 | 15.6464 | 11.1760 | 1.8 |
+| 100 | 12 / 12 | 15.6464 | 2.2352 | 3.0 |
+| 135 | 80 / 80 | 15.6464 | 6.7056 | 1.8 |
+
+The **135–180 s tail** held 80 actual and requested backgrounds throughout and
+added **eight passes and four lane changes**. All four saved pause snapshots
+matched the paused state and clock. Preferred following gap in the table is a
+control setting; the measured geometric headway below is a separate statistic.
+
+Decimated planner diagnostics record one deliberate attempt starting at tick
+14,856 (123.8 s), cap release at tick 16,116 (134.3 s), and ordinary maneuver
+acceptance at tick 16,584 (138.2 s): 10.5 s slowing, 3.9 s recovering, 14.4 s
+total elapsed and 34.725721 m measured added lag. The saved completion certificate
+reports 10.749321 m/s ego speed and 273.999620 m remaining rear reserve. Those
+event ticks are retained in later snapshots; the 1 Hz planner records do not
+provide every intervening 60 Hz guard decision. This observed success establishes
+the declared scenario only, not a universal passing guarantee.
+
+The separate control review reconstructed a maximum 38.373119 m added lag during
+the attempt, below the 50 m bound. This uses the 120 Hz ego trajectory and declared
+constant angular background motion, corroborated against saved measured-lead
+diagnostics to within 0.00001455 m; it is not a saved 120 Hz lead track. Maximum
+recorded radial and heading errors during the attempt were 0.015890 m and
+0.003148 rad. The requested cap floor was 2.5 m/s, while measured speed reached
+2.469845 m/s: the target floor is not a guaranteed physical speed floor. Total
+ego time loss against the unchanged reference during the 14.4 s attempt was
+10.390451 s, not an estimate of incremental causal cost versus continued following.
+
+![Gap-creation endpoint driving after recovery](images/showcase-validation-20261019/showcase-gap-recovered-20261019.jpg)
+
+At the observed 156-second driving state, the original full-window image shows
+80/80 backgrounds, 34.9 mph, six completed passes and three lane changes. The
+displayed 2.42 m clearance is the current frame's reading, not the run minimum.
+The image is in-progress evidence; final acceptance comes from the completed
+records above. The sixth image's original bytes and caption are recorded in the
+image provenance.
+
+The independent reduction passed **94 consistency checks**, plus exact-deadline
+target and frozen-source checks. It covered all 23,040 rows: 240 settle, 21,600
+drive and 1,200 final-brake samples. Lifetime reconstruction found **220 events**
+(144 entries, 76 exits), 156 background lifetimes plus ego, 76 retired and 81
+run-censored lifetimes, with maximum generation three. All seven alternate-entry
+geometry reconstructions passed the same decimated-native-snapshot checks
+described above; the minimum event spacing was 30 ticks and minimum ego arc
+separation 187.988486 m.
+
+| Drive-only statistic | Gap-creation endpoint |
+| --- | ---: |
+| Ego exposure, s | 179.991667 |
+| Ego mean speed, m/s | 9.723022 |
+| Ego scalar-speed-integrated distance, m | 1750.062860 |
+| Ego time loss, s | 53.357063 |
+| Ego time-loss fraction | 0.296442 |
+| Minimum observed net headway, s | 1.943188 |
+| Headway observation exposure, s | 134.400000 |
+| Minimum closing TTC, s | 5.634473 |
+| Hard-braking / near-miss proxy episodes | 0 / 0 |
+
+The exposure, scalar-speed derivative, reference-speed, identity and censoring
+limits stated earlier still apply. The scripted backgrounds dominate aggregate
+fairness, so the all-lifetime Jain value is not evidence of a fair interactive
+traffic policy. Zero recorded proxy episodes do not establish general safety.
+
+Strict display timing **failed**: 202.061221 active wall seconds for 192 simulated
+seconds, RTF **0.950207**, lag p95 **10.782066 s** and maximum **11.590994 s**.
+Native notification delivery averaged 28.511160/s, with p95 interval 40.544100 ms
+and maximum 252.396400 ms. These are notification measurements, not monitor FPS.
+This interactive endpoint is not a matched performance trial. The
+11-case/eight-comparison performance matrix remains pending.
+
+## Verified endpoint repeat and legacy control smoke
+
+The same frozen gap-creation source was used for endpoint repeat
+`20261019T171541Z-e2c26f1d` and legacy control smoke
+`20261019T171947Z-9f61a18c`. Both passed **33/33 native gates**, exited zero,
+verified cleanup and recorded zero contacts. Independent audits matched all
+**90 recorded output hashes and 47 runtime source hashes** for the repeat and
+**88 output hashes and 46 runtime source hashes** for the legacy smoke. These
+inventories differ because the endpoint includes the control-validation module
+and artifacts.
+
+The endpoint repeat passed all four exact deadline targets and again held 80/80
+backgrounds during 135–180 s, adding eight passes and four lane changes in that
+tail. It completed 11 passes and five lane changes overall, with the same
+1.779726 m minimum observed clearance. Independent reduction passed **94
+consistency checks**. The resolved configuration, complete 23,040-row trajectory,
+traffic-statistics file, lifecycle events and control-validation result are each
+**byte-identical to the original endpoint's corresponding file**. Consequently
+the drive-only statistics and 157-lifetime reconstruction above also match
+exactly. The planner files differ in per-run episode identity; the control review
+matched all **192 saved planner frames** after omitting that identity. Its
+normalizer also excludes wall-named fields, and no wall-clock equivalence is
+claimed. The four native control events are byte-identical as well.
+
+The legacy smoke covered 90 driving seconds, 102 total simulated seconds, and
+passed **88 consistency checks**. It reached 12/40/12 actual backgrounds at
+34/64/89 s. Zero passes and lane changes are expected for this smoke; it does not
+contain the endpoint's settled-tail passing requirement. Saved supervisor
+diagnostics contain zero gap-creation attempts. Minimum observed clearance was
+1.811181 m. Its 124 lifecycle events (28 entries, 96 exits) account for 109 total
+lifetimes, 96 retired and 13 run-censored, with maximum generation two. No
+alternate-entry placements occurred. Counts, saved native memberships, identity
+generations and observed lifetime exposure all matched.
+
+Compared with the earlier admission-only legacy smoke, all 12,240 trajectory
+rows, configuration, 124 lifecycle events and three native control events are
+byte-identical. Its 102 saved planner frames match after excluding per-run
+episode identity and the newly added `gap_creation` diagnostic object. The only
+changed captured runtime source is `traffic/live_showcase.py`. This is observed
+compatibility for the declared smoke, not proof across all traffic settings.
+The control review and file comparison are retained in
+`outputs/showcase_validation/oct19-review/gap-repeat-and-legacy-comparison.json`.
+
+| Legacy smoke drive-only statistic | Recorded value |
+| --- | ---: |
+| Ego exposure, s | 89.991667 |
+| Ego mean speed, m/s | 7.409489 |
+| Ego scalar-speed-integrated distance, m | 666.792251 |
+| Ego time loss, s / fraction | 32.170187 / 0.357480 |
+| Minimum observed net headway, s | 1.903976 |
+| Headway observation exposure, s | 89.958333 |
+| Minimum closing TTC, s | 7.096361 |
+| Hard-braking / near-miss proxy episodes | 0 / 0 |
+
+| Frozen-source run | Active wall seconds | RTF | Lag p95 / max, s | Strict display |
+| --- | ---: | ---: | ---: | --- |
+| Endpoint repeat | 201.141406 | 0.954552 | 9.917673 / 10.665637 | Failed |
+| Legacy control smoke | 102.000223 | 0.999998 | 1.405118 / 1.472237 | Failed |
+
+The legacy smoke's notification rate of 30.003883/s and near-one RTF do not
+override its lag and frame-interval failures. Neither run is a matched
+presentation-cost comparison. The repeated recorded physical/metric result
+supports this bounded scenario and source snapshot; broader traffic coverage,
+general safety and display performance remain separate questions.
 
 ## Evidence locations and reproduction
 

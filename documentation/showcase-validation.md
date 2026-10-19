@@ -1,9 +1,10 @@
 # Showcase validation milestone — October 16, 2026
 
 October 19 continuation: three native startup smokes and the legacy live-control
-regression passed. A reviewed admission repair reached all four endpoint targets,
-but the subsequent-passing gate still failed. That separate controller limitation
-is under investigation; the matched performance matrix remains pending.
+regression passed. After a remote-admission repair, a separately reviewed
+[bounded gap-creation controller](showcase-gap-creation.md) passed the original
+endpoint scenario twice, including all four targets and subsequent passing.
+Matched performance measurements remain pending; strict display timing still fails.
 See the [measured results and original screenshots](showcase-validation-20261019.md).
 The October 16 implementation checkpoint and its evidence remain below.
 Branch: `codex/showcase-validation`.
