@@ -3,7 +3,9 @@
 Status: required for new and modified scene-authoring work. The one-car LiDAR
 obstacle-bypass demo now opts into the composed scene described in
 [migration evidence](../documentation/physical-scene-composition.md).
-Legacy low-level, Lab and vehicle-specific fixtures have not been migrated.
+The separate [one-car Lab lane task](../documentation/lab-lane-following.md) also
+uses this composition contract. Legacy low-level, zero-reward Lab compatibility
+and vehicle-specific fixtures retain their historical structures.
 
 The user's requirement is legible hierarchies, properly named components and
 reusable OpenUSD/Omniverse composition, even with simple development visuals.
@@ -128,6 +130,24 @@ make names/hierarchy clean, and payloads do not guarantee a real-time speedup.
   It saves `scene/world.usda` with composition intact, not a flattened stage.
 - `visualization/physics_road_view.py` preserves its legacy default while the
   migrated demo uses `/World/Environment/Highway` and `/World/Debug/Route`.
+- `environments/lane_following_scene.py` composes one native car into a fresh Lab
+  stage before vehicle physics initialization. Lab retains the sole physics scene
+  at `/World/Physics/Scene` and its solver settings. The empty
+  `/World/envs/env_0` namespace is Lab-owned bookkeeping; it contains no cloned
+  task content. Vehicle identity remains `ego` at
+  `/World/Vehicles/vehicle_ego/Chassis`.
+- The Lab task's `world.usda` retains ordered `initial-state`, `runtime-initial`,
+  `debug`, `view-layout`, `physics`, `road-layout` and `layout` sublayers. Vehicle,
+  ground and road components are file-backed references; an explicit diagnostic
+  flag adds the referenced `Environment/Props/Barrier_001` collider. Ordinary
+  driving scenes contain no barrier. Live commands/cameras/debug use anonymous
+  runtime layers, and all published files remain immutable during episodes.
+- The saved Lab entry is the initial authored scene, not a trajectory replay.
+  Actual ordinary/contact exports were reopened in fresh plain-USD processes from
+  another directory, with zero composition errors and unchanged static hashes.
+  Native editor screenshots document their hierarchy and layer composition.
+  The installed plain-USD launcher invokes Python as `kit.exe`; do not overlap
+  such audits with native jobs that require zero competing Kit processes.
 - `scripts/replay_export.py` already references `vehicle.usda` and instances the
   Model subtree, with separate road/motion layers. The whole project is not
   reference-free. Preserve its SUMO/front-bumper contract during any migration.

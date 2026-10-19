@@ -4,6 +4,32 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-19 - Native Isaac Lab lane-following task
+
+- Added a separate one-car DirectRLEnv with seeded native resets, 22 privileged
+  observations, steering/throttle/brake actions, time-scaled rewards and explicit
+  failure/success/timeout behavior. Existing SUMO and compatibility demos remain
+  available. The task cruises at 3 m/s and stops at station 60 m.
+- Preserved referenced vehicle/road assets and named scene layers. Fixed the
+  installed Lab configuration boundary, enabled and verified native contact
+  reporting with cleanup, and corrected the project-local SB3 terminal snapshot
+  before automatic reset. Installed runtimes were not modified.
+- The frozen 12-package matrix passed: 13 successful drive/stop episodes and
+  three expected collision, departure and timeout diagnostics. All three fresh
+  process repeats had zero measured position/speed/yaw differences. Worst driving
+  lateral RMS was 0.043482 m; every successful stop held for a measured second.
+- Preserved construction, contact-reporting and process-isolation failures,
+  superseded attempts and serial reruns. Independent raw-trace/hash checks and
+  original viewport/hierarchy/layer screenshots are linked in the
+  [implementation and evidence note](lab-lane-following.md).
+- Full CPU regression passed 2,037 tests and 116 subtests, with 187 optional
+  runtime skips. Native validation and scene portability are recorded separately.
+- Prepared a concrete [PPO training proposal](lab-lane-following-training-proposal.md):
+  one route/environment, 65,536 control transitions, fixed selection and paired
+  held-out evaluation. It remains UNAPPROVED; no policy or optimizer was created
+  and no training was launched. Measured scripted throughput is not training
+  throughput or highway/sensor validation.
+
 ## 2026-10-19 - Engineering-guide synchronization
 
 - Appended the validated native results, six screenshot links and matched
@@ -50,7 +76,7 @@ authority for historical measurements and failures.
 - Strict display timing still fails. The matched 11-case matrix is the next
   measurement; physical acceptance does not grant real-time qualification.
 
-## 2026-10-19 — Native validation and remote traffic admission
+## 2026-10-19 â€” Native validation and remote traffic admission
 
 - Three fresh public-car startup smokes passed and produced matching viewport
   captures. The native 90-second live-control regression also passed.
@@ -67,7 +93,7 @@ authority for historical measurements and failures.
 - Added actual unmodified screenshots, source hashes and measured evidence in
   the [October 19 report](showcase-validation-20261019.md).
 
-## 2026-10-16 — Showcase validation implementation
+## 2026-10-16 â€” Showcase validation implementation
 
 - Added bounded native window/viewport/sidebar readiness with retained failure
   evidence, plus an opt-in live endpoint, rapid-request, pause/resume, transition
@@ -84,7 +110,7 @@ authority for historical measurements and failures.
   is claimed. Existing demonstrations and private notes remain preserved.
 - See [implementation, protocol and evidence](showcase-validation.md).
 
-## 2026-10-15 — Clean-clone readiness
+## 2026-10-15 â€” Clean-clone readiness
 
 - Added an explicit public procedural PhysX car option, leaving the prepared
   Americano default and private assets unchanged. Setup checks now reject missing
@@ -97,7 +123,7 @@ authority for historical measurements and failures.
 - See [clean-clone evidence and limits](clean-clone.md) for actual validation
   outcomes, including retained failed attempts. No runtime upgrade or training.
 
-## 2026-10-14 — Main integration checkpoint
+## 2026-10-14 â€” Main integration checkpoint
 
 - Joined the published collector-v02 and showcase histories for the requested
   main promotion; retained both sides of documentation conflicts and all commits.
@@ -108,7 +134,7 @@ authority for historical measurements and failures.
 - See [review, invocation failures and merge scope](main-integration-2026-10-14.md)
   and PR 10 for the GitHub merge outcome.
 
-## 2026-10-12 — Repository-local project skills
+## 2026-10-12 â€” Repository-local project skills
 
 - Added eight domain skills under `.agents/skills`, their UI metadata and two
   reusable vehicle-preparation references, with source hashes and usage guidance.
@@ -120,17 +146,17 @@ authority for historical measurements and failures.
 - Six bundle checks and all eight skill-creator validations passed. Google guide
   tab 38 synced and native-readback verified; all 38 older tabs preserved.
 
-## 2026-10-12 — Native sidebar and live traffic tuning (v08/v09)
+## 2026-10-12 â€” Native sidebar and live traffic tuning (v08/v09)
 
 - Added a docked regular-editor sidebar with live viewing controls, validated
   settings and 26 disabled, explicitly display-only future sliders. Preserved
   v08's safe-stop/restart workflow as a separate milestone.
-- v09 adds live 4–80 background-car targets, bounded speed/following-gap ramps,
+- v09 adds live 4â€“80 background-car targets, bounded speed/following-gap ramps,
   remote rate-limited entry/exit, generation-aware identity and an 80-slot native
   pool without rebuilding USD or physics bindings. Rendering settings still
   restart explicitly. Existing versions, source assets and results are preserved.
 - Two native live-change runs passed and repeated exactly across 12,240 physics
-  samples; population reached 80→12→40→12 without relaunch. Final general suite:
+  samples; population reached 80â†’12â†’40â†’12 without relaunch. Final general suite:
   1,593 passed, 180 optional skips, 18 subtests; separate USD suites: 122 passed.
   GUI docking/interaction were checked separately. Smoothness and exhaustive
   parameter combinations remain unqualified; failed trials are preserved.
@@ -139,7 +165,7 @@ authority for historical measurements and failures.
 - Google guide tab **37 Live showcase controls** synced and native-readback
   verified, including command styling; all 37 older tab bodies unchanged.
 
-## 2026-10-10 — Regular editor UI with v07 optimizations
+## 2026-10-10 â€” Regular editor UI with v07 optimizations
 
 - Made the regular Isaac Sim editor the v07 default at the user's request;
   the minimal interface remains available with `--ui-profile showcase`.
@@ -155,7 +181,7 @@ authority for historical measurements and failures.
   version. Google guide tab 36 synced and verified; command styling and all
   36 older tabs preserved.
 
-## 2026-10-10 — Instanced v07 responsive showcase
+## 2026-10-10 â€” Instanced v07 responsive showcase
 
 - Added a project-owned single-viewport Kit experience, immutable OpenUSD
   visual instancing, cached camera/path metadata, and 5 Hz statistics updates.
@@ -164,7 +190,7 @@ authority for historical measurements and failures.
 - Added native application/delivered-frame timing and opt-in bounded CPU/GPU
   diagnosis, with explicit exclusion of profiling/paused runs from qualification.
 - Two 30-Hz GUI drives held real-time speed with exact 30,240-sample physical
-  repeats (46 passes, 23 changes, zero contacts). Rare 126–128 ms intervals keep
+  repeats (46 passes, 23 changes, zero contacts). Rare 126â€“128 ms intervals keep
   strict smoothness open; 60 Hz remained below real time at about 50 completion
   notifications/s. See [v07 responsiveness](showcase-responsiveness.md).
 - Final general suite: 1,575 passed, 179 optional skips, 18 subtests; 115 USD
@@ -175,7 +201,7 @@ authority for historical measurements and failures.
   Responsive showcase** is synced with native readback and all older tabs intact.
 - No training, runtime installation, persistent settings or raw-asset publication.
 
-## 2026-10-10 — Profiled v06 showcase presentation
+## 2026-10-10 â€” Profiled v06 showcase presentation
 
 - Added exclusive phase timings, shared native fleet snapshots, single-pass
   camera/path updates, distant decorative-wheel reduction and exact-math reuse.
@@ -194,7 +220,7 @@ authority for historical measurements and failures.
   Google guide tab **35 Showcase performance** added with native readback;
   all 35 older tabs preserved. No training, installation or asset publication.
 
-## 2026-10-10 — Denser 80-car loop showcase
+## 2026-10-10 â€” Denser 80-car loop showcase
 
 - Added opt-in v05 with 80 slower block cars in staggered pairs, keeping open
   passing opportunities and preserving v04's lighter twelve-car default.
@@ -216,7 +242,7 @@ authority for historical measurements and failures.
   highlighted definitions and portable command blocks; older tabs preserved.
   No dependency installation, training, roadmap replacement or asset publication.
 
-## 2026-10-09 — Versioned loop traffic showcase
+## 2026-10-09 â€” Versioned loop traffic showcase
 
 - Integrated the supplied Americano v07 as a native-PhysX main car with twelve
   slower referenced block cars, scripted moving-object passing, follow/overhead
@@ -237,7 +263,7 @@ authority for historical measurements and failures.
   is postponed; no training or installation. Google guide sync is pending the
   required Windows trusted-reader failure, confirmed again for this milestone.
 
-## 2026-10-08 — Continuous physical highway mentor branch
+## 2026-10-08 â€” Continuous physical highway mentor branch
 
 - Preserved the existing V02 road/navigation source and added a portable,
   referenced highway assembly with one physics scene and finite-road support.
@@ -257,7 +283,7 @@ authority for historical measurements and failures.
   the first new Isaac Lab training run. Google guide sync remains pending the
   Windows trusted-reader issue, explicitly recorded in the sync note.
 
-## 2026-10-08 — Bounded 35 mph physical-car profile
+## 2026-10-08 â€” Bounded 35 mph physical-car profile
 
 - Added a named 15.6464 m/s cruise profile with a 550 m road, gentler 70 m
   lane shifts, longer detection/stopping preview and denser 20-Hz LiDAR scans.
@@ -270,7 +296,7 @@ authority for historical measurements and failures.
   when unrelated vehicle tests launched concurrently. No training or dependency
   changes; Google guide sync pending. This is a development-preview checkpoint.
 
-## 2026-10-08 — Referenced one-car physical scene
+## 2026-10-08 â€” Referenced one-car physical scene
 
 - Migrated the scripted LiDAR bypass demo to named Environment, Vehicles,
   Physics, Lighting, Cameras and Debug branches with referenced assets.
@@ -282,7 +308,7 @@ authority for historical measurements and failures.
   successful runs. See [scope, evidence and remaining checks](physical-scene-composition.md).
 - Google learning-document sync is pending a Windows trusted-reader issue.
 
-## 2026-10-06 — Required OpenUSD scene-authoring conventions
+## 2026-10-06 â€” Required OpenUSD scene-authoring conventions
 
 - Recorded the user's clean-hierarchy requirement in AGENTS.md and the workflow.
 - Added [scene/asset conventions](../usd/SCENE_STRUCTURE.md): stable descriptive
@@ -294,7 +320,7 @@ authority for historical measurements and failures.
   dependency installation, asset conversion or training. Existing results and
   unrelated highway/vehicle work are preserved. Google guide sync is pending.
 
-## 2026-10-06 — Measured preview pacing (GUI timing still open)
+## 2026-10-06 â€” Measured preview pacing (GUI timing still open)
 
 - Added optional `--real-time` 1x-target pacing, lighter RGB settings and 20-Hz
   rendering. Physics/control/planning/LiDAR rates remain 120/60/10/20 Hz.
@@ -307,7 +333,7 @@ authority for historical measurements and failures.
 - See [commands, measurements and remaining work](realtime-preview.md).
   No training or dependency installation; historical results are unchanged.
 
-## 2026-10-06 — Measured demo speedup and frozen-policy rehearsals
+## 2026-10-06 â€” Measured demo speedup and frozen-policy rehearsals
 
 - Added bounded, matched-seed SUMO readiness checks: eight completed episodes,
   zero collisions, exact repeat fingerprints, saved source/checkpoint hashes,
@@ -315,7 +341,7 @@ authority for historical measurements and failures.
 - Profiled the physical obstacle demo before optimizing it. Immutable evidence
   chunks replace repeated full-log rewrites; NumPy batches the unchanged safety
   predicates. The measured headless loop fell from 92.58 to 45.49 wall seconds
-  per 50 simulated seconds. GUI loops remain 64.65–67.19 seconds, not real time.
+  per 50 simulated seconds. GUI loops remain 64.65â€“67.19 seconds, not real time.
 - Rechecked all pass/blocked/stale-scan gates, wheel geometry and sensor timing.
   Three optimized pass-mode starts and both failure cases passed. Preserved all
   earlier evidence and full final JSON outputs; added fresh follow/overview PNGs.
@@ -333,7 +359,7 @@ authority for historical measurements and failures.
   tabs unchanged. [Sync evidence](learning-guide-sync.md) records the Windows
   transport workaround and the unverified pagination limit.
 
-## 2026-10-06 — Outer collector highway USD v02
+## 2026-10-06 â€” Outer collector highway USD v02
 
 - Added a separate `_v02` with 500 m innermost main-lane radius, 535 m collector,
   four gradual exits and four returns. V01 files remain unchanged.
@@ -345,7 +371,7 @@ authority for historical measurements and failures.
 - Saved top, angled and exit-detail RTX screenshots with hashes. See the
   [v02 evidence and limitations](highway-usd-v02.md).
 
-## 2026-10-06 — Versioned four-leaf highway USD draft
+## 2026-10-06 â€” Versioned four-leaf highway USD draft
 
 - Added `highway_usd/_v01` with a reproducible generator, circular four-lane
   highway, continuous outer auxiliary lane, and four symmetric return petals.
@@ -357,7 +383,7 @@ authority for historical measurements and failures.
 - Added actual USD/RTX screenshots and a capture workflow for every version.
   See [scope, evidence and limitations](highway-usd-v01.md).
 
-## 2026-10-04 — LiDAR-triggered physical obstacle bypass
+## 2026-10-04 â€” LiDAR-triggered physical obstacle bypass
 
 - Added a separate one-car, two-lane fixture with a sensed static-obstacle
   detour and return. Cyan now previews the actual driver route; simple visuals,
@@ -379,7 +405,7 @@ authority for historical measurements and failures.
 - Added verified guide tab 31: five shaded portable commands, six highlighted
   definitions and preserved earlier tabs. No unattended training was launched.
 
-## 2026-10-04 — Correct physical-car wheel orientation
+## 2026-10-04 â€” Correct physical-car wheel orientation
 
 - Fixed the horizontal/tumbling-wheel visual by authoring an explicit cylinder
   axle basis before simulation. PhysX still owns all wheel and chassis movement;
@@ -394,7 +420,7 @@ authority for historical measurements and failures.
 - Added verified Google guide tab 30 with three styled portable commands and
   four highlighted definitions; all 30 earlier tab bodies remain unchanged.
 
-## 2026-10-04 — Visible physical car with RTX emergency braking
+## 2026-10-04 â€” Visible physical car with RTX emergency braking
 
 - Added a separate SUMO-free GUI demo with a marked curved road, overview/follow
   cameras, cyan reference path, pink pursuit target, green LiDAR points and pause
@@ -422,7 +448,7 @@ authority for historical measurements and failures.
   the overview. Native verification preserved all 28 earlier milestone bodies;
   see the [sync record](learning-guide-sync.md).
 
-## 2026-10-04 — Physical lane-following subset verified
+## 2026-10-04 â€” Physical lane-following subset verified
 
 - Added analytic straight/left/right 100 m route fixtures with shared sampling,
   coordinate transforms and explicit chassis-center versus rear-axle references.
@@ -446,7 +472,7 @@ authority for historical measurements and failures.
   results and limitations; updated the overview. Native verification confirmed
   29 tabs and preserved all 27 prior milestone bodies. See [sync record](learning-guide-sync.md).
 
-## 2026-10-03 — Hybrid physics foundation: in progress
+## 2026-10-03 â€” Hybrid physics foundation: in progress
 
 Next validation increment (same feature branch, not merged to main):
 
@@ -507,7 +533,7 @@ Verified implementation subset:
   portable styled commands, evidence and limits; refreshed its start page and
   verified preservation of historical tabs. See [sync record](learning-guide-sync.md).
 
-## 2026-10-03 — Capacity and shared-state foundations
+## 2026-10-03 â€” Capacity and shared-state foundations
 
 Baseline reference: commit `76c9c197c0be6b36991240ba25a05d0b1484d529`.
 See [scaling foundations](scaling-foundations.md) and [capacity results](capacity-results.md).
@@ -520,7 +546,7 @@ See [scaling foundations](scaling-foundations.md) and [capacity results](capacit
   control. The reported 120-second headless run passed its bounded timing gate;
   GUI memory growth and indefinite runtime reliability remain unproven.
 
-## 2026-10-02 — Workspace consolidation
+## 2026-10-02 â€” Workspace consolidation
 
 The [consolidation record](consolidation-2026-10-02.md) and
 [transfer verification](transfer-verification.md) preserve the details.
