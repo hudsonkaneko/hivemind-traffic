@@ -1,0 +1,1270 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-19",
+  "milestone": "One-car Isaac Lab lane-following task validation",
+  "status": "corrected_12_run_matrix_passed",
+  "training_started": false,
+  "optimizer_steps": 0,
+  "scope": {
+    "native_vehicles": 1,
+    "physics_hz": 120,
+    "control_hz": 60,
+    "target_speed_m_s": 3,
+    "task_stop_station_m": 60,
+    "map_length_m": 100,
+    "episode_ceiling_s": 35,
+    "settle_s": 2,
+    "stopped_hold_s": 1,
+    "observation_source": "privileged_simulator_state_and_known_map",
+    "observations": 22,
+    "actions": [
+      "steering_rad",
+      "throttle",
+      "brake"
+    ],
+    "action_low": [
+      -0.5,
+      0,
+      0
+    ],
+    "action_high": [
+      0.5,
+      1,
+      1
+    ],
+    "vectorized_cloning": false,
+    "policy_training": false,
+    "sensor_driven": false,
+    "background_traffic": false
+  },
+  "protocol": {
+    "path": "experiments/lab-lane-following-validation.json",
+    "sha256": "811ad576ffdb23d0dd0dc6c0f51b47f3891168dc1220c164d7124ec74c014f57",
+    "validation_seed": 101,
+    "perturbation_seeds": [
+      1101,
+      1102
+    ],
+    "tested_perturbation_corners": [
+      [
+        0.15,
+        0.035
+      ],
+      [
+        -0.15,
+        -0.035
+      ]
+    ],
+    "acceptance": {
+      "minimum_progress_m": 59.5,
+      "endpoint_error_max_m": 0.5,
+      "stopped_speed_max_m_s": 0.05,
+      "hold_drift_max_m": 0.05,
+      "driving_lateral_rms_max_m": 0.2,
+      "driving_lateral_max_m": 0.5,
+      "repeat_position_tolerance_m": 0.001,
+      "repeat_speed_tolerance_m_s": 0.001,
+      "repeat_yaw_tolerance_rad": 0.001,
+      "post_settle_wheel_support_fraction_min": 0.99,
+      "full_episode_upright_z_min": 0.9961946980917455,
+      "maximum_unsupported_gap_s": 0.1,
+      "full_footprint_containment_required": true,
+      "rigid_contacts_max": 0
+    },
+    "matrix_packages": 12,
+    "episodes": 16
+  },
+  "provenance": {
+    "captured_runtime_source_sha256": {
+      "experiments/lab-lane-following-validation.json": "811ad576ffdb23d0dd0dc6c0f51b47f3891168dc1220c164d7124ec74c014f57",
+      "experiments/verify_lane_following_lab.py": "5284ff7e6d37fd138cbd7512d0767b59ce4f96a867af72481aba7aa118f07999",
+      "experiments/lane_following_lab_validation.py": "e5f40099724e4898389c06b2e598d7944fa736fd184ae10e0c371221274530f1",
+      "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+      "experiments/verify_physics_vehicle.py": "95b8f97f79a71963812ef0a19e8385381870c07d4fbf28bcd880649eabe9ab8e",
+      "scripts/probe_lane_following_lab.py": "d6c3e89e65fd25e4ac5b10e851ae03647ee119520a6f5927ff9093f43b4a48e4",
+      "scripts/probe_vehicle_lab.py": "9f6bcd8ee3b406ebffb5a10635a562a478423cc473b0b213e64e9651b86bd0bb",
+      "hivemind/launcher.py": "b2ea5e656c887a920ef06b6c70ccdb0830bbba7a097d82ae13187dbb829f23d3",
+      "environments/__init__.py": "52d667e6abf1afede7b32e6de9abce7da7a06fe545f398b4f15d91bc55b415bd",
+      "environments/lane_following_contract.py": "19f929c9809745c4aab2352cc1a404a222615ce5596c69a2e8e015523808a41d",
+      "environments/lane_following_lab.py": "a5d009b4ebff49c46d8d4ed21d6b7c370a1d3eed5ddd8c5bfd64af049fbe0fc4",
+      "environments/lane_following_scene.py": "6d944fb96416f831c79dd595445126a3106d1ee831e15b6beb8b94b893118a1e",
+      "environments/lane_follow_sb3.py": "922b33f8c6595d9ce8c17808c6b024b14d6a0f991aa72ad6e355154235107616",
+      "environments/physics_vehicle_contract.py": "8944dd3e78041fe1de4db189d34a34f06f00c47f27e8e6fd08a7493fdbfa7bc6",
+      "traffic/physx_vehicle.py": "167f0e6ce5da581e4520707a71596c9efe7a3dca6b36f466ee5081df210fe8a6",
+      "traffic/physics_session.py": "d0016c776819bdd93ff612d533f6ff4d2b70de9b332e52d81493255419d7c61a",
+      "traffic/wheel_geometry.py": "8d4f23a9e3fdaf7eef41ee0d3be7eae1350e1208a250bb72ad0530ba551082b5",
+      "traffic/driver_control.py": "29755844f3b1df77ac002caba87be3ba22ff9918b0e8a5ba03ff568d2690e18a",
+      "traffic/lane_geometry.py": "2b7976bf1e04ae6ae223ea93c3dd18551394a57404e350713e2b42004e8413b0",
+      "traffic/path_following.py": "c89288bee58812817873203222ecb404f3186bd7735d3c1f23d90770e7ec906b",
+      "traffic/speed_profiles.py": "0f9337601191671641af539ea75a513b600c3ba7974031b682287ab137b8b1d9",
+      "traffic/vehicle_contacts.py": "628fbf2c7e1cc735437a6c67b3051f57a604b72bf67227c1d39769ab9488170d",
+      "traffic/lane_validation.py": "bd247d77efc1c96a1f0e9641873763a395f66b77e82dedf8b9204886b1fced79",
+      "traffic/dynamics_validation.py": "6ce4d6442260280dbe601f63600cf9e376470e60b2aca5c6f54bfab9e90d0a45",
+      "usd/physical_scene.py": "2f7a0283cf2165538a6d0bf0336e042bf7c46c5110b63a3842fde7435d5e91f9",
+      "usd/scene_validation.py": "fb998a59fb325eed9a258d5441067fa05f832e8b1668be446f2cecc40b678475",
+      "visualization/physics_road_view.py": "b1f2b0d473a7ae6c6d9a70262f1c2b6c0a0c9fa5528d4f8a7f8995d81bd6c219",
+      "scenarios/physics-road/routes.json": "2efc40e7a60a0d1e72e657ee56ea3de3a6fda576f0b5231f57b8f0bd31114cc7"
+    },
+    "report_code_sha256": "56ebb5cd44e5b9acbb8f94aab7d607804b5c3c57dc397c80bd9d9efcd6cb3219",
+    "official_matrix_report_sha256": "ed8640266b89d852b1e5b12409248ef6cc11716eb7668a36c7824985d89dfe0d",
+    "matrix_index_sha256": "8a457cd8a3900e226f9510e36ea0e5295b99e635d39265aa9873bae560f8f353",
+    "source_control_note": "Each package records its base commit and working-tree patch. Source hashes identify tested code; a clean checkout is not asserted.",
+    "raw_artifacts_in_git": false,
+    "local_raw_root": "outputs/lab_lane_following"
+  },
+  "independent_audit": {
+    "artifact_hashes_verified": 664,
+    "captured_source_copies_verified": 336,
+    "raw_episode_timelines_checked": 16,
+    "report_metrics_match_raw_assessment": true,
+    "metric_reconciliation_absolute_tolerance": 1e-12,
+    "metric_reconciliation_max_absolute_delta": 3.907985046680551e-14,
+    "findings": [],
+    "review_path": "outputs/lab_lane_following/review/final-matrix-independent-audit.json"
+  },
+  "cpu_regression": {
+    "passed": 2037,
+    "skipped": 187,
+    "subtests_passed": 116,
+    "wall_seconds": 114.55,
+    "log": "outputs/lab_lane_following/review/pytest-full.log",
+    "sha256": "4e0c9c35ebef1b0da98d660b926e137d1f5584686a53df6e069361ce8f7cfce5"
+  },
+  "portability_evidence": {
+    "reports": [
+      {
+        "path": "outputs/lab_lane_following/review/portability-visible-b54f88b6.json",
+        "sha256": "8a592317f21b492b734a5fd6dccafc7af5bec595dc19441bda0928050d56c97d"
+      },
+      {
+        "path": "outputs/lab_lane_following/review/portability-contact-38b5a659.json",
+        "sha256": "e0a82b6de44e13f8f6793d2897b0b5e71c3692ce5155621e061e3e25dff2c6ad"
+      },
+      {
+        "path": "outputs/lab_lane_following/review/portability-process-correction.json",
+        "sha256": "f0ce04bf55db1bc6a5420fa5532f94566e83b9bef84c32b55dfcdf9a53ecc75e"
+      }
+    ],
+    "note": "Plain OpenUSD inspection used the installed runtime Python, which is kit.exe, without SimulationApp, physics or renderer. The concurrent checker could trigger process-isolation detection; its exact PID/start/end mapping was not captured. The failed run and isolated accepted rerun remain distinct."
+  },
+  "runs": [
+    {
+      "label": "contact-control",
+      "run": "20261019T185655Z-38b5a659",
+      "manifest_sha256": "ac1bc97c38b43176e7716f4a9ba5585c39dd158b40cdd0ad4b39ddc208dc03e4",
+      "passed": true,
+      "route": "straight100",
+      "profile": "contact-control",
+      "episodes": [
+        {
+          "label": "contact-positive-control",
+          "seed": 101,
+          "reset_offsets": {
+            "lateral_m": 0.0,
+            "yaw_rad": 0.0
+          },
+          "expected_reason": "rigid_contact",
+          "passed": true,
+          "checks": 64,
+          "metrics": {
+            "physics_samples": 544,
+            "control_samples": 272,
+            "terminal_tick": 544,
+            "simulated_seconds": 4.533333333333333,
+            "progress_m": 5.099169731140137,
+            "final_station_m": 5.099169731140137,
+            "endpoint_error_m": 54.90083026885986,
+            "driving_lateral_rms_m": 6.973079175626939e-05,
+            "driving_lateral_max_m": 0.0012152829440310597,
+            "footprint_lateral_bound_max_m": 0.9024249043586313,
+            "minimum_upright_z": 0.999992952222152,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 2,
+            "contact_points": 8,
+            "first_physical_failure": [
+              543,
+              "rigid_contact"
+            ],
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 2.762027979123721,
+            "hold_endpoint_error_max_m": 57.66220164299011,
+            "hold_speed_max_m_s": 2.9033594131469727,
+            "total_reward": -8.551180959740423
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 2,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 25.25845710001886,
+        "gpu_peak_mib": 3172.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 224.58854865461913,
+      "measured_control_steps_per_loop_wall_second": 180.86592754497534
+    },
+    {
+      "label": "visible",
+      "run": "20261019T185729Z-b54f88b6",
+      "manifest_sha256": "1af03cbd61d34681043b51284d60b4274ed4e6e839c7f8ee261c4b5df6111d38",
+      "passed": true,
+      "route": "left_r60",
+      "profile": "visible",
+      "episodes": [
+        {
+          "label": "nominal",
+          "seed": 101,
+          "reset_offsets": {
+            "lateral_m": 0.0,
+            "yaw_rad": 0.0
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2932,
+            "control_samples": 1466,
+            "terminal_tick": 2932,
+            "simulated_seconds": 24.433333333333334,
+            "progress_m": 59.87698396062168,
+            "final_station_m": 59.87698396062168,
+            "endpoint_error_m": 0.12301603937832084,
+            "driving_lateral_rms_m": 0.01876468132165224,
+            "driving_lateral_max_m": 0.02716966630048666,
+            "footprint_lateral_bound_max_m": 1.0512336914328426,
+            "minimum_upright_z": 0.9999599925500754,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.006161132894202483,
+            "hold_endpoint_error_max_m": 0.12347727770988115,
+            "hold_speed_max_m_s": 0.01964185957765297,
+            "total_reward": 28.632729433421773
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 0,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 90.61970789998304,
+        "gpu_peak_mib": 5150.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 77.3159578562954,
+      "measured_control_steps_per_loop_wall_second": 63.15730692528532
+    },
+    {
+      "label": "straight100-nominal",
+      "run": "20261019T185927Z-55ca0a2b",
+      "manifest_sha256": "a0c4385ac25724ce0c3339698ed9caad45d724fc6a52ff052dbf96e295c2422a",
+      "passed": true,
+      "route": "straight100",
+      "profile": "nominal",
+      "episodes": [
+        {
+          "label": "nominal",
+          "seed": 101,
+          "reset_offsets": {
+            "lateral_m": 0.0,
+            "yaw_rad": 0.0
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2930,
+            "control_samples": 1465,
+            "terminal_tick": 2930,
+            "simulated_seconds": 24.416666666666668,
+            "progress_m": 59.87775421142578,
+            "final_station_m": 59.87775421142578,
+            "endpoint_error_m": 0.12224578857421875,
+            "driving_lateral_rms_m": 3.3520517295922595e-08,
+            "driving_lateral_max_m": 3.840244744424126e-07,
+            "footprint_lateral_bound_max_m": 0.9000301200790839,
+            "minimum_upright_z": 0.9999597588574055,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.005786895753050823,
+            "hold_endpoint_error_max_m": 0.1225128173828125,
+            "hold_speed_max_m_s": 0.027466936365441192,
+            "total_reward": 28.707589432488433
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 2,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 15.481477799999993,
+        "gpu_peak_mib": 3327.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 264.0474695593054,
+      "measured_control_steps_per_loop_wall_second": 210.48849969792656
+    },
+    {
+      "label": "left_r60-nominal",
+      "run": "20261019T185944Z-6fe028fb",
+      "manifest_sha256": "0ef85ad7d55bd16d03321fdea72a940e7dbf0fe86967cd32f4aaf145415dea34",
+      "passed": true,
+      "route": "left_r60",
+      "profile": "nominal",
+      "episodes": [
+        {
+          "label": "nominal",
+          "seed": 101,
+          "reset_offsets": {
+            "lateral_m": 0.0,
+            "yaw_rad": 0.0
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2932,
+            "control_samples": 1466,
+            "terminal_tick": 2932,
+            "simulated_seconds": 24.433333333333334,
+            "progress_m": 59.87698396062168,
+            "final_station_m": 59.87698396062168,
+            "endpoint_error_m": 0.12301603937832084,
+            "driving_lateral_rms_m": 0.01876468132165224,
+            "driving_lateral_max_m": 0.02716966630048666,
+            "footprint_lateral_bound_max_m": 1.0512336914328426,
+            "minimum_upright_z": 0.9999599925500754,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.006161132894202483,
+            "hold_endpoint_error_max_m": 0.12347727770988115,
+            "hold_speed_max_m_s": 0.01964185957765297,
+            "total_reward": 28.632729433421773
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 2,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 16.28572039998835,
+        "gpu_peak_mib": 3328.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 258.04784976358815,
+      "measured_control_steps_per_loop_wall_second": 203.41298121603867
+    },
+    {
+      "label": "right_r60-nominal",
+      "run": "20261019T190001Z-69e5cfb2",
+      "manifest_sha256": "8e7c231995dd5cd54b2ddc56814c9f8b74acea5cf2a2f0caf2d0323d35efcd93",
+      "passed": true,
+      "route": "right_r60",
+      "profile": "nominal",
+      "episodes": [
+        {
+          "label": "nominal",
+          "seed": 101,
+          "reset_offsets": {
+            "lateral_m": 0.0,
+            "yaw_rad": 0.0
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2932,
+            "control_samples": 1466,
+            "terminal_tick": 2932,
+            "simulated_seconds": 24.433333333333334,
+            "progress_m": 59.87698396062168,
+            "final_station_m": 59.87698396062168,
+            "endpoint_error_m": 0.12301603937832084,
+            "driving_lateral_rms_m": 0.018764752413038606,
+            "driving_lateral_max_m": 0.02716966630048666,
+            "footprint_lateral_bound_max_m": 1.0512336893284597,
+            "minimum_upright_z": 0.9999599936047443,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.006161771235586363,
+            "hold_endpoint_error_max_m": 0.12347786566901675,
+            "hold_speed_max_m_s": 0.019642273928761483,
+            "total_reward": 28.632724484357414
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 2,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 15.278699500020593,
+        "gpu_peak_mib": 3318.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 277.2438511777913,
+      "measured_control_steps_per_loop_wall_second": 216.99505251336703
+    },
+    {
+      "label": "straight100-repeat",
+      "run": "20261019T190017Z-e121f7b3",
+      "manifest_sha256": "0aea6591c6bb443ad1b54de095572b4e294e8fe228fbc7ed29159bd4dbb20e09",
+      "passed": true,
+      "route": "straight100",
+      "profile": "nominal",
+      "episodes": [
+        {
+          "label": "nominal",
+          "seed": 101,
+          "reset_offsets": {
+            "lateral_m": 0.0,
+            "yaw_rad": 0.0
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2930,
+            "control_samples": 1465,
+            "terminal_tick": 2930,
+            "simulated_seconds": 24.416666666666668,
+            "progress_m": 59.87775421142578,
+            "final_station_m": 59.87775421142578,
+            "endpoint_error_m": 0.12224578857421875,
+            "driving_lateral_rms_m": 3.3520517295922595e-08,
+            "driving_lateral_max_m": 3.840244744424126e-07,
+            "footprint_lateral_bound_max_m": 0.9000301200790839,
+            "minimum_upright_z": 0.9999597588574055,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.005786895753050823,
+            "hold_endpoint_error_max_m": 0.1225128173828125,
+            "hold_speed_max_m_s": 0.027466936365441192,
+            "total_reward": 28.707589432488433
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 2,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 15.293637300026603,
+        "gpu_peak_mib": 3327.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 271.4523865736232,
+      "measured_control_steps_per_loop_wall_second": 216.1358338606622
+    },
+    {
+      "label": "left_r60-repeat",
+      "run": "20261019T190033Z-29dd0af5",
+      "manifest_sha256": "08b1e5f810b2f740bd879863701ff5a8bfeee4e7b8fddc0dd56fc940a3a0cbed",
+      "passed": true,
+      "route": "left_r60",
+      "profile": "nominal",
+      "episodes": [
+        {
+          "label": "nominal",
+          "seed": 101,
+          "reset_offsets": {
+            "lateral_m": 0.0,
+            "yaw_rad": 0.0
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2932,
+            "control_samples": 1466,
+            "terminal_tick": 2932,
+            "simulated_seconds": 24.433333333333334,
+            "progress_m": 59.87698396062168,
+            "final_station_m": 59.87698396062168,
+            "endpoint_error_m": 0.12301603937832084,
+            "driving_lateral_rms_m": 0.01876468132165224,
+            "driving_lateral_max_m": 0.02716966630048666,
+            "footprint_lateral_bound_max_m": 1.0512336914328426,
+            "minimum_upright_z": 0.9999599925500754,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.006161132894202483,
+            "hold_endpoint_error_max_m": 0.12347727770988115,
+            "hold_speed_max_m_s": 0.01964185957765297,
+            "total_reward": 28.632729433421773
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 2,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 15.287879200011957,
+        "gpu_peak_mib": 3318.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 277.07231865235707,
+      "measured_control_steps_per_loop_wall_second": 215.8369492897589
+    },
+    {
+      "label": "right_r60-repeat",
+      "run": "20261019T190049Z-71be4337",
+      "manifest_sha256": "fd667a3b4b0b1fb1dd6fdac5f91a629e7a384427d32ca4f3dce473f85956bf13",
+      "passed": true,
+      "route": "right_r60",
+      "profile": "nominal",
+      "episodes": [
+        {
+          "label": "nominal",
+          "seed": 101,
+          "reset_offsets": {
+            "lateral_m": 0.0,
+            "yaw_rad": 0.0
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2932,
+            "control_samples": 1466,
+            "terminal_tick": 2932,
+            "simulated_seconds": 24.433333333333334,
+            "progress_m": 59.87698396062168,
+            "final_station_m": 59.87698396062168,
+            "endpoint_error_m": 0.12301603937832084,
+            "driving_lateral_rms_m": 0.018764752413038606,
+            "driving_lateral_max_m": 0.02716966630048666,
+            "footprint_lateral_bound_max_m": 1.0512336893284597,
+            "minimum_upright_z": 0.9999599936047443,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.006161771235586363,
+            "hold_endpoint_error_max_m": 0.12347786566901675,
+            "hold_speed_max_m_s": 0.019642273928761483,
+            "total_reward": 28.632724484357414
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 2,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 15.682911499985494,
+        "gpu_peak_mib": 3320.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 261.8279807853518,
+      "measured_control_steps_per_loop_wall_second": 206.64441287780895
+    },
+    {
+      "label": "straight100-perturbed",
+      "run": "20261019T190105Z-212c63ee",
+      "manifest_sha256": "958b1db550fe9abe56a87a7b4feeb3df3bf65fd6f34eb22ac0751b4c47b59f0a",
+      "passed": true,
+      "route": "straight100",
+      "profile": "perturbed",
+      "episodes": [
+        {
+          "label": "corner-0",
+          "seed": 1101,
+          "reset_offsets": {
+            "lateral_m": 0.15,
+            "yaw_rad": 0.035
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2930,
+            "control_samples": 1465,
+            "terminal_tick": 2930,
+            "simulated_seconds": 24.416666666666668,
+            "progress_m": 59.87811279296875,
+            "final_station_m": 59.87811279296875,
+            "endpoint_error_m": 0.12188720703125,
+            "driving_lateral_rms_m": 0.039188063423217775,
+            "driving_lateral_max_m": 0.15040946006774902,
+            "footprint_lateral_bound_max_m": 1.1334565588702994,
+            "minimum_upright_z": 0.9999598411546918,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.005783081055396906,
+            "hold_endpoint_error_max_m": 0.12215423583984375,
+            "hold_speed_max_m_s": 0.02732939087327458,
+            "total_reward": 28.563015758479565
+          }
+        },
+        {
+          "label": "corner-1",
+          "seed": 1102,
+          "reset_offsets": {
+            "lateral_m": -0.15,
+            "yaw_rad": -0.035
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2930,
+            "control_samples": 1465,
+            "terminal_tick": 2930,
+            "simulated_seconds": 24.416666666666668,
+            "progress_m": 59.87811279296875,
+            "final_station_m": 59.87811279296875,
+            "endpoint_error_m": 0.12188720703125,
+            "driving_lateral_rms_m": 0.03918806506288089,
+            "driving_lateral_max_m": 0.15040944516658783,
+            "footprint_lateral_bound_max_m": 1.1334565690501108,
+            "minimum_upright_z": 0.9999598406950563,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.00578308105552177,
+            "hold_endpoint_error_max_m": 0.12215423583984375,
+            "hold_speed_max_m_s": 0.027329992904911372,
+            "total_reward": 28.563015737002758
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 2,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 20.493608999997377,
+        "gpu_peak_mib": 3320.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 318.24285457579685,
+      "measured_control_steps_per_loop_wall_second": 247.94219192967773
+    },
+    {
+      "label": "left_r60-perturbed",
+      "run": "20261019T190230Z-06a430fb",
+      "manifest_sha256": "de47781870bf51cf81bab36a329085bb88fb39552183b41ba8b12ffbfd8f1dc3",
+      "passed": true,
+      "route": "left_r60",
+      "profile": "perturbed",
+      "episodes": [
+        {
+          "label": "corner-0",
+          "seed": 1101,
+          "reset_offsets": {
+            "lateral_m": 0.15,
+            "yaw_rad": 0.035
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2932,
+            "control_samples": 1466,
+            "terminal_tick": 2932,
+            "simulated_seconds": 24.433333333333334,
+            "progress_m": 59.87732813199725,
+            "final_station_m": 59.87732813199725,
+            "endpoint_error_m": 0.12267186800274743,
+            "driving_lateral_rms_m": 0.043389601168506535,
+            "driving_lateral_max_m": 0.15040946006774902,
+            "footprint_lateral_bound_max_m": 1.1908166041449728,
+            "minimum_upright_z": 0.9999600733812603,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.0061585803438142595,
+            "hold_endpoint_error_max_m": 0.12313369588,
+            "hold_speed_max_m_s": 0.019624404016241676,
+            "total_reward": 28.488648367520778
+          }
+        },
+        {
+          "label": "corner-1",
+          "seed": 1102,
+          "reset_offsets": {
+            "lateral_m": -0.15,
+            "yaw_rad": -0.035
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2932,
+            "control_samples": 1466,
+            "terminal_tick": 2932,
+            "simulated_seconds": 24.433333333333334,
+            "progress_m": 59.87734295482935,
+            "final_station_m": 59.87734295482935,
+            "endpoint_error_m": 0.1226570451706479,
+            "driving_lateral_rms_m": 0.04348194151284616,
+            "driving_lateral_max_m": 0.15040944516658783,
+            "footprint_lateral_bound_max_m": 1.1908166224395207,
+            "minimum_upright_z": 0.9999600774642537,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.0061585803438142595,
+            "hold_endpoint_error_max_m": 0.12311887316452896,
+            "hold_speed_max_m_s": 0.019623453051386665,
+            "total_reward": 28.487661114384444
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 2,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 20.274281100020744,
+        "gpu_peak_mib": 3319.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 317.4422555146358,
+      "measured_control_steps_per_loop_wall_second": 244.77875315023016
+    },
+    {
+      "label": "right_r60-perturbed",
+      "run": "20261019T190251Z-d4ca90d2",
+      "manifest_sha256": "06d112f6132234ba14986848fd59a7f6e78df1d78eece4ec149dfd9dac3b5dc1",
+      "passed": true,
+      "route": "right_r60",
+      "profile": "perturbed",
+      "episodes": [
+        {
+          "label": "corner-0",
+          "seed": 1101,
+          "reset_offsets": {
+            "lateral_m": 0.15,
+            "yaw_rad": 0.035
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2932,
+            "control_samples": 1466,
+            "terminal_tick": 2932,
+            "simulated_seconds": 24.433333333333334,
+            "progress_m": 59.87734177888508,
+            "final_station_m": 59.87734177888508,
+            "endpoint_error_m": 0.12265822111491786,
+            "driving_lateral_rms_m": 0.04348203665910123,
+            "driving_lateral_max_m": 0.15040946006774902,
+            "footprint_lateral_bound_max_m": 1.1908166041449728,
+            "minimum_upright_z": 0.9999600780953131,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.0061585803438142595,
+            "hold_endpoint_error_max_m": 0.12312063705569898,
+            "hold_speed_max_m_s": 0.01962377266491624,
+            "total_reward": 28.487655478857207
+          }
+        },
+        {
+          "label": "corner-1",
+          "seed": 1102,
+          "reset_offsets": {
+            "lateral_m": -0.15,
+            "yaw_rad": -0.035
+          },
+          "expected_reason": "success",
+          "passed": true,
+          "checks": 66,
+          "metrics": {
+            "physics_samples": 2932,
+            "control_samples": 1466,
+            "terminal_tick": 2932,
+            "simulated_seconds": 24.433333333333334,
+            "progress_m": 59.87732689428686,
+            "final_station_m": 59.87732689428686,
+            "endpoint_error_m": 0.12267310571314027,
+            "driving_lateral_rms_m": 0.043389232676541725,
+            "driving_lateral_max_m": 0.15040944516658783,
+            "footprint_lateral_bound_max_m": 1.1908166224395207,
+            "minimum_upright_z": 0.9999600749494599,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 0.0061585803438142595,
+            "hold_endpoint_error_max_m": 0.12313552158382635,
+            "hold_speed_max_m_s": 0.01962442920514888,
+            "total_reward": 28.48864506050701
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 2,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 20.680481699993834,
+        "gpu_peak_mib": 3319.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 307.9062748820601,
+      "measured_control_steps_per_loop_wall_second": 238.13465260589498
+    },
+    {
+      "label": "diagnostics",
+      "run": "20261019T190313Z-5713de32",
+      "manifest_sha256": "1aa649098cf3b98c312b7b5ad41f2297ee3e1da37b6787b136edc6962e75513c",
+      "passed": true,
+      "route": "straight100",
+      "profile": "diagnostics",
+      "episodes": [
+        {
+          "label": "zero-drive-timeout",
+          "seed": 101,
+          "reset_offsets": {
+            "lateral_m": 0.0,
+            "yaw_rad": 0.0
+          },
+          "expected_reason": "time_limit",
+          "passed": true,
+          "checks": 63,
+          "metrics": {
+            "physics_samples": 4200,
+            "control_samples": 2100,
+            "terminal_tick": 4200,
+            "simulated_seconds": 35.0,
+            "progress_m": 1.4184354313329095e-07,
+            "final_station_m": 1.4184354313329095e-07,
+            "endpoint_error_m": 59.99999985815646,
+            "driving_lateral_rms_m": 3.5567374442945073e-10,
+            "driving_lateral_max_m": 1.2147712835641755e-09,
+            "footprint_lateral_bound_max_m": 0.9000000073616194,
+            "minimum_upright_z": 0.9999999999999915,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": null,
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 2.1185140570824635e-09,
+            "hold_endpoint_error_max_m": 59.999999860252586,
+            "hold_speed_max_m_s": 3.481062414560994e-08,
+            "total_reward": -9.899999978084216
+          }
+        },
+        {
+          "label": "hard-steer-departure",
+          "seed": 101,
+          "reset_offsets": {
+            "lateral_m": 0.0,
+            "yaw_rad": 0.0
+          },
+          "expected_reason": "lane_departure",
+          "passed": true,
+          "checks": 62,
+          "metrics": {
+            "physics_samples": 442,
+            "control_samples": 221,
+            "terminal_tick": 442,
+            "simulated_seconds": 3.683333333333333,
+            "progress_m": 1.3048197031021118,
+            "final_station_m": 1.3048197031021118,
+            "endpoint_error_m": 58.69518029689789,
+            "driving_lateral_rms_m": 0.16815553496280924,
+            "driving_lateral_max_m": 0.43572986125946045,
+            "footprint_lateral_bound_max_m": 1.8028581672004298,
+            "minimum_upright_z": 0.9999901348174576,
+            "post_settle_wheel_support_fraction": 1.0,
+            "longest_unsupported_gap_s": 0.0,
+            "rigid_contact_events": 0,
+            "contact_points": 0,
+            "first_physical_failure": [
+              442,
+              "lane_departure"
+            ],
+            "hold_samples": 121,
+            "hold_duration_s": 1.0,
+            "hold_drift_m": 1.1531488589367729,
+            "hold_endpoint_error_max_m": 59.7732410132885,
+            "hold_speed_max_m_s": 1.6505989599248827,
+            "total_reward": -10.140443826297483
+          }
+        }
+      ],
+      "lifecycle": {
+        "kit_before": 0,
+        "kit_after": 0,
+        "changed_sources": 0,
+        "unexpected_runtime_errors": 0,
+        "known_startup_errors": 2,
+        "usd_reference_warnings": 0,
+        "contact_processing_enabled": true,
+        "prior_contact_setting_restored": true
+      },
+      "resources": {
+        "wall_process_seconds": 17.079405799973756,
+        "gpu_peak_mib": 3320.0,
+        "gpu_scope": "Whole desktop GPU, sampled approximately once per second"
+      },
+      "measured_control_steps_per_step_wall_second": 347.27343144680015,
+      "measured_control_steps_per_loop_wall_second": 268.9606666858052
+    }
+  ],
+  "repeated_fresh_processes": {
+    "straight100": {
+      "passed": true,
+      "checks": {
+        "records_present": true,
+        "finite_telemetry": true,
+        "matched_control_ticks": true,
+        "complete_physics_ticks": true,
+        "complete_control_ticks": true,
+        "control_physics_alignment": true,
+        "native_state_schema": true,
+        "matching_decisions": true,
+        "complete_terminal_episodes": true,
+        "position_repeatability": true,
+        "speed_repeatability": true,
+        "yaw_repeatability": true,
+        "matching_support_and_contacts": true
+      },
+      "metrics": {
+        "maximum_position_difference_m": 0.0,
+        "maximum_speed_difference_m_s": 0.0,
+        "maximum_yaw_difference_rad": 0.0,
+        "compared_physics_samples": 2930
+      },
+      "exact_native_state_values": true,
+      "exact_decision_sequence": true
+    },
+    "left_r60": {
+      "passed": true,
+      "checks": {
+        "records_present": true,
+        "finite_telemetry": true,
+        "matched_control_ticks": true,
+        "complete_physics_ticks": true,
+        "complete_control_ticks": true,
+        "control_physics_alignment": true,
+        "native_state_schema": true,
+        "matching_decisions": true,
+        "complete_terminal_episodes": true,
+        "position_repeatability": true,
+        "speed_repeatability": true,
+        "yaw_repeatability": true,
+        "matching_support_and_contacts": true
+      },
+      "metrics": {
+        "maximum_position_difference_m": 0.0,
+        "maximum_speed_difference_m_s": 0.0,
+        "maximum_yaw_difference_rad": 0.0,
+        "compared_physics_samples": 2932
+      },
+      "exact_native_state_values": true,
+      "exact_decision_sequence": true
+    },
+    "right_r60": {
+      "passed": true,
+      "checks": {
+        "records_present": true,
+        "finite_telemetry": true,
+        "matched_control_ticks": true,
+        "complete_physics_ticks": true,
+        "complete_control_ticks": true,
+        "control_physics_alignment": true,
+        "native_state_schema": true,
+        "matching_decisions": true,
+        "complete_terminal_episodes": true,
+        "position_repeatability": true,
+        "speed_repeatability": true,
+        "yaw_repeatability": true,
+        "matching_support_and_contacts": true
+      },
+      "metrics": {
+        "maximum_position_difference_m": 0.0,
+        "maximum_speed_difference_m_s": 0.0,
+        "maximum_yaw_difference_rad": 0.0,
+        "compared_physics_samples": 2932
+      },
+      "exact_native_state_values": true,
+      "exact_decision_sequence": true
+    }
+  },
+  "historical_attempts": [
+    {
+      "run": "20261019T185046Z-419c2613",
+      "status": "preserved_failed",
+      "reason": "Frozen nested dataclass was incompatible with installed Lab configclass; failure before an episode.",
+      "manifest_sha256": "5f987abb9cfb0aac4fa682d397c95d168bfd32e0c3cea598c2a55e0e3ff50105",
+      "adapter_sha256": "29fda101dd442973d3d695aaaa619c93d4b519cfbe0d993bad172b285f737220",
+      "physical_episode_status": [],
+      "kit_after": 0,
+      "error": "FrozenInstanceError(\"cannot assign to field 'physics_hz'\")",
+      "failed_episode_checks": {}
+    },
+    {
+      "run": "20261019T185326Z-053b448e",
+      "status": "preserved_failed",
+      "reason": "Installed Lab disabled contact processing; car reached the barrier but no contact event was reported, so expected contact termination failed.",
+      "manifest_sha256": "be861275db4f874a53a6a4c8f0df3892ad012afb8005a82c8168217307d519f5",
+      "adapter_sha256": "5bebbc9a63e4f8ee03a4bc498f7a6c920dcb43c933af8d6b530876a963ae022f",
+      "physical_episode_status": [
+        false
+      ],
+      "kit_after": 0,
+      "error": null,
+      "failed_episode_checks": {
+        "contact-positive-control": [
+          "terminal_reason",
+          "terminal_flags",
+          "expected_physical_mechanism",
+          "decoded_nonempty_contact",
+          "chassis_barrier_pair"
+        ]
+      }
+    },
+    {
+      "run": "20261019T190126Z-31b4dcb4",
+      "status": "preserved_failed",
+      "reason": "Process-isolation gate failed with two Kit processes present at exit. Both physical corner episodes passed, but the run remained failed; repeated in an isolated process.",
+      "manifest_sha256": "aed2bbee499f16f7bce16aab4e540657d272ca3bfe30e5e14708f56d367f3b62",
+      "adapter_sha256": "a5d009b4ebff49c46d8d4ed21d6b7c370a1d3eed5ddd8c5bfd64af049fbe0fc4",
+      "physical_episode_status": [
+        true,
+        true
+      ],
+      "kit_after": 2,
+      "error": null,
+      "failed_episode_checks": {
+        "corner-0": [],
+        "corner-1": []
+      }
+    },
+    {
+      "run": "20261019T185241Z-5f10d59b",
+      "status": "superseded_preliminary_pass",
+      "reason": "Recorded before contact-processing repair. Preserved, but not counted toward the corrected matrix.",
+      "manifest_sha256": "6104520f92a212a310bbfc0ee9bd0bb56250c19361ba67775da64b7f260d6fde",
+      "adapter_sha256": "5bebbc9a63e4f8ee03a4bc498f7a6c920dcb43c933af8d6b530876a963ae022f"
+    },
+    {
+      "run": "20261019T185305Z-599cb53d",
+      "status": "superseded_preliminary_pass",
+      "reason": "Recorded before contact-processing repair. Preserved, but not counted toward the corrected matrix.",
+      "manifest_sha256": "0f55511de50d556807e32842a62bcb6b23f79e5d0ef3cc273545f9b5fe2730aa",
+      "adapter_sha256": "5bebbc9a63e4f8ee03a4bc498f7a6c920dcb43c933af8d6b530876a963ae022f"
+    }
+  ],
+  "visual_evidence": {
+    "matrix_run": "20261019T185729Z-b54f88b6",
+    "original_hierarchy": "scene-hierarchy-original.png",
+    "follow_captures": [
+      "preview-03s-follow.png",
+      "preview-12s-follow.png",
+      "preview-20s-follow.png"
+    ],
+    "overview": "preview-scene-overview.png",
+    "overview_context": "Post-autoreset episode2 tick0, not a terminal driving pose.",
+    "hierarchy_context": "Original live Kit Stage hierarchy screenshot. Original filename had PNG extension but JPEG bytes; published JPG preserves every byte.",
+    "layer_context": "Original live Kit Layer-panel screenshot shows separate runtime, view, debug, road, physics and layout layers.",
+    "published_captures": [
+      {
+        "source": "outputs/lab_lane_following/20261019T185729Z-b54f88b6/preview-12s-follow.png",
+        "published": "documentation/images/lab-lane-following-20261019/lane-following-12s.png",
+        "sha256": "83e536ff01a4cb93b72e85498de0f7c0a8cb19c50dcb7f35ff2a99a1af83794e",
+        "bytes": 113561,
+        "unaltered": true,
+        "format": "PNG"
+      },
+      {
+        "source": "outputs/lab_lane_following/20261019T185729Z-b54f88b6/preview-20s-follow.png",
+        "published": "documentation/images/lab-lane-following-20261019/lane-following-20s.png",
+        "sha256": "3bb1fe8ae89c9e038359e51f17c024d5c62278ac3ef3c20a7171be363c3a1af0",
+        "bytes": 107218,
+        "unaltered": true,
+        "format": "PNG"
+      },
+      {
+        "source": "outputs/lab_lane_following/20261019T185729Z-b54f88b6/preview-scene-overview.png",
+        "published": "documentation/images/lab-lane-following-20261019/scene-overview.png",
+        "sha256": "fbfd72eb41f20aff6729081dc967b0732781f912c68c4e9630d7218c289ab19e",
+        "bytes": 79919,
+        "unaltered": true,
+        "format": "PNG"
+      },
+      {
+        "source": "outputs/lab_lane_following/20261019T185729Z-b54f88b6/scene-hierarchy-original.png",
+        "published": "documentation/images/lab-lane-following-20261019/scene-hierarchy.jpg",
+        "sha256": "a7060659c02bb7d1a851490ed1cce8b85fc3a05808aa71627138578e3c512ee7",
+        "bytes": 185129,
+        "unaltered": true,
+        "format": "JPEG"
+      },
+      {
+        "source": "outputs/lab_lane_following/20261019T190802Z-167fa4e1/scene-layers-original.jpg",
+        "published": "documentation/images/lab-lane-following-20261019/scene-layers.jpg",
+        "sha256": "7b4519106d9f4ce1293e128a4d80189aa3356f1803dc43ba140520224d4e9243",
+        "bytes": 184806,
+        "unaltered": true,
+        "format": "JPEG"
+      }
+    ],
+    "supplemental_runs": [
+      {
+        "run": "20261019T190401Z-17312a75",
+        "passed": true,
+        "purpose": "Additional visible inspection; planned Layer-panel screenshot was missed.",
+        "manifest_sha256": "7cbdd30a0ac4d7f1fcf9a1194f80fa2fa3d8e008e701572a28ab5eb5541fd52e",
+        "artifact_hashes_verified": 59,
+        "captured_source_copies_verified": 28
+      },
+      {
+        "run": "20261019T190802Z-167fa4e1",
+        "passed": true,
+        "purpose": "Additional visible inspection and original live Layer-panel screenshot.",
+        "manifest_sha256": "2f7bdee924ec74b890a4d432af219416792b8e3f89cb6be63f230220084db828",
+        "artifact_hashes_verified": 60,
+        "captured_source_copies_verified": 28
+      }
+    ]
+  },
+  "limitations": [
+    "Scripted low-speed task and interface qualification; no trained driving policy or optimizer update.",
+    "Sixty-metre stopping task on 100 m map geometry; not a full 100 m completion claim.",
+    "One native vehicle with CPU physics; no vectorized native cloning, multi-agent traffic, sensor autonomy or highway-speed qualification.",
+    "Only the declared reset corners and seeds were exercised; this is not a broad random robustness evaluation.",
+    "Headless runs retain the two explicitly predeclared OmniPlaybackAPI startup errors; unexpected errors and USD reference warnings are zero.",
+    "Timing is measured local scripted stepping, not PPO training throughput or an across-machine performance guarantee.",
+    "One deliberate barrier contact validates reporting identity and prompt termination, not calibrated crash dynamics.",
+    "The reward and PPO proposal require user discussion and approval before any training launch."
+  ]
+}

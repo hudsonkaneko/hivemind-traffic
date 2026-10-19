@@ -1,7 +1,13 @@
 # Physics-driven vehicle foundation
 
-Updated: October 3, 2026. **Verified low-speed compatibility spike; full migration
-still in progress.** Existing SUMO-motion demos and Leatherback results are unchanged.
+Historical foundation report: October 3, 2026. **Verified low-speed compatibility
+spike; its measurements and retained warning below are unchanged.** The October 19
+[one-car Isaac Lab lane task](lab-lane-following.md) now separately passes its
+12-package scripted native matrix with a composed scene, bounded reset checks,
+terminal-state handling and contact/departure/timeout controls. That later result
+does not rewrite this report's lifecycle evidence or close full hybrid migration.
+Existing SUMO-motion demos and Leatherback results are unchanged. Training remains
+unapproved.
 
 ## What changed and why
 
@@ -147,7 +153,10 @@ For the existing visible traffic demo (still SUMO movement), use:
 python scripts/demo_cooperative_lidar.py
 ```
 
-## What remains before advancing
+## Historical next steps at the October 3 checkpoint
+
+This list records the scope still open at that checkpoint. Later evidence is
+linked below; it must not be read as a current claim that no Lab adapter exists.
 
 1. Close repeated reset/lifetime validation, including the USD warning and ten
    resets; exercise 1 and 6 m/s, right turns, turn-radius tracking, coast behavior,
@@ -165,3 +174,29 @@ are still planned. Straight open-loop stability is not lane-keeping validation.
 The Isaac validation skill drove the single-authority boundary and scripted-first
 test; the reproducible-experiment skill drove predeclared gates, retained attempts,
 source snapshots and explicit limits on performance claims.
+
+## October 19 continuation
+
+The [lane-task evidence](evidence/lab-lane-following-20261019.json) records 16
+episodes across 12 accepted packages: 13 successful 60 m drive-and-stop episodes
+and three expected diagnostic endings. The three nominal repeat pairs match
+recorded position, speed and yaw exactly on this installation. Every accepted
+package passes its current cleanup/isolation checks without a USD reference-count
+warning; the two historical OmniPlaybackAPI startup messages remain explicitly
+reported. The October 3 warning above remains historical evidence.
+
+The new task preserves the full-size car and torque interface, uses one CPU PhysX
+car without cloning, and writes poses/velocities only at reset. It preserves
+pre-autoreset terminal observations and rewards through a local SB3 wrapper.
+An explicit contact-reporting lifecycle was validated with a real collision
+against a referenced diagnostic barrier; ordinary driving has no barrier.
+Initial composed USD exports reopen in fresh plain-USD processes without changing
+their static files. Native screenshots document the scene and its layers.
+
+The 60 m task's one-second stop hold is a distinct protocol from the earlier
+100 m lane-following and five-second dynamics holds. Neither its bounded reset
+corners nor its repeat pairs establish general robustness. Shared SUMO/Isaac map
+and state conversion, multi-car interaction, cloning, long-run endurance and
+learned-policy evaluation remain separate work. Review the
+[unapproved training proposal](lab-lane-following-training-proposal.md) with the
+user before any optimizer step.
