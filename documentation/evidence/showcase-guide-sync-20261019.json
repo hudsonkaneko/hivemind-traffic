@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "status": "verified",
+  "verified_at_utc": "2026-10-19T18:14:15.990975+00:00",
+  "document_id": "1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c",
+  "tab_id": "t.lz1t1b5s17js",
+  "tab_title": "40 Showcase validation",
+  "tab_url": "https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.lz1t1b5s17js",
+  "source_commit": "7940a9757356fa2dcd6790cc8c1769e0d0ba1fbc",
+  "counts": {
+    "existing_tabs": 41,
+    "after_tabs": 41,
+    "unchanged_other_tabs": 40,
+    "draft_blocks": 49,
+    "new_nonempty_paragraph_or_table_elements": 53,
+    "native_tables": 6,
+    "table_cells": 199,
+    "heading_paragraphs": 7,
+    "shaded_command_paragraphs": 6,
+    "command_blocks": 2,
+    "hyperlinks": 15,
+    "original_screenshot_links": 6,
+    "new_text_highlights": 0
+  },
+  "check_summary": {
+    "total": 207,
+    "passed": 207,
+    "failed": 0
+  },
+  "preserved_prefix": {
+    "elements": 45,
+    "start_index": 0,
+    "end_index": 12673,
+    "before_sha256": "f0a1828744bc7a493d47014dc87b74068933d866d91f2b6d192a109d1f5bdeb6",
+    "after_sha256": "f0a1828744bc7a493d47014dc87b74068933d866d91f2b6d192a109d1f5bdeb6",
+    "exact_native_object_equality": true
+  },
+  "verification_note": "The initial explicit-only style checker falsely failed six table checks because Google omits values equal to inherited NORMAL_TEXT defaults. Effective-style resolution verifies Arial 11 regular body text and bold headers; no native table style repair was needed. A separate single-paragraph revision corrected stationary-leader wording to stationary ego.",
+  "preservation": {
+    "tab_ids_titles_and_order_unchanged": true,
+    "other_tab_objects_unchanged": 40,
+    "comparison": "Exact native JSON object equality; added formatting checked with inherited effective styles."
+  },
+  "final_native_revision": "AHj4eMTZ0zTaDmzP1IqgYzvG1Cx5cH7HZ4tG6JFDImj4eO_e3tSWq28ArQyAzRY9CUikfSy1vFs_VZZxWy2aU_aZLLcgfeA4-T_sL6_YSZg",
+  "limitations": [
+    "Native text, object structure, styles, links and exact preservation were checked by connector readback. PDF pagination, rendered page fit and monitor appearance were not inspected.",
+    "Full native readbacks and request plans remain in ignored local outputs; this compact hash record is not a substitute for those files."
+  ],
+  "local_evidence": [
+    {
+      "path": "outputs/doc-sync/showcase-validation-20261019/verification-final.json",
+      "sha256": "9146c0c7e0bc60ab8be60f05aae298fed0c1fe0d271a21c0a6f5f6547ed170e3",
+      "bytes": 40909
+    },
+    {
+      "path": "outputs/doc-sync/showcase-validation-20261019/guide-final-before.json",
+      "sha256": "7f2ae8a30f7f4b0f8f52f7d52eb20f4fe53f3230c9f08938d0af8cc319017e13",
+      "bytes": 2952570
+    },
+    {
+      "path": "outputs/doc-sync/showcase-validation-20261019/guide-final-after-verified.json",
+      "sha256": "48bc20e2f5617084853a547a6a5fc23f472579dd4ec9b66a8f50adea55bdce7b",
+      "bytes": 3507831
+    },
+    {
+      "path": "outputs/doc-sync/showcase-validation-20261019/final-blocks-7940a97-verified.json",
+      "sha256": "68a49687a4d220e6579a819ba15b86f3cc24df9f2ab5caf520fb864aa9cd338c",
+      "bytes": 31019
+    },
+    {
+      "path": "outputs/doc-sync/showcase-validation-20261019/initial-explicit-style-verification-reconstructed.json",
+      "sha256": "dcfba09ac55b2e26bc05d2409f197f3fdc1b5b67613b0585372309a2bca4e46d",
+      "bytes": 25734
+    },
+    {
+      "path": "outputs/doc-sync/showcase-validation-20261019/verify_native_sync.py",
+      "sha256": "4af78db933f260492c65e51dde332f38b520cf93bc51dd2ca557c0b21c34953c",
+      "bytes": 10676
+    }
+  ],
+  "implementation_ci": [
+    {
+      "run_id": 39299088357,
+      "commit": "7940a9757356fa2dcd6790cc8c1769e0d0ba1fbc",
+      "conclusion": "success",
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39299088357"
+    },
+    {
+      "run_id": 39299079995,
+      "commit": "7940a9757356fa2dcd6790cc8c1769e0d0ba1fbc",
+      "conclusion": "success",
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39299079995"
+    }
+  ],
+  "independent_content_review": {
+    "checks_passed": 85,
+    "path": "outputs/showcase_validation/oct19-review/guide-content-review.json",
+    "sha256": "6c24542a20d07dedacca44db81e440951d5e3113a84b9f83e5832e59f22094f3",
+    "bytes": 7930
+  }
+}

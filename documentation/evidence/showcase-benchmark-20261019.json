@@ -1,0 +1,2857 @@
+{
+  "schema_version": 1,
+  "checkpoint_date_pacific": "2026-10-19",
+  "checkpoint": "Eleven physical passes, two light strict-display passes and nine dense timing failures; eight original comparison rejections preserved alongside eight corrected valid reassessments",
+  "matrix_run_id": "20261019T172621Z-63aa7c17",
+  "matrix_git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+  "scope": {
+    "backend": "One public PhysX ego; scripted kinematic backgrounds; privileged simulator state; known circular map",
+    "training": false,
+    "sensors_drive_controller": false,
+    "sumo_backgrounds": false,
+    "individual_physical_pass_count": 11,
+    "individual_strict_display_pass_count": 2,
+    "comparisons_qualified": true,
+    "comparison_reassessment_completed": true,
+    "observed_wall_differences_qualified": true,
+    "causal_or_statistical_cost_effect_claimed": false
+  },
+  "original_matrix": {
+    "raw_artifact_root": "outputs/showcase_benchmark/20261019T172621Z-63aa7c17",
+    "artifact_sha256": {
+      "manifest.json": "fc3ebfd64ab0ba6d2632a7be18334610ad7beca9878b8f3d80e511f0130d38a6",
+      "index.json": "92b58daf389703dff65ec99392c03d40c4765cf9c2f395df7f150f9a5989cc4f",
+      "summary.json": "6f90f032993428a4b7c9976b2f11f69e46f847bef127732ff8484ce27c985067",
+      "resolved-config.json": "0193e2817adc72f07e5c1c79b69475d2204d178b04ca5958ee4ba4114ce62cd8"
+    },
+    "passed": false,
+    "status": "completed",
+    "all_output_hashes_match": true,
+    "comparisons": {
+      "light-panel": {
+        "valid": false,
+        "failures": [
+          "Physical scene/assets/fleet contract differs"
+        ],
+        "run_ids": [
+          "20261019T172819Z-662b17c9",
+          "20261019T172621Z-6d756fdc"
+        ]
+      },
+      "dense-panel": {
+        "valid": false,
+        "failures": [
+          "Physical scene/assets/fleet contract differs"
+        ],
+        "run_ids": [
+          "20261019T173229Z-824f0e72",
+          "20261019T173018Z-20ab40d6"
+        ]
+      },
+      "display-cadence": {
+        "valid": false,
+        "failures": [
+          "Physical scene/assets/fleet contract differs"
+        ],
+        "run_ids": [
+          "20261019T173229Z-824f0e72",
+          "20261019T173440Z-3a6e8a63"
+        ]
+      },
+      "capture-cost": {
+        "valid": false,
+        "failures": [
+          "Physical scene/assets/fleet contract differs"
+        ],
+        "run_ids": [
+          "20261019T173229Z-824f0e72",
+          "20261019T173638Z-3107db6f"
+        ]
+      },
+      "evidence-cost": {
+        "valid": false,
+        "failures": [
+          "Physical scene/assets/fleet contract differs"
+        ],
+        "run_ids": [
+          "20261019T173229Z-824f0e72",
+          "20261019T173849Z-a1b25fdd"
+        ]
+      },
+      "editor-cost": {
+        "valid": false,
+        "failures": [
+          "Physical scene/assets/fleet contract differs"
+        ],
+        "run_ids": [
+          "20261019T174338Z-dae89ff9",
+          "20261019T174129Z-4208ceeb"
+        ]
+      },
+      "dense-repeat-1": {
+        "valid": false,
+        "failures": [
+          "Physical scene/assets/fleet contract differs"
+        ],
+        "run_ids": [
+          "20261019T173018Z-20ab40d6",
+          "20261019T174532Z-f479e013"
+        ]
+      },
+      "dense-repeat-2": {
+        "valid": false,
+        "failures": [
+          "Physical scene/assets/fleet contract differs"
+        ],
+        "run_ids": [
+          "20261019T173018Z-20ab40d6",
+          "20261019T174743Z-9a8fde34"
+        ]
+      }
+    },
+    "interpretation": "Original result remains failed; completing all individual runs does not qualify cross-run comparisons"
+  },
+  "captured_source_inventory": {
+    "experiments/loop_showcase_config.py": "1f546fec67a4488ed4a703d73c655e2585e41660f67860889ecf43c85b7b470e",
+    "experiments/loop_showcase_performance.py": "f486a06d76045e6027260fba33ef78f8b55ce7bb3dd68d5a2d63d87c82a84acc",
+    "experiments/loop_showcase_repeatability.py": "61c6ed8a1a1bc2dbd782f106894f34b1f137c520079b8de8698dd73094dfc4a0",
+    "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+    "experiments/showcase_benchmark.py": "ae58a85c28d493200a0dddb1d01d732c10c9b0d7e70101487495793a09c4001e",
+    "experiments/showcase_controls.py": "e3e4770b907affc72d23342aab27e7ef53c563b46d39b422cbfa5dd8478d31d2",
+    "experiments/verify_physics_vehicle.py": "95b8f97f79a71963812ef0a19e8385381870c07d4fbf28bcd880649eabe9ab8e",
+    "highway_usd/_v02/highway_v02.usda": "8ab855aa553e9ab4576ee8266140553312a004b3616b3ea29ad6400eadbf95a8",
+    "highway_usd/_v02/manifest.json": "2fa0f6fd3018a2e4246ff9f4cf4e917f07c4143ea10031b2c69400aa43d0df46",
+    "highway_usd/_v02/navigation.json": "6a6b3708af48773ecb2d35d684fe16822f36365ca7e0fe4ece0df7c828766855",
+    "highway_usd/_v02/parameters.json": "374d19f77563f6d84ff6c1293ac4bfe9bcb12285572dbedbd9ff2587e16d0593",
+    "hivemind/launcher.py": "b2ea5e656c887a920ef06b6c70ccdb0830bbba7a097d82ae13187dbb829f23d3",
+    "hivemind/showcase_setup.py": "62560131f7280f3b7740728e27a6ecf499b26929de97a394a8d8ab5aa1eb203e",
+    "scripts/demo_loop_showcase.py": "0f1ec34b08da11c1ec39ac55d2e55794a1781c5ff2811622d7a3334bdb8d9c6e",
+    "scripts/physics_loop_showcase.py": "9c237baece6272901d8c75a8d67ca3a46409ccb9bce06b0bbead433cf968fe1a",
+    "traffic/bypass_validation.py": "30c1fde2c3a2a241e47c7f09701149417cd771d23ca3ef6a8bf8ea062ea572ea",
+    "traffic/driver_control.py": "29755844f3b1df77ac002caba87be3ba22ff9918b0e8a5ba03ff568d2690e18a",
+    "traffic/evidence_chunks.py": "177096d1116d8adf191e26b730bd4464f7fa31004476b7e8b5e691911140e6cf",
+    "traffic/lane_geometry.py": "2b7976bf1e04ae6ae223ea93c3dd18551394a57404e350713e2b42004e8413b0",
+    "traffic/lidar_braking.py": "08dd911868a94b86a84a6d5f4e3041a1dad9bc3203f29a0c6bfd78fba40f2b6c",
+    "traffic/live_showcase.py": "7b3778e9635422f7773f63cde5ecee308d5fb4f48a49312363913d245d0d4042",
+    "traffic/loop_driving.py": "1589bf2448587cbde7af65207fb266dabef8c16a4bbc1a7bca6307990a9f3b5d",
+    "traffic/loop_showcase_control.py": "4ca5615e2626e432c8c3a6a71cf9a162c1bef7b96bcbc9a898a3a908433f8d9b",
+    "traffic/path_following.py": "c89288bee58812817873203222ecb404f3186bd7735d3c1f23d90770e7ec906b",
+    "traffic/physics_session.py": "d0016c776819bdd93ff612d533f6ff4d2b70de9b332e52d81493255419d7c61a",
+    "traffic/physx_vehicle.py": "167f0e6ce5da581e4520707a71596c9efe7a3dca6b36f466ee5081df210fe8a6",
+    "traffic/rendered_physics_session.py": "2780f1b55b833c2d37fceab2c66b62b2582d1bc96701bd0e523bd8f80652fce9",
+    "traffic/runtime_profile.py": "55e1b88b7b20fade7b7c6dfde1f15d8a2304fb293e0b0e438623b254d162cd5f",
+    "traffic/showcase_clearance.py": "fe3264c7b21c44b5c164c871f2248a2d11ad93ed5b616aabe71f34630396a167",
+    "traffic/showcase_metrics.py": "02609bd5ddd78460a50171fdbc33c000b57f14e67b11a03713ded60d51d4df68",
+    "traffic/showcase_performance.py": "a50c837910621657a595c32ca9a807c3b3b2dcda32ec3031c6a3cc1e3db75c59",
+    "traffic/showcase_runtime.py": "cbc72fa84752bfa8acff0296d39aef91192d74843b77679df7604c8cf4ef1a76",
+    "traffic/speed_profiles.py": "0f9337601191671641af539ea75a513b600c3ba7974031b682287ab137b8b1d9",
+    "traffic/vehicle_contacts.py": "628fbf2c7e1cc735437a6c67b3051f57a604b72bf67227c1d39769ab9488170d",
+    "traffic/wheel_geometry.py": "8d4f23a9e3fdaf7eef41ee0d3be7eae1350e1208a250bb72ad0530ba551082b5",
+    "usd/highway_loop_scene.py": "62556b1d84651404619e087f98970023661c948e42701013cf46eb587dac7db6",
+    "usd/live_showcase_fleet.py": "0b3c8ca6493ac1371efa9b7b7dda1e0059a9f22376bc619664249e74a3bbe661",
+    "usd/physical_scene.py": "2f7a0283cf2165538a6d0bf0336e042bf7c46c5110b63a3842fde7435d5e91f9",
+    "usd/scene_validation.py": "fb998a59fb325eed9a258d5441067fa05f832e8b1668be446f2cecc40b678475",
+    "usd/showcase_fleet.py": "560da155348c9b612639351a5793249bde7a3b64f368506287848acb2b9b26b2",
+    "usd/showcase_vehicle.py": "f7a5d68176f7c28a42cab2ad8b1272811cda765d59af30812c335432fc046dac",
+    "visualization/highway_loop_view.py": "dedcc500aa4300424d332672bc62dd4b44a73a6bec2b90cdbd6b559acda4b524",
+    "visualization/highwaysim.showcase.kit": "3beaebfb9242ab19b805bf0014b7994e564f2bdd834dd14d6c2c410c969d4620",
+    "visualization/loop_showcase_view.py": "02c7aae511be59f78b3e9d9e96a492b5cf9bad471840776038e8edf7e633f81d",
+    "visualization/preview_timing.py": "593b4a04145930b269cb0b62de2714cb41b1dc01c4ad85d4f34c0ba9ffc4780a",
+    "visualization/showcase_render_profile.py": "c4818a2e58c997684eed492e1f93d5adad35ca8aa622c24f51be4a807ad09bda",
+    "visualization/showcase_responsiveness.py": "8b516fa3425be27b72db6b3f86747e010918d15a8c363ac8439a957ba01c386f",
+    "visualization/showcase_sidebar.py": "059609ebf11ed993316805f4bec7a6f25da6f3eb4616483ff84e2d5c8b2c557e",
+    "visualization/showcase_startup.py": "59b63b7390c9ad96d45131adcc53d467beccde81ecd67356d7f853efd9722bfd"
+  },
+  "source_profiles": {
+    "v09": {
+      "count": 46,
+      "inventory_sha256": "75e093aab8c637d01f2380232e3a2aef22a0c8faecdc78516f7aaaa5fa487f2a",
+      "members_are_matrix_union_except": [
+        "experiments/loop_showcase_performance.py",
+        "experiments/loop_showcase_repeatability.py",
+        "experiments/showcase_benchmark.py"
+      ]
+    },
+    "v07": {
+      "count": 42,
+      "inventory_sha256": "da41dbeb42e57944161db248c96ec6feb8437d54538b353e0f3dd53d25c0d9d5",
+      "members_are_matrix_union_except": [
+        "experiments/loop_showcase_performance.py",
+        "experiments/loop_showcase_repeatability.py",
+        "experiments/showcase_benchmark.py",
+        "experiments/showcase_controls.py",
+        "traffic/live_showcase.py",
+        "usd/live_showcase_fleet.py",
+        "visualization/showcase_sidebar.py"
+      ]
+    }
+  },
+  "runtime": {
+    "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 5070",
+      "total_mib": 12227.0,
+      "driver": "610.88"
+    }
+  },
+  "common_protocol": {
+    "physics_hz": 120,
+    "control_hz": 60,
+    "planner_hz": 10,
+    "cpu_threads": 8,
+    "statistics_hz": 5,
+    "frame_generation": false,
+    "vehicle_profile": "public",
+    "seed": 101,
+    "drive_s": 90,
+    "settle_s": 2,
+    "brake_s": 10,
+    "total_simulation_s": 102,
+    "traffic_statistics": true,
+    "paired_control_tolerance": "exact every physics tick",
+    "paired_position_tolerance_m": 0.02,
+    "paired_scalar_speed_tolerance_m_s": 0.02,
+    "rtf_range": [
+      0.99,
+      1.01
+    ],
+    "lag_p95_max_s": 0.1,
+    "lag_max_s": 0.5,
+    "native_notification_rate_min_fraction": 0.99,
+    "native_interval_p95_max_ms_formula": "1100 / requested_render_hz",
+    "native_interval_max_ms": 100,
+    "application_service_interval_p95_max_ms": 50,
+    "application_service_interval_max_ms": 100,
+    "preview_interval_p95_max_s_formula": "1.5 / requested_render_hz",
+    "preview_interval_max_s": 0.2
+  },
+  "runs": [
+    {
+      "case": "light-visible",
+      "run_id": "20261019T172621Z-6d756fdc",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T172621Z-6d756fdc",
+      "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+      "source_profile": "v09",
+      "manifest_sha256": "f2aa10e9843c8536f9cb6f874ccdfafae2df41741ae6cb08e9157a8b3186a057",
+      "output_hashes": {
+        "resolved-config.json": "0e12a4db051b3d6c3e20fe06670abd06c5a15cbaaa7f526235d6f17e2bd54f2e",
+        "summary.json": "da476a8efcbf58f76a11e32a6030e142fd25f4a93427ecd2e7a36a4d3ee4e1b9",
+        "trajectory.json": "0a2937b8747ba030ce96ade6bb425eb1a1edc766959aed8effbc35b5758f7873",
+        "traffic-statistics.json": "aa6d78a9e8a3581ee2c8c88ed2f22591949d533216baf215d39ef68df7f34a22",
+        "planner.json": "119c431f92fb6d6a5f080bc6250335dcf1a7b229d4e3be616e7316baf6421d6d",
+        "lifecycle.json": "eec3dd8eff0c7edf931257052d67dfcab936e08f45cd6b41be2f7c3d14dc8734",
+        "scene-contract.json": "b3393e8278853a37c6201535481140c2de395eb4bf64dc555fba8669422a0eed",
+        "background-visual-checks.json": "d66df4f39ec7cbaff778bc8647bfac90875f1f9438415c8bbb20ae2b736c5cc4",
+        "preview-timing.json": "2840b6bc339dd7d463ad05cd15eab49160f52d63fd69556285418e4c2df41e64",
+        "ui-event-timing.json": "099c00cae0f1839f11f8f2e149a67e4fc607030d9ba1692958944c222043b873",
+        "runtime-profile.json": "0642f26fbc5e08818597ee7baa6c88967c26b3a57422ebadb9a1f18d66dcba41",
+        "startup-readiness.json": "1ed381e625e0f211a651fd2f29e19e5c4d344c860313d1280206a415fb06b065"
+      },
+      "output_hash_count": 88,
+      "all_checks_passed": true,
+      "physical": {
+        "passed": true,
+        "gate_count": 32,
+        "failed_gates": [],
+        "contacts": 0,
+        "minimum_clearance_m": 1.8960217828308303,
+        "completed_passes": 1,
+        "completed_lane_changes": 0,
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "source_changed_during_run": []
+      },
+      "timing": {
+        "strict_display_passed": true,
+        "recomputed_threshold_gates": {
+          "rtf": true,
+          "lag_p95": true,
+          "lag_max": true,
+          "preview_interval_p95": true,
+          "preview_interval_max": true,
+          "preview_complete": true,
+          "preview_paced": true,
+          "native_notification_rate": true,
+          "native_frame_p95": true,
+          "native_frame_max": true,
+          "application_service_p95": true,
+          "application_service_max": true,
+          "native_complete": true,
+          "native_finite": true,
+          "native_monotonic": true,
+          "native_enough_frames": true
+        },
+        "failed_thresholds": [],
+        "display_qualification_exclusions": [],
+        "simulation_time_s": 102.0,
+        "active_wall_s": 102.00029039999936,
+        "rtf": 0.9999971529492885,
+        "p95_lag_s": 0.0005056666132716714,
+        "max_lag_s": 0.0012080666415082916,
+        "p95_loop_frame_interval_s": 0.03358029999071732,
+        "max_loop_frame_interval_s": 0.034541399974841624,
+        "native_notification_count": 3060,
+        "native_notifications_per_s": 30.001989713521905,
+        "native_delivery_intervals": {
+          "count": 3059,
+          "p50_ms": 33.316200016997755,
+          "p95_ms": 34.70260003814474,
+          "max_ms": 37.97770000528544
+        },
+        "application_service_intervals": {
+          "count": 3059,
+          "p50_ms": 33.32149999914691,
+          "p95_ms": 34.62560003390536,
+          "max_ms": 37.78529999544844
+        },
+        "unique_frame_ids_verified": false,
+        "actual_mouse_latency_qualified": false
+      },
+      "observed_load": {
+        "pre_post_kit_quiet": true,
+        "desktop_memory_load_percent_before": 38,
+        "desktop_memory_load_percent_after": 38,
+        "peak_whole_gpu_memory_mib": 3538.0
+      },
+      "config": {
+        "version": "v09",
+        "render_hz": 30,
+        "capture": false,
+        "evidence_profile": "presentation",
+        "ui_profile": "editor",
+        "panel_hidden": false,
+        "background_count": 4
+      },
+      "independent_check_count": 15,
+      "failed_independent_checks": []
+    },
+    {
+      "case": "light-hidden",
+      "run_id": "20261019T172819Z-662b17c9",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T172819Z-662b17c9",
+      "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+      "source_profile": "v09",
+      "manifest_sha256": "4566b5d8b8664d59b32ea9b7133026bdcd1be16c1dbe0b5b08629d8176e3cf2b",
+      "output_hashes": {
+        "resolved-config.json": "909f8c664d7c6601b8528bccc3a97586134652591abe27f47db40f812df364dd",
+        "summary.json": "0ee3dffed86f80bed546310daabacc80a762c0ae70342d27e4ec15c91b4e8a8d",
+        "trajectory.json": "0a2937b8747ba030ce96ade6bb425eb1a1edc766959aed8effbc35b5758f7873",
+        "traffic-statistics.json": "aa6d78a9e8a3581ee2c8c88ed2f22591949d533216baf215d39ef68df7f34a22",
+        "planner.json": "7c4299c7595419f1be179e70c073c7eab15d71e3d351a341d1bf0a71dc1dfac7",
+        "lifecycle.json": "ad9069c160fdc6ac2a36018f1433596eb865dd7209d2b7d2ddfdb6049e5a6471",
+        "scene-contract.json": "943945f2e43ad650b4907fc43c08886abfb61cf94d55c6d45cae6ffd09c09568",
+        "background-visual-checks.json": "d66df4f39ec7cbaff778bc8647bfac90875f1f9438415c8bbb20ae2b736c5cc4",
+        "preview-timing.json": "dc9e0876d09d385492f4686a1880670deb1965e6cad932615e9156c7ad4bc25a",
+        "ui-event-timing.json": "11daddb3f67616f4cbd65744ecd668c9908e8db0a69a3a814f4d5302a4ebed27",
+        "runtime-profile.json": "71d1b31db1502496f791519675764027f5092b334affe32019864397ebf63d54",
+        "startup-readiness.json": "76111011d7942d4674a330fd8c00bde3abb20bfe2e24f2075442f21cc2e22e6b"
+      },
+      "output_hash_count": 88,
+      "all_checks_passed": true,
+      "physical": {
+        "passed": true,
+        "gate_count": 32,
+        "failed_gates": [],
+        "contacts": 0,
+        "minimum_clearance_m": 1.8960217828308303,
+        "completed_passes": 1,
+        "completed_lane_changes": 0,
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "source_changed_during_run": []
+      },
+      "timing": {
+        "strict_display_passed": true,
+        "recomputed_threshold_gates": {
+          "rtf": true,
+          "lag_p95": true,
+          "lag_max": true,
+          "preview_interval_p95": true,
+          "preview_interval_max": true,
+          "preview_complete": true,
+          "preview_paced": true,
+          "native_notification_rate": true,
+          "native_frame_p95": true,
+          "native_frame_max": true,
+          "application_service_p95": true,
+          "application_service_max": true,
+          "native_complete": true,
+          "native_finite": true,
+          "native_monotonic": true,
+          "native_enough_frames": true
+        },
+        "failed_thresholds": [],
+        "display_qualification_exclusions": [],
+        "simulation_time_s": 102.0,
+        "active_wall_s": 102.00039460003609,
+        "rtf": 0.9999961313871615,
+        "p95_lag_s": 0.0005108333386800723,
+        "max_lag_s": 0.014819900039583445,
+        "p95_loop_frame_interval_s": 0.03357159998267889,
+        "max_loop_frame_interval_s": 0.04519769997568801,
+        "native_notification_count": 3060,
+        "native_notifications_per_s": 30.00198850709332,
+        "native_delivery_intervals": {
+          "count": 3059,
+          "p50_ms": 33.313100051600486,
+          "p95_ms": 34.72679998958483,
+          "max_ms": 43.522699968889356
+        },
+        "application_service_intervals": {
+          "count": 3059,
+          "p50_ms": 33.31219998653978,
+          "p95_ms": 34.69790000235662,
+          "max_ms": 43.51039999164641
+        },
+        "unique_frame_ids_verified": false,
+        "actual_mouse_latency_qualified": false
+      },
+      "observed_load": {
+        "pre_post_kit_quiet": true,
+        "desktop_memory_load_percent_before": 38,
+        "desktop_memory_load_percent_after": 38,
+        "peak_whole_gpu_memory_mib": 3538.0
+      },
+      "config": {
+        "version": "v09",
+        "render_hz": 30,
+        "capture": false,
+        "evidence_profile": "presentation",
+        "ui_profile": "editor",
+        "panel_hidden": true,
+        "background_count": 4
+      },
+      "independent_check_count": 15,
+      "failed_independent_checks": []
+    },
+    {
+      "case": "dense-visible",
+      "run_id": "20261019T173018Z-20ab40d6",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T173018Z-20ab40d6",
+      "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+      "source_profile": "v09",
+      "manifest_sha256": "290af021acec2c44b0706700c49a2c7532eeac0c2f6e20da94adc6c49e8ea9f0",
+      "output_hashes": {
+        "resolved-config.json": "65cedb443da13a29fa0fe25bae0c37fbec01f5e4fdf73c7a77e5ca11a6cd1154",
+        "summary.json": "a4527f4cab304070f6b8b3c9676f8e9f4e94055853dac74109837f3e596ee185",
+        "trajectory.json": "882bb0f8c83b8e74818ca0c23b35caf2e828cb333e1aefd8b3f8a6420155cab3",
+        "traffic-statistics.json": "3269ffbef0386b8b41a67bc33ce4ac17ff9ead798c75c2191bfa5e264b9bdc56",
+        "planner.json": "2bab9a6d22a3a07e8979aee63881a750a4709f6f14a063c9de03269f4ba55534",
+        "lifecycle.json": "632a0bf6868615ee0f2b18fffc284dde8a3d8cfe5c0277ef5d7ab5228cf2b68c",
+        "scene-contract.json": "a8ae4624ca84e034a9108ad9aeb538b730a7c1b862edf33ac0ad8904fc411fd9",
+        "background-visual-checks.json": "594437227f68d862144c78147cd6eb449ac061f0a660bec4e1c3ea7e564e1b7b",
+        "preview-timing.json": "cd8d1c5d9aa8550aadb9249cd0f3387e166549abe1802b88e2273d5b3702710f",
+        "ui-event-timing.json": "bc2db8ab9b692e59b923a2f1d09f6f86296dd0d5c3319ba50e8e14d0e8513d03",
+        "runtime-profile.json": "4b163568951f7d099dca65acd5b679c10add89c9116d1e3408a45e5da82fd672",
+        "startup-readiness.json": "f22106a6f542b2b58d0a1bf167bafefdcde6195bb6a088405be2cd8e424e5bd9"
+      },
+      "output_hash_count": 88,
+      "all_checks_passed": true,
+      "physical": {
+        "passed": true,
+        "gate_count": 32,
+        "failed_gates": [],
+        "contacts": 0,
+        "minimum_clearance_m": 1.7796288644791936,
+        "completed_passes": 16,
+        "completed_lane_changes": 8,
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "source_changed_during_run": []
+      },
+      "timing": {
+        "strict_display_passed": false,
+        "recomputed_threshold_gates": {
+          "rtf": false,
+          "lag_p95": false,
+          "lag_max": false,
+          "preview_interval_p95": true,
+          "preview_interval_max": false,
+          "preview_complete": true,
+          "preview_paced": true,
+          "native_notification_rate": false,
+          "native_frame_p95": false,
+          "native_frame_max": false,
+          "application_service_p95": true,
+          "application_service_max": false,
+          "native_complete": true,
+          "native_finite": true,
+          "native_monotonic": true,
+          "native_enough_frames": true
+        },
+        "failed_thresholds": [
+          "rtf",
+          "lag_p95",
+          "lag_max",
+          "preview_interval_max",
+          "native_notification_rate",
+          "native_frame_p95",
+          "native_frame_max",
+          "application_service_max"
+        ],
+        "display_qualification_exclusions": [],
+        "simulation_time_s": 102.0,
+        "active_wall_s": 114.30849149997812,
+        "rtf": 0.892322159636054,
+        "p95_lag_s": 13.529411433342219,
+        "max_lag_s": 13.851056233335598,
+        "p95_loop_frame_interval_s": 0.040661800012458116,
+        "max_loop_frame_interval_s": 0.22521359997335821,
+        "native_notification_count": 3060,
+        "native_notifications_per_s": 26.769350874602274,
+        "native_delivery_intervals": {
+          "count": 3059,
+          "p50_ms": 37.7470999956131,
+          "p95_ms": 40.458900039084256,
+          "max_ms": 223.08369999518618
+        },
+        "application_service_intervals": {
+          "count": 3059,
+          "p50_ms": 37.75090002454817,
+          "p95_ms": 40.43270001420751,
+          "max_ms": 222.89650002494454
+        },
+        "unique_frame_ids_verified": false,
+        "actual_mouse_latency_qualified": false
+      },
+      "observed_load": {
+        "pre_post_kit_quiet": true,
+        "desktop_memory_load_percent_before": 38,
+        "desktop_memory_load_percent_after": 38,
+        "peak_whole_gpu_memory_mib": 3538.0
+      },
+      "config": {
+        "version": "v09",
+        "render_hz": 30,
+        "capture": false,
+        "evidence_profile": "presentation",
+        "ui_profile": "editor",
+        "panel_hidden": false,
+        "background_count": 80
+      },
+      "independent_check_count": 15,
+      "failed_independent_checks": []
+    },
+    {
+      "case": "dense-hidden",
+      "run_id": "20261019T173229Z-824f0e72",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T173229Z-824f0e72",
+      "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+      "source_profile": "v09",
+      "manifest_sha256": "f6eb8b6d517bf1ffa1c99f01a6ee3ecdaabef5aa0333f2bfdc78c005d3259b75",
+      "output_hashes": {
+        "resolved-config.json": "f0b1013094c588353b9a3e78d1c7a835b41fe7e6306661e25d5e5a085ee543b2",
+        "summary.json": "d88c129305467b864abe6c945a3c5271844cf50e2460649229ae422d19e8d912",
+        "trajectory.json": "882bb0f8c83b8e74818ca0c23b35caf2e828cb333e1aefd8b3f8a6420155cab3",
+        "traffic-statistics.json": "3269ffbef0386b8b41a67bc33ce4ac17ff9ead798c75c2191bfa5e264b9bdc56",
+        "planner.json": "7be8299b787b0556bfa1c151f89ce3e1f51d6d3f7be5e1bb6603d3f439cd65b8",
+        "lifecycle.json": "4c43cc4a2583f897630bf6059d2de8e39a96e40388e085fffbddaf9147d8aec8",
+        "scene-contract.json": "d9b73ca57a9a716df418aba3db571b53d7e9306e0766c8b581a8859abf56146d",
+        "background-visual-checks.json": "594437227f68d862144c78147cd6eb449ac061f0a660bec4e1c3ea7e564e1b7b",
+        "preview-timing.json": "1bc40abc2749ddaa4d6c3b5b98f1265be6e0c62d8b4074b5bcf1d82dd107e360",
+        "ui-event-timing.json": "b8326baec113ccfa7c915f3649377e6e65ed8045e94acab08d87e0dbcbd6b897",
+        "runtime-profile.json": "b75d7ab407f07154f765587bf2992e3a86dd85a6dd401c8aa5676ef348605ff8",
+        "startup-readiness.json": "3a466d40a64f75df56ae09ff5111c6208fd1ae42882dc3f627cc2894a704b5be"
+      },
+      "output_hash_count": 88,
+      "all_checks_passed": true,
+      "physical": {
+        "passed": true,
+        "gate_count": 32,
+        "failed_gates": [],
+        "contacts": 0,
+        "minimum_clearance_m": 1.7796288644791936,
+        "completed_passes": 16,
+        "completed_lane_changes": 8,
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "source_changed_during_run": []
+      },
+      "timing": {
+        "strict_display_passed": false,
+        "recomputed_threshold_gates": {
+          "rtf": false,
+          "lag_p95": false,
+          "lag_max": false,
+          "preview_interval_p95": true,
+          "preview_interval_max": false,
+          "preview_complete": true,
+          "preview_paced": true,
+          "native_notification_rate": false,
+          "native_frame_p95": false,
+          "native_frame_max": false,
+          "application_service_p95": true,
+          "application_service_max": false,
+          "native_complete": true,
+          "native_finite": true,
+          "native_monotonic": true,
+          "native_enough_frames": true
+        },
+        "failed_thresholds": [
+          "rtf",
+          "lag_p95",
+          "lag_max",
+          "preview_interval_max",
+          "native_notification_rate",
+          "native_frame_p95",
+          "native_frame_max",
+          "application_service_max"
+        ],
+        "display_qualification_exclusions": [],
+        "simulation_time_s": 102.0,
+        "active_wall_s": 114.4989218999981,
+        "rtf": 0.8908380822055731,
+        "p95_lag_s": 13.740176033364449,
+        "max_lag_s": 14.092138333358648,
+        "p95_loop_frame_interval_s": 0.04072520002955571,
+        "max_loop_frame_interval_s": 0.22807559999637306,
+        "native_notification_count": 3060,
+        "native_notifications_per_s": 26.72486201795734,
+        "native_delivery_intervals": {
+          "count": 3059,
+          "p50_ms": 37.85610001068562,
+          "p95_ms": 40.56370002217591,
+          "max_ms": 226.68520000297576
+        },
+        "application_service_intervals": {
+          "count": 3059,
+          "p50_ms": 37.85650001373142,
+          "p95_ms": 40.56930000660941,
+          "max_ms": 226.49440000532195
+        },
+        "unique_frame_ids_verified": false,
+        "actual_mouse_latency_qualified": false
+      },
+      "observed_load": {
+        "pre_post_kit_quiet": true,
+        "desktop_memory_load_percent_before": 38,
+        "desktop_memory_load_percent_after": 38,
+        "peak_whole_gpu_memory_mib": 3612.0
+      },
+      "config": {
+        "version": "v09",
+        "render_hz": 30,
+        "capture": false,
+        "evidence_profile": "presentation",
+        "ui_profile": "editor",
+        "panel_hidden": true,
+        "background_count": 80
+      },
+      "independent_check_count": 15,
+      "failed_independent_checks": []
+    },
+    {
+      "case": "dense-20hz",
+      "run_id": "20261019T173440Z-3a6e8a63",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T173440Z-3a6e8a63",
+      "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+      "source_profile": "v09",
+      "manifest_sha256": "fbab15ea6abe950648cb9f80eae1f26034d0d4fa49b0308af551ddc188515822",
+      "output_hashes": {
+        "resolved-config.json": "82e19b2078d3f551ef4e5a9ae98e068cb6dcc33bd1a6c01e520c8558a1b0d5d9",
+        "summary.json": "3169413d5cccf92936595c332dd8b9b4b63a92b39a00e334950c7c8aedb91e6f",
+        "trajectory.json": "882bb0f8c83b8e74818ca0c23b35caf2e828cb333e1aefd8b3f8a6420155cab3",
+        "traffic-statistics.json": "3269ffbef0386b8b41a67bc33ce4ac17ff9ead798c75c2191bfa5e264b9bdc56",
+        "planner.json": "86fc7d7d47cf9d9d62c566e68887ca566e79ddcc140b8da9e375f4db0ace1419",
+        "lifecycle.json": "261d6b9d7ca125b4f7eee70ae119536c6e37900b70042aa06496e86c179d7010",
+        "scene-contract.json": "847ab832402b89631e4babe8722f8306ca5fd7ddacba0caaa26784f7b45e8b47",
+        "background-visual-checks.json": "f45066c8e1c90d65b46c15e5efaaccb68413e171e77f4fb8892f583be19505bf",
+        "preview-timing.json": "f3b8874062b08f836c6c232c25f2d34b5647cd3dc98ca11302dd390e73e68115",
+        "ui-event-timing.json": "5cb3991db314eb09908c12b3f54dcfbafe661bb5eacea06f03dcc04c56cea56f",
+        "runtime-profile.json": "6e3e0eed874ac1da51e7ce236c6ab9f9a286e828797afe29c8e0e4e4748c4701",
+        "startup-readiness.json": "4d2ef100ae10b6b7470de20f6420c360f6df1bc13d1e2f4a8c54fbe204fa13d4"
+      },
+      "output_hash_count": 88,
+      "all_checks_passed": true,
+      "physical": {
+        "passed": true,
+        "gate_count": 32,
+        "failed_gates": [],
+        "contacts": 0,
+        "minimum_clearance_m": 1.7796288644791936,
+        "completed_passes": 16,
+        "completed_lane_changes": 8,
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "source_changed_during_run": []
+      },
+      "timing": {
+        "strict_display_passed": false,
+        "recomputed_threshold_gates": {
+          "rtf": true,
+          "lag_p95": false,
+          "lag_max": true,
+          "preview_interval_p95": true,
+          "preview_interval_max": false,
+          "preview_complete": true,
+          "preview_paced": true,
+          "native_notification_rate": true,
+          "native_frame_p95": true,
+          "native_frame_max": false,
+          "application_service_p95": false,
+          "application_service_max": false,
+          "native_complete": true,
+          "native_finite": true,
+          "native_monotonic": true,
+          "native_enough_frames": true
+        },
+        "failed_thresholds": [
+          "lag_p95",
+          "preview_interval_max",
+          "native_frame_max",
+          "application_service_p95",
+          "application_service_max"
+        ],
+        "display_qualification_exclusions": [],
+        "simulation_time_s": 102.0,
+        "active_wall_s": 102.00012790004257,
+        "rtf": 0.9999987460795863,
+        "p95_lag_s": 0.2025182000361383,
+        "max_lag_s": 0.26447980001103133,
+        "p95_loop_frame_interval_s": 0.052373800019267946,
+        "max_loop_frame_interval_s": 0.23815879999892786,
+        "native_notification_count": 2040,
+        "native_notifications_per_s": 20.000690460326787,
+        "native_delivery_intervals": {
+          "count": 2039,
+          "p50_ms": 49.55370002426207,
+          "p95_ms": 52.35509999329224,
+          "max_ms": 237.55439999513328
+        },
+        "application_service_intervals": {
+          "count": 2039,
+          "p50_ms": 49.55930000869557,
+          "p95_ms": 52.3109000059776,
+          "max_ms": 237.41280002286658
+        },
+        "unique_frame_ids_verified": false,
+        "actual_mouse_latency_qualified": false
+      },
+      "observed_load": {
+        "pre_post_kit_quiet": true,
+        "desktop_memory_load_percent_before": 38,
+        "desktop_memory_load_percent_after": 38,
+        "peak_whole_gpu_memory_mib": 3538.0
+      },
+      "config": {
+        "version": "v09",
+        "render_hz": 20,
+        "capture": false,
+        "evidence_profile": "presentation",
+        "ui_profile": "editor",
+        "panel_hidden": true,
+        "background_count": 80
+      },
+      "independent_check_count": 15,
+      "failed_independent_checks": []
+    },
+    {
+      "case": "dense-captures",
+      "run_id": "20261019T173638Z-3107db6f",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T173638Z-3107db6f",
+      "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+      "source_profile": "v09",
+      "manifest_sha256": "801043199f0d0bddc24e35abb4248067fa62485072fe245e207f084fcc98c7a1",
+      "output_hashes": {
+        "resolved-config.json": "28e8c8cb93afb7cb8851f4221237de5f7ad1e3860ba13dce8961b2e0c7648dd5",
+        "summary.json": "87e8ffcbc35803d38f800a52aeeb93b61a4bb3f53c2931bb13cf60747930ca2d",
+        "trajectory.json": "882bb0f8c83b8e74818ca0c23b35caf2e828cb333e1aefd8b3f8a6420155cab3",
+        "traffic-statistics.json": "3269ffbef0386b8b41a67bc33ce4ac17ff9ead798c75c2191bfa5e264b9bdc56",
+        "planner.json": "dc1ef71cf45a35ba55805d25d1ad260d50b0ad01d15a7888bc3ec388814b0966",
+        "lifecycle.json": "1937c23bc41b6fa45ee7942760ece5351e27903ebdb1c4ec954dbead7e22d0c5",
+        "scene-contract.json": "537e2bb4b46ccb6d3db2c2d57b1dfa6ac7d547d840f1c0cf2a2aae9cd4f14fcf",
+        "background-visual-checks.json": "594437227f68d862144c78147cd6eb449ac061f0a660bec4e1c3ea7e564e1b7b",
+        "preview-timing.json": "1064e7bd9f625c5b7be963f2d084a97318cbaa3af3450e2933fe465e0e058202",
+        "ui-event-timing.json": "8911d40c96b874c71c75ad09347a9d94640a830263a4699e75fe0cb46186ace2",
+        "runtime-profile.json": "d00884d3e018125f7f4174fa0ffd994a2e2f5057eccbedda907a4c2abc1b775c",
+        "startup-readiness.json": "9271a77da9b0e74fa679451ea27cf1fd8301c908f81c50df5a6b4c80b3698e92"
+      },
+      "output_hash_count": 93,
+      "all_checks_passed": true,
+      "physical": {
+        "passed": true,
+        "gate_count": 32,
+        "failed_gates": [],
+        "contacts": 0,
+        "minimum_clearance_m": 1.7796288644791936,
+        "completed_passes": 16,
+        "completed_lane_changes": 8,
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "source_changed_during_run": []
+      },
+      "timing": {
+        "strict_display_passed": false,
+        "recomputed_threshold_gates": {
+          "rtf": false,
+          "lag_p95": false,
+          "lag_max": false,
+          "preview_interval_p95": true,
+          "preview_interval_max": false,
+          "preview_complete": true,
+          "preview_paced": true,
+          "native_notification_rate": false,
+          "native_frame_p95": false,
+          "native_frame_max": false,
+          "application_service_p95": true,
+          "application_service_max": false,
+          "native_complete": true,
+          "native_finite": true,
+          "native_monotonic": true,
+          "native_enough_frames": true
+        },
+        "failed_thresholds": [
+          "rtf",
+          "lag_p95",
+          "lag_max",
+          "preview_interval_max",
+          "native_notification_rate",
+          "native_frame_p95",
+          "native_frame_max",
+          "application_service_max"
+        ],
+        "display_qualification_exclusions": [],
+        "simulation_time_s": 102.0,
+        "active_wall_s": 114.25239779998083,
+        "rtf": 0.8927602568006421,
+        "p95_lag_s": 13.551578166630733,
+        "max_lag_s": 13.88417533330697,
+        "p95_loop_frame_interval_s": 0.04098819999489933,
+        "max_loop_frame_interval_s": 0.2277460999903269,
+        "native_notification_count": 3060,
+        "native_notifications_per_s": 26.782260103661738,
+        "native_delivery_intervals": {
+          "count": 3059,
+          "p50_ms": 37.72919997572899,
+          "p95_ms": 40.73659999994561,
+          "max_ms": 227.4693000363186
+        },
+        "application_service_intervals": {
+          "count": 3059,
+          "p50_ms": 37.72939997725189,
+          "p95_ms": 40.74430000036955,
+          "max_ms": 227.40720002911985
+        },
+        "unique_frame_ids_verified": false,
+        "actual_mouse_latency_qualified": false
+      },
+      "observed_load": {
+        "pre_post_kit_quiet": true,
+        "desktop_memory_load_percent_before": 38,
+        "desktop_memory_load_percent_after": 38,
+        "peak_whole_gpu_memory_mib": 3538.0
+      },
+      "config": {
+        "version": "v09",
+        "render_hz": 30,
+        "capture": true,
+        "evidence_profile": "presentation",
+        "ui_profile": "editor",
+        "panel_hidden": true,
+        "background_count": 80
+      },
+      "independent_check_count": 15,
+      "failed_independent_checks": []
+    },
+    {
+      "case": "dense-full",
+      "run_id": "20261019T173849Z-a1b25fdd",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T173849Z-a1b25fdd",
+      "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+      "source_profile": "v09",
+      "manifest_sha256": "ccc8000dba2cf375751692772c82ec1a5f707bdc8d4403120493613e6fc65c03",
+      "output_hashes": {
+        "resolved-config.json": "efb972bff8b417d7532ae64b6fb609c06d380ab34b997c675ca3f5a896c2c574",
+        "summary.json": "14f5ae86bd4ac6be87408110940829111e7a64701a479028132349258a5f1941",
+        "trajectory.json": "fb94534a67f05b63950e489658dbb7619eabf8289a7a4cfbf8495df47da6034c",
+        "traffic-statistics.json": "3269ffbef0386b8b41a67bc33ce4ac17ff9ead798c75c2191bfa5e264b9bdc56",
+        "planner.json": "8320022730079940003920be8b420ef5824a193da75202590fd77112c53fa519",
+        "lifecycle.json": "d99d0a704000b81cb896169cca4b051bd269f614de59d6bd29a17ea307ccb88c",
+        "scene-contract.json": "c91415de0166f8e08d6a1c3ee0be9eb19b026321b30fa8aaa880d5d26b31a38f",
+        "background-visual-checks.json": "a36f04af0597259a0fce627a6b83d9918834a96b843e506701dd8979eb0ed96f",
+        "preview-timing.json": "00d1856ccd4d0755065c46fda924073b5db1637881eab5e641d18d93cb867197",
+        "ui-event-timing.json": "6d27329e7c627dbce226db24cfd585a9302aa2a437dd17ee47a0437be7c5fb5b",
+        "runtime-profile.json": "d5a8a1a911077a9ac395c1c39024771d5d385ae40405cb116092a6263f0541e0",
+        "startup-readiness.json": "afc92b8635a7971e7c9e1ba3b410e18f609efb658e8275edf060202bc4bb3573"
+      },
+      "output_hash_count": 190,
+      "all_checks_passed": true,
+      "physical": {
+        "passed": true,
+        "gate_count": 32,
+        "failed_gates": [],
+        "contacts": 0,
+        "minimum_clearance_m": 1.7796288644791936,
+        "completed_passes": 16,
+        "completed_lane_changes": 8,
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "source_changed_during_run": []
+      },
+      "timing": {
+        "strict_display_passed": false,
+        "recomputed_threshold_gates": {
+          "rtf": false,
+          "lag_p95": false,
+          "lag_max": false,
+          "preview_interval_p95": false,
+          "preview_interval_max": false,
+          "preview_complete": true,
+          "preview_paced": true,
+          "native_notification_rate": false,
+          "native_frame_p95": false,
+          "native_frame_max": false,
+          "application_service_p95": false,
+          "application_service_max": false,
+          "native_complete": true,
+          "native_finite": true,
+          "native_monotonic": true,
+          "native_enough_frames": true
+        },
+        "failed_thresholds": [
+          "rtf",
+          "lag_p95",
+          "lag_max",
+          "preview_interval_p95",
+          "preview_interval_max",
+          "native_notification_rate",
+          "native_frame_p95",
+          "native_frame_max",
+          "application_service_p95",
+          "application_service_max"
+        ],
+        "display_qualification_exclusions": [],
+        "simulation_time_s": 102.0,
+        "active_wall_s": 141.48008879995905,
+        "rtf": 0.7209495050870333,
+        "p95_lag_s": 39.196331700007434,
+        "max_lag_s": 39.48008879995905,
+        "p95_loop_frame_interval_s": 0.05043249996379018,
+        "max_loop_frame_interval_s": 0.23744430002989247,
+        "native_notification_count": 3060,
+        "native_notifications_per_s": 21.627937836307765,
+        "native_delivery_intervals": {
+          "count": 3059,
+          "p50_ms": 44.97550002997741,
+          "p95_ms": 50.96540000522509,
+          "max_ms": 235.4975999915041
+        },
+        "application_service_intervals": {
+          "count": 3059,
+          "p50_ms": 44.97839999385178,
+          "p95_ms": 50.93300004955381,
+          "max_ms": 235.24770000949502
+        },
+        "unique_frame_ids_verified": false,
+        "actual_mouse_latency_qualified": false
+      },
+      "observed_load": {
+        "pre_post_kit_quiet": true,
+        "desktop_memory_load_percent_before": 38,
+        "desktop_memory_load_percent_after": 38,
+        "peak_whole_gpu_memory_mib": 3546.0
+      },
+      "config": {
+        "version": "v09",
+        "render_hz": 30,
+        "capture": false,
+        "evidence_profile": "full",
+        "ui_profile": "editor",
+        "panel_hidden": true,
+        "background_count": 80
+      },
+      "independent_check_count": 15,
+      "failed_independent_checks": []
+    },
+    {
+      "case": "editor-cost",
+      "run_id": "20261019T174129Z-4208ceeb",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T174129Z-4208ceeb",
+      "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+      "source_profile": "v07",
+      "manifest_sha256": "11e3d0999eff95a31d5cea00d68e011ca707043e1174ca53621aa140d05a5137",
+      "output_hashes": {
+        "resolved-config.json": "4cf8dbc8e2918395b30c392ce3b03f757e5f8f8897a0ae296c6e41e9b7a0a01b",
+        "summary.json": "719054299fb7777182de6e6e1872e5a6ce8bc03f90f48a4129799a19e25ca708",
+        "trajectory.json": "a291582e60bc8d7796184e825e2c550c74b924a9e9218706d6e1b0a55542c41c",
+        "traffic-statistics.json": "67dd43e5c1d0d3165071f07a1a047a955349b7b8e8bf8b254fd362c9d6d91336",
+        "planner.json": "b638e1af03bac6b7047c3081dc676c1cdf51269dddc5f83bc7f888014a9a57da",
+        "lifecycle.json": "14ef28dd3a3ffd49dd2d6ba2cea77e9fdb74146b3d2add43ecf3ad3f53d1f9d4",
+        "scene-contract.json": "bb8cc8549ffd090206033bf59faf5a409b438f4183e8e5592814090b3bf09c6e",
+        "background-visual-checks.json": "594437227f68d862144c78147cd6eb449ac061f0a660bec4e1c3ea7e564e1b7b",
+        "preview-timing.json": "2c94ec5ffa910ec4268e380c133eb4c04d574c32d1083266e6bb937636f7a3e1",
+        "ui-event-timing.json": "b0fd2a1067122824ec85e8274ee0fc664b69ed3892daafa2bb700913ccd8b0c5",
+        "runtime-profile.json": "d77c93e8095ece4fb10f19021bb6a30dc85ac67bfdd6115278886675b5d8ebae",
+        "startup-readiness.json": "8761cd2d72f0a1e1e12a542589c62caa98881d1a32657ab67c455f83fb657675"
+      },
+      "output_hash_count": 82,
+      "all_checks_passed": true,
+      "physical": {
+        "passed": true,
+        "gate_count": 31,
+        "failed_gates": [],
+        "contacts": 0,
+        "minimum_clearance_m": 1.7796288644791936,
+        "completed_passes": 16,
+        "completed_lane_changes": 8,
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "source_changed_during_run": []
+      },
+      "timing": {
+        "strict_display_passed": false,
+        "recomputed_threshold_gates": {
+          "rtf": false,
+          "lag_p95": false,
+          "lag_max": false,
+          "preview_interval_p95": true,
+          "preview_interval_max": false,
+          "preview_complete": true,
+          "preview_paced": true,
+          "native_notification_rate": false,
+          "native_frame_p95": false,
+          "native_frame_max": false,
+          "application_service_p95": true,
+          "application_service_max": false,
+          "native_complete": true,
+          "native_finite": true,
+          "native_monotonic": true,
+          "native_enough_frames": true
+        },
+        "failed_thresholds": [
+          "rtf",
+          "lag_p95",
+          "lag_max",
+          "preview_interval_max",
+          "native_notification_rate",
+          "native_frame_p95",
+          "native_frame_max",
+          "application_service_max"
+        ],
+        "display_qualification_exclusions": [],
+        "simulation_time_s": 102.0,
+        "active_wall_s": 111.660309400002,
+        "rtf": 0.9134848411945934,
+        "p95_lag_s": 11.274403733348791,
+        "max_lag_s": 11.534554533365494,
+        "p95_loop_frame_interval_s": 0.03898589999880642,
+        "max_loop_frame_interval_s": 2.212414900015574,
+        "native_notification_count": 3060,
+        "native_notifications_per_s": 27.403462711576502,
+        "native_delivery_intervals": {
+          "count": 3059,
+          "p50_ms": 36.21589997783303,
+          "p95_ms": 38.85100001934916,
+          "max_ms": 2214.2179000074975
+        },
+        "application_service_intervals": {
+          "count": 3059,
+          "p50_ms": 36.22209996683523,
+          "p95_ms": 38.85030001401901,
+          "max_ms": 2214.0404999954626
+        },
+        "unique_frame_ids_verified": false,
+        "actual_mouse_latency_qualified": false
+      },
+      "observed_load": {
+        "pre_post_kit_quiet": true,
+        "desktop_memory_load_percent_before": 38,
+        "desktop_memory_load_percent_after": 38,
+        "peak_whole_gpu_memory_mib": 3547.0
+      },
+      "config": {
+        "version": "v07",
+        "render_hz": 30,
+        "capture": false,
+        "evidence_profile": "presentation",
+        "ui_profile": "editor",
+        "panel_hidden": null,
+        "background_count": 80
+      },
+      "independent_check_count": 15,
+      "failed_independent_checks": []
+    },
+    {
+      "case": "minimal-cost",
+      "run_id": "20261019T174338Z-dae89ff9",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T174338Z-dae89ff9",
+      "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+      "source_profile": "v07",
+      "manifest_sha256": "453fe2779dfa7cdfa958ca9693e1f67170c31de64026c1b5a1423e6abbd75fab",
+      "output_hashes": {
+        "resolved-config.json": "4f005c834110e4c716b5a123a325de854d2125492710a3e50ac772470b4c8892",
+        "summary.json": "35072d0efa3167d542fe050ced436e997632652192d645cffd9a4f4e202e4fea",
+        "trajectory.json": "a291582e60bc8d7796184e825e2c550c74b924a9e9218706d6e1b0a55542c41c",
+        "traffic-statistics.json": "67dd43e5c1d0d3165071f07a1a047a955349b7b8e8bf8b254fd362c9d6d91336",
+        "planner.json": "80d59893bf477dcf796afd140e53c63b60acf72f66f6218dfb9fa7805ee79662",
+        "lifecycle.json": "ffe5268f4f37548bd7fcd8be3df932454428b91a3d8daf181a51bc91df420c13",
+        "scene-contract.json": "9ce99229ec5d945f40610da739a2a3d608cd8bcb99ec778f658d910f64681427",
+        "background-visual-checks.json": "594437227f68d862144c78147cd6eb449ac061f0a660bec4e1c3ea7e564e1b7b",
+        "preview-timing.json": "5a2ab4c324132d28cad8d1f2a1c5bd3e8f9a592abf710cf9cc453d95b6d332c1",
+        "ui-event-timing.json": "6ae70439f4f7378192821df42a38cbb59750e584c98350c2afddc89bc44d34d9",
+        "runtime-profile.json": "ab24e6a9a474a11fe011b238bd4bf73df47f96c9262f9ca37691ce2df5359778",
+        "startup-readiness.json": "9ad9ee8141d1396bc0f77c097db0e9084a72b5fa42340602c9f5f8f26ec9d932"
+      },
+      "output_hash_count": 82,
+      "all_checks_passed": true,
+      "physical": {
+        "passed": true,
+        "gate_count": 31,
+        "failed_gates": [],
+        "contacts": 0,
+        "minimum_clearance_m": 1.7796288644791936,
+        "completed_passes": 16,
+        "completed_lane_changes": 8,
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "source_changed_during_run": []
+      },
+      "timing": {
+        "strict_display_passed": false,
+        "recomputed_threshold_gates": {
+          "rtf": true,
+          "lag_p95": false,
+          "lag_max": false,
+          "preview_interval_p95": true,
+          "preview_interval_max": true,
+          "preview_complete": true,
+          "preview_paced": true,
+          "native_notification_rate": true,
+          "native_frame_p95": true,
+          "native_frame_max": false,
+          "application_service_p95": true,
+          "application_service_max": false,
+          "native_complete": true,
+          "native_finite": true,
+          "native_monotonic": true,
+          "native_enough_frames": true
+        },
+        "failed_thresholds": [
+          "lag_p95",
+          "lag_max",
+          "native_frame_max",
+          "application_service_max"
+        ],
+        "display_qualification_exclusions": [],
+        "simulation_time_s": 102.0,
+        "active_wall_s": 102.46240609994857,
+        "rtf": 0.9954870657683218,
+        "p95_lag_s": 2.548458433321983,
+        "max_lag_s": 2.6064142999821343,
+        "p95_loop_frame_interval_s": 0.03671529999701306,
+        "max_loop_frame_interval_s": 0.13463960000080988,
+        "native_notification_count": 3060,
+        "native_notifications_per_s": 29.863563443783764,
+        "native_delivery_intervals": {
+          "count": 3059,
+          "p50_ms": 33.79509999649599,
+          "p95_ms": 36.62819997407496,
+          "max_ms": 132.3598999879323
+        },
+        "application_service_intervals": {
+          "count": 3059,
+          "p50_ms": 33.8018000475131,
+          "p95_ms": 36.59250005148351,
+          "max_ms": 132.16000003740191
+        },
+        "unique_frame_ids_verified": false,
+        "actual_mouse_latency_qualified": false
+      },
+      "observed_load": {
+        "pre_post_kit_quiet": true,
+        "desktop_memory_load_percent_before": 38,
+        "desktop_memory_load_percent_after": 38,
+        "peak_whole_gpu_memory_mib": 3649.0
+      },
+      "config": {
+        "version": "v07",
+        "render_hz": 30,
+        "capture": false,
+        "evidence_profile": "presentation",
+        "ui_profile": "showcase",
+        "panel_hidden": null,
+        "background_count": 80
+      },
+      "independent_check_count": 15,
+      "failed_independent_checks": []
+    },
+    {
+      "case": "dense-repeat-1",
+      "run_id": "20261019T174532Z-f479e013",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T174532Z-f479e013",
+      "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+      "source_profile": "v09",
+      "manifest_sha256": "63a0dfe043233c2fbf0a41321cc0d8aa51dea9d251f9de78b1e91512d02222d5",
+      "output_hashes": {
+        "resolved-config.json": "65cedb443da13a29fa0fe25bae0c37fbec01f5e4fdf73c7a77e5ca11a6cd1154",
+        "summary.json": "b62ed250ada27bf77ed915b79f3743f5f4cd94ff764457cb1808a5a9e87a24f2",
+        "trajectory.json": "882bb0f8c83b8e74818ca0c23b35caf2e828cb333e1aefd8b3f8a6420155cab3",
+        "traffic-statistics.json": "3269ffbef0386b8b41a67bc33ce4ac17ff9ead798c75c2191bfa5e264b9bdc56",
+        "planner.json": "d49988944fc8f0a91e6ce584fb55940cefe9a0fd163aceec270283b52c088fa5",
+        "lifecycle.json": "ddb10d0eae0c8c50c10ebb8c42c5e3b56655b65c52b45510cae31f46ef3ecb9a",
+        "scene-contract.json": "f433240bd1cd1eeca69b078eb8fad232ef0c987205958a24ac8bee32fc4aa7c3",
+        "background-visual-checks.json": "594437227f68d862144c78147cd6eb449ac061f0a660bec4e1c3ea7e564e1b7b",
+        "preview-timing.json": "6fc2516ea7bb425f325606e2f573a1dba20aea744867dbfa4fddb3f7db7c8fec",
+        "ui-event-timing.json": "e0d67be0a49146e8f66bc8d3f342341fff39c6bba1befafa3bde2b40355f85d1",
+        "runtime-profile.json": "aa3d66d9407e03804466eafee328fe0535289c6b2bcb4ad86805534f52587857",
+        "startup-readiness.json": "2463e23ff002a97e2c5cddf328e54152da2be1694495fdcccc9cbc8cc40da845"
+      },
+      "output_hash_count": 88,
+      "all_checks_passed": true,
+      "physical": {
+        "passed": true,
+        "gate_count": 32,
+        "failed_gates": [],
+        "contacts": 0,
+        "minimum_clearance_m": 1.7796288644791936,
+        "completed_passes": 16,
+        "completed_lane_changes": 8,
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "source_changed_during_run": []
+      },
+      "timing": {
+        "strict_display_passed": false,
+        "recomputed_threshold_gates": {
+          "rtf": false,
+          "lag_p95": false,
+          "lag_max": false,
+          "preview_interval_p95": true,
+          "preview_interval_max": false,
+          "preview_complete": true,
+          "preview_paced": true,
+          "native_notification_rate": false,
+          "native_frame_p95": false,
+          "native_frame_max": false,
+          "application_service_p95": true,
+          "application_service_max": false,
+          "native_complete": true,
+          "native_finite": true,
+          "native_monotonic": true,
+          "native_enough_frames": true
+        },
+        "failed_thresholds": [
+          "rtf",
+          "lag_p95",
+          "lag_max",
+          "preview_interval_max",
+          "native_notification_rate",
+          "native_frame_p95",
+          "native_frame_max",
+          "application_service_max"
+        ],
+        "display_qualification_exclusions": [],
+        "simulation_time_s": 102.0,
+        "active_wall_s": 114.59214959997917,
+        "rtf": 0.8901133311144251,
+        "p95_lag_s": 13.815437499969264,
+        "max_lag_s": 14.166930433300635,
+        "p95_loop_frame_interval_s": 0.0407751000020653,
+        "max_loop_frame_interval_s": 0.22526119998656213,
+        "native_notification_count": 3060,
+        "native_notifications_per_s": 26.70298880705735,
+        "native_delivery_intervals": {
+          "count": 3059,
+          "p50_ms": 37.8224000451155,
+          "p95_ms": 40.62020004494116,
+          "max_ms": 223.91399997286499
+        },
+        "application_service_intervals": {
+          "count": 3059,
+          "p50_ms": 37.82209998462349,
+          "p95_ms": 40.639800019562244,
+          "max_ms": 223.744600021746
+        },
+        "unique_frame_ids_verified": false,
+        "actual_mouse_latency_qualified": false
+      },
+      "observed_load": {
+        "pre_post_kit_quiet": true,
+        "desktop_memory_load_percent_before": 38,
+        "desktop_memory_load_percent_after": 38,
+        "peak_whole_gpu_memory_mib": 3547.0
+      },
+      "config": {
+        "version": "v09",
+        "render_hz": 30,
+        "capture": false,
+        "evidence_profile": "presentation",
+        "ui_profile": "editor",
+        "panel_hidden": false,
+        "background_count": 80
+      },
+      "independent_check_count": 15,
+      "failed_independent_checks": []
+    },
+    {
+      "case": "dense-repeat-2",
+      "run_id": "20261019T174743Z-9a8fde34",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T174743Z-9a8fde34",
+      "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+      "source_profile": "v09",
+      "manifest_sha256": "1cf716bd4e767f825ead389b79501a21cb5456decce475b1247e4768980467d8",
+      "output_hashes": {
+        "resolved-config.json": "65cedb443da13a29fa0fe25bae0c37fbec01f5e4fdf73c7a77e5ca11a6cd1154",
+        "summary.json": "07207ca7e58f43c6e07afcfd28819c1573d7edace6ab0f1014617c2f65e3e632",
+        "trajectory.json": "882bb0f8c83b8e74818ca0c23b35caf2e828cb333e1aefd8b3f8a6420155cab3",
+        "traffic-statistics.json": "3269ffbef0386b8b41a67bc33ce4ac17ff9ead798c75c2191bfa5e264b9bdc56",
+        "planner.json": "12f68eafbe02f51f9426b28dceaf111cc3e4ff2c63afad7aeab880123309d584",
+        "lifecycle.json": "64b1e764637f1eebbc22ee49597edb3fdd630ff6af099e6726394a6ebbe91d77",
+        "scene-contract.json": "1216f8419d2fcb5d2b9f35895892dc2054cbe0295310b2edec683424fb0125ce",
+        "background-visual-checks.json": "594437227f68d862144c78147cd6eb449ac061f0a660bec4e1c3ea7e564e1b7b",
+        "preview-timing.json": "735c2ba9f404708cea0e7831d0477eb485b55e076d8544c0891cef3d7eb6bd69",
+        "ui-event-timing.json": "f28210414a8823ff28f5dd9a923b4a54bd39e1f3e5666d4add5dca69a66667f3",
+        "runtime-profile.json": "76fb285ae0a8da87c4ad24385b06476a92bd00e83b148b884866ed4ec084938f",
+        "startup-readiness.json": "75025e98c3f4d7a62ee05037d50dc5118d0e3240431d2994fe030013288e14f9"
+      },
+      "output_hash_count": 88,
+      "all_checks_passed": true,
+      "physical": {
+        "passed": true,
+        "gate_count": 32,
+        "failed_gates": [],
+        "contacts": 0,
+        "minimum_clearance_m": 1.7796288644791936,
+        "completed_passes": 16,
+        "completed_lane_changes": 8,
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "source_changed_during_run": []
+      },
+      "timing": {
+        "strict_display_passed": false,
+        "recomputed_threshold_gates": {
+          "rtf": false,
+          "lag_p95": false,
+          "lag_max": false,
+          "preview_interval_p95": true,
+          "preview_interval_max": false,
+          "preview_complete": true,
+          "preview_paced": true,
+          "native_notification_rate": false,
+          "native_frame_p95": false,
+          "native_frame_max": false,
+          "application_service_p95": true,
+          "application_service_max": false,
+          "native_complete": true,
+          "native_finite": true,
+          "native_monotonic": true,
+          "native_enough_frames": true
+        },
+        "failed_thresholds": [
+          "rtf",
+          "lag_p95",
+          "lag_max",
+          "preview_interval_max",
+          "native_notification_rate",
+          "native_frame_p95",
+          "native_frame_max",
+          "application_service_max"
+        ],
+        "display_qualification_exclusions": [],
+        "simulation_time_s": 102.0,
+        "active_wall_s": 115.98153440002352,
+        "rtf": 0.879450341191376,
+        "p95_lag_s": 14.897049000009432,
+        "max_lag_s": 15.152176333354632,
+        "p95_loop_frame_interval_s": 0.042530500038992614,
+        "max_loop_frame_interval_s": 0.2253908000420779,
+        "native_notification_count": 3060,
+        "native_notifications_per_s": 26.383064062775112,
+        "native_delivery_intervals": {
+          "count": 3059,
+          "p50_ms": 37.916700006462634,
+          "p95_ms": 42.21360001247376,
+          "max_ms": 222.97900001285598
+        },
+        "application_service_intervals": {
+          "count": 3059,
+          "p50_ms": 37.91910002473742,
+          "p95_ms": 42.174600006546825,
+          "max_ms": 222.67079999437556
+        },
+        "unique_frame_ids_verified": false,
+        "actual_mouse_latency_qualified": false
+      },
+      "observed_load": {
+        "pre_post_kit_quiet": true,
+        "desktop_memory_load_percent_before": 38,
+        "desktop_memory_load_percent_after": 39,
+        "peak_whole_gpu_memory_mib": 3552.0
+      },
+      "config": {
+        "version": "v09",
+        "render_hz": 30,
+        "capture": false,
+        "evidence_profile": "presentation",
+        "ui_profile": "editor",
+        "panel_hidden": false,
+        "background_count": 80
+      },
+      "independent_check_count": 15,
+      "failed_independent_checks": []
+    }
+  ],
+  "independent_audit": {
+    "path": "outputs/showcase_validation/oct19-review/benchmark-individual-review.json",
+    "sha256": "52eda23da170aa293db8efa05eb23d054553142875cd770bdf35c2a6582b1358",
+    "script_path": "outputs/showcase_validation/oct19-review/reduce-benchmark-individuals.py",
+    "script_sha256": "40b9d74a2d92d988bc9e742e366c831635af1e211b2fd1a2ac23b209999515e5",
+    "all_individual_checks_passed": true,
+    "per_run_check_count": 15,
+    "total_output_hashes_checked": 1063,
+    "individual_physical_passes": 11,
+    "strict_display_passes": 2,
+    "original_matrix_artifacts_unchanged": true
+  },
+  "comparison_assessment": {
+    "status": "Original failed result preserved; separate corrected reassessment passed all eight pairs",
+    "original_failure": "Physical scene/assets/fleet contract differs",
+    "original_valid_count": 0,
+    "original_rejected_count": 8,
+    "original_includes_two_identical_configuration_repeat_pairs": true,
+    "corrected_valid_count": 8,
+    "valid_observed_wall_differences_reported": true,
+    "causal_or_statistical_effect_claimed": false
+  },
+  "limitations": [
+    "One trial per variant plus declared repeated dense baseline; no statistical or causal cost claim.",
+    "Pre/post Kit inventory does not rule out transient or non-Kit desktop activity.",
+    "Kit native frame notifications are not monitor scanouts or click-to-photon measurements.",
+    "The eight originally rejected comparisons are qualified only by the separately recorded narrowly corrected evaluator; original failed records remain unchanged.",
+    "Raw outputs remain ignored; compact public evidence cannot replace unavailable telemetry."
+  ],
+  "corrected_reassessment": {
+    "raw_artifact_root": "outputs/showcase_benchmark_reassessment/20261019T175418Z-a5a6a122",
+    "manifest_sha256": "33fe035f3c7e759dbb88c653ea0ca78c48724620bd573cd77b604ecd47945fe1",
+    "recorded_artifact_sha256": {
+      "resolved-config.json": "8892d32e9255c905120618edf8efbc4d42d66744ad268065257ee9f5b94e6523",
+      "summary.json": "4a5c8aa829aa5f4e3232816013c4c330d17cef72c17d6fdb27e8ed35c91d2c44",
+      "working-tree.patch": "066851c78d3db6a24d7a81354fdb8c3650301d0c2c32bf22d24c828737d45ce0",
+      "source\\experiments\\loop_showcase_performance.py": "f486a06d76045e6027260fba33ef78f8b55ce7bb3dd68d5a2d63d87c82a84acc",
+      "source\\experiments\\loop_showcase_repeatability.py": "61c6ed8a1a1bc2dbd782f106894f34b1f137c520079b8de8698dd73094dfc4a0",
+      "source\\experiments\\probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+      "source\\experiments\\showcase_benchmark.py": "9a388b68ebbac79e9575f45bb4dd1b0d7fcfea3652b142bdc2d36b5e7e135f1d",
+      "source\\outputs\\showcase_validation\\oct19-review\\reassess_benchmark.py": "e9737d3561ebeadf1c53f75fea594d673ccd8ef3541f84d14295dbbb4da5f24b",
+      "source\\tests\\test_showcase_benchmark.py": "c87b31318540196d21b557e2782fbdb48816d2c7e64c227c7847d29867633aec"
+    },
+    "git_commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+    "evaluator_source_sha256": "9a388b68ebbac79e9575f45bb4dd1b0d7fcfea3652b142bdc2d36b5e7e135f1d",
+    "captured_source_sha256": {
+      "experiments/loop_showcase_performance.py": "f486a06d76045e6027260fba33ef78f8b55ce7bb3dd68d5a2d63d87c82a84acc",
+      "experiments/loop_showcase_repeatability.py": "61c6ed8a1a1bc2dbd782f106894f34b1f137c520079b8de8698dd73094dfc4a0",
+      "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+      "experiments/showcase_benchmark.py": "9a388b68ebbac79e9575f45bb4dd1b0d7fcfea3652b142bdc2d36b5e7e135f1d",
+      "outputs/showcase_validation/oct19-review/reassess_benchmark.py": "e9737d3561ebeadf1c53f75fea594d673ccd8ef3541f84d14295dbbb4da5f24b",
+      "tests/test_showcase_benchmark.py": "c87b31318540196d21b557e2782fbdb48816d2c7e64c227c7847d29867633aec"
+    },
+    "passed": true,
+    "original_comparison_passed": false,
+    "native_runs_reexecuted": false,
+    "original_inputs_unchanged": true,
+    "evaluator_unchanged_during_reassessment": true,
+    "correction": "Validate exact own-run public assembly_directory, then normalize only that packaging field.",
+    "original_input_hashes": {
+      "index.json": "92b58daf389703dff65ec99392c03d40c4765cf9c2f395df7f150f9a5989cc4f",
+      "summary.json": "6f90f032993428a4b7c9976b2f11f69e46f847bef127732ff8484ce27c985067",
+      "manifest.json": "fc3ebfd64ab0ba6d2632a7be18334610ad7beca9878b8f3d80e511f0130d38a6"
+    },
+    "comparisons": {
+      "light-panel": {
+        "valid": true,
+        "failures": [],
+        "run_ids": [
+          "20261019T172819Z-662b17c9",
+          "20261019T172621Z-6d756fdc"
+        ],
+        "physical_valid": true,
+        "load_qualified": true,
+        "acceptance": {
+          "position_tolerance_m": 0.02,
+          "speed_tolerance_m_s": 0.02,
+          "controls": "exact every physics tick"
+        },
+        "config_differences": [
+          "panel_hidden"
+        ],
+        "max_position_difference_m": 0.0,
+        "max_speed_difference_m_s": 0.0,
+        "scope": "Matched observed display costs; native notifications are not monitor scanouts",
+        "load_scope": "Pre/post external Kit.exe inventory and whole-desktop GPU memory; transient or non-Kit work is not ruled out",
+        "inference_limit": "One sample per variant under observed local desktop load; no statistical or causal benefit claim",
+        "observed_wall_change_percent": -0.00010215650354528094,
+        "both_strict_display_qualified": true,
+        "direction": {
+          "first_case": "light-hidden",
+          "second_case": "light-visible",
+          "formula": "100 * (second active_wall_s / first active_wall_s - 1)"
+        }
+      },
+      "dense-panel": {
+        "valid": true,
+        "failures": [],
+        "run_ids": [
+          "20261019T173229Z-824f0e72",
+          "20261019T173018Z-20ab40d6"
+        ],
+        "physical_valid": true,
+        "load_qualified": true,
+        "acceptance": {
+          "position_tolerance_m": 0.02,
+          "speed_tolerance_m_s": 0.02,
+          "controls": "exact every physics tick"
+        },
+        "config_differences": [
+          "panel_hidden"
+        ],
+        "max_position_difference_m": 0.0,
+        "max_speed_difference_m_s": 0.0,
+        "scope": "Matched observed display costs; native notifications are not monitor scanouts",
+        "load_scope": "Pre/post external Kit.exe inventory and whole-desktop GPU memory; transient or non-Kit work is not ruled out",
+        "inference_limit": "One sample per variant under observed local desktop load; no statistical or causal benefit claim",
+        "observed_wall_change_percent": -0.16631632583081757,
+        "both_strict_display_qualified": false,
+        "direction": {
+          "first_case": "dense-hidden",
+          "second_case": "dense-visible",
+          "formula": "100 * (second active_wall_s / first active_wall_s - 1)"
+        }
+      },
+      "display-cadence": {
+        "valid": true,
+        "failures": [],
+        "run_ids": [
+          "20261019T173229Z-824f0e72",
+          "20261019T173440Z-3a6e8a63"
+        ],
+        "physical_valid": true,
+        "load_qualified": true,
+        "acceptance": {
+          "position_tolerance_m": 0.02,
+          "speed_tolerance_m_s": 0.02,
+          "controls": "exact every physics tick"
+        },
+        "config_differences": [
+          "controls.render_hz",
+          "render_hz"
+        ],
+        "max_position_difference_m": 0.0,
+        "max_speed_difference_m_s": 0.0,
+        "scope": "Matched observed display costs; native notifications are not monitor scanouts",
+        "load_scope": "Pre/post external Kit.exe inventory and whole-desktop GPU memory; transient or non-Kit work is not ruled out",
+        "inference_limit": "One sample per variant under observed local desktop load; no statistical or causal benefit claim",
+        "observed_wall_change_percent": -10.916080075296964,
+        "both_strict_display_qualified": false,
+        "direction": {
+          "first_case": "dense-hidden",
+          "second_case": "dense-20hz",
+          "formula": "100 * (second active_wall_s / first active_wall_s - 1)"
+        }
+      },
+      "capture-cost": {
+        "valid": true,
+        "failures": [],
+        "run_ids": [
+          "20261019T173229Z-824f0e72",
+          "20261019T173638Z-3107db6f"
+        ],
+        "physical_valid": true,
+        "load_qualified": true,
+        "acceptance": {
+          "position_tolerance_m": 0.02,
+          "speed_tolerance_m_s": 0.02,
+          "controls": "exact every physics tick"
+        },
+        "config_differences": [
+          "capture"
+        ],
+        "max_position_difference_m": 0.0,
+        "max_speed_difference_m_s": 0.0,
+        "scope": "Matched observed display costs; native notifications are not monitor scanouts",
+        "load_scope": "Pre/post external Kit.exe inventory and whole-desktop GPU memory; transient or non-Kit work is not ruled out",
+        "inference_limit": "One sample per variant under observed local desktop load; no statistical or causal benefit claim",
+        "observed_wall_change_percent": -0.21530691811454394,
+        "both_strict_display_qualified": false,
+        "direction": {
+          "first_case": "dense-hidden",
+          "second_case": "dense-captures",
+          "formula": "100 * (second active_wall_s / first active_wall_s - 1)"
+        }
+      },
+      "evidence-cost": {
+        "valid": true,
+        "failures": [],
+        "run_ids": [
+          "20261019T173229Z-824f0e72",
+          "20261019T173849Z-a1b25fdd"
+        ],
+        "physical_valid": true,
+        "load_qualified": true,
+        "acceptance": {
+          "position_tolerance_m": 0.02,
+          "speed_tolerance_m_s": 0.02,
+          "controls": "exact every physics tick"
+        },
+        "config_differences": [
+          "evidence_profile"
+        ],
+        "max_position_difference_m": 0.0,
+        "max_speed_difference_m_s": 0.0,
+        "scope": "Matched observed display costs; native notifications are not monitor scanouts",
+        "load_scope": "Pre/post external Kit.exe inventory and whole-desktop GPU memory; transient or non-Kit work is not ruled out",
+        "inference_limit": "One sample per variant under observed local desktop load; no statistical or causal benefit claim",
+        "observed_wall_change_percent": 23.564559781205595,
+        "both_strict_display_qualified": false,
+        "direction": {
+          "first_case": "dense-hidden",
+          "second_case": "dense-full",
+          "formula": "100 * (second active_wall_s / first active_wall_s - 1)"
+        }
+      },
+      "editor-cost": {
+        "valid": true,
+        "failures": [],
+        "run_ids": [
+          "20261019T174338Z-dae89ff9",
+          "20261019T174129Z-4208ceeb"
+        ],
+        "physical_valid": true,
+        "load_qualified": true,
+        "acceptance": {
+          "position_tolerance_m": 0.02,
+          "speed_tolerance_m_s": 0.02,
+          "controls": "exact every physics tick"
+        },
+        "config_differences": [
+          "ui_profile"
+        ],
+        "max_position_difference_m": 0.0,
+        "max_speed_difference_m_s": 0.0,
+        "scope": "Matched observed display costs; native notifications are not monitor scanouts",
+        "load_scope": "Pre/post external Kit.exe inventory and whole-desktop GPU memory; transient or non-Kit work is not ruled out",
+        "inference_limit": "One sample per variant under observed local desktop load; no statistical or causal benefit claim",
+        "observed_wall_change_percent": 8.976856634697029,
+        "both_strict_display_qualified": false,
+        "direction": {
+          "first_case": "minimal-cost",
+          "second_case": "editor-cost",
+          "formula": "100 * (second active_wall_s / first active_wall_s - 1)"
+        }
+      },
+      "dense-repeat-1": {
+        "valid": true,
+        "failures": [],
+        "run_ids": [
+          "20261019T173018Z-20ab40d6",
+          "20261019T174532Z-f479e013"
+        ],
+        "physical_valid": true,
+        "load_qualified": true,
+        "acceptance": {
+          "position_tolerance_m": 0.02,
+          "speed_tolerance_m_s": 0.02,
+          "controls": "exact every physics tick"
+        },
+        "config_differences": [],
+        "max_position_difference_m": 0.0,
+        "max_speed_difference_m_s": 0.0,
+        "scope": "Matched observed display costs; native notifications are not monitor scanouts",
+        "load_scope": "Pre/post external Kit.exe inventory and whole-desktop GPU memory; transient or non-Kit work is not ruled out",
+        "inference_limit": "One sample per variant under observed local desktop load; no statistical or causal benefit claim",
+        "observed_wall_change_percent": 0.2481513807756741,
+        "both_strict_display_qualified": false,
+        "direction": {
+          "first_case": "dense-visible",
+          "second_case": "dense-repeat-1",
+          "formula": "100 * (second active_wall_s / first active_wall_s - 1)"
+        }
+      },
+      "dense-repeat-2": {
+        "valid": true,
+        "failures": [],
+        "run_ids": [
+          "20261019T173018Z-20ab40d6",
+          "20261019T174743Z-9a8fde34"
+        ],
+        "physical_valid": true,
+        "load_qualified": true,
+        "acceptance": {
+          "position_tolerance_m": 0.02,
+          "speed_tolerance_m_s": 0.02,
+          "controls": "exact every physics tick"
+        },
+        "config_differences": [],
+        "max_position_difference_m": 0.0,
+        "max_speed_difference_m_s": 0.0,
+        "scope": "Matched observed display costs; native notifications are not monitor scanouts",
+        "load_scope": "Pre/post external Kit.exe inventory and whole-desktop GPU memory; transient or non-Kit work is not ruled out",
+        "inference_limit": "One sample per variant under observed local desktop load; no statistical or causal benefit claim",
+        "observed_wall_change_percent": 1.4636208369924297,
+        "both_strict_display_qualified": false,
+        "direction": {
+          "first_case": "dense-visible",
+          "second_case": "dense-repeat-2",
+          "formula": "100 * (second active_wall_s / first active_wall_s - 1)"
+        }
+      }
+    },
+    "interpretation": "Valid matched observations; failed strict timing gates remain failed; single-sample differences are not causal or statistical effects"
+  },
+  "independent_reviews": [
+    {
+      "path": "outputs/showcase_validation/oct19-review/benchmark-original-comparison-failure.json",
+      "sha256": "e03f99878f1fe219f3802d956e2f779f1f0b0c091caa8f31f03cfb386cc62208"
+    },
+    {
+      "path": "outputs/showcase_validation/oct19-review/benchmark-comparator-independent-review.json",
+      "sha256": "694fe6dd6d01963e0f9ace06b2f4f946be26414b4910b68f16bb20be45203b89"
+    },
+    {
+      "path": "outputs/showcase_validation/oct19-review/benchmark-reassessment-independent-review.json",
+      "sha256": "57ca0e017e457711d51a7256c47fe46d3986ee8b0147533ea6fe651baa705e22"
+    },
+    {
+      "path": "outputs/showcase_validation/oct19-review/matrix-frame-timing-analysis.json",
+      "sha256": "b922afaa892fbcc7694b9754035aee09c7c84f45acc03fa1c0a3e92f70858ae5"
+    },
+    {
+      "path": "outputs/showcase_validation/oct19-review/matrix-frame-timing-findings.txt",
+      "sha256": "961697c52dee71f26678a2d287934a8bebffce30b5f83da59bbbfd25a25beb7e"
+    }
+  ],
+  "corrected_evaluator_cpu": {
+    "path": "outputs/showcase_validation/cpu-comparator-20261019T175324Z/cpu-checks.json",
+    "sha256": "4896f23695c45f702c2bcf7cc64e970d5730d42a167c1d557b212b9e2a493723",
+    "passed": true,
+    "tests_passed": 1767,
+    "skipped": 181,
+    "subtests_passed": 116,
+    "elapsed_s": 86.23,
+    "runtime": ".venv-traffic Python3.11.9",
+    "commit": "3a3185ad2ae0c5aa4a93987b00b10385e37e19ab",
+    "source_sha256": {
+      "experiments/showcase_benchmark.py": "9a388b68ebbac79e9575f45bb4dd1b0d7fcfea3652b142bdc2d36b5e7e135f1d",
+      "tests/test_showcase_benchmark.py": "c87b31318540196d21b557e2782fbdb48816d2c7e64c227c7847d29867633aec"
+    },
+    "report_sha256": "340639f352ab78732a2560ed79a4f488c79abf92409a679dc5ce1b5862c27815",
+    "independent_review": "outputs/showcase_validation/oct19-review/benchmark-comparator-independent-review.json",
+    "xml_report": {
+      "path": "outputs/showcase_validation/cpu-comparator-20261019T175324Z/tests.xml",
+      "sha256": "340639f352ab78732a2560ed79a4f488c79abf92409a679dc5ce1b5862c27815"
+    },
+    "current_head_hosted_ci_claimed": false
+  },
+  "timing_diagnostics": {
+    "source": {
+      "path": "outputs/showcase_validation/oct19-review/matrix-frame-timing-analysis.json",
+      "sha256": "b922afaa892fbcc7694b9754035aee09c7c84f45acc03fa1c0a3e92f70858ae5"
+    },
+    "scope": "Read-only raw-frame timing reassessment of immutable completed matrix. No native runs, tests, source edits, physical-gate recomputation or matched improvement claim.",
+    "limitations": [
+      "Publication profiles retain aggregates without tick or subcall identity; frame outliers cannot prove which native/authoring call stalled.",
+      "First preview interval includes post-PreviewClock setup and initial ticks/render; application and completion intervals begin with their first observed event.",
+      "Stage wall time includes scheduling and waiting; no GPU/CPU causal attribution or complete dynamic warmup claim.",
+      "Original eight invalid comparisons remain immutable; observed per-run timing is separate from comparison validity."
+    ],
+    "runs": [
+      {
+        "case": "light-visible",
+        "run_id": "20261019T172621Z-6d756fdc",
+        "strict_display_passed": true,
+        "failed_strict_gates": [],
+        "first_frame": {
+          "sim_time_s": 0.03333333333333333,
+          "active_wall_s": 0.034541399974841624,
+          "lag_s": 0.0012080666415082916,
+          "frame_interval_s": 0.034541399974841624,
+          "rtf": 0.9650255449290361
+        },
+        "segments": [
+          {
+            "start_sim_s": 0,
+            "end_sim_s": 2,
+            "wall_duration_s": 2.000301699968986,
+            "segment_rtf": 0.9998491727677925,
+            "added_signed_lag_s": 0.0003016999689862132
+          },
+          {
+            "start_sim_s": 2,
+            "end_sim_s": 10,
+            "wall_duration_s": 7.999926200020127,
+            "segment_rtf": 1.0000092250825854,
+            "added_signed_lag_s": -7.379997987300158e-05
+          },
+          {
+            "start_sim_s": 10,
+            "end_sim_s": 30,
+            "wall_duration_s": 20.0002533000079,
+            "segment_rtf": 0.9999873351600053,
+            "added_signed_lag_s": 0.0002533000078983605
+          },
+          {
+            "start_sim_s": 30,
+            "end_sim_s": 60,
+            "wall_duration_s": 30.000038800004404,
+            "segment_rtf": 0.9999987066681926,
+            "added_signed_lag_s": 3.880000440403819e-05
+          },
+          {
+            "start_sim_s": 60,
+            "end_sim_s": 90,
+            "wall_duration_s": 29.999623899988364,
+            "segment_rtf": 1.0000125368242245,
+            "added_signed_lag_s": -0.0003761000116355717
+          },
+          {
+            "start_sim_s": 90,
+            "end_sim_s": 102,
+            "wall_duration_s": 12.000146500009578,
+            "segment_rtf": 0.9999877918149102,
+            "added_signed_lag_s": 0.00014650000957772136
+          }
+        ],
+        "largest_three_preview_intervals": [
+          {
+            "sim_time_s": 0.03333333333333333,
+            "active_wall_s": 0.034541399974841624,
+            "lag_s": 0.0012080666415082916,
+            "frame_interval_s": 0.034541399974841624
+          },
+          {
+            "sim_time_s": 71.2,
+            "active_wall_s": 71.20053109998116,
+            "lag_s": 0.0005310999811598549,
+            "frame_interval_s": 0.03369900002144277
+          },
+          {
+            "sim_time_s": 35.0,
+            "active_wall_s": 35.000459200004116,
+            "lag_s": 0.0004592000041157007,
+            "frame_interval_s": 0.03368180000688881
+          }
+        ],
+        "preview_intervals_over_200ms": 0,
+        "aggregate_publication": {
+          "count": 3060,
+          "total_s": 3.56983,
+          "p50_ms": 1.1542,
+          "p95_ms": 1.3364,
+          "max_ms": 1.8951
+        },
+        "aggregate_render": {
+          "count": 3060,
+          "total_s": 32.0206755,
+          "p50_ms": 10.6324,
+          "p95_ms": 12.3362,
+          "max_ms": 15.3735
+        }
+      },
+      {
+        "case": "light-hidden",
+        "run_id": "20261019T172819Z-662b17c9",
+        "strict_display_passed": true,
+        "failed_strict_gates": [],
+        "first_frame": {
+          "sim_time_s": 0.03333333333333333,
+          "active_wall_s": 0.035372500016819686,
+          "lag_s": 0.002039166683486353,
+          "frame_interval_s": 0.035372500016819686,
+          "rtf": 0.9423516380658216
+        },
+        "segments": [
+          {
+            "start_sim_s": 0,
+            "end_sim_s": 2,
+            "wall_duration_s": 2.000370300025679,
+            "segment_rtf": 0.9998148842613418,
+            "added_signed_lag_s": 0.0003703000256791711
+          },
+          {
+            "start_sim_s": 2,
+            "end_sim_s": 10,
+            "wall_duration_s": 7.999861899996176,
+            "segment_rtf": 1.000017262798477,
+            "added_signed_lag_s": -0.00013810000382363796
+          },
+          {
+            "start_sim_s": 10,
+            "end_sim_s": 30,
+            "wall_duration_s": 20.000138300005347,
+            "segment_rtf": 0.9999930850475496,
+            "added_signed_lag_s": 0.00013830000534653664
+          },
+          {
+            "start_sim_s": 30,
+            "end_sim_s": 60,
+            "wall_duration_s": 29.999778800003696,
+            "segment_rtf": 1.0000073733875765,
+            "added_signed_lag_s": -0.00022119999630376697
+          },
+          {
+            "start_sim_s": 60,
+            "end_sim_s": 90,
+            "wall_duration_s": 29.999933799961582,
+            "segment_rtf": 1.0000022066728167,
+            "added_signed_lag_s": -6.620003841817379e-05
+          },
+          {
+            "start_sim_s": 90,
+            "end_sim_s": 102,
+            "wall_duration_s": 12.000311500043608,
+            "segment_rtf": 0.9999740423368504,
+            "added_signed_lag_s": 0.00031150004360824823
+          }
+        ],
+        "largest_three_preview_intervals": [
+          {
+            "sim_time_s": 65.93333333333334,
+            "active_wall_s": 65.94538920000196,
+            "lag_s": 0.01205586666861791,
+            "frame_interval_s": 0.04519769997568801
+          },
+          {
+            "sim_time_s": 66.0,
+            "active_wall_s": 66.01481990003958,
+            "lag_s": 0.014819900039583445,
+            "frame_interval_s": 0.03669050004100427
+          },
+          {
+            "sim_time_s": 75.0,
+            "active_wall_s": 75.00346550001996,
+            "lag_s": 0.00346550001995638,
+            "frame_interval_s": 0.03663400001823902
+          }
+        ],
+        "preview_intervals_over_200ms": 0,
+        "aggregate_publication": {
+          "count": 3060,
+          "total_s": 3.5715516,
+          "p50_ms": 1.1522,
+          "p95_ms": 1.3442,
+          "max_ms": 2.0264
+        },
+        "aggregate_render": {
+          "count": 3060,
+          "total_s": 31.7153137,
+          "p50_ms": 10.4706,
+          "p95_ms": 12.3682,
+          "max_ms": 17.6597
+        }
+      },
+      {
+        "case": "dense-visible",
+        "run_id": "20261019T173018Z-20ab40d6",
+        "strict_display_passed": false,
+        "failed_strict_gates": [
+          "preview_rtf",
+          "preview_lag_p95",
+          "preview_lag_max",
+          "preview_interval_max",
+          "event_realtime",
+          "event_native_fps",
+          "event_frame_p95",
+          "event_frame_max",
+          "event_service_max"
+        ],
+        "first_frame": {
+          "sim_time_s": 0.03333333333333333,
+          "active_wall_s": 0.0451059999759309,
+          "lag_s": 0.011772666642597567,
+          "frame_interval_s": 0.0451059999759309,
+          "rtf": 0.7389999856143395
+        },
+        "segments": [
+          {
+            "start_sim_s": 0,
+            "end_sim_s": 2,
+            "wall_duration_s": 2.0745439999736845,
+            "segment_rtf": 0.9640672841961269,
+            "added_signed_lag_s": 0.07454399997368455
+          },
+          {
+            "start_sim_s": 2,
+            "end_sim_s": 10,
+            "wall_duration_s": 9.212946899991948,
+            "segment_rtf": 0.8683432225151533,
+            "added_signed_lag_s": 1.2129468999919482
+          },
+          {
+            "start_sim_s": 10,
+            "end_sim_s": 30,
+            "wall_duration_s": 23.196924499992747,
+            "segment_rtf": 0.8621832605441404,
+            "added_signed_lag_s": 3.196924499992747
+          },
+          {
+            "start_sim_s": 30,
+            "end_sim_s": 60,
+            "wall_duration_s": 34.323646200005896,
+            "segment_rtf": 0.8740330157579485,
+            "added_signed_lag_s": 4.323646200005896
+          },
+          {
+            "start_sim_s": 60,
+            "end_sim_s": 90,
+            "wall_duration_s": 34.572201500006486,
+            "segment_rtf": 0.867749194392332,
+            "added_signed_lag_s": 4.572201500006486
+          },
+          {
+            "start_sim_s": 90,
+            "end_sim_s": 102,
+            "wall_duration_s": 10.928228400007356,
+            "segment_rtf": 1.0980736822806452,
+            "added_signed_lag_s": -1.071771599992644
+          }
+        ],
+        "largest_three_preview_intervals": [
+          {
+            "sim_time_s": 67.26666666666667,
+            "active_wall_s": 77.34291399997892,
+            "lag_s": 10.076247333312253,
+            "frame_interval_s": 0.22521359997335821
+          },
+          {
+            "sim_time_s": 28.433333333333334,
+            "active_wall_s": 32.69401029997971,
+            "lag_s": 4.2606769666463755,
+            "frame_interval_s": 0.21140139998169616
+          },
+          {
+            "sim_time_s": 71.8,
+            "active_wall_s": 82.57947769999737,
+            "lag_s": 10.779477699997372,
+            "frame_interval_s": 0.09819280001102015
+          }
+        ],
+        "preview_intervals_over_200ms": 2,
+        "aggregate_publication": {
+          "count": 3060,
+          "total_s": 8.4418057,
+          "p50_ms": 2.7316,
+          "p95_ms": 2.9737,
+          "max_ms": 187.2827
+        },
+        "aggregate_render": {
+          "count": 3060,
+          "total_s": 38.0474656,
+          "p50_ms": 12.7947,
+          "p95_ms": 14.1505,
+          "max_ms": 73.3912
+        }
+      },
+      {
+        "case": "dense-hidden",
+        "run_id": "20261019T173229Z-824f0e72",
+        "strict_display_passed": false,
+        "failed_strict_gates": [
+          "preview_rtf",
+          "preview_lag_p95",
+          "preview_lag_max",
+          "preview_interval_max",
+          "event_realtime",
+          "event_native_fps",
+          "event_frame_p95",
+          "event_frame_max",
+          "event_service_max"
+        ],
+        "first_frame": {
+          "sim_time_s": 0.03333333333333333,
+          "active_wall_s": 0.04867049999302253,
+          "lag_s": 0.015337166659689198,
+          "frame_interval_s": 0.04867049999302253,
+          "rtf": 0.6848775611122147
+        },
+        "segments": [
+          {
+            "start_sim_s": 0,
+            "end_sim_s": 2,
+            "wall_duration_s": 2.083772999991197,
+            "segment_rtf": 0.9597974443513996,
+            "added_signed_lag_s": 0.08377299999119714
+          },
+          {
+            "start_sim_s": 2,
+            "end_sim_s": 10,
+            "wall_duration_s": 9.17243120004423,
+            "segment_rtf": 0.8721787959512222,
+            "added_signed_lag_s": 1.1724312000442296
+          },
+          {
+            "start_sim_s": 10,
+            "end_sim_s": 30,
+            "wall_duration_s": 23.261073199973907,
+            "segment_rtf": 0.859805557037774,
+            "added_signed_lag_s": 3.2610731999739073
+          },
+          {
+            "start_sim_s": 30,
+            "end_sim_s": 60,
+            "wall_duration_s": 34.46871149999788,
+            "segment_rtf": 0.8703545532881856,
+            "added_signed_lag_s": 4.46871149999788
+          },
+          {
+            "start_sim_s": 60,
+            "end_sim_s": 90,
+            "wall_duration_s": 34.592582100012805,
+            "segment_rtf": 0.867237950415644,
+            "added_signed_lag_s": 4.592582100012805
+          },
+          {
+            "start_sim_s": 90,
+            "end_sim_s": 102,
+            "wall_duration_s": 10.920350899978075,
+            "segment_rtf": 1.098865788280127,
+            "added_signed_lag_s": -1.0796491000219248
+          }
+        ],
+        "largest_three_preview_intervals": [
+          {
+            "sim_time_s": 67.26666666666667,
+            "active_wall_s": 77.52872629999183,
+            "lag_s": 10.262059633325165,
+            "frame_interval_s": 0.22807559999637306
+          },
+          {
+            "sim_time_s": 28.433333333333334,
+            "active_wall_s": 32.732129300013185,
+            "lag_s": 4.298795966679851,
+            "frame_interval_s": 0.21489579998888075
+          },
+          {
+            "sim_time_s": 12.433333333333334,
+            "active_wall_s": 14.058084500022233,
+            "lag_s": 1.624751166688899,
+            "frame_interval_s": 0.053576799982693046
+          }
+        ],
+        "preview_intervals_over_200ms": 2,
+        "aggregate_publication": {
+          "count": 3060,
+          "total_s": 8.4947336,
+          "p50_ms": 2.7512,
+          "p95_ms": 2.9744,
+          "max_ms": 189.8694
+        },
+        "aggregate_render": {
+          "count": 3060,
+          "total_s": 37.8564785,
+          "p50_ms": 12.7828,
+          "p95_ms": 14.1382,
+          "max_ms": 19.3958
+        }
+      },
+      {
+        "case": "dense-20hz",
+        "run_id": "20261019T173440Z-3a6e8a63",
+        "strict_display_passed": false,
+        "failed_strict_gates": [
+          "preview_lag_p95",
+          "preview_interval_max",
+          "event_frame_max",
+          "event_service_p95",
+          "event_service_max"
+        ],
+        "first_frame": {
+          "sim_time_s": 0.05,
+          "active_wall_s": 0.05285090004326776,
+          "lag_s": 0.002850900043267754,
+          "frame_interval_s": 0.05285090004326776,
+          "rtf": 0.9460576822545351
+        },
+        "segments": [
+          {
+            "start_sim_s": 0,
+            "end_sim_s": 2,
+            "wall_duration_s": 2.000210300029721,
+            "segment_rtf": 0.9998948610405026,
+            "added_signed_lag_s": 0.00021030002972111106
+          },
+          {
+            "start_sim_s": 2,
+            "end_sim_s": 10,
+            "wall_duration_s": 8.002988899999764,
+            "segment_rtf": 0.999626527034198,
+            "added_signed_lag_s": 0.0029888999997638166
+          },
+          {
+            "start_sim_s": 10,
+            "end_sim_s": 30,
+            "wall_duration_s": 20.025538099987898,
+            "segment_rtf": 0.9987247234076615,
+            "added_signed_lag_s": 0.025538099987898022
+          },
+          {
+            "start_sim_s": 30,
+            "end_sim_s": 60,
+            "wall_duration_s": 29.97607269999571,
+            "segment_rtf": 1.0007982133031152,
+            "added_signed_lag_s": -0.023927300004288554
+          },
+          {
+            "start_sim_s": 60,
+            "end_sim_s": 90,
+            "wall_duration_s": 30.17324010003358,
+            "segment_rtf": 0.9942584853512836,
+            "added_signed_lag_s": 0.17324010003358126
+          },
+          {
+            "start_sim_s": 90,
+            "end_sim_s": 102,
+            "wall_duration_s": 11.822077799995895,
+            "segment_rtf": 1.0150499940039446,
+            "added_signed_lag_s": -0.17792220000410452
+          }
+        ],
+        "largest_three_preview_intervals": [
+          {
+            "sim_time_s": 85.25,
+            "active_wall_s": 85.51447980001103,
+            "lag_s": 0.26447980001103133,
+            "frame_interval_s": 0.23815879999892786
+          },
+          {
+            "sim_time_s": 40.25,
+            "active_wall_s": 40.43001410004217,
+            "lag_s": 0.18001410004217178,
+            "frame_interval_s": 0.22934150003129616
+          },
+          {
+            "sim_time_s": 72.85,
+            "active_wall_s": 72.88466120004887,
+            "lag_s": 0.0346612000488733,
+            "frame_interval_s": 0.07326250005280599
+          }
+        ],
+        "preview_intervals_over_200ms": 2,
+        "aggregate_publication": {
+          "count": 2040,
+          "total_s": 5.9054753,
+          "p50_ms": 2.8093,
+          "p95_ms": 3.0392,
+          "max_ms": 190.9363
+        },
+        "aggregate_render": {
+          "count": 2040,
+          "total_s": 25.8939299,
+          "p50_ms": 13.0892,
+          "p95_ms": 14.4368,
+          "max_ms": 19.2257
+        }
+      },
+      {
+        "case": "dense-captures",
+        "run_id": "20261019T173638Z-3107db6f",
+        "strict_display_passed": false,
+        "failed_strict_gates": [
+          "preview_rtf",
+          "preview_lag_p95",
+          "preview_lag_max",
+          "preview_interval_max",
+          "event_realtime",
+          "event_native_fps",
+          "event_frame_p95",
+          "event_frame_max",
+          "event_service_max"
+        ],
+        "first_frame": {
+          "sim_time_s": 0.03333333333333333,
+          "active_wall_s": 0.049966499966103584,
+          "lag_s": 0.01663316663277025,
+          "frame_interval_s": 0.049966499966103584,
+          "rtf": 0.6671136332532015
+        },
+        "segments": [
+          {
+            "start_sim_s": 0,
+            "end_sim_s": 2,
+            "wall_duration_s": 2.07462349999696,
+            "segment_rtf": 0.9640303409283325,
+            "added_signed_lag_s": 0.07462349999696016
+          },
+          {
+            "start_sim_s": 2,
+            "end_sim_s": 10,
+            "wall_duration_s": 9.226659199979622,
+            "segment_rtf": 0.8670527247844668,
+            "added_signed_lag_s": 1.226659199979622
+          },
+          {
+            "start_sim_s": 10,
+            "end_sim_s": 30,
+            "wall_duration_s": 23.15681830001995,
+            "segment_rtf": 0.8636765094789715,
+            "added_signed_lag_s": 3.1568183000199497
+          },
+          {
+            "start_sim_s": 30,
+            "end_sim_s": 60,
+            "wall_duration_s": 34.53034989995649,
+            "segment_rtf": 0.8688009269213285,
+            "added_signed_lag_s": 4.530349899956491
+          },
+          {
+            "start_sim_s": 60,
+            "end_sim_s": 90,
+            "wall_duration_s": 34.424567300011404,
+            "segment_rtf": 0.8714706488116137,
+            "added_signed_lag_s": 4.424567300011404
+          },
+          {
+            "start_sim_s": 90,
+            "end_sim_s": 102,
+            "wall_duration_s": 10.8393796000164,
+            "segment_rtf": 1.1070744307157436,
+            "added_signed_lag_s": -1.1606203999835998
+          }
+        ],
+        "largest_three_preview_intervals": [
+          {
+            "sim_time_s": 67.26666666666667,
+            "active_wall_s": 77.5152244999772,
+            "lag_s": 10.248557833310528,
+            "frame_interval_s": 0.2277460999903269
+          },
+          {
+            "sim_time_s": 28.433333333333334,
+            "active_wall_s": 32.672509199997876,
+            "lag_s": 4.239175866664542,
+            "frame_interval_s": 0.21156640001572669
+          },
+          {
+            "sim_time_s": 59.56666666666667,
+            "active_wall_s": 68.48590719996719,
+            "lag_s": 8.919240533300517,
+            "frame_interval_s": 0.09796759998425841
+          }
+        ],
+        "preview_intervals_over_200ms": 2,
+        "aggregate_publication": {
+          "count": 3060,
+          "total_s": 8.4455934,
+          "p50_ms": 2.7327,
+          "p95_ms": 2.9832,
+          "max_ms": 188.4534
+        },
+        "aggregate_render": {
+          "count": 3060,
+          "total_s": 37.8352795,
+          "p50_ms": 12.744,
+          "p95_ms": 14.2255,
+          "max_ms": 72.8395
+        }
+      },
+      {
+        "case": "dense-full",
+        "run_id": "20261019T173849Z-a1b25fdd",
+        "strict_display_passed": false,
+        "failed_strict_gates": [
+          "preview_rtf",
+          "preview_lag_p95",
+          "preview_lag_max",
+          "preview_interval_p95",
+          "preview_interval_max",
+          "event_realtime",
+          "event_native_fps",
+          "event_frame_p95",
+          "event_frame_max",
+          "event_service_p95",
+          "event_service_max"
+        ],
+        "first_frame": {
+          "sim_time_s": 0.03333333333333333,
+          "active_wall_s": 0.05218399997102097,
+          "lag_s": 0.018850666637687634,
+          "frame_interval_s": 0.05218399997102097,
+          "rtf": 0.6387653946007231
+        },
+        "segments": [
+          {
+            "start_sim_s": 0,
+            "end_sim_s": 2,
+            "wall_duration_s": 2.5336942999856547,
+            "segment_rtf": 0.7893612106288133,
+            "added_signed_lag_s": 0.5336942999856547
+          },
+          {
+            "start_sim_s": 2,
+            "end_sim_s": 10,
+            "wall_duration_s": 11.291077199974097,
+            "segment_rtf": 0.7085240724435355,
+            "added_signed_lag_s": 3.2910771999740973
+          },
+          {
+            "start_sim_s": 10,
+            "end_sim_s": 30,
+            "wall_duration_s": 28.550677400024142,
+            "segment_rtf": 0.7005087732168165,
+            "added_signed_lag_s": 8.550677400024142
+          },
+          {
+            "start_sim_s": 30,
+            "end_sim_s": 60,
+            "wall_duration_s": 42.60490059998119,
+            "segment_rtf": 0.7041443490661082,
+            "added_signed_lag_s": 12.604900599981192
+          },
+          {
+            "start_sim_s": 60,
+            "end_sim_s": 90,
+            "wall_duration_s": 42.42144210002152,
+            "segment_rtf": 0.7071895370568927,
+            "added_signed_lag_s": 12.421442100021522
+          },
+          {
+            "start_sim_s": 90,
+            "end_sim_s": 102,
+            "wall_duration_s": 14.07829719997244,
+            "segment_rtf": 0.8523758114740959,
+            "added_signed_lag_s": 2.0782971999724396
+          }
+        ],
+        "largest_three_preview_intervals": [
+          {
+            "sim_time_s": 66.86666666666666,
+            "active_wall_s": 94.84141789999558,
+            "lag_s": 27.974751233328917,
+            "frame_interval_s": 0.23744430002989247
+          },
+          {
+            "sim_time_s": 28.433333333333334,
+            "active_wall_s": 40.18598579999525,
+            "lag_s": 11.752652466661917,
+            "frame_interval_s": 0.22498390002874658
+          },
+          {
+            "sim_time_s": 32.03333333333333,
+            "active_wall_s": 45.46821759996237,
+            "lag_s": 13.434884266629041,
+            "frame_interval_s": 0.12852009997004643
+          }
+        ],
+        "preview_intervals_over_200ms": 2,
+        "aggregate_publication": {
+          "count": 3060,
+          "total_s": 14.3344873,
+          "p50_ms": 4.6293,
+          "p95_ms": 4.9609,
+          "max_ms": 196.2408
+        },
+        "aggregate_render": {
+          "count": 3060,
+          "total_s": 38.9033149,
+          "p50_ms": 13.0945,
+          "p95_ms": 14.4884,
+          "max_ms": 20.6728
+        }
+      },
+      {
+        "case": "editor-cost",
+        "run_id": "20261019T174129Z-4208ceeb",
+        "strict_display_passed": false,
+        "failed_strict_gates": [
+          "preview_rtf",
+          "preview_lag_p95",
+          "preview_lag_max",
+          "preview_interval_max",
+          "event_realtime",
+          "event_native_fps",
+          "event_frame_p95",
+          "event_frame_max",
+          "event_service_max"
+        ],
+        "first_frame": {
+          "sim_time_s": 0.03333333333333333,
+          "active_wall_s": 0.04536640003789216,
+          "lag_s": 0.01203306670455883,
+          "frame_interval_s": 0.04536640003789216,
+          "rtf": 0.734758175775282
+        },
+        "segments": [
+          {
+            "start_sim_s": 0,
+            "end_sim_s": 2,
+            "wall_duration_s": 2.0143075000378303,
+            "segment_rtf": 0.9928970626195049,
+            "added_signed_lag_s": 0.014307500037830323
+          },
+          {
+            "start_sim_s": 2,
+            "end_sim_s": 10,
+            "wall_duration_s": 8.763086299994029,
+            "segment_rtf": 0.9129203714455546,
+            "added_signed_lag_s": 0.7630862999940291
+          },
+          {
+            "start_sim_s": 10,
+            "end_sim_s": 30,
+            "wall_duration_s": 22.348235099983867,
+            "segment_rtf": 0.8949252551945114,
+            "added_signed_lag_s": 2.3482350999838673
+          },
+          {
+            "start_sim_s": 30,
+            "end_sim_s": 60,
+            "wall_duration_s": 32.79318889998831,
+            "segment_rtf": 0.9148241145895603,
+            "added_signed_lag_s": 2.7931888999883085
+          },
+          {
+            "start_sim_s": 60,
+            "end_sim_s": 90,
+            "wall_duration_s": 35.31588449998526,
+            "segment_rtf": 0.8494761047259775,
+            "added_signed_lag_s": 5.315884499985259
+          },
+          {
+            "start_sim_s": 90,
+            "end_sim_s": 102,
+            "wall_duration_s": 10.425607100012712,
+            "segment_rtf": 1.1510121074853634,
+            "added_signed_lag_s": -1.5743928999872878
+          }
+        ],
+        "largest_three_preview_intervals": [
+          {
+            "sim_time_s": 89.3,
+            "active_wall_s": 100.4671260000323,
+            "lag_s": 11.167126000032297,
+            "frame_interval_s": 2.212414900015574
+          },
+          {
+            "sim_time_s": 66.93333333333334,
+            "active_wall_s": 73.77756560000125,
+            "lag_s": 6.844232266667916,
+            "frame_interval_s": 0.22244029998546466
+          },
+          {
+            "sim_time_s": 28.1,
+            "active_wall_s": 31.008802800031845,
+            "lag_s": 2.908802800031843,
+            "frame_interval_s": 0.20863950002240017
+          }
+        ],
+        "preview_intervals_over_200ms": 3,
+        "aggregate_publication": {
+          "count": 3060,
+          "total_s": 8.2995506,
+          "p50_ms": 2.6881,
+          "p95_ms": 2.9112,
+          "max_ms": 186.8078
+        },
+        "aggregate_render": {
+          "count": 3060,
+          "total_s": 40.4809869,
+          "p50_ms": 12.9227,
+          "p95_ms": 14.2554,
+          "max_ms": 2189.2833
+        }
+      },
+      {
+        "case": "minimal-cost",
+        "run_id": "20261019T174338Z-dae89ff9",
+        "strict_display_passed": false,
+        "failed_strict_gates": [
+          "preview_lag_p95",
+          "preview_lag_max",
+          "event_frame_max",
+          "event_service_max"
+        ],
+        "first_frame": {
+          "sim_time_s": 0.03333333333333333,
+          "active_wall_s": 0.04089389997534454,
+          "lag_s": 0.007560566642011206,
+          "frame_interval_s": 0.04089389997534454,
+          "rtf": 0.8151174956027777
+        },
+        "segments": [
+          {
+            "start_sim_s": 0,
+            "end_sim_s": 2,
+            "wall_duration_s": 2.0013487999676727,
+            "segment_rtf": 0.9993260545249811,
+            "added_signed_lag_s": 0.0013487999676726758
+          },
+          {
+            "start_sim_s": 2,
+            "end_sim_s": 10,
+            "wall_duration_s": 8.368407300033141,
+            "segment_rtf": 0.9559764138115407,
+            "added_signed_lag_s": 0.3684073000331409
+          },
+          {
+            "start_sim_s": 10,
+            "end_sim_s": 30,
+            "wall_duration_s": 20.68440319999354,
+            "segment_rtf": 0.9669121127945449,
+            "added_signed_lag_s": 0.6844031999935396
+          },
+          {
+            "start_sim_s": 30,
+            "end_sim_s": 60,
+            "wall_duration_s": 30.72604609996779,
+            "segment_rtf": 0.976370337478321,
+            "added_signed_lag_s": 0.7260460999677889
+          },
+          {
+            "start_sim_s": 60,
+            "end_sim_s": 90,
+            "wall_duration_s": 30.79302350000944,
+            "segment_rtf": 0.9742466503814022,
+            "added_signed_lag_s": 0.7930235000094399
+          },
+          {
+            "start_sim_s": 90,
+            "end_sim_s": 102,
+            "wall_duration_s": 9.889177199976984,
+            "segment_rtf": 1.2134477679323947,
+            "added_signed_lag_s": -2.1108228000230156
+          }
+        ],
+        "largest_three_preview_intervals": [
+          {
+            "sim_time_s": 74.66666666666667,
+            "active_wall_s": 76.88574319996405,
+            "lag_s": 2.2190765332973825,
+            "frame_interval_s": 0.13463960000080988
+          },
+          {
+            "sim_time_s": 49.86666666666667,
+            "active_wall_s": 51.42562889994588,
+            "lag_s": 1.5589622332792104,
+            "frame_interval_s": 0.0954793999553658
+          },
+          {
+            "sim_time_s": 5.266666666666667,
+            "active_wall_s": 5.394255499995779,
+            "lag_s": 0.12758883332911264,
+            "frame_interval_s": 0.04408520000288263
+          }
+        ],
+        "preview_intervals_over_200ms": 0,
+        "aggregate_publication": {
+          "count": 3060,
+          "total_s": 6.6670629,
+          "p50_ms": 2.1976,
+          "p95_ms": 2.4398,
+          "max_ms": 100.4413
+        },
+        "aggregate_render": {
+          "count": 3060,
+          "total_s": 35.4225429,
+          "p50_ms": 11.8839,
+          "p95_ms": 13.3904,
+          "max_ms": 72.6061
+        }
+      },
+      {
+        "case": "dense-repeat-1",
+        "run_id": "20261019T174532Z-f479e013",
+        "strict_display_passed": false,
+        "failed_strict_gates": [
+          "preview_rtf",
+          "preview_lag_p95",
+          "preview_lag_max",
+          "preview_interval_max",
+          "event_realtime",
+          "event_native_fps",
+          "event_frame_p95",
+          "event_frame_max",
+          "event_service_max"
+        ],
+        "first_frame": {
+          "sim_time_s": 0.03333333333333333,
+          "active_wall_s": 0.0442689000046812,
+          "lag_s": 0.010935566671347867,
+          "frame_interval_s": 0.0442689000046812,
+          "rtf": 0.7529740592110604
+        },
+        "segments": [
+          {
+            "start_sim_s": 0,
+            "end_sim_s": 2,
+            "wall_duration_s": 2.1118841000134125,
+            "segment_rtf": 0.9470216665712375,
+            "added_signed_lag_s": 0.11188410001341254
+          },
+          {
+            "start_sim_s": 2,
+            "end_sim_s": 10,
+            "wall_duration_s": 9.355724599969108,
+            "segment_rtf": 0.8550914378162024,
+            "added_signed_lag_s": 1.3557245999691077
+          },
+          {
+            "start_sim_s": 10,
+            "end_sim_s": 30,
+            "wall_duration_s": 23.22308740002336,
+            "segment_rtf": 0.8612119334305172,
+            "added_signed_lag_s": 3.22308740002336
+          },
+          {
+            "start_sim_s": 30,
+            "end_sim_s": 60,
+            "wall_duration_s": 34.4587840999593,
+            "segment_rtf": 0.8706052979981795,
+            "added_signed_lag_s": 4.458784099959303
+          },
+          {
+            "start_sim_s": 60,
+            "end_sim_s": 90,
+            "wall_duration_s": 34.502306700043846,
+            "segment_rtf": 0.8695070813906444,
+            "added_signed_lag_s": 4.502306700043846
+          },
+          {
+            "start_sim_s": 90,
+            "end_sim_s": 102,
+            "wall_duration_s": 10.940362699970137,
+            "segment_rtf": 1.0968557742635676,
+            "added_signed_lag_s": -1.0596373000298627
+          }
+        ],
+        "largest_three_preview_intervals": [
+          {
+            "sim_time_s": 67.26666666666667,
+            "active_wall_s": 77.75287450000178,
+            "lag_s": 10.486207833335115,
+            "frame_interval_s": 0.22526119998656213
+          },
+          {
+            "sim_time_s": 28.433333333333334,
+            "active_wall_s": 32.89464760001283,
+            "lag_s": 4.461314266679498,
+            "frame_interval_s": 0.2147547000204213
+          },
+          {
+            "sim_time_s": 60.46666666666667,
+            "active_wall_s": 69.7457185999956,
+            "lag_s": 9.27905193332893,
+            "frame_interval_s": 0.09809179999865592
+          }
+        ],
+        "preview_intervals_over_200ms": 2,
+        "aggregate_publication": {
+          "count": 3060,
+          "total_s": 8.5254364,
+          "p50_ms": 2.7512,
+          "p95_ms": 3.0292,
+          "max_ms": 188.2417
+        },
+        "aggregate_render": {
+          "count": 3060,
+          "total_s": 38.0390158,
+          "p50_ms": 12.7965,
+          "p95_ms": 14.2105,
+          "max_ms": 72.9577
+        }
+      },
+      {
+        "case": "dense-repeat-2",
+        "run_id": "20261019T174743Z-9a8fde34",
+        "strict_display_passed": false,
+        "failed_strict_gates": [
+          "preview_rtf",
+          "preview_lag_p95",
+          "preview_lag_max",
+          "preview_interval_max",
+          "event_realtime",
+          "event_native_fps",
+          "event_frame_p95",
+          "event_frame_max",
+          "event_service_max"
+        ],
+        "first_frame": {
+          "sim_time_s": 0.03333333333333333,
+          "active_wall_s": 0.04450290004024282,
+          "lag_s": 0.011169566706909488,
+          "frame_interval_s": 0.04450290004024282,
+          "rtf": 0.7490148575304275
+        },
+        "segments": [
+          {
+            "start_sim_s": 0,
+            "end_sim_s": 2,
+            "wall_duration_s": 2.0880036000162363,
+            "segment_rtf": 0.9578527546525533,
+            "added_signed_lag_s": 0.0880036000162363
+          },
+          {
+            "start_sim_s": 2,
+            "end_sim_s": 10,
+            "wall_duration_s": 9.182989900000393,
+            "segment_rtf": 0.8711759554477629,
+            "added_signed_lag_s": 1.1829899000003934
+          },
+          {
+            "start_sim_s": 10,
+            "end_sim_s": 30,
+            "wall_duration_s": 23.33575580001343,
+            "segment_rtf": 0.8570538778087697,
+            "added_signed_lag_s": 3.3357558000134304
+          },
+          {
+            "start_sim_s": 30,
+            "end_sim_s": 60,
+            "wall_duration_s": 34.71380119997775,
+            "segment_rtf": 0.8642095928123028,
+            "added_signed_lag_s": 4.713801199977752
+          },
+          {
+            "start_sim_s": 60,
+            "end_sim_s": 90,
+            "wall_duration_s": 35.30838990001939,
+            "segment_rtf": 0.8496564155133997,
+            "added_signed_lag_s": 5.308389900019392
+          },
+          {
+            "start_sim_s": 90,
+            "end_sim_s": 102,
+            "wall_duration_s": 11.352593999996316,
+            "segment_rtf": 1.0570271428718312,
+            "added_signed_lag_s": -0.6474060000036843
+          }
+        ],
+        "largest_three_preview_intervals": [
+          {
+            "sim_time_s": 67.26666666666667,
+            "active_wall_s": 77.95945950003807,
+            "lag_s": 10.6927928333714,
+            "frame_interval_s": 0.2253908000420779
+          },
+          {
+            "sim_time_s": 28.433333333333334,
+            "active_wall_s": 32.64650710002752,
+            "lag_s": 4.213173766694187,
+            "frame_interval_s": 0.21083789999829605
+          },
+          {
+            "sim_time_s": 13.366666666666667,
+            "active_wall_s": 15.163046600006055,
+            "lag_s": 1.796379933339388,
+            "frame_interval_s": 0.09785670001292601
+          }
+        ],
+        "preview_intervals_over_200ms": 2,
+        "aggregate_publication": {
+          "count": 3060,
+          "total_s": 8.5142589,
+          "p50_ms": 2.7278,
+          "p95_ms": 3.0575,
+          "max_ms": 188.2078
+        },
+        "aggregate_render": {
+          "count": 3060,
+          "total_s": 38.6815224,
+          "p50_ms": 12.9029,
+          "p95_ms": 14.8155,
+          "max_ms": 73.2949
+        }
+      }
+    ],
+    "next_investigation": "Bounded tick/subcall-indexed native/Sdf publication and CPU/allocation/GC timing around 28.4333 and 67.2667 simulated seconds; separately inspect editor render bracket. No speculative optimization, cadence reduction or threshold relaxation."
+  }
+}

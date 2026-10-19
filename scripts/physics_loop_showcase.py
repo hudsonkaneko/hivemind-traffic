@@ -56,6 +56,7 @@ def main():
     route=CircularLoop();episode='showcase-'+output.name
     app=session=vehicle=fleet=monitor=view=window=label=viewport=writer=preview=ui_probe=render_probe=None
     sidebar=None;restart_config=None;restart_values=None;smoke_done=False;next_stats_tick=0
+    control_validation=None;metrics=None;metric_latest={}
     live_settings=cfg.get('controls',{})
     static_layers=None;rows=[];plans=[];contacts=[];camera_checks=[];visual_checks=[];captures=[];captured=set()
     passed=set();passed_records=[];seen_ahead=set();peers={};last_peer_stations={}
@@ -79,6 +80,9 @@ def main():
         if dense:
             # Process-local fallback for this runtime's dense-Fabric crash.
             graphics['extra_args']=[*graphics['extra_args'],'--/app/useFabricSceneDelegate=false']
+        if responsive:
+            from visualization.showcase_startup import window_launch_config
+            graphics=window_launch_config(graphics,gui=cfg['gui'])
         result['graphics_profile']=graphics
         experience=str(ROOT/'visualization/highwaysim.showcase.kit') if responsive and cfg['ui_profile']=='showcase' else ''
         app=SimulationApp({**graphics,'headless':not cfg['gui'],'disable_viewport_updates':False},experience=experience)
@@ -159,15 +163,19 @@ def main():
         ui_state=dict(camera=cfg['camera'],paused=False,show_path=True)
         # Hidden native-model smoke still needs real widgets/subscriptions;
         # ordinary headless runs avoid constructing the interactive panel.
-        if cfg['gui'] or (sidebar_enabled and cfg['control_smoke']):
+        if cfg['gui'] or (sidebar_enabled and (cfg['control_smoke'] or cfg.get('control_validation'))):
             if sidebar_enabled:
                 from visualization.showcase_sidebar import ShowcaseSidebar
-                sidebar=ShowcaseSidebar(ui_state,cfg['controls'],visible=not cfg['panel_hidden'],live_driving=live_driving)
+                sidebar=ShowcaseSidebar(ui_state,cfg['controls'],visible=not cfg['panel_hidden'],live_driving=live_driving,
+                    statistics=cfg.get('traffic_statistics',False))
                 label=sidebar.telemetry
             else:window,label=make_controls(ui_state,view=view if optimized else None)
         if sidebar_enabled:
             view.follow_distance_m=live_settings['camera_distance_m']
             view.follow_height_m=live_settings['camera_height_m']
+        if cfg.get('control_validation'):
+            from experiments.showcase_control_validation import ControlValidationScenario,validation_snapshot
+            control_validation=ControlValidationScenario(cfg['control_validation'],cfg['physics_hz'])
         viewport=get_active_viewport()
         if viewport is None:raise RuntimeError('No viewport is available')
         if responsive:
@@ -222,9 +230,17 @@ def main():
         warmup_started=time.perf_counter()
         fleet.publish_visuals()
         for _ in range(4):session.render()
-        if sidebar:
-            sidebar.dock()
-            for _ in range(2):session.render()
+        if responsive:
+            from visualization.showcase_startup import wait_for_native_showcase_ready,ShowcaseStartupError
+            try:
+                result['startup_readiness']=wait_for_native_showcase_ready(
+                    pump=session.render,is_running=app.is_running,viewport=viewport,sidebar=sidebar,
+                    gui=cfg['gui'],window_size=(graphics.get('window_width',1440),graphics.get('window_height',900)))
+            except ShowcaseStartupError as error:
+                result['startup_readiness']=error.evidence
+                raise
+            finally:
+                if 'startup_readiness' in result:write_json(output/'startup-readiness.json',result['startup_readiness'])
         result['renderer_warmup_s']=time.perf_counter()-warmup_started
         if responsive:
             ui_probe=KitResponsiveness();ui_probe.start()
@@ -234,17 +250,26 @@ def main():
         writer=None if presentation else EvidenceChunkWriter(output)
         preview=PreviewClock(paced=cfg['paced'])
         result['startup_wall_s']=time.perf_counter()-started
+        if cfg.get('traffic_statistics'):
+            from traffic.showcase_metrics import ShowcaseMetrics,VehicleSample
+            metrics=ShowcaseMetrics()
+            nominal_background_speeds={spec['vehicle_id']:spec['speed_m_s'] for spec in fleet_specs(cfg)}
         hz=cfg['physics_hz'];brake_tick=(cfg['settle_s']+cfg['drive_s'])*hz
         traveled=0.;paused_wall=0.;expires=None;diagnostics={};max_lanes=0
         pose_check=fleet.pose_check(0.)
         for tick in range(cfg['duration_s']*hz):
             if not app.is_running() or time.perf_counter()-started>cfg['max_process_seconds']-20:
                 raise RuntimeError('Preview closed or bounded deadline reached')
+            if control_validation:
+                control_validation.before_tick(sidebar,tick,validation_snapshot(tick,state,live,session.snapshot()))
             while ui_state['paused']:
                 if not app.is_running() or time.perf_counter()-started>cfg['max_process_seconds']-20:
                     raise RuntimeError('Paused preview closed or bounded deadline reached')
                 before=time.perf_counter();render_frame(session,render_probe)
                 time.sleep(.02);paused_wall+=time.perf_counter()-before
+                if control_validation:
+                    paused_state=vehicle.state(refresh_usd=not dense)
+                    control_validation.paused_frame(sidebar,tick,validation_snapshot(tick,paused_state,live,session.snapshot()))
             if sidebar:
                 # In-memory only; widget callbacks never step physics or author USD.
                 if cfg['control_smoke'] and live_driving:
@@ -351,6 +376,19 @@ def main():
             if live:row.update(active_background_count=len(tracks),requested_background_count=live.settings['traffic_count'],
                                applied_ego_target_m_s=live.ego_target_m_s,applied_traffic_speed_m_s=live.speed_m_s,
                                applied_following_s=live.following_s)
+            if metrics:
+                observed=[VehicleSample('ego',ego_box.x_m,ego_box.y_m,ego_box.yaw_rad,
+                    state['speed_m_s'],ego_box.length_m,ego_box.width_m,
+                    live.ego_target_m_s if live else cfg['target_speed_m_s'],role='ego')]
+                for track in tracks:
+                    reference=(max(live.speed_m_s,.001)*math.hypot(track.x_m,track.y_m)/500 if live
+                        else nominal_background_speeds[track.vehicle_id])
+                    observed.append(VehicleSample(track.vehicle_id,track.x_m,track.y_m,track.yaw_rad,
+                        track.speed_m_s if phase=='drive' else abs(track.speed_m_s),
+                        track.length_m,track.width_m,max(reference,.001)))
+                metric_latest=metrics.update(row['sim_time_s'],phase,observed,
+                    nearest_clearance_m=row['clearance_m'])
+                row['traffic_statistics']=metric_latest
             rows.append(row)
             profile.mark('safety_and_metrics')
             if schedule['objects']:plans.append(dict(tick=tick+1,diagnostics=diagnostics,objects=[asdict(t) for t in tracks]))
@@ -374,6 +412,11 @@ def main():
                 if label and refresh_stats:label.text=(f"{cfg['version']} | {phase} | {state['speed_m_s']/0.44704:.1f} mph | {len(tracks)} traffic cars\n"
                     f"Passes {len(passed)} | lane changes {max_lanes} | clearance {row['clearance_m']:.2f} m\n"
                     f"{row['controller_status']}: {row['controller_reason']} | {row['sim_time_s']:.0f}s")
+                if label and refresh_stats and metrics and sidebar:
+                    headway=metric_latest.get('net_headway_s')
+                    headway_text='--' if headway is None else f'{headway:.2f}s'
+                    label.text+=(f"\nMeasured gap {headway_text} | time loss {metric_latest.get('ego_time_loss_s',0):.1f}s"
+                        f"\nNear-miss proxy events {metric_latest.get('near_miss_events',0)} | ground-truth stats")
                 if sidebar_enabled and refresh_stats:next_stats_tick=tick+1+hz/live_settings['statistics_hz']
                 if live and sidebar and refresh_stats:
                     sidebar.live_status=f'Actual: {len(tracks)} cars | traffic {live.speed_m_s/.44704:.1f} mph'
@@ -416,6 +459,9 @@ def main():
             extra['optional_audit_coverage']=(native_audit_ticks==[t for t in range(1,len(rows)+1) if audit_schedule(cfg,t)['native']]
                 and [r['tick'] for r in visual_checks]==[t for t in range(1,len(rows)+1) if audit_schedule(cfg,t)['visual']])
         result['gates'].update(extra);result['passed']=all(result['gates'].values())
+        if responsive:
+            result['gates']['startup_readiness']=result.get('startup_readiness',{}).get('passed',False)
+            result['passed']=all(result['gates'].values())
         if restart_config:
             result.update(restart_ready=result['passed'],passed=False,
                 run_status='stopped_for_requested_restart',full_scenario_completed=False,
@@ -429,6 +475,15 @@ def main():
     except Exception as error:
         result.update(passed=False,error=repr(error),traceback=traceback.format_exc());traceback.print_exc()
     finally:
+        if metrics:
+            result['traffic_statistics']=metrics.summary()
+            result['traffic_statistics']['integration']=dict(sample_hz=cfg['physics_hz'],
+                ego_speed_source='native chassis planar velocity magnitude',
+                background_speed_source='native velocity projected onto body forward axis; reverse drive samples rejected',
+                configuration_mode=cfg['mode'],
+                full_trajectory_completed=len(rows)==cfg['duration_s']*cfg['physics_hz'],
+                run_error=result.get('error'),acceptance_source='summary.json after process cleanup')
+            write_json(output/'traffic-statistics.json',result['traffic_statistics'])
         if profile.iteration_active:profile.finish_iteration()
         if ui_probe:ui_probe.stop()
         if render_probe:
@@ -451,6 +506,12 @@ def main():
             result['live_traffic']=dict(capacity=live.capacity,active_count=len(live.active),lifecycle_events=live.events,
                 no_process_restart=restart_config is None,final_settings=live.settings)
             write_json(output/'traffic-lifecycle.json',live.events)
+            if control_validation:
+                result['control_validation']=control_validation.finish(rows,live.events,sidebar.settings.events,
+                    restarted=restart_config is not None)
+                write_json(output/'control-validation.json',result['control_validation'])
+                result.setdefault('gates',{})['control_validation']=result['control_validation']['passed']
+                result['passed']=bool(result.get('passed') and result['control_validation']['passed'])
             if cfg['control_smoke']:
                 from traffic.live_showcase import assess_live_smoke
                 result['live_smoke']=assess_live_smoke(rows,live.events,smoke_done,restart_config is not None)
@@ -483,7 +544,7 @@ def main():
                     wall_s=result['preview_timing']['active_wall_s'],simulation_s=len(rows)/cfg['physics_hz'],
                     render_hz=cfg['render_hz'],complete=len(rows)==cfg['duration_s']*cfg['physics_hz'])
                 result['display_qualification_exclusions']=display_qualification_exclusions(cfg,paused_wall)
-                if sidebar and (sidebar.settings.events or restart_config or cfg['control_smoke']):
+                if sidebar and (sidebar.settings.events or restart_config or cfg['control_smoke'] or control_validation):
                     result['display_qualification_exclusions'].append('interactive_display_changes_or_restart')
                 result['smooth_display_passed']=bool(result['smooth_display_passed'] and result['responsiveness']['passed']
                     and not result['display_qualification_exclusions'])
@@ -507,7 +568,7 @@ def main():
             try:session.close()
             except Exception as error:result.update(passed=False,session_close_error=repr(error))
             write_json(output/'lifecycle.json',session.lifecycle)
-        if sidebar_enabled:
+        if responsive:
             result['cleanup_verified']=bool(session and session.lifecycle[-1]['event']=='closed'
                 and not any(v for k,v in result.items() if k=='error' or k.endswith('_error')))
         result.update(total_wall_s=time.perf_counter()-started,process=process_sample(),preview_files=[p.name for p in output.glob('preview-*.png')])
