@@ -25,6 +25,12 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
 
+October 19 validation continuation: [native results and screenshots](showcase-validation-20261019.md)
+record three startup passes and a verified remote-admission repair. The endpoint
+now reaches all four population/speed/gap targets, while subsequent passing
+remains failed. A bounded controller improvement is in progress; matched timing
+is still pending. This does not advance the research integration or training gates.
+
 October 16 validation increment: [showcase validation](showcase-validation.md)
 adds bounded native-window readiness, opt-in endpoint/pause/transition tests,
 descriptive traffic statistics and a matched display-cost protocol. CPU checks

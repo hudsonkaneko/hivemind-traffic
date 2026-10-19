@@ -10,6 +10,14 @@ statistics (enabled by default by the v09 launcher, disabled with
 `--no-statistics`). Its CPU checks and native acceptance status are recorded
 separately; the historical v08/v09 results below are unchanged.
 
+October 19 follow-up: the first native endpoint run exposed protected dormant
+slots that could prevent an 80-car request from completing. The admission repair
+below adds a bounded search for remote entry positions. CPU and OpenUSD tests
+with fake native views pass. The repaired native endpoint reaches all four
+population/speed/gap targets, but subsequent passing still fails. See
+[the retained failure and validation scope](showcase-control-validation.md#evidence).
+The October 19 changes have not been synchronized to the Google guide.
+
 ## What changed
 
 v08 adds a native `omni.ui` sidebar to the regular Isaac editor, with live camera
@@ -59,6 +67,68 @@ using the same USD slot. The controller accepts only explicit lifecycle events;
 unannounced membership changes still fail. Physics/control/planning remain
 120/60/10 Hz. Source assets and published static layers remain immutable;
 live visibility/transform opinions stay in the runtime layer.
+
+## Remote entry positions — October 19 admission repair
+
+Each pool slot retains its immutable `FleetSpec`, USD hierarchy and native body
+binding. A separate runtime `phase_offsets_m` mapping records its placement on
+the circular road. Ordinary motion adds the shared accumulated distance to that
+phase; outer-lane speed scales with radius, preserving relative angular spacing
+through speed ramps. Active cars are never repositioned to satisfy a density
+request. Exits use the slot's actual runtime phase, including earlier relocation.
+
+Admission first tries existing phases in the original order: greatest circular
+separation from the main car, then stable slot ID. Every entry is checked against
+current placements, including unchanged nominal phases and re-entering relocated
+slots. If no existing phase is admissible, the bounded fallback considers
+midpoints of gaps in the same lane. An empty lane uses the point opposite the
+main car. It chooses deterministically by available half-gap, main-car separation,
+slot ID and station. Only the selected dormant slot receives a new offset.
+
+An entry must satisfy all of these conditions:
+
+- At least **160 m** circular station separation from the main car.
+- At least **40 m** front and rear center spacing in its lane, measured on the
+  base radius of 500 m. This exceeds the maximum configured 25 mph × 3 s,
+  plus the 4.8 m body and 0.8 m clearance: **39.128 m**. Outer-lane arc spacing
+  grows with its speed. The bound is independent of current ramp values.
+- At least **0.8 m exact planar footprint clearance** from every active
+  background. Boxes use the full 4.8 × 1.9 m background footprint, including
+  wheels. The existing conservative circle pruning skips polygon calculations
+  only when they cannot affect the exact minimum; it does not relax the gate.
+
+At most one entry or exit occurs every **30 physics ticks**. Failed searches
+also wait 30 ticks before retrying and inspect at most 80 existing phases plus
+80 gap candidates per attempt. A failed search leaves the request pending.
+Membership changes remain frozen during committed lane changes and stopping;
+new lane changes still wait for population transitions. The repair does not
+create merge gaps or alter the planner's safety envelope.
+
+The existing native adapter installs an admitted dormant body's pose with an
+indexed `set_transforms` call before its next normal kinematic target. It does
+not sweep a target from parking through the road. Other active transforms,
+static asset/layer contents, native paths and tensor bindings remain unchanged.
+These are implementation contracts; native physical behavior requires its own
+run evidence.
+
+Lifecycle records retain the original identity, count, tick and exclusion
+fields and add:
+
+| Field | Meaning |
+| --- | --- |
+| `actual_station_m` | Chosen entry or actual exit station on the base circle |
+| `old_phase_offset_m`, `new_phase_offset_m` | Runtime phase before and after the event |
+| `placement_method` | Existing phase, remote gap midpoint, empty-lane opposite point, or remote exit |
+| `nearest_front_station_gap_m`, `nearest_rear_station_gap_m` | Center spacing to same-lane neighbors; `null` when none exist |
+| `minimum_background_clearance_m` | Exact minimum clearance of analytic current target footprints |
+| `entry_required_station_gap_m`, `entry_required_clearance_m` | Entry thresholds; `null` on exit |
+| `placement_geometry_source` | Explicit analytic-target provenance; native audits are separate |
+
+`actual_arc_gap_m` uses the selected runtime phase. The entry geometry is not a
+measurement of native body clearance: independent native pose, contact and
+clearance checks remain required. Re-entry increments the logical generation;
+its USD slot stays stable. Entry spacing is a conservative placement rule,
+not a reactive background-driver model.
 
 ## Performance and evidence boundaries
 

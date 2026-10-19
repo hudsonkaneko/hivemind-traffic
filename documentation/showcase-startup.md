@@ -111,6 +111,13 @@ change, unstable layout, headless and hidden-panel behavior, elapsed-time and
 update limits, user closure, and native API exceptions. The fake native adapter
 checks public property use. No simulation or training is launched by this suite.
 
+October 19 native evidence: three fresh public-car runs passed all 32 run gates.
+Each reached stable docking in four updates with positive 1440-by-900 native
+window and 960-by-600 output dimensions; no resize repair was needed. All nine
+scheduled viewport images were inspected, and corresponding images were
+byte-identical. See the [run IDs, measurements and actual screenshots](showcase-validation-20261019.md).
+This verifies those launches, not the cause of the older swapchain failure.
+
 Native qualification should use repeated fresh processes with the same public
 vehicle, seed, configuration, and source hashes. Every repeat must retain:
 valid startup-readiness evidence, a readable viewport capture, confirmed visible

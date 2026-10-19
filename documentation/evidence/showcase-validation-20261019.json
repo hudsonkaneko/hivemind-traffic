@@ -1,0 +1,1389 @@
+{
+  "schema_version": 1,
+  "checkpoint_date_pacific": "2026-10-19",
+  "checkpoint": "Three startup smokes, retained first failed endpoint, admission-only repair with passing legacy smoke and endpoint that meets counts but still fails settled passing",
+  "scope": {
+    "backend": "One public PhysX ego; scripted kinematic backgrounds; known map; privileged simulator state",
+    "training": false,
+    "sensors_drive_controller": false,
+    "sumo_backgrounds": false,
+    "matched_performance_matrix_completed": false,
+    "strict_display_qualified": false,
+    "raw_telemetry_published": false
+  },
+  "source": {
+    "git_commit": "89442f51f8bb26e9989ff543bd228a985043a8f6",
+    "implementation_commit": "3a8cea4f29be4129469dfcd20ad5c5b89c8d0a86",
+    "pull_request_url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/12",
+    "working_tree": "Not asserted clean; each raw manifest records git_status and hashes its retained working-tree.patch",
+    "common_46_sha256": {
+      "scripts/demo_loop_showcase.py": "0f1ec34b08da11c1ec39ac55d2e55794a1781c5ff2811622d7a3334bdb8d9c6e",
+      "scripts/physics_loop_showcase.py": "9c237baece6272901d8c75a8d67ca3a46409ccb9bce06b0bbead433cf968fe1a",
+      "experiments/loop_showcase_config.py": "1f546fec67a4488ed4a703d73c655e2585e41660f67860889ecf43c85b7b470e",
+      "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+      "experiments/verify_physics_vehicle.py": "95b8f97f79a71963812ef0a19e8385381870c07d4fbf28bcd880649eabe9ab8e",
+      "hivemind/launcher.py": "b2ea5e656c887a920ef06b6c70ccdb0830bbba7a097d82ae13187dbb829f23d3",
+      "hivemind/showcase_setup.py": "62560131f7280f3b7740728e27a6ecf499b26929de97a394a8d8ab5aa1eb203e",
+      "traffic/loop_showcase_control.py": "4ca5615e2626e432c8c3a6a71cf9a162c1bef7b96bcbc9a898a3a908433f8d9b",
+      "traffic/loop_driving.py": "1589bf2448587cbde7af65207fb266dabef8c16a4bbc1a7bca6307990a9f3b5d",
+      "traffic/driver_control.py": "29755844f3b1df77ac002caba87be3ba22ff9918b0e8a5ba03ff568d2690e18a",
+      "traffic/path_following.py": "c89288bee58812817873203222ecb404f3186bd7735d3c1f23d90770e7ec906b",
+      "traffic/lane_geometry.py": "2b7976bf1e04ae6ae223ea93c3dd18551394a57404e350713e2b42004e8413b0",
+      "traffic/speed_profiles.py": "0f9337601191671641af539ea75a513b600c3ba7974031b682287ab137b8b1d9",
+      "traffic/bypass_validation.py": "30c1fde2c3a2a241e47c7f09701149417cd771d23ca3ef6a8bf8ea062ea572ea",
+      "traffic/showcase_clearance.py": "fe3264c7b21c44b5c164c871f2248a2d11ad93ed5b616aabe71f34630396a167",
+      "traffic/lidar_braking.py": "08dd911868a94b86a84a6d5f4e3041a1dad9bc3203f29a0c6bfd78fba40f2b6c",
+      "traffic/physx_vehicle.py": "167f0e6ce5da581e4520707a71596c9efe7a3dca6b36f466ee5081df210fe8a6",
+      "traffic/wheel_geometry.py": "8d4f23a9e3fdaf7eef41ee0d3be7eae1350e1208a250bb72ad0530ba551082b5",
+      "traffic/physics_session.py": "d0016c776819bdd93ff612d533f6ff4d2b70de9b332e52d81493255419d7c61a",
+      "traffic/rendered_physics_session.py": "2780f1b55b833c2d37fceab2c66b62b2582d1bc96701bd0e523bd8f80652fce9",
+      "traffic/vehicle_contacts.py": "628fbf2c7e1cc735437a6c67b3051f57a604b72bf67227c1d39769ab9488170d",
+      "traffic/evidence_chunks.py": "177096d1116d8adf191e26b730bd4464f7fa31004476b7e8b5e691911140e6cf",
+      "traffic/showcase_runtime.py": "cbc72fa84752bfa8acff0296d39aef91192d74843b77679df7604c8cf4ef1a76",
+      "traffic/runtime_profile.py": "55e1b88b7b20fade7b7c6dfde1f15d8a2304fb293e0b0e438623b254d162cd5f",
+      "traffic/showcase_performance.py": "a50c837910621657a595c32ca9a807c3b3b2dcda32ec3031c6a3cc1e3db75c59",
+      "visualization/showcase_responsiveness.py": "8b516fa3425be27b72db6b3f86747e010918d15a8c363ac8439a957ba01c386f",
+      "visualization/loop_showcase_view.py": "02c7aae511be59f78b3e9d9e96a492b5cf9bad471840776038e8edf7e633f81d",
+      "visualization/highway_loop_view.py": "dedcc500aa4300424d332672bc62dd4b44a73a6bec2b90cdbd6b559acda4b524",
+      "visualization/preview_timing.py": "593b4a04145930b269cb0b62de2714cb41b1dc01c4ad85d4f34c0ba9ffc4780a",
+      "usd/physical_scene.py": "2f7a0283cf2165538a6d0bf0336e042bf7c46c5110b63a3842fde7435d5e91f9",
+      "usd/highway_loop_scene.py": "62556b1d84651404619e087f98970023661c948e42701013cf46eb587dac7db6",
+      "usd/showcase_vehicle.py": "f7a5d68176f7c28a42cab2ad8b1272811cda765d59af30812c335432fc046dac",
+      "usd/showcase_fleet.py": "560da155348c9b612639351a5793249bde7a3b64f368506287848acb2b9b26b2",
+      "usd/scene_validation.py": "fb998a59fb325eed9a258d5441067fa05f832e8b1668be446f2cecc40b678475",
+      "highway_usd/_v02/highway_v02.usda": "8ab855aa553e9ab4576ee8266140553312a004b3616b3ea29ad6400eadbf95a8",
+      "highway_usd/_v02/navigation.json": "6a6b3708af48773ecb2d35d684fe16822f36365ca7e0fe4ece0df7c828766855",
+      "highway_usd/_v02/manifest.json": "2fa0f6fd3018a2e4246ff9f4cf4e917f07c4143ea10031b2c69400aa43d0df46",
+      "highway_usd/_v02/parameters.json": "374d19f77563f6d84ff6c1293ac4bfe9bcb12285572dbedbd9ff2587e16d0593",
+      "visualization/highwaysim.showcase.kit": "3beaebfb9242ab19b805bf0014b7994e564f2bdd834dd14d6c2c410c969d4620",
+      "visualization/showcase_render_profile.py": "c4818a2e58c997684eed492e1f93d5adad35ca8aa622c24f51be4a807ad09bda",
+      "experiments/showcase_controls.py": "e3e4770b907affc72d23342aab27e7ef53c563b46d39b422cbfa5dd8478d31d2",
+      "visualization/showcase_sidebar.py": "059609ebf11ed993316805f4bec7a6f25da6f3eb4616483ff84e2d5c8b2c557e",
+      "traffic/live_showcase.py": "107639d579402e1694e08ec3d40cb41e0f620c870228c0015aa24e320346c7ff",
+      "usd/live_showcase_fleet.py": "0b3c8ca6493ac1371efa9b7b7dda1e0059a9f22376bc619664249e74a3bbe661",
+      "visualization/showcase_startup.py": "59b63b7390c9ad96d45131adcc53d467beccde81ecd67356d7f853efd9722bfd",
+      "traffic/showcase_metrics.py": "02609bd5ddd78460a50171fdbc33c000b57f14e67b11a03713ded60d51d4df68"
+    },
+    "endpoint_additional_sha256": {
+      "experiments/showcase_control_validation.py": "dd3d83b6a6d32e3a73b3f11c6745c849ab2cbf6c4aa9ae702492cc420e10072d"
+    },
+    "admission_checkpoint": {
+      "base_commit": "89442f51f8bb26e9989ff543bd228a985043a8f6",
+      "working_tree_source_override_sha256": {
+        "traffic/live_showcase.py": "8642d0de38ade1194c6b2cd3e977fdc3e9933ea6a5e15084d9a59acc926a3bcf"
+      },
+      "interpretation": "Admission runs use this recorded working-tree change over the base commit; no current published commit or CI status is inferred"
+    }
+  },
+  "runtime": {
+    "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+    "python": "3.11.9",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 5070",
+      "total_mib": 12227.0,
+      "driver": "610.88"
+    }
+  },
+  "configs": {
+    "smoke": {
+      "version": "v09",
+      "mode": "showcase",
+      "seed": 101,
+      "vehicle_profile": "public",
+      "source_directory": "highway_usd/_v02",
+      "initial_lane": 1,
+      "physics_hz": 120,
+      "control_hz": 60,
+      "planner_hz": 10,
+      "render_hz": 30,
+      "settle_s": 2,
+      "drive_s": 15,
+      "brake_s": 10,
+      "duration_s": 27,
+      "gui": true,
+      "paced": true,
+      "camera": "follow",
+      "capture": true,
+      "evidence_profile": "presentation",
+      "ui_profile": "editor",
+      "cpu_threads": 8,
+      "frame_generation": false,
+      "profile_render": false,
+      "instance_visuals": true,
+      "controls": {
+        "traffic_count": 80,
+        "ego_mph": 35.0,
+        "traffic_mph": 15.0,
+        "following_s": 1.8,
+        "render_hz": 30,
+        "resolution_percent": 100,
+        "camera_distance_m": 20.0,
+        "camera_height_m": 17.0,
+        "path_horizon_m": 120.0,
+        "statistics_hz": 5,
+        "wheel_distance_m": 150.0
+      },
+      "panel_hidden": false,
+      "traffic_statistics": true
+    },
+    "endpoint": {
+      "version": "v09",
+      "mode": "showcase",
+      "seed": 101,
+      "vehicle_profile": "public",
+      "source_directory": "highway_usd/_v02",
+      "initial_lane": 1,
+      "physics_hz": 120,
+      "control_hz": 60,
+      "planner_hz": 10,
+      "render_hz": 30,
+      "settle_s": 2,
+      "drive_s": 180,
+      "brake_s": 10,
+      "duration_s": 192,
+      "gui": true,
+      "paced": true,
+      "camera": "follow",
+      "capture": false,
+      "evidence_profile": "presentation",
+      "ui_profile": "editor",
+      "cpu_threads": 8,
+      "frame_generation": false,
+      "profile_render": false,
+      "instance_visuals": true,
+      "controls": {
+        "traffic_count": 12,
+        "ego_mph": 10.0,
+        "traffic_mph": 5.0,
+        "following_s": 2.4,
+        "render_hz": 30,
+        "resolution_percent": 100,
+        "camera_distance_m": 20.0,
+        "camera_height_m": 17.0,
+        "path_horizon_m": 120.0,
+        "statistics_hz": 5,
+        "wheel_distance_m": 150.0
+      },
+      "panel_hidden": false,
+      "traffic_statistics": true,
+      "control_validation": "endpoints"
+    },
+    "legacy_control_smoke_admission": {
+      "version": "v09",
+      "mode": "showcase",
+      "seed": 101,
+      "vehicle_profile": "public",
+      "source_directory": "highway_usd/_v02",
+      "initial_lane": 1,
+      "physics_hz": 120,
+      "control_hz": 60,
+      "planner_hz": 10,
+      "render_hz": 30,
+      "settle_s": 2,
+      "drive_s": 90,
+      "brake_s": 10,
+      "duration_s": 102,
+      "gui": true,
+      "paced": true,
+      "camera": "follow",
+      "capture": false,
+      "evidence_profile": "presentation",
+      "ui_profile": "editor",
+      "cpu_threads": 8,
+      "frame_generation": false,
+      "profile_render": false,
+      "instance_visuals": true,
+      "controls": {
+        "traffic_count": 80,
+        "ego_mph": 35.0,
+        "traffic_mph": 15.0,
+        "following_s": 1.8,
+        "render_hz": 30,
+        "resolution_percent": 100,
+        "camera_distance_m": 20.0,
+        "camera_height_m": 17.0,
+        "path_horizon_m": 120.0,
+        "statistics_hz": 5,
+        "wheel_distance_m": 150.0
+      },
+      "panel_hidden": false,
+      "traffic_statistics": true,
+      "control_smoke": true
+    },
+    "endpoint_admission": {
+      "version": "v09",
+      "mode": "showcase",
+      "seed": 101,
+      "vehicle_profile": "public",
+      "source_directory": "highway_usd/_v02",
+      "initial_lane": 1,
+      "physics_hz": 120,
+      "control_hz": 60,
+      "planner_hz": 10,
+      "render_hz": 30,
+      "settle_s": 2,
+      "drive_s": 180,
+      "brake_s": 10,
+      "duration_s": 192,
+      "gui": true,
+      "paced": true,
+      "camera": "follow",
+      "capture": false,
+      "evidence_profile": "presentation",
+      "ui_profile": "editor",
+      "cpu_threads": 8,
+      "frame_generation": false,
+      "profile_render": false,
+      "instance_visuals": true,
+      "controls": {
+        "traffic_count": 12,
+        "ego_mph": 10.0,
+        "traffic_mph": 5.0,
+        "following_s": 2.4,
+        "render_hz": 30,
+        "resolution_percent": 100,
+        "camera_distance_m": 20.0,
+        "camera_height_m": 17.0,
+        "path_horizon_m": 120.0,
+        "statistics_hz": 5,
+        "wheel_distance_m": 150.0
+      },
+      "panel_hidden": false,
+      "traffic_statistics": true,
+      "control_smoke": false,
+      "control_validation": "endpoints"
+    }
+  },
+  "commands": {
+    "smoke": "python scripts/demo_loop_showcase.py --version v09 --vehicle public --drive-seconds 15 --capture",
+    "endpoint": "python scripts/demo_loop_showcase.py --version v09 --vehicle public --control-validation endpoints --drive-seconds 180",
+    "legacy_control_smoke": "python scripts/demo_loop_showcase.py --version v09 --vehicle public --control-smoke --drive-seconds 90"
+  },
+  "runs": [
+    {
+      "run_id": "20261019T161716Z-e514b86e",
+      "kind": "startup_smoke",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T161716Z-e514b86e",
+      "manifest_sha256": "7377968d1d61507af34a363ec62306cf0b0a89879291938a1facf43ba42588ef",
+      "config_id": "smoke",
+      "source_inventory_count": 46,
+      "recorded_artifact_sha256": {
+        "resolved-config.json": "4a3a9e9ebfd91e0d51572693369e77665e7e90f614c3359f59e4a5f816e09d54",
+        "summary.json": "f004229274a2c3fda7ccd5c02d6b1bece7cf98dc1cda07fd7e6fa6d4cc04d8d7",
+        "trajectory.json": "2a521e5271f9479cb7e6c229f88798a8c6bcb7ec18d023a2310361f2cc5965f5",
+        "traffic-statistics.json": "faedec4738c3445baf99cbc3c8836450970482acae6d41cd09265c9bbcf9cb1d",
+        "startup-readiness.json": "c883a9b6dd503352b4381078a95e37961ba6882706bd65ad6bb81e82b658921f",
+        "preview-timing.json": "e1a8eeb0ec9c880437e76ee57ce184ebc2624cd38ae31259b4a6098874b2d226",
+        "ui-event-timing.json": "5a7803a83305431c3abd252059fc3dd90c4b13cc77c5634624b6821b96cd1bf0"
+      },
+      "passed": true,
+      "failed_run_gates": [],
+      "exit_code": 0,
+      "cleanup_verified": true,
+      "source_changed_during_run": [],
+      "reported_contacts": 0,
+      "minimum_observed_clearance_m": 1.7892393081898528,
+      "completed_passes": 0,
+      "completed_lane_changes": 1,
+      "timing": {
+        "simulation_time_s": 27.0,
+        "active_wall_s": 29.874173299991526,
+        "rtf": 0.9037907000428246,
+        "p95_lag_s": 4.196117466680395,
+        "max_lag_s": 4.2807593333379685,
+        "p95_loop_frame_interval_s": 0.04466640000464395,
+        "max_loop_frame_interval_s": 0.6854374000104144,
+        "requested_hz": 30,
+        "native_delivery_notifications_per_s": 27.121558065575424,
+        "native_notification_count": 810,
+        "application_updates": 810,
+        "native_delivery_intervals": {
+          "count": 809,
+          "p50_ms": 37.45160001562908,
+          "p95_ms": 44.345100002828985,
+          "max_ms": 686.118500016164
+        },
+        "application_service_intervals": {
+          "count": 809,
+          "p50_ms": 37.44039998855442,
+          "p95_ms": 44.28500001085922,
+          "max_ms": 685.9758000355214
+        },
+        "strict_display_passed": false,
+        "recorded_qualification_exclusions": []
+      },
+      "peak_whole_gpu_memory_mib": 3476.0,
+      "startup": {
+        "gate_count": 32,
+        "runtime_error_count": 0,
+        "reference_warning_count": 0,
+        "readiness_elapsed_s": 0.07544779998715967,
+        "readiness_updates": 4,
+        "readiness_actions": [
+          {
+            "update": 1,
+            "action": "request_dock"
+          }
+        ],
+        "readiness_observed_dimensions": {
+          "native_window_extent": [
+            1440.0,
+            900.0
+          ],
+          "viewport_resolution": [
+            960.0,
+            600.0
+          ],
+          "viewport_window_extent": [
+            949.0,
+            577.0
+          ],
+          "update": 4,
+          "elapsed_s": 0.07544079999206588,
+          "viewport_visible": true,
+          "sidebar_docked": true,
+          "pending": []
+        },
+        "image_review_passed": true
+      },
+      "reviewed_drive_statistics": {
+        "rows": 3240,
+        "phase_counts": {
+          "settle": 240,
+          "drive": 1800,
+          "brake": 1200
+        },
+        "vehicle_lifetimes": 81,
+        "drive_exposure_s": 14.991666666666665,
+        "ego_mean_speed_m_s": 11.778091960615368,
+        "ego_speed_integral_distance_m": 176.57322864288682,
+        "ego_time_loss_s": 3.706436285052562,
+        "ego_time_loss_fraction": 0.247233104061316,
+        "hard_braking_events": 0,
+        "hard_braking_exposure_s": 0.0,
+        "ego_jerk_rms_m_s3": 12.201630839043082,
+        "near_miss_proxy_events": 0,
+        "minimum_net_headway_s": 4.032496329613903,
+        "headway_observed_s": 14.958333333333332,
+        "minimum_closing_ttc_s": 7.185343184377123,
+        "source": "privileged_simulator_state"
+      }
+    },
+    {
+      "run_id": "20261019T161922Z-d44d31d2",
+      "kind": "startup_smoke",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T161922Z-d44d31d2",
+      "manifest_sha256": "20287ac374aa68ccc23f6f2b6081ade488bfff9a3efb91deba808533a8a166af",
+      "config_id": "smoke",
+      "source_inventory_count": 46,
+      "recorded_artifact_sha256": {
+        "resolved-config.json": "4a3a9e9ebfd91e0d51572693369e77665e7e90f614c3359f59e4a5f816e09d54",
+        "summary.json": "af9b23a872f7063cdcbfa4953562dc8a1e60c47002fdee13e93e7eaa73c70868",
+        "trajectory.json": "2a521e5271f9479cb7e6c229f88798a8c6bcb7ec18d023a2310361f2cc5965f5",
+        "traffic-statistics.json": "faedec4738c3445baf99cbc3c8836450970482acae6d41cd09265c9bbcf9cb1d",
+        "startup-readiness.json": "2cec22891359a1471e16ae1fb396683d847e71ab6ff72c9b389a4e3bce4da9c7",
+        "preview-timing.json": "24740064ddec4ad03c1762434da571e01edbca8610a7b10d4b902bfd5196fb44",
+        "ui-event-timing.json": "52521162ff84d98ff145bb9fdd3b9466a73be456b1c8009f159a6059c68ecce1"
+      },
+      "passed": true,
+      "failed_run_gates": [],
+      "exit_code": 0,
+      "cleanup_verified": true,
+      "source_changed_during_run": [],
+      "reported_contacts": 0,
+      "minimum_observed_clearance_m": 1.7892393081898528,
+      "completed_passes": 0,
+      "completed_lane_changes": 1,
+      "timing": {
+        "simulation_time_s": 27.0,
+        "active_wall_s": 28.986992799967993,
+        "rtf": 0.9314522615822989,
+        "p95_lag_s": 3.247444099979475,
+        "max_lag_s": 3.331803033299124,
+        "p95_loop_frame_interval_s": 0.04374539997661486,
+        "max_loop_frame_interval_s": 0.06801619997713715,
+        "requested_hz": 30,
+        "native_delivery_notifications_per_s": 27.94335675030318,
+        "native_notification_count": 810,
+        "application_updates": 810,
+        "native_delivery_intervals": {
+          "count": 809,
+          "p50_ms": 37.64649998629466,
+          "p95_ms": 44.174899987410754,
+          "max_ms": 66.00120000075549
+        },
+        "application_service_intervals": {
+          "count": 809,
+          "p50_ms": 37.65479999128729,
+          "p95_ms": 44.253100000787526,
+          "max_ms": 65.89880003593862
+        },
+        "strict_display_passed": false,
+        "recorded_qualification_exclusions": []
+      },
+      "peak_whole_gpu_memory_mib": 3485.0,
+      "startup": {
+        "gate_count": 32,
+        "runtime_error_count": 0,
+        "reference_warning_count": 0,
+        "readiness_elapsed_s": 0.027522900025360286,
+        "readiness_updates": 4,
+        "readiness_actions": [
+          {
+            "update": 1,
+            "action": "request_dock"
+          }
+        ],
+        "readiness_observed_dimensions": {
+          "native_window_extent": [
+            1440.0,
+            900.0
+          ],
+          "viewport_resolution": [
+            960.0,
+            600.0
+          ],
+          "viewport_window_extent": [
+            949.0,
+            577.0
+          ],
+          "update": 4,
+          "elapsed_s": 0.027517499984242022,
+          "viewport_visible": true,
+          "sidebar_docked": true,
+          "pending": []
+        },
+        "image_review_passed": true
+      }
+    },
+    {
+      "run_id": "20261019T162041Z-7f6eec77",
+      "kind": "startup_smoke",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T162041Z-7f6eec77",
+      "manifest_sha256": "1d4e2335f58d806b57cea3dcca07d510af3de2d191b911f5018c0ade2a2cc5be",
+      "config_id": "smoke",
+      "source_inventory_count": 46,
+      "recorded_artifact_sha256": {
+        "resolved-config.json": "4a3a9e9ebfd91e0d51572693369e77665e7e90f614c3359f59e4a5f816e09d54",
+        "summary.json": "ff36344028a1d4f357f321420d3faaaab349ad075a574e54ae1e868aa6f8bc6a",
+        "trajectory.json": "2a521e5271f9479cb7e6c229f88798a8c6bcb7ec18d023a2310361f2cc5965f5",
+        "traffic-statistics.json": "faedec4738c3445baf99cbc3c8836450970482acae6d41cd09265c9bbcf9cb1d",
+        "startup-readiness.json": "2ba939b0da21a42063e6aa87286ae60a9fe03d3c3d5a9a68b4b02ece2725e5df",
+        "preview-timing.json": "a32dc200ea1acd72afae6da759962d625300966feacccb23a9d34ea856ca878a",
+        "ui-event-timing.json": "d29bfc8e5f014a2599d4546758bbbcc5853fa9338bc8e81b2624c2edfb7b8922"
+      },
+      "passed": true,
+      "failed_run_gates": [],
+      "exit_code": 0,
+      "cleanup_verified": true,
+      "source_changed_during_run": [],
+      "reported_contacts": 0,
+      "minimum_observed_clearance_m": 1.7892393081898528,
+      "completed_passes": 0,
+      "completed_lane_changes": 1,
+      "timing": {
+        "simulation_time_s": 27.0,
+        "active_wall_s": 28.5744396999944,
+        "rtf": 0.9449004174176437,
+        "p95_lag_s": 2.9694658333396866,
+        "max_lag_s": 3.0528373333470284,
+        "p95_loop_frame_interval_s": 0.042066399997565895,
+        "max_loop_frame_interval_s": 0.0977396999951452,
+        "requested_hz": 30,
+        "native_delivery_notifications_per_s": 28.34883301396132,
+        "native_notification_count": 810,
+        "application_updates": 810,
+        "native_delivery_intervals": {
+          "count": 809,
+          "p50_ms": 37.48870000708848,
+          "p95_ms": 42.042599990963936,
+          "max_ms": 98.5103000421077
+        },
+        "application_service_intervals": {
+          "count": 809,
+          "p50_ms": 37.47680003289133,
+          "p95_ms": 42.07060002954677,
+          "max_ms": 98.46419998211786
+        },
+        "strict_display_passed": false,
+        "recorded_qualification_exclusions": []
+      },
+      "peak_whole_gpu_memory_mib": 3487.0,
+      "startup": {
+        "gate_count": 32,
+        "runtime_error_count": 0,
+        "reference_warning_count": 0,
+        "readiness_elapsed_s": 0.019219100009649992,
+        "readiness_updates": 4,
+        "readiness_actions": [
+          {
+            "update": 1,
+            "action": "request_dock"
+          }
+        ],
+        "readiness_observed_dimensions": {
+          "native_window_extent": [
+            1440.0,
+            900.0
+          ],
+          "viewport_resolution": [
+            960.0,
+            600.0
+          ],
+          "viewport_window_extent": [
+            949.0,
+            577.0
+          ],
+          "update": 4,
+          "elapsed_s": 0.019213899970054626,
+          "viewport_visible": true,
+          "sidebar_docked": true,
+          "pending": []
+        },
+        "image_review_passed": true
+      }
+    },
+    {
+      "run_id": "20261019T162155Z-fb9cb018",
+      "kind": "control_endpoint",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T162155Z-fb9cb018",
+      "manifest_sha256": "e46a887d8bba1c5249da80fb84f29b060da3c293548cbab3aca4b25624c86595",
+      "config_id": "endpoint",
+      "source_inventory_count": 47,
+      "recorded_artifact_sha256": {
+        "resolved-config.json": "ed62845ed188523687a4bab4c39b542eda4e8d2e560cac088392d0fe6f41df73",
+        "summary.json": "1787a9db05aaacb6317b15bc31f9010e184ab0dfb0680a8c5833e5c8ff03dbdb",
+        "trajectory.json": "6bb3fe5fd7bf95bb536ed7ecf69a58ff61a56c09ead0c85cfb1406ec6ab3a101",
+        "traffic-statistics.json": "6fb0e5ec2475c010228469125ca1f663f9af08609f2c16f4e2fa58b1ecbcdc6a",
+        "startup-readiness.json": "5c039c809b88c4a09ea01d23b96f34b6694030860dce3768ab3e54b7080c63e2",
+        "preview-timing.json": "ba1f11eb4833eb075e6fc7bcf6d8893113d2eb4b8773459b117b180f0a7d786a",
+        "ui-event-timing.json": "df05849fa8beb767bec7fef6058b297cd0a7b4379b0cb526bdd626bbb0ef04cb",
+        "control-validation.json": "50824074cc4019e8d7d651f058ab074d7064549ca73177bcd55d1a6986a80956",
+        "traffic-lifecycle.json": "045367f9674a3a16d584b544ef75cec514f262df43e5d4d7504753dfee764281"
+      },
+      "passed": false,
+      "failed_run_gates": [
+        "control_validation"
+      ],
+      "exit_code": 0,
+      "cleanup_verified": true,
+      "source_changed_during_run": [],
+      "reported_contacts": 0,
+      "minimum_observed_clearance_m": 1.8448009598014399,
+      "completed_passes": 1,
+      "completed_lane_changes": 0,
+      "timing": {
+        "simulation_time_s": 192.0,
+        "active_wall_s": 200.565936399973,
+        "rtf": 0.9572911704064712,
+        "p95_lag_s": 9.294867433289369,
+        "max_lag_s": 10.11874043329928,
+        "p95_loop_frame_interval_s": 0.04020350001519546,
+        "max_loop_frame_interval_s": 0.25783879996743053,
+        "requested_hz": 30,
+        "native_delivery_notifications_per_s": 28.723531221749024,
+        "native_notification_count": 5764,
+        "application_updates": 5764,
+        "native_delivery_intervals": {
+          "count": 5763,
+          "p50_ms": 35.35869996994734,
+          "p95_ms": 40.02000001491979,
+          "max_ms": 256.63019996136427
+        },
+        "application_service_intervals": {
+          "count": 5763,
+          "p50_ms": 35.353099985513836,
+          "p95_ms": 40.016200044192374,
+          "max_ms": 256.4775999635458
+        },
+        "strict_display_passed": false,
+        "recorded_qualification_exclusions": [
+          "user_paused",
+          "interactive_display_changes_or_restart"
+        ]
+      },
+      "peak_whole_gpu_memory_mib": 3563.0,
+      "control_acceptance": {
+        "passed": false,
+        "failed_run_gates": [
+          "control_validation"
+        ],
+        "failed_control_validation_gates": [
+          "endpoint_deadlines",
+          "settled_passing_tail"
+        ],
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "contact_report_count": 0,
+        "control_checkpoints": [
+          {
+            "deadline_s": 14,
+            "expected_count": 4,
+            "actual_count": 4,
+            "passed": true
+          },
+          {
+            "deadline_s": 50,
+            "expected_count": 80,
+            "actual_count": 75,
+            "passed": false
+          },
+          {
+            "deadline_s": 100,
+            "expected_count": 12,
+            "actual_count": 12,
+            "passed": true
+          },
+          {
+            "deadline_s": 135,
+            "expected_count": 80,
+            "actual_count": 77,
+            "passed": false
+          }
+        ],
+        "passing_tail": {
+          "start_s": 135,
+          "end_s": 180,
+          "completed_passes": 0,
+          "completed_lane_changes": 0,
+          "settled": false
+        },
+        "scope": "Retained failed endpoint run; correct statistics do not override failed control acceptance",
+        "minimum_observed_clearance_m": 1.8448009598014399
+      },
+      "lifecycle": {
+        "event_count": 209,
+        "by_type": {
+          "exit": 72,
+          "enter": 137
+        },
+        "initial_active": 12,
+        "final_active": 77,
+        "unique_background_lifetimes": 149,
+        "total_lifetimes": 150,
+        "retired_lifetimes": 72,
+        "run_censored_lifetimes": 78,
+        "largest_generation": 3,
+        "minimum_actual_arc_gap_m": 160.00237147683106,
+        "minimum_event_interval_ticks": 30
+      },
+      "reviewed_drive_statistics": {
+        "rows": 23040,
+        "phases": {
+          "settle": 240,
+          "drive": 21600,
+          "brake": 1200
+        },
+        "drive_exposure_s": 179.99166666666665,
+        "ego_mean_speed_m_s": 7.454641923976961,
+        "ego_distance_m": 1341.7734242988745,
+        "ego_time_loss_s": 79.45184778035623,
+        "ego_time_loss_fraction": 0.44141959042746187,
+        "hard_braking_events": 0,
+        "hard_braking_exposure_s": 0.0,
+        "near_miss_proxy_events": 0,
+        "minimum_net_headway_s": 1.9379635495535599,
+        "minimum_closing_ttc_s": 8.359789167710991,
+        "headway_observed_s": 136.79166666666666,
+        "fairness": {
+          "all_lifetimes": {
+            "eligible_lifetimes": 150,
+            "excluded_short_lifetimes": 0,
+            "minimum_exposure_s": 1.0,
+            "mean_time_loss_fraction": 0.003026960097585533,
+            "time_loss_fraction_range": 0.4414003395996477,
+            "achieved_fraction_jain_index": 0.9987039826027606
+          },
+          "by_role": {
+            "ego": {
+              "eligible_lifetimes": 1,
+              "excluded_short_lifetimes": 0,
+              "minimum_exposure_s": 1.0,
+              "mean_time_loss_fraction": 0.44141959042746187,
+              "time_loss_fraction_range": 0.0,
+              "achieved_fraction_jain_index": 1.0
+            },
+            "background": {
+              "eligible_lifetimes": 149,
+              "excluded_short_lifetimes": 0,
+              "minimum_exposure_s": 1.0,
+              "mean_time_loss_fraction": 8.472767926421512e-05,
+              "time_loss_fraction_range": 0.00025326066766522844,
+              "achieved_fraction_jain_index": 0.9999999980349216
+            }
+          }
+        }
+      },
+      "pause_check": {
+        "ui_frames": 4,
+        "simulation_clock_and_state_unchanged": true,
+        "added_simulation_exposure_s": 0
+      }
+    },
+    {
+      "run_id": "20261019T164220Z-7fd95c16",
+      "kind": "legacy_control_smoke",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T164220Z-7fd95c16",
+      "manifest_sha256": "5eb12ffee8c8fef4e433b5b575bb7de2a2fc1a481240cdd8c16a60e9e31a6c0e",
+      "config_id": "legacy_control_smoke_admission",
+      "source_inventory_count": 46,
+      "source_override_sha256": {
+        "traffic/live_showcase.py": "8642d0de38ade1194c6b2cd3e977fdc3e9933ea6a5e15084d9a59acc926a3bcf"
+      },
+      "recorded_artifact_sha256": {
+        "resolved-config.json": "3e14f3c4214a7e4dabad9ce836dab14fce7efcda0551cfbab5241444a73a2aad",
+        "summary.json": "88a36fb7eb2f57ae8616a93e5388aa8ccb3af48636b55c4f5dfe9b744db0cca9",
+        "trajectory.json": "d9230b59f0e8c251627523c0759e9a1be72971f4fc8d0fee65393767db6caa68",
+        "traffic-statistics.json": "39ab8f3735c43b9500e793ccb9d812cd61ba50d0d80191fd0fc5856aecfbee1d",
+        "startup-readiness.json": "56fd1c8b1b3713982338b85e5f8d5f83f510473b3e1a407f1c68a73e09272270",
+        "preview-timing.json": "bfb0126f7ee690ad68f030419f2afccd49f7875fc90f21366a3d7ba67b2f39f2",
+        "ui-event-timing.json": "f4e999c520293dc58eb349e30c709c4dd438e5b18fa5f60bf9b77350ec44839c",
+        "traffic-lifecycle.json": "51c009d858d7dbf23896613616783613df07c10cf6367dc18c8a12b0c6c8c95d",
+        "planner.json": "39a845aa78ac922c6e1fc74256b96af13ecf4387174287790f068a009368ec7b"
+      },
+      "passed": true,
+      "run_gate_count": 33,
+      "failed_run_gates": [],
+      "exit_code": 0,
+      "cleanup_verified": true,
+      "source_changed_during_run": [],
+      "reported_contacts": 0,
+      "minimum_observed_clearance_m": 1.8111805728847408,
+      "completed_passes": 0,
+      "completed_lane_changes": 0,
+      "timing": {
+        "simulation_time_s": 102.0,
+        "active_wall_s": 102.00046599999769,
+        "rtf": 0.9999954313934439,
+        "p95_lag_s": 1.088952533326422,
+        "max_lag_s": 1.1695490666820358,
+        "p95_loop_frame_interval_s": 0.03741969994734973,
+        "max_loop_frame_interval_s": 0.21571489999769256,
+        "requested_hz": 30,
+        "native_delivery_notifications_per_s": 30.004095151938788,
+        "native_notification_count": 3060,
+        "application_updates": 3060,
+        "native_delivery_intervals": {
+          "count": 3059,
+          "p50_ms": 33.2979999948293,
+          "p95_ms": 37.453000026289374,
+          "max_ms": 212.83979999134317
+        },
+        "application_service_intervals": {
+          "count": 3059,
+          "p50_ms": 33.301400020718575,
+          "p95_ms": 37.4741000123322,
+          "max_ms": 212.71439996780828
+        },
+        "strict_display_passed": false,
+        "recorded_qualification_exclusions": [
+          "interactive_display_changes_or_restart"
+        ]
+      },
+      "peak_whole_gpu_memory_mib": 3603.0,
+      "control_acceptance": {
+        "passed": true,
+        "failed_run_gates": [],
+        "failed_control_validation_gates": [],
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "contact_report_count": 0,
+        "minimum_observed_clearance_m": 1.8111805728847408,
+        "control_checkpoints": [
+          {
+            "deadline_s": 34,
+            "expected_count": 12,
+            "actual_count": 12,
+            "passed": true
+          },
+          {
+            "deadline_s": 64,
+            "expected_count": 40,
+            "actual_count": 40,
+            "passed": true
+          },
+          {
+            "deadline_s": 89,
+            "expected_count": 12,
+            "actual_count": 12,
+            "passed": true
+          }
+        ],
+        "passing_tail": null,
+        "completed_passes": 0,
+        "completed_lane_changes": 0
+      },
+      "lifecycle": {
+        "event_count": 124,
+        "by_type": {
+          "exit": 96,
+          "enter": 28
+        },
+        "placement_methods": {
+          "remote_exit": 96,
+          "existing_phase": 28
+        },
+        "initial_active": 80,
+        "final_active": 12,
+        "unique_background_lifetimes": 108,
+        "total_lifetimes": 109,
+        "retired_lifetimes": 96,
+        "run_censored_lifetimes": 13,
+        "largest_generation": 2,
+        "minimum_actual_arc_gap_m": 240.8010916508324,
+        "minimum_event_interval_ticks": 30
+      },
+      "reviewed_drive_statistics": {
+        "rows": 12240,
+        "phases": {
+          "settle": 240,
+          "drive": 10800,
+          "brake": 1200
+        },
+        "drive_exposure_s": 89.99166666666666,
+        "ego_mean_speed_m_s": 7.409488856870991,
+        "ego_distance_m": 666.7922513775719,
+        "ego_time_loss_s": 32.17018738519233,
+        "ego_time_loss_fraction": 0.35747962646755066,
+        "hard_braking_events": 0,
+        "near_miss_proxy_events": 0,
+        "minimum_net_headway_s": 1.9039756182090397,
+        "minimum_closing_ttc_s": 7.096361127719766,
+        "headway_observed_s": 89.95833333333333,
+        "fairness": {
+          "all_lifetimes": {
+            "eligible_lifetimes": 109,
+            "excluded_short_lifetimes": 0,
+            "minimum_exposure_s": 1.0,
+            "mean_time_loss_fraction": 0.0033336373225824638,
+            "time_loss_fraction_range": 0.3574778605729965,
+            "achieved_fraction_jain_index": 0.9988322922031506
+          },
+          "by_role": {
+            "ego": {
+              "eligible_lifetimes": 1,
+              "excluded_short_lifetimes": 0,
+              "minimum_exposure_s": 1.0,
+              "mean_time_loss_fraction": 0.35747962646755066,
+              "time_loss_fraction_range": 0.0,
+              "achieved_fraction_jain_index": 1.0
+            },
+            "background": {
+              "eligible_lifetimes": 108,
+              "excluded_short_lifetimes": 0,
+              "minimum_exposure_s": 1.0,
+              "mean_time_loss_fraction": 5.4507793462387894e-05,
+              "time_loss_fraction_range": 0.000119868041950635,
+              "achieved_fraction_jain_index": 0.9999999991687331
+            }
+          }
+        }
+      },
+      "alternate_entry_geometry": [],
+      "review_limits": [
+        "Native background snapshots are decimated to one per simulated second; entry geometry is reconstructed by reversing recorded shared circular advance, not a direct first-entry-frame measurement.",
+        "Native contact/pose audits remain separate; no proof of every unsaved background state or immediate entry velocity.",
+        "Active counts/leader membership checked every tick; full native identity sets checked at recorded snapshot ticks; lifetime exposure independently reconstructed.",
+        "Ego scalar derivatives independently reduced; full 120 Hz background derivatives unavailable.",
+        "Control smoke and interactive endpoint are not matched performance trials; valid metrics do not override failed endpoint acceptance."
+      ]
+    },
+    {
+      "run_id": "20261019T164433Z-563caac3",
+      "kind": "control_endpoint_admission",
+      "raw_artifact_root": "outputs/loop_showcase/20261019T164433Z-563caac3",
+      "manifest_sha256": "62fd6f43ebe2d2b1235bc17adc86dfa924de016a5d4956a29476e18b56288197",
+      "config_id": "endpoint_admission",
+      "source_inventory_count": 47,
+      "source_override_sha256": {
+        "traffic/live_showcase.py": "8642d0de38ade1194c6b2cd3e977fdc3e9933ea6a5e15084d9a59acc926a3bcf"
+      },
+      "recorded_artifact_sha256": {
+        "resolved-config.json": "ed62845ed188523687a4bab4c39b542eda4e8d2e560cac088392d0fe6f41df73",
+        "summary.json": "666e7ae822955044560063cf1e38d2353ecb53a442a29e31a0bca6bd63b5e651",
+        "trajectory.json": "58c3cad395702b038865f1bfe33c37e09c088da2b161ac0ab907c18cd81f8d61",
+        "traffic-statistics.json": "b195138dbda2c9ec682f80c2900951164574ceda8157d528ec5df771acd1d58e",
+        "startup-readiness.json": "18a56405e81c700b3e617b34662c9c3556ccf31918b26eab3fd839133cf24a64",
+        "preview-timing.json": "216752ce8bb4e36a21baaa6295791e763307f0eff0d5cace69037d36ecd990e2",
+        "ui-event-timing.json": "8017afad57227ac7a3357d0c8f766907919b210b36e45146aff3f7444ee500ed",
+        "traffic-lifecycle.json": "6da3f6227288c9b68b1a536dc6c4c00a4c10d4cffd9a140c42d194e5934460dd",
+        "planner.json": "d32f3945c3664cdeba5a147f9dd25e2d18b4d12e153b3a085087035a612c733a",
+        "control-validation.json": "5f4fd36b8ea0135f8ab03e21ce9b2aafe2cf44b263c0f4ce70327da5949b8bdd"
+      },
+      "passed": false,
+      "run_gate_count": 33,
+      "failed_run_gates": [
+        "control_validation"
+      ],
+      "exit_code": 0,
+      "cleanup_verified": true,
+      "source_changed_during_run": [],
+      "reported_contacts": 0,
+      "minimum_observed_clearance_m": 1.8313941034033903,
+      "completed_passes": 3,
+      "completed_lane_changes": 1,
+      "timing": {
+        "simulation_time_s": 192.0,
+        "active_wall_s": 201.52094860002398,
+        "rtf": 0.9527545465314327,
+        "p95_lag_s": 10.268177366702986,
+        "max_lag_s": 11.11914883338224,
+        "p95_loop_frame_interval_s": 0.04051189997699112,
+        "max_loop_frame_interval_s": 0.24728660000255331,
+        "requested_hz": 30,
+        "native_delivery_notifications_per_s": 28.587799336705782,
+        "native_notification_count": 5764,
+        "application_updates": 5764,
+        "native_delivery_intervals": {
+          "count": 5763,
+          "p50_ms": 36.2944999942556,
+          "p95_ms": 40.38130003027618,
+          "max_ms": 245.39799999911338
+        },
+        "application_service_intervals": {
+          "count": 5763,
+          "p50_ms": 36.2893000128679,
+          "p95_ms": 40.40579998400062,
+          "max_ms": 245.25860004359856
+        },
+        "strict_display_passed": false,
+        "recorded_qualification_exclusions": [
+          "user_paused",
+          "interactive_display_changes_or_restart"
+        ]
+      },
+      "peak_whole_gpu_memory_mib": 3528.0,
+      "control_acceptance": {
+        "passed": false,
+        "failed_run_gates": [
+          "control_validation"
+        ],
+        "failed_control_validation_gates": [
+          "settled_passing_tail"
+        ],
+        "exit_code": 0,
+        "cleanup_verified": true,
+        "contact_report_count": 0,
+        "minimum_observed_clearance_m": 1.8313941034033903,
+        "control_checkpoints": [
+          {
+            "deadline_s": 14,
+            "expected_count": 4,
+            "actual_count": 4,
+            "passed": true
+          },
+          {
+            "deadline_s": 50,
+            "expected_count": 80,
+            "actual_count": 80,
+            "passed": true
+          },
+          {
+            "deadline_s": 100,
+            "expected_count": 12,
+            "actual_count": 12,
+            "passed": true
+          },
+          {
+            "deadline_s": 135,
+            "expected_count": 80,
+            "actual_count": 80,
+            "passed": true
+          }
+        ],
+        "passing_tail": {
+          "start_s": 135,
+          "end_s": 180,
+          "completed_passes": 0,
+          "completed_lane_changes": 0,
+          "settled": true
+        },
+        "completed_passes": 3,
+        "completed_lane_changes": 1
+      },
+      "lifecycle": {
+        "event_count": 220,
+        "by_type": {
+          "exit": 76,
+          "enter": 144
+        },
+        "placement_methods": {
+          "remote_exit": 76,
+          "existing_phase": 137,
+          "remote_gap_midpoint": 7
+        },
+        "initial_active": 12,
+        "final_active": 80,
+        "unique_background_lifetimes": 156,
+        "total_lifetimes": 157,
+        "retired_lifetimes": 76,
+        "run_censored_lifetimes": 81,
+        "largest_generation": 3,
+        "minimum_actual_arc_gap_m": 187.9884861365772,
+        "minimum_event_interval_ticks": 30
+      },
+      "reviewed_drive_statistics": {
+        "rows": 23040,
+        "phases": {
+          "settle": 240,
+          "drive": 21600,
+          "brake": 1200
+        },
+        "drive_exposure_s": 179.99166666666665,
+        "ego_mean_speed_m_s": 7.996979726596566,
+        "ego_distance_m": 1439.389709288645,
+        "ego_time_loss_s": 73.212950334952,
+        "ego_time_loss_fraction": 0.40675744433511923,
+        "hard_braking_events": 0,
+        "near_miss_proxy_events": 0,
+        "minimum_net_headway_s": 1.9431878703955379,
+        "minimum_closing_ttc_s": 7.259479829863033,
+        "headway_observed_s": 134.4,
+        "fairness": {
+          "all_lifetimes": {
+            "eligible_lifetimes": 157,
+            "excluded_short_lifetimes": 0,
+            "minimum_exposure_s": 1.0,
+            "mean_time_loss_fraction": 0.0026705731920453678,
+            "time_loss_fraction_range": 0.4067458251101953,
+            "achieved_fraction_jain_index": 0.9989487849086071
+          },
+          "by_role": {
+            "ego": {
+              "eligible_lifetimes": 1,
+              "excluded_short_lifetimes": 0,
+              "minimum_exposure_s": 1.0,
+              "mean_time_loss_fraction": 0.40675744433511923,
+              "time_loss_fraction_range": 0.0,
+              "achieved_fraction_jain_index": 1.0
+            },
+            "background": {
+              "eligible_lifetimes": 156,
+              "excluded_short_lifetimes": 0,
+              "minimum_exposure_s": 1.0,
+              "mean_time_loss_fraction": 8.027273600002268e-05,
+              "time_loss_fraction_range": 0.0002608922705554305,
+              "achieved_fraction_jain_index": 0.9999999981843486
+            }
+          }
+        }
+      },
+      "alternate_entry_geometry": [
+        {
+          "event_tick": 3870,
+          "vehicle_id": "background_077_g001",
+          "snapshot_tick": 3960,
+          "snapshot_delay_s": 0.75,
+          "all_pre_entry_active_ids_available": true,
+          "rewound_native_position_error_m": 1.610520507129945e-05,
+          "measured_same_lane_front_m": 86.53981629072359,
+          "measured_same_lane_rear_m": 86.5398142599289,
+          "measured_background_clearance_m": 13.51992130132632,
+          "recorded_background_clearance_m": 13.51991461922049,
+          "clearance_absolute_difference_m": 6.682105830435603e-06,
+          "recomputed_ego_arc_gap_m": 903.6756966849496,
+          "recorded_ego_arc_gap_m": 903.6756966849496,
+          "passed": true
+        },
+        {
+          "event_tick": 3900,
+          "vehicle_id": "background_076_g001",
+          "snapshot_tick": 3960,
+          "snapshot_delay_s": 0.5,
+          "all_pre_entry_active_ids_available": true,
+          "rewound_native_position_error_m": 1.2118622333862134e-05,
+          "measured_same_lane_front_m": 86.53980306948301,
+          "measured_same_lane_rear_m": 86.53980813158137,
+          "measured_background_clearance_m": 5.5000119764596604,
+          "recorded_background_clearance_m": 5.500000000000032,
+          "clearance_absolute_difference_m": 1.1976459628471048e-05,
+          "recomputed_ego_arc_gap_m": 1471.658890849755,
+          "recorded_ego_arc_gap_m": 1471.658890849755,
+          "passed": true
+        },
+        {
+          "event_tick": 3930,
+          "vehicle_id": "background_001_g001",
+          "snapshot_tick": 3960,
+          "snapshot_delay_s": 0.25,
+          "all_pre_entry_active_ids_available": true,
+          "rewound_native_position_error_m": 1.6105205054938587e-05,
+          "measured_same_lane_front_m": 86.53981629072359,
+          "measured_same_lane_rear_m": 86.53981425992902,
+          "measured_background_clearance_m": 13.387919681052518,
+          "recorded_background_clearance_m": 13.387918894913225,
+          "clearance_absolute_difference_m": 7.861392923302901e-07,
+          "recomputed_ego_arc_gap_m": 1454.7677417457369,
+          "recorded_ego_arc_gap_m": 1454.7677417457369,
+          "passed": true
+        },
+        {
+          "event_tick": 3960,
+          "vehicle_id": "background_002_g001",
+          "snapshot_tick": 4080,
+          "snapshot_delay_s": 1.0,
+          "all_pre_entry_active_ids_available": true,
+          "rewound_native_position_error_m": 3.961976154568507e-06,
+          "measured_same_lane_front_m": 86.53981829429176,
+          "measured_same_lane_rear_m": 86.53981284713336,
+          "measured_background_clearance_m": 5.499985512114807,
+          "recorded_background_clearance_m": 5.500000000000022,
+          "clearance_absolute_difference_m": 1.448788521507538e-05,
+          "recomputed_ego_arc_gap_m": 1275.0446837315033,
+          "recorded_ego_arc_gap_m": 1275.0446837315033,
+          "passed": true
+        },
+        {
+          "event_tick": 3990,
+          "vehicle_id": "background_079_g001",
+          "snapshot_tick": 4080,
+          "snapshot_delay_s": 0.75,
+          "all_pre_entry_active_ids_available": true,
+          "rewound_native_position_error_m": 1.1150710759966889e-05,
+          "measured_same_lane_front_m": 86.53981165109894,
+          "measured_same_lane_rear_m": 86.5398245903641,
+          "measured_background_clearance_m": 13.651927931388022,
+          "recorded_background_clearance_m": 13.651933596860749,
+          "clearance_absolute_difference_m": 5.665472727400811e-06,
+          "recomputed_ego_arc_gap_m": 1255.9678770195849,
+          "recorded_ego_arc_gap_m": 1255.9678770195849,
+          "passed": true
+        },
+        {
+          "event_tick": 4020,
+          "vehicle_id": "background_003_g001",
+          "snapshot_tick": 4080,
+          "snapshot_delay_s": 0.5,
+          "all_pre_entry_active_ids_available": true,
+          "rewound_native_position_error_m": 1.1150710646835726e-05,
+          "measured_same_lane_front_m": 86.53981165109872,
+          "measured_same_lane_rear_m": 86.53982459036433,
+          "measured_background_clearance_m": 16.253047759423648,
+          "recorded_background_clearance_m": 16.253052653555006,
+          "clearance_absolute_difference_m": 4.894131357957576e-06,
+          "recomputed_ego_arc_gap_m": 1101.3035081185778,
+          "recorded_ego_arc_gap_m": 1101.3035081185778,
+          "passed": true
+        },
+        {
+          "event_tick": 4050,
+          "vehicle_id": "background_078_g001",
+          "snapshot_tick": 4080,
+          "snapshot_delay_s": 0.25,
+          "all_pre_entry_active_ids_available": true,
+          "rewound_native_position_error_m": 3.961976083931008e-06,
+          "measured_same_lane_front_m": 86.53981829429203,
+          "measured_same_lane_rear_m": 86.53981284713336,
+          "measured_background_clearance_m": 5.499985512115209,
+          "recorded_background_clearance_m": 5.499999999999955,
+          "clearance_absolute_difference_m": 1.4487884746117174e-05,
+          "recomputed_ego_arc_gap_m": 298.98231628944063,
+          "recorded_ego_arc_gap_m": 298.98231628944063,
+          "passed": true
+        }
+      ],
+      "review_limits": [
+        "Native background snapshots are decimated to one per simulated second; entry geometry is reconstructed by reversing recorded shared circular advance, not a direct first-entry-frame measurement.",
+        "Native contact/pose audits remain separate; no proof of every unsaved background state or immediate entry velocity.",
+        "Active counts/leader membership checked every tick; full native identity sets checked at recorded snapshot ticks; lifetime exposure independently reconstructed.",
+        "Ego scalar derivatives independently reduced; full 120 Hz background derivatives unavailable.",
+        "Control smoke and interactive endpoint are not matched performance trials; valid metrics do not override failed endpoint acceptance."
+      ]
+    }
+  ],
+  "independent_reviews": [
+    {
+      "path": "outputs/showcase_validation/oct19-review/startup-three-run-review.json",
+      "sha256": "e697d42a0eaa1ead2fc87d5e2666191142b0018baa773f4e5e949087e5f92e3d",
+      "startup_visual_acceptance_passed": true,
+      "viewport_images_inspected": 9,
+      "full_window_images_inspected": 1
+    },
+    {
+      "path": "outputs/showcase_validation/oct19-review/20261019T161716Z-e514b86e-metrics-review.json",
+      "sha256": "24d6cfd71b4a1314b4809584f945b5290fed81844371e1f31f0a6cf29ae66adf",
+      "run_id": "20261019T161716Z-e514b86e",
+      "consistency_checks": 86,
+      "consistency_checks_passed": true
+    },
+    {
+      "path": "outputs/showcase_validation/oct19-review/20261019T162155Z-fb9cb018-endpoint-metrics-review.json",
+      "sha256": "e4e8269c30c46fe48fad39f282ef62a76fa950deb8fbb647b72313759515de0f",
+      "run_id": "20261019T162155Z-fb9cb018",
+      "consistency_checks": 88,
+      "consistency_checks_passed": true
+    },
+    {
+      "path": "outputs/showcase_validation/oct19-review/admission-fix-checks.json",
+      "sha256": "04252f0cab830cc95956465b3d8a48abdee2fd954d3c8a78741fbd35caa4b4a6",
+      "scope": "Admission-only implementation/CPU review; original pending-native wording retained as historical review state"
+    },
+    {
+      "path": "outputs/showcase_validation/oct19-review/dormant-entry-safety-review.json",
+      "sha256": "968969fa2605eb01a8a4acbb791163c9ddaed209ef0f2ef4862a2597e2c37800",
+      "scope": "Admission-only implementation/CPU review; original pending-native wording retained as historical review state"
+    },
+    {
+      "path": "outputs/showcase_validation/oct19-review/20261019T164220Z-7fd95c16-admission-metrics-review.json",
+      "sha256": "eac5413e97fffdbee7bf9492b0bac234f047f6ba36c83ffab4001d5a6655607b",
+      "run_id": "20261019T164220Z-7fd95c16",
+      "consistency_checks": 88,
+      "consistency_checks_passed": true
+    },
+    {
+      "path": "outputs/showcase_validation/oct19-review/20261019T164433Z-563caac3-admission-metrics-review.json",
+      "sha256": "49c84bccfa549c1e89479970c8d87fae3902d70a860bbd9f7d4f7b002f0e0a8b",
+      "run_id": "20261019T164433Z-563caac3",
+      "consistency_checks": 94,
+      "consistency_checks_passed": true
+    }
+  ],
+  "images": [
+    {
+      "path": "documentation/images/showcase-validation-20261019/showcase-startup-editor-20261019.jpg",
+      "sha256": "b096d4c5c7cb772249ceb44f1fdea4fb2aa95585957b6ef0ecde84c0a46af568",
+      "run_id": "20261019T161716Z-e514b86e",
+      "capture_kind": "full application window",
+      "caption": "Regular Isaac editor and docked Highway Sim Controls during the first public-car startup smoke, at the observed 26-second braking state. The panel identifies scripted traffic and simulator-state statistics; it shows 80 background cars and 0.0 mph. This is full-window evidence of the editor/sidebar, not a performance measurement.",
+      "source_relative_path": "outputs/showcase_validation/oct19-review/screenshots/20261019T161716Z-e514b86e-window.jpg",
+      "width_px": 1442,
+      "height_px": 932,
+      "bytes": 130808,
+      "image_modified": false
+    },
+    {
+      "path": "documentation/images/showcase-validation-20261019/showcase-live-transition-20261019.jpg",
+      "sha256": "5a37c94433f0553a4b904586dc9371e00aa470eadd246ccbc4688cc4a07186e9",
+      "run_id": "20261019T162155Z-fb9cb018",
+      "capture_kind": "full application window",
+      "caption": "Live population transition in the endpoint scenario, at the observed 65-second driving state: the panel reports 35 active background cars while the requested target is 12, and the main car is moving at 23.6 mph. This image documents an in-progress gradual change, not completion of the transition or the endpoint validation.",
+      "source_relative_path": "outputs/showcase_validation/oct19-review/screenshots/20261019T162155Z-fb9cb018-transition-065s.jpg",
+      "width_px": 1442,
+      "height_px": 932,
+      "bytes": 125264,
+      "image_modified": false
+    },
+    {
+      "path": "documentation/images/showcase-validation-20261019/showcase-public-follow-20261019.png",
+      "sha256": "d970e372da365421c1d7f3bf6e2bf9a170df84105e00e72c2180de997fb0d1ef",
+      "run_id": "20261019T161716Z-e514b86e",
+      "capture_kind": "viewport render only",
+      "caption": "Public procedural main car, scripted background cars, lane geometry and cyan planned path in the follow viewport. Requested at 16 simulated seconds of the first 15-second-driving startup smoke (after the 2-second settling phase). This PNG excludes editor UI; matching 16-second captures are byte-identical across all three startup smoke runs.",
+      "source_relative_path": "outputs/loop_showcase/20261019T161716Z-e514b86e/preview-016s-follow.png",
+      "width_px": 960,
+      "height_px": 600,
+      "bytes": 38367,
+      "image_modified": false
+    },
+    {
+      "path": "documentation/images/showcase-validation-20261019/showcase-endpoint-stalled-brake-20261019.jpg",
+      "sha256": "d5280da4c0b33f4870675108dc3915872183ba812991ddcc75a831a70ba2a446",
+      "run_id": "20261019T162155Z-fb9cb018",
+      "capture_kind": "full application window",
+      "caption": "Final braking state of the first endpoint run, observed at 184 simulated seconds: the editor sidebar shows 77 active background cars against a requested 80, 0.0 mph, one completed pass and zero lane changes. The completed run failed its population deadlines and settled passing tail; this full-window image documents the unresolved 77/80 state and does not establish performance.",
+      "source_relative_path": "outputs/showcase_validation/oct19-review/screenshots/20261019T162155Z-fb9cb018-brake-184s.jpg",
+      "width_px": 1442,
+      "height_px": 932,
+      "bytes": 129146,
+      "image_modified": false
+    },
+    {
+      "path": "documentation/images/showcase-validation-20261019/showcase-endpoint-dense-in-progress-20261019.jpg",
+      "sha256": "93c6727f6f13c788eca519d8effc583f1ae2c30de97b6ec27eaf445078094647",
+      "run_id": "20261019T164433Z-563caac3",
+      "capture_kind": "full application window",
+      "caption": "Endpoint validation in progress after the dormant-entry repair, observed at 44 simulated seconds: the full editor window shows 80 active background cars against a requested 80, main-car speed 34.9 mph, one completed pass and zero lane changes. This screenshot records the current 80/80 state; it does not claim final endpoint acceptance or display-timing qualification.",
+      "source_relative_path": "outputs/showcase_validation/oct19-review/screenshots/20261019T164433Z-563caac3-dense-044s.jpg",
+      "width_px": 1442,
+      "height_px": 932,
+      "bytes": 125115,
+      "image_modified": false
+    }
+  ],
+  "metric_definitions": {
+    "specification": "documentation/showcase-statistics.md",
+    "measurement_hz": 120,
+    "panel_refresh_hz": 5,
+    "included_phase": "Consecutive drive samples only; first sample is baseline; settle and final forced braking excluded",
+    "ego_speed": "Measured planar chassis speed; acceleration and jerk are scalar-speed derivatives/tangential approximations",
+    "background_speed": "Measured body-forward velocity during drive; full 120 Hz derivatives cannot be rebuilt independently from decimated planner records",
+    "headway": "Measured geometric net gap / ego speed when leader and moving ego exist; not preferred gap",
+    "ttc": "Closing TTC only; null when nonclosing; near-zero positive closing produces very large finite values",
+    "near_miss_proxy": "Exact clearance below 1 m OR closing TTC below 1.5 s; contiguous observed ego-level episodes",
+    "hard_braking": "Scalar acceleration <= -3 m/s^2",
+    "time_loss": "Trapezoidal integral max(0,1-speed/applied_free_flow_reference); no overspeed credit",
+    "fairness": "Per-lifetime loss normalized by observed exposure, at least 1 s eligibility; Jain index of achieved fractions; descriptive heterogeneous scripted cohort",
+    "identity": "Generation-aware active lifetimes; dormant slots excluded; retirement/run censoring retained",
+    "completed_trip_claim": false
+  },
+  "timing_interpretation": {
+    "scope": "Diagnostic captured startup and interactive endpoint, not matched performance comparisons",
+    "rtf_scope": "Simulation duration divided by active wall time including live settle/drive/brake/recording; startup and explicit pauses excluded",
+    "native_delivery_scope": "Kit NEW_FRAME notifications, not verified unique monitor scanouts, FPS, or mouse-to-photon latency",
+    "strict_limits": {
+      "rtf_min": 0.99,
+      "rtf_max": 1.01,
+      "p95_lag_max_s": 0.1,
+      "max_lag_max_s": 0.5,
+      "native_delivery_p95_max_s_at_30_hz": 0.03666666666666667,
+      "native_delivery_max_s": 0.1,
+      "event_service_p95_max_s": 0.05,
+      "event_service_max_s": 0.1
+    },
+    "capture_causality_claim": false,
+    "performance_improvement_claim": false
+  },
+  "limitations": [
+    "Historical 120-by-0 swapchain root cause remains unconfirmed; three launches do not establish long-duration reliability",
+    "Only first smoke has a reviewed full-window image; sidebar readback is used for the other two",
+    "Correct metrics and zero reported contacts do not override failed count and settled-passing gates",
+    "Raw local artifacts are ignored and not supplied by this summary; hashes alone cannot reproduce their numerical reductions",
+    "Admission repair has verified population recovery but not settled-tail passing; subsequent planner changes and repeat remain pending",
+    "All six runs fail strict display qualification; the legacy smoke RTF near 1 does not override its failed lag/frame checks"
+  ],
+  "admission_cpu": {
+    "path": "outputs/showcase_validation/cpu-admission-20261019T164050Z/cpu-checks.json",
+    "sha256": "a59cbf6893b9907882a2252943aa364c56773405ff5fa5f172adf9557ab76e35",
+    "passed": true,
+    "tests_passed": 1724,
+    "skipped": 181,
+    "subtests_passed": 100,
+    "elapsed_s": 77.36,
+    "runtime": ".venv-traffic Python 3.11.9",
+    "commit": "89442f51f8bb26e9989ff543bd228a985043a8f6",
+    "source_sha256": {
+      "traffic/live_showcase.py": "8642d0de38ade1194c6b2cd3e977fdc3e9933ea6a5e15084d9a59acc926a3bcf",
+      "tests/test_live_showcase_fleet.py": "af4bc31a34d7ce902e4f3941a07532d9f5f129570ff4af478efbc92f0197577a",
+      "tests/test_live_showcase.py": "9d802b1e664366e00a3af77cb875165e05774901f027dc3e105989e784cc7ef3"
+    },
+    "report_sha256": "b6540877491b09fabb014bef4dc21bb4f3e0a8afefdbdcfd349042a17b727b93",
+    "independent_review": "outputs/showcase_validation/oct19-review/dormant-entry-safety-review.json",
+    "xml_report": {
+      "path": "outputs/showcase_validation/cpu-admission-20261019T164050Z/tests.xml",
+      "sha256": "b6540877491b09fabb014bef4dc21bb4f3e0a8afefdbdcfd349042a17b727b93"
+    },
+    "hosted_ci_for_this_change_claimed": false
+  },
+  "reduction_script": {
+    "path": "outputs/showcase_validation/oct19-review/reduce-admission-runs.py",
+    "sha256": "72f05f59796945441cc1ee08748456ba0db4a3f78577d5e7652035a5e6e2f787"
+  },
+  "admission_assessment": {
+    "legacy_control_smoke_passed": true,
+    "repaired_endpoint_counts_passed": true,
+    "repaired_endpoint_overall_passed": false,
+    "remaining_failed_gate": "settled_passing_tail",
+    "tail_background_count": 80,
+    "tail_new_completed_passes": 0,
+    "tail_new_completed_lane_changes": 0,
+    "alternate_entries": 7,
+    "native_geometry_check_passed": true,
+    "native_geometry_scope": "Reverse 0.25–1.00 s of independently integrated shared circular motion from the next saved native snapshot; all pre-entry active IDs present in each selected snapshot; not immediate entry-frame evidence",
+    "maximum_reconstructed_position_error_m": 1.610520507129945e-05,
+    "maximum_reconstructed_clearance_difference_m": 1.448788521507538e-05,
+    "minimum_reconstructed_background_clearance_m": 5.499985512114807,
+    "subsequent_planner_fix_verified": false,
+    "same_configuration_endpoint_repeat_completed": false
+  }
+}

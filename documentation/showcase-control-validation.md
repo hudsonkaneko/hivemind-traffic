@@ -31,7 +31,8 @@ must be rejected and its native model reset to the accepted value.
 
 Actual population and all three ramped driving values must meet every deadline;
 successful callbacks alone are insufficient. Lifecycle evidence includes the
-measured circular arc separation for every entry/removal. Changes must remain
+circular arc separation computed from the actual runtime phase for every
+entry/removal, with native pose and physical-clearance audits kept separate. Changes must remain
 at least 160 m from the main car and at least 30 physics ticks apart. Stable
 generation identities, physical pose checks and existing native pool checks
 remain in force. No hierarchy changes or physics reset are requested.
@@ -81,14 +82,73 @@ validation run, not a fixed-demand performance comparison.
 Implementation: `experiments/showcase_control_validation.py` owns the declared
 schedule and assessment; the runner supplies fresh native observations and
 consumes settings only after the pause loop returns. `traffic/live_showcase.py`
-records actual lifecycle arc distances. Native outcomes will be recorded below
-only after the runtime evidence is available.
+records actual lifecycle arc distances and admission geometry. Native outcomes
+are recorded below only when runtime evidence is available.
 
 ## Evidence
 
-Native acceptance is pending. The three targeted CPU suites above passed
+The October 16 harness-only checkpoint passed the three targeted CPU suites above:
+
 **30 tests and 16 subtests** in the configured traffic environment. They include
 preflight-only CLI/configuration checks with no runtime launch, adversarial pause
 and missing-evidence fixtures, endpoint/deadline assessment, measured lifecycle
 distance/rate checks and the protected low-density case. A CPU pass is not a
 native endpoint acceptance.
+
+### First native endpoint attempt and admission repair — October 19
+
+Run `20261019T162155Z-fb9cb018` completed all 23,040 physics samples and clean
+shutdown, with no runtime errors or USD reference-count warnings. Its physical
+checks passed, including 1.844801 m minimum measured clearance, but **overall
+acceptance failed**. Actual populations at 14 / 50 / 100 / 135 s were
+**4 / 75 / 12 / 77**, so both 80-car deadlines failed. The entire 135–180 s tail
+remained at 77 cars, with no additional pass or lane change. The one earlier pass
+cannot satisfy the tail gate. Pause/mailbox stability, callback coalescing,
+invalid-pair rejection and bounded remote lifecycle checks passed.
+
+Three remaining dormant slots stayed inside the 160 m exclusion zone. Their
+fixed phases moved at the same angular rate as the traffic the main car followed,
+so they remained protected. Population-pending mode correctly inhibited new lane
+changes. Read-only geometry analysis found empty remote same-lane gaps; the
+fixed nominal-phase admission rule could not use them. This is a demonstrated
+admission limitation, not a reason to remove the exclusion or force an overtake.
+The failed run and its original source snapshots remain unchanged.
+
+The repair in `traffic/live_showcase.py` preserves safe existing-phase priority
+and adds a deterministic fallback for **dormant slots only**. Its runtime phase
+mapping leaves immutable fleet specs, static USD, active poses and native body
+bindings intact. Every entry requires at least 160 m main-car separation,
+40 m front/rear base-circle center spacing, and 0.8 m exact analytic background
+footprint clearance. The 40 m bound covers the maximum configured 25 mph and
+3 s gap plus body length and clearance, independently of current speed ramps.
+Membership and failed-search attempts remain at least 30 physics ticks apart;
+committed maneuvers and stopping freeze changes. No admissible bounded candidate
+means the request remains pending. Exits use actual relocated phases.
+
+Lifecycle evidence records the selected station, old/new phase, placement method,
+front/rear spacing and minimum background footprint clearance. Empty-neighbor
+gaps are explicit `null` values. Geometry is calculated from analytic current
+target poses; it does not replace measured native pose, contact or clearance
+checks. The [live-controls implementation note](showcase-live-controls.md#remote-entry-positions--october-19-admission-repair)
+describes the thresholds, event fields and unchanged native admission path.
+
+The repair's focused CPU check passed **112 tests and 18 subtests** across live
+controls, endpoint validation, the planner and clearance. Separate plain Isaac
+Python/OpenUSD tests passed **two tests with fake native views**, including a
+protected nominal entry with 79 active cars, selected-index-only teleportation,
+continuous next target/step, generation accounting, visibility, stable native
+paths and unchanged static layers. These tests did not launch `SimulationApp`
+or exercise actual PhysX dynamics. They establish software/composition contracts.
+
+Native legacy regression `20261019T164220Z-7fd95c16` passed all 33 run gates and
+reached the unchanged 12/40/12 checkpoints. Repaired endpoint
+`20261019T164433Z-563caac3` reached all four population, speed and gap deadlines
+(4/80/12/80), with all physical/scene/process gates passing and 1.831394 m minimum
+clearance. Its settled 135–180 s tail added no passes or lane changes, so overall
+endpoint acceptance remains **failed**. Three earlier passes and one earlier
+lane change do not satisfy that tail gate. Both failures remain in the
+[measured report](showcase-validation-20261019.md).
+
+The admission repair does not change the planner's conservative lane-change
+forecast. A separate bounded gap-creation improvement is under investigation;
+the original endpoint schedule and acceptance requirements remain unchanged.

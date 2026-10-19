@@ -4,6 +4,23 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-19 — Native validation and remote traffic admission
+
+- Three fresh public-car startup smokes passed and produced matching viewport
+  captures. The native 90-second live-control regression also passed.
+- Fixed dormant slots that could remain permanently inside the protected entry
+  region. Entries now use deterministic safe remote gaps when needed, with
+  40 m front/rear spacing and exact 0.8 m footprint clearance. Active cars,
+  static assets, 160 m ego exclusion and 30-tick transition limits are preserved.
+- The repaired endpoint reached all four declared targets (4/80/12/80), but
+  subsequent passing still failed. Both failed endpoint attempts are retained;
+  a separate controller improvement remains in progress.
+- Verification: 1,724 CPU tests and 100 subtests passed, 181 optional skips;
+  two OpenUSD adapter tests passed and independent review found no blocker.
+  Strict display qualification remains open; the matched matrix is pending.
+- Added actual unmodified screenshots, source hashes and measured evidence in
+  the [October 19 report](showcase-validation-20261019.md).
+
 ## 2026-10-16 — Showcase validation implementation
 
 - Added bounded native window/viewport/sidebar readiness with retained failure

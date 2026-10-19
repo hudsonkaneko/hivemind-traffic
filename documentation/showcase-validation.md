@@ -1,8 +1,11 @@
 # Showcase validation milestone — October 16, 2026
 
-Status: implementation, independent code review and CPU verification complete.
-Native validation is blocked by competing simulator
-work. No new native pass or performance improvement is claimed yet.
+October 19 continuation: three native startup smokes and the legacy live-control
+regression passed. A reviewed admission repair reached all four endpoint targets,
+but the subsequent-passing gate still failed. That separate controller limitation
+is under investigation; the matched performance matrix remains pending.
+See the [measured results and original screenshots](showcase-validation-20261019.md).
+The October 16 implementation checkpoint and its evidence remain below.
 Branch: `codex/showcase-validation`.
 This presentation milestone preserves the order in [the active roadmap](hybrid-roadmap.md).
 
@@ -113,7 +116,7 @@ integration fixes. CPU fixtures cover startup fault injection, control validatio
 metric calculations and invalid benchmark evidence; native execution remains
 the required next level of evidence.
 
-## Evidence and synchronization
+## October 16 evidence and synchronization
 
 Run results and source snapshots belong under unique ignored `outputs/` paths.
 Initial workstation inspection found three other project viewers and a separate

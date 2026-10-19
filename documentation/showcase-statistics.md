@@ -186,3 +186,11 @@ These checks establish the definitions and implementation independently of the
 controller. They do not establish physical realism, sensor accuracy, improved
 driving, 30 Hz display acceptance or 60 FPS. Runtime timing must include the
 collector when reporting statistics-enabled performance.
+
+October 19 native evidence: independent reductions passed 86 consistency checks
+on the first startup smoke and 88 on the original failed endpoint. Ego metrics,
+every membership/lifetime boundary, exposure and saved-summary consistency were
+checked against retained telemetry. Background derivatives are not fully
+reconstructible from decimated planner records. The [measured report](showcase-validation-20261019.md)
+preserves these limits and separates metric correctness from driving and timing
+acceptance; the endpoint's driving failure remains a failure.
