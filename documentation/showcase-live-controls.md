@@ -20,7 +20,9 @@ including the settled passing tail. See
 [the retained failures and validation scope](showcase-control-validation.md#evidence).
 The [completed display-cost matrix](showcase-benchmark-20261019.md) qualifies only
 its two light-traffic timing cases; the dense variants still fail strict timing.
-The October 19 changes have not been synchronized to the Google guide.
+The October 19 changes are synchronized to the Google guide; the
+[native readback and preservation checks](showcase-validation.md#october-19-engineering-guide-synchronization)
+passed on the final dated addition.
 
 ## What changed
 

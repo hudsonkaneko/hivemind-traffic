@@ -4,6 +4,16 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-19 - Engineering-guide synchronization
+
+- Appended the validated native results, six screenshot links and matched
+  benchmark findings to the existing engineering-guide tab. All 207 native
+  checks passed; existing content, styles and all 41 tab identities/order remain
+  preserved. Record exact scope and local evidence hashes in the
+  [synchronization note](showcase-validation.md#october-19-engineering-guide-synchronization).
+- Both Windows CPU/SUMO clean-clone checks passed for implementation checkpoint
+  `7940a9757356fa2dcd6790cc8c1769e0d0ba1fbc`. Dense strict timing remains open.
+
 ## 2026-10-19 - Matched display matrix and evaluator correction
 
 - Completed all 11 declared native cases on one frozen source. All physical,

@@ -13,6 +13,27 @@ The October 16 implementation checkpoint and its evidence remain below.
 Branch: `codex/showcase-validation`.
 This presentation milestone preserves the order in [the active roadmap](hybrid-roadmap.md).
 
+## October 19 engineering-guide synchronization
+
+The dated continuation is synchronized to the existing Google guide's
+[40 Showcase validation tab](https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit?tab=t.lz1t1b5s17js).
+Final native readback at **2026-10-19 18:14:15 UTC** passed all 207 checks.
+All 41 tab identities, titles and order remain unchanged; the other 40 tab
+objects and all 45 preexisting target-tab elements retain exact native equality.
+The append contains six native tables, two command blocks with six shaded
+command paragraphs, and 15 links including the six original screenshots.
+
+The guide links implementation checkpoint
+`7940a9757356fa2dcd6790cc8c1769e0d0ba1fbc`, whose two Windows CPU/SUMO
+clean-clone jobs passed: [run 39299088357](https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39299088357)
+and [run 39299079995](https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39299079995).
+The [compact sync record](evidence/showcase-guide-sync-20261019.json) references
+the local before/after readbacks and verifier by hash. Native text, inherited
+effective styles, links and preservation were checked; PDF pagination and
+rendered page fit were not inspected. Raw guide snapshots remain ignored locally.
+The guide preserves the failed dense timing qualification and original rejected
+comparisons alongside their separate corrected reassessment.
+
 ## Purpose and implementation
 
 The four requested areas are bounded window/sidebar readiness, native live-control
