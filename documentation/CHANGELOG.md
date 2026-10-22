@@ -6,6 +6,14 @@ authority for historical measurements and failures.
 
 ## 2026-10-22 — Sam's supplied-car visual replay foundation
 
+- Follow-up: added fixed-horizon, boundary-inclusive trip accounting with a
+  separate bounded drain, native tripinfo crosschecks, a synthetic merge fixture,
+  and ledger telemetry in the existing viewer. Preserved the old replay prefix.
+- Audited a bounded public I-80 development sample and Esri context metadata;
+  historical site admission remains conditional. Recorded Hudson's actual
+  experimental driver interface and proposed research integration gates.
+  See [accounting and qualification evidence](merge-accounting-2026-10-22.md).
+
 - Added a scoped [development plan](sam-development-plan.md) under the master
   research boundaries, without adopting the broader physical-fleet roadmap.
 - Added private-source asset composition and a layered SUMO replay builder,

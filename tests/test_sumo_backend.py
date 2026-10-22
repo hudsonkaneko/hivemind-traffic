@@ -33,6 +33,14 @@ def test_rejects_action_for_inactive_vehicle():
             backend.step({"missing": VehicleCommand(target_speed=10.0)})
 
 
+def test_removed_vehicle_does_not_leave_a_fabricated_subscription_state():
+    with SumoBackend(CONFIG) as backend:
+        backend.reset(seed=42)
+        backend._require_connection().vehicle.remove('agent_0')
+        result=backend.step({})
+        assert not result.states and not backend.active_vehicle_ids
+
+
 @pytest.mark.timeout(30)
 def test_scripted_run_completes_without_collision():
     rows, summary = run_episode(CONFIG, seed=42, max_steps=600)

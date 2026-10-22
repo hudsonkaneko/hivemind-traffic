@@ -32,6 +32,12 @@ remains available for the camera, but the telemetry explicitly says absent.
 Use the standard Stage and Layers panels to inspect composition; camera views
 are under `/World/Cameras`. Viewport render products are runtime-owned exceptions.
 
+Recordings from `traffic.accounted_baseline` additionally show requested,
+externally waiting, completed, unfinished and removed trips, with primary-window
+and drain labels. See [complete-trip verification](merge-accounting-2026-10-22.md).
+The camera overview and ground bounds adapt to the supplied network. The original
+five-car recording remains available with its original unfinished-trip limitation.
+
 ## Separate Isaac environment
 
 Isaac 6.0.1 uses Python 3.12; do not put the traffic requirements in it. A local

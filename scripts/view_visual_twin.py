@@ -76,7 +76,10 @@ def main():
                 eye = pos+Gf.Vec3d(-11,-14,8)
                 target = pos+Gf.Vec3d(-1,0,1)
             else:
-                eye, target = Gf.Vec3d(420,-390,480),Gf.Vec3d(450,105,0)
+                xmin,ymin,xmax,ymax=manifest.get('road_bounds_m',[0,-115,900,115])
+                span=max(xmax-xmin,ymax-ymin,50)
+                target=Gf.Vec3d((xmin+xmax)/2,(ymin+ymax)/2,0)
+                eye=target+Gf.Vec3d(-.05*span,-.55*span,.65*span)
             matrix = Gf.Matrix4d().SetLookAt(eye,target,Gf.Vec3d(0,0,1)).GetInverse()
             xf = UsdGeom.Xformable(stage.GetPrimAtPath(path))
             ops = xf.GetOrderedXformOps()
@@ -84,7 +87,7 @@ def main():
             op.Set(matrix)
             viewport.camera_path = path
 
-        window = ui.Window('Highway twin | recorded SUMO', width=420, height=370)
+        window = ui.Window('Highway twin | recorded SUMO', width=450, height=410)
         with window.frame:
             with ui.VStack(spacing=8):
                 ui.Label('SUPPLIED CAR / SUMO REPLAY', height=24)
@@ -109,8 +112,11 @@ def main():
                     state['selected']=manifest['ids'][model.get_item_value_model().as_int]
                     context.get_selection().set_selected_prim_paths(['/World/Vehicles/v_'+state['selected'].encode().hex()],True)
                 combo.model.add_item_changed_fn(select)
-                status = ui.Label('',height=76,word_wrap=True)
-                ui.Label('Poses are measured SUMO output. Speeds below are source samples.\nThree background trips remain at the recording end.',height=44,word_wrap=True)
+                status = ui.Label('',height=110,word_wrap=True)
+                final_accounting=frames[-1].get('accounting',{})
+                ending=(f"{final_accounting['unfinished']} unfinished trips at recording end."
+                    if final_accounting else f"{len(frames[-1]['vehicles'])} vehicles present at recording end; no full trip ledger.")
+                ui.Label('Recorded SUMO state; source-sample telemetry.\n'+ending,height=44,word_wrap=True)
         app.update()
         print('VISUAL_TWIN_READY: scene loaded; playback panel and viewport initialized', flush=True)
         if args.check_controls:
@@ -160,6 +166,10 @@ def main():
             vehicle=next((v for v in frame['vehicles'] if v['id']==state['selected']),None)
             details=(f"{vehicle['speed']:.2f} m/s | x {vehicle['x']:.2f}, y {vehicle['y']:.2f} m" if vehicle else 'not present at this source sample')
             status.text=f"{'PLAYING' if state['playing'] else 'PAUSED'} | {state['t']:.2f} / {times[-1]:.2f} s\n{state['selected']} | {details}\n{len(frame['vehicles'])} present | source time {frame['time']:.2f} s"
+            if 'accounting' in frame:
+                ledger=frame['accounting']
+                phase='DRAIN' if frame['time']>data['horizon_s'] else 'PRIMARY WINDOW'
+                status.text+=f"\n{phase} | requested {ledger['requested']} | waiting {ledger['waiting']}\ncompleted {ledger['completed']} | unfinished {ledger['unfinished']} | removed {ledger['removed']}"
             camera()
             start=time.perf_counter(); app.update(); durations.append(time.perf_counter()-start)
             if index==min(120,max(1,args.frames//3)) and args.frames:

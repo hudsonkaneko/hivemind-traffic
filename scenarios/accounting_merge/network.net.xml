@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-10-22T14:15:47.393109-08:00 by Eclipse SUMO netconvert 1.27.1
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <node-files value="scenarios/accounting_merge/nodes.nod.xml"/>
+        <edge-files value="scenarios/accounting_merge/edges.edg.xml"/>
+        <connection-files value="scenarios/accounting_merge/connections.con.xml"/>
+    </input>
+
+    <output>
+        <output-file value="scenarios/accounting_merge/network.net.xml"/>
+    </output>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+    </junctions>
+
+    <report>
+        <no-warnings value="true"/>
+    </report>
+
+</netconvertConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="0.00,70.00" convBoundary="0.00,0.00,500.00,70.00" origBoundary="0.00,-70.00,500.00,0.00" projParameter="!"/>
+
+    <edge id=":merge_0" function="internal">
+        <lane id=":merge_0_0" index="0" speed="14.06" length="9.36" shape="188.54,61.46 190.86,63.02 192.48,64.19 194.20,64.94 196.88,65.20"/>
+    </edge>
+    <edge id=":merge_1" function="internal">
+        <lane id=":merge_1_0" index="0" speed="22.00" length="9.35" shape="187.53,65.20 196.88,65.20"/>
+        <lane id=":merge_1_1" index="1" speed="22.00" length="9.35" shape="187.53,68.40 196.88,68.40"/>
+    </edge>
+
+    <edge id="main_in" from="main_start" to="merge" priority="2">
+        <lane id="main_in_0" index="0" speed="22.00" length="187.53" shape="0.00,65.20 187.53,65.20"/>
+        <lane id="main_in_1" index="1" speed="22.00" length="187.53" shape="0.00,68.40 187.53,68.40"/>
+    </edge>
+    <edge id="out" from="merge" to="exit" priority="2">
+        <lane id="out_0" index="0" speed="22.00" length="303.12" shape="196.88,65.20 500.00,65.20"/>
+        <lane id="out_1" index="1" speed="22.00" length="303.12" shape="196.88,68.40 500.00,68.40"/>
+    </edge>
+    <edge id="ramp_in" from="ramp_start" to="merge" priority="1">
+        <lane id="ramp_in_0" index="0" speed="12.00" length="124.72" shape="80.81,-1.38 188.54,61.46"/>
+    </edge>
+
+    <junction id="exit" type="dead_end" x="500.00" y="70.00" incLanes="out_0 out_1" intLanes="" shape="500.00,63.60 500.00,70.00"/>
+    <junction id="main_start" type="dead_end" x="0.00" y="70.00" incLanes="" intLanes="" shape="0.00,70.00 0.00,63.60"/>
+    <junction id="merge" type="priority" x="200.00" y="70.00" incLanes="ramp_in_0 main_in_0 main_in_1" intLanes=":merge_0_0 :merge_1_0 :merge_1_1" shape="196.88,70.00 196.88,63.60 193.88,63.15 192.90,62.63 191.97,61.92 190.86,61.07 189.35,60.08 187.73,62.84 187.53,63.60 187.53,70.00">
+        <request index="0" response="110" foes="110" cont="0"/>
+        <request index="1" response="000" foes="001" cont="0"/>
+        <request index="2" response="000" foes="001" cont="0"/>
+    </junction>
+    <junction id="ramp_start" type="dead_end" x="80.00" y="0.00" incLanes="" intLanes="" shape="80.00,0.00 81.61,-2.76"/>
+
+    <connection from="main_in" to="out" fromLane="0" toLane="0" via=":merge_1_0" dir="s" state="M"/>
+    <connection from="main_in" to="out" fromLane="1" toLane="1" via=":merge_1_1" dir="s" state="M"/>
+    <connection from="ramp_in" to="out" fromLane="0" toLane="0" via=":merge_0_0" dir="s" state="m"/>
+
+    <connection from=":merge_0" to="out" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":merge_1" to="out" fromLane="0" toLane="0" dir="s" state="M"/>
+    <connection from=":merge_1" to="out" fromLane="1" toLane="1" dir="s" state="M"/>
+
+</net>

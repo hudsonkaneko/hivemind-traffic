@@ -130,9 +130,13 @@ def build_scene(recording_path, network_path, vehicle, output):
                 stripe.CreateFaceVertexCountsAttr([4]); stripe.CreateFaceVertexIndicesAttr([0,1,2,3])
                 stripe.CreateSubdivisionSchemeAttr('none'); stripe.CreateDoubleSidedAttr(True)
                 stripe.CreateDisplayColorAttr([Gf.Vec3f(.8,.82,.76)])
+    if not anchors:
+        raise ValueError('Network has no nonzero lane segments')
+    xmin,ymin=min(p[0] for p in anchors),min(p[1] for p in anchors)
+    xmax,ymax=max(p[0] for p in anchors),max(p[1] for p in anchors)
     ground = UsdGeom.Cube.Define(static, '/World/Environment/Ground')
-    ground.CreateSizeAttr(1); ground.AddTranslateOp().Set((450,110,-.16))
-    ground.AddScaleOp().Set((1200,650,.2)); ground.CreateDisplayColorAttr([(.14,.20,.16)])
+    ground.CreateSizeAttr(1); ground.AddTranslateOp().Set(((xmin+xmax)/2,(ymin+ymax)/2,-.16))
+    ground.AddScaleOp().Set((xmax-xmin+200,ymax-ymin+200,.2)); ground.CreateDisplayColorAttr([(.14,.20,.16)])
     UsdGeom.Scope.Define(static, '/World/Lighting')
     UsdLux.DomeLight.Define(static, '/World/Lighting/Sky').CreateIntensityAttr(700)
     sun = UsdLux.DistantLight.Define(static, '/World/Lighting/Sun')
@@ -187,6 +191,7 @@ def build_scene(recording_path, network_path, vehicle, output):
                     ids=ids, source_time_origin=frames[0]['time'], duration_s=world.GetEndTimeCode()/60,
                     units='metres',up_axis='Z',yaw='90 - SUMO heading',anchor='front bumper',
                     anchors=anchors[:2],geometry='synthetic SUMO lane shapes; not Esri',
+                    road_bounds_m=[xmin,ymin,xmax,ymax],
                     limitation='SUMO visual replay, no physics, no learned policy; fallback materials; visual dimensions differ from SUMO envelopes')
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2))
     return manifest

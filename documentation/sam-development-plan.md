@@ -27,6 +27,15 @@ SUMO owns replay poses; Isaac owns ego poses only in the separate response test.
 
 ## Deliverables and exit gates
 
+22 October follow-up: Sam authorized real-merge qualification and complete trip
+accounting. The new [evidence note](merge-accounting-2026-10-22.md) verifies the
+accounting fixture and records I-80/Powell's unresolved admission gaps. Hudson's
+forwarded report and commit `1fb5d1d` clarify that his current driver uses
+simulator-state inputs, not LiDAR, and has no accepted full-scene learned policy.
+The [integration contract](hudson-driver-research-contract.md) defines proposed
+driver, command-interface and coordination gates. This updates the technical
+handoff without adopting a full physical-fleet architecture or starting training.
+
 | Stage | Concrete work and deliverable | Dependencies and acceptance | Main risk / parallel work |
 |---|---|---|---|
 | A: runtime | Isolated pinned Isaac Python, install log, package inventory, launch scripts | Verify GPU/driver/storage; import, app-ready, render to PNG, clean bounded shutdown | Registry/path/driver issues; asset inspection and plan can proceed during downloads |
