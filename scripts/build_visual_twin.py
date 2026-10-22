@@ -93,6 +93,45 @@ def vehicle_path(identifier):
     return '/World/Vehicles/v_'+identifier.encode('utf-8').hex()
 
 
+def author_motion(frames, vehicle, output, motion_authority='recorded SUMO; visual only'):
+    """Shared replay authoring for simulator and explicitly labeled observation data."""
+    asset_path = Path(os.path.relpath(vehicle, output)).as_posix()
+    motion = new_stage(output/'motion.usda')
+    Usd.ModelAPI(UsdGeom.Xform.Define(motion, '/World/Vehicles').GetPrim()).SetKind('group')
+    ids = sorted({v['id'] for f in frames for v in f['vehicles']})
+    ops = {}
+    for identifier in ids:
+        xf = UsdGeom.Xform.Define(motion, vehicle_path(identifier))
+        Usd.ModelAPI(xf.GetPrim()).SetKind('component')
+        xf.GetPrim().SetCustomDataByKey('external_id',identifier)
+        if motion_authority == 'recorded SUMO; visual only':
+            xf.GetPrim().SetCustomDataByKey('sumo_id',identifier)
+        xf.GetPrim().SetCustomDataByKey('motion_authority',motion_authority)
+        ops[identifier] = (xf.AddTranslateOp(),xf.AddRotateZOp(),xf.CreateVisibilityAttr())
+        model = UsdGeom.Xform.Define(motion, vehicle_path(identifier)+'/Model')
+        model.GetPrim().GetReferences().AddReference(asset_path)
+        # Model-kind metadata belongs to the placement boundary above.
+        model.GetPrim().ClearMetadata('kind')
+        model.GetPrim().SetMetadata('kind','subcomponent')
+        model.GetPrim().SetInstanceable(True)
+    previous_yaw = {}
+    for frame in frames:
+        tc = (frame['time']-frames[0]['time'])*60
+        present = {v['id']:v for v in frame['vehicles']}
+        for identifier, (trans,rot,vis) in ops.items():
+            v = present.get(identifier)
+            vis.Set('inherited' if v else 'invisible',tc)
+            if v:
+                trans.Set((v['x'],v['y'],.02),tc)
+                yaw = 90-v['heading']
+                if identifier in previous_yaw:
+                    yaw = previous_yaw[identifier] + (yaw-previous_yaw[identifier]+180)%360-180
+                previous_yaw[identifier] = yaw
+                rot.Set(yaw,tc)
+    motion.GetRootLayer().Save()
+    return ids
+
+
 def build_scene(recording_path, network_path, vehicle, output):
     output.mkdir(parents=True, exist_ok=False)
     data = json.loads(recording_path.read_text())
@@ -101,7 +140,6 @@ def build_scene(recording_path, network_path, vehicle, output):
         raise ValueError('Recording must have nonempty, strictly increasing times')
     shutil.copyfile(recording_path, output/'recording.json')
     shutil.copyfile(network_path, output/'network.net.xml')
-    asset_path = Path(os.path.relpath(vehicle, output)).as_posix()
     static = new_stage(output/'environment.usda')
     for path, kind in [('/World/Environment','group'),('/World/Environment/Highway','component')]:
         Usd.ModelAPI(UsdGeom.Xform.Define(static, path).GetPrim()).SetKind(kind)
@@ -149,37 +187,7 @@ def build_scene(recording_path, network_path, vehicle, output):
         camera.CreateVerticalApertureAttr(22.5)
         camera.CreateClippingRangeAttr((.1,5000))
     static.GetRootLayer().Save()
-    motion = new_stage(output/'motion.usda')
-    Usd.ModelAPI(UsdGeom.Xform.Define(motion, '/World/Vehicles').GetPrim()).SetKind('group')
-    ids = sorted({v['id'] for f in frames for v in f['vehicles']})
-    ops = {}
-    for identifier in ids:
-        xf = UsdGeom.Xform.Define(motion, vehicle_path(identifier))
-        Usd.ModelAPI(xf.GetPrim()).SetKind('component')
-        xf.GetPrim().SetCustomDataByKey('sumo_id',identifier)
-        xf.GetPrim().SetCustomDataByKey('motion_authority','recorded SUMO; visual only')
-        ops[identifier] = (xf.AddTranslateOp(),xf.AddRotateZOp(),xf.CreateVisibilityAttr())
-        model = UsdGeom.Xform.Define(motion, vehicle_path(identifier)+'/Model')
-        model.GetPrim().GetReferences().AddReference(asset_path)
-        # Model-kind metadata belongs to the placement boundary above.
-        model.GetPrim().ClearMetadata('kind')
-        model.GetPrim().SetMetadata('kind','subcomponent')
-        model.GetPrim().SetInstanceable(True)
-    previous_yaw = {}
-    for frame in frames:
-        tc = (frame['time']-frames[0]['time'])*60
-        present = {v['id']:v for v in frame['vehicles']}
-        for identifier, (trans,rot,vis) in ops.items():
-            v = present.get(identifier)
-            vis.Set('inherited' if v else 'invisible',tc)
-            if v:
-                trans.Set((v['x'],v['y'],.02),tc)
-                yaw = 90-v['heading']
-                if identifier in previous_yaw:
-                    yaw = previous_yaw[identifier] + (yaw-previous_yaw[identifier]+180)%360-180
-                previous_yaw[identifier] = yaw
-                rot.Set(yaw,tc)
-    motion.GetRootLayer().Save()
+    ids = author_motion(frames, vehicle, output)
     world = new_stage(output/'world.usda')
     world.GetRootLayer().subLayerPaths = ['./motion.usda','./environment.usda']
     world.SetStartTimeCode(0); world.SetEndTimeCode((frames[-1]['time']-frames[0]['time'])*60)

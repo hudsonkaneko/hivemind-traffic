@@ -107,10 +107,19 @@ are not rescaled to each SUMO vehicle's collision envelope. Telemetry is the
 authoritative traffic measurement; rendered clearances are not safety metrics.
 Motion is linearly interpolated between recorded samples; lifecycle is sampled.
 The original baseline ends when controlled agents finish, leaving three active
-background trips. See the dedicated plan for the accounting repair before any
-traffic-wide comparison.
+background trips. The later [accounted evaluator](merge-accounting-2026-10-22.md)
+fixes this with a fixed measurement horizon and a separately reported drain;
+the original recording is preserved as historical evidence.
 
 Layers: `world.usda` composes `motion.usda` over `environment.usda`. Stable vehicle
 roots carry motion; their immutable Model subtrees instance the referenced
 versioned car. Cameras/UI operate in the session layer. Source, environment and
 saved motion must remain unchanged during playback.
+
+## Historical I-80 inspection follow-up
+
+The existing viewer also accepts the explicitly labeled scene produced by
+`python -m scripts.build_i80_inspection`. This reuses the car references, motion
+layer, cameras and controls. Observed tracks have no requested-trip ledger:
+disappearance is not completion. See the
+[qualification decision and reproduction contract](i80-powell-qualification-2026-10-22.md).

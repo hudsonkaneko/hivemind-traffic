@@ -87,11 +87,11 @@ def main():
             op.Set(matrix)
             viewport.camera_path = path
 
-        window = ui.Window('Highway twin | recorded SUMO', width=450, height=410)
+        window = ui.Window(manifest.get('viewer_title','Highway twin | recorded SUMO'), width=490, height=450)
         with window.frame:
             with ui.VStack(spacing=8):
-                ui.Label('SUPPLIED CAR / SUMO REPLAY', height=24)
-                ui.Label('Synthetic road · fallback materials · no physics', height=22)
+                ui.Label(manifest.get('viewer_heading','SUPPLIED CAR / SUMO REPLAY'), height=24)
+                ui.Label(manifest.get('viewer_subtitle','Synthetic road · fallback materials · no physics'), height=44,word_wrap=True)
                 with ui.HStack(height=30):
                     ui.Button('Play / Pause', clicked_fn=toggle)
                     ui.Button('Reset', clicked_fn=reset)
@@ -116,7 +116,7 @@ def main():
                 final_accounting=frames[-1].get('accounting',{})
                 ending=(f"{final_accounting['unfinished']} unfinished trips at recording end."
                     if final_accounting else f"{len(frames[-1]['vehicles'])} vehicles present at recording end; no full trip ledger.")
-                ui.Label('Recorded SUMO state; source-sample telemetry.\n'+ending,height=44,word_wrap=True)
+                ui.Label(manifest.get('viewer_footer','Recorded SUMO state; source-sample telemetry.\n'+ending),height=66,word_wrap=True)
         app.update()
         print('VISUAL_TWIN_READY: scene loaded; playback panel and viewport initialized', flush=True)
         if args.check_controls:

@@ -69,6 +69,14 @@ unchanged source. Wheel motion, sensors and dynamics are not inferred from meshe
 
 ## Collaboration and release
 
+Latest qualification: [I-80/Powell evidence decision](i80-powell-qualification-2026-10-22.md).
+Original files and a geographically grounded inspection replay are now usable.
+The complete empirical communication study is not admitted: requested demand,
+outside queues, physical merge opportunities and independent audit support remain
+open. Next is a bounded historical lane/gap/boundary closure task, not training.
+The observation viewer shares the existing foundation but never treats a track
+ending as successful trip completion.
+
 Use the existing checkout on `codex/sam-visual-twin`; origin was fetched and
 remains `edb7125`. Commit source/tests/docs; push a feature branch and open a
 reviewable PR if credentials permit. Never merge over partner work. Private

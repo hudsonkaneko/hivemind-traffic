@@ -6,6 +6,14 @@ authority for historical measurements and failures.
 
 ## 2026-10-22 — Sam's supplied-car visual replay foundation
 
+- Continued [I-80/Powell qualification](i80-powell-qualification-2026-10-22.md):
+  recovered readable original support/TXT sources, matched the early API sample
+  exactly, and documented the remaining demand/queue and gap-evidence gaps.
+  Site is usable for historical development but not admitted for the full study.
+- Added a separate observed-track/GIS inspection scene through the existing
+  viewer, with explicit source labels and no fabricated trip-completion ledger.
+  Reused motion-layer authoring; synthetic accounted replay remains available.
+
 - Follow-up: added fixed-horizon, boundary-inclusive trip accounting with a
   separate bounded drain, native tripinfo crosschecks, a synthetic merge fixture,
   and ledger telemetry in the existing viewer. Preserved the old replay prefix.
