@@ -27,6 +27,14 @@ SUMO owns replay poses; Isaac owns ego poses only in the separate response test.
 
 ## Deliverables and exit gates
 
+22 October site-selection amendment: Sam delegated a broader highway comparison
+after identifying the inspection scene's unrealistic road shape and appearance.
+The [site decision and build contract](highway-twin-site-decision-2026-10-22.md)
+recommends the recording-era exiD A44 Aachen-Brand merge as the next target.
+This supersedes I-80 as the default reconstruction priority, not its historical
+evidence. Exact direction/epoch, licensed package access and factual admission
+remain open. Preserve the existing viewer and complete-accounting foundation.
+
 22 October follow-up: Sam authorized real-merge qualification and complete trip
 accounting. The new [evidence note](merge-accounting-2026-10-22.md) verifies the
 accounting fixture and records I-80/Powell's unresolved admission gaps. Hudson's
@@ -40,7 +48,7 @@ handoff without adopting a full physical-fleet architecture or starting training
 |---|---|---|---|
 | A: runtime | Isolated pinned Isaac Python, install log, package inventory, launch scripts | Verify GPU/driver/storage; import, app-ready, render to PNG, clean bounded shutdown | Registry/path/driver issues; asset inspection and plan can proceed during downloads |
 | B: first usable 3D milestone | One supplied car, layered synthetic road replay, overview/follow cameras, play/pause/reset/scrub, selected-car speed/position/time | Reuse baseline recording; check explicit scale, axis, front-bumper anchor, stable IDs/lifecycle, source immutability; inspect real render and controls | Missing textures: visibly labeled fallback materials. Source is private until rights established. No Esri/calibration claim |
-| C: geographic merge | Versioned Esri/CityEngine USD package and matching lane/merge surface | Site/data admission (P01–02), item IDs/rights/epochs/CRS, local-origin transform; two anchors, lane widths/connectivity and driving-surface check | Historical traffic vs modern context mismatch; source/rights requests can overlap A–B |
+| C: geographic merge | Versioned lane/contact/appearance layers in USD, with Esri-compatible regional context | Site/data admission (P01–02), source IDs/rights/epochs/CRS, local-origin transform; distributed independent anchors/cross sections, lane widths/connectivity/grade and contact checks | Licensed exiD package and dated NRW site subset pending; conversion and fidelity must be verified before acceptance |
 | D: accounting baseline | Requested/waiting/active/completed/removed/unfinished ledger, human/ramp splits, fixed horizon and drain report | Hand-computed delayed-entry fixture; no early-agent-end cutoff; teleports never count as completions; repeated seeds | Existing agent-focused termination is insufficient; independent of visual polish |
 | E: matched controls | Route-aware observations, identical longitudinal actions/shields, shared centralized critic in L and C, explicit actor messages; tuned local/remote scripts | P03–13 freezes, actor/critic leakage tests, expiry/mask checks, truncation bootstrap tests, measured pilot budget | Current learner has local value input and different action semantics; do not relabel it CTDE |
 | F: bounded Isaac response | One documented physics car; identification commands and held-out response; closed-loop following; validated surrogate fed into paired SUMO reruns | P17–18 envelope/physics/actuator provenance, independent validation inputs and error limits; single pose owner | Supplied visual geometry has no physics. A separate proxy needs explicit provenance; no real-car validation claim |

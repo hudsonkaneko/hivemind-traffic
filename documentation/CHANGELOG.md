@@ -6,6 +6,13 @@ authority for historical measurements and failures.
 
 ## 2026-10-22 — Sam's supplied-car visual replay foundation
 
+- Added a [site-selection decision and complete build contract](highway-twin-site-decision-2026-10-22.md)
+  after Sam requested a more realistic highway and delegated candidate selection.
+  Recommend recording-era exiD A44 Aachen-Brand; exact site files/rights and
+  factual admission remain pending. Verified public NRW I3S metadata; retained
+  bounded I-80 LiDAR acquisition and failed imagery attempts as local evidence.
+  No new road reconstruction, simulator acceptance or training is claimed.
+
 - Released the viewer camera from its per-frame pose reset: Free camera is now
   the interactive default, with explicit Follow and Overview controls. Added
   startup callback evidence for camera-pose preservation and resuming Follow.

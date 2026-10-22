@@ -25,6 +25,13 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
 
+October 22 geographic-site amendment: Sam requested an evidence-based site
+selection and realistic road reconstruction using the existing viewer. The
+[site decision](highway-twin-site-decision-2026-10-22.md) recommends exiD's A44
+Aachen-Brand merge at its recording epoch, pending package access, exact location
+and factual qualification. This is a scoped research contribution; no new physical
+fleet, sensing, learned-policy or shared-map gate passes through this decision.
+
 October 22 scoped Sam contribution: [Sam's research development plan](sam-development-plan.md)
 and [supplied-car visual replay](visual-twin.md) develop the bounded research
 visualization path. This does not replace the broader hybrid-fleet roadmap or
