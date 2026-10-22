@@ -6,6 +6,10 @@ authority for historical measurements and failures.
 
 ## 2026-10-22 — Sam's supplied-car visual replay foundation
 
+- Released the viewer camera from its per-frame pose reset: Free camera is now
+  the interactive default, with explicit Follow and Overview controls. Added
+  startup callback evidence for camera-pose preservation and resuming Follow.
+
 - Continued [I-80/Powell qualification](i80-powell-qualification-2026-10-22.md):
   recovered readable original support/TXT sources, matched the early API sample
   exactly, and documented the remaining demand/queue and gap-evidence gaps.

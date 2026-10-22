@@ -118,6 +118,21 @@ saved motion must remain unchanged during playback.
 
 ## Historical I-80 inspection follow-up
 
+The viewer starts in **Free camera**, with the whole site framed once. Hold the
+right mouse button over the viewport and use WASD to move; drag to look around.
+**Follow** resumes tracking the selected vehicle; **Overview** restores the site
+view. Select **Free camera** again to release either automatic view. Playback,
+scrubbing and vehicle selection do not reposition the free camera. Camera edits
+remain in the session layer and do not modify saved scene files.
+
+`--check-controls` additionally writes `startup-controls.json`, testing a moved
+camera across a replay seek/update and the return to Follow. This is a
+programmatic check, not evidence of manual mouse/keyboard interaction.
+The 22 October follow-up `outputs/i80-free-camera-20261022-a` passed all nine
+startup callback checks with unchanged saved-layer hashes and left the GUI in
+Free camera mode. The six visual-twin/I-80 fixture tests also passed. The
+interactive process remains open; this is not a bounded shutdown test.
+
 The existing viewer also accepts the explicitly labeled scene produced by
 `python -m scripts.build_i80_inspection`. This reuses the car references, motion
 layer, cameras and controls. Observed tracks have no requested-trip ledger:

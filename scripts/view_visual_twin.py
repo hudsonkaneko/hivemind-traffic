@@ -52,7 +52,7 @@ def main():
         timeline.pause()
         viewport = get_active_viewport()
         viewport.updates_enabled = True
-        state = dict(t=0., playing=False, follow=True, selected=manifest['ids'][0], rate=1.)
+        state = dict(t=0., playing=False, follow=False, free_camera=False, selected=manifest['ids'][0], rate=1.)
         checks = {}
 
         def seek(value):
@@ -69,6 +69,8 @@ def main():
             state['playing'] = not state['playing']
 
         def camera():
+            if state['free_camera']:
+                return
             path = '/World/Cameras/'+('Follow' if state['follow'] else 'Overview')
             selected = '/World/Vehicles/v_'+state['selected'].encode().hex()
             pos = UsdGeom.Xformable(stage.GetPrimAtPath(selected)).ComputeLocalToWorldTransform(state['t']*60).ExtractTranslation()
@@ -87,6 +89,15 @@ def main():
             op.Set(matrix)
             viewport.camera_path = path
 
+        def camera_mode(mode):
+            state['free_camera'] = mode == 'free'
+            if mode != 'free':
+                state['follow'] = mode == 'follow'
+                camera()
+
+        # Frame the site once, then leave the camera entirely under user control.
+        camera()
+        camera_mode('free')
         window = ui.Window(manifest.get('viewer_title','Highway twin | recorded SUMO'), width=490, height=450)
         with window.frame:
             with ui.VStack(spacing=8):
@@ -95,8 +106,10 @@ def main():
                 with ui.HStack(height=30):
                     ui.Button('Play / Pause', clicked_fn=toggle)
                     ui.Button('Reset', clicked_fn=reset)
-                    ui.Button('Follow', clicked_fn=lambda:state.update(follow=True))
-                    ui.Button('Overview', clicked_fn=lambda:state.update(follow=False))
+                with ui.HStack(height=30):
+                    ui.Button('Free camera', clicked_fn=lambda:camera_mode('free'))
+                    ui.Button('Follow', clicked_fn=lambda:camera_mode('follow'))
+                    ui.Button('Overview', clicked_fn=lambda:camera_mode('overview'))
                 ui.Label('Scrub replay seconds (pauses playback)', height=20)
                 slider = ui.FloatSlider(min=0,max=times[-1])
                 def scrub(model):
@@ -124,10 +137,32 @@ def main():
             toggle(); checks['pause']=not state['playing']
             seek(10); app.update(); checks['seek']=abs(timeline.get_current_time()-10)<1e-6
             reset(); checks['reset']=state['t']==0 and not state['playing']
-            state.update(follow=False); camera(); checks['overview']=str(viewport.camera_path).endswith('/Overview')
-            state.update(follow=True,selected=manifest['ids'][-1]); camera()
+            camera_mode('overview'); checks['overview']=str(viewport.camera_path).endswith('/Overview')
+            state.update(selected=manifest['ids'][-1]); camera_mode('follow')
             checks['selection_follow']=str(viewport.camera_path).endswith('/Follow')
+            camera_mode('free')
+            free_path = str(viewport.camera_path)
+            free_op = UsdGeom.Xformable(stage.GetPrimAtPath(free_path)).GetOrderedXformOps()[0]
+            moved = Gf.Matrix4d(free_op.Get())
+            moved.SetTranslateOnly(moved.ExtractTranslation()+Gf.Vec3d(3,4,5))
+            free_op.Set(moved)
+            seek(12); camera(); app.update(); camera()
+            checks['free_camera_preserves_pose'] = free_op.Get() == moved
+            checks['free_camera_preserves_selection'] = str(viewport.camera_path) == free_path
+            camera_mode('follow')
+            checks['follow_resumes'] = not state['free_camera'] and free_op.Get() != moved
             state.update(selected=manifest['ids'][0]); seek(5)
+            if not args.frames:
+                camera_mode('overview'); camera_mode('free')
+            startup = dict(control_callbacks=checks.copy(), camera_mode='free' if state['free_camera'] else 'follow',
+                           static_layers_unchanged=before == {str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files},
+                           source_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                           limitation='Programmatic callback checks, not manual mouse/keyboard interaction.')
+            (evidence/'startup-controls.json').write_text(json.dumps(startup,indent=2))
+            if not all(checks.values()) or not startup['static_layers_unchanged']:
+                raise RuntimeError('Startup camera/control check failed')
+        if args.frames:
+            camera_mode('follow')
         def capture_image(name):
             capture=capture_viewport_to_file(viewport,str(evidence/name))
             pending=asyncio.ensure_future(capture.wait_for_result())
@@ -165,7 +200,8 @@ def main():
             frame=frames[max(0,bisect.bisect_right(times,state['t'])-1)]
             vehicle=next((v for v in frame['vehicles'] if v['id']==state['selected']),None)
             details=(f"{vehicle['speed']:.2f} m/s | x {vehicle['x']:.2f}, y {vehicle['y']:.2f} m" if vehicle else 'not present at this source sample')
-            status.text=f"{'PLAYING' if state['playing'] else 'PAUSED'} | {state['t']:.2f} / {times[-1]:.2f} s\n{state['selected']} | {details}\n{len(frame['vehicles'])} present | source time {frame['time']:.2f} s"
+            camera_label = 'FREE CAMERA' if state['free_camera'] else ('FOLLOW' if state['follow'] else 'OVERVIEW')
+            status.text=f"{'PLAYING' if state['playing'] else 'PAUSED'} | {camera_label} | {state['t']:.2f} / {times[-1]:.2f} s\n{state['selected']} | {details}\n{len(frame['vehicles'])} present | source time {frame['time']:.2f} s"
             if 'accounting' in frame:
                 ledger=frame['accounting']
                 phase='DRAIN' if frame['time']>data['horizon_s'] else 'PRIMARY WINDOW'
