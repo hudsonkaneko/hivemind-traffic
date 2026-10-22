@@ -79,6 +79,10 @@ a clone includes it. Preserve already tracked historical evidence.
 - **Google learning document:** readable explanation of each milestone, purpose,
   technology, commands, and lessons. It mirrors reviewed facts, not a separate
   source of implementation truth.
+- **[Engineering guide Markdown](engineering-guide.md):** the complete GitHub-readable
+  copy of that Google learning document, refreshed after each chat-driven guide
+  update. The [sync procedure](learning-guide-sync.md#chat-managed-markdown-mirror)
+  binds the native document ID, revision, tab inventory and Markdown hash.
 
 For each meaningful learning-document update, preserve existing tabs and styles;
 add or update the relevant milestone tab with command blocks, key terms, test
@@ -86,6 +90,9 @@ outcomes, limitations, and a source commit or pull-request link. Do not overwrit
 historical results with new results. Verify the native document after the edit
 and record the sync outcome. If access or formatting verification fails, report
 that the repository is updated but the document is pending; do not claim success.
+After successful native readback, regenerate and verify the Markdown mirror and
+commit/push it with its sync manifest. A Google-only edit is not a completed guide
+update under the user's October 22 synchronization preference.
 
 ## Status vocabulary
 

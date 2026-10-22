@@ -50,6 +50,26 @@ elsewhere, but all prepared assets and project outputs belong under this root.
   environment plumbing and bounded validation may proceed now; do not interpret
   that authorization as permission to begin unattended training.
 
+## Connected engineering guide
+
+User preference (2026-10-22): the Google engineering guide and its GitHub Markdown
+copy must stay aligned whenever the guide is updated from this project chat.
+The binding is `documentation/engineering-guide.sync.json`; the readable copy is
+`documentation/engineering-guide.md`. Follow the **Chat-managed Markdown mirror**
+procedure in `documentation/learning-guide-sync.md` for each guide update.
+
+- Use the connected Google Drive tools to read the current full document, make
+  revision-guarded scoped edits, and verify the native readback. Preserve all tabs
+  and historical evidence. Refresh the Markdown from that verified full read with
+  `scripts/sync_engineering_guide.py`, then commit/push the mirror and manifest
+  alongside the related documentation change. This standing user authorization
+  covers guide synchronization; it does not authorize new training or messaging.
+- Do not hand-edit the generated mirror or discard divergent Markdown edits.
+  Reconcile differences first. If either service is unavailable, record which
+  copy is pending and report it honestly; do not claim both are synchronized.
+- This is a chat-managed workflow, not an unattended watcher. Direct edits in
+  Google Docs or GitHub outside this workflow require a fresh read/reconciliation.
+
 ## Required OpenUSD authoring discipline
 
 User requirement (2026-10-06): always maintain a clean, clearly named scene
