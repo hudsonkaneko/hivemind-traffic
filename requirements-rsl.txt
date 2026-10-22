@@ -1,0 +1,16 @@
+# Install into runtimes/rsl_rl with --no-deps --only-binary=:all: --python-version 3.12.
+# Torch, NumPy, torchvision, ONNX and TensorBoard come from the isolated Isaac runtime.
+rsl-rl-lib==5.0.0
+tensordict==0.10.0
+GitPython==3.1.46
+gitdb==4.0.12
+smmap==5.0.2
+onnxscript==0.5.4
+onnx_ir==0.1.12
+pyvers==0.1.0
+orjson==3.11.3
+cloudpickle==3.1.2
+packaging==25.0
+importlib_metadata==8.7.0
+zipp==3.23.0
+typing_extensions==4.15.0
