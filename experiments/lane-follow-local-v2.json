@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "run_name": "lane-follow-local-v2",
+  "seed": 2101,
+  "route": "left_r60",
+  "total_timesteps": 262144,
+  "checkpoint_every": 16384,
+  "max_seconds": 7200,
+  "action_mapping": "normalized_steering_signed_longitudinal",
+  "ppo": {
+    "learning_rate": 0.0003,
+    "n_steps": 2048,
+    "batch_size": 128,
+    "n_epochs": 10,
+    "gamma": 0.999,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "ent_coef": 0.01,
+    "vf_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "target_kl": 0.02
+  },
+  "policy": {
+    "hidden_sizes": [64, 64],
+    "log_std_init": -1.0
+  }
+}
