@@ -1,5 +1,79 @@
 # Engineering guide synchronization
 
+## Chat-managed Markdown mirror
+
+The complete [Engineering & Learning Guide](engineering-guide.md) can now be read
+on GitHub. Its source is the existing native Google document
+`1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c`; its binding, last verified source
+revision, tab inventory and Markdown SHA-256 are in
+[`engineering-guide.sync.json`](engineering-guide.sync.json).
+
+The user authorized this ongoing workflow on October 22, 2026. A guide update
+requested through the project chat must update both copies, without another
+permission prompt. This does not create a background poller, scheduled task,
+Google webhook, or automatic bidirectional GitHub integration.
+
+1. Read the current document with the Google Drive connector's `get_document`.
+   Read all tabs, even if the browser URL points at only one. Compare the tab
+   inventory/revision with the manifest and reconcile any intervening changes.
+2. Make the requested scoped native changes using `batch_update_document` with
+   `write_control.requiredRevisionId`. Preserve unrelated text, native formatting,
+   tabs and history. If the request starts from an edit to Markdown, reconcile
+   it into the corresponding native section before regenerating the mirror.
+3. Read the full native document back once. Verify the intended edit and
+   preservation of unaffected tabs. Save the returned `structuredContent` JSON
+   in a new directory under ignored `outputs/doc-sync/`; do not commit raw reads,
+   access tokens, signed download URLs or comments.
+4. Render and verify from the repository root with normal traffic Python:
+
+   ```text
+   python scripts/sync_engineering_guide.py --source outputs/doc-sync/<run>/source.json
+   python scripts/sync_engineering_guide.py --source outputs/doc-sync/<run>/source.json --check
+   ```
+
+   The script has no Google credentials and performs no network writes. It binds
+   the exact native document to the fixed Markdown/manifest paths. A partial
+   read, missing existing tab, unsupported element or locally edited mirror
+   stops the refresh instead of silently losing content. Do not delete the
+   manifest to bypass a conflict; preserve the edits, reconcile both versions,
+   and review any explicit repair before refreshing.
+5. Review the rendered headings, tables, commands and links. The renderer retains
+   wording, tab order, headings, bold/italic text, hyperlinks, simple tables and
+   monospace command blocks. Page layout, fonts, colors, comments and suggestion
+   workflows are not reproduced. New images, lists, footnotes or merged tables
+   require explicit converter support and preservation checks before refreshing.
+6. Update this sync record and the changelog for a meaningful milestone, then
+   commit/push the Markdown, manifest and related changes together. Follow the
+   normal feature-branch/PR workflow. A local commit alone is not a GitHub update.
+   The Google guide's GitHub link should follow the active published branch and
+   be updated to `main` after this documentation feature is reviewed and merged.
+7. If native editing or GitHub publication fails, name the pending copy in the
+   final response. An unchanged local manifest does not prove that Google Docs
+   has not changed since the last read. Edits made outside this chat are imported
+   at the next requested synchronization, not continuously monitored.
+
+## October 22: initial complete conversion
+
+Converted all 42 existing tabs and 14 native tables with 182 monospace command
+paragraphs. There were no embedded images, native lists, footnotes, headers or
+footers; existing screenshot hyperlinks remain links to the original assets.
+Added a reciprocal GitHub link and synchronization explanation to **00 Start
+here**. Historical milestone content is retained, including the October 19
+training proposal; conversion does not revise those earlier claims to describe
+later training. The exact source revision and final counts are in the manifest.
+
+The native source and Google's direct Markdown export are retained locally under
+`outputs/doc-sync/markdown-20261022/`. Native structure is used for the published
+conversion because the direct export flattens heading levels and loses command
+styling. Targeted tests cover text/table/code preservation, all-tab rendering,
+revision checks, unsupported features and refusal to overwrite local edits.
+
+Verification: all 10 targeted tests passed. GitHub's own Markdown renderer
+preserved all 1,742 nonempty native paragraphs, 42 tab anchors, 14 tables and
+182 command blocks. Native readback confirmed the exact added text and unchanged
+bodies for the other 41 tabs. Local render output and the comparison report are
+retained in the same ignored directory; no Google pagination audit is claimed.
+
 ## Verified October 12: project-local skills
 
 Added **38 Project skills in GitHub**, tab `t.124coz3q4xks`, to the

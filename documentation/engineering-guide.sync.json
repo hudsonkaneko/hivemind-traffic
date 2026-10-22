@@ -1,0 +1,359 @@
+{
+  "schema_version": 1,
+  "document_id": "1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c",
+  "document_url": "https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit",
+  "source_revision_id": "AHj4eMS9MbkLt6Qn4w79TMv3RhGGx4Q7S9trqxpy9I48IOPFhZu7PpLHQukrjXbKWRtSHz8cY38gHoxtV-AeTkMlA3Fa-9h9OzK1i-fQaWM",
+  "markdown_path": "documentation/engineering-guide.md",
+  "markdown_sha256": "c642643ad9693b9f70707a2bdab9d85fb119536c82bddf84adcd736c8bbb6959",
+  "sync_mode": "chat_managed_after_verified_google_edit",
+  "renderer": "scripts/sync_engineering_guide.py",
+  "tabs": [
+    {
+      "tab_id": "t.0",
+      "title": "00 Start here",
+      "parent_tab_id": null,
+      "paragraphs": 72,
+      "tables": 0,
+      "source_body_sha256": "76ad2d47449bb1513e7c5f5800611c2982e1a146e75cae1a1bdb73cd4e6afb37"
+    },
+    {
+      "tab_id": "t.w2twc8yzdth8",
+      "title": "01 Repository boundaries",
+      "parent_tab_id": null,
+      "paragraphs": 30,
+      "tables": 0,
+      "source_body_sha256": "5958aa5e194db38b74bc0a6eeca41f3a04154c10cac7f5fb818a149808f59e35"
+    },
+    {
+      "tab_id": "t.nc1hv1juyfll",
+      "title": "02 Dependencies and portability",
+      "parent_tab_id": null,
+      "paragraphs": 39,
+      "tables": 0,
+      "source_body_sha256": "99f2871260830ad28c39e486810ba1f3c4568fa4e9165da82ea6cb53a2071ae5"
+    },
+    {
+      "tab_id": "t.6z084o1j9bo2",
+      "title": "03 SUMO and TraCI",
+      "parent_tab_id": null,
+      "paragraphs": 43,
+      "tables": 0,
+      "source_body_sha256": "8f69fcad493585e7327bae10b7bdfa5457c3ff7a934ac18749b41fa00e1a9058"
+    },
+    {
+      "tab_id": "t.xx03z3lvew1x",
+      "title": "04 Isaac and lidar decision",
+      "parent_tab_id": null,
+      "paragraphs": 36,
+      "tables": 0,
+      "source_body_sha256": "66bd4754c2cc78f6de3c86174675e5c7fe9f50778693d7904d2f179974d1a047"
+    },
+    {
+      "tab_id": "t.1aizbsu5kpcr",
+      "title": "05 PettingZoo and curved traffic",
+      "parent_tab_id": null,
+      "paragraphs": 40,
+      "tables": 0,
+      "source_body_sha256": "a50975f9e9682a0ad80263d8f3bc09f5f7266284fc11bc9d2caa5382178a86ee"
+    },
+    {
+      "tab_id": "t.odx5w8vvnbs9",
+      "title": "06 Scripted and random baselines",
+      "parent_tab_id": null,
+      "paragraphs": 42,
+      "tables": 0,
+      "source_body_sha256": "08601138469d557b7baffc0f611276f87fd638d6bd2dee452c6979b8b33fd2d5"
+    },
+    {
+      "tab_id": "t.2oadx9o9j7v9",
+      "title": "07 Shared PPO",
+      "parent_tab_id": null,
+      "paragraphs": 40,
+      "tables": 0,
+      "source_body_sha256": "0649ace4d8be80707496a8bab6463496501afbfcdfc3194afba9ed12880b71ea"
+    },
+    {
+      "tab_id": "t.kzvpcax50f94",
+      "title": "08 Awareness and safety refinement",
+      "parent_tab_id": null,
+      "paragraphs": 36,
+      "tables": 0,
+      "source_body_sha256": "df5e7b977722d2dcbfae86c9b8033341f84f7777d73b724250c9573361471a1f"
+    },
+    {
+      "tab_id": "t.nbbmkv8ek2tk",
+      "title": "09 Static RTX lidar",
+      "parent_tab_id": null,
+      "paragraphs": 37,
+      "tables": 0,
+      "source_body_sha256": "aaf188a8542721f5579f5cfd13ad86c8540522da4356f76e4fb9ddc6bf44309c"
+    },
+    {
+      "tab_id": "t.utnb9vbixqfp",
+      "title": "10 Moving traffic in OpenUSD",
+      "parent_tab_id": null,
+      "paragraphs": 40,
+      "tables": 0,
+      "source_body_sha256": "5bf4883376f862fc6a66f5abed1467629399cd0974ee2b0dd2359f9097f88e0e"
+    },
+    {
+      "tab_id": "t.i3zm9qaea3qe",
+      "title": "11 Repository transfer",
+      "parent_tab_id": null,
+      "paragraphs": 42,
+      "tables": 0,
+      "source_body_sha256": "3181431d9a4cfb4cda9c12264a8687f8979c88e15ee7ad8d9d0063de373a2be0"
+    },
+    {
+      "tab_id": "t.pmiduualw22c",
+      "title": "12 GUI lidar fix",
+      "parent_tab_id": null,
+      "paragraphs": 36,
+      "tables": 0,
+      "source_body_sha256": "0a63e423b2fcc3899b8f74d226920154ddb0caee3f1832bf9ab585e96030722d"
+    },
+    {
+      "tab_id": "t.kcaya7u45f24",
+      "title": "13 ovrtx architecture decision",
+      "parent_tab_id": null,
+      "paragraphs": 36,
+      "tables": 0,
+      "source_body_sha256": "40137e04d6b2dbed266a413dc8d3687028ed2d307077e2891e80ed3b43268811"
+    },
+    {
+      "tab_id": "t.7yw661dv42iu",
+      "title": "14 Shared exporter and ovrtx",
+      "parent_tab_id": null,
+      "paragraphs": 44,
+      "tables": 0,
+      "source_body_sha256": "b22d74fadcfd581e6e109b793f37714d2930720891ab14b57bfbeeb96b30f7e9"
+    },
+    {
+      "tab_id": "t.fslvdlft9ot",
+      "title": "15 Interview and study workbook",
+      "parent_tab_id": null,
+      "paragraphs": 56,
+      "tables": 0,
+      "source_body_sha256": "4f78fa3d46fe816b6d6f725e17a35efde712826b3a1bd88cb181943ab1368058"
+    },
+    {
+      "tab_id": "t.cchxbirgtixb",
+      "title": "16 Moving lidar geometry and timing",
+      "parent_tab_id": null,
+      "paragraphs": 56,
+      "tables": 0,
+      "source_body_sha256": "4b0ea277739cd4da603bd28f01a6680904c3dcbe1db6767bb92342ebe4839992"
+    },
+    {
+      "tab_id": "t.2ctsja7co7rg",
+      "title": "17 Curved replay lidar validation",
+      "parent_tab_id": null,
+      "paragraphs": 68,
+      "tables": 0,
+      "source_body_sha256": "ddb5fd4aeb20d5b15ea1cced67cc0260c06e7df63d5df1116aa306f286231b27"
+    },
+    {
+      "tab_id": "t.c9rggs6xex7k",
+      "title": "18 Ground truth vs lidar perception",
+      "parent_tab_id": null,
+      "paragraphs": 61,
+      "tables": 0,
+      "source_body_sha256": "0b35d94c3802e9c267177e03ecd132542755546dee86978dac1b3a6949bbc58b"
+    },
+    {
+      "tab_id": "t.jz0vf0ad2a8r",
+      "title": "19 Lidar failure diagnostics",
+      "parent_tab_id": null,
+      "paragraphs": 73,
+      "tables": 0,
+      "source_body_sha256": "c014df7b95da9f7789a8b97583628d5d310413df902e2eb7fc667c8e6ccdba59"
+    },
+    {
+      "tab_id": "t.c8cnwa4eowg",
+      "title": "20 Two-car lidar identity isolation",
+      "parent_tab_id": null,
+      "paragraphs": 73,
+      "tables": 0,
+      "source_body_sha256": "885c5b6acc7efc99af3c9d7ed49b8bcbff03e0e46771853137ef2a6ce4d107a0"
+    },
+    {
+      "tab_id": "t.2ivlli89tzj8",
+      "title": "21 Portable demonstration launcher",
+      "parent_tab_id": null,
+      "paragraphs": 100,
+      "tables": 0,
+      "source_body_sha256": "854fb8c80c437f34c14ff1ee61802d50a0d8e18edc704818064d322ede9d79b6"
+    },
+    {
+      "tab_id": "t.mum52kmdfd9i",
+      "title": "22 Lidar identity map-source investigation",
+      "parent_tab_id": null,
+      "paragraphs": 37,
+      "tables": 0,
+      "source_body_sha256": "e0bdcb4896dab7cf5768d693afb133ebc2f079bfaaa08282a9bda5feb9c185da"
+    },
+    {
+      "tab_id": "t.df6w7wqf3jkt",
+      "title": "23 Initial visibility and lidar registration",
+      "parent_tab_id": null,
+      "paragraphs": 22,
+      "tables": 0,
+      "source_body_sha256": "9a824cc6be1e7cf852555f493db4969b37a0a22f79f229192ac5b0c46c037cae"
+    },
+    {
+      "tab_id": "t.tcee1jwa6vj6",
+      "title": "24 Explicit visibility diagnostic",
+      "parent_tab_id": null,
+      "paragraphs": 28,
+      "tables": 0,
+      "source_body_sha256": "1216955d4c19ba47078beb2c6ee34d02616d9288cc658a18fac052514b79517e"
+    },
+    {
+      "tab_id": "t.yt6tixhcaw4x",
+      "title": "25 Hybrid roadmap and GitHub workflow",
+      "parent_tab_id": null,
+      "paragraphs": 52,
+      "tables": 0,
+      "source_body_sha256": "2092f3c399473af0a2204785546ce3b588dcf5247bb89ee21c2455c6c54984b9"
+    },
+    {
+      "tab_id": "t.n7c34hqtzn8v",
+      "title": "26 Physics-driven car foundation",
+      "parent_tab_id": null,
+      "paragraphs": 42,
+      "tables": 0,
+      "source_body_sha256": "5f1471c3663cd792fc45cd967e401594cb6f1361438b87b0e58973746edf6088"
+    },
+    {
+      "tab_id": "t.egh5rmb516m4",
+      "title": "27 Dynamics, resets and Isaac Lab",
+      "parent_tab_id": null,
+      "paragraphs": 48,
+      "tables": 0,
+      "source_body_sha256": "cb043e1f1fca1151df64a846d11f359b7f6bb53fd55be63745ce6a074a6e202b"
+    },
+    {
+      "tab_id": "t.70inmvd9orgv",
+      "title": "28 Scripted lane following",
+      "parent_tab_id": null,
+      "paragraphs": 43,
+      "tables": 0,
+      "source_body_sha256": "355f7dabf0649de9acdf9e19abc56b39b1939fb9def8488366ae2e361ad3fcc7"
+    },
+    {
+      "tab_id": "t.rb5nks6ogqck",
+      "title": "29 Physics car and LiDAR view",
+      "parent_tab_id": null,
+      "paragraphs": 47,
+      "tables": 0,
+      "source_body_sha256": "6042782459c5db832bdfcc52b6bc8ce0ad06d5b11112963a62531899b426d15b"
+    },
+    {
+      "tab_id": "t.ivzd9eyrxgjj",
+      "title": "30 Wheel orientation fix",
+      "parent_tab_id": null,
+      "paragraphs": 31,
+      "tables": 0,
+      "source_body_sha256": "025d0c7b81cfba1ad2c81a8b898051d17cda1a5cb1d0a88ec7a7aa69b7dfe478"
+    },
+    {
+      "tab_id": "t.cbgq2dwnrach",
+      "title": "31 Adaptive obstacle bypass",
+      "parent_tab_id": null,
+      "paragraphs": 36,
+      "tables": 0,
+      "source_body_sha256": "3678cbebf7fa24cb1015213f3a5ffc904533df3b53ef587b3911879f2c6945b3"
+    },
+    {
+      "tab_id": "t.9wkfs52ky6df",
+      "title": "32 Demo readiness and profiling",
+      "parent_tab_id": null,
+      "paragraphs": 37,
+      "tables": 0,
+      "source_body_sha256": "696baf73978231645c24877aecfb8e079b217341ba5350e08f8f5a81abf300ab"
+    },
+    {
+      "tab_id": "t.e9ctk5gfkhg",
+      "title": "33 Live preview timing",
+      "parent_tab_id": null,
+      "paragraphs": 33,
+      "tables": 0,
+      "source_body_sha256": "be865825fffd0c645a379d6c546a679357b05205651a5d4745f169cbb523cae6"
+    },
+    {
+      "tab_id": "t.9ah0315nta8b",
+      "title": "34 Loop traffic showcase",
+      "parent_tab_id": null,
+      "paragraphs": 38,
+      "tables": 0,
+      "source_body_sha256": "fc417d427a01e2e42909c4f8663ee1328ea71b3a785ebfaa8d44a224a7b4a752"
+    },
+    {
+      "tab_id": "t.dwsxfv73kedy",
+      "title": "35 Showcase performance",
+      "parent_tab_id": null,
+      "paragraphs": 33,
+      "tables": 0,
+      "source_body_sha256": "b094eb21e635197fb60560e248a042bcdbc69a8bc9d9a90443bc9cc82c97c479"
+    },
+    {
+      "tab_id": "t.jndashuyzqn1",
+      "title": "36 Responsive showcase",
+      "parent_tab_id": null,
+      "paragraphs": 31,
+      "tables": 0,
+      "source_body_sha256": "7ae6a7253b2e084784f4753029abb19fc6ed79ffca8466969dece69ff602806b"
+    },
+    {
+      "tab_id": "t.q3vcdoqqkcjq",
+      "title": "37 Live showcase controls",
+      "parent_tab_id": null,
+      "paragraphs": 34,
+      "tables": 0,
+      "source_body_sha256": "6a54e4cf52b663fd8a5a8693b9561257578a27d21bd3067580662e46c031228d"
+    },
+    {
+      "tab_id": "t.124coz3q4xks",
+      "title": "38 Project skills in GitHub",
+      "parent_tab_id": null,
+      "paragraphs": 31,
+      "tables": 0,
+      "source_body_sha256": "ba8f8826499fd0680c5df386a5093d203d1d35be1d051f027de15ddb04231e83"
+    },
+    {
+      "tab_id": "t.mriyksl2h83o",
+      "title": "39 Clean-clone readiness",
+      "parent_tab_id": null,
+      "paragraphs": 44,
+      "tables": 0,
+      "source_body_sha256": "0d0ff7bb4aede65fe21103ce206fe65377b2ff0de335600f0b1ccd23139ffb3d"
+    },
+    {
+      "tab_id": "t.lz1t1b5s17js",
+      "title": "40 Showcase validation",
+      "parent_tab_id": null,
+      "paragraphs": 303,
+      "tables": 6,
+      "source_body_sha256": "37465e49b28061514730f37d7808acc3c06f47fc3a2e3565f74aeef717f04e65"
+    },
+    {
+      "tab_id": "t.k82ts3ro3qz9",
+      "title": "41 Isaac Lab lane task",
+      "parent_tab_id": null,
+      "paragraphs": 200,
+      "tables": 8,
+      "source_body_sha256": "1d12a8198e004beb46ddb7b90118318be4689c280962ccb174beb4995722a9ec"
+    }
+  ],
+  "totals": {
+    "tabs": 42,
+    "paragraphs": 2270,
+    "tables": 14,
+    "code_blocks": 182
+  },
+  "limitations": [
+    "Typography, page layout, color and comment threads are not mirrored.",
+    "No background polling or automatic sync for edits made outside the chat.",
+    "Unsupported native elements stop conversion rather than silently disappearing."
+  ]
+}

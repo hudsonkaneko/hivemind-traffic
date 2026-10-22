@@ -51,3 +51,6 @@ tests/test_lane_follow_ppo_runner.py text eol=lf
 tests/test_plot_lane_follow_ppo.py text eol=lf
 tests/test_preview_lane_follow_ppo.py text eol=lf
 tests/test_report_lane_follow_ppo.py text eol=lf
+# The guide manifest hashes exact Markdown bytes on every checkout platform.
+documentation/engineering-guide.md text eol=lf
+documentation/engineering-guide.sync.json text eol=lf
