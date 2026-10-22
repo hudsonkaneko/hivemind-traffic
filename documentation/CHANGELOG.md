@@ -4,6 +4,20 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-22 — Sam's supplied-car visual replay foundation
+
+- Added a scoped [development plan](sam-development-plan.md) under the master
+  research boundaries, without adopting the broader physical-fleet roadmap.
+- Added private-source asset composition and a layered SUMO replay builder,
+  explicit fallback materials, stable vehicle identities and shortest-arc heading
+  interpolation. The original collection and baseline inputs remain unchanged.
+- Added an Isaac viewer with playback, scrub, selection, telemetry and camera
+  controls plus a portable launch wrapper. See [usage and evidence limits](visual-twin.md).
+- Three public-fixture tests pass for pose/heading/lifecycle, input immutability,
+  invalid times, output preservation and heading wrap. Local full-recording checks
+  passed 1,350 pose/heading/lifecycle checks; actual runtime evidence is recorded
+  separately. Private assets, installed runtime and raw outputs are excluded.
+
 ## 2026-10-15 — Clean-clone readiness
 
 - Added an explicit public procedural PhysX car option, leaving the prepared

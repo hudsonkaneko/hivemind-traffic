@@ -25,6 +25,11 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
 
+October 22 scoped Sam contribution: [Sam's research development plan](sam-development-plan.md)
+and [supplied-car visual replay](visual-twin.md) develop the bounded research
+visualization path. This does not replace the broader hybrid-fleet roadmap or
+advance its physics, trained-control or mixed-traffic acceptance gates.
+
 October 15 portability increment: [clean-clone readiness](clean-clone.md) adds
 Windows CPU/SUMO CI and an opt-in procedural public car for the loop showcase.
 This verifies installation and demo entry points separately from private assets;

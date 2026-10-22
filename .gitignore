@@ -11,5 +11,7 @@ runtimes/
 .idea/
 .vscode/
 hivemind.local.json
+# Supplied collection: source and prepared visual variants have unqualified rights.
+vehicles/sim_ready/sam-collected/
 results/*
 !results/README.md
