@@ -25,6 +25,22 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
 
+October 22 end-of-day handoff: [current status and next session](team-handoff-2026-10-22.md)
+distinguish verified viewer/accounting work, conditional site selection and pending
+driver/communication evidence. No new training or physical acceptance is claimed.
+
+October 22 geographic-site amendment: Sam requested an evidence-based site
+selection and realistic road reconstruction using the existing viewer. The
+[site decision](highway-twin-site-decision-2026-10-22.md) recommends exiD's A44
+Aachen-Brand merge at its recording epoch, pending package access, exact location
+and factual qualification. This is a scoped research contribution; no new physical
+fleet, sensing, learned-policy or shared-map gate passes through this decision.
+
+October 22 scoped Sam contribution: [Sam's research development plan](sam-development-plan.md)
+and [supplied-car visual replay](visual-twin.md) develop the bounded research
+visualization path. This does not replace the broader hybrid-fleet roadmap or
+advance its physics, trained-control or mixed-traffic acceptance gates.
+
 October 15 portability increment: [clean-clone readiness](clean-clone.md) adds
 Windows CPU/SUMO CI and an opt-in procedural public car for the loop showcase.
 This verifies installation and demo entry points separately from private assets;

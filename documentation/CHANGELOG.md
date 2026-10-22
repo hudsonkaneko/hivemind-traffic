@@ -4,6 +4,58 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-22 — Sam's supplied-car visual replay foundation
+
+- Added the [teammate handoff and resume checklist](team-handoff-2026-10-22.md),
+  linked it from the README and active plans, and aligned viewer instructions with
+  free/follow/overview camera behavior. Next session begins with exiD access and
+  exact-site qualification. Shared-master synchronization is specifically
+  authorized by Sam's end-of-day documentation request and verified saved with
+  all prior text preserved; no new runtime claim.
+
+- Added a [site-selection decision and complete build contract](highway-twin-site-decision-2026-10-22.md)
+  after Sam requested a more realistic highway and delegated candidate selection.
+  Recommend recording-era exiD A44 Aachen-Brand; exact site files/rights and
+  factual admission remain pending. Verified public NRW I3S metadata; retained
+  bounded I-80 LiDAR acquisition and failed imagery attempts as local evidence.
+  No new road reconstruction, simulator acceptance or training is claimed.
+
+- Released the viewer camera from its per-frame pose reset: Free camera is now
+  the interactive default, with explicit Follow and Overview controls. Added
+  startup callback evidence for camera-pose preservation and resuming Follow.
+
+- Continued [I-80/Powell qualification](i80-powell-qualification-2026-10-22.md):
+  recovered readable original support/TXT sources, matched the early API sample
+  exactly, and documented the remaining demand/queue and gap-evidence gaps.
+  Site is usable for historical development but not admitted for the full study.
+- Added a separate observed-track/GIS inspection scene through the existing
+  viewer, with explicit source labels and no fabricated trip-completion ledger.
+  Reused motion-layer authoring; synthetic accounted replay remains available.
+
+- Follow-up: added fixed-horizon, boundary-inclusive trip accounting with a
+  separate bounded drain, native tripinfo crosschecks, a synthetic merge fixture,
+  and ledger telemetry in the existing viewer. Preserved the old replay prefix.
+- Audited a bounded public I-80 development sample and Esri context metadata;
+  historical site admission remains conditional. Recorded Hudson's actual
+  experimental driver interface and proposed research integration gates.
+  See [accounting and qualification evidence](merge-accounting-2026-10-22.md).
+
+- Added a scoped [development plan](sam-development-plan.md) under the master
+  research boundaries, without adopting the broader physical-fleet roadmap.
+- Added private-source asset composition and a layered SUMO replay builder,
+  explicit fallback materials, stable vehicle identities and shortest-arc heading
+  interpolation. The original collection and baseline inputs remain unchanged.
+- Added an Isaac viewer with playback, scrub, selection, telemetry and camera
+  controls plus a portable launch wrapper. See [usage and evidence limits](visual-twin.md).
+- Three public-fixture tests pass for pose/heading/lifecycle, input immutability,
+  invalid times, output preservation and heading wrap. Local full-recording checks
+  passed 1,350 pose/heading/lifecycle checks; actual runtime evidence is recorded
+  separately. Private assets, installed runtime and raw outputs are excluded.
+- Isaac 6.0.1 completed a 360-update RTX check with follow/overview PNGs, seven
+  passing control/state checks and unchanged saved layers. Added a standalone
+  composition checker, short-runtime-path launcher support and synchronized
+  capture completion. See [runtime evidence and failures](visual-twin-2026-10-22.md).
+
 ## 2026-10-15 — Clean-clone readiness
 
 - Added an explicit public procedural PhysX car option, leaving the prepared
