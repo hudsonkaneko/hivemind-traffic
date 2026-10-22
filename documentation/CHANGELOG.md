@@ -4,6 +4,22 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-22 - Hazard training recovery and full-scene integration (v02/v03)
+
+- Fixed the native inference-tensor reset boundary and resumed the saved RSL
+  optimizer. The isolated curriculum passed all three 10-case development gates
+  after 98,304 cumulative PPO transitions plus an explicit imitation warm start.
+- Retained the failed full-scene policy transfer (lane departure after 6.659 m).
+  Added full-highway training with the actual twelve background-car inputs,
+  independently replayed observations and seeded scenario compatibility checks.
+  Four scripted full-scene cases and a continuous 180 m baseline passed.
+- Verified a separate two-physical-car foundation: independent actuation/reset,
+  repeatable motion, support/containment and deliberate car-to-car contacts.
+  Learned main-car integration remains the first acceptance target; expansion
+  follows it. Full-scene training and held-out policy acceptance are in progress.
+- Preserved failed attempts and source snapshots. See
+  [the versioned record](rsl-road-hazard-integration.md) for scope and evidence.
+
 ## 2026-10-22 - RSL-RL native road-hazard foundation (v01)
 
 - Added a separate 42-observation task, collidable seeded crossing objects,

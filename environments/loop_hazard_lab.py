@@ -25,6 +25,16 @@ class LoopHazardLabCfg(LaneFollowingLabCfg):
 
 
 class LoopHazardLabEnv(LaneFollowingLabEnv):
+    @torch.inference_mode()
+    def reset(self, seed=None, options=None):
+        # RSL allocates task tensors inside inference_mode. Native reset writes
+        # those tensors in place, so evaluation must use that same context.
+        return super().reset(seed=seed, options=options)
+
+    @torch.inference_mode()
+    def step(self, actions):
+        return super().step(actions)
+
     def __init__(self, cfg, **kwargs):
         self.hazards = None
         self.schedule = None

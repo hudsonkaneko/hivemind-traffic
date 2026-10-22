@@ -39,6 +39,14 @@ def source_hashes():
         'traffic/bypass_validation.py',
         'environments/lane_follow_rsl.py', 'requirements-rsl.txt',
         'scenarios/physics-road/loop-hazard-routes-v1.json',
+        'environments/full_loop_hazard_lab.py', 'environments/full_loop_hazard_contract.py',
+        'experiments/full_loop_hazard_support.py',
+        'environments/continuous_loop_hazard_contract.py',
+        'environments/compatible_full_loop_hazard_lab.py', 'experiments/full_scene_hazard_preflight.py',
+        'usd/highway_loop_scene.py', 'usd/live_showcase_fleet.py', 'usd/showcase_fleet.py',
+        'traffic/live_showcase.py', 'traffic/loop_driving.py', 'traffic/showcase_clearance.py',
+        'traffic/loop_showcase_control.py', 'traffic/obstacle_bypass.py', 'experiments/showcase_controls.py',
+        'environments/physics_vehicle_lab.py', 'experiments/train_lane_follow_rsl.py', 'traffic/lidar_braking.py',
     }
     return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in sorted(names)}
 
@@ -47,6 +55,14 @@ def episode_case(args, index):
     if args.stage != 'mixed':
         return args.stage, args.side
     return [('clear', None), ('static', None), ('crossing', 'left'), ('crossing', 'right')][index % 4]
+
+
+def make_accumulator(args, reset, *, route, stage):
+    if args.environment == 'full':
+        from experiments.full_loop_hazard_support import FullEpisodeAccumulator
+        return FullEpisodeAccumulator(reset, route=route, stage=stage)
+    from experiments.loop_hazard_support import EpisodeAccumulator
+    return EpisodeAccumulator(reset, route=route, stage=stage)
 
 
 def resolved_arguments(args):
@@ -86,18 +102,23 @@ def native(args, output):
                 result['runtime_versions'][package] = importlib.metadata.version(package)
             except importlib.metadata.PackageNotFoundError:
                 result['runtime_versions'][package] = 'distribution metadata unavailable'
-        from environments.loop_hazard_lab import LoopHazardLabCfg, LoopHazardLabEnv
+        if args.environment == 'full':
+            from environments.full_loop_hazard_lab import FullLoopHazardLabCfg as EnvironmentCfg
+            from environments.compatible_full_loop_hazard_lab import CompatibleFullLoopHazardLabEnv as Environment
+        else:
+            from environments.loop_hazard_lab import LoopHazardLabCfg as EnvironmentCfg
+            from environments.loop_hazard_lab import LoopHazardLabEnv as Environment
         from environments.lane_follow_rsl import signed_vehicle_actions
-        from experiments.loop_hazard_support import EpisodeAccumulator
         torch.set_num_threads(4)
         torch.manual_seed(args.seeds[0])
-        cfg = LoopHazardLabCfg()
+        cfg = EnvironmentCfg()
         cfg.scene_directory = str(output / 'scene')
         cfg.sim.log_dir = str(ROOT / 'logs/rsl_integration' / output.name / 'isaac')
         cfg.hazard_stage, cfg.hazard_side = episode_case(args, 0)
         cfg.seed = args.seeds[0]
         cfg.reset_perturb = True
-        env = LoopHazardLabEnv(cfg)
+        env = Environment(cfg)
+        result['environment'] = args.environment
         atomic_json(output / 'scene-contract.json', env.scene_contract())
         policy = None
         if args.policy:
@@ -118,7 +139,7 @@ def native(args, output):
                     episode = {'seed': seed, 'stage': stage, 'side': side,
                                'reset': deepcopy(env.last_reset), 'steps': 0, 'return': 0.0,
                                'contacts': 0, 'clipped_actions': 0, 'max_lateral_m': 0.0}
-                    accumulator = EpisodeAccumulator(env.last_reset, route=env.route, stage=stage)
+                    accumulator = make_accumulator(args, env.last_reset, route=env.route, stage=stage)
                     for step in range(2101):
                         if time.monotonic() - started > args.max_seconds - 30:
                             raise TimeoutError('Native operation deadline reached')
@@ -174,6 +195,7 @@ def native(args, output):
                 raise RuntimeError('Frozen policy parameters or normalization changed')
         result['scene_final'] = env.scene_contract()
     except BaseException as exc:
+        result['completed'] = False
         result['error'] = f'{type(exc).__name__}: {exc}'
         result['traceback'] = traceback.format_exc()
         raise
@@ -184,6 +206,10 @@ def native(args, output):
                 result['contact_cleanup'] = env.contact_reporting.get('cleanup')
                 result['viewport_cleanup'] = env.viewport_cleanup
         finally:
+            counts_path = output / 'optimizer-counts.json'
+            if args.mode == 'train' and counts_path.is_file():
+                result['optimizer_counts'] = json.loads(counts_path.read_text(encoding='utf-8'))
+                result['optimizer_steps'] = result['optimizer_counts']['ppo']
             result['wall_seconds'] = time.monotonic() - started
             atomic_json(output / 'result.json', result)
             app.close()
@@ -198,12 +224,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('mode', choices=['probe', 'collect', 'train', 'evaluate'])
     parser.add_argument('--stage', choices=['clear', 'static', 'crossing', 'mixed'], default='mixed')
+    parser.add_argument('--environment', choices=['isolated', 'full'], default='isolated')
     parser.add_argument('--side', choices=['left', 'right'])
     parser.add_argument('--seeds', type=int, nargs='+', default=[31001, 31002, 31003, 31004])
     parser.add_argument('--policy', type=Path)
     parser.add_argument('--config', type=Path)
     parser.add_argument('--demonstrations', type=Path)
     parser.add_argument('--demonstration-audit', type=Path)
+    parser.add_argument('--resume', type=Path)
     parser.add_argument('--controller', choices=['scripted', 'ignore_objects'], default='scripted')
     parser.add_argument('--max-seconds', type=int, default=600)
     parser.add_argument('--native', action='store_true', help=argparse.SUPPRESS)
@@ -215,7 +243,7 @@ def main():
         parser.error('Bounded time and seed count required')
     if any(seed < 0 or seed >= 2**32 for seed in args.seeds) or len(set(args.seeds)) != len(args.seeds):
         parser.error('Unique unsigned32 seeds required')
-    for name in ('policy', 'config', 'demonstrations', 'demonstration_audit'):
+    for name in ('policy', 'config', 'demonstrations', 'demonstration_audit', 'resume'):
         path = getattr(args, name)
         if path is not None:
             path = path.resolve()
@@ -255,7 +283,10 @@ def main():
     if gpu_before['used_mib'] / gpu_before['total_mib'] >= .9:
         raise RuntimeError('Whole-GPU memory preflight limit reached')
     stamp = datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
-    output = ROOT / 'outputs/rsl_integration' / f'v01-{args.mode}-{stamp}-{uuid.uuid4().hex[:8]}'
+    version = json.loads(args.config.read_text(encoding='utf-8'))['version'] if args.config else ('v03' if args.environment == 'full' else 'v01')
+    if version not in ('v01', 'v02', 'v03'):
+        raise ValueError('Unsupported run version')
+    output = ROOT / 'outputs/rsl_integration' / f'{version}-{args.mode}-{stamp}-{uuid.uuid4().hex[:8]}'
     output.mkdir(parents=True, exist_ok=False)
     logs = ROOT / 'logs/rsl_integration' / output.name
     logs.mkdir(parents=True, exist_ok=False)
@@ -265,7 +296,7 @@ def main():
         destination.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / relative, destination)
     inputs = {getattr(args, name).relative_to(ROOT).as_posix(): hashlib.sha256(getattr(args, name).read_bytes()).hexdigest()
-              for name in ('policy', 'config', 'demonstrations', 'demonstration_audit') if getattr(args, name) is not None}
+              for name in ('policy', 'config', 'demonstrations', 'demonstration_audit', 'resume') if getattr(args, name) is not None}
     atomic_json(output / 'manifest.json', {'args': resolved_arguments(args), 'input_sha256': inputs,
                 'source_sha256': hashes, 'git_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
                 'git_status': subprocess.check_output(['git', 'status', '--short'], cwd=ROOT, text=True),
@@ -306,7 +337,9 @@ def main():
                   and after['available'] and after['count'] == 0 and monitor.rows and not monitor.errors
                   and native_result.get('completed') and not native_result.get('error')
                   and native_result.get('contact_cleanup', {}).get('passed')
-                  and not runtime['unexpected_runtime_errors'])
+                  and native_result.get('viewport_cleanup', {}).get('passed')
+                  and all(e['independent_assessment']['evidence_valid'] for e in native_result.get('episodes', []))
+                  and not runtime['unexpected_runtime_errors'] and not runtime['usd_reference_warning_count'])
     atomic_json(output / 'gpu-samples.json', monitor.rows)
     atomic_json(output / 'exit.json', {'returncode': process.poll(), 'timed_out': timed_out,
                 'wall_seconds': time.monotonic() - started, 'kit_after': after,

@@ -10,6 +10,24 @@ perception require their own gates; neither is implied by a one-car pass.
 
 ## Version history
 
+### v02 — resume after the PPO/evaluation tensor-context failure
+
+Run `v01-train-20261022T202419Z-7322db03` passed all 10 clear-road development
+cases after 2,000 imitation updates. RSL-RL then completed 16 PPO updates and
+saved `checkpoints/clear-0016.pt` plus `policy-clear-0016.pt` (32,768 transitions).
+The switch into its next evaluation failed because the task's action tensor had
+been allocated in Torch inference mode, while reset tried to clear it outside
+that mode. The supervisor correctly marked the run incomplete despite the
+runtime's exit0 behavior. The original package is retained.
+
+The new task's reset and step boundaries now consistently use inference mode;
+the original frozen lane task remains unchanged. Version2 restores the complete
+actor, critic and PPO optimizer state at update16, with no repeated imitation
+training. Its remaining maximum is 1,015,808 transitions, preserving the initial
+1,048,576-transition lifetime cap. The postponed clear-road probe runs first.
+Every promotion now also requires valid independent evidence for all ten cases.
+This is an implementation repair, not an extension of the training budget.
+
 ### v01 — measured-object task and shared policy boundary
 
 This version preserves the previous lane task, its immutable experiments, and
@@ -75,7 +93,8 @@ policy evaluation is being added before reuse decisions. Audit evidence:
 
 ## Current limitations
 
-No hazard-trained policy or full-sim acceptance result is claimed yet. This is
+The isolated hazard curriculum has passed, but full-sim policy acceptance has
+not passed: the first transfer attempt left the lane. This is
 simulator-state control at 3 m/s, not sensor autonomy, highway-speed validation,
 SUMO transfer, multi-agent training, or real-world safety certification. The
 Google engineering guide has not been synchronized for this milestone.
@@ -109,3 +128,46 @@ actions, learning rate 0.00003 and initial action standard deviation 0.06.
 Development checks run every 16 PPO updates; a passing stage promotes early,
 while the stated stage budgets remain hard upper bounds. Imitation and PPO
 optimizer calls are counted separately. Training has not yet passed its gates.
+
+## v02 — resumed training and an unsuccessful full-scene transfer
+
+The v01 attempt completed 2,000 imitation updates and 16 PPO updates before
+evaluation reset hit a Torch inference-tensor mutation error. Its checkpoint,
+logs and failed result remain intact. The reset/step boundary now uses the same
+inference context as RSL; the regression reproduces the old failure and passes
+with real CPU Torch. The interrupted run's result had a stale zero optimizer
+counter; its separate counter file correctly records 1,280 PPO optimizer calls.
+See [the interruption audit](evidence/rsl-road-hazard-v01-training-20261022.json).
+
+`v02-train-20261022T203726Z-61afe5d7` restored the full checkpoint and optimizer,
+without repeating imitation. Its clear/static/crossing development gates each
+passed 10/10, with clean process exit, source hashes and native cleanup. Across
+both attempts there were 48 PPO updates, 98,304 transitions and 3,840 PPO
+optimizer calls, plus the original 2,000 imitation updates. Early promotion
+completed the curriculum in less than its maximum budget; this does not mean
+that the remaining budget was executed.
+
+The frozen candidate is
+`outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7/policy.pt`, SHA256
+`f2e51984bce3a13d43e20f146b4b00f5d406f6ce1aa48167bb384773317123a5`.
+Full-scene trial `v01-20261022T204641Z-101d29f0` completed cleanly but failed
+driving: lane departure after 6.659 m, zero contacts. Twelve background cars
+populate object slots and sizes absent from the isolated demonstrations. The
+observed failure is evidence of a transfer problem; its exact causal weight
+has not been isolated by an ablation. Do not deploy this candidate as accepted.
+
+The scripted continuous baseline `v01-20261022T204758Z-f4202c5e` passed 180 m
+on the complete highway through three task windows, using one physical reset.
+This validates a deployment mechanism, not learned continuous driving. The
+12 background cars remain scripted and nonreactive.
+
+## v03 — full-scene training in progress
+
+The next configuration uses the same full-highway/native-background observation
+context for demonstrations, training and deployment. It starts a fresh network
+with a separately qualified imitation dataset; it does not silently mask away
+background vehicles to recover the old result. The new PPO cap is 950,272
+transitions, leaving cumulative experiment consumption within the original
+1,048,576 cap after v01/v02's 98,304 transitions. Budgets are 48/96/320 updates
+for clear/static/crossing, with the same development promotion rule. Final
+held-out seeds have not been used for policy selection.

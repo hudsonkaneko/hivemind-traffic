@@ -1,0 +1,535 @@
+{
+  "schema_version": 1,
+  "milestone": "RSL road-hazard v02 curriculum completion and full-road transfer boundary",
+  "date": "2026-10-22",
+  "status": "v02_segment_training_completed; learned_full_road_transfer_failed; scripted_continuous_and_physical_fleet_foundations_passed",
+  "priority": "Qualify the main learned car in the full scene before expanding learned multi-car behavior.",
+  "training": {
+    "run": "outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7",
+    "completed": true,
+    "curriculum_complete": true,
+    "task": "One dynamic physical car on a 100 m, radius 500 m road segment; 60 m clear/crossing goal or static-object stop. Privileged 42-value measured-state/map observation and two signed control outputs.",
+    "policy": {
+      "path": "outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7/policy.pt",
+      "sha256": "f2e51984bce3a13d43e20f146b4b00f5d406f6ce1aa48167bb384773317123a5",
+      "bytes": 68596
+    },
+    "resume_checkpoint": {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/checkpoints/clear-0016.pt",
+      "sha256": "436fff03fec93a8cf02a3dba6d20a864f32a90b2684e5e9bc9e00416130cb1b2",
+      "bytes": 351477
+    },
+    "lifetime": {
+      "ppo_updates": 48,
+      "ppo_transitions": 98304,
+      "ppo_optimizer_steps": 3840,
+      "behavior_cloning_optimizer_steps": 2000,
+      "total_optimizer_steps": 5840
+    },
+    "continuation_only": {
+      "new_ppo_updates": 32,
+      "new_ppo_transitions": 65536,
+      "ppo_optimizer_steps": 2560,
+      "behavior_cloning_optimizer_steps": 0,
+      "optimizer_state_restored": true
+    },
+    "prior_interrupted_run": {
+      "run": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03",
+      "completed": false,
+      "ppo_updates": 16,
+      "ppo_transitions": 32768,
+      "ppo_optimizer_steps": 1280,
+      "behavior_cloning_optimizer_steps": 2000,
+      "boundary_error": "In-place update to an inference tensor outside inference mode during the post-update development reset.",
+      "preserved_reporting_defect": "Original v01 result.json optimizer_steps=0 is a stale error-path default. Dedicated optimizer-counts.json records 2000 BC and 1280 PPO steps; those bytes remain unchanged.",
+      "related_evidence": "documentation/evidence/rsl-road-hazard-v01-training-20261022.json"
+    },
+    "development_gates": [
+      {
+        "stage": "clear",
+        "label": "resumed-clear",
+        "lifetime_ppo_updates": 16,
+        "episodes": 10,
+        "successes": 10,
+        "raw_rigid_contact_reports": 0,
+        "seeds": [
+          31001,
+          31002,
+          31003,
+          31004,
+          31005,
+          31006,
+          31007,
+          31008,
+          31009,
+          31010
+        ],
+        "raw_control_rows": 13820,
+        "artifact": {
+          "path": "outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7/probe-resumed-clear.jsonl",
+          "sha256": "165b8146d541e554fe62dd6b785791ad988b42229cd2dd97a765498fafb9f62b",
+          "bytes": 53155881
+        }
+      },
+      {
+        "stage": "static",
+        "label": "static-0032",
+        "lifetime_ppo_updates": 32,
+        "episodes": 10,
+        "successes": 10,
+        "raw_rigid_contact_reports": 0,
+        "seeds": [
+          31001,
+          31002,
+          31003,
+          31004,
+          31005,
+          31006,
+          31007,
+          31008,
+          31009,
+          31010
+        ],
+        "raw_control_rows": 7039,
+        "artifact": {
+          "path": "outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7/probe-static-0032.jsonl",
+          "sha256": "0c3f627967653342e1b55f164d0810ef174a74ade26d51ff77a2ed55430c902f",
+          "bytes": 34940898
+        }
+      },
+      {
+        "stage": "crossing",
+        "label": "crossing-0048",
+        "lifetime_ppo_updates": 48,
+        "episodes": 10,
+        "successes": 10,
+        "raw_rigid_contact_reports": 0,
+        "seeds": [
+          31001,
+          31002,
+          31003,
+          31004,
+          31005,
+          31006,
+          31007,
+          31008,
+          31009,
+          31010
+        ],
+        "raw_control_rows": 14602,
+        "artifact": {
+          "path": "outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7/probe-crossing-0048.jsonl",
+          "sha256": "6d94049eb52429294152eb44b64e5dd186b4037bbd1968510b83921407344e54",
+          "bytes": 74362858
+        }
+      }
+    ],
+    "gate_interpretation": "Each stage passed 10/10 at its own curriculum checkpoint: clear update 16, static 32, crossing 48. This is not 30 held-out episodes of the final policy.",
+    "heldout_generalization_qualified": false,
+    "emergency_shield": false,
+    "cleanup_passed": true,
+    "runtime_versions": {
+      "python": "3.12.13",
+      "torch": "2.10.0+cu128",
+      "numpy": "2.3.1",
+      "isaacsim": "distribution metadata unavailable",
+      "isaaclab": "6.1.18",
+      "isaaclab-rl": "0.5.7",
+      "rsl-rl-lib": "5.0.0",
+      "tensordict": "0.10.0"
+    }
+  },
+  "full_road_policy_transfer": {
+    "controller": "rsl",
+    "stage": "clear",
+    "seed": 61001,
+    "execution_passed": true,
+    "driving_passed": false,
+    "terminal_reason": "lane_departure",
+    "progress_m": 6.659350839562497,
+    "control_steps": 469,
+    "physics_samples": 938,
+    "simulated_seconds": 7.816666666666666,
+    "rigid_contact_reports": 0,
+    "minimum_ego_object_clearance_m": 35.4014792220659,
+    "physical_reset_count": null,
+    "completed_windows": 0,
+    "exact_native_roll_ticks": [],
+    "policy_state_unchanged": true,
+    "artifact": {
+      "path": "outputs/rsl_full_sim/v01-20261022T204641Z-101d29f0/trajectory.jsonl",
+      "sha256": "00a255a1eabee86c5e42beafb1e50b75f01cc23fd214c492daf0b513066b4cbc",
+      "bytes": 7937441
+    },
+    "first_guard_failure": {
+      "tick": 938,
+      "reason": "lane_departure"
+    },
+    "scope": "Same frozen v02 policy; complete highway with one dynamic learned ego and 12 adjacent nonreactive kinematic backgrounds; clear-road bounded 60 m task.",
+    "policy_sha256": "f2e51984bce3a13d43e20f146b4b00f5d406f6ce1aa48167bb384773317123a5",
+    "interpretation": "Execution and evidence completed cleanly, but the learned car departed its lane after 6.65935 m. Segment curriculum success did not establish full-road behavior.",
+    "diagnosis_status": "Populated background object slots introduce a distribution shift. This is a plausible contributor, not a proven exclusive cause; no object masking was used to relabel the failure as success."
+  },
+  "continuous_scripted_baseline": {
+    "controller": "scripted",
+    "stage": "clear",
+    "seed": 61001,
+    "execution_passed": true,
+    "driving_passed": true,
+    "terminal_reason": "success",
+    "progress_m": 180.01703875107208,
+    "control_steps": 3829,
+    "physics_samples": 7658,
+    "simulated_seconds": 63.81666666666667,
+    "rigid_contact_reports": 0,
+    "minimum_ego_object_clearance_m": 1.8338059452649516,
+    "physical_reset_count": 1,
+    "completed_windows": 3,
+    "exact_native_roll_ticks": [
+      2778,
+      5218
+    ],
+    "policy_state_unchanged": null,
+    "final_guard": null,
+    "artifact": {
+      "path": "outputs/rsl_full_sim/v01-20261022T204758Z-f4202c5e/trajectory.jsonl",
+      "sha256": "f270cb76087e5e5051a65a8f81abbc7899843daf0264acd088c5a8d81d2d4cca",
+      "bytes": 65964660
+    },
+    "scope": "Scripted clear-road baseline on the full highway; three 60 m route windows, one physical reset, one retained schedule, 12 kinematic backgrounds.",
+    "terminal_state_retained": true,
+    "optimizer_steps": 0,
+    "interpretation": "Two route-window changes preserve exact native position/velocity state. This 180 m scripted result is not a learned-policy success."
+  },
+  "physical_fleet_foundation": {
+    "run": "outputs/physical_rl_fleet/v01-20261022T205228Z-f6960232",
+    "passed": true,
+    "scope": "Two separately bound native physical cars in bounded straight Factory-ground corridors; no policy inference or training.",
+    "physics_hz": 120,
+    "control_hz": 60,
+    "phase_seconds": 9,
+    "phases": [
+      {
+        "phase": "car1_drive",
+        "native_ticks": 1080,
+        "settle_rigid_reports": {
+          "ego": 0,
+          "rl_002": 0
+        },
+        "total_rigid_reports": {
+          "ego": 0,
+          "rl_002": 0
+        },
+        "contact_points": {},
+        "first_contact_phase_tick": null,
+        "reset_other_body_unchanged": true
+      },
+      {
+        "phase": "car2_drive",
+        "native_ticks": 1080,
+        "settle_rigid_reports": {
+          "ego": 0,
+          "rl_002": 0
+        },
+        "total_rigid_reports": {
+          "ego": 0,
+          "rl_002": 0
+        },
+        "contact_points": {},
+        "first_contact_phase_tick": null,
+        "reset_other_body_unchanged": true
+      },
+      {
+        "phase": "car1_repeat",
+        "native_ticks": 1080,
+        "settle_rigid_reports": {
+          "ego": 0,
+          "rl_002": 0
+        },
+        "total_rigid_reports": {
+          "ego": 0,
+          "rl_002": 0
+        },
+        "contact_points": {},
+        "first_contact_phase_tick": null,
+        "reset_other_body_unchanged": true
+      },
+      {
+        "phase": "car_contact",
+        "native_ticks": 1080,
+        "settle_rigid_reports": {
+          "ego": 0,
+          "rl_002": 0
+        },
+        "total_rigid_reports": {
+          "ego": 628,
+          "rl_002": 628
+        },
+        "contact_points": {
+          "ego": 2512,
+          "rl_002": 2512
+        },
+        "first_contact_phase_tick": 453,
+        "reset_other_body_unchanged": true
+      }
+    ],
+    "post_settle_repeat_max_component_difference": 0.0,
+    "no_policy": true,
+    "optimizer_steps": 0,
+    "physics_ticks": 4320,
+    "settling_ticks_per_phase": 240,
+    "contact_counts_are_per_monitor_reports_not_distinct_collisions": true,
+    "reset_count": 8,
+    "native_pose_writes": 8,
+    "native_velocity_writes": 8,
+    "reset_write_scope": "Two reset-only writes per phase; no runtime pose steering. Each reset retained the other body unchanged.",
+    "intentional_contact_note": "628 reports and 2512 contact points per monitor describe one sustained intentional contact interval, not 628 distinct collisions. Both monitors name the exact ego/rl_002 chassis pair.",
+    "cleanup_passed": true,
+    "contact_setting_restored": true,
+    "learned_multi_car_qualified": false
+  },
+  "later_v03_pretraining_gate": {
+    "version_boundary": "Follow-up plumbing and scripted probes only; no full-context training outcome claimed here.",
+    "preserved_startup_failure": {
+      "completed": false,
+      "episodes": 0,
+      "error": "RuntimeError: Current native background differs from compatibility plan",
+      "diagnosis": "Retained USD parked translations with dormant road headings; no numeric native mismatch was captured in the failed exception.",
+      "run": "outputs/rsl_integration/v03-probe-20261022T205907Z-e7350d1f"
+    },
+    "repair": {
+      "dormant_slots": 68,
+      "active_pose_writes": 0,
+      "native_pose_writes": 0,
+      "physics_steps": 0,
+      "phase": "before full scene export and physics initialization"
+    },
+    "repair_source": {
+      "path": "outputs/rsl_integration/v03-probe-20261022T210337Z-9fb462cd/sources/environments/compatible_full_loop_hazard_lab.py",
+      "sha256": "d4ac568e07bc2bce09a38b5a17632152cc12a66a5ecc61c8de0f6d7da1182606",
+      "bytes": 4520
+    },
+    "repair_details": "The compatible subclass completes dormant chassis/proxy yaw before scene export and physics startup. Active cars are unchanged; strict measured pose checks remain and future failure exceptions retain full diagnostics.",
+    "fresh_probe": {
+      "completed": true,
+      "execution_passed": true,
+      "episodes": [
+        {
+          "seed": 31001,
+          "stage": "clear",
+          "side": null,
+          "steps": 1389,
+          "success": true,
+          "reason": "success",
+          "progress_m": 60.04015680372546,
+          "contacts": 0,
+          "selected_preflight_draw": 0,
+          "retained_candidates": 1
+        },
+        {
+          "seed": 31002,
+          "stage": "static",
+          "side": null,
+          "steps": 719,
+          "success": true,
+          "reason": "success",
+          "progress_m": 22.850020021900793,
+          "contacts": 0,
+          "selected_preflight_draw": 0,
+          "retained_candidates": 1
+        },
+        {
+          "seed": 31003,
+          "stage": "crossing",
+          "side": "left",
+          "steps": 1417,
+          "success": true,
+          "reason": "success",
+          "progress_m": 60.0297093768494,
+          "contacts": 0,
+          "selected_preflight_draw": 0,
+          "retained_candidates": 1
+        },
+        {
+          "seed": 31004,
+          "stage": "crossing",
+          "side": "right",
+          "steps": 1494,
+          "success": true,
+          "reason": "success",
+          "progress_m": 60.02571232456691,
+          "contacts": 0,
+          "selected_preflight_draw": 0,
+          "retained_candidates": 1
+        }
+      ],
+      "raw_rows": 5019,
+      "rigid_contact_reports": 0,
+      "optimizer_steps": 0,
+      "artifact": {
+        "path": "outputs/rsl_integration/v03-probe-20261022T210337Z-9fb462cd/steps.jsonl",
+        "sha256": "24fde7496a7f8ab063b91053563a850a8d63d8c8dffb04d44ddc85abb84b7b09",
+        "bytes": 76879364
+      },
+      "scope": "Scripted full-scene compatibility proof before full-context training; not learned policy qualification.",
+      "run": "outputs/rsl_integration/v03-probe-20261022T210337Z-9fb462cd"
+    },
+    "compatibility_rule": "Same requested seed; up to 16 predeclared candidate indices. All rejected candidates retained. 35 s exact box samples plus conservative temporal/tracking padding require 0.8 m object/background separation before physical reset; no future schedule enters actor observations.",
+    "collector_or_training_completion_claimed": false
+  },
+  "independent_verification": {
+    "audit": {
+      "path": "outputs/rsl_integration/review/v02-transfer-independent-audit.json",
+      "sha256": "6be865d334c89632f16b550b9ffa9c873906e1b6eaa1939c6fb39d41ef93b9a1",
+      "bytes": 9797
+    },
+    "pretraining_probe_audit": {
+      "path": "outputs/rsl_integration/review/v03-pretraining-probe-audit.json",
+      "sha256": "d74c166d5120aaf0bea285aacfd0e6bef6dd3b5a3ad1253a90b538530154000b",
+      "bytes": 3437
+    },
+    "packages": [
+      {
+        "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03",
+        "verified_outputs": 81,
+        "verified_captured_sources": 42,
+        "verified_output_bytes": 77631841,
+        "seal": {
+          "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/exit.json",
+          "sha256": "f66147b7e3a0a1a3f996f566b7e9516af55d854391e765298f9abd2ada12b498",
+          "bytes": 9884
+        },
+        "original_bytes_unchanged": true,
+        "current_source_match_claimed": false
+      },
+      {
+        "path": "outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7",
+        "verified_outputs": 88,
+        "verified_captured_sources": 42,
+        "verified_output_bytes": 223574056,
+        "seal": {
+          "path": "outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7/exit.json",
+          "sha256": "1f59d64633a8ea61e1e03c9caaddabcd7951836d0013c35dfdc3fe77db77dd28",
+          "bytes": 10579
+        },
+        "original_bytes_unchanged": true,
+        "current_source_match_claimed": false
+      },
+      {
+        "path": "outputs/rsl_full_sim/v01-20261022T204641Z-101d29f0",
+        "verified_outputs": 114,
+        "verified_captured_sources": 68,
+        "verified_output_bytes": 17203426,
+        "seal": {
+          "path": "outputs/rsl_full_sim/v01-20261022T204641Z-101d29f0/manifest.json",
+          "sha256": "43533d6713ce3d88e66c6bc2ba0676136cbb8ef3ff0764f29f7d7e39a36c0862",
+          "bytes": 22827
+        },
+        "original_bytes_unchanged": true,
+        "current_source_match_claimed": false
+      },
+      {
+        "path": "outputs/rsl_full_sim/v01-20261022T204758Z-f4202c5e",
+        "verified_outputs": 114,
+        "verified_captured_sources": 68,
+        "verified_output_bytes": 75250942,
+        "seal": {
+          "path": "outputs/rsl_full_sim/v01-20261022T204758Z-f4202c5e/manifest.json",
+          "sha256": "ae76cf991fa3d2f55362fdcd47b15a87b48e019d91543a2344a2faf22e8f0c32",
+          "bytes": 22773
+        },
+        "original_bytes_unchanged": true,
+        "current_source_match_claimed": false
+      },
+      {
+        "path": "outputs/physical_rl_fleet/v01-20261022T205228Z-f6960232",
+        "verified_outputs": 32,
+        "verified_captured_sources": 12,
+        "verified_output_bytes": 17856986,
+        "seal": {
+          "path": "outputs/physical_rl_fleet/v01-20261022T205228Z-f6960232/exit.json",
+          "sha256": "e316d9b234646d3174cd234ec4a9fcd76a896d92b4ad82da3910013a45f477a1",
+          "bytes": 12533
+        },
+        "original_bytes_unchanged": true,
+        "current_source_match_claimed": false
+      },
+      {
+        "path": "outputs/rsl_integration/v03-probe-20261022T205907Z-e7350d1f",
+        "verified_outputs": 100,
+        "verified_captured_sources": 57,
+        "seal": {
+          "path": "outputs/rsl_integration/v03-probe-20261022T205907Z-e7350d1f/exit.json",
+          "sha256": "71e7ff6b76f7cdeff67f9760eec361563694c96f51934976dfcd3227c72fe694",
+          "bytes": 12286
+        }
+      },
+      {
+        "path": "outputs/rsl_integration/v03-probe-20261022T210337Z-9fb462cd",
+        "verified_outputs": 103,
+        "verified_captured_sources": 60,
+        "seal": {
+          "path": "outputs/rsl_integration/v03-probe-20261022T210337Z-9fb462cd/exit.json",
+          "sha256": "1849f86c4d5e4591c168a6f2e95fe4b9d448253052455d888d02271db6aa5135",
+          "bytes": 12634
+        }
+      }
+    ],
+    "original_packages_rewritten": false,
+    "native_simulation_or_model_execution_during_audit": false,
+    "raw_scope": "All sealed file/source hashes; raw development terminal/tick/contact/component arithmetic; full-road raw tick/contact/roll evidence; fleet raw per-car contacts and numeric repeat. No simulator, model load or optimization."
+  },
+  "artifacts": [
+    {
+      "path": "outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7/result.json",
+      "sha256": "140e7a8ecebf305233cdaf3c814c9ee4257acdf511588d04e377339a2da3e6ff",
+      "bytes": 90941
+    },
+    {
+      "path": "outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7/optimizer-counts.json",
+      "sha256": "553320d9514b21d4f97299092fb423e7b409e2d5824680caab4c47b54f1b0575",
+      "bytes": 47
+    },
+    {
+      "path": "outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7/resume.json",
+      "sha256": "a6da8a726fb7cee2004ad3fd4f8a26423cccf8e1b16b10053297507617fc1180",
+      "bytes": 361
+    },
+    {
+      "path": "outputs/rsl_integration/v02-train-20261022T203726Z-61afe5d7/development-probes.json",
+      "sha256": "386a4e60809a017ec3fc50dd227210a8008b0f88c35e3583585a12d695eee64a",
+      "bytes": 79775
+    },
+    {
+      "path": "outputs/rsl_full_sim/v01-20261022T204641Z-101d29f0/result.json",
+      "sha256": "206d04ffaa7547d319b709caf06e8c79f7d846cddc87cc4d47a93a5cb8bee33b",
+      "bytes": 539708
+    },
+    {
+      "path": "outputs/rsl_full_sim/v01-20261022T204758Z-f4202c5e/result.json",
+      "sha256": "c6615b24f0fa2efb023331741fc45809354d6aed4de2937007f63ccce6c97124",
+      "bytes": 545711
+    },
+    {
+      "path": "outputs/physical_rl_fleet/v01-20261022T205228Z-f6960232/probe-result.json",
+      "sha256": "d5618edadece382f608c37b47f1967a2ae0c05ff9a5a731184c56780f8250d10",
+      "bytes": 22115
+    },
+    {
+      "path": "outputs/physical_rl_fleet/v01-20261022T205228Z-f6960232/protocol.json",
+      "sha256": "b41251e639c9195cbccef2021193c18ba9a518e1481eaee80b816aa7dd28bc3b",
+      "bytes": 1353
+    }
+  ],
+  "limitations": [
+    "No learned full-road success is established by this checkpoint. The preserved transfer failure motivates full-context data and adaptation.",
+    "Development gates select curriculum progression. No held-out generalization claim follows from them or from training-episode success.",
+    "Object observations are privileged current simulator state plus a known map, not LiDAR or camera autonomy. Background cars remain nonreactive scripted actors.",
+    "The actor receives the nearest two objects; other objects still participate in physical collision/clearance checks. Capacity and distribution shift remain relevant.",
+    "This audit verifies all sealed outputs and captured sources, plus specified raw boundary/contact/roll evidence. It does not independently replay omitted decimated training samples or every optimizer operation.",
+    "The independent full-road reducer replays task/observation/reward and ego-versus-all-object geometry. Later background tracking conformance uses retained native readback diagnostics; DriverControlGate slew is not independently reconstructed.",
+    "The pre-reset compatibility certificate covers the declared 35 s scripted object/background plan only, not ego safety or 105 s continuous runs.",
+    "Fleet physical independence/contact/reset results precede learned multi-car integration and do not establish coordinated MARL behavior.",
+    "Raw run packages, model checkpoints, logs and audit scripts remain ignored local artifacts; this public record contains their identifiers and hashes."
+  ]
+}
