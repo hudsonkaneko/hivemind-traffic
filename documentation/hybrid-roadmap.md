@@ -25,6 +25,10 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
 
+October 22 end-of-day handoff: [current status and next session](team-handoff-2026-10-22.md)
+distinguish verified viewer/accounting work, conditional site selection and pending
+driver/communication evidence. No new training or physical acceptance is claimed.
+
 October 22 geographic-site amendment: Sam requested an evidence-based site
 selection and realistic road reconstruction using the existing viewer. The
 [site decision](highway-twin-site-decision-2026-10-22.md) recommends exiD's A44

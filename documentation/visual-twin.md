@@ -25,8 +25,10 @@ The unchanged source is copied once beside versioned wrappers. Asset hashes
 and geometry-derived dimensions are saved in `provenance.json`.
 
 The native Isaac window stays open until closed. The custom panel controls
-playback; its scrub slider pauses at the selected time. Vehicle selection follows
-that car and updates sampled speed/position. The status line shows current replay
+playback; its scrub slider pauses at the selected time. Free camera is the default
+after the initial overview placement, so normal viewport navigation remains free.
+Follow explicitly tracks the selected car; Overview explicitly restores the wide
+view. Vehicle selection updates sampled speed/position. The status line shows current replay
 time and source sample time separately. After a car disappears, its last pose
 remains available for the camera, but the telemetry explicitly says absent.
 Use the standard Stage and Layers panels to inspect composition; camera views
@@ -37,6 +39,11 @@ externally waiting, completed, unfinished and removed trips, with primary-window
 and drain labels. See [complete-trip verification](merge-accounting-2026-10-22.md).
 The camera overview and ground bounds adapt to the supplied network. The original
 five-car recording remains available with its original unfinished-trip limitation.
+
+For the current geographic work, read the [team handoff](team-handoff-2026-10-22.md).
+The I-80 linework/track inspection is not reconstructed pavement. The next proposed
+environment uses recording-era exiD geometry after access and qualification;
+the existing viewer and camera controls remain its foundation.
 
 ## Separate Isaac environment
 

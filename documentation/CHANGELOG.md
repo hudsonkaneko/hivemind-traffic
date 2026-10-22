@@ -6,6 +6,13 @@ authority for historical measurements and failures.
 
 ## 2026-10-22 — Sam's supplied-car visual replay foundation
 
+- Added the [teammate handoff and resume checklist](team-handoff-2026-10-22.md),
+  linked it from the README and active plans, and aligned viewer instructions with
+  free/follow/overview camera behavior. Next session begins with exiD access and
+  exact-site qualification. Shared-master synchronization is specifically
+  authorized by Sam's end-of-day documentation request and verified saved with
+  all prior text preserved; no new runtime claim.
+
 - Added a [site-selection decision and complete build contract](highway-twin-site-decision-2026-10-22.md)
   after Sam requested a more realistic highway and delegated candidate selection.
   Recommend recording-era exiD A44 Aachen-Brand; exact site files/rights and

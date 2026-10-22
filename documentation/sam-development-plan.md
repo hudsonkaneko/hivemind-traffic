@@ -1,5 +1,9 @@
 # Sam's highway twin development plan
 
+Next-session entry point: [22 October team handoff](team-handoff-2026-10-22.md).
+Begin with exiD access and exact-site qualification; this plan's empirical gates
+remain open even where synthetic infrastructure has passed its own checks.
+
 22 October 2026. Prepared by Codex for Sam. This is a scoped development plan
 under Sam's approved research direction, not a replacement for the team's hybrid
 roadmap or a new assignment to Hudson or Lorenzo.
