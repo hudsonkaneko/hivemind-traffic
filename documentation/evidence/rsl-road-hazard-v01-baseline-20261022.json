@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "evidence_id": "rsl-road-hazard-v01-baseline-20261022",
+  "recorded_at_utc": "2026-10-22T20:22:17.003156+00:00",
+  "scope": "Baseline RSL policy evaluation and scripted native road-hazard probes/demonstrations. No new learned hazard-policy result is claimed here.",
+  "native_backend": "One dynamic native PhysX car, CPU physics, 120 Hz physics/60 Hz control; 42-field hazard observations use privileged measured simulator ego/object state and analytic map. Obstacle is nonreactive scripted kinematic motion.",
+  "old_policy_evaluation": {
+    "run_directory": "outputs/lane_follow_rsl_eval/20261022T201631Z-8dc8d6ee",
+    "policy_sha256": "cb109b71e86505e8336464f1ea27216312a12b124b06af9246740a13a4d518ee",
+    "training_origin": "outputs/lane_follow_rsl/lane-follow-rsl-v1-20261022T185540Z-05fa4bbe",
+    "observation_count": 22,
+    "normalized_action_count": 2,
+    "seeds": [
+      5101,
+      5102,
+      5103,
+      5104,
+      5105
+    ],
+    "routes": [
+      "straight100",
+      "left_r60",
+      "right_r60"
+    ],
+    "episodes": 15,
+    "driving_successes": 0,
+    "timeouts": 15,
+    "physical_failures": 0,
+    "checks": {
+      "supervisor_passed": true,
+      "exact15cases": true,
+      "allcaseevidencevalid": true,
+      "alltimeouts": true,
+      "zerodrivingsuccesses": true,
+      "alloutputhashes": true,
+      "allsourcesnapshothashes": true,
+      "allloghashes": true,
+      "cleanserialexit": true
+    },
+    "progress_m_by_route": {
+      "straight100": [
+        6.46934422547929e-05,
+        0.2315949946641922,
+        -1.2800079502994777e-06,
+        0.15781477093696594,
+        0.09277836978435516
+      ],
+      "left_r60": [
+        0.0850406289100647,
+        0.22756019234657288,
+        0.20548386871814728,
+        0.15577225387096405,
+        0.24964985251426697
+      ],
+      "right_r60": [
+        0.39571160078048706,
+        0.09514878690242767,
+        0.2425384223461151,
+        0.09913762658834457,
+        0.2078201323747635
+      ]
+    },
+    "interpretation": "The old exported policy completed valid frozen inference evaluation but did not complete any drive/stop objective. Training-loop completion is not driving success.",
+    "artifacts": [
+      {
+        "path": "outputs/lane_follow_rsl_eval/20261022T201631Z-8dc8d6ee/manifest.json",
+        "sha256": "73ac8663c9ca3681834b8f8e14e15aed51d65cb6f162040c0ab33ec094d58c32",
+        "bytes": 19097
+      },
+      {
+        "path": "outputs/lane_follow_rsl_eval/20261022T201631Z-8dc8d6ee/summary.json",
+        "sha256": "05038d56c33c93ccd9961a185d8cd1f54b9fd89927eb9f074e7545c28427eb95",
+        "bytes": 174493
+      }
+    ]
+  },
+  "scripted_probe": {
+    "run_directory": "outputs/rsl_integration/v01-probe-20261022T201030Z-be025799",
+    "episodes": 4,
+    "driving_successes": 4,
+    "rigid_contact_events": 0,
+    "checks": {
+      "fourdeclaredcases": true,
+      "independentvalid": true,
+      "fourdrivingsuccesses": true,
+      "zerocontacts": true,
+      "nativecomplete": true,
+      "cleanexit": true,
+      "sourceunchangedduringrun": true,
+      "contactrestore": true
+    },
+    "cases": [
+      {
+        "seed": 31001,
+        "stage": "clear",
+        "progress_m": 60.04015301652078,
+        "terminal_reason": "success",
+        "minimum_clearance_m": null,
+        "post_clear_stopped_seconds": 0.0
+      },
+      {
+        "seed": 31002,
+        "stage": "static",
+        "progress_m": 22.850020021900793,
+        "terminal_reason": "success",
+        "minimum_clearance_m": 2.106819626871466,
+        "post_clear_stopped_seconds": 0.0
+      },
+      {
+        "seed": 31003,
+        "stage": "crossing",
+        "progress_m": 60.0297093768494,
+        "terminal_reason": "success",
+        "minimum_clearance_m": 1.1035715014611476,
+        "post_clear_stopped_seconds": 0.0
+      },
+      {
+        "seed": 31004,
+        "stage": "crossing",
+        "progress_m": 60.02577292005088,
+        "terminal_reason": "success",
+        "minimum_clearance_m": 0.9760083721864146,
+        "post_clear_stopped_seconds": 0.008333333333333333
+      }
+    ],
+    "artifacts": [
+      {
+        "path": "outputs/rsl_integration/v01-probe-20261022T201030Z-be025799/manifest.json",
+        "sha256": "ac01dfe25b8013303b7b3627fbd06dcab6b2cfd36bd1ae5cd5876bb2317552bb",
+        "bytes": 5057
+      },
+      {
+        "path": "outputs/rsl_integration/v01-probe-20261022T201030Z-be025799/result.json",
+        "sha256": "bd7c5f4505813c36114b80bbcc3f98de64bca5eefd8f6b756f1244ead336085b",
+        "bytes": 59422
+      },
+      {
+        "path": "outputs/rsl_integration/v01-probe-20261022T201030Z-be025799/exit.json",
+        "sha256": "9937b6d0fb6e8be032df0b4697f1f05d12cc1207bf4d1cf09a88c35625f90fe7",
+        "bytes": 198
+      },
+      {
+        "path": "outputs/rsl_integration/v01-probe-20261022T201030Z-be025799/steps.jsonl",
+        "sha256": "377729fd95f5aa3573874c43c9f35f1780129e1d264348822c54615358e603cd",
+        "bytes": 24726944
+      }
+    ]
+  },
+  "scripted_demonstrations": {
+    "run_directory": "outputs/rsl_integration/v01-collect-20261022T201215Z-e1b7d509",
+    "episodes": 40,
+    "driving_successes": 40,
+    "stage_counts": {
+      "clear": 10,
+      "static": 10,
+      "crossing": 20
+    },
+    "seeds": [
+      21001,
+      21002,
+      21003,
+      21004,
+      21005,
+      21006,
+      21007,
+      21008,
+      21009,
+      21010,
+      21011,
+      21012,
+      21013,
+      21014,
+      21015,
+      21016,
+      21017,
+      21018,
+      21019,
+      21020,
+      21021,
+      21022,
+      21023,
+      21024,
+      21025,
+      21026,
+      21027,
+      21028,
+      21029,
+      21030,
+      21031,
+      21032,
+      21033,
+      21034,
+      21035,
+      21036,
+      21037,
+      21038,
+      21039,
+      21040
+    ],
+    "control_transitions": 50669,
+    "rigid_contact_events": 0,
+    "qualified_for_imitation_warm_start": true,
+    "qualification": "25/25 independent audit checks; every saved float32 pre-action 42-observation and signed 2-action pair exactly matches the streamed raw episode/reset evidence.",
+    "demonstrations": {
+      "path": "outputs/rsl_integration/v01-collect-20261022T201215Z-e1b7d509/demonstrations.npz",
+      "sha256": "aa2551590ca46f1a306408e8bd323c032aacb10a1091c1bc826de38dfc73ccd7",
+      "observations_shape": [
+        50669,
+        42
+      ],
+      "actions_shape": [
+        50669,
+        2
+      ],
+      "dtypes": [
+        "float32",
+        "float32"
+      ],
+      "matching": "Every saved pre-action observation and signed action checked exactly afterfloat32 conversion against streamed reset/transition records."
+    },
+    "independent_audit": {
+      "path": "outputs/rsl_integration/review/collect-v01-independent-audit.json",
+      "sha256": "30858bcee2a46f3e3608f43639be846d0e18c1598a90ff51d77b0f08988b01ca",
+      "bytes": 100698
+    },
+    "native_wall_seconds": 217.40600000007544,
+    "supervisor_wall_seconds": 222.23399999993853,
+    "artifacts": [
+      {
+        "path": "outputs/rsl_integration/v01-collect-20261022T201215Z-e1b7d509/manifest.json",
+        "sha256": "850e202e91962301087e7ff9b0d907c16625b301f4740c405a15251d1cd372ff",
+        "bytes": 5671
+      },
+      {
+        "path": "outputs/rsl_integration/v01-collect-20261022T201215Z-e1b7d509/result.json",
+        "sha256": "791ee42fd591ee7f5f1e89d0bb4f3e5f0978c37dd301568136c5cb995c9117d1",
+        "bytes": 505563
+      },
+      {
+        "path": "outputs/rsl_integration/v01-collect-20261022T201215Z-e1b7d509/exit.json",
+        "sha256": "cdf946c2f46cd93aed15d5376f40f886e8f7556b148d6f18776103eff4e28001",
+        "bytes": 198
+      }
+    ]
+  },
+  "retained_failures": [
+    {
+      "run_directory": "outputs/lane_follow_rsl_eval/20261022T200801Z-63a70586",
+      "status": "failed evaluation package",
+      "reason": "Native first route saved five complete valid timeouts but application.close ended Python before the final native-result publication. Supervisor rejected missing result despite exit 0.",
+      "repair": "Final native evidence is now atomically published before requesting application close; supervisor still checks actual exit/isolation.",
+      "subsequent_run": "outputs/lane_follow_rsl_eval/20261022T201631Z-8dc8d6ee",
+      "original_rewritten": false
+    }
+  ],
+  "evaluation_method": {
+    "module": "experiments/loop_hazard_support.py",
+    "sha256": "9bfac3554bdd63a22d48da3e6da451eddeef80c90cf7ffde7894885181e8440a",
+    "sampling": "Every 60 Hz transition and both 120 Hz native samples; full raw traces streamed without loading all traces into memory.",
+    "independent_checks": [
+      "Tick/episode inventory and finite 42-field observations",
+      "Measured object-slot reconstruction and native route/box geometry",
+      "Rigid-contact counts, wheel support and physical bounds",
+      "Static measured stop window and continuous 1 s hold; clear/crossing 60 m completion",
+      "Actual crossing encounter, corridor clearance and stopped time after clearance",
+      "Reward component arithmetic and pre-reset terminal snapshot"
+    ],
+    "limits": "This compact reducer does not independently replay the entire reward/controller function. Scripted demonstrations and development probes are not learned-policy held-out performance."
+  },
+  "provenance_limits": [
+    "Raw trajectories, checkpoints, runtime logs and NPZ data remain ignored local outputs and are not committed by this evidence record. References resolve only when those packages are retained.",
+    "The old 15-case evaluator captured exact source copies and all output/log hashes. Initial hazard probe/collector retained source hashes but not source copies; their exit records report source equality during native execution.",
+    "Root-owned hazard environment and runner changed after collection; the independent audit lists these current-source differences without rewriting historical source claims.",
+    "No general-road safety, sensor validation, reactive-traffic model or calibrated impact-dynamics claim."
+  ],
+  "all_baseline_checks_passed": true
+}

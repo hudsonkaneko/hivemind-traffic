@@ -4,6 +4,18 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-22 - RSL-RL native road-hazard foundation (v01)
+
+- Added a separate 42-observation task, collidable seeded crossing objects,
+  shared RSL inference adapter and bounded curriculum runner. Existing lane
+  and full-showcase behavior remains preserved.
+- Four scripted native probes and 40 demonstration episodes passed independent
+  geometry/contact checks. A deliberate non-braking control triggered a native
+  contact. The original RSL lane policy evaluated at 0/15 successes (timeouts).
+- Recorded versioned configuration, training/evaluation boundaries and compact
+  baseline evidence in [the integration record](rsl-road-hazard-integration.md).
+  Learned hazard behavior and full-road integration remain in progress.
+
 ## 2026-10-19 - Approved first lane PPO pilot
 
 - Added the guarded PPO runner, post-update checkpoints, immutable evidence and

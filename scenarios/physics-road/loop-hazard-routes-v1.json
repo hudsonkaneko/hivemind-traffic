@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "frame": "xy_m_z_up_yaw_ccw_rad",
+  "description": "Versioned 100 m arc matching the full showcase's inner 500 m radius; known-map native hazard training fixture.",
+  "routes": [
+    {
+      "route_id": "loop_r500",
+      "width_m": 3.6,
+      "origin_xy_m": [500.0, 0.0],
+      "initial_yaw_rad": 1.5707963267948966,
+      "segments": [{"length_m": 100.0, "curvature_rad_m": 0.002}]
+    }
+  ]
+}
