@@ -4,6 +4,7 @@ logs/
 outputs/
 .venv/
 runtimes/
+nv_shadercache/
 .venv-isaac7/
 .venv-traffic/
 .venv-ovrtx/

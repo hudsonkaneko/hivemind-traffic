@@ -139,7 +139,11 @@ def build_scene(recording_path, network_path, vehicle, output):
     sun.CreateIntensityAttr(2500); sun.AddRotateXYZOp().Set((-35,-25,20))
     UsdGeom.Scope.Define(static, '/World/Cameras')
     for name in ('Overview','Follow'):
-        UsdGeom.Camera.Define(static, '/World/Cameras/'+name)
+        camera = UsdGeom.Camera.Define(static, '/World/Cameras/'+name)
+        camera.CreateFocalLengthAttr(22 if name=='Overview' else 35)
+        camera.CreateHorizontalApertureAttr(36)
+        camera.CreateVerticalApertureAttr(22.5)
+        camera.CreateClippingRangeAttr((.1,5000))
     static.GetRootLayer().Save()
     motion = new_stage(output/'motion.usda')
     Usd.ModelAPI(UsdGeom.Xform.Define(motion, '/World/Vehicles').GetPrim()).SetKind('group')

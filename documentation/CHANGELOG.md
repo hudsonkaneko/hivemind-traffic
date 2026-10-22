@@ -17,6 +17,10 @@ authority for historical measurements and failures.
   invalid times, output preservation and heading wrap. Local full-recording checks
   passed 1,350 pose/heading/lifecycle checks; actual runtime evidence is recorded
   separately. Private assets, installed runtime and raw outputs are excluded.
+- Isaac 6.0.1 completed a 360-update RTX check with follow/overview PNGs, seven
+  passing control/state checks and unchanged saved layers. Added a standalone
+  composition checker, short-runtime-path launcher support and synchronized
+  capture completion. See [runtime evidence and failures](visual-twin-2026-10-22.md).
 
 ## 2026-10-15 — Clean-clone readiness
 

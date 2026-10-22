@@ -40,9 +40,16 @@ environment at `runtimes/isaac-env` is ignored. A reproducible installation is:
 ```text
 uv venv --python 3.12 --seed runtimes/isaac-env
 runtimes\isaac-env\Scripts\python.exe -m pip install "isaacsim[all,extscache]==6.0.1.0" --extra-index-url https://pypi.nvidia.com
+runtimes\isaac-env\Scripts\python.exe -m pip install --upgrade torch==2.11.0 torchvision==0.26.0 torchaudio==2.11.0 --index-url https://download.pytorch.org/whl/cu128
 ```
 
 Handle NVIDIA's license prompt as the user; the viewer does not embed acceptance.
+Native DLLs may exceed Windows path limits in a deeply nested checkout even
+when Windows long-path support is enabled. In that case install into a short,
+user-writable runtime directory. Set `HIVEMIND_ISAAC_PYTHON` to its Python
+executable, or store that one path in ignored `runtimes/isaac-python.txt`.
+The environment variable takes precedence. Use the selected interpreter with
+`-m pip`; environment executable wrappers can retain old paths after relocation.
 Follow NVIDIA's versioned installation instructions for CUDA-enabled Torch when
 needed. Keep installation logs and the final freeze locally, and run `pip check`.
 
@@ -55,6 +62,18 @@ runtimes\isaac-env\Scripts\python.exe scripts/view_visual_twin.py --scene output
 This produces actual viewport PNGs, callback-check results and static-layer
 hash comparisons. It does not establish manual GUI interaction or steady-state
 rendering performance. Choose a fresh evidence directory for every attempt.
+The capture waits for both the renderer callback and the final PNG write;
+the callback alone can return before the image exists. Errors are saved in
+`failure.txt` and propagated through Isaac's fast-shutdown exit status.
+
+Check the source-to-USD contract in the traffic environment:
+
+```text
+python scripts/check_visual_twin.py outputs/my-twin/scene/world.usda --report outputs/my-twin/composed-checks.json
+```
+
+The [22 October verification record](visual-twin-2026-10-22.md) records the
+successful bounded render and retained failed attempts.
 
 ## Asset and composition limits
 

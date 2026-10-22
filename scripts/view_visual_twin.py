@@ -1,10 +1,11 @@
 """Interactive Isaac viewer for a prepared SUMO visual replay; no physics stepping."""
 import argparse
+import asyncio
 import bisect
 import hashlib
 import json
-import math
 import time
+import traceback
 from pathlib import Path
 
 
@@ -31,11 +32,14 @@ def main():
     before = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
     # Import only after the user has handled the vendor license prompt.
     from isaacsim import SimulationApp
-    app = SimulationApp({'headless':args.headless,'width':1280,'height':800})
+    app = SimulationApp({'headless':args.headless,'hide_ui':False,'width':1280,'height':800})
+    exit_code = 0
     try:
         import omni.usd
         import omni.ui as ui
         import omni.timeline
+        import carb
+        carb.settings.get_settings().set('/persistent/app/viewport/displayOptions', 0)
         from pxr import Gf, UsdGeom
         from omni.kit.viewport.utility import get_active_viewport, capture_viewport_to_file
         context = omni.usd.get_context()
@@ -47,6 +51,7 @@ def main():
         timeline = omni.timeline.get_timeline_interface()
         timeline.pause()
         viewport = get_active_viewport()
+        viewport.updates_enabled = True
         state = dict(t=0., playing=False, follow=True, selected=manifest['ids'][0], rate=1.)
         checks = {}
 
@@ -107,17 +112,43 @@ def main():
                 status = ui.Label('',height=76,word_wrap=True)
                 ui.Label('Poses are measured SUMO output. Speeds below are source samples.\nThree background trips remain at the recording end.',height=44,word_wrap=True)
         app.update()
+        print('VISUAL_TWIN_READY: scene loaded; playback panel and viewport initialized', flush=True)
         if args.check_controls:
             toggle(); checks['play']=state['playing']
             toggle(); checks['pause']=not state['playing']
-            seek(10); checks['seek']=abs(timeline.get_current_time()-10)<1e-6
+            seek(10); app.update(); checks['seek']=abs(timeline.get_current_time()-10)<1e-6
             reset(); checks['reset']=state['t']==0 and not state['playing']
             state.update(follow=False); camera(); checks['overview']=str(viewport.camera_path).endswith('/Overview')
             state.update(follow=True,selected=manifest['ids'][-1]); camera()
             checks['selection_follow']=str(viewport.camera_path).endswith('/Follow')
             state.update(selected=manifest['ids'][0]); seek(5)
-        captures=[]
+        def capture_image(name):
+            capture=capture_viewport_to_file(viewport,str(evidence/name))
+            pending=asyncio.ensure_future(capture.wait_for_result())
+            deadline=time.perf_counter()+45
+            while not pending.done() and time.perf_counter()<deadline:
+                app.update()
+                time.sleep(.01)
+            if not pending.done():
+                pending.cancel()
+                raise TimeoutError('Viewport capture did not complete within 45 seconds')
+            pending.result()
+            # Renderer completion precedes the worker's final PNG write.
+            path = evidence/name
+            while time.perf_counter()<deadline:
+                if path.is_file():
+                    try:
+                        with path.open('rb') as stream:
+                            stream.seek(-12, 2)
+                            if stream.read()==b'\x00\x00\x00\x00IEND\xaeB`\x82':
+                                return
+                    except (OSError, ValueError):
+                        pass
+                app.update()
+                time.sleep(.01)
+            raise TimeoutError('Viewport PNG write did not complete within 45 seconds')
         durations=[]
+        start_time=state['t']
         index=0
         last=time.perf_counter()
         while app.is_running() and (not args.frames or index<args.frames):
@@ -132,25 +163,38 @@ def main():
             camera()
             start=time.perf_counter(); app.update(); durations.append(time.perf_counter()-start)
             if index==min(120,max(1,args.frames//3)) and args.frames:
-                captures.append(capture_viewport_to_file(viewport,str(evidence/'follow.png')))
+                capture_image('follow.png')
+                if args.check_controls: state['playing']=True
             if args.frames and index==args.frames//2:
                 state['follow']=False
             if args.frames and index==args.frames*3//4:
-                captures.append(capture_viewport_to_file(viewport,str(evidence/'overview.png')))
+                capture_image('overview.png')
                 state['follow']=True
             index+=1
         after={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
+        if args.check_controls:
+            checks['playback_advanced']=state['t']>start_time
         report=dict(frames=index,control_callbacks=checks,static_layers_unchanged=before==after,
+                    initial_replay_time=start_time,final_replay_time=state['t'],
                     captures=[p.name for p in evidence.glob('*.png')],
                     app_update_seconds_mean=sum(durations)/len(durations) if durations else None,
                     limitation='Bounded viewer check; update timing includes startup/warmup, not a throughput benchmark. Callback tests are not manual GUI interaction.',
                     scene_sha256=hashlib.sha256(scene.read_bytes()).hexdigest())
         (evidence/'runtime.json').write_text(json.dumps(report,indent=2))
         print('VISUAL_TWIN_RESULT='+json.dumps(report),flush=True)
+        timeline.stop()
+        context.close_stage()
+        for _ in range(30): app.update()
         if not before==after or not all(checks.values()):
             raise RuntimeError('Viewer acceptance check failed')
+    except BaseException:
+        exit_code = 1
+        failure = traceback.format_exc()
+        (evidence/'failure.txt').write_text(failure)
+        print(failure, flush=True)
+        raise
     finally:
-        app.close()
+        app.close(exit_code=exit_code)
 
 
 if __name__=='__main__':
