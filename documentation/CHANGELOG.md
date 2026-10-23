@@ -4,6 +4,18 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-22 - CIRCLES controller actuation smoke
+
+- Tested seven pinned public ONNX exports on the existing physical-car loop task
+  with native state inputs, existing steering and an explicit low-speed pedal
+  adapter. Six passed the limited actuation check; strict stopping success was
+  0/7. One faster export contacted the obstacle. No training ran.
+- Preserved the original log-classification failure and confirmed all seven cases
+  in a fresh bounded run after fixing output chronology. Added two adapter tests,
+  source/model hashes, local raw traces and compact published measurements.
+- Updated the Google lane-task guide and verified the generated Markdown mirror.
+  See [the control smoke record](circles-control-smoke.md) for scope and rerun.
+
 ## 2026-10-22 - Google engineering guide mirrored on GitHub
 
 - Converted the complete 42-tab Google guide to `engineering-guide.md`, preserving
