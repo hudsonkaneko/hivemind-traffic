@@ -11,6 +11,13 @@ This is the active development order, replacing the old immediate-next-step
 sections in the preserved [implementation roadmap](../experiments/ROADMAP.md)
 and [capacity study](scaling-foundations.md). Historical evidence is unchanged.
 
+October 22 CIRCLES smoke: seven public ONNX exports actuated the existing
+physical car through a longitudinal adapter, with local scripted steering.
+Six passed the limited non-contact actuation check; all seven failed the strict
+stopping task, including one obstacle collision. This was a low-speed isolated
+fixture with privileged state, not full-traffic integration. No training ran.
+See [the measured results and limitations](circles-control-smoke.md).
+
 October 22 RSL-RL increment: the user authorized full hazard training and
 integration, with subagents and versioned evidence. The isolated 42-feature
 clear/static/crossing curriculum passed its three 10-case development gates
