@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/circles-control-smoke/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/circles-control-smoke/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-60mph-ppo-traffic/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-60mph-ppo-traffic/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4170,3 +4170,21 @@ Confirmed run: outputs/circles\_control/v01-20261023T021853Z-3dd776cb. All seven
 Next implementation need: calibrate acceleration tracking and the observation/output contract before evaluating a moving leader or full traffic. This smoke does not establish LiDAR perception, merging, sudden-object avoidance or highway-speed control.
 
 Report and rerun instructions: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/circles-control-smoke/documentation/circles-control-smoke.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/circles-control-smoke/documentation/circles-control-smoke.md>)
+
+<a id="docs-h-2prchjl12cla"></a>
+
+### CIRCLES highway preparation — October 25, 2026
+
+Prepared, with highway driving validation pending. The user chose to defer the native retry while another project uses Isaac. No background launch or training is scheduled.
+
+The separate v01 probe places three physical cars in adjacent V02 highway lanes. CIRCLES supplies the main car's longitudinal command and the existing scripted PathFollower supplies steering. Two frozen RSL-RL PPO actors control the other cars with their trained 3 m/s target and deliberately empty object slots for nonreactive lane-only traffic.
+
+The ceiling is 60 mph (26.8224 m/s), not a target-speed promise. The adapter clamps speed + 0.6 \* output to that limit, with throttle gain 0.7 and brake gain 0.35. Full braking is requested at the ceiling and measured overspeed terminates the case. With no same-lane leader, CIRCLES receives the experimental surrogate \[own speed, 26.8224, 1000\]; this is not an upstream-verified missing-leader contract or sensor measurement.
+
+One scripted baseline and seven pinned CIRCLES exports are configured for 35 simulated seconds each, including 2 seconds of settling. Physics runs at 120 Hz, commands at 60 Hz and CIRCLES at 20 Hz; seed 51001, 600-second process bound and zero optimizer steps. Passing requires the full duration, more than 5 m progress per car and no contact, footprint departure, support/tilt failure, reverse motion, command fallback or overspeed.
+
+The first native attempt, v01-20261025T211416Z-ee14a001, failed during scene export before driving: 0 physics steps, no completed cases and no screenshot. Cleanup passed, but the evidence gate failed. The repair exports a separate file-backed layer without recomposing the live scene. All 55 selected CPU/OpenUSD tests passed, including portable three-car composition and preservation of all 12 wheel handles. The repaired native run remains untested.
+
+Run later from the configured checkout root after Isaac is free: python experiments/run\_highway\_circles.py. The existing policy remains outputs/rsl\_integration/v02-train-20261022T203726Z-61afe5d7/policy.pt; no new checkpoint is created. New evidence and logs use unique outputs/highway\_circles and logs/highway\_circles directories. Models, checkpoints and raw outputs remain local and are not included in a Git clone.
+
+Protocol, exact checkpoint hash, launch prerequisites and retained failure: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-60mph-ppo-traffic/documentation/highway-circles-60mph.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-60mph-ppo-traffic/documentation/highway-circles-60mph.md>)
