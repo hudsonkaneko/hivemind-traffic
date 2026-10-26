@@ -1,0 +1,293 @@
+{
+  "passed": true,
+  "training": false,
+  "composition_errors": [],
+  "lidar_target_hits": {
+    "0": 39540,
+    "65": 35459,
+    "-65": 34115,
+    "135": 39114,
+    "-135": 38736,
+    "180": 35414
+  },
+  "near_field_target_hits": {
+    "Near_Right_2m": 32348,
+    "Near_Right_4m": 4035,
+    "Near_Right_6m": 2323,
+    "Near_Left_2m": 32225,
+    "Near_Left_4m": 4022,
+    "Near_Left_6m": 2323,
+    "Near_Rear_3.5m": 21842,
+    "Near_Rear_5.0m": 5039,
+    "Near_Rear_7.0m": 2102,
+    "Near_Front_3.5m": 16388,
+    "Near_Front_5.0m": 6302,
+    "Near_Front_7.0m": 2446
+  },
+  "lidar_complete_scans": 595,
+  "lidar_packets": 595,
+  "scans_by_sensor": {
+    "/World/Vehicles/vehicle_ego/Chassis/Sensors/LidarRoof/Scan": 119,
+    "/World/Vehicles/vehicle_ego/Chassis/Sensors/LidarLeftNear/Scan": 119,
+    "/World/Vehicles/vehicle_ego/Chassis/Sensors/LidarRightNear/Scan": 119,
+    "/World/Vehicles/vehicle_ego/Chassis/Sensors/LidarFrontNear/Scan": 119,
+    "/World/Vehicles/vehicle_ego/Chassis/Sensors/LidarRearNear/Scan": 119
+  },
+  "lidar_self_region_returns": 683,
+  "gates": {
+    "all_seven_capture": true,
+    "stable_mounts": true,
+    "targets_visible": true,
+    "moved": true,
+    "stable": true,
+    "no_contacts": true,
+    "screenshots": true,
+    "composition": true,
+    "lidar_surround_targets": true,
+    "lidar_complete_scans": true,
+    "near_field_targets": true
+  },
+  "valid_frames": {
+    "CameraFront": 59,
+    "CameraFrontTele": 59,
+    "CameraCrossLeft": 59,
+    "CameraCrossRight": 59,
+    "CameraRearLeft": 59,
+    "CameraRearRight": 59,
+    "CameraRearTele": 59
+  },
+  "progress_m": 0.629859148201242,
+  "clock": {
+    "physics_steps": 720,
+    "render_count": 120,
+    "time_s": 6.0,
+    "absolute_time_s": 6.016666666666667,
+    "native_physics_steps": 722,
+    "physics_hz": 120,
+    "render_hz": 20,
+    "origin_time_s": 0.016666666666666666,
+    "origin_physics_steps": 2
+  },
+  "contacts": 0,
+  "camera_specs": [
+    {
+      "name": "CameraFront",
+      "translation_m": [
+        2.368144036224195,
+        0.0,
+        -0.05
+      ],
+      "heading_deg": 0,
+      "down_pitch_deg": 15,
+      "horizontal_fov_deg": 120,
+      "focal_length_mm": 10.392304845413268,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10,
+      "body_anchor_m": [
+        2.2681440362241947,
+        0.0,
+        -0.05
+      ],
+      "housing_center_m": [
+        2.303144036224195,
+        0.0,
+        -0.05
+      ],
+      "mount_style": "compact body housing"
+    },
+    {
+      "name": "CameraFrontTele",
+      "translation_m": [
+        1.93981132329329,
+        0.22,
+        0.2
+      ],
+      "heading_deg": 0,
+      "down_pitch_deg": 3,
+      "horizontal_fov_deg": 30,
+      "focal_length_mm": 67.17691453623979,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10,
+      "body_anchor_m": [
+        1.83981132329329,
+        0.22,
+        0.2
+      ],
+      "housing_center_m": [
+        1.87481132329329,
+        0.22,
+        0.2
+      ],
+      "mount_style": "compact body housing"
+    },
+    {
+      "name": "CameraCrossLeft",
+      "translation_m": [
+        1.2422618261740699,
+        1.094045914686066,
+        -0.1
+      ],
+      "heading_deg": 65,
+      "down_pitch_deg": 10,
+      "horizontal_fov_deg": 120,
+      "focal_length_mm": 10.392304845413268,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10,
+      "body_anchor_m": [
+        1.2,
+        1.0034151359824008,
+        -0.1
+      ],
+      "housing_center_m": [
+        1.2147916391609244,
+        1.0351359085286835,
+        -0.1
+      ],
+      "mount_style": "compact body housing"
+    },
+    {
+      "name": "CameraCrossRight",
+      "translation_m": [
+        1.2422618261740699,
+        -1.094046399212643,
+        -0.1
+      ],
+      "heading_deg": -65,
+      "down_pitch_deg": 10,
+      "horizontal_fov_deg": 120,
+      "focal_length_mm": 10.392304845413268,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10,
+      "body_anchor_m": [
+        1.2,
+        -1.003415620508978,
+        -0.1
+      ],
+      "housing_center_m": [
+        1.2147916391609244,
+        -1.0351363930552606,
+        -0.1
+      ],
+      "mount_style": "compact body housing"
+    },
+    {
+      "name": "CameraRearLeft",
+      "translation_m": [
+        -1.920710678118655,
+        0.9650718289400598,
+        0.25
+      ],
+      "heading_deg": 135,
+      "down_pitch_deg": 10,
+      "horizontal_fov_deg": 70,
+      "focal_length_mm": 25.706664121358063,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10,
+      "body_anchor_m": [
+        -1.85,
+        0.8943611508214051,
+        0.25
+      ],
+      "housing_center_m": [
+        -1.8747487373415292,
+        0.9191098881629343,
+        0.25
+      ],
+      "mount_style": "compact body housing"
+    },
+    {
+      "name": "CameraRearRight",
+      "translation_m": [
+        -1.920710678118655,
+        -0.9650713258454165,
+        0.25
+      ],
+      "heading_deg": -135,
+      "down_pitch_deg": 10,
+      "horizontal_fov_deg": 70,
+      "focal_length_mm": 25.706664121358063,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10,
+      "body_anchor_m": [
+        -1.85,
+        -0.8943606477267618,
+        0.25
+      ],
+      "housing_center_m": [
+        -1.8747487373415292,
+        -0.919109385068291,
+        0.25
+      ],
+      "mount_style": "compact body housing"
+    },
+    {
+      "name": "CameraRearTele",
+      "translation_m": [
+        -2.6090773370691838,
+        1.2246467991473533e-17,
+        0.2
+      ],
+      "heading_deg": 180,
+      "down_pitch_deg": 3,
+      "horizontal_fov_deg": 30,
+      "focal_length_mm": 67.17691453623979,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10,
+      "body_anchor_m": [
+        -2.5090773370691837,
+        0.0,
+        0.2
+      ],
+      "housing_center_m": [
+        -2.544077337069184,
+        4.286263797015737e-18,
+        0.2
+      ],
+      "mount_style": "compact body housing"
+    }
+  ],
+  "limitations": [
+    "Synthetic perspective cameras, no fisheye distortion or hardware noise",
+    "Caller simulation timestamps; hardware freshness not proven",
+    "No learned fusion, Cosmos or policy training; combined capture only",
+    "Angular coverage and six static targets do not establish obstacle-free visibility everywhere"
+  ],
+  "source_unchanged": true,
+  "source_hashes": {
+    "assets/ground.usda": "fecda741fa028cb99889147fa21a4b86f171ea87259d72b300df1c8040c6b957",
+    "assets/vehicle-geometry.usda": "3f29d13bfdf973341d21481e00ca7406fbdb7eeeb0bfcc5626558bf421a8321d",
+    "assets/vehicle-physics.usda": "567724ece7804213c30febdae2e8ac0635901d7129237cb9b3dff6bfa69c0594",
+    "assets/vehicle-sensors.usda": "3ea728bfb506d8c300bb7dedb196a3836a59cba86a3109ce3c99f7dee665e36c",
+    "assets/vehicle.usda": "eb239d3e5d16d43975b33ee4afef1720a73082a65db4f19bb9edab880281b3f6",
+    "assets/visuals.usdc": "bf84656461e0a0c79794c61ecfd8a24bd6e94e7a2ef5218fe1b2c48da818e400",
+    "layout.usda": "f006aa7f7ff46555632f2cd50e2cf49eb1a960361d2fe065501ffa947d816289",
+    "model.json": "d06a98cdbceb5d3cde923eeeb6435a9e0590c50ce0a8f4ce8afdb49f1eb799a5",
+    "physics.usda": "76d9558b057584ecfb0d810eaed8862d812babea9ed0188b4f5acd691149c159",
+    "world.usda": "252d3362068ef14f7f19189d878f7389baef68cef63146c32d9c51db2bb1bbbe"
+  },
+  "wall_seconds": 22.42201500001829,
+  "run_id": "20261026T212758Z-d9729274",
+  "cpu_tests_passed": 141,
+  "usd_tests_passed": 28
+}

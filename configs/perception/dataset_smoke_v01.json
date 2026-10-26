@@ -1,0 +1,70 @@
+{
+  "version": "perception-dataset-smoke-v01",
+  "purpose": "Bounded native RGB/semantic/LiDAR capture verification, not a training-quality dataset",
+  "training_enabled": false,
+  "source_vehicle_version": "v14",
+  "camera": "CameraFront",
+  "resolution_wh": [
+    640,
+    360
+  ],
+  "capture_hz": 10,
+  "target_frames_per_scene": 10,
+  "requested_classes": [
+    "background",
+    "drivable",
+    "lane",
+    "vehicle",
+    "pedestrian",
+    "obstacle"
+  ],
+  "scenes": [
+    {
+      "scene_id": "train-clear-101",
+      "scenario_id": "clear_lane",
+      "seed": 101,
+      "split": "train"
+    },
+    {
+      "scene_id": "train-obstacle-102",
+      "scenario_id": "stopped_obstacle",
+      "seed": 102,
+      "split": "train"
+    },
+    {
+      "scene_id": "train-follow-103",
+      "scenario_id": "lead_vehicle",
+      "seed": 103,
+      "split": "train"
+    },
+    {
+      "scene_id": "train-crossing-104",
+      "scenario_id": "crossing_target",
+      "seed": 104,
+      "split": "train"
+    },
+    {
+      "scene_id": "val-obstacle-201",
+      "scenario_id": "stopped_obstacle",
+      "seed": 201,
+      "split": "val"
+    },
+    {
+      "scene_id": "test-obstacle-301",
+      "scenario_id": "stopped_obstacle",
+      "seed": 301,
+      "split": "test"
+    }
+  ],
+  "limits": {
+    "max_total_frames": 60,
+    "no_cosmos_augmentation": true,
+    "no_weights_download": true,
+    "no_policy_training": true
+  },
+  "limitations": [
+    "Geometry proxies may verify semantic wiring but do not establish realistic pedestrian or vehicle recognition",
+    "Missing classes are reported and block full training readiness",
+    "Native capture must record actual runtime settings and source hashes in the output manifest"
+  ]
+}

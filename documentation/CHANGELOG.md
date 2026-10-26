@@ -4,6 +4,14 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## October 26, 2026: Near-field sensing and perception preparation
+
+- Versioned local source v12-v14 preserves seven body cameras and adds four compact perimeter LiDARs. Independent writer registrations support five concurrent scanners.
+- Final bounded native test detects all 12 small near-field targets and six tall targets; 595 complete scans and 59 images per camera, stable mounts and zero contacts. Earlier coverage failures are preserved.
+- Prepared and validated 60 labeled frames in six isolated scenes (40/10/10 split), with hashed RGB/masks/raw scans, transforms and explicit evaluation-only truth. Pedestrian examples and full training diversity remain missing.
+- 141 focused CPU tests, 28 USD tests and four additional capture-config tests pass. Actual screenshots, source hashes and limits: [perception preparation v01](perception-preparation-v01.md).
+- Proposed segmentation config is disabled; no training or weights download. Google guide and generated Markdown synchronized through verified native readback.
+
 ## 2026-10-26 - Body-mounted seven-camera source v11
 
 - Removed camera roof stalks and seated compact housings against measured body
