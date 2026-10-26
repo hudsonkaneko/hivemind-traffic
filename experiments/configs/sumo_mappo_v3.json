@@ -1,0 +1,193 @@
+{
+  "schema_version": 1,
+  "study": "sumo-mappo-v03-communication-waves",
+  "environment": {
+    "dt": 0.1,
+    "horizon": 600,
+    "speed_limit_m_s": 26.8224,
+    "route_length_m": 5000.0,
+    "neighbor_range_m": 120.0,
+    "acceleration_min_m_s2": -4.5,
+    "acceleration_max_m_s2": 2.0,
+    "min_gap_m": 2.5,
+    "time_headway_s": 1.5,
+    "initial_speed_range_m_s": [
+      12.0,
+      22.0
+    ],
+    "background_depart_interval_range_s": [
+      1.5,
+      3.0
+    ],
+    "reward_weights": {
+      "progress": 1.0,
+      "headway": -0.5,
+      "jerk": -0.02,
+      "collision": -10.0,
+      "intervention": -1.0,
+      "cruise_excess": -2.0,
+      "traffic_progress": 1.0,
+      "wave_fluctuation": -0.5
+    },
+    "cruise_speed_m_s": 25.0,
+    "communication": {
+      "mode": "local",
+      "range_m": 150.0,
+      "max_neighbors": 6,
+      "update_hz": 10.0,
+      "latency_s": [
+        0.0,
+        0.3
+      ],
+      "packet_loss": 0.1,
+      "expiry_s": 0.5,
+      "outages_s": []
+    },
+    "wave": {
+      "enabled": true,
+      "pulse_start_s_range": [
+        10.0,
+        15.0
+      ],
+      "pulse_duration_s": 4.0,
+      "pulse_acceleration_m_s2": -2.0,
+      "detector_position_m": 1000.0
+    }
+  },
+  "model": {
+    "observation_size": 69,
+    "state_size": 280,
+    "num_agents": 4,
+    "actor_hidden_sizes": [
+      128,
+      128
+    ],
+    "critic_hidden_sizes": [
+      256,
+      256
+    ],
+    "normalization": "fixed_environment_feature_scaling",
+    "communication": "local",
+    "action": "tanh_gaussian_normalized_acceleration",
+    "critic_input": "joint_observations_alive_masks_and_agent_one_hot",
+    "message_encoder": true
+  },
+  "training": {
+    "algorithm": "MAPPO",
+    "seed": 6103,
+    "episode_seed_start": 600000,
+    "episode_seed_end": 699999,
+    "num_workers": 4,
+    "rollout_steps": 256,
+    "max_agent_transitions": 1000000,
+    "max_wall_seconds": 7200,
+    "device": "cpu",
+    "torch_threads": 1,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "actor_lr": 0.0003,
+    "critic_lr": 0.0003,
+    "clip": 0.2,
+    "value_clip": 0.2,
+    "entropy_coef": 0.001,
+    "value_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "epochs": 4,
+    "minibatch_size": 256,
+    "target_kl": 0.02
+  },
+  "evaluation": {
+    "validation_seeds": [
+      710001,
+      710002,
+      710003,
+      710004,
+      710005,
+      710006,
+      710007,
+      710008,
+      710009,
+      710010
+    ],
+    "test_seeds": [
+      810001,
+      810002,
+      810003,
+      810004,
+      810005,
+      810006,
+      810007,
+      810008,
+      810009,
+      810010,
+      810011,
+      810012,
+      810013,
+      810014,
+      810015,
+      810016,
+      810017,
+      810018,
+      810019,
+      810020,
+      810021,
+      810022,
+      810023,
+      810024,
+      810025,
+      810026,
+      810027,
+      810028,
+      810029,
+      810030,
+      810031,
+      810032,
+      810033,
+      810034,
+      810035,
+      810036,
+      810037,
+      810038,
+      810039,
+      810040,
+      810041,
+      810042,
+      810043,
+      810044,
+      810045,
+      810046,
+      810047,
+      810048,
+      810049,
+      810050
+    ],
+    "every_updates": 25,
+    "selection": "accepted_then_fewer_collisions_then_fewer_overspeed_steps_then_nominal_episodes_then_reward_then_fewer_interventions",
+    "acceptance": {
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "minimum_mean_progress_m": 600.0,
+      "maximum_intervention_fraction": 0.05
+    },
+    "wave_targets": {
+      "minimum_variance_reduction": 0.15,
+      "maximum_throughput_loss": 0.02,
+      "baseline": "separately_trained_no_communication_same_scenario",
+      "requires_baseline": true
+    }
+  },
+  "preflight": {
+    "seeds": [
+      920001,
+      920002
+    ],
+    "rollout_steps": 32,
+    "max_wall_seconds": 300
+  },
+  "execution": {
+    "worker_timeout_seconds": 30,
+    "log_mode": "files_only",
+    "rendering": false,
+    "requires_explicit_train_mode": true
+  }
+}
