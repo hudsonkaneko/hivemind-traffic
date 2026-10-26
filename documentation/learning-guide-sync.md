@@ -1,5 +1,14 @@
 # Engineering guide synchronization
 
+## October 26: Roof LiDAR combined test
+
+Appended v10 mount/path changes, combined-camera/LiDAR results and the measured
+near-field failures to tab 41. The start link follows `codex/roof-lidar-rig`.
+Revision-guarded full readback verified the addition and 40 unaffected tab bodies;
+all 42 tabs regenerated and checked from
+`outputs/doc-sync/roof-lidar-v01/verified-source.json`. Native pagination was not
+inspected. Results and actual screenshots: [roof LiDAR](roof-lidar-v01.md).
+
 ## October 26: Seven-camera source rig
 
 Appended the v09 seven-camera setup, passed native/CPU/USD results, preserved

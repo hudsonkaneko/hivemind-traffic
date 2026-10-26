@@ -4,6 +4,16 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-26 - Roof LiDAR v10 and combined capture
+
+- Renamed the new source mount to LidarRoof and raised it 20 cm above the prior
+  roof location. Preserved earlier versions and migrated v10 paths/metadata.
+- Combined seven-camera/LiDAR test passed: 119 scans, 59 images per camera,
+  all six tall surrounding targets, stable mounts and no contacts. 94 CPU and
+  22 USD tests pass. Small side targets at 2–6 m were missed and are documented.
+- Saved actual screenshots and synchronized the guide. No training or actor
+  changes. See [roof LiDAR results](roof-lidar-v01.md).
+
 ## 2026-10-26 - Seven-camera source rig
 
 - Added seven source-authored perspective cameras to local vehicle v09 while

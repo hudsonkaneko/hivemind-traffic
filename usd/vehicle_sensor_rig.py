@@ -19,10 +19,12 @@ CAMERA_ORIENTATION_WXYZ = (.5*(_C+_S), .5*(_C-_S), .5*(_S-_C), -.5*(_C+_S))
 RESOLUTION = (1280, 720)
 
 
-def sensor_paths(chassis_path):
+def sensor_paths(chassis_path, *, lidar_name='LidarFront'):
+    if lidar_name not in ('LidarFront','LidarRoof'):
+        raise ValueError('Unknown versioned LiDAR mount')
     root = str(chassis_path).rstrip('/') + '/Sensors'
     return dict(root=root, camera=root + '/CameraFront',
-                lidar_mount=root + '/LidarFront', lidar=root + '/LidarFront/Scan')
+                lidar_mount=root + '/'+lidar_name, lidar=root + '/'+lidar_name+'/Scan')
 
 
 def author_sensor_rig(stage, chassis_path):
