@@ -387,3 +387,7 @@ October 26: [seven-camera v09 source](seven-camera-v01.md) passed bounded native
 capture, projected-target visibility, composition and moving-mount checks. This
 is a camera-rig milestone only; learned surround perception, Cosmos, sensor
 fusion and camera-policy training remain open. No new training was launched.
+
+October 26: [v10 roof LiDAR](roof-lidar-v01.md) passed combined capture with all
+seven cameras and tall targets around the car. Small side targets at 2–6 m were
+missed; near-field sensing remains open. No new training or actor change.

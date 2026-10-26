@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/seven-camera-rig/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/seven-camera-rig/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/roof-lidar-rig/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/roof-lidar-rig/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4258,3 +4258,15 @@ Bounded native run 20261026T190556Z-d6c892f5 passed: 59 valid frames per camera,
 This validates camera capture and mounting, not learned surround perception or driving. No new training, Cosmos, fisheye distortion, learned sensor fusion or active LiDAR concurrency test was performed. Existing RL actors still use their prior observation contracts. Review the perception encoder, actor inputs, rewards, training budget and evaluation before training.
 
 Results and screenshots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/seven-camera-rig/documentation/seven-camera-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/seven-camera-rig/documentation/seven-camera-v01.md>)
+
+<a id="docs-h-wb812z1miqpz"></a>
+
+#### Roof LiDAR v01 and combined sensor test — October 26, 2026
+
+Local reusable vehicle source v10 now names the central sensor LidarRoof, with runtime child LidarRoof/Scan. The roof mount was raised 20 cm to chassis XYZ (0, 0, 1.45 m), with source-authored housing/support changes and unchanged vehicle dynamics. Seven cameras remain. v08/v09 retain their historical paths; old actor contracts are unchanged.
+
+Combined native run 20261026T192146Z-40b994ce passed: 119 complete LiDAR scans, 59 valid images per camera, returns on all six tall surrounding targets, 0.6299 m travel, stable camera mounts, zero contacts and unchanged source hashes. 94 CPU tests and 22 USD tests passed. Actual vehicle and point-cloud screenshots are documented.
+
+Near-field limitation: zero returns on 30 cm cubes placed 2, 4 and 6 m to both sides. The retained 32-emitter profile spans -15 to +10 degrees vertically, with 20 Hz scans and configured 0–360 degree azimuth. Roof placement does not guarantee complete close-range coverage. Source hardware lies below the sensor origin, but 1,666 returns in a broad roof region mean downward-beam self-occlusion remains possible. Short-range/perimeter sensing or a separately validated wider vertical profile remains future work. No new training or learned fusion was started.
+
+Results: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/roof-lidar-rig/documentation/roof-lidar-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/roof-lidar-rig/documentation/roof-lidar-v01.md>)
