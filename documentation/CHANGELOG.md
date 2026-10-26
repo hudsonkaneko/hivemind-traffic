@@ -4,6 +4,15 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-26 - Seven-camera source rig
+
+- Added seven source-authored perspective cameras to local vehicle v09 while
+  preserving v08, the LiDAR path and vehicle dynamics. Fixed RTX mount handling.
+- Passed 44 capture tests, 21 USD tests and a six-second native test: 59 valid
+  frames per camera, all target views, 0.63 m travel, zero contacts, unchanged
+  source and stable mounts. Saved actual screenshots and all failed attempts.
+- No learned surround perception or new training. See [results](seven-camera-v01.md).
+
 ## 2026-10-26 - Repair native SUMO GUI recording
 
 - Added paced, native-size SUMO viewport capture with bounded socket/process

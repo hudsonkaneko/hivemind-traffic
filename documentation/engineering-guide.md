@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/seven-camera-rig/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/seven-camera-rig/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4246,3 +4246,15 @@ Native failures were preserved. The source v08 camera now includes the native RT
 Final checks: 163 targeted CPU tests and 18 plain-USD tests pass. Actual, unenhanced front-camera and vehicle overview screenshots were inspected and published in the milestone report. Source files were unchanged during the final run. This is one seeded static-obstacle test, not a held-out evaluation, repeated native reset proof, highway-speed qualification or learned-policy integration. Old actor observation contracts remain unchanged. Surround cameras, Cosmos generation, moving-hazard validation and new policy training are future work.
 
 Results and screenshots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-perception-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-perception-v01.md>)
+
+<a id="docs-h-edbm8sqjk8k5"></a>
+
+#### Seven-camera source rig v01 — October 26, 2026
+
+The reusable local Americano v09 source now contains front wide, front telephoto, cross left/right, rear left/right and rear telephoto cameras under the moving chassis. v08 and the LiDAR path are preserved. All seven use 640×360 RGB at 10 Hz; horizontal fields of view are 120°, 30°, 120°, 120°, 70°, 70° and 30° respectively. Housings are visual only; vehicle mass and collision geometry are unchanged.
+
+Bounded native run 20261026T190556Z-d6c892f5 passed: 59 valid frames per camera, all seven assigned target visibility checks, 0.6299 m travel, zero contacts, stable camera mounts and unchanged source hashes. Six simulated seconds took 20.82 wall seconds including startup; this is not a real-time throughput benchmark. 44 capture tests and 21 USD tests passed. Actual screenshots and three failed attempts are documented. RTX discarded matrix-only mounts; standard translation/orientation ops fixed the source, with pre/post initialization checks added.
+
+This validates camera capture and mounting, not learned surround perception or driving. No new training, Cosmos, fisheye distortion, learned sensor fusion or active LiDAR concurrency test was performed. Existing RL actors still use their prior observation contracts. Review the perception encoder, actor inputs, rewards, training budget and evaluation before training.
+
+Results and screenshots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/seven-camera-rig/documentation/seven-camera-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/seven-camera-rig/documentation/seven-camera-v01.md>)
