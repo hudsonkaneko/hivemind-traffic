@@ -1,0 +1,181 @@
+{
+  "passed": true,
+  "training": false,
+  "composition_errors": [],
+  "gates": {
+    "all_seven_capture": true,
+    "stable_mounts": true,
+    "targets_visible": true,
+    "moved": true,
+    "stable": true,
+    "no_contacts": true,
+    "screenshots": true,
+    "composition": true
+  },
+  "valid_frames": {
+    "CameraFront": 59,
+    "CameraFrontTele": 59,
+    "CameraCrossLeft": 59,
+    "CameraCrossRight": 59,
+    "CameraRearLeft": 59,
+    "CameraRearRight": 59,
+    "CameraRearTele": 59
+  },
+  "progress_m": 0.629859148201242,
+  "clock": {
+    "physics_steps": 720,
+    "render_count": 120,
+    "time_s": 6.0,
+    "absolute_time_s": 6.016666666666667,
+    "native_physics_steps": 722,
+    "physics_hz": 120,
+    "render_hz": 20,
+    "origin_time_s": 0.016666666666666666,
+    "origin_physics_steps": 2
+  },
+  "contacts": 0,
+  "camera_specs": [
+    {
+      "name": "CameraFront",
+      "translation_m": [
+        0.8,
+        0,
+        1.12
+      ],
+      "heading_deg": 0,
+      "down_pitch_deg": 15,
+      "horizontal_fov_deg": 120,
+      "focal_length_mm": 10.392304845413268,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10
+    },
+    {
+      "name": "CameraFrontTele",
+      "translation_m": [
+        0.8,
+        0.18,
+        1.12
+      ],
+      "heading_deg": 0,
+      "down_pitch_deg": 3,
+      "horizontal_fov_deg": 30,
+      "focal_length_mm": 67.17691453623979,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10
+    },
+    {
+      "name": "CameraCrossLeft",
+      "translation_m": [
+        0.5,
+        0.8,
+        1.05
+      ],
+      "heading_deg": 65,
+      "down_pitch_deg": 10,
+      "horizontal_fov_deg": 120,
+      "focal_length_mm": 10.392304845413268,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10
+    },
+    {
+      "name": "CameraCrossRight",
+      "translation_m": [
+        0.5,
+        -0.8,
+        1.05
+      ],
+      "heading_deg": -65,
+      "down_pitch_deg": 10,
+      "horizontal_fov_deg": 120,
+      "focal_length_mm": 10.392304845413268,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10
+    },
+    {
+      "name": "CameraRearLeft",
+      "translation_m": [
+        -1.0,
+        0.8,
+        1.05
+      ],
+      "heading_deg": 135,
+      "down_pitch_deg": 10,
+      "horizontal_fov_deg": 70,
+      "focal_length_mm": 25.706664121358063,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10
+    },
+    {
+      "name": "CameraRearRight",
+      "translation_m": [
+        -1.0,
+        -0.8,
+        1.05
+      ],
+      "heading_deg": -135,
+      "down_pitch_deg": 10,
+      "horizontal_fov_deg": 70,
+      "focal_length_mm": 25.706664121358063,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10
+    },
+    {
+      "name": "CameraRearTele",
+      "translation_m": [
+        -1.2,
+        0,
+        1.12
+      ],
+      "heading_deg": 180,
+      "down_pitch_deg": 3,
+      "horizontal_fov_deg": 30,
+      "focal_length_mm": 67.17691453623979,
+      "resolution": [
+        640,
+        360
+      ],
+      "frequency_hz": 10
+    }
+  ],
+  "limitations": [
+    "Synthetic perspective cameras, no fisheye distortion or hardware noise",
+    "Caller simulation timestamps; hardware freshness not proven",
+    "No learned fusion, Cosmos, active LiDAR concurrency or policy training",
+    "Angular coverage and six static targets do not establish obstacle-free visibility everywhere"
+  ],
+  "source_unchanged": true,
+  "source_hashes": {
+    "assets/ground.usda": "fecda741fa028cb99889147fa21a4b86f171ea87259d72b300df1c8040c6b957",
+    "assets/vehicle-geometry.usda": "3f29d13bfdf973341d21481e00ca7406fbdb7eeeb0bfcc5626558bf421a8321d",
+    "assets/vehicle-physics.usda": "567724ece7804213c30febdae2e8ac0635901d7129237cb9b3dff6bfa69c0594",
+    "assets/vehicle-sensors.usda": "af6216362a659129c5b266cd39c8fc1d4a2ea134b58dc455c0404bbc47ae4c1e",
+    "assets/vehicle.usda": "0e0796409e4c49a1724a8e82c9f1998a1ad30d2f23c2552cd81ea7776c7b6e53",
+    "assets/visuals.usdc": "bf84656461e0a0c79794c61ecfd8a24bd6e94e7a2ef5218fe1b2c48da818e400",
+    "layout.usda": "f006aa7f7ff46555632f2cd50e2cf49eb1a960361d2fe065501ffa947d816289",
+    "model.json": "342a08d4f18da0db5ec301706b9ce4f3a475edb9d8de8816580829cc60fa0366",
+    "physics.usda": "76d9558b057584ecfb0d810eaed8862d812babea9ed0188b4f5acd691149c159",
+    "world.usda": "252d3362068ef14f7f19189d878f7389baef68cef63146c32d9c51db2bb1bbbe"
+  },
+  "wall_seconds": 20.822147600003518,
+  "run_id": "20261026T190556Z-d6c892f5",
+  "cpu_tests_passed": 44,
+  "usd_tests_passed": 21
+}

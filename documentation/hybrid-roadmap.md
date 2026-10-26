@@ -381,3 +381,9 @@ and reuse of the scene/control boundary for a two-car/hybrid fixture. Library
 promotion and cloning/reset validation are required before expanding beyond the
 tested single-car task. This scene milestone does not advance highway-speed,
 physical-fleet or hivemind-effectiveness claims.
+
+
+October 26: [seven-camera v09 source](seven-camera-v01.md) passed bounded native
+capture, projected-target visibility, composition and moving-mount checks. This
+is a camera-rig milestone only; learned surround perception, Cosmos, sensor
+fusion and camera-policy training remain open. No new training was launched.
