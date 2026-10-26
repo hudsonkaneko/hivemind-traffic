@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/roof-lidar-rig/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/roof-lidar-rig/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/body-camera-rig/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/body-camera-rig/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4270,3 +4270,15 @@ Combined native run 20261026T192146Z-40b994ce passed: 119 complete LiDAR scans, 
 Near-field limitation: zero returns on 30 cm cubes placed 2, 4 and 6 m to both sides. The retained 32-emitter profile spans -15 to +10 degrees vertically, with 20 Hz scans and configured 0–360 degree azimuth. Roof placement does not guarantee complete close-range coverage. Source hardware lies below the sensor origin, but 1,666 returns in a broad roof region mean downward-beam self-occlusion remains possible. Short-range/perimeter sensing or a separately validated wider vertical profile remains future work. No new training or learned fusion was started.
 
 Results: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/roof-lidar-rig/documentation/roof-lidar-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/roof-lidar-rig/documentation/roof-lidar-v01.md>)
+
+<a id="docs-h-jc0n7z4ekux1"></a>
+
+#### Body-mounted cameras v01 — October 26, 2026
+
+The actual reusable local v11 vehicle source removes all seven camera roof stalks. Compact housings now sit on measured exterior body surfaces: front fascia/hood, front fenders, rear quarter panels and tailgate. The central roof LiDAR remains unchanged. Camera paths, optics and headings are preserved; body-camera mount calibration metadata is updated. Earlier sources remain preserved.
+
+Native run 20261026T193608Z-4ea7afd5 passed combined sensing: 59 valid images from each camera, all camera targets visible, 119 complete LiDAR scans with all tall surrounding targets detected, stable mounts over 0.6299 m travel, zero contacts and unchanged source. Two exterior-intersection tests and actual source checks passed. Visual inspection of an earlier layout found excessive body occlusion in cross views; moving those cameras onto the outer fenders cleared the views. Actual screenshots are documented.
+
+Roof-region LiDAR self returns fell to zero in this test; that does not prove universal clearance. Small side targets at 2–6 m remain undetected by the existing LiDAR profile. No training or learned fusion was started; old actor observation contracts are unchanged.
+
+Results: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/body-camera-rig/documentation/body-camera-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/body-camera-rig/documentation/body-camera-v01.md>)

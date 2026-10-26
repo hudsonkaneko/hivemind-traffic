@@ -391,3 +391,7 @@ fusion and camera-policy training remain open. No new training was launched.
 October 26: [v10 roof LiDAR](roof-lidar-v01.md) passed combined capture with all
 seven cameras and tall targets around the car. Small side targets at 2–6 m were
 missed; near-field sensing remains open. No new training or actor change.
+
+October 26: [v11 body-mounted cameras](body-camera-v01.md) removes camera roof
+stalks, seats compact housings against measured body geometry and retains roof
+LiDAR. Combined capture passes; near-field LiDAR and learned fusion remain open.

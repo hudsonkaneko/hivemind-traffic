@@ -1,5 +1,13 @@
 # Engineering guide synchronization
 
+## October 26: Body-mounted cameras
+
+Appended the actual v11 body-mounted camera source, combined test, visual
+occlusion correction and limits to tab 41. Start-tab mirror link follows
+`codex/body-camera-rig`. Revision-guarded full native readback and regeneration
+are recorded in `outputs/doc-sync/body-camera-v01/verified-source.json`.
+All 42 tabs preserved; native pagination not inspected.
+
 ## October 26: Roof LiDAR combined test
 
 Appended v10 mount/path changes, combined-camera/LiDAR results and the measured
