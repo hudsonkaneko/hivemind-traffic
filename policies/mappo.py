@@ -42,13 +42,33 @@ def _mlp(input_size: int, hidden_sizes: Sequence[int], output_size: int, gain: f
     return nn.Sequential(*layers)
 
 
+class MessageObservationEncoder(nn.Module):
+    """Permutation-invariant masked encoding of six delivered-message slots."""
+    def __init__(self):
+        super().__init__()
+        self.message_net = _mlp(6, (16,), 16, 1.0)
+
+    def forward(self, observations: torch.Tensor) -> torch.Tensor:
+        slots = observations[..., 27:].unflatten(-1, (6, 7))
+        mask = slots[..., 6:7]
+        encoded = self.message_net(slots[..., :6] * mask) * mask
+        pooled = encoded.sum(-2) / mask.sum(-2).clamp_min(1.0)
+        # Count distinguishes absent messages from messages whose embedding cancels.
+        return torch.cat((observations[..., :27], pooled, mask.sum(-2) / 6.0), dim=-1)
+
+
 class LocalAccelerationActor(nn.Module):
     """Deployment interface: local observations -> normalized acceleration."""
 
-    def __init__(self, observation_size: int, hidden_sizes: Sequence[int]):
+    def __init__(self, observation_size: int, hidden_sizes: Sequence[int], message_encoder: bool = False):
         super().__init__()
         self.observation_size = observation_size
-        self.mean_net = _mlp(observation_size, hidden_sizes, 1, 0.01)
+        if message_encoder:
+            if observation_size != 69:
+                raise ValueError("Message encoder requires 27 local plus six 7-feature slots")
+            self.mean_net = nn.Sequential(MessageObservationEncoder(), _mlp(44, hidden_sizes, 1, 0.01))
+        else:
+            self.mean_net = _mlp(observation_size, hidden_sizes, 1, 0.01)
 
     def forward(self, local_obs: torch.Tensor) -> torch.Tensor:
         if local_obs.shape[-1] != self.observation_size:
@@ -71,6 +91,7 @@ class MappoActorCritic(nn.Module):
         num_agents: int = 4,
         actor_hidden_sizes: Sequence[int] = (128, 128),
         critic_hidden_sizes: Sequence[int] = (256, 256),
+        message_encoder: bool = False,
     ):
         super().__init__()
         if num_agents <= 0 or state_size <= 0:
@@ -78,7 +99,7 @@ class MappoActorCritic(nn.Module):
         self.observation_size = observation_size
         self.state_size = state_size
         self.num_agents = num_agents
-        self.actor = LocalAccelerationActor(observation_size, actor_hidden_sizes)
+        self.actor = LocalAccelerationActor(observation_size, actor_hidden_sizes, message_encoder)
         self.log_std = nn.Parameter(torch.zeros(1))
         self.critic = _mlp(state_size + num_agents, critic_hidden_sizes, 1, 1.0)
         nodes, weights = np.polynomial.hermite.hermgauss(20)

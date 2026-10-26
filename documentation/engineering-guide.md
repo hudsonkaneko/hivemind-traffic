@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-communication-waves/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-communication-waves/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4246,3 +4246,65 @@ Native failures were preserved. The source v08 camera now includes the native RT
 Final checks: 163 targeted CPU tests and 18 plain-USD tests pass. Actual, unenhanced front-camera and vehicle overview screenshots were inspected and published in the milestone report. Source files were unchanged during the final run. This is one seeded static-obstacle test, not a held-out evaluation, repeated native reset proof, highway-speed qualification or learned-policy integration. Old actor observation contracts remain unchanged. Surround cameras, Cosmos generation, moving-hazard validation and new policy training are future work.
 
 Results and screenshots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-perception-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-perception-v01.md>)
+
+<a id="docs-h-edbm8sqjk8k5"></a>
+
+#### Seven-camera source rig v01 — October 26, 2026
+
+The reusable local Americano v09 source now contains front wide, front telephoto, cross left/right, rear left/right and rear telephoto cameras under the moving chassis. v08 and the LiDAR path are preserved. All seven use 640×360 RGB at 10 Hz; horizontal fields of view are 120°, 30°, 120°, 120°, 70°, 70° and 30° respectively. Housings are visual only; vehicle mass and collision geometry are unchanged.
+
+Bounded native run 20261026T190556Z-d6c892f5 passed: 59 valid frames per camera, all seven assigned target visibility checks, 0.6299 m travel, zero contacts, stable camera mounts and unchanged source hashes. Six simulated seconds took 20.82 wall seconds including startup; this is not a real-time throughput benchmark. 44 capture tests and 21 USD tests passed. Actual screenshots and three failed attempts are documented. RTX discarded matrix-only mounts; standard translation/orientation ops fixed the source, with pre/post initialization checks added.
+
+This validates camera capture and mounting, not learned surround perception or driving. No new training, Cosmos, fisheye distortion, learned sensor fusion or active LiDAR concurrency test was performed. Existing RL actors still use their prior observation contracts. Review the perception encoder, actor inputs, rewards, training budget and evaluation before training.
+
+Results and screenshots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/seven-camera-rig/documentation/seven-camera-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/seven-camera-rig/documentation/seven-camera-v01.md>)
+
+<a id="docs-h-wb812z1miqpz"></a>
+
+#### Roof LiDAR v01 and combined sensor test — October 26, 2026
+
+Local reusable vehicle source v10 now names the central sensor LidarRoof, with runtime child LidarRoof/Scan. The roof mount was raised 20 cm to chassis XYZ (0, 0, 1.45 m), with source-authored housing/support changes and unchanged vehicle dynamics. Seven cameras remain. v08/v09 retain their historical paths; old actor contracts are unchanged.
+
+Combined native run 20261026T192146Z-40b994ce passed: 119 complete LiDAR scans, 59 valid images per camera, returns on all six tall surrounding targets, 0.6299 m travel, stable camera mounts, zero contacts and unchanged source hashes. 94 CPU tests and 22 USD tests passed. Actual vehicle and point-cloud screenshots are documented.
+
+Near-field limitation: zero returns on 30 cm cubes placed 2, 4 and 6 m to both sides. The retained 32-emitter profile spans -15 to +10 degrees vertically, with 20 Hz scans and configured 0–360 degree azimuth. Roof placement does not guarantee complete close-range coverage. Source hardware lies below the sensor origin, but 1,666 returns in a broad roof region mean downward-beam self-occlusion remains possible. Short-range/perimeter sensing or a separately validated wider vertical profile remains future work. No new training or learned fusion was started.
+
+Results: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/roof-lidar-rig/documentation/roof-lidar-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/roof-lidar-rig/documentation/roof-lidar-v01.md>)
+
+<a id="docs-h-jc0n7z4ekux1"></a>
+
+#### Body-mounted cameras v01 — October 26, 2026
+
+The actual reusable local v11 vehicle source removes all seven camera roof stalks. Compact housings now sit on measured exterior body surfaces: front fascia/hood, front fenders, rear quarter panels and tailgate. The central roof LiDAR remains unchanged. Camera paths, optics and headings are preserved; body-camera mount calibration metadata is updated. Earlier sources remain preserved.
+
+Native run 20261026T193608Z-4ea7afd5 passed combined sensing: 59 valid images from each camera, all camera targets visible, 119 complete LiDAR scans with all tall surrounding targets detected, stable mounts over 0.6299 m travel, zero contacts and unchanged source. Two exterior-intersection tests and actual source checks passed. Visual inspection of an earlier layout found excessive body occlusion in cross views; moving those cameras onto the outer fenders cleared the views. Actual screenshots are documented.
+
+Roof-region LiDAR self returns fell to zero in this test; that does not prove universal clearance. Small side targets at 2–6 m remain undetected by the existing LiDAR profile. No training or learned fusion was started; old actor observation contracts are unchanged.
+
+Results: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/body-camera-rig/documentation/body-camera-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/body-camera-rig/documentation/body-camera-v01.md>)
+
+<a id="docs-h-8auh37hm86ow"></a>
+
+#### Near-field sensing and perception dataset preparation — October 26, 2026
+
+The actual local v14 source preserves seven body-mounted cameras and adds four compact perimeter LiDARs alongside the roof scanner. The opt-in generic 64-beam profile spans -65 to +10 degrees at 20 Hz. Roof-only and side-only attempts exposed occlusion; all attempts are preserved. Native run 20261026T212758Z-d9729274 passed all 12 small near-field target checks, six tall surrounding targets, 119 complete scans per scanner and 59 images per camera, with stable mounts, unchanged source and zero contacts. This closes measured gaps, not all possible blind spots or highway-speed sensing. 141 focused CPU tests, 28 USD tests and four additional capture-config tests passed.
+
+Six short scenes produce 60 labeled front-camera frames (40 training, 10 validation, 10 test), with RGB, semantic masks and separate raw LiDAR. Native labels are supervision/evaluation only. The initial sample passed file, hash, class and split validation; pedestrian examples are absent and crossing boxes are labeled obstacle. Review prompted camera/chassis transforms and LiDAR frame-end pose metadata in revised captures. Raw WORLD scans are noncompensated; moving-object deskew and deployed fusion remain unverified. The sample verifies plumbing, not a training-quality corpus.
+
+Proposed training, NOT STARTED: front-wide 640x360 RGB, six-class DeepLabV3 MobileNetV3, future 20,000 frames split 16,000/2,000/2,000 by scenes/seeds, AdamW learning rate 0.0001, weight decay 0.0001, batch 8, mixed precision, at most 20 epochs and validation-mIoU early stopping after four epochs without improvement. Weights are not downloaded. Full data, realistic pedestrian examples, an implemented/tested isolated training entrypoint, a measured wall-time cap and user review remain prerequisites. No policy training or changes to old actor inputs were made.
+
+Results, version history and actual screenshots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/perception-preparation/documentation/perception-preparation-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/perception-preparation/documentation/perception-preparation-v01.md>)
+
+<a id="docs-h-53zjwdnf2yx3"></a>
+
+#### October 26: MAPPO v03 communication and traffic-wave setup
+
+Implemented explicit simulated V2V transport between four SUMO-controlled cars: timestamped JSON state and preceding action intent, 10 Hz, 150 m range, six masked receiver slots, 0–300 ms delay, 10% packet loss and 500 ms expiry. Duplicate, stale and out-of-order packets are rejected; background vehicles do not transmit. A shared message encoder extends the actor from 27 to 69 inputs. Global critic information is not supplied to the deployed actor.
+
+A seeded background leader brakes at -2 m/s² for four seconds, starting between 10 and 15 seconds. Wave rewards and throughput measure the affected lane only. Following target stays 1.5 seconds; speed ceiling stays 60 mph and cruise target stays 25 m/s. Merging and closer following are future work.
+
+124 targeted tests passed. Native preflight preflight-20261026T230647Z-60ff04c7 passed with zero optimizer steps, unchanged parameters, reproducible seeded episodes, 512 rollout decisions and matching actor export. Scripted and cooperative scripted controls both achieved zero collisions/overspeed and 3.4375% overrides. Their outcomes were identical: communication benefits are not yet demonstrated. Pooled follower speed variance includes initial transients and changing membership and is not a string-stability certificate.
+
+Final proposed pilot: MAPPO, four CPU workers, one million agent decisions, two-hour total budget, 60-second episodes, ten validation seeds and fifty held-out seeds. A separate matched no-communication configuration is prepared. No training has started; review the final configuration before launching. Learned wave improvement requires the separate trained baseline comparison: at least 15% lower pooled speed variance and no more than 2% throughput loss, alongside the unchanged safety acceptance.
+
+Source and detailed configuration: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-communication-waves/documentation/sumo-mappo-v3.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-communication-waves/documentation/sumo-mappo-v3.md>)

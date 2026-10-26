@@ -13,6 +13,7 @@ from pettingzoo import ParallelEnv
 from traffic.mappo_sumo import AGENT_IDS, MappoSumoBackend
 
 DEFAULT_CONFIG = {
+    "communication": None, "wave": None,
     "cruise_speed_m_s": 26.8224,
     "dt": 0.1, "horizon": 600, "speed_limit_m_s": 26.8224, "route_length_m": 5000.0,
     "neighbor_range_m": 120.0, "acceleration_min_m_s2": -4.5, "acceleration_max_m_s2": 2.0,
@@ -59,6 +60,18 @@ class SumoMappoEnv(ParallelEnv):
                 raise ValueError(f"Unknown environment settings: {sorted(unknown)}")
             self.config.update(deepcopy(config))
         self._validate_config()
+        self.communication = None
+        self.observation_size = OBSERVATION_SIZE
+        if self.config["communication"] is not None:
+            from traffic.mappo_communication import V2VChannel
+            self.communication = V2VChannel(self.config["communication"])
+            self.message_slots = int(self.config["communication"].get("max_neighbors", 6))
+            names = ("relative_position_over_range", "lane_delta_over_2", "relative_speed_over_cap",
+                     "acceleration_over_4p5", "intended_acceleration_over_4p5", "age_over_expiry", "present")
+            self.observation_features = observation_features + tuple(
+                f"message_{i}_{name}" for i in range(self.message_slots) for name in names)
+            self.observation_size = len(self.observation_features)
+        self.state_size = len(AGENT_IDS) * (self.observation_size + 1)
         self.dt = float(self.config["dt"])
         self.horizon = int(self.config["horizon"])
         self.possible_agents = list(AGENT_IDS)
@@ -70,7 +83,7 @@ class SumoMappoEnv(ParallelEnv):
         self._previous_requests = {agent: 0.0 for agent in self.possible_agents}
         self._last_observations = {}
         self.control_mode = "policy"
-        self.state_space = gym.spaces.Box(-1.0, 1.0, (STATE_SIZE,), np.float32)
+        self.state_space = gym.spaces.Box(-1.0, 1.0, (self.state_size,), np.float32)
 
     def _validate_config(self):
         cfg = self.config
@@ -94,17 +107,30 @@ class SumoMappoEnv(ParallelEnv):
         if not 0 < cfg['cruise_speed_m_s'] <= cfg['speed_limit_m_s']:
             raise ValueError('Cruise speed must be positive and no greater than the ceiling')
         required = set(DEFAULT_CONFIG['reward_weights'])
-        if not required.issubset(cfg['reward_weights']) or set(cfg['reward_weights']) - required - {'cruise_excess'}:
+        if not required.issubset(cfg['reward_weights']) or set(cfg['reward_weights']) - required - {'cruise_excess', 'traffic_progress', 'wave_fluctuation'}:
             raise ValueError("Reward weights must name every v01 component")
+        wave = cfg.get("wave")
+        if wave is not None:
+            expected = {"enabled", "pulse_start_s_range", "pulse_duration_s", "pulse_acceleration_m_s2", "detector_position_m"}
+            if set(wave) != expected or wave["enabled"] is not True:
+                raise ValueError("Wave settings must explicitly specify the complete enabled pulse contract")
+            lo, hi = wave["pulse_start_s_range"]
+            if not 0 <= lo <= hi or hi + wave["pulse_duration_s"] >= cfg["dt"] * cfg["horizon"]:
+                raise ValueError("Pulse must finish before the episode horizon")
+            if not 0 < wave["pulse_duration_s"] or not -4.5 <= wave["pulse_acceleration_m_s2"] < 0:
+                raise ValueError("Pulse must have positive duration and feasible braking")
+            if not 0 < wave["detector_position_m"] < cfg["route_length_m"]:
+                raise ValueError("Detector must lie inside the road")
         if not all(math.isfinite(float(x)) for x in cfg["reward_weights"].values()):
             raise ValueError("Reward weights must be finite")
 
     @lru_cache(maxsize=None)
     def observation_space(self, agent):
         self._validate_agent(agent)
-        low = np.zeros(OBSERVATION_SIZE, dtype=np.float32)
+        low = np.zeros(self.observation_size, dtype=np.float32)
         low[[1, 5, 7, 10, 13, 16, 19, 22]] = -1.0
-        return gym.spaces.Box(low, np.ones(OBSERVATION_SIZE, dtype=np.float32), dtype=np.float32)
+        low[OBSERVATION_SIZE:] = -1.0
+        return gym.spaces.Box(low, np.ones(self.observation_size, dtype=np.float32), dtype=np.float32)
 
     @lru_cache(maxsize=None)
     def action_space(self, agent):
@@ -127,6 +153,10 @@ class SumoMappoEnv(ParallelEnv):
             self.agents = list(self.possible_agents)
             self._step_count = 0
             self._previous_requests = {agent: 0.0 for agent in self.possible_agents}
+            self._episode_start_time = self._result.simulation_time
+            if self.communication is not None:
+                self.communication.reset(seed, episode_id=str(seed))
+                self._broadcast()
             observations = self._observations(self.agents)
             return observations, {agent: {"seed": seed, "simulation_time": self._result.simulation_time,
                 "active_agents": tuple(self.agents)} for agent in self.agents}
@@ -159,7 +189,9 @@ class SumoMappoEnv(ParallelEnv):
             raise RuntimeError("Backend did not advance exactly one control interval")
         self._previous_requests.update(requested if self.control_mode == "policy" else
                                        {agent: 0.0 for agent in transition_agents})
+        self._broadcast()
         observations = self._observations(transition_agents)
+        wave_metrics = self._wave_metrics(before)
         any_collision = bool(self._result.collisions)
         any_teleport = bool(self._result.teleported)
         terminations, truncations, infos, local_rewards = {}, {}, {}, {}
@@ -190,6 +222,10 @@ class SumoMappoEnv(ParallelEnv):
                 components['cruise_excess'] = float(np.clip(
                     ((state['speed'] if state else 0.) - target) /
                     max(1e-6, self.config['speed_limit_m_s'] - target), 0, 1))
+            if "traffic_progress" in self.config["reward_weights"]:
+                components["traffic_progress"] = wave_metrics["traffic_progress_normalized"]
+            if "wave_fluctuation" in self.config["reward_weights"]:
+                components["wave_fluctuation"] = wave_metrics["traffic_acceleration_abs_normalized"]
             weighted = {key: self.config["reward_weights"][key] * value for key, value in components.items()}
             local_rewards[agent] = float(sum(weighted.values()))
             infos[agent] = dict(simulation_time=self._result.simulation_time, episode_step=self._step_count,
@@ -221,9 +257,45 @@ class SumoMappoEnv(ParallelEnv):
         rewards = {agent: shared_reward for agent in transition_agents}
         for info in infos.values():
             info["team_reward"] = shared_reward
+            if self.config["wave"] is not None:
+                info["wave_metrics"] = dict(wave_metrics)
+            if self.communication is not None:
+                info["communication"] = self.communication.telemetry()
             info["terminal_state"] = terminal_state.copy()
         self.agents = [agent for agent in transition_agents if not terminations[agent] and not truncations[agent]]
         return observations, rewards, terminations, truncations, infos
+
+    def _broadcast(self):
+        if self.communication is None:
+            return
+        fleet = {agent: dict(position_m=state["position"], lane=state["lane_index"],
+                 speed_m_s=state["speed"], acceleration_m_s2=state["acceleration"],
+                 intended_acceleration_m_s2=self._previous_requests[agent])
+                 for agent, state in self._result.states.items() if agent in self.possible_agents}
+        self.communication.broadcast(self._step_count * self.dt, fleet)
+
+    def _wave_metrics(self, before):
+        states = self._result.states
+        # Spatially upstream followers receive the braking wave; "downstream" denotes its propagation.
+        leader = states.get("background_initial_0_1")
+        followers = [s for key, s in states.items() if s["lane_index"] == 0
+                     and (leader is None or s["position"] < leader["position"])]
+        speeds = [s["speed"] for s in followers]
+        detector = (self.config["wave"] or {}).get("detector_position_m", 1000.)
+        crossings = sum(s["lane_index"] == 0 and key in before.states and before.states[key]["position"] < detector <= s["position"]
+                        for key, s in states.items())
+        common = [(before.states[key], s) for key, s in states.items() if key in before.states and s["lane_index"] == 0]
+        affected = [s for s in states.values() if s["lane_index"] == 0]
+        progress = sum(max(0., s["distance"] - prior["distance"]) for prior, s in common)
+        return dict(elapsed_s=self.dt, downstream_speed_sum=float(sum(speeds)),
+                    downstream_speed_squared_sum=float(sum(v*v for v in speeds)),
+                    downstream_speed_count=len(speeds), throughput_count=int(crossings),
+                    traffic_progress_m=float(progress),
+                    pulse_leader_present=bool(leader is not None),
+                    pulse_leader_speed_m_s=float(leader["speed"]) if leader else None,
+                    pulse_leader_acceleration_m_s2=float(leader["acceleration"]) if leader else None,
+                    traffic_progress_normalized=float(np.mean([min(1., s["speed"] / self.config["cruise_speed_m_s"]) for s in affected])) if affected else 0.,
+                    traffic_acceleration_abs_normalized=float(np.mean([min(1., abs(s["acceleration"])/4.5) for s in affected])) if affected else 0.)
 
     def _neighbor(self, agent, lane_delta, ahead):
         ego = self._result.states.get(agent)
@@ -249,7 +321,7 @@ class SumoMappoEnv(ParallelEnv):
         for agent in agents:
             state = self._result.states.get(agent)
             if state is None:
-                observation = np.zeros(OBSERVATION_SIZE, dtype=np.float32)
+                observation = np.zeros(self.observation_size, dtype=np.float32)
             else:
                 speed = state["speed"]
                 cap = self.config["speed_limit_m_s"]
@@ -263,6 +335,18 @@ class SumoMappoEnv(ParallelEnv):
                                          np.clip((neighbor[1] - speed) / cap, -1, 1), 1.0] if neighbor else [0, 0, 0])
                 features.extend([float(state["lane_index"] < 2), float(state["lane_index"] > 0),
                                  min(1.0, self._step_count / self.horizon)])
+                if self.communication is not None:
+                    now = self._step_count * self.dt
+                    messages = self.communication.receive(agent, now, state["position"])
+                    channel_cfg = self.config["communication"]
+                    for message in messages:
+                        features.extend([np.clip((message.position_m - state["position"]) / channel_cfg.get("range_m", 150.), -1, 1),
+                            np.clip((message.lane - state["lane_index"]) / 2, -1, 1),
+                            np.clip((message.speed_m_s - speed) / cap, -1, 1),
+                            np.clip(message.acceleration_m_s2 / 4.5, -1, 1),
+                            np.clip(message.intended_acceleration_m_s2 / 4.5, -1, 1),
+                            np.clip((now - message.timestamp_s) / channel_cfg.get("expiry_s", .5), 0, 1), 1.])
+                    features.extend([0.] * (7 * (self.message_slots - len(messages))))
                 observation = np.asarray(features, dtype=np.float32)
                 if not self.observation_space(agent).contains(observation):
                     raise ValueError(f"Invalid observation for {agent}: {observation}")
@@ -292,7 +376,7 @@ class SumoMappoEnv(ParallelEnv):
     def _state_for(self, active_agents):
         active = set(active_agents)
         return np.concatenate([np.concatenate((self._last_observations[agent], [1])).astype(np.float32)
-            if agent in active else np.zeros(OBSERVATION_SIZE + 1, dtype=np.float32)
+            if agent in active else np.zeros(self.observation_size + 1, dtype=np.float32)
             for agent in self.possible_agents])
 
     def state(self):

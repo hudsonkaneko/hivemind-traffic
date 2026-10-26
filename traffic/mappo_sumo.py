@@ -59,11 +59,20 @@ def write_episode(config: dict, seed: int, directory: Path) -> dict:
     for agent, lane, position in zip(AGENT_IDS, (0, 0, 1, 2), (220, 130, 175, 190)):
         vehicles.append(dict(id=agent, lane=lane, position=position + float(rng.uniform(-10, 10)),
                              speed=float(rng.uniform(speed_low, speed_high)), depart=0.0))
+    if config.get("wave"):
+        for vehicle, position in zip(vehicles, (230., 175., 120., 65.)):
+            vehicle.update(lane=0, position=position, speed=20.)
     for lane in range(3):
         for index, position in enumerate((65, 310, 460)):
             vehicles.append(dict(id=f"background_initial_{lane}_{index}", lane=lane,
                                  position=position + float(rng.uniform(-10, 10)),
                                  speed=float(rng.uniform(speed_low, speed_high)), depart=0.0))
+    if config.get("wave"):
+        # The designated leader is ahead of the controlled platoon; other initial cars cannot overlap it.
+        for vehicle in vehicles:
+            if vehicle["id"].startswith("background_initial_0_"):
+                index = int(vehicle["id"].rsplit("_", 1)[1])
+                vehicle.update(position=(15., 300., 440.)[index], speed=20.)
     # Ordinary vehicles keep entering. Departures may be delayed by SUMO's safe insertion.
     interval_low, interval_high = config["background_depart_interval_range_s"]
     for lane in range(3):
@@ -115,6 +124,9 @@ class MappoSumoBackend:
         self.close()
         self.episode_directory = self.run_directory / f"episode-{seed}-{uuid4().hex[:8]}"
         write_episode(self.config, seed, self.episode_directory)
+        self._pulse_start_s = None
+        if self.config.get("wave"):
+            self._pulse_start_s = float(np.random.default_rng(seed + 73421).uniform(*self.config["wave"]["pulse_start_s_range"]))
         label = f"mappo-{uuid4().hex}"
         log_directory = ROOT / "logs" / "sumo_mappo"
         log_directory.mkdir(parents=True, exist_ok=True)
@@ -155,6 +167,7 @@ class MappoSumoBackend:
                 "initial_spawn_steps": spawn_steps,
                 "spawn_warmup_seconds": result.simulation_time,
             }, indent=2) + "\n", encoding="utf-8")
+            self._episode_start_time = result.simulation_time
             return result
         except BaseException:
             self.close()
@@ -169,6 +182,13 @@ class MappoSumoBackend:
                 raise KeyError(f"Cannot control inactive or non-policy vehicle {vehicle}")
             if not math.isfinite(acceleration) or not -4.5 <= acceleration <= 2.0:
                 raise ValueError(f"Invalid physical acceleration {acceleration}")
+        wave = self.config.get("wave")
+        if wave:
+            elapsed = self.connection.simulation.getTime() - self._episode_start_time
+            if self._pulse_start_s <= elapsed < self._pulse_start_s + wave["pulse_duration_s"]:
+                leader = "background_initial_0_1"
+                if leader in active:
+                    self.connection.vehicle.setAcceleration(leader, wave["pulse_acceleration_m_s2"], self.config["dt"])
         for vehicle in sorted(accelerations):
             self.connection.vehicle.setAcceleration(vehicle, float(accelerations[vehicle]), self.config["dt"])
         return self._advance()

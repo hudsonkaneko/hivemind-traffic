@@ -24,12 +24,25 @@ class EpisodeMetrics:
         self.peak_speed = 0.
         self.minimum_ttc = None
         self.background_peak = 0
+        self.wave = None
 
     def add(self, packet):
         self.steps += 1
         rewards = packet['rewards']
         self.transitions += len(rewards)
         self.reward += sum(rewards.values()) / len(AGENTS)
+        # The environment repeats team telemetry in each agent's info. Count once.
+        shared = next(iter(packet['infos'].values()), {}).get('wave_metrics')
+        if shared is not None:
+            if self.wave is None:
+                self.wave = {key: 0. for key in (
+                    'downstream_speed_sum', 'downstream_speed_squared_sum',
+                    'downstream_speed_count', 'throughput_count', 'elapsed_s', 'traffic_progress_m')}
+            for key in self.wave:
+                value = float(shared.get(key, 0.))
+                if not np.isfinite(value):
+                    raise ValueError('Nonfinite wave metric: ' + key)
+                self.wave[key] += value
         for agent, info in packet['infos'].items():
             self.progress[agent] += info.get('progress_m', 0.)
             self.interventions += int(info.get('safety_intervention', False))
@@ -46,7 +59,7 @@ class EpisodeMetrics:
                 self.causes[agent] = cause
 
     def result(self):
-        return dict(seed=self.seed, steps=self.steps, agent_transitions=self.transitions,
+        result = dict(seed=self.seed, steps=self.steps, agent_transitions=self.transitions,
                     team_reward=self.reward, mean_progress_m=float(np.mean(list(self.progress.values()))),
                     progress_by_agent_m=self.progress, collision_vehicles=len(self.collisions),
                     collision_ids=sorted(self.collisions), interventions=self.interventions,
@@ -55,6 +68,13 @@ class EpisodeMetrics:
                     min_ttc_s=self.minimum_ttc, background_peak=self.background_peak,
                     end_causes=self.causes,
                     nominal_end=len(self.causes) == 4 and all(c in ('time_limit', 'route_complete') for c in self.causes.values()))
+        if self.wave is not None:
+            count = self.wave['downstream_speed_count']
+            mean = self.wave['downstream_speed_sum'] / count if count else 0.
+            result['wave'] = dict(self.wave,
+                downstream_speed_variance_m2_s2=max(0., self.wave['downstream_speed_squared_sum'] / count - mean**2) if count else None,
+                throughput_vehicles_per_hour=3600. * self.wave['throughput_count'] / self.wave['elapsed_s'] if self.wave['elapsed_s'] else None)
+        return result
 
 
 def journal_packet(stream, worker, seed, actions, packet):
@@ -130,7 +150,7 @@ class RolloutCollector:
                 with torch.no_grad():
                     next_values = self.model.values(
                         torch.from_numpy(np.repeat(np.asarray(terminal)[None], 4, axis=0)), torch.arange(4))
-                row = dict(local_obs=np.zeros((4, 27), np.float32),
+                row = dict(local_obs=np.zeros((4, local.shape[-1]), np.float32),
                            global_states=np.repeat(np.asarray(before['state'])[None], 4, axis=0),
                            agent_indices=np.arange(4, dtype=np.int64), actions=np.zeros((4, 1), np.float32),
                            pre_tanh_actions=np.zeros((4, 1), np.float32),
@@ -193,7 +213,51 @@ def aggregate(episodes, acceptance=None):
             and result['mean_progress_m'] >= acceptance['minimum_mean_progress_m']
             and result['intervention_fraction'] <= acceptance['maximum_intervention_fraction']
             and result['nominal_episodes'] == len(episodes))
+    if all('wave' in row for row in episodes):
+        waves = [row['wave'] for row in episodes]
+        valid = all(row['downstream_speed_count'] > 0 and row['elapsed_s'] > 0 for row in waves)
+        result['wave'] = dict(
+            valid=valid,
+            mean_downstream_speed_variance_m2_s2=float(np.mean([row['downstream_speed_variance_m2_s2'] for row in waves])) if valid else None,
+            mean_throughput_vehicles_per_hour=float(np.mean([row['throughput_vehicles_per_hour'] for row in waves])) if valid else None,
+            mean_traffic_progress_m=float(np.mean([row['traffic_progress_m'] for row in waves])))
     result['selection_score'] = [int(result.get('accepted', False)), -result['collision_vehicles'],
                                  -result['overspeed_steps'], result['nominal_episodes'],
                                  result['mean_team_reward'], -result['intervention_fraction']]
     return result
+
+
+def compare_wave_episodes(candidate, baseline, *, minimum_variance_reduction=.15,
+                          maximum_throughput_loss=.02):
+    """Matched-seed comparison; caller must identify a separately trained baseline.
+
+    A zero baseline variance or throughput cannot establish a relative gain.
+    This helper does not assert policy provenance or replace the safety gate.
+    """
+    def indexed(rows):
+        result = {row['seed']: row for row in rows}
+        if not result or len(result) != len(rows):
+            raise ValueError('Wave comparison requires nonempty unique episode seeds')
+        return result
+    left, right = indexed(candidate), indexed(baseline)
+    if set(left) != set(right):
+        raise ValueError('Wave comparison requires identical episode seeds')
+    pairs = []
+    for seed in sorted(left):
+        a, b = left[seed]['wave'], right[seed]['wave']
+        if a['elapsed_s'] != b['elapsed_s'] or a['elapsed_s'] <= 0:
+            raise ValueError('Wave comparison requires equal positive episode duration')
+        av, bv = a['downstream_speed_variance_m2_s2'], b['downstream_speed_variance_m2_s2']
+        at, bt = a['throughput_vehicles_per_hour'], b['throughput_vehicles_per_hour']
+        if any(value is None or not np.isfinite(value) for value in (av, bv, at, bt)):
+            raise ValueError('Wave comparison requires finite populated metrics')
+        pairs.append(dict(seed=seed, candidate_variance=av, baseline_variance=bv,
+                          candidate_throughput=at, baseline_throughput=bt))
+    means = {key: float(np.mean([row[key] for row in pairs])) for key in pairs[0] if key != 'seed'}
+    valid = means['baseline_variance'] > 0 and means['baseline_throughput'] > 0
+    reduction = 1. - means['candidate_variance'] / means['baseline_variance'] if valid else None
+    loss = 1. - means['candidate_throughput'] / means['baseline_throughput'] if valid else None
+    return dict(pairs=pairs, means=means, valid=valid, variance_reduction_fraction=reduction,
+                throughput_loss_fraction=loss, wave_targets_met=bool(valid and
+                reduction >= minimum_variance_reduction - 1e-12 and
+                loss <= maximum_throughput_loss + 1e-12))
