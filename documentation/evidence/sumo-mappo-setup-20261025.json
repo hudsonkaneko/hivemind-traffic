@@ -1,0 +1,424 @@
+{
+  "schema_version": 1,
+  "milestone": "SUMO MAPPO v01 setup",
+  "local_date": "2026-10-25",
+  "training_started": false,
+  "trained_policy_available": false,
+  "config_sha256": "0c8e70ef98827a27ed5c77dc680ea35739811cdbbca045e8fb76af9fd2d3265c",
+  "preflight": {
+    "run_id": "preflight-20261026T002632Z-df0749c6",
+    "raw_path": "outputs/sumo_mappo/v01/preflight-20261026T002632Z-df0749c6",
+    "result_sha256": "8a9b9ffabfb6e9c9c11e1d05824d8099a14a38cc7ada8ba1e544f93e0205e473",
+    "manifest_sha256": "928f28b28029297f4bf55a0d40230d525fc9988395b61deb5582fa0b384ccc8c",
+    "base_git_commit": "ff5aebc72fba6525cf5dafc6e3da3d58abcc8a08",
+    "source_sha256": {
+      "experiments/run_sumo_mappo.py": "a602a993743abc40c623e9a247f51862828c1f343b1ebb2cdd4d7da51a03b73a",
+      "experiments/sumo_mappo_support.py": "ec2adfaa6b102737837189a829cb31324ab9aef4a45a3264ab6e03423fefbd30",
+      "experiments/sumo_mappo_rollout.py": "dbd55a913c2b86bdc3949204f9fc98c43e146f96dced871a2a3ad2f84cef823a",
+      "experiments/configs/sumo_mappo_v1.json": "53aa3ad5425c7fc3db1970643436fd3d0789a9e1a4da6db59c3711ed894ae288",
+      "policies/mappo.py": "7e316cb37d17e8b93da112dbadc2045273910d80122491d8c7ae9fabdc7dd239",
+      "environments/sumo_mappo_env.py": "b3c85b854c0a9a9d5e6e93324577866baa8d05c612a1958a395053dbd58a9420",
+      "traffic/mappo_sumo.py": "6f4cb900a79014698db8b70306aae75ab76fa4add14c8537b96ee7d4d58804cb",
+      "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+      "requirements.txt": "a057af83cf9f81ac9306afa68b62f340373a764090d7f14c4feed0438be059fc",
+      "scenarios/mappo_highway/edges.edg.xml": "e90fa974eabb39dbe74c2df963b260548aa68eeec33ab59411049bca256321f7",
+      "scenarios/mappo_highway/network.net.xml": "67aa49629d3bfe7316067adbc2d25b17eecd57ff3a81f627de50f45809508202",
+      "scenarios/mappo_highway/nodes.nod.xml": "80aa41e9d79fe3c39b92c1c9056d1ea683cb7f9bd5b165caa2114d639c567888",
+      "scenarios/mappo_highway/README.md": "e8bfa5420895bab93dd0c0102b5c56000db1779f71a31556cc4646ad1e9487fd"
+    },
+    "versions": {
+      "torch": "2.14.0+cpu",
+      "numpy": "2.4.6",
+      "gymnasium": "1.3.0",
+      "pettingzoo": "1.27.0",
+      "traci": "1.27.1",
+      "sumo": "Eclipse SUMO sumo 1.27.1"
+    },
+    "platform": "Windows-10-10.0.26200-SP0",
+    "cpu": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+    "wall_seconds": 24.968999999924563,
+    "optimizer_steps": 0,
+    "parameters_unchanged": true,
+    "source_unchanged_during_run": true,
+    "scripted_repeat_equal": true,
+    "actor_export_equal": true,
+    "forced_cleanup": [],
+    "rollout": {
+      "agent_transitions": 512,
+      "environment_steps": 128,
+      "likelihood_max_error": 4.76837158203125e-07,
+      "finite": true,
+      "optimizer_steps": 0
+    },
+    "evaluations": {
+      "native": {
+        "controller": "native",
+        "episodes": [
+          {
+            "seed": 500001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 589.0662591979237,
+            "mean_progress_m": 1580.1623191250196,
+            "progress_by_agent_m": {
+              "agent_0": 1588.0334098000212,
+              "agent_1": 1566.7288235000174,
+              "agent_2": 1571.0192952000189,
+              "agent_3": 1594.8677480000208
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 0,
+            "intervention_fraction": 0.0,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 26.8224,
+            "min_ttc_s": 105.4295634191617,
+            "background_peak": 89,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true
+          },
+          {
+            "seed": 500002,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 590.2535914005443,
+            "mean_progress_m": 1583.3500968082728,
+            "progress_by_agent_m": {
+              "agent_0": 1575.6000408000214,
+              "agent_1": 1591.0202649330301,
+              "agent_2": 1582.8740565000196,
+              "agent_3": 1583.9060250000205
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 0,
+            "intervention_fraction": 0.0,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 26.8224,
+            "min_ttc_s": 19.777061520717595,
+            "background_peak": 86,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true
+          }
+        ],
+        "summary": {
+          "episodes": 2,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.0,
+          "mean_team_reward": 589.659925299234,
+          "std_team_reward": 0.5936661013103048,
+          "mean_progress_m": 1581.7562079666463,
+          "nominal_episodes": 2,
+          "peak_speed_m_s": 26.8224,
+          "accepted": true,
+          "selection_score": [
+            1,
+            0,
+            0,
+            2,
+            589.659925299234,
+            -0.0
+          ]
+        }
+      },
+      "scripted": {
+        "controller": "scripted",
+        "episodes": [
+          {
+            "seed": 500001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 583.6498563501253,
+            "mean_progress_m": 1578.7258450965624,
+            "progress_by_agent_m": {
+              "agent_0": 1586.5967627275552,
+              "agent_1": 1565.2910024164435,
+              "agent_2": 1569.583355161267,
+              "agent_3": 1593.432260080984
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 195,
+            "intervention_fraction": 0.08125,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 26.8224,
+            "min_ttc_s": 106.52956341916168,
+            "background_peak": 89,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true
+          },
+          {
+            "seed": 500002,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 583.7783818644183,
+            "mean_progress_m": 1582.6916053720217,
+            "progress_by_agent_m": {
+              "agent_0": 1574.1641362863284,
+              "agent_1": 1592.701114197639,
+              "agent_2": 1581.4345377166637,
+              "agent_3": 1582.466633287456
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 249,
+            "intervention_fraction": 0.10375,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 26.8224,
+            "min_ttc_s": 20.863359339578317,
+            "background_peak": 86,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true
+          }
+        ],
+        "summary": {
+          "episodes": 2,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.0925,
+          "mean_team_reward": 583.7141191072718,
+          "std_team_reward": 0.06426275714648,
+          "mean_progress_m": 1580.7087252342922,
+          "nominal_episodes": 2,
+          "peak_speed_m_s": 26.8224,
+          "accepted": false,
+          "selection_score": [
+            0,
+            0,
+            0,
+            2,
+            583.7141191072718,
+            -0.0925
+          ]
+        }
+      },
+      "random": {
+        "controller": "random",
+        "episodes": [
+          {
+            "seed": 500001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 6.399807298306931,
+            "mean_progress_m": 111.99076540410452,
+            "progress_by_agent_m": {
+              "agent_0": 134.1562436224998,
+              "agent_1": 87.49834565624315,
+              "agent_2": 84.4729611657462,
+              "agent_3": 141.83551117192894
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 1112,
+            "intervention_fraction": 0.4633333333333333,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 18.783500145987276,
+            "min_ttc_s": 285.1183104694587,
+            "background_peak": 73,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true
+          },
+          {
+            "seed": 500002,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 13.724077148425112,
+            "mean_progress_m": 132.53679837812487,
+            "progress_by_agent_m": {
+              "agent_0": 87.31714010543533,
+              "agent_1": 135.49285749535437,
+              "agent_2": 160.78063034628923,
+              "agent_3": 146.55656556542053
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 1128,
+            "intervention_fraction": 0.47,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 18.83764537977469,
+            "min_ttc_s": 11.924774195410246,
+            "background_peak": 77,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true
+          }
+        ],
+        "summary": {
+          "episodes": 2,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.4666666666666667,
+          "mean_team_reward": 10.061942223366021,
+          "std_team_reward": 3.66213492505909,
+          "mean_progress_m": 122.26378189111469,
+          "nominal_episodes": 2,
+          "peak_speed_m_s": 18.83764537977469,
+          "accepted": false,
+          "selection_score": [
+            0,
+            0,
+            0,
+            2,
+            10.061942223366021,
+            -0.4666666666666667
+          ]
+        }
+      },
+      "untrained": {
+        "controller": "untrained",
+        "episodes": [
+          {
+            "seed": 500001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": -7.469946393174361,
+            "mean_progress_m": 106.28458325206735,
+            "progress_by_agent_m": {
+              "agent_0": 123.12940477303238,
+              "agent_1": 74.9933992649562,
+              "agent_2": 82.12939039492821,
+              "agent_3": 144.88613857535262
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 1882,
+            "intervention_fraction": 0.7841666666666667,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 18.987707105149095,
+            "min_ttc_s": 196.71515717761253,
+            "background_peak": 71,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true
+          },
+          {
+            "seed": 500002,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": -4.275867485984946,
+            "mean_progress_m": 113.43968962164223,
+            "progress_by_agent_m": {
+              "agent_0": 91.86221235788594,
+              "agent_1": 144.45301100211225,
+              "agent_2": 107.68694689274002,
+              "agent_3": 109.75658823383074
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 1861,
+            "intervention_fraction": 0.7754166666666666,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 18.800147974451022,
+            "min_ttc_s": 11.540746633987554,
+            "background_peak": 77,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true
+          }
+        ],
+        "summary": {
+          "episodes": 2,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.7797916666666667,
+          "mean_team_reward": -5.872906939579654,
+          "std_team_reward": 1.5970394535947072,
+          "mean_progress_m": 109.8621364368548,
+          "nominal_episodes": 2,
+          "peak_speed_m_s": 18.987707105149095,
+          "accepted": false,
+          "selection_score": [
+            0,
+            0,
+            0,
+            2,
+            -5.872906939579654,
+            -0.7797916666666667
+          ]
+        }
+      }
+    },
+    "passed": true
+  },
+  "verification": {
+    "broad_suite": {
+      "passed": 2724,
+      "skipped": 215,
+      "subtests_passed": 116,
+      "warnings": 29,
+      "seconds": 206.31,
+      "command": "python -m pytest -q --ignore=tests/test_physical_pair_loop.py --ignore=tests/test_physical_rl_fleet.py --junitxml=outputs/sumo-mappo-full-tests-20261025.xml",
+      "exclusions_reason": "Two unrelated pre-existing untracked private-work test files are outside this milestone."
+    },
+    "final_targeted_suite": {
+      "passed": 90,
+      "warnings": 3,
+      "seconds": 12.9,
+      "command": "python -m pytest tests/test_mappo_policy.py tests/test_mappo_sumo.py tests/test_sumo_mappo_env.py tests/test_sumo_mappo_rollout.py tests/test_sumo_mappo_config.py tests/test_sumo_mappo_runner.py -q --junitxml=outputs/sumo-mappo-final-tests-20261025.xml"
+    },
+    "final_source_sha256": {
+      "experiments/run_sumo_mappo.py": "ef491cf23faea4acf8f6fece6f20f10d4bceac09a3ac768c73442c92dbb0b3b7",
+      "experiments/sumo_mappo_support.py": "a69807fcadf01c3177b5db41f1bca2db998f15f916235d7ef49229c3bd52c9b8",
+      "experiments/sumo_mappo_rollout.py": "dbd55a913c2b86bdc3949204f9fc98c43e146f96dced871a2a3ad2f84cef823a",
+      "experiments/configs/sumo_mappo_v1.json": "53aa3ad5425c7fc3db1970643436fd3d0789a9e1a4da6db59c3711ed894ae288",
+      "policies/mappo.py": "7e316cb37d17e8b93da112dbadc2045273910d80122491d8c7ae9fabdc7dd239",
+      "environments/sumo_mappo_env.py": "b3c85b854c0a9a9d5e6e93324577866baa8d05c612a1958a395053dbd58a9420",
+      "traffic/mappo_sumo.py": "6f4cb900a79014698db8b70306aae75ab76fa4add14c8537b96ee7d4d58804cb",
+      "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+      "requirements.txt": "a057af83cf9f81ac9306afa68b62f340373a764090d7f14c4feed0438be059fc",
+      "scenarios/mappo_highway/edges.edg.xml": "e90fa974eabb39dbe74c2df963b260548aa68eeec33ab59411049bca256321f7",
+      "scenarios/mappo_highway/network.net.xml": "67aa49629d3bfe7316067adbc2d25b17eecd57ff3a81f627de50f45809508202",
+      "scenarios/mappo_highway/nodes.nod.xml": "80aa41e9d79fe3c39b92c1c9056d1ea683cb7f9bd5b165caa2114d639c567888",
+      "scenarios/mappo_highway/README.md": "e8bfa5420895bab93dd0c0102b5c56000db1779f71a31556cc4646ad1e9487fd"
+    },
+    "post_preflight_changes": "Evaluation seed upper-bound validation and rejection of resumes with fewer than four remaining decisions; both covered in final targeted suite.",
+    "review": "Independent subagent review found no remaining material setup issue. POSIX forced cleanup reviewed but not run on Windows."
+  },
+  "limitations": [
+    "No driving-policy optimizer updates or trained MAPPO checkpoint.",
+    "Synthetic numerical optimizer unit tests are separate from driving training.",
+    "Scripted baseline fails unchanged 5% override acceptance (9.25% measured).",
+    "No merging, jump-in obstacle, sensor-noise, communication or physical transfer validation.",
+    "Two preflight seeds cannot establish general driving safety or coordination gains.",
+    "TorchScript API is deprecated in current Torch; export and reload still pass."
+  ],
+  "policy_output_after_future_approval": "outputs/sumo_mappo/v01/train-<UTC>-<id>/policy.pt"
+}
