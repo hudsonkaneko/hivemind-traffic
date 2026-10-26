@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sumo-mappo-setup/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sumo-mappo-setup/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4216,3 +4216,21 @@ Actual training requires a later user approval and explicit --mode train with th
 The runner handles collection, learning, checkpointing, evaluation and shutdown itself, with only start/final status printed. After approval, wait for process completion without continuous chat analysis. No monitoring automation or automatic retraining loop was installed. The Google guide and GitHub Markdown mirror remain chat-managed.
 
 Full configuration, component definitions, commands, evidence and transfer limits: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sumo-mappo-setup/documentation/sumo-mappo-setup.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sumo-mappo-setup/documentation/sumo-mappo-setup.md>)
+
+<a id="docs-h-ynrpce2pp5qp"></a>
+
+#### October 25 — Forward sensor milestone v01 (native validation pending)
+
+The existing SUMO and physical-car policies still use privileged simulator inputs. A new audit identifies exact neighbor state, obstacle-derived braking targets, episode bookkeeping and world-frame conversion shortcuts; historical checkpoints and observation contracts are preserved.
+
+The separate sensor prototype receives forward RGB, RTX LiDAR returns and noisy wheel-speed/yaw-rate measurements with an initial noisy localization fix. RGB lane evidence is a brightness heuristic, not a learned semantic detector. Depth is saved for evaluation only. Packet timestamps, calibration, episode identity and stale-data braking are checked. The WORLD LiDAR conversion uses simulator pose only inside measurement generation; noncompensated moving-object and high-speed accuracy remain unverified.
+
+The actual reusable local vehicle source is now v08, with a camera and LiDAR mount authored under the moving chassis in vehicle-sensors.usda. These survive reference or payload loading. V07 and a byte-identical backup are preserved. The private vehicle package is not included in GitHub.
+
+160 targeted CPU tests and 17 OpenUSD tests pass. A bounded 15-second, 2 m/s native test is prepared, including a blank-camera braking check and genuine front/overview image capture. Native driving and screenshots remain pending while ARACHNID occupies the GPU; the user requested waiting. No new reinforcement-learning training is launched.
+
+Source, exact parameters and pending evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-perception-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-perception-v01.md>)
+
+Input audit: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-input-audit.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-input-audit.md>)
+
+Draft review: [`https://github.com/hudsonkaneko/hivemind-traffic/pull/21`](<https://github.com/hudsonkaneko/hivemind-traffic/pull/21>)
