@@ -4,6 +4,20 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-25 - SUMO MAPPO v01 setup, training awaiting approval
+
+- Added a separate four-car fixed-lane SUMO environment, local 27-feature shared
+  actor, centralized training critic and acceleration-only MAPPO learner with
+  terminal-aware rollout collection and actual active-agent budget accounting.
+- Added a reviewed 60 mph / one-million-decision CPU proposal, explicit config
+  digest launch guard, isolated workers, quiet file logging, resumable atomic
+  checkpoints and disjoint validation/test partitions. No driving training ran.
+- Verified a zero-optimizer native preflight, exact repeat/export checks and
+  90 final targeted tests; broad regression passed 2,724 tests with 215 skips.
+  The scripted baseline's 9.25% override rate fails the unchanged 5% criterion.
+- Synchronized the Google guide and its complete Markdown mirror. See the
+  [configuration, evidence and physical-transfer limits](sumo-mappo-setup.md).
+
 ## 2026-10-25 - Prepared CIRCLES highway test with PPO lane traffic
 
 - Added a separate three-physical-car inference probe with a 60 mph ceiling,
