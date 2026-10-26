@@ -1,5 +1,23 @@
 # Engineering guide synchronization
 
+## October 25: sensor prototype checkpoint
+
+Final native result was subsequently appended in place: 8.52 m travel, 2.57 m
+clearance, fault braking/recovery, 163 CPU tests and 18 USD tests, with the failed
+attempts and revised 3 m stopping criterion disclosed. Full readback preserved
+all 41 unaffected tab bodies. The final mirror/check uses
+`outputs/doc-sync/sensor-perception-v01-final/verified-source.json`; the earlier
+pending checkpoint remains historical evidence rather than being rewritten.
+
+Appended the forward sensor v01 implementation and explicitly pending native
+validation to tab **41 Isaac Lab lane task**. Updated the start-tab mirror link
+to `codex/sensor-perception-v01`. Revision-guarded native readback verified the
+exact addition, all 42 tabs and unchanged bodies for the 40 unaffected tabs.
+The complete Markdown mirror passed regeneration/check from
+`outputs/doc-sync/sensor-perception-v01/verified-source.json`. Native document
+pagination was not inspected. [Draft PR 21](https://github.com/hudsonkaneko/hivemind-traffic/pull/21)
+records the CPU-tested checkpoint; no native driving or training result is implied.
+
 ## Chat-managed Markdown mirror
 
 The complete [Engineering & Learning Guide](engineering-guide.md) can now be read
