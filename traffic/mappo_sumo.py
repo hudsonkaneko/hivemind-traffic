@@ -7,6 +7,7 @@ import json
 import math
 from pathlib import Path
 import shutil
+import subprocess
 from typing import Mapping
 from uuid import uuid4
 import xml.etree.ElementTree as ET
@@ -95,10 +96,11 @@ def write_episode(config: dict, seed: int, directory: Path) -> dict:
 class MappoSumoBackend:
     """One private TraCI connection, one simulationStep per joint control batch."""
 
-    def __init__(self, config: dict, run_directory=None, sumo_binary=None):
+    def __init__(self, config: dict, run_directory=None, sumo_binary=None, *, gui=False):
         self.config = dict(config)
         self.run_directory = project_output_directory(run_directory)
-        self.sumo_binary = Path(sumo_binary) if sumo_binary else find_sumo_binary()
+        self.sumo_binary = Path(sumo_binary) if sumo_binary else find_sumo_binary(gui=gui)
+        self.gui = gui
         self.connection = None
         self.simulation_steps = 0
         self.episode_directory = None
@@ -124,10 +126,15 @@ class MappoSumoBackend:
                    "--xml-validation", "never", "--time-to-teleport", "-1",
                    "--collision.action", "warn", "--collision.check-junctions", "true",
                    "--quit-on-end", "true", "--error-log", str(error_log_path)]
+        if self.gui:
+            command.extend(["--start", "--window-size", "1280,560"])
         try:
             self._log_handle = log_path.open("w", encoding="utf-8")
             traci.start(command, label=label, stdout=self._log_handle, verbose=False)
             self.connection = traci.getConnection(label)
+            if self.gui:
+                # Bound GUI/rendering stalls independently of headless training.
+                self.connection._socket.settimeout(15)
             self.version = self.connection.getVersion()
             self.simulation_steps = 0
             # SUMO may safely delay insertion when sampled departure speeds need
@@ -202,10 +209,18 @@ class MappoSumoBackend:
         try:
             if connection is not None:
                 try:
-                    connection.close()
+                    connection.close(wait=not self.gui)
                 except traci.exceptions.FatalTraCIError:
                     # A crashed/previously disconnected SUMO process must not prevent local cleanup.
                     pass
+                finally:
+                    if self.gui and connection._process is not None:
+                        process = connection._process
+                        try:
+                            process.wait(timeout=5)
+                        except subprocess.TimeoutExpired:
+                            process.kill()
+                            process.wait(timeout=5)
         finally:
             if self._log_handle is not None:
                 self._log_handle.close()

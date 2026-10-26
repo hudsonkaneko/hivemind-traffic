@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import sys
+import time
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -23,6 +24,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--seconds', type=int, default=60)
     parser.add_argument('--seed', type=int, default=400001)
+    parser.add_argument('--native-gui', action='store_true', help='Capture actual SUMO viewport PNGs at 10 fps')
     args = parser.parse_args()
     if Path.cwd().resolve() != ROOT or not args.output.resolve().is_relative_to(ROOT / 'outputs'):
         parser.error('Run from checkout root and save under outputs/')
@@ -33,24 +35,48 @@ def main():
     config = load_config()
     torch.set_num_threads(1)
     actor = torch.jit.load(str(args.policy.resolve()), map_location='cpu').eval()
-    backend = MappoSumoBackend(config['environment'], output / 'scenario')
+    backend = MappoSumoBackend(config['environment'], output / 'scenario', gui=args.native_gui)
     env = SumoMappoEnv(config['environment'], backend_factory=lambda: backend)
     colors = [(40, 220, 100, 255), (70, 160, 255, 255),
               (250, 190, 40, 255), (240, 80, 180, 255)]
     metrics = EpisodeMetrics(args.seed)
     snapshots = []
+    colored = set()
+    frames = output / 'frames'
+    if args.native_gui:
+        frames.mkdir()
     try:
         obs, _ = env.reset(seed=args.seed)
+        view = backend.connection.gui.getIDList()[0] if args.native_gui else None
         for step in range(args.seconds * 10):
             if not env.agents:
                 break
             agents = list(env.agents)
+            if args.native_gui:
+                connection = backend.connection
+                for vehicle in set(backend.active_vehicle_ids) - colored:
+                    color = colors[int(vehicle[-1])] if vehicle.startswith('agent_') else (170,170,180,255)
+                    connection.vehicle.setColor(vehicle, color)
+                    colored.add(vehicle)
+                positions = [env._result.states[a]['x'] for a in agents]
+                connection.gui.setBoundary(view, min(positions)-45, -25, max(positions)+65, 14)
+                frame = frames / f'{step:05d}.png'
+                # Native size avoids needless framebuffer resizing. The pause
+                # lets the GUI process screenshot work before the next TraCI step.
+                connection.gui.screenshot(view, str(frame))
+                time.sleep(.2)
             with torch.inference_mode():
                 actions = actor(torch.from_numpy(np.stack([obs[a] for a in agents]))).numpy()
             obs, rewards, terminated, truncated, infos = env.step(dict(zip(agents, actions)))
             metrics.add(dict(rewards=rewards, infos=infos))
             snapshots.append(dict(time=(step + 1) * .1, vehicles=env._result.states,
                 overrides={a: i['safety_intervention'] for a, i in infos.items()}))
+            if args.native_gui:
+                deadline = time.monotonic() + 5
+                while not frame.is_file() or frame.stat().st_size == 0:
+                    if time.monotonic() > deadline:
+                        raise TimeoutError('Native SUMO screenshot did not finish')
+                    time.sleep(.02)
     finally:
         env.close()
     (output / 'trajectories.json').write_text(json.dumps(snapshots), encoding='utf-8')
@@ -59,6 +85,10 @@ def main():
         policy=str(args.policy), policy_sha256=hashlib.sha256(args.policy.read_bytes()).hexdigest(),
         colors={f'agent_{i}':color for i,color in enumerate(colors)},
         background_color=[170,170,180,255], metrics=metrics.result())
+    if args.native_gui:
+        manifest['renderer'] = 'Native SUMO GUI viewport screenshots; no synthetic geometry'
+        manifest['capture_pause_seconds'] = .2
+        manifest['frame_files'] = [p.name for p in sorted(frames.glob('*.png'))]
     (output / 'recording.json').write_text(json.dumps(manifest, indent=2)+'\n', encoding='utf-8')
     print(json.dumps(dict(output=str(output), frames=len(snapshots), training=False)))
 

@@ -4,6 +4,14 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-26 - Repair native SUMO GUI recording
+
+- Added paced, native-size SUMO viewport capture with bounded socket/process
+  cleanup after reproducing the unpaced stall. Headless training is unchanged.
+- Recorded and decoded 600 native frames into a 60-second MP4; all vehicle
+  trajectories exactly match the prior headless replay. All 26 targeted tests
+  pass. No training ran. See [native capture evidence](sumo-mappo-recording.md).
+
 ## 2026-10-25 - Forward sensor pipeline and reusable v08 source rig
 
 - Audited exact actor inputs and privileged control shortcuts across SUMO and
