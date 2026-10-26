@@ -67,6 +67,29 @@ def make_env(**kwargs):
     return SumoMappoEnv({"horizon": 17}, backend_factory=lambda: FakeBackend(**kwargs))
 
 
+def test_v2_rewards_cruise_over_ceiling_without_hiding_overrides():
+    from experiments.sumo_mappo_support import load_config, ROOT
+    cfg = load_config(ROOT / 'experiments/configs/sumo_mappo_v2.json')['environment']
+    outcomes = []
+    for speed, acceleration in [(25., -.001), (26.8224, -.001), (26.8224, .5)]:
+        backend = FakeBackend()
+        env = SumoMappoEnv(cfg, backend_factory=lambda: backend)
+        try:
+            env.reset(seed=1)
+            for states in (backend.states, env._result.states):
+                for state in states.values():
+                    state['speed'] = speed
+            _, rewards, _, _, infos = env.step(actions(env, acceleration))
+            outcomes.append((rewards['agent_2'], infos['agent_2']))
+        finally:
+            env.close()
+    assert outcomes[0][1]['reward_components']['cruise_excess'] == 0
+    assert outcomes[1][1]['reward_components']['cruise_excess'] == pytest.approx(1, abs=1e-4)
+    assert outcomes[0][0] > outcomes[1][0] > outcomes[2][0]
+    assert outcomes[2][1]['safety_intervention']
+    assert 'speed_ceiling' in outcomes[2][1]['safety_reasons']
+
+
 def test_action_mapping_is_asymmetric_and_invertible():
     assert action_to_acceleration(-1) == -4.5
     assert action_to_acceleration(0) == -1.25

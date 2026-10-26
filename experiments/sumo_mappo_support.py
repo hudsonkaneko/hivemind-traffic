@@ -123,6 +123,8 @@ def sources():
              'traffic/sumo_backend.py', 'requirements.txt']
     names += [str(path.relative_to(ROOT)).replace('\\', '/')
               for path in sorted((ROOT / 'scenarios/mappo_highway').glob('*')) if path.is_file()]
+    names += [str(path.relative_to(ROOT)).replace('\\', '/')
+              for path in sorted((ROOT / 'experiments/configs').glob('sumo_mappo_v[2-9]*.json'))]
     return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in names}
 
 
