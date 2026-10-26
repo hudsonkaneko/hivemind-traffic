@@ -4,6 +4,15 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-25 - Repair SUMO MAPPO delayed spawn before checkpoint resume
+
+- Preserve safe SUMO insertion delays with bounded native warm-up rather than
+  requiring all cars in the first step. The failed training seed 100277 now
+  resets reproducibly in two steps; 37 targeted tests pass.
+- Preserve the failed 659,456-decision run and checkpoints. Resume is authorized
+  under the unchanged one-million-decision configuration. See the
+  [training failure and repair record](sumo-mappo-setup.md).
+
 ## 2026-10-25 - SUMO MAPPO v01 setup, training awaiting approval
 
 - Added a separate four-car fixed-lane SUMO environment, local 27-feature shared

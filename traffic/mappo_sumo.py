@@ -20,6 +20,7 @@ from traffic.sumo_backend import find_sumo_binary
 ROOT = Path(__file__).resolve().parents[1]
 SCENARIO = ROOT / "scenarios" / "mappo_highway"
 AGENT_IDS = tuple(f"agent_{index}" for index in range(4))
+MAX_SPAWN_STEPS = 100
 
 
 @dataclass(frozen=True)
@@ -129,13 +130,23 @@ class MappoSumoBackend:
             self.connection = traci.getConnection(label)
             self.version = self.connection.getVersion()
             self.simulation_steps = 0
-            result = self._advance()
-            if not set(AGENT_IDS).issubset(result.states):
-                raise RuntimeError("Controlled vehicles did not all depart during the initial spawn step")
+            # SUMO may safely delay insertion when sampled departure speeds need
+            # more braking distance. Let native traffic open the gap; do not
+            # disable insertion checks or silently discard the sampled seed.
+            for spawn_steps in range(1, MAX_SPAWN_STEPS + 1):
+                result = self._advance()
+                if result.collisions or result.teleported or set(AGENT_IDS).intersection(result.arrived):
+                    raise RuntimeError("Invalid traffic event during initial spawn warm-up")
+                if set(AGENT_IDS).issubset(result.states):
+                    break
+            else:
+                missing = sorted(set(AGENT_IDS) - set(result.states))
+                raise RuntimeError(f"Controlled vehicles failed to spawn after {MAX_SPAWN_STEPS} steps: {missing}")
             (self.episode_directory / "runtime.json").write_text(json.dumps({
                 "sumo_version": self.version, "traci_version": traci.__version__,
                 "command": command, "log": str(log_path), "error_log": str(error_log_path),
-                "initial_spawn_steps": 1,
+                "initial_spawn_steps": spawn_steps,
+                "spawn_warmup_seconds": result.simulation_time,
             }, indent=2) + "\n", encoding="utf-8")
             return result
         except BaseException:

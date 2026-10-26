@@ -73,7 +73,7 @@ Every active controlled car receives the mean of active cars' local rewards:
 | Intervention | Local filter or SUMO changed the requested command | -0.1 |
 
 One joint SUMO step follows each action batch at 10 Hz. Episodes have at most
-600 steps (60 simulated seconds after one initial spawn step). Any collision or
+600 steps (60 simulated seconds after bounded native spawn warm-up). Any collision or
 teleport ends the episode; arrival or disappearance ends the affected agent.
 Time limits truncate and bootstrap from the measured final state. True terminals
 have zero bootstrap. Inactive agents are masked out of losses and do not consume
@@ -204,3 +204,23 @@ a lane controller and validate one physical car before expanding. Replaying
 SUMO positions in Omniverse proves visualization only. Controller transfer,
 merging, jump-in obstacles, sensor noise, communication ablations and a matched
 IPPO comparison remain subsequent work. No coordination gain is claimed.
+
+## October 25: first training attempt and spawn repair
+
+The approved run `train-20261026T041059Z-5ae53d79` stopped after 360.062 seconds
+with 659,456 checkpointed decisions and 10,304 optimizer steps. Seed 100277
+triggered safe delayed insertion: one controlled car needed a second SUMO step,
+but reset incorrectly required all four cars on the first step. The failure and
+its saved best/latest checkpoints remain intact. Best validation at update 150
+had zero collisions/overspeed but 81.279% interventions, failing acceptance;
+final held-out evaluation did not run.
+
+Reset now permits at most 100 native warm-up steps (10 simulated seconds),
+retaining insertion safety and the original seed/demand. It rejects collisions,
+teleports, controlled arrivals or exhausted warm-up. The episode clock and
+learning budget start only after all four agents exist. Runtime evidence records
+the actual warm-up duration. The failed seed now resets identically twice in
+two steps (0.2 seconds). All 37 targeted backend/environment/runner tests passed.
+The approved training configuration and digest are unchanged. Resume uses the
+latest checkpoint and only the remaining original decision budget, with fresh
+episodes as documented. The historical single-step preflight remains unchanged.

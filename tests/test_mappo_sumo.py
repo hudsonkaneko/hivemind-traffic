@@ -97,6 +97,25 @@ def rollout(directory, seed, mode="policy", horizon=100):
     return trace
 
 
+def test_delayed_safe_insertion_training_seed_resets_reproducibly(project_tmp_path):
+    require_sumo()
+    records = []
+    for attempt in range(2):
+        env = SumoMappoEnv({"horizon": 2}, run_directory=project_tmp_path / str(attempt))
+        try:
+            observations, _ = env.reset(seed=100277)
+            runtime = json.loads((env._backend.episode_directory / "runtime.json").read_text())
+            assert 1 < runtime["initial_spawn_steps"] <= 100
+            assert set(observations) == set(AGENT_IDS)
+            assert env._step_count == 0
+            records.append((runtime["initial_spawn_steps"], {a: o.tolist() for a, o in observations.items()}))
+            _, _, terminated, truncated, _ = env.step({a: np.array([0.0], dtype=np.float32) for a in env.agents})
+            assert not any(terminated.values()) and not any(truncated.values())
+        finally:
+            env.close()
+    assert records[0] == records[1]
+
+
 def test_real_sumo_replayability_dynamic_background_and_time_limit(project_tmp_path):
     require_sumo()
     tmp_path = project_tmp_path
