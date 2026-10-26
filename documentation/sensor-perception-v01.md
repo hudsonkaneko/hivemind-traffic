@@ -1,9 +1,9 @@
 # Sensor perception v01 — source rig and forward measurement prototype
 
-Implementation draft, October 25, 2026 (America/Los_Angeles).
-**Native results and screenshot evidence are pending. No new policy training
-has started for this milestone.** This document describes the implemented
-interfaces visible during review; it does not claim driving acceptance.
+Verified bounded prototype, October 25, 2026 (America/Los_Angeles).
+**The final native low-speed static-obstacle test passed. No new policy training
+started.** This establishes a scripted forward-sensing foundation, not general
+autonomous driving or sensor-trained policy performance.
 
 The [input audit](sensor-input-audit.md) records the old SUMO/physical policy
 contracts and privileged shortcuts. Its baseline is the actual checked-out
@@ -28,16 +28,19 @@ source hierarchy under `/Vehicle/Chassis/Sensors`:
 - `CameraFront`: a USD perspective camera, chassis translation `(0.8, 0, 1.12)` m.
 - `LidarFront`: mount at `(0, 0, 1.25)` m; reserved child `Scan` is created by the
   RTX runtime, not baked into a captured runtime stage.
-- `CameraHousing` and `LidarHousing`: visual-only housings with no collision,
+- `CameraHousing`, `LidarHousing` and their supports: visual-only housings with no collision,
   rigid-body or mass changes.
 
 The composed standalone chassis path is
 `/World/Vehicles/vehicle_ego/Chassis`; sensor paths are derived from the actual
-chassis path rather than a fixed scene root. Camera optical forward maps to
-chassis +X, optical up to chassis +Z. Optics are provisional: 18 mm focal length,
+chassis path rather than a fixed scene root. The camera looks forward with a
+15-degree downward pitch. Its quaternion (wxyz) is
+`(0.5609855268, 0.4304593346, -0.4304593346, -0.5609855268)`.
+Optics are provisional: 18 mm focal length,
 36 × 20.25 mm aperture, 0.1–250 m clipping, 1280 × 720 resolution, and authored
-10 Hz metadata. Actual delivered cadence requires native measurement; custom
-frequency metadata does not itself schedule rendering.
+10 Hz metadata plus the native `OmniSensorAPI` and `omni:sensor:tickRate=10`.
+The final fixture reads the camera at 10 Hz and renders at 20 Hz. These are
+scheduled rates, not a hardware latency or real-time throughput qualification.
 
 The asset is marked friend-supplied/local-use-only with redistribution rights
 unverified. Source code and evidence summaries can be published independently;
@@ -55,7 +58,7 @@ objects, not an environment or exact object list.
 | --- | --- | --- |
 | `SeededSensorModel` | Deterministic noisy initial position/yaw and wheel-speed/yaw-rate measurements | Noise settings are engineering assumptions, not calibrated hardware. |
 | `EgoEstimator` | Integrates measured speed and yaw rate from an initial localization fix, with growing position uncertainty | Dead reckoning; no map correction, GNSS fusion, slip model or complete six-axis IMU. |
-| `detect_lane_rgb` | Searches lower RGB image for two narrow bright neutral boundaries; reports pixel center offset | A paint heuristic, not semantic lane detection. Pixel offset is not metres; confidence is uncalibrated. |
+| `detect_lane_rgb` | Finds two bright boundaries around a dark road interior in lower RGB; reports pixel center offset | A brightness heuristic, not semantic lane detection. Pixel offset is not metres; confidence is uncalibrated. |
 | `SensorPipeline` | Freshness/calibration/frame checks, chassis corridor clearance, local-ID geometric tracking and stop-required output | Forward-only low-speed prototype; no surrounding free-space guarantee, learned detector or complete planner. |
 
 Prototype measurement settings are wheel-speed sigma 0.03 m/s, yaw-rate sigma
@@ -77,6 +80,10 @@ prepared vehicle envelope. Its braking threshold is
 plus latency/margin, not a validated stopping guarantee. A fresh cloud without
 corridor hits means no observed obstacle in the tested corridor, not verified
 absence everywhere.
+An obstacle stop is latched as speed falls, avoiding brake-release creep toward
+the same obstacle. It releases only when a fresh observed gap exceeds the
+initial stopping gap by one metre. Missing returns do not release the latch;
+general restart/planning behavior is outside this fixture.
 
 ## Native capture plumbing
 
@@ -115,11 +122,12 @@ axes, chassis-following transforms, visual-only housings, duplicate/missing
 chassis rejection, payload load/unload behavior and composed-stage errors. These
 are plain USD checks; they do not prove an RTX render or physical drive passed.
 
-CPU validation: 160 targeted tests passed across the pipeline, native adapters,
+CPU validation: 163 targeted tests passed across the pipeline, native adapters,
 legacy physical LiDAR/tracking, clock ownership, runner and acceptance checks.
-Seventeen separate plain-USD tests passed for the sensor rig and prepared vehicle
-composition. Native results remain pending while an unrelated ARACHNID job owns
-the GPU; the user requested waiting for that job to finish.
+Eighteen separate plain-USD tests passed for the sensor rig and prepared vehicle
+composition. A fresh-process scene reopen also verified 86 prims, zero missing
+dependencies and zero composition errors. Native validation ran after the
+unrelated ARACHNID training process released the GPU.
 
 ```text
 .venv-traffic/Scripts/python.exe -m pytest tests/test_sensor_pipeline.py tests/test_native_sensor_capture.py tests/test_physical_lidar.py tests/test_lidar_tracking.py tests/test_rendered_physics_session.py tests/test_sensor_perception_runner.py tests/test_sensor_perception_probe.py -q
@@ -152,8 +160,46 @@ under `logs/sensor-perception/`. Required native evidence is:
 5. Reset isolation and acquisition freshness checks; failure packages remain
    preserved if a native attempt fails.
 
-Until those results are recorded, native camera capture, sensor-controlled
-physical driving and milestone acceptance remain **pending**.
+## Native result and screenshots
+
+Final run: `20261026T053004Z-02b4a01a`, seed 17. Full local artifacts are under
+`outputs/sensor-perception/v01/<run-id>/`; the matching log is under
+`logs/sensor-perception/`. The [compact results and hashes](evidence/sensor-perception-v01/results.json)
+include all retained failed attempt IDs and source fingerprints.
+
+| Measurement | Final result |
+| --- | --- |
+| Physics/rendering | 1,800 physics steps / 300 render calls, 15 simulated seconds |
+| Travel / maximum speed | 8.5195 m / 1.9579 m/s (4.38 mph) |
+| Final physical barrier clearance | 2.5715 m; stopped |
+| Valid nominal control frames | 126/126 after warmup, excluding intentional camera fault |
+| Delivered LiDAR packets | 299 |
+| Blank camera at 3–3.5 s | Full brake; nominal perception recovered |
+| Contacts / lane departures | 0 / 0 |
+| Maximum estimated-position error | 0.1386 m in this seeded fixture |
+| Source files during run | Unchanged |
+| Native wall time | 25.43 s including initialization/cleanup |
+
+Actual native images, visually inspected; no Cosmos enhancement or image generation:
+
+![Front sensor image at the final obstacle stop](evidence/sensor-perception-v01/camera-front-14s.png)
+
+![Physical v08 car with source-authored camera and LiDAR supports](evidence/sensor-perception-v01/overview-14s.png)
+
+Retained failures exposed startup-scene teardown crashing, missing native camera
+schema, viewport readiness ordering, bright-shoulder rejection, insufficient
+near-road coverage and brake-release creep. Fixes create the owned stage directly,
+wait for the viewport before sensor construction, author the required schema in
+the source asset, preserve sensor transforms, improve RGB boundary extraction,
+pitch the source camera down and latch obstacle stops. The stopping-clearance
+ceiling changed from 2.5 m to 3 m before the final run so the safe latched stop is
+accepted; older failed runs were not reclassified. No-contact, lane containment,
+80% nominal validity and sustained valid obstacle-stop criteria remain intact.
+
+This is one final seeded static-obstacle run, not a held-out generalization study.
+Episode isolation has CPU coverage; repeated native resets, moving hazards,
+highway speeds and diverse lighting remain unverified. The old PPO/MAPPO/RSL-RL
+actors still consume their original contracts and are not connected to these images.
 
 ## Scope and remaining boundaries
 

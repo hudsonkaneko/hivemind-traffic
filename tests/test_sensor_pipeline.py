@@ -45,6 +45,33 @@ def test_lane_uses_pixels_and_rejects_bland_or_glare():
     assert not detect_lane_rgb(np.full((100,200,3),255,np.uint8)).valid
 
 
+def test_lane_bright_shoulders_preserve_nearest_dark_road_boundaries():
+    rgb=np.full((160,320,3),210,np.uint8)
+    # Perspective road widening downward, white boundaries and broad gray shoulders.
+    for y in range(88,144):
+        half_width=40+(y-88)
+        left,right=160-half_width,160+half_width
+        rgb[y,left:right]=[65,75,85]
+        rgb[y,left-3:left]=235
+        rgb[y,right:right+3]=235
+    result=detect_lane_rgb(rgb)
+    assert result.valid and abs(result.center_offset_pixels)<1
+    assert result.confidence>.9
+    # An orange obstacle across the upper portion must not become a lane label.
+    rgb[88:102,100:220]=[230,140,40]
+    result=detect_lane_rgb(rgb)
+    assert result.valid and .3<result.confidence<1
+
+
+def test_lane_central_glare_or_one_boundary_fails():
+    rgb=np.zeros((100,200,3),np.uint8)
+    rgb[55:90,:50]=220
+    assert not detect_lane_rgb(rgb).valid
+    rgb[55:90,150:]=220
+    rgb[55:90,80:120]=220
+    assert not detect_lane_rgb(rgb).valid
+
+
 def test_forward_stop_and_geometric_track():
     camera,lidar,ego = packets(obstacle_x=5)
     result = SensorPipeline().process(camera,lidar,ego,.1)
@@ -152,6 +179,16 @@ def test_held_camera_timestamp_fails_with_fresh_lidar():
     _,lidar,ego=packets(.2)
     result=pipeline.process(camera,lidar,ego,.2)
     assert not result.valid and result.stop_required
+
+
+def test_obstacle_stop_holds_as_speed_falls_and_releases_with_clearance():
+    pipeline=SensorPipeline()
+    camera,lidar,ego=packets(.1,obstacle_x=5.)
+    assert pipeline.process(camera,lidar,replace(ego,speed_m_s=2.),.1).stop_required
+    camera,lidar,ego=packets(.2,obstacle_x=5.)
+    assert pipeline.process(camera,lidar,replace(ego,speed_m_s=0.),.2).stop_required
+    camera,lidar,ego=packets(.3,obstacle_x=9.)
+    assert not pipeline.process(camera,lidar,replace(ego,speed_m_s=0.),.3).stop_required
 
 
 def test_ego_calibration_and_uncertainty_checks():

@@ -1,0 +1,185 @@
+{
+  "passed": true,
+  "gates": {
+    "sensor_frames": true,
+    "obstacle_observed": true,
+    "moved": true,
+    "stopped_for_obstacle": true,
+    "injected_fault_fails_closed": true,
+    "no_contacts": true,
+    "source_unchanged": true,
+    "screenshots": true,
+    "lane_containment": true,
+    "stable": true
+  },
+  "valid_control_frames": 126,
+  "control_frames": 150,
+  "final_progress_m": 8.51952266567637,
+  "final_speed_m_s": 1.2977614435911962e-08,
+  "lidar_packets": 299,
+  "clock": {
+    "physics_steps": 1800,
+    "render_count": 300,
+    "time_s": 15.0,
+    "absolute_time_s": 15.016666666666667,
+    "native_physics_steps": 1802,
+    "physics_hz": 120,
+    "render_hz": 20,
+    "origin_time_s": 0.016666666666666666,
+    "origin_physics_steps": 2
+  },
+  "wall_seconds": 25.42853739997372,
+  "source_unchanged": true,
+  "limitations": [
+    "RGB brightness lane heuristic is not learned semantic perception",
+    "Static barrier only; WORLD noncompensated LiDAR converted at sensor boundary",
+    "Wheel speed/gyro measurements use synthetic prototype noise",
+    "Camera timestamps use synchronous render barrier, not hardware clock metadata",
+    "No Cosmos, radar, surround perception or policy training"
+  ],
+  "run_id": "20261026T053004Z-02b4a01a",
+  "seed": 17,
+  "training": false,
+  "final_true_clearance_m": 2.5714861655652985,
+  "max_speed_m_s": 1.9578994321588674,
+  "max_position_estimation_error_m": 0.13858891634138476,
+  "final_position_estimation_error_m": 0.13815381859541537,
+  "source_hashes": {
+    "experiments/verify_sensor_perception.py": "3e5522aa597a14d89c1cfac99bd2284f0f8cfb5bbebad41ac4f4e24bc8743d06",
+    "scripts/probe_sensor_perception.py": "c0efafdf90c0da249daa76ef21f424751b5aa30f1a420c0c8e319ede4ea2141c",
+    "traffic/sensor_pipeline.py": "09ccecb425fe5457ba753c1ea73cc8bbdaa8849e42903f5ec5f50ea1f3f7f5ff",
+    "traffic/native_sensor_capture.py": "61d093abbf97fe5a718b7dc28ca88f005818aa5ab027df31f488bdb7937fce5a",
+    "traffic/physical_lidar.py": "df0a36e746f576e41b45c5f9b53d48b8160fdca374ffd910fea598178f473127",
+    "traffic/rendered_physics_session.py": "2780f1b55b833c2d37fceab2c66b62b2582d1bc96701bd0e523bd8f80652fce9",
+    "usd/vehicle_sensor_rig.py": "908c36a2c6afa78921d1c60ab38c53b1b147a2dcc0f0242ac1a313498bca061d",
+    "usd/showcase_vehicle.py": "f7a5d68176f7c28a42cab2ad8b1272811cda765d59af30812c335432fc046dac",
+    "traffic/lidar_tracking.py": "357cd4c6f3b9d27d6642b6cf3960d110b27b4f3d32b584b290bb46ddb5dedb8d",
+    "traffic/driver_control.py": "29755844f3b1df77ac002caba87be3ba22ff9918b0e8a5ba03ff568d2690e18a",
+    "traffic/physx_vehicle.py": "167f0e6ce5da581e4520707a71596c9efe7a3dca6b36f466ee5081df210fe8a6",
+    "traffic/physics_session.py": "d0016c776819bdd93ff612d533f6ff4d2b70de9b332e52d81493255419d7c61a",
+    "traffic/vehicle_contacts.py": "628fbf2c7e1cc735437a6c67b3051f57a604b72bf67227c1d39769ab9488170d",
+    "traffic/lane_geometry.py": "2b7976bf1e04ae6ae223ea93c3dd18551394a57404e350713e2b42004e8413b0",
+    "traffic/bypass_validation.py": "30c1fde2c3a2a241e47c7f09701149417cd771d23ca3ef6a8bf8ea062ea572ea",
+    "usd/physical_scene.py": "2f7a0283cf2165538a6d0bf0336e042bf7c46c5110b63a3842fde7435d5e91f9",
+    "visualization/physics_road_view.py": "b1f2b0d473a7ae6c6d9a70262f1c2b6c0a0c9fa5528d4f8a7f8995d81bd6c219",
+    "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+    "hivemind/launcher.py": "b2ea5e656c887a920ef06b6c70ccdb0830bbba7a097d82ae13187dbb829f23d3"
+  },
+  "vehicle_source_hashes": {
+    "assets/ground.usda": "fecda741fa028cb99889147fa21a4b86f171ea87259d72b300df1c8040c6b957",
+    "assets/vehicle-geometry.usda": "3f29d13bfdf973341d21481e00ca7406fbdb7eeeb0bfcc5626558bf421a8321d",
+    "assets/vehicle-physics.usda": "567724ece7804213c30febdae2e8ac0635901d7129237cb9b3dff6bfa69c0594",
+    "assets/vehicle-sensors.usda": "0d5776aa39614560ec5f6be13a074c2662d9fa74dd14b777872ac644c11dfcb1",
+    "assets/vehicle.usda": "b72b7bfb1d676acaf88f541bfa7e44b520c97443b47b21d58f7add29828e5463",
+    "assets/visuals.usdc": "bf84656461e0a0c79794c61ecfd8a24bd6e94e7a2ef5218fe1b2c48da818e400",
+    "layout.usda": "f006aa7f7ff46555632f2cd50e2cf49eb1a960361d2fe065501ffa947d816289",
+    "model.json": "830272a4b8d2930dd9dc061f57effce8f517dac0ac7db587e5a5cb66351da492",
+    "physics.usda": "76d9558b057584ecfb0d810eaed8862d812babea9ed0188b4f5acd691149c159",
+    "world.usda": "252d3362068ef14f7f19189d878f7389baef68cef63146c32d9c51db2bb1bbbe"
+  },
+  "raw_artifacts_local_only": true,
+  "first_native_failures": [
+    {
+      "run_id": "20261026T051121Z-cc95c7ae",
+      "passed": false,
+      "error": "No native result",
+      "gates": null
+    },
+    {
+      "run_id": "20261026T051248Z-3529fa81",
+      "passed": false,
+      "error": "ValueError(\"Prim at /World/Vehicles/vehicle_ego/Chassis/Sensors/CameraFront does not have the 'OmniSensorAPI' schema\")",
+      "gates": null
+    },
+    {
+      "run_id": "20261026T051425Z-40c395d7",
+      "passed": false,
+      "error": "RuntimeError('Camera has no rendered RGB/depth frame')",
+      "gates": null
+    },
+    {
+      "run_id": "20261026T051521Z-11beba99",
+      "passed": false,
+      "error": null,
+      "gates": {
+        "sensor_frames": false,
+        "obstacle_observed": false,
+        "moved": false,
+        "stopped_for_obstacle": false,
+        "injected_fault_fails_closed": true,
+        "no_contacts": true,
+        "source_unchanged": true,
+        "screenshots": true,
+        "lane_containment": true,
+        "stable": true
+      }
+    },
+    {
+      "run_id": "20261026T052015Z-4f8347b8",
+      "passed": false,
+      "error": "RuntimeError('Camera has no rendered RGB/depth frame')",
+      "gates": null
+    },
+    {
+      "run_id": "20261026T052216Z-bf24aae2",
+      "passed": false,
+      "error": "RuntimeError('Camera has no rendered RGB/depth frame')",
+      "gates": null
+    },
+    {
+      "run_id": "20261026T052523Z-48a1bbfc",
+      "passed": false,
+      "error": null,
+      "gates": {
+        "sensor_frames": false,
+        "obstacle_observed": true,
+        "moved": true,
+        "stopped_for_obstacle": false,
+        "injected_fault_fails_closed": true,
+        "no_contacts": true,
+        "source_unchanged": true,
+        "screenshots": true,
+        "lane_containment": true,
+        "stable": true
+      }
+    },
+    {
+      "run_id": "20261026T052822Z-dd42f6f1",
+      "passed": false,
+      "error": null,
+      "gates": {
+        "sensor_frames": false,
+        "obstacle_observed": true,
+        "moved": true,
+        "stopped_for_obstacle": false,
+        "injected_fault_fails_closed": true,
+        "no_contacts": true,
+        "source_unchanged": true,
+        "screenshots": true,
+        "lane_containment": true,
+        "stable": true
+      }
+    },
+    {
+      "run_id": "20261026T053004Z-02b4a01a",
+      "passed": true,
+      "error": null,
+      "gates": {
+        "sensor_frames": true,
+        "obstacle_observed": true,
+        "moved": true,
+        "stopped_for_obstacle": true,
+        "injected_fault_fails_closed": true,
+        "no_contacts": true,
+        "source_unchanged": true,
+        "screenshots": true,
+        "lane_containment": true,
+        "stable": true
+      }
+    }
+  ],
+  "screenshots": {
+    "camera-front-14s.png": "adecde7db9239a0d572163cf5e1ebb10c9b2e0905dac7a779b3c22dc980f2e54",
+    "overview-14s.png": "2661c89b968095761a23566a4841d9a27625ce9510c19060144f37dd054f2a29"
+  }
+}

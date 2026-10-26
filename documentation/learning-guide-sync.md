@@ -2,6 +2,13 @@
 
 ## October 25: sensor prototype checkpoint
 
+Final native result was subsequently appended in place: 8.52 m travel, 2.57 m
+clearance, fault braking/recovery, 163 CPU tests and 18 USD tests, with the failed
+attempts and revised 3 m stopping criterion disclosed. Full readback preserved
+all 41 unaffected tab bodies. The final mirror/check uses
+`outputs/doc-sync/sensor-perception-v01-final/verified-source.json`; the earlier
+pending checkpoint remains historical evidence rather than being rewritten.
+
 Appended the forward sensor v01 implementation and explicitly pending native
 validation to tab **41 Isaac Lab lane task**. Updated the start-tab mirror link
 to `codex/sensor-perception-v01`. Revision-guarded native readback verified the

@@ -68,7 +68,8 @@ def main():
         result['passed'] = bool(result.get('passed') and not changed)
         finish(output, manifest, result)
     print('SENSOR_PERCEPTION_RUN='+str(output), flush=True)
-    print(json.dumps(result, indent=2), flush=True)
+    print(json.dumps({k:v for k,v in result.items() if k not in
+                      ('scene_structure','source_hashes','traceback')}, indent=2), flush=True)
     return 0 if result['passed'] else 1
 
 

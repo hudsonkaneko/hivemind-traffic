@@ -1,5 +1,6 @@
 """Plain USD sensor mounting/composition tests; no RTX/physics claims."""
 import tempfile
+import math
 from pathlib import Path
 import unittest
 
@@ -23,8 +24,9 @@ class VehicleSensorRigTests(unittest.TestCase):
     def test_optical_axes_and_mount_follow_chassis(self):
         camera = UsdGeom.Xformable(self.stage.GetPrimAtPath(self.paths['camera']))
         transform = camera.ComputeLocalToWorldTransform(Usd.TimeCode.Default())
-        self.assertTrue(Gf.IsClose(transform.TransformDir(Gf.Vec3d(0, 0, -1)), Gf.Vec3d(1, 0, 0), 1e-6))
-        self.assertTrue(Gf.IsClose(transform.TransformDir(Gf.Vec3d(0, 1, 0)), Gf.Vec3d(0, 0, 1), 1e-6))
+        c,s = math.cos(math.radians(15)),math.sin(math.radians(15))
+        self.assertTrue(Gf.IsClose(transform.TransformDir(Gf.Vec3d(0, 0, -1)), Gf.Vec3d(c, 0, -s), 1e-6))
+        self.assertTrue(Gf.IsClose(transform.TransformDir(Gf.Vec3d(0, 1, 0)), Gf.Vec3d(s, 0, c), 1e-6))
         self.chassis.AddTranslateOp().Set(Gf.Vec3d(10, 20, 30))
         transformed = camera.ComputeLocalToWorldTransform(Usd.TimeCode.Default()).ExtractTranslation()
         self.assertTrue(Gf.IsClose(transformed, Gf.Vec3d(10, 20, 30) + Gf.Vec3d(*CAMERA_TRANSLATION), 1e-6))
@@ -35,6 +37,11 @@ class VehicleSensorRigTests(unittest.TestCase):
         for prim in Usd.PrimRange(self.stage.GetPrimAtPath(self.paths['root'])):
             self.assertFalse(prim.HasAPI(UsdPhysics.CollisionAPI))
             self.assertFalse(prim.HasAPI(UsdPhysics.RigidBodyAPI))
+
+    def test_camera_authors_native_sensor_schema_and_rate(self):
+        prim = self.stage.GetPrimAtPath(self.paths['camera'])
+        self.assertIn('OmniSensorAPI', prim.GetMetadata('apiSchemas').GetAppliedItems())
+        self.assertEqual(prim.GetAttribute('omni:sensor:tickRate').Get(), 10.)
 
     def test_duplicate_rig_rejected_and_no_missing_chassis(self):
         with self.assertRaises(ValueError):

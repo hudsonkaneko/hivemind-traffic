@@ -148,9 +148,12 @@ class LaneEvidence:
 
 
 def detect_lane_rgb(rgb):
-    """Bright neutral paint heuristic on lower image. No labels or depth accepted.
+    """Dark road/bright boundary heuristic on lower RGB. No labels or depth.
 
-    Rejects bland frames and broad bright regions. Shadows, worn paint, glare,
+    Searches outward from a dark central road strip for the nearest neutral bright
+    boundary on each side. Bright shoulders outside those boundaries are allowed.
+    This is image geometry, not recognition of legal lanes or drivable surfaces.
+    Rejects bland and centrally bright frames. Shadows, worn paint, glare,
     junctions and white vehicles can defeat it; confidence is not calibrated.
     """
     rgb = np.asarray(rgb)
@@ -159,18 +162,29 @@ def detect_lane_rgb(rgb):
     h,w = rgb.shape[:2]
     color = rgb[int(h*.55):int(h*.9),:,:3].astype(float)
     mask = (color.min(axis=2)>170) & (np.ptp(color,axis=2)<45)
+    darkness = color.max(axis=2)<140
     left,right = [],[]
-    for row in mask:
+    center = w//2
+    central_half_width = max(2,int(w*.02))
+    for row,dark in zip(mask,darkness):
+        if np.mean(dark[center-central_half_width:center+central_half_width]) < .9:
+            continue
         l = np.flatnonzero(row[:w//2]); r = np.flatnonzero(row[w//2:])+w//2
-        if 1 <= len(l) <= w*.08 and 1 <= len(r) <= w*.08:
-            left.append(float(np.median(l))); right.append(float(np.median(r)))
+        if len(l) and len(r):
+            nearest_left,nearest_right = int(l[-1]),int(r[0])
+            span = nearest_right-nearest_left
+            # A broad, mostly dark interior is required; isolated bright blobs
+            # against a bright/unknown background must not imply a clear lane.
+            if (.1*w <= span <= .95*w
+                    and np.mean(dark[nearest_left+1:nearest_right]) >= .85):
+                left.append(float(nearest_left)); right.append(float(nearest_right))
     fraction = len(left)/max(len(mask),1)
     if fraction < .3:
         return LaneEvidence(False,None,0.,'insufficient_two_boundary_evidence')
     centers = (np.asarray(left)+right)/2
     if np.std(centers)>w*.08:
         return LaneEvidence(False,None,0.,'inconsistent_boundaries')
-    return LaneEvidence(True,float(np.median(centers)-w/2),float(fraction),'rgb_brightness_heuristic')
+    return LaneEvidence(True,float(np.median(centers)-w/2),float(fraction),'rgb_dark_road_bright_boundary_heuristic')
 
 
 @dataclass(frozen=True)
@@ -206,6 +220,7 @@ class SensorPipeline:
         self.corridor_half_width_m = corridor_half_width_m
         self.tracker = LidarTracker()
         self._last_lidar_s = -1.
+        self._obstacle_stop_release_gap = None
         self._last_camera_s = -1.
         self.episode_id = episode_id
 
@@ -256,4 +271,14 @@ class SensorPipeline:
         scan_age = max(0.,now_s-lidar.header.acquisition_s) if good_lidar else self.max_age_s
         stop_distance = speed*speed/3 + speed*(.2+scan_age)+1.
         blocked = gap is not None and gap <= stop_distance
+        # Do not accelerate toward the same obstacle merely because braking
+        # reduced the speed-dependent stopping distance. Release only on fresh
+        # measured clearance greater than the initial stop gap plus one metre.
+        if blocked and self._obstacle_stop_release_gap is None:
+            self._obstacle_stop_release_gap = gap+1.
+        if self._obstacle_stop_release_gap is not None:
+            if good_lidar and gap is not None and gap > self._obstacle_stop_release_gap:
+                self._obstacle_stop_release_gap = None
+            else:
+                blocked = True
         return PerceptionResult(now_s,valid,not valid or blocked,tuple(reasons),lane,tracks,gap,ego)

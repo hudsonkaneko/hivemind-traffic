@@ -4234,3 +4234,15 @@ Source, exact parameters and pending evidence: [`https://github.com/hudsonkaneko
 Input audit: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-input-audit.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-input-audit.md>)
 
 Draft review: [`https://github.com/hudsonkaneko/hivemind-traffic/pull/21`](<https://github.com/hudsonkaneko/hivemind-traffic/pull/21>)
+
+<a id="docs-h-vpbx465vyrh7"></a>
+
+#### Forward sensor v01 — native validation result
+
+The final native run 20261026T053004Z-02b4a01a passed the bounded scripted fixture: 15 simulated seconds, 8.5195 m travel, maximum speed 1.9579 m/s, final obstacle clearance 2.5715 m, no contacts and full-body lane containment. All 126 nominal control frames after warmup were valid, excluding the intentional blank-camera fault; that fault commanded full braking and recovered. RTX delivered 299 LiDAR packets. No reinforcement-learning training started.
+
+Native failures were preserved. The source v08 camera now includes the native RTX schema, a 15-degree downward pitch and visual support stems. Startup waits for viewport readiness before constructing sensors. The RGB heuristic handles bright shoulders. Obstacle braking remains latched as speed falls, releasing only when fresh measured clearance increases. Before the final run, the stop-clearance ceiling changed from 2.5 m to 3 m to accept the safer latched stop; previous failures were not relabeled.
+
+Final checks: 163 targeted CPU tests and 18 plain-USD tests pass. Actual, unenhanced front-camera and vehicle overview screenshots were inspected and published in the milestone report. Source files were unchanged during the final run. This is one seeded static-obstacle test, not a held-out evaluation, repeated native reset proof, highway-speed qualification or learned-policy integration. Old actor observation contracts remain unchanged. Surround cameras, Cosmos generation, moving-hazard validation and new policy training are future work.
+
+Results and screenshots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-perception-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sensor-perception-v01/documentation/sensor-perception-v01.md>)

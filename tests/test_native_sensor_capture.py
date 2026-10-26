@@ -23,7 +23,10 @@ class MockSensor:
 
 @pytest.fixture
 def camera(monkeypatch):
-    monkeypatch.setitem(sys.modules,'isaacsim.sensors.experimental.rtx',SimpleNamespace(RtxCamera=lambda path:path,CameraSensor=MockSensor))
+    def wrap(path, *, reset_xform_op_properties):
+        assert reset_xform_op_properties is False
+        return path
+    monkeypatch.setitem(sys.modules,'isaacsim.sensors.experimental.rtx',SimpleNamespace(RtxCamera=wrap,CameraSensor=MockSensor))
     return NativeCamera('/World/Car/Camera',(64,32))
 
 

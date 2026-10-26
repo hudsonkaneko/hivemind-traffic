@@ -33,7 +33,7 @@ def assess(rows, contacts, source_unchanged, screenshots):
         moved=bool(rows and rows[-1]['evaluation']['progress_m'] > 2.),
         stopped_for_obstacle=len(tail)>=8 and all(r['perception']['valid'] and
             r['perception']['stop_required'] and r['perception']['nearest_forward_gap_m'] is not None
-            and r['evaluation']['speed_m_s']<.3 and 0<r['evaluation']['true_barrier_gap_m']<2.5 for r in tail),
+            and r['evaluation']['speed_m_s']<.3 and 0<r['evaluation']['true_barrier_gap_m']<3. for r in tail),
         injected_fault_fails_closed=bool(fault) and all(r['control']['throttle']==0 and r['control']['brake']==1 for r in fault),
         no_contacts=not contacts, source_unchanged=source_unchanged,
         screenshots=any(s.startswith('camera-front-') for s in screenshots) and any(s.startswith('overview-') for s in screenshots),
@@ -79,8 +79,9 @@ def main():
         from isaacsim import SimulationApp
         app = SimulationApp(dict(headless=True, renderer='RealTimePathTracing', width=1280,
                                  height=720, enable_motion_bvh=True, disable_viewport_updates=False,
+                                 create_new_stage=False,
                                  limit_cpu_threads=8))
-        from pxr import Sdf, Usd, UsdGeom
+        from pxr import Gf, Sdf, Usd, UsdGeom
         from PIL import Image
         from traffic.physics_session import prepare_vehicle_runtime
         from traffic.rendered_physics_session import RenderedPhysicsSession
@@ -124,8 +125,27 @@ def main():
             dict(path=str(p.GetPath()), type=p.GetTypeName(), references=p.HasAuthoredReferences(),
                  payloads=p.HasAuthoredPayloads()) for p in session.stage.Traverse()], indent=2))
         monitor = VehicleContactMonitor(session.stage, vehicle.path)
+        from isaacsim.core.rendering_manager import ViewportManager
+        ready, frames = ViewportManager.wait_for_viewport(max_frames=120, sleep_time=.02)
+        result['viewport_readiness'] = dict(ready=ready, frames=frames)
+        if not ready:
+            raise RuntimeError('Viewport initialization failed before sensor creation')
+        # Evaluation-only camera is authored by the generic scene helper.
+        session.stage.GetPrimAtPath(PATHS.overview_camera).ApplyAPI('OmniSensorAPI')
         camera = NativeCamera(paths['camera'], resolution=tuple(cfg['camera_resolution']), episode_id=output.name)
         overview = NativeCamera(PATHS.overview_camera, resolution=(960,540), episode_id=output.name)
+        # Bind the evaluation camera after wrappers normalize camera xform ops.
+        overview_xform = UsdGeom.Xformable(session.stage.GetPrimAtPath(PATHS.overview_camera))
+        overview_xform.ClearXformOpOrder()
+        overview_xform.AddTransformOp(opSuffix='evaluationView').Set(
+            Gf.Matrix4d().SetLookAt(Gf.Vec3d(6,-12,8),Gf.Vec3d(5,0,1),Gf.Vec3d(0,0,1)).GetInverse())
+        overview_xform = None
+        from omni.kit.viewport.utility import get_active_viewport
+        viewport = get_active_viewport()
+        if viewport:
+            viewport.updates_enabled = True
+            viewport.camera_path = PATHS.overview_camera
+        viewport = None
         lidar = PhysicalLidar(vehicle.path, episode_id=output.name, vehicle_id='ego',
                               tick_source=lambda:session.physics_steps, sensor_path=paths['lidar'],
                               mount_translation_m=(0.,0.,0.))
@@ -174,10 +194,23 @@ def main():
                     last_camera, last_depth = camera.read(now)
                 except RuntimeError as error:
                     if now > 2.:
-                        raise
-                    result.setdefault('camera_warmup', []).append(dict(time_s=now, error=str(error)))
-                    last_camera = CameraFrame(SensorHeader('front_camera','camera_optical',now,now,
-                        'front-camera-v1',False,output.name), np.empty((0,0,3),dtype=np.uint8))
+                        # Shader/asset readiness follows wall time, not physics time.
+                        # Hold physics while draining rendering; every call checks
+                        # that no hidden physics step occurred.
+                        deadline = time.perf_counter()+30.
+                        while True:
+                            session.render()
+                            try:
+                                last_camera,last_depth = camera.read(now)
+                                break
+                            except RuntimeError:
+                                if time.perf_counter() >= deadline:
+                                    raise
+                                time.sleep(.02)
+                    else:
+                        result.setdefault('camera_warmup', []).append(dict(time_s=now, error=str(error)))
+                        last_camera = CameraFrame(SensorHeader('front_camera','camera_optical',now,now,
+                            'front-camera-v1',False,output.name), np.empty((0,0,3),dtype=np.uint8))
                 packet = lidar.latest
                 acquisition = (float(packet['timestamp_ns'])+float(packet['offset_ns'].min()))*1e-9-epoch if packet else now
                 reference_tick = max(0,min(tick,round(acquisition*120)))

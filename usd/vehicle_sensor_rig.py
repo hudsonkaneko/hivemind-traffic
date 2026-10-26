@@ -6,13 +6,16 @@ are visual-only: this milestone does not claim changed vehicle mass/inertia.
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 import shutil
 
 RIG_VERSION = 'sensor-rig-v01'
 CAMERA_TRANSLATION = (.8, 0., 1.12)
 LIDAR_TRANSLATION = (0., 0., 1.25)
-CAMERA_ORIENTATION_WXYZ = (.5, .5, -.5, -.5)
+CAMERA_PITCH_DEGREES = 15.
+_C, _S = math.cos(math.radians(CAMERA_PITCH_DEGREES)/2), math.sin(math.radians(CAMERA_PITCH_DEGREES)/2)
+CAMERA_ORIENTATION_WXYZ = (.5*(_C+_S), .5*(_C-_S), .5*(_S-_C), -.5*(_C+_S))
 RESOLUTION = (1280, 720)
 
 
@@ -34,6 +37,9 @@ def author_sensor_rig(stage, chassis_path):
     root.GetPrim().SetCustomDataByKey('sensorRigVersion', RIG_VERSION)
     root.GetPrim().SetCustomDataByKey('sensorMountAssumptions', 'Provisional roof mounts; visual-only housings')
     camera = UsdGeom.Camera.Define(stage, paths['camera'])
+    # Preserve the NVIDIA schema token even in a plain-USD authoring runtime.
+    camera.GetPrim().AddAppliedSchema('OmniSensorAPI')
+    camera.GetPrim().CreateAttribute('omni:sensor:tickRate', Sdf.ValueTypeNames.Float, custom=False).Set(10.)
     camera.AddTranslateOp().Set(Gf.Vec3d(*CAMERA_TRANSLATION))
     camera.AddOrientOp().Set(Gf.Quatf(CAMERA_ORIENTATION_WXYZ[0], Gf.Vec3f(*CAMERA_ORIENTATION_WXYZ[1:])))
     camera.CreateProjectionAttr().Set('perspective')
@@ -49,6 +55,8 @@ def author_sensor_rig(stage, chassis_path):
     for name, position, scale in (
         ('CameraHousing', (.71, 0., 1.12), (.12, .16, .10)),
         ('LidarHousing', (0., 0., 1.10), (.24, .24, .20)),
+        ('CameraSupport', (.71, 0., .94), (.04, .04, .26)),
+        ('LidarSupport', (0., 0., .91), (.08, .08, .20)),
     ):
         housing = UsdGeom.Cube.Define(stage, paths['root'] + '/' + name)
         housing.CreateSizeAttr().Set(1.)
@@ -102,6 +110,7 @@ def prepare_sensor_vehicle(source_directory, target_directory, backup_directory)
                                  camera_translation_m=CAMERA_TRANSLATION,
                                  lidar_translation_m=LIDAR_TRANSLATION,
                                  camera_orientation_wxyz=CAMERA_ORIENTATION_WXYZ,
+                                 camera_downward_pitch_degrees=CAMERA_PITCH_DEGREES,
                                  camera_resolution=RESOLUTION, camera_frequency_hz=10,
                                  focal_length_mm=18, horizontal_aperture_mm=36,
                                  source_authored=True, dynamics_modified=False,

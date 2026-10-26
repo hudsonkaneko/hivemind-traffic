@@ -24,7 +24,7 @@ class NativeCamera:
         if len(resolution) != 2 or any(not isinstance(v,Integral) or isinstance(v,bool) or v < 32 for v in resolution):
             raise ValueError('Resolution must be (width,height), each at least 32')
         from isaacsim.sensors.experimental.rtx import RtxCamera, CameraSensor
-        self.camera = RtxCamera(path)
+        self.camera = RtxCamera(path, reset_xform_op_properties=False)
         self.sensor = CameraSensor(self.camera, resolution=(resolution[1],resolution[0]),
                                    annotators=['rgb','distance_to_image_plane'])
         self.path = path
@@ -44,7 +44,7 @@ class NativeCamera:
         rgb, _ = self.sensor.get_data('rgb')
         depth, _ = self.sensor.get_data('distance_to_image_plane')
         if rgb is None or depth is None:
-            raise RuntimeError('Camera has no rendered RGB/depth frame')
+            raise RuntimeError(f'Camera data unavailable: rgb={rgb is not None}, depth={depth is not None}')
         rgb = rgb.numpy().copy()
         depth = depth.numpy().copy()
         if (rgb.ndim != 3 or rgb.shape[2] not in (3,4) or rgb.dtype != np.uint8
