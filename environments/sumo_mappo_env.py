@@ -13,6 +13,7 @@ from pettingzoo import ParallelEnv
 from traffic.mappo_sumo import AGENT_IDS, MappoSumoBackend
 
 DEFAULT_CONFIG = {
+    "cruise_speed_m_s": 26.8224,
     "dt": 0.1, "horizon": 600, "speed_limit_m_s": 26.8224, "route_length_m": 5000.0,
     "neighbor_range_m": 120.0, "acceleration_min_m_s2": -4.5, "acceleration_max_m_s2": 2.0,
     "min_gap_m": 2.5, "time_headway_s": 1.5, "initial_speed_range_m_s": [12.0, 22.0],
@@ -90,7 +91,10 @@ class SumoMappoEnv(ParallelEnv):
                 raise ValueError(f"Invalid range for {key}")
         if cfg["initial_speed_range_m_s"][1] > cfg["speed_limit_m_s"]:
             raise ValueError("Initial speeds exceed the ceiling")
-        if set(cfg["reward_weights"]) != set(DEFAULT_CONFIG["reward_weights"]):
+        if not 0 < cfg['cruise_speed_m_s'] <= cfg['speed_limit_m_s']:
+            raise ValueError('Cruise speed must be positive and no greater than the ceiling')
+        required = set(DEFAULT_CONFIG['reward_weights'])
+        if not required.issubset(cfg['reward_weights']) or set(cfg['reward_weights']) - required - {'cruise_excess'}:
             raise ValueError("Reward weights must name every v01 component")
         if not all(math.isfinite(float(x)) for x in cfg["reward_weights"].values()):
             raise ValueError("Reward weights must be finite")
@@ -175,12 +179,17 @@ class SumoMappoEnv(ParallelEnv):
             local_intervention = self.control_mode == "policy" and bool(reasons[agent])
             intervention = local_intervention or sumo_intervention
             components = {
-                "progress": float(np.clip(progress / (self.config["speed_limit_m_s"] * self.dt), 0, 1)),
+                "progress": float(np.clip(progress / (self.config["cruise_speed_m_s"] * self.dt), 0, 1)),
                 "headway": float(np.clip((desired_gap - gap) / desired_gap, 0, 1)) if gap is not None else 0.0,
                 "jerk": float(np.clip(abs(acceleration - prior["acceleration"]) / self.dt / 10.0, 0, 1)) if state else 0.0,
                 "collision": float(agent in self._result.collisions),
                 "intervention": float(intervention),
             }
+            if 'cruise_excess' in self.config['reward_weights']:
+                target = self.config['cruise_speed_m_s']
+                components['cruise_excess'] = float(np.clip(
+                    ((state['speed'] if state else 0.) - target) /
+                    max(1e-6, self.config['speed_limit_m_s'] - target), 0, 1))
             weighted = {key: self.config["reward_weights"][key] * value for key, value in components.items()}
             local_rewards[agent] = float(sum(weighted.values()))
             infos[agent] = dict(simulation_time=self._result.simulation_time, episode_step=self._step_count,
