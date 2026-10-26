@@ -1,0 +1,117 @@
+{
+  "run_id": "train-20261026T190003Z-9d133a8c",
+  "source_commit": "c06e45eaa79698eda85d01a65fa6ae5a6811b6d7",
+  "config_sha256": "172171c4eaf04105c616b8ab430176eb6b6df61d5a8a5a9034151f35de9be0b8",
+  "source_sha256": {
+    "experiments/run_sumo_mappo.py": "ef491cf23faea4acf8f6fece6f20f10d4bceac09a3ac768c73442c92dbb0b3b7",
+    "experiments/sumo_mappo_support.py": "f1fcd3aaaeb7f4cf6470c04baf43764772c37fcba1478f64c7532890104bfd37",
+    "experiments/sumo_mappo_rollout.py": "dbd55a913c2b86bdc3949204f9fc98c43e146f96dced871a2a3ad2f84cef823a",
+    "experiments/configs/sumo_mappo_v1.json": "53aa3ad5425c7fc3db1970643436fd3d0789a9e1a4da6db59c3711ed894ae288",
+    "policies/mappo.py": "7e316cb37d17e8b93da112dbadc2045273910d80122491d8c7ae9fabdc7dd239",
+    "environments/sumo_mappo_env.py": "f7f4202e39109d642196c35e1050f73ae95e6b11df100dc41013b52175210b27",
+    "traffic/mappo_sumo.py": "b23abbe5243ae1476139729ba3401e5f83a0e312b4085eddf7974d2eb71139c4",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "requirements.txt": "a057af83cf9f81ac9306afa68b62f340373a764090d7f14c4feed0438be059fc",
+    "scenarios/mappo_highway/edges.edg.xml": "e90fa974eabb39dbe74c2df963b260548aa68eeec33ab59411049bca256321f7",
+    "scenarios/mappo_highway/network.net.xml": "67aa49629d3bfe7316067adbc2d25b17eecd57ff3a81f627de50f45809508202",
+    "scenarios/mappo_highway/nodes.nod.xml": "80aa41e9d79fe3c39b92c1c9056d1ea683cb7f9bd5b165caa2114d639c567888",
+    "scenarios/mappo_highway/README.md": "e8bfa5420895bab93dd0c0102b5c56000db1779f71a31556cc4646ad1e9487fd",
+    "experiments/configs/sumo_mappo_v2.json": "6c0f81463d87b1c5c7115bf11005080bfd94978d15f82f3fe38a2c2c757e55c8"
+  },
+  "versions": {
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.6",
+    "gymnasium": "1.3.0",
+    "pettingzoo": "1.27.0",
+    "traci": "1.27.1",
+    "sumo": "Eclipse SUMO sumo 1.27.1"
+  },
+  "training": {
+    "training": true,
+    "optimizer_steps": 15554,
+    "agent_transitions": 1000000,
+    "unused_transition_budget": 0,
+    "updates": 245,
+    "best_validation_score": [
+      1,
+      0,
+      0,
+      10,
+      498.21279658286824,
+      -0.0
+    ],
+    "policy": "policy.pt",
+    "checkpoint": "checkpoints/best.pt",
+    "latest_checkpoint": "checkpoints/latest.pt",
+    "passed": true,
+    "learned_acceptance": true,
+    "status": "completed",
+    "wall_seconds": 737.625,
+    "source_unchanged": true
+  },
+  "held_out": {
+    "learned": {
+      "episodes": 20,
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "intervention_fraction": 0.0,
+      "mean_team_reward": 500.24734035328413,
+      "std_team_reward": 29.589197127120404,
+      "mean_progress_m": 1445.4534486442549,
+      "nominal_episodes": 20,
+      "peak_speed_m_s": 26.066446626654404,
+      "accepted": true,
+      "selection_score": [
+        1,
+        0,
+        0,
+        20,
+        500.24734035328413,
+        -0.0
+      ]
+    },
+    "scripted": {
+      "episodes": 20,
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "intervention_fraction": 0.118875,
+      "mean_team_reward": -570.9420971666536,
+      "std_team_reward": 22.7554008188607,
+      "mean_progress_m": 1581.7552927732736,
+      "nominal_episodes": 20,
+      "peak_speed_m_s": 26.8224,
+      "accepted": false,
+      "selection_score": [
+        0,
+        0,
+        0,
+        20,
+        -570.9420971666536,
+        -0.118875
+      ]
+    },
+    "native": {
+      "episodes": 20,
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "intervention_fraction": 0.0,
+      "mean_team_reward": -509.1126042820535,
+      "std_team_reward": 12.789436864009216,
+      "mean_progress_m": 1580.6286607097315,
+      "nominal_episodes": 20,
+      "peak_speed_m_s": 26.8224,
+      "accepted": true,
+      "selection_score": [
+        1,
+        0,
+        0,
+        20,
+        -509.1126042820535,
+        -0.0
+      ]
+    }
+  },
+  "policy_path": "outputs/sumo_mappo/v01/train-20261026T190003Z-9d133a8c/policy.pt",
+  "policy_sha256": "6ec2167aa2c769ec41c9221b77382fe74658430ce852703ce32568d089e591fd",
+  "result_sha256": "dfecfafc2e02be18d42f0f2dc770403994cbd1ec37b31b91a6979e81d43326bc"
+}

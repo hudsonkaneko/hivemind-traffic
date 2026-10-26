@@ -4,6 +4,16 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-26 - MAPPO cruise retraining passes the override gate
+
+- Diagnosed all prior learned overrides as speed-ceiling clamps. Added a separate
+  25 m/s cruise-reward configuration with stronger override penalties and lower
+  exploration; retained the original safety checks and 5% acceptance threshold.
+- Retrained for one million decisions. All 20 fresh held-out episodes passed:
+  zero collisions, overspeed or overrides, with 1,445.453 m mean progress per car.
+  Preserve the speed/progress tradeoff and different seed-set qualification in
+  [the v02 training record](sumo-mappo-v2.md). Google guide sync remains pending.
+
 ## 2026-10-26 - Repair native SUMO GUI recording
 
 - Added paced, native-size SUMO viewport capture with bounded socket/process

@@ -47,3 +47,30 @@ The historical `outputs/sumo_mappo/v01/` runner directory name also contains
 v02 packages; use each package's resolved config and study name to identify its
 version. No result is claimed before the run completes. Google guide training
 updates remain pending; this repository note is the current experiment record.
+
+## Completed result
+
+Run `train-20261026T190003Z-9d133a8c` completed all 1,000,000 decisions and
+15,554 optimizer steps in 737.625 seconds. Sources remained unchanged during
+execution. The assistant waited for process completion without inspecting
+progress logs or performing ongoing analysis while learning ran.
+
+The selected actor passed all 20 held-out episodes on the new test partition:
+zero collisions, zero overspeed decisions and **zero safety overrides across
+48,000 decisions**. Mean progress was 1,445.453 m per car over 60 seconds
+(about 53.9 mph average), with peak speed 26.066 m/s (58.3 mph). The unchanged
+5% override and 600 m progress acceptance gates pass. This result is limited to
+the fixed-lane SUMO fixture, not merging, unexpected obstacles or physical cars.
+
+Matched native traffic averaged 1,580.629 m per car, about 8.55% more progress
+relative to native's distance; the learned policy trades speed for ceiling
+margin. Scripted control averaged 1,581.755 m with 11.8875% overrides. V01's
+75.6167% override result used a different held-out seed partition, so it is
+historical context rather than a paired-seed improvement estimate. Reward
+comparisons across versions are invalid because v02 changed the reward.
+
+The new best actor is `outputs/sumo_mappo/v01/train-20261026T190003Z-9d133a8c/policy.pt`.
+Best/latest full checkpoints and raw evaluation evidence remain alongside it.
+The old policies and failures remain unchanged. See the compact
+[v02 evidence](evidence/sumo-mappo-v2-20261026.json). No further training was
+launched after this passing result. Google guide synchronization remains pending.
