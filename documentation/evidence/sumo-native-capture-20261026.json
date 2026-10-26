@@ -1,0 +1,47 @@
+{
+  "trajectory_exact_match_to_headless": true,
+  "frames": 600,
+  "video": {
+    "file": "sumo-native-replay.mp4",
+    "decoded_frames": 600,
+    "fps": 10,
+    "sha256": "a7b5795f4ef27f712d5fde5a8b1a851a3dfff2906a3681bf9e2abafc23c2c6cd",
+    "encoder_sha256": "2ce797a0f88d7f067180338fb227f7b1928ea727bd9a4d7a1d022f7c52af71a3",
+    "processing": "H.264 encoding; at most one pixel padding per dimension; no overlays or reconstructed geometry"
+  },
+  "metrics": {
+    "seed": 400001,
+    "steps": 600,
+    "agent_transitions": 2400,
+    "team_reward": 542.1304185546467,
+    "mean_progress_m": 1572.7951428653942,
+    "progress_by_agent_m": {
+      "agent_0": 1569.898444338361,
+      "agent_1": 1575.3907034597094,
+      "agent_2": 1579.1542265720313,
+      "agent_3": 1566.7371970914753
+    },
+    "collision_vehicles": 0,
+    "collision_ids": [],
+    "interventions": 1766,
+    "intervention_fraction": 0.7358333333333333,
+    "overspeed_steps": 0,
+    "peak_speed_m_s": 26.8224,
+    "min_ttc_s": 12.995469634860685,
+    "background_peak": 87,
+    "end_causes": {
+      "agent_0": "time_limit",
+      "agent_1": "time_limit",
+      "agent_2": "time_limit",
+      "agent_3": "time_limit"
+    },
+    "nominal_end": true
+  },
+  "run_id": "native-60s-20261026",
+  "training": false,
+  "optimizer_steps": 0,
+  "seed": 400001,
+  "policy_sha256": "f82aec2d31f277d2d1236613a3ea386d99686e449e8a141c3e1eb27bae000bd6",
+  "tests_passed": 26,
+  "renderer": "Native SUMO GUI viewport screenshots; no synthetic geometry"
+}
