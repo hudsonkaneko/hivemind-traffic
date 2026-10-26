@@ -4,6 +4,17 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-25 - Forward sensor pipeline and reusable v08 source rig
+
+- Audited exact actor inputs and privileged control shortcuts across SUMO and
+  physical-car policies. Existing checkpoint contracts remain unchanged.
+- Added source-authored camera/LiDAR mounts in the local v08 vehicle package,
+  RGB lane evidence, noisy ego estimation, validated sensor packet boundaries
+  and a bounded scripted native probe with fail-closed camera fault injection.
+- 160 targeted CPU tests and 17 OpenUSD tests pass. Native driving and screenshot
+  results are pending GPU availability; no new policy training started. See
+  [the sensor milestone](sensor-perception-v01.md) and [input audit](sensor-input-audit.md).
+
 ## 2026-10-25 - Repair SUMO MAPPO delayed spawn before checkpoint resume
 
 - Preserve safe SUMO insertion delays with bounded native warm-up rather than
