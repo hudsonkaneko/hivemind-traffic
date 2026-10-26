@@ -4,6 +4,16 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-26 - Body-mounted seven-camera source v11
+
+- Removed camera roof stalks and seated compact housings against measured body
+  surfaces on the fascia/hood, fenders, rear quarter panels and tailgate.
+  Retained central roof LiDAR and historical source versions.
+- Corrected cross-view body occlusion after inspecting actual images. Combined
+  capture passed with 59 images per camera, 119 scans and stable moving mounts.
+  Source checks and two exterior-intersection tests pass. No training started.
+- See [body-camera results and screenshots](body-camera-v01.md).
+
 ## 2026-10-26 - Roof LiDAR v10 and combined capture
 
 - Renamed the new source mount to LidarRoof and raised it 20 cm above the prior
