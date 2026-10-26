@@ -224,3 +224,23 @@ two steps (0.2 seconds). All 37 targeted backend/environment/runner tests passed
 The approved training configuration and digest are unchanged. Resume uses the
 latest checkpoint and only the remaining original decision budget, with fresh
 episodes as documented. The historical single-step preflight remains unchanged.
+
+## Resumed pilot result: completed budget, failed learned acceptance
+
+The authorized continuation `train-20261026T042040Z-ad06049e` completed the
+original cumulative 1,000,000-decision budget in a further 343.141 seconds,
+with 5,187 additional optimizer steps and unchanged source during execution.
+The spawn repair did not recur as a failure. All 20 held-out learned episodes
+completed without collisions or overspeed, averaging 1,568.835 m progress per
+car. Safety overrides affected 75.617% of decisions, failing the unchanged 5%
+limit. Scripted control averaged 1,583.742 m with 11.133% overrides; SUMO-native
+averaged 1,581.976 m with zero external overrides by definition. Training-process
+completion is not driving acceptance; no physical integration is approved by
+this result. No further training was launched.
+
+The selected actor and resumable latest checkpoint remain local in that run's
+`policy.pt` and `checkpoints/latest.pt`. See the compact
+[resume evidence](evidence/sumo-mappo-resume-20261025.json). This repository note
+records the training outcome; the connected Google guide and generated mirror
+still describe the earlier setup milestone and have not yet been refreshed with
+these training results.

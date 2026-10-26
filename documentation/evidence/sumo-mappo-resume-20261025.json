@@ -1,0 +1,76 @@
+{
+  "run_id": "train-20261026T042040Z-ad06049e",
+  "parent_run": "train-20261026T041059Z-5ae53d79",
+  "source_commit": "888bc54",
+  "status": "completed",
+  "agent_transitions": 1000000,
+  "resume_optimizer_steps": 5187,
+  "resume_wall_seconds": 343.14100000006147,
+  "learned_acceptance": false,
+  "source_unchanged": true,
+  "held_out": {
+    "learned": {
+      "episodes": 20,
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "intervention_fraction": 0.7561666666666667,
+      "mean_team_reward": 539.4536874836733,
+      "std_team_reward": 4.784417317768,
+      "mean_progress_m": 1568.8353526894928,
+      "nominal_episodes": 20,
+      "peak_speed_m_s": 26.8224,
+      "accepted": false,
+      "selection_score": [
+        0,
+        0,
+        0,
+        20,
+        539.4536874836733,
+        -0.7561666666666667
+      ]
+    },
+    "scripted": {
+      "episodes": 20,
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "intervention_fraction": 0.11133333333333334,
+      "mean_team_reward": 583.713097554941,
+      "std_team_reward": 1.828238327048954,
+      "mean_progress_m": 1583.7419557706376,
+      "nominal_episodes": 20,
+      "peak_speed_m_s": 26.8224,
+      "accepted": false,
+      "selection_score": [
+        0,
+        0,
+        0,
+        20,
+        583.713097554941,
+        -0.11133333333333334
+      ]
+    },
+    "native": {
+      "episodes": 20,
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "intervention_fraction": 0.0,
+      "mean_team_reward": 589.7272589589522,
+      "std_team_reward": 2.869623720050419,
+      "mean_progress_m": 1581.9762013737027,
+      "nominal_episodes": 20,
+      "peak_speed_m_s": 26.8224,
+      "accepted": true,
+      "selection_score": [
+        1,
+        0,
+        0,
+        20,
+        589.7272589589522,
+        -0.0
+      ]
+    }
+  },
+  "policy_path": "outputs/sumo_mappo/v01/train-20261026T042040Z-ad06049e/policy.pt",
+  "policy_sha256": "f82aec2d31f277d2d1236613a3ea386d99686e449e8a141c3e1eb27bae000bd6",
+  "result_sha256": "c8b3bed6e7c220c017213b984be09cb92465573c05ad8b8956081189e000823f"
+}
