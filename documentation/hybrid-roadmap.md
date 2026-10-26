@@ -1,5 +1,14 @@
 # Active roadmap: physical research cars, economical background traffic
 
+October 26 perception preparation: source v14 retains seven body cameras and
+adds four compact perimeter LiDARs beside the roof scanner. All 12 measured
+small near-field targets pass with five concurrent scanners. A six-scene,
+60-frame labeled front-camera sample passes structure/hash/split checks, with
+camera transforms and separate raw LiDAR recorded. Pedestrian examples and full
+training diversity are still missing. No training started; the segmentation
+proposal, actual screenshots and remaining gates are in
+[perception preparation v01](perception-preparation-v01.md).
+
 Updated: October 25, 2026. Status: physical lane following, the bounded visible
 LiDAR-braking subset and a separate one-car Isaac Lab lane task are verified
 within their stated fixtures. Broader lifecycle/endurance, shared-map and hybrid

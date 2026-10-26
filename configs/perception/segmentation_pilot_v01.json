@@ -1,0 +1,62 @@
+{
+  "version": "segmentation-pilot-v01",
+  "status": "PROPOSED_NOT_STARTED",
+  "purpose": "Offline front-wide semantic segmentation; no driving-policy or detector training",
+  "seed": 20261026,
+  "dataset": {
+    "manifest": null,
+    "schema": "perception-dataset-v1",
+    "target_total_frames": 20000,
+    "target_split_frames": {"train": 16000, "val": 2000, "test": 2000},
+    "camera": "CameraFront",
+    "input_size_hw": [360, 640],
+    "sampling_hz": 10,
+    "split_unit": "whole_scene_and_scenario_seed_group",
+    "held_out_test_road_layouts": true,
+    "classes": {"background": 0, "drivable": 1, "lane": 2, "vehicle": 3, "pedestrian": 4, "obstacle": 5},
+    "inputs": ["rgb"],
+    "targets": ["semantic_mask"],
+    "lidar_role": "recorded_separately_for_later_fusion_not_segmentation_input",
+    "simulator_ground_truth_role": "labels_and_evaluation_only"
+  },
+  "model": {
+    "library": "torchvision",
+    "architecture": "deeplabv3_mobilenet_v3_large",
+    "initialization": "DeepLabV3_MobileNet_V3_Large_Weights.DEFAULT then replace classification head for six classes",
+    "pretrained_weights_downloaded": false,
+    "runtime_dependencies_verified": false,
+    "output_classes": 6
+  },
+  "optimizer": {"name": "AdamW", "learning_rate": 0.0001, "weight_decay": 0.0001},
+  "training": {
+    "epochs_max": 20,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 1,
+    "mixed_precision": true,
+    "loss": "cross_entropy",
+    "augmentation": {"brightness_factor": [0.8, 1.2], "contrast_factor": [0.8, 1.2], "geometric_transforms": []},
+    "validation_each_epoch": true,
+    "early_stopping_metric": "validation_mean_iou",
+    "early_stopping_patience_epochs": 4,
+    "test_set_use": "once_after_model_selection",
+    "wall_time_limit_hours": null,
+    "wall_time_limit_reason": "Set after approved dependency and throughput smoke check; no unattended unlimited run"
+  },
+  "evaluation": {
+    "metrics": ["per_class_iou", "mean_iou", "per_class_pixel_recall", "inference_latency_ms_p50_p95"],
+    "report_absent_classes_as": "not_evaluated",
+    "evaluate_road_lighting_and_occlusion_groups_separately": true,
+    "safety_claim": "Pixel metrics do not establish object detection, tracking, braking safety or closed-loop driving performance"
+  },
+  "output_directory": "outputs/perception-training/segmentation-pilot-v01/<unique-run-id>",
+  "checkpoint_files": ["best.pt", "last.pt"],
+  "launch_gates": [
+    "User approves resolved configuration before training",
+    "Training entrypoint and isolated runtime implemented and smoke tested",
+    "Dataset manifest and file hashes pass validation",
+    "All required classes have reviewed training and evaluation examples",
+    "Human review confirms RGB-mask alignment and realistic assets",
+    "Held-out road layout and seed isolation verified",
+    "Throughput and memory measured; wall-time cap resolved"
+  ]
+}

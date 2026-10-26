@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/body-camera-rig/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/body-camera-rig/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/perception-preparation/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/perception-preparation/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4282,3 +4282,15 @@ Native run 20261026T193608Z-4ea7afd5 passed combined sensing: 59 valid images fr
 Roof-region LiDAR self returns fell to zero in this test; that does not prove universal clearance. Small side targets at 2–6 m remain undetected by the existing LiDAR profile. No training or learned fusion was started; old actor observation contracts are unchanged.
 
 Results: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/body-camera-rig/documentation/body-camera-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/body-camera-rig/documentation/body-camera-v01.md>)
+
+<a id="docs-h-8auh37hm86ow"></a>
+
+#### Near-field sensing and perception dataset preparation — October 26, 2026
+
+The actual local v14 source preserves seven body-mounted cameras and adds four compact perimeter LiDARs alongside the roof scanner. The opt-in generic 64-beam profile spans -65 to +10 degrees at 20 Hz. Roof-only and side-only attempts exposed occlusion; all attempts are preserved. Native run 20261026T212758Z-d9729274 passed all 12 small near-field target checks, six tall surrounding targets, 119 complete scans per scanner and 59 images per camera, with stable mounts, unchanged source and zero contacts. This closes measured gaps, not all possible blind spots or highway-speed sensing. 141 focused CPU tests, 28 USD tests and four additional capture-config tests passed.
+
+Six short scenes produce 60 labeled front-camera frames (40 training, 10 validation, 10 test), with RGB, semantic masks and separate raw LiDAR. Native labels are supervision/evaluation only. The initial sample passed file, hash, class and split validation; pedestrian examples are absent and crossing boxes are labeled obstacle. Review prompted camera/chassis transforms and LiDAR frame-end pose metadata in revised captures. Raw WORLD scans are noncompensated; moving-object deskew and deployed fusion remain unverified. The sample verifies plumbing, not a training-quality corpus.
+
+Proposed training, NOT STARTED: front-wide 640x360 RGB, six-class DeepLabV3 MobileNetV3, future 20,000 frames split 16,000/2,000/2,000 by scenes/seeds, AdamW learning rate 0.0001, weight decay 0.0001, batch 8, mixed precision, at most 20 epochs and validation-mIoU early stopping after four epochs without improvement. Weights are not downloaded. Full data, realistic pedestrian examples, an implemented/tested isolated training entrypoint, a measured wall-time cap and user review remain prerequisites. No policy training or changes to old actor inputs were made.
+
+Results, version history and actual screenshots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/perception-preparation/documentation/perception-preparation-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/perception-preparation/documentation/perception-preparation-v01.md>)
