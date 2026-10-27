@@ -1,5 +1,10 @@
 # Sam's highway twin development plan
 
+27 October geographic priority: [LA highway twin strategy](la-highway-twin-strategy-2026-10-27.md).
+Sam requests an American highway near USC/Los Angeles with research-backed
+geometric, behavioral and vehicle fidelity. Start LA corridor screening; exiD
+application is no longer the immediate task. Exact-site admission remains open.
+
 Current qualification: [27 October evidence sheet](exid-qualification-2026-10-27.md)
 and [geometry/audit intake plan](exid-geometry-audit-plan.md). Package access and
 exact-site facts remain unresolved; no empirical gate has passed.

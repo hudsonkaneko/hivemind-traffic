@@ -6,6 +6,12 @@ authority for historical measurements and failures.
 
 ## 2026-10-27 — exiD public qualification and audit preparation
 
+- Later on 27 October, Sam changed the geographic priority to an American/LA
+  highway near USC. Added the [LA fidelity strategy](la-highway-twin-strategy-2026-10-27.md)
+  and source ledger, with Caltrans-supported corridor leads, Adams signal-control
+  caveat, public LA lidar route and separate geometry/traffic/vehicle checks.
+  No LA site is admitted; no scene, observation analysis or training performed.
+
 - Added the [access/site evidence sheet](exid-qualification-2026-10-27.md),
   [geometry/audit acceptance plan](exid-geometry-audit-plan.md) and blank intake
   manifest. No restricted package/grant was identified in the scoped search;

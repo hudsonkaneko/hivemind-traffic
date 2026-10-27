@@ -25,6 +25,10 @@ mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
 
+October 27 Sam geographic amendment: [LA corridor and fidelity strategy](la-highway-twin-strategy-2026-10-27.md).
+Los Angeles now takes priority over the exiD target. This is site/architecture
+qualification for Sam's scoped study, not a new physical-fleet or training result.
+
 October 22 end-of-day handoff: [current status and next session](team-handoff-2026-10-22.md)
 distinguish verified viewer/accounting work, conditional site selection and pending
 driver/communication evidence. No new training or physical acceptance is claimed.

@@ -1,5 +1,10 @@
 # Highway twin site decision and build contract
 
+27 October amendment: Sam now prioritizes an American/Los Angeles highway twin.
+The [LA strategy](la-highway-twin-strategy-2026-10-27.md) supersedes this document's
+Aachen-Brand-first recommendation. This original comparison and contract remain
+historical evidence; no exact LA site is admitted yet.
+
 22 October 2026 · Codex for Sam · Evidence reviewed through this date.
 
 ## Decision
