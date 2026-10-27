@@ -1,0 +1,23 @@
+{
+  "schema_version": "proposal-1",
+  "status": "intake_only_not_executable",
+  "event_id": null,
+  "event_type": null,
+  "allowed_types": ["disabled_vehicle", "crash_consequences", "construction", "police_traffic_break", "debris"],
+  "provenance": {"kind": null, "allowed_kinds": ["observed", "reconstructed", "synthetic"], "source_uri": null, "source_sha256": null, "observed_at": null, "retrieved_at": null, "uncertainty": null},
+  "road_asset_revision": null,
+  "coordinate_frame": null,
+  "road_and_lane_ids": [],
+  "footprint": null,
+  "schedule": {"onset_sim_s": null, "end_sim_s": null, "clearance_stages": []},
+  "actors": [],
+  "moving_obstruction_path_and_speed": null,
+  "traffic_effects": {"closures": [], "speed_constraints": [], "routing_rules": []},
+  "usd_layer": null,
+  "backend_adapters": {"sumo": null, "isaac": null},
+  "motion_authority": null,
+  "seed": null,
+  "actor_information_policy": "No future event schedule or hidden source metadata in local driving observations",
+  "accounting_boundary": null,
+  "validation_evidence": null
+}

@@ -2,6 +2,13 @@
 
 27 October 2026 · Codex for Sam · Research recommendation and qualification plan.
 
+Later same-day refinement: [exact corridor comparison](la-corridor-selection-2026-10-27.md)
+recommends I-110 southbound Exposition–Vernon, with the MLK entrance/Vernon lane
+reduction as the first tile. Public map/lidar samples are now inspected; PeMS
+access is absent. This supersedes the unspecified search area below, not its
+calibration gates. See also the [separate disruption layer](highway-disruption-layer.md)
+and [fresh driving readiness audit](driving-readiness-2026-10-27.md).
+
 ## Direction and recommendation
 
 Sam now prefers an American highway, with Los Angeles as the target because the

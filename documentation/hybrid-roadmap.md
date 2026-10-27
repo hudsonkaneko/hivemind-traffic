@@ -1,5 +1,11 @@
 # Active roadmap: physical research cars, economical background traffic
 
+27 October audit: read [current learned-driving evidence](driving-readiness-2026-10-27.md)
+for newer upstream branch work not merged into this checkout. Sam's LA direction
+is refined to [I-110 southbound Exposition–Vernon](la-corridor-selection-2026-10-27.md),
+with a [separate optional disruption layer](highway-disruption-layer.md). These
+are scoped recommendations/design records; physical driver acceptance remains open.
+
 Updated: October 4, 2026. Status: physical lane following and bounded visible
 LiDAR-braking subset verified;
 scene-lifecycle reliability and full shared-map integration **in progress**.

@@ -1,0 +1,196 @@
+{
+  "date_local": "2026-10-27",
+  "actor": "Codex for Sam",
+  "status": "development_recommendation_not_site_admission",
+  "recommendation": "I-110 southbound general-purpose lanes, Exposition Boulevard/37th Street to Vernon Avenue; MLK entrance/Vernon lane-reduction first tile",
+  "pems_access": "Sam confirmed no account or downloaded District 7 data",
+  "geometry": {
+    "source": "https://s3-us-west-2.amazonaws.com/usgs-lidar-public/CA_LosAngeles_1_B23/ept.json",
+    "ept_sha256": "191c6f88cb080fae59863aeca00f9da6805e8547ba76c5e43eb8833d0ffc7bbb",
+    "depth_limit": 10,
+    "full_density": false,
+    "point_total": 79373,
+    "samples": {
+      "i110": {
+        "center_lonlat": [
+          -118.28127,
+          34.0057
+        ],
+        "bbox_3857": [
+          -13167110.746781705,
+          4029467.4225525553,
+          -13166910.746781705,
+          4029667.4225525553
+        ],
+        "points": 28227,
+        "classes": {
+          "1": 17481,
+          "2": 8747,
+          "7": 26,
+          "17": 1852,
+          "18": 121
+        },
+        "z_percentiles": [
+          43.23000000000002,
+          44.659999999999854,
+          54.069999999999936,
+          73.25999999999999,
+          75.94000000000005
+        ]
+      },
+      "i10": {
+        "center_lonlat": [
+          -118.3904659,
+          34.0312661
+        ],
+        "bbox_3857": [
+          -13179266.37876642,
+          4032901.072506955,
+          -13179066.37876642,
+          4033101.072506955
+        ],
+        "points": 23710,
+        "classes": {
+          "1": 12504,
+          "2": 8347,
+          "7": 30,
+          "17": 2794,
+          "18": 35
+        },
+        "z_percentiles": [
+          33.63999999999987,
+          33.799999999999955,
+          39.57999999999993,
+          56.87909999999988,
+          61.159999999999854
+        ]
+      },
+      "i405": {
+        "center_lonlat": [
+          -118.386808,
+          33.9762752
+        ],
+        "bbox_3857": [
+          -13178859.183201047,
+          4025516.8098432333,
+          -13178659.183201047,
+          4025716.8098432333
+        ],
+        "points": 27436,
+        "classes": {
+          "1": 18258,
+          "2": 8734,
+          "7": 12,
+          "17": 420,
+          "18": 12
+        },
+        "z_percentiles": [
+          9.8599999999999,
+          10.089999999999918,
+          17.079999999999927,
+          42.09999999999991,
+          45.11999999999989
+        ]
+      }
+    },
+    "accuracy_validated": false,
+    "entire_corridor_covered": false
+  },
+  "ramp_workbook": {
+    "url": "https://dot.ca.gov/-/media/dot-media/programs/traffic-operations/documents/census/2024/2024-d7-ramp-adt-a11y.xlsx",
+    "sha256": "9815fe2f85c6918000a98be166500bda2f81968207f313ae2d6439ac6b04355a",
+    "extract_sha256": "0cd33749c18fbed5e7bd17bb8485cb661589f12a32c40211507d8be459e1bba0",
+    "warning": "Blank later years are missing, not zero. Annual values are not peak-period demand."
+  },
+  "upstream_audit": [
+    {
+      "branch": "codex/mappo-communication-waves",
+      "sha": "d8f2dc8c7bfd1b19176aac145cb33bf987c80583",
+      "path": "documentation/sumo-mappo-v2.md",
+      "sha256": "4d60d2419b76ab6e2a5f91fbc7d4bfb2db11964632a4765634b129f3f00feec3"
+    },
+    {
+      "branch": "codex/mappo-communication-waves",
+      "sha": "d8f2dc8c7bfd1b19176aac145cb33bf987c80583",
+      "path": "documentation/sumo-mappo-v3.md",
+      "sha256": "0727499630f3f368ccc654a408f097cd51b9d6c2f1364ed56b9317535d97e1ee"
+    },
+    {
+      "branch": "codex/mappo-communication-waves",
+      "sha": "d8f2dc8c7bfd1b19176aac145cb33bf987c80583",
+      "path": "documentation/sensor-input-audit.md",
+      "sha256": "b69803bf1b89e5de1414f1635c750b2be4f6e961ad9e9ababd13d9cb8d682827"
+    },
+    {
+      "branch": "codex/mappo-communication-waves",
+      "sha": "d8f2dc8c7bfd1b19176aac145cb33bf987c80583",
+      "path": "documentation/sensor-perception-v01.md",
+      "sha256": "166f91c463ee3c625848d0f20b7c68e23f3bbcda9d365ef0f01109d1e8fe5a52"
+    },
+    {
+      "branch": "codex/mappo-communication-waves",
+      "sha": "d8f2dc8c7bfd1b19176aac145cb33bf987c80583",
+      "path": "documentation/evidence/sumo-mappo-v2-20261026.json",
+      "sha256": "842cd87b560a2c8d153db3db1feaaa7777bb449e98338ea776a7c75cd1c0933e"
+    },
+    {
+      "branch": "codex/mappo-communication-waves",
+      "sha": "d8f2dc8c7bfd1b19176aac145cb33bf987c80583",
+      "path": "environments/sumo_mappo_env.py",
+      "sha256": "d75436fdba3d03b5edd38c6e6e546ba7f1ebbd988e419fa1b21571d227a417b1"
+    },
+    {
+      "branch": "codex/mappo-communication-waves",
+      "sha": "d8f2dc8c7bfd1b19176aac145cb33bf987c80583",
+      "path": "traffic/mappo_sumo.py",
+      "sha256": "8238ae4dd9cd23753dcd01e58353bffb0bd0d4e140e7e2531d5ca599d7a17db1"
+    },
+    {
+      "branch": "codex/highway-60mph-ppo-traffic",
+      "sha": "ff5aebc72fba6525cf5dafc6e3da3d58abcc8a08",
+      "path": "documentation/highway-circles-60mph.md",
+      "sha256": "73c20b95fdf1bdb481b1d27159324d558600e7caf431a6bae678e79829086569"
+    },
+    {
+      "branch": "codex/highway-60mph-ppo-traffic",
+      "sha": "ff5aebc72fba6525cf5dafc6e3da3d58abcc8a08",
+      "path": "documentation/circles-control-smoke.md",
+      "sha256": "749e7e11ec50e2550d00c8371e92f6d285d12fc2347b134af6a0f9e05d689361"
+    },
+    {
+      "branch": "codex/highway-60mph-ppo-traffic",
+      "sha": "ff5aebc72fba6525cf5dafc6e3da3d58abcc8a08",
+      "path": "experiments/highway-circles-60mph-v1.json",
+      "sha256": "6d1db5b21990e1e4e8fc4300446c090096839024a45e32a4175d5bb5097c424f"
+    },
+    {
+      "branch": "codex/highway-60mph-ppo-traffic",
+      "sha": "ff5aebc72fba6525cf5dafc6e3da3d58abcc8a08",
+      "path": "experiments/run_highway_circles.py",
+      "sha256": "4e4eda02700fdb9b56319e4aa28aca6dba2d29270e890256afbfcb65ffe1bb78"
+    },
+    {
+      "branch": "codex/rsl-road-hazard-integration",
+      "sha": "1fb5d1d82e434798ec9996262bf4dd34279da73b",
+      "path": "documentation/rsl-road-hazard-integration.md",
+      "sha256": "9ce674d124bbf0ae17f8030afeae3dfc7c18bb377bd0782e30eebb0c2a302ba3"
+    },
+    {
+      "branch": "codex/rsl-road-hazard-integration",
+      "sha": "1fb5d1d82e434798ec9996262bf4dd34279da73b",
+      "path": "environments/loop_hazard_contract.py",
+      "sha256": "f514b029774b77f1f92b16e7b84f5a8e1ff695fbfaf92fd79d9dcce6f92dc6d3"
+    }
+  ],
+  "limits": [
+    "No PeMS station-health data",
+    "OSM is not a surveyed HD lane map",
+    "No full-density geometry or lane accuracy validation",
+    "No simulator or training run",
+    "Upstream results inspected, not independently reproduced",
+    "Event layer specified, not implemented",
+    "Initial off-highway I-405 reconnaissance relocated after map check; original records retained",
+    "Full lidar report exceeded bounded retrieval and was not read"
+  ],
+  "local_evidence": "outputs/la-corridor-review-20261027-a/"
+}

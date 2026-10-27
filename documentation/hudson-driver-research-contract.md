@@ -1,5 +1,10 @@
 # Hudson's driving controller and the communication study
 
+27 October update: [fresh branch/evidence audit](driving-readiness-2026-10-27.md)
+records newer passing SUMO cruise results, the pending physical highway probe
+and untrained communication setup. The October 22 physical-driver limitations
+below remain scoped historical evidence, not a complete current repo status.
+
 22 October 2026. Codex for Sam. Source: Hudson's message forwarded by Sam,
 corroborated by read-only inspection of
 [`1fb5d1d`](https://github.com/hudsonkaneko/hivemind-traffic/commit/1fb5d1d)

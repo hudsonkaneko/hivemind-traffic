@@ -1,5 +1,12 @@
 # Sam's highway twin development plan
 
+27 October exact-corridor refinement: [I-110 southbound Exposition–Vernon](la-corridor-selection-2026-10-27.md),
+starting at the MLK entrance/Vernon lane-reduction tile. Read the
+[event-layer contract](highway-disruption-layer.md) and
+[current learned-driver audit](driving-readiness-2026-10-27.md). Next: source/epoch
+and lane/deck reconstruction checks, plus PeMS access and station qualification.
+The exiD next-step wording retained below is superseded historical context.
+
 27 October geographic priority: [LA highway twin strategy](la-highway-twin-strategy-2026-10-27.md).
 Sam requests an American highway near USC/Los Angeles with research-backed
 geometric, behavioral and vehicle fidelity. Start LA corridor screening; exiD

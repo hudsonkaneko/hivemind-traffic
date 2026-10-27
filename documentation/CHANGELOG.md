@@ -1,5 +1,18 @@
 # Change log
 
+## 2026-10-27 — LA corridor comparison, disruptions and current driving audit
+
+- Recommend I-110 southbound Exposition–Vernon, starting with the MLK entrance,
+  Vernon exit and auxiliary-lane reduction. Retrieved bounded OSM extracts,
+  actual lidar samples and official ramp counts; preserved missing/stale traffic
+  evidence. Sam confirms no PeMS account/data. No LA scene or calibration claim.
+- Specify a separate event manifest and SUMO/USD/Isaac adapter contract for
+  crashes, construction and police traffic breaks; runtime implementation pending.
+- Audit October 25–26 upstream branches: passing fixed-lane SUMO cruise is
+  distinct from pending physical highway acceptance and untrained V2V comparison.
+  See [corridor evidence](la-corridor-selection-2026-10-27.md) and
+  [driving audit](driving-readiness-2026-10-27.md). No simulation/training launched.
+
 This is a curated guide to meaningful changes, not a replacement for Git history.
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
