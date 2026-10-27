@@ -1,5 +1,14 @@
 # Hivemind Traffic
 
+## Sam's research checkpoint — 22 October 2026
+
+Start with the [team handoff and next-session task](documentation/team-handoff-2026-10-22.md)
+for the viewer, complete-trip accounting and geographic qualification contribution
+in [PR 16](https://github.com/hudsonkaneko/hivemind-traffic/pull/16). The recommended
+next target is recording-era exiD A44 Aachen-Brand, pending access and qualification.
+The existing I-80 inspection is not a reconstructed road or an admitted research
+case. This scoped contribution does not replace the broader physical-fleet roadmap.
+
 ## Start from a fresh clone
 
 See [clean-clone setup and validation](documentation/clean-clone.md). The supported

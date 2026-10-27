@@ -1,0 +1,15 @@
+{
+  "template_version": 1,
+  "prepared_date_local": "2026-10-27",
+  "timezone": "America/Los_Angeles",
+  "status": "template_only_not_an_admitted_site",
+  "candidate": "recording-era A44 Aachen-Brand merge",
+  "access": {"application_status": null, "grant_reference": null, "authorized_recipient": null, "permitted_uses": null, "package_path_private": null, "package_sha256": null, "release": null},
+  "site": {"location_id": null, "recording_ids": null, "carriageway_direction": null, "footprint": null, "traffic_dates_timezone": null},
+  "geometry": {"map_version": null, "map_capture_date": null, "asset_3d_version": null, "asset_3d_capture_date": null, "horizontal_crs": null, "vertical_crs": null, "origin": null, "pose_anchor": null, "elevation_provenance": null, "independent_checks": null, "tolerance_rationale": null},
+  "observability": {"entry_exit_boundaries": null, "upstream_queue": null, "ramp_queue": null, "requested_demand": null, "downstream_supply": null, "gap_opportunities": null, "censoring_rules": null, "supported_regimes": null},
+  "partitions": {"status": "not_reserved_no_package_ids", "independence_basis": null, "correlation_groups": null, "A": null, "B": null, "C": null, "development_recording": null, "freeze_timestamp": null, "reviewer": null, "access_protection": null, "prior_exposure": null},
+  "files": [],
+  "access_log": [],
+  "admission": {"P01": "open", "P02": "open", "P03": "open", "P04": "open", "P05": "open", "P07": "open"}
+}

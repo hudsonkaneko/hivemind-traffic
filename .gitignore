@@ -4,6 +4,7 @@ logs/
 outputs/
 .venv/
 runtimes/
+nv_shadercache/
 .venv-isaac7/
 .venv-traffic/
 .venv-ovrtx/
@@ -11,5 +12,7 @@ runtimes/
 .idea/
 .vscode/
 hivemind.local.json
+# Supplied collection: source and prepared visual variants have unqualified rights.
+vehicles/sim_ready/sam-collected/
 results/*
 !results/README.md
