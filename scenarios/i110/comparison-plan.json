@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "purpose": "Synthetic engineering setup; not a frozen empirical efficacy experiment",
+  "network_profile": "sumo-road-profiles.json",
+  "step_s": 0.1,
+  "horizon_s": 60,
+  "drain_budget_s": 90,
+  "development_seeds": [730101, 730102],
+  "repeat_seed": 730101,
+  "cases": ["ordinary", "braking_leader"],
+  "initial_arm": "SUMO native ACC; IDM human proxies",
+  "learned_arm": "Unavailable until exact actor is published, original fixture reproduced, and graph-aware observation contract reviewed",
+  "network_smoke_gate": {
+    "collisions": 0,
+    "teleports": 0,
+    "removed_trips": 0,
+    "all_requested_trips_complete_by_bounded_drain": true,
+    "controlled_through_lanes_preserved": true,
+    "native_tripinfo_crosscheck": true,
+    "same_seed_trace_sha256_equal": true
+  },
+  "traffic_calibration": "Pending optional offline PeMS exports and independent local observations",
+  "bottleneck_layer": "Separate scripted leader-speed schedule in runner; crash/construction/police scenarios remain separate pending adapters",
+  "ordinary_driver_acceptance": "Not established by this connectivity/accounting smoke gate; gap, TTC, jerk and intervention limits require a declared envelope",
+  "training": false
+}

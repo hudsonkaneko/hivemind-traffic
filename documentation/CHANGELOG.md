@@ -1,5 +1,20 @@
 # Change log
 
+## 2026-10-27 — I-110 SUMO setup and repository checkpoint audit
+
+- Recovered all 14 recorded Hudson MAPPO v02 source hashes (two CRLF restorations)
+  and the configuration digest. Published weights remain absent from inspected
+  Git history/releases; original three-lane observations need explicit corridor
+  adaptation. No reproduction or learned-versus-ACC result claimed.
+- Added a portable profile-based I-110 lane graph, MLK entry/Vernon exit, ACC/IDM
+  engineering fixture, separate leader-speed event and complete trip accounting.
+  Corrected backward automatic junction connectors and retained earlier outputs.
+- Twenty targeted tests and six bounded scenario runs pass; exact same-seed
+  replay and different-seed sensitivity verified. All cohorts finish in the
+  separate drain without collisions/removals/teleports. High fleet jerk leaves
+  comfortable ordinary driving unaccepted. No PeMS dependency or new training.
+- See [checkpoint audit and runnable setup](i110-sumo-checkpoint-2026-10-27.md).
+
 ## 2026-10-27 — I-110 imagery refinement and bounded physical contact
 
 - Refined pavement/ramp connections against date-pinned May 2024 NAIP, added

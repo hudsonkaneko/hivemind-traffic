@@ -1,5 +1,12 @@
 # Active roadmap: physical research cars, economical background traffic
 
+27 October Sam setup: [I-110 SUMO network and checkpoint audit](i110-sumo-checkpoint-2026-10-27.md).
+The synthetic ACC baseline now runs with ramp/exit topology and complete accounting.
+Hudson's exact actor is absent from published repository artifacts inspected here;
+three-lane observations also need explicit graph-aware transfer. Twenty tests and
+six bounded smoke runs pass; abrupt ACC acceleration changes leave comfortable
+ordinary driving unaccepted. No learned comparison, new training or site admission.
+
 27 October audit: read [current learned-driving evidence](driving-readiness-2026-10-27.md)
 for newer upstream branch work not merged into this checkout. Sam's LA direction
 is refined to [I-110 southbound Exposition–Vernon](la-corridor-selection-2026-10-27.md),
