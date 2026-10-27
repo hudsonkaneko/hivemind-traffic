@@ -34,6 +34,16 @@ elsewhere, but all prepared assets and project outputs belong under this root.
 
 ## Development continuity
 
+Sam's 27 October evidence-organization requirement: apply `organize-av-evidence`
+to all substantive research/development work. Read the installed skill or the
+repository fallback `skills/organize-av-evidence/SKILL.md`. Before new runs, record
+the question and actual reason/trigger; at close, link every new result and graphic
+to its inputs, generator, run and interpretation in
+`documentation/evidence-catalog/activities.json`, then refresh the local catalog.
+Keep historical paths stable, retain failed attempts, and mark unknown provenance
+for backfill rather than inventing explanations. This does not lift publication,
+shared-document, protected-data or training boundaries.
+
 - Follow `documentation/workflow.md`: feature branches, code/tests/documentation
   together, tested GitHub checkpoints, and pull-request review before merging.
 - The active plan is `documentation/hybrid-roadmap.md`. Older roadmap text is

@@ -1,0 +1,6 @@
+interface:
+  display_name: "AV Evidence Organizer"
+  short_description: "Link research questions, runs, graphics and conclusions"
+  default_prompt: "Use $organize-av-evidence to organize this AV work and explain why each result and graphic was produced."
+policy:
+  allow_implicit_invocation: true

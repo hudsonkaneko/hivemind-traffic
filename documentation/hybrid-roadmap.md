@@ -1,5 +1,14 @@
 # Active roadmap: physical research cars, economical background traffic
 
+27 October later increment: [ACC comfort and graph-interface evidence](i110-acc-interface-2026-10-27.md).
+Seven smooth engineering runs pass a declared 2.05 m/s³ jerk bound, with complete
+cohort accounting and no collisions/removals/teleports. This supersedes the earlier
+ACC comfort blocker for these bounded fixtures only. A 30-feature graph interface
+is tested; Hudson's exact actor remains pending and its 27-feature inputs are
+incompatible. Next: obtain/reproduce the original actor and agree the transfer
+contract; extend scripted checks to cut-ins/emergency/ramp interactions. Apply the
+[evidence organization workflow](evidence-catalog/README.md) to all project work.
+
 27 October Sam setup: [I-110 SUMO network and checkpoint audit](i110-sumo-checkpoint-2026-10-27.md).
 The synthetic ACC baseline now runs with ramp/exit topology and complete accounting.
 Hudson's exact actor is absent from published repository artifacts inspected here;

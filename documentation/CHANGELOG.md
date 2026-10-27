@@ -1,5 +1,21 @@
 # Change log
 
+## 2026-10-27 — Smooth ACC, graph observations and evidence organization
+
+- Matched native/default, native/parallel and filtered/parallel ACC runs separate
+  passing-rule and comfort-filter effects: peak controlled-fleet jerk 65 → 20 →
+  2.010 m/s³. Seven smooth runs pass the declared 2.05 engineering bound, complete
+  their cohorts after drain, and record no collisions, removals or teleports.
+- Added a 30-feature graph-aware observation contract, stable lane identities,
+  connected-path neighbor distances and unknown-context masks. Legacy 27-feature
+  weights are rejected; no actor loaded or training launched.
+- Added the project-wide `organize-av-evidence` skill, 17 activity records,
+  explicit current result/figure lineage and searchable local inventory with
+  historical gaps exposed. Prepared an exact checkpoint request for Sam.
+- See [results and limits](i110-acc-interface-2026-10-27.md),
+  [Hudson request](hudson-checkpoint-request-2026-10-27.md), and
+  [catalog workflow](evidence-catalog/README.md). Shared-document writes remain held.
+
 ## 2026-10-27 — I-110 SUMO setup and repository checkpoint audit
 
 - Recovered all 14 recorded Hudson MAPPO v02 source hashes (two CRLF restorations)

@@ -1,0 +1,926 @@
+{
+  "schema_version": 1,
+  "curator": "Codex for Sam",
+  "created_local": "2026-10-27",
+  "scope": {
+    "roots": {
+      "project": [
+        "PROJECT_REFERENCE.md",
+        "AGENTS.md",
+        "research",
+        "exports",
+        "setup-downloads",
+        ".agents"
+      ],
+      "repo": [
+        "."
+      ]
+    },
+    "excludes": [
+      "vendor runtimes/caches",
+      "Git internals",
+      "recovery archives",
+      "the catalog itself",
+      "unrelated machine directories"
+    ],
+    "source_content_policy": "Project research/raw data inventoried by metadata only; no protected observations opened for cataloging"
+  },
+  "activities": [
+    {
+      "id": "01-foundation",
+      "title": "Digital-twin foundations",
+      "domain": "Research design",
+      "question": "What constitutes a useful and testable digital twin?",
+      "why_now": "Establish the concepts before selecting a research question.",
+      "trigger": {
+        "text": "Establish the concepts before selecting a research question.",
+        "sources": [
+          "project:research/digital-twins/01-foundation/README.md"
+        ]
+      },
+      "method": "Read the original edition and its cited source ledgers.",
+      "status": "approved research edition",
+      "result": "A dated research edition exists; use its original claims and reading-depth limits.",
+      "limits": "Approval is not team adoption, empirical feasibility or a new experimental result.",
+      "next_action": "Route current decisions through the research custodian and open protocol fields.",
+      "references": [
+        "project:research/digital-twins/01-foundation/README.md"
+      ],
+      "prefixes": [
+        "project:research/digital-twins/01-foundation",
+        "project:research/digital-twins/01-foundation/README.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "02-research-focuses",
+      "title": "Research focus selection",
+      "domain": "Research design",
+      "question": "Which research direction fits the project and available methods?",
+      "why_now": "Compare alternatives before committing to the highway study.",
+      "trigger": {
+        "text": "Compare alternatives before committing to the highway study.",
+        "sources": [
+          "project:research/digital-twins/02-research-focuses/README.md"
+        ]
+      },
+      "method": "Read the original edition and its cited source ledgers.",
+      "status": "approved research edition",
+      "result": "A dated research edition exists; use its original claims and reading-depth limits.",
+      "limits": "Approval is not team adoption, empirical feasibility or a new experimental result.",
+      "next_action": "Route current decisions through the research custodian and open protocol fields.",
+      "references": [
+        "project:research/digital-twins/02-research-focuses/README.md"
+      ],
+      "prefixes": [
+        "project:research/digital-twins/02-research-focuses",
+        "project:research/digital-twins/02-research-focuses/README.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "03-specialized-knowledge",
+      "title": "Specialized literature and novelty",
+      "domain": "Research design",
+      "question": "What does prior AV coordination research already establish?",
+      "why_now": "Avoid presenting an existing result or architecture as a new contribution.",
+      "trigger": {
+        "text": "Avoid presenting an existing result or architecture as a new contribution.",
+        "sources": [
+          "project:research/digital-twins/03-specialized-knowledge/README.md"
+        ]
+      },
+      "method": "Read the original edition and its cited source ledgers.",
+      "status": "approved research edition",
+      "result": "A dated research edition exists; use its original claims and reading-depth limits.",
+      "limits": "Approval is not team adoption, empirical feasibility or a new experimental result.",
+      "next_action": "Route current decisions through the research custodian and open protocol fields.",
+      "references": [
+        "project:research/digital-twins/03-specialized-knowledge/README.md"
+      ],
+      "prefixes": [
+        "project:research/digital-twins/03-specialized-knowledge",
+        "project:research/digital-twins/03-specialized-knowledge/README.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "04-research-skeleton",
+      "title": "Study design and decision contract",
+      "domain": "Research design",
+      "question": "How can communication versus local control be compared defensibly?",
+      "why_now": "Translate the selected question into matched comparisons and complete accounting.",
+      "trigger": {
+        "text": "Translate the selected question into matched comparisons and complete accounting.",
+        "sources": [
+          "project:research/digital-twins/04-research-skeleton/README.md"
+        ]
+      },
+      "method": "Read the original edition and its cited source ledgers.",
+      "status": "approved research edition",
+      "result": "A dated research edition exists; use its original claims and reading-depth limits.",
+      "limits": "Approval is not team adoption, empirical feasibility or a new experimental result.",
+      "next_action": "Route current decisions through the research custodian and open protocol fields.",
+      "references": [
+        "project:research/digital-twins/04-research-skeleton/README.md"
+      ],
+      "prefixes": [
+        "project:research/digital-twins/04-research-skeleton",
+        "project:research/digital-twins/04-research-skeleton/README.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "05-execution-plan",
+      "title": "Execution and protocol gates",
+      "domain": "Research design",
+      "question": "What must be qualified and frozen before expensive experiments?",
+      "why_now": "Define evidence, resource and evaluation gates for the approved design.",
+      "trigger": {
+        "text": "Define evidence, resource and evaluation gates for the approved design.",
+        "sources": [
+          "project:research/digital-twins/05-execution-plan/README.md"
+        ]
+      },
+      "method": "Read the original edition and its cited source ledgers.",
+      "status": "approved research edition",
+      "result": "A dated research edition exists; use its original claims and reading-depth limits.",
+      "limits": "Approval is not team adoption, empirical feasibility or a new experimental result.",
+      "next_action": "Route current decisions through the research custodian and open protocol fields.",
+      "references": [
+        "project:research/digital-twins/05-execution-plan/README.md"
+      ],
+      "prefixes": [
+        "project:research/digital-twins/05-execution-plan",
+        "project:research/digital-twins/05-execution-plan/README.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "06-feasibility-qualification",
+      "title": "Feasibility qualification",
+      "domain": "Research design",
+      "question": "Which required resources and assets are actually available?",
+      "why_now": "Distinguish installed tooling and static assets from demonstrated experimental capability.",
+      "trigger": {
+        "text": "Distinguish installed tooling and static assets from demonstrated experimental capability.",
+        "sources": [
+          "project:research/digital-twins/06-feasibility-qualification/README.md"
+        ]
+      },
+      "method": "Read the original edition and its cited source ledgers.",
+      "status": "reported qualification edition",
+      "result": "A dated research edition exists; use its original claims and reading-depth limits.",
+      "limits": "Approval is not team adoption, empirical feasibility or a new experimental result.",
+      "next_action": "Route current decisions through the research custodian and open protocol fields.",
+      "references": [
+        "project:research/digital-twins/06-feasibility-qualification/README.md"
+      ],
+      "prefixes": [
+        "project:research/digital-twins/06-feasibility-qualification",
+        "project:research/digital-twins/06-feasibility-qualification/README.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "research-communication",
+      "title": "Research explanations and team guide",
+      "domain": "Research communication",
+      "question": "How can teammates understand the study and inspect its examples?",
+      "why_now": "Sam authorized plain-language explanations and teaching demos.",
+      "trigger": {
+        "text": "Sam authorized plain-language explanations and teaching demos.",
+        "sources": [
+          "project:research/digital-twins/team-guide/README.md"
+        ]
+      },
+      "method": "Use the existing guide, demos and source references as explanation assets.",
+      "status": "recorded development",
+      "result": "Teaching artifacts exist; their demonstrations are not empirical research results.",
+      "limits": "Historical individual image generators may still need backfill.",
+      "next_action": "Link each new teaching graphic to its source claim and mark illustrations explicitly.",
+      "references": [
+        "project:research/digital-twins/team-guide/README.md"
+      ],
+      "prefixes": [
+        "project:research/digital-twins/team-guide",
+        "project:research/2026-09-28",
+        "project:research/digital-twins/master-document-update",
+        "project:research/digital-twins/team-guide/README.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "repository-accounting",
+      "title": "Repository baseline and complete-trip accounting",
+      "domain": "Traffic infrastructure",
+      "question": "Can the existing code run reproducibly and account for every requested trip?",
+      "why_now": "Sam needed a verified starting point and boundary-inclusive evaluation.",
+      "trigger": {
+        "text": "Sam needed a verified starting point and boundary-inclusive evaluation.",
+        "sources": [
+          "repo:documentation/team-handoff-2026-10-22.md"
+        ]
+      },
+      "method": "Repository review, bounded baseline runs, fixed-horizon ledger and separate drain.",
+      "status": "recorded development",
+      "result": "The dated reports record baseline/accounting checks; later runs retain this ledger.",
+      "limits": "Infrastructure success is not communication benefit or calibrated traffic.",
+      "next_action": "Preserve all-role/origin accounting in new comparisons.",
+      "references": [
+        "repo:documentation/team-handoff-2026-10-22.md"
+      ],
+      "prefixes": [
+        "repo:outputs/review-20261020",
+        "repo:outputs/baseline-20261022-a",
+        "repo:outputs/merge-accounting-20261022-a",
+        "repo:outputs/twin-20261022-a",
+        "repo:outputs/session-close-20261022-a",
+        "project:research/digital-twins/repository-review",
+        "repo:documentation/team-handoff-2026-10-22.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "i80-qualification",
+      "title": "I-80 historical qualification and inspection",
+      "domain": "Historical geography",
+      "question": "Can the historical I-80 material support the intended open-merge study?",
+      "why_now": "A real merge required original-source, boundary, epoch and geometry checks.",
+      "trigger": {
+        "text": "A real merge required original-source, boundary, epoch and geometry checks.",
+        "sources": [
+          "repo:documentation/i80-powell-qualification-2026-10-22.md"
+        ]
+      },
+      "method": "Historical source alignment, track/GIS inspection and a clearly limited viewer.",
+      "status": "recorded development",
+      "result": "Historical development supported; full factual admission remained unresolved.",
+      "limits": "Modern context is not a reconstructed 2005 driving surface. Protected observations remain protected.",
+      "next_action": "Keep this as historical evidence; I-110 is the current selected geography.",
+      "references": [
+        "repo:documentation/i80-powell-qualification-2026-10-22.md"
+      ],
+      "prefixes": [
+        "repo:outputs/i80-qualification-20261022-b",
+        "repo:outputs/i80-geospatial-rebuild-20261022-a",
+        "repo:outputs/i80-free-camera-20261022-a",
+        "repo:documentation/i80-powell-qualification-2026-10-22.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "exid-site-qualification",
+      "title": "exiD site and access qualification",
+      "domain": "Historical geography",
+      "question": "Would exiD provide a better-supported merge and matching geometry?",
+      "why_now": "The earlier road inspection did not establish a realistic reconstructed highway.",
+      "trigger": {
+        "text": "The earlier road inspection did not establish a realistic reconstructed highway.",
+        "sources": [
+          "repo:documentation/exid-qualification-2026-10-27.md"
+        ]
+      },
+      "method": "Public source/license questions and exact-site intake; no restricted package obtained.",
+      "status": "recorded development",
+      "result": "Request/intake materials were prepared. Sam later selected Los Angeles.",
+      "limits": "No exiD grant, restricted trajectory analysis or admitted site is implied.",
+      "next_action": "Retain provenance and historical decision context; no current application dependency.",
+      "references": [
+        "repo:documentation/exid-qualification-2026-10-27.md"
+      ],
+      "prefixes": [
+        "repo:outputs/exid-qualification-20261027-a",
+        "repo:documentation/exid-qualification-2026-10-27.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "la-corridor-selection",
+      "title": "Los Angeles corridor comparison",
+      "domain": "Geographic selection",
+      "question": "Which LA corridor should be built first, and which data support it?",
+      "why_now": "Sam changed the geographic priority to an American highway near USC.",
+      "trigger": {
+        "text": "Sam changed the geographic priority to an American highway near USC.",
+        "sources": [
+          "repo:documentation/la-corridor-selection-2026-10-27.md"
+        ]
+      },
+      "method": "Compare public road/lidar/traffic source coverage and driver readiness.",
+      "status": "recorded development",
+      "result": "Sam selected I-110 MLKÃ¢â‚¬â€œVernon after the corridor review.",
+      "limits": "Public data availability does not establish lane accuracy or PeMS station quality.",
+      "next_action": "Qualify the selected corridor while keeping observational gaps explicit.",
+      "references": [
+        "repo:documentation/la-corridor-selection-2026-10-27.md"
+      ],
+      "prefixes": [
+        "repo:outputs/la-strategy-20261027-a",
+        "repo:outputs/la-corridor-review-20261027-a",
+        "repo:documentation/la-corridor-selection-2026-10-27.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "i110-first-build",
+      "title": "I-110 first road and event preview",
+      "domain": "Road geometry",
+      "question": "Can the selected corridor be built with separate traffic-disruption visuals?",
+      "why_now": "Sam selected MLKÃ¢â‚¬â€œVernon and requested a distinct bottleneck layer.",
+      "trigger": {
+        "text": "Sam selected MLKÃ¢â‚¬â€œVernon and requested a distinct bottleneck layer.",
+        "sources": [
+          "repo:documentation/i110-mlk-vernon-build.md"
+        ]
+      },
+      "method": "Source-based road package, layered USD and optional scripted event previews.",
+      "status": "recorded development",
+      "result": "First geometry/viewer build recorded; later image/contact work refines it.",
+      "limits": "Initial lane widths were provisional; event previews are not full traffic/physics integration.",
+      "next_action": "Use the refined road and preserve event separation.",
+      "references": [
+        "repo:documentation/i110-mlk-vernon-build.md"
+      ],
+      "prefixes": [
+        "repo:outputs/i110-mlk-vernon-v01",
+        "repo:documentation/i110-mlk-vernon-build.md"
+      ],
+      "follow_up_to": [
+        "la-corridor-selection"
+      ],
+      "artifacts": [],
+      "current": false
+    },
+    {
+      "id": "i110-road-contact",
+      "title": "I-110 imagery refinement and tire contact",
+      "domain": "Road geometry / physics",
+      "question": "Do lane/ramp envelopes match imagery, and do tires stay supported?",
+      "why_now": "Sam requested lane-edge/taper refinement and tire-contact testing.",
+      "trigger": {
+        "text": "Sam requested lane-edge/taper refinement and tire-contact testing.",
+        "sources": [
+          "repo:documentation/i110-geometry-contact-refinement.md"
+        ]
+      },
+      "method": "Date-pinned NAIP interpretation, lidar profiles, a unified support mesh and bounded PhysX cases.",
+      "status": "recorded development",
+      "result": "The report records 12 bounded contact passes and corrected fitting/contact-harness failures.",
+      "limits": "Image interpretation is not survey accuracy; surrogate scripted contact is not learned driving.",
+      "next_action": "Keep independent geometry accuracy and vehicle-dynamics acceptance separate.",
+      "references": [
+        "repo:documentation/i110-geometry-contact-refinement.md"
+      ],
+      "prefixes": [
+        "repo:outputs/i110-refinement-20261027",
+        "repo:documentation/i110-geometry-contact-refinement.md"
+      ],
+      "follow_up_to": [
+        "i110-first-build"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/i110-refinement-20261027/refined-envelope-overlay.png",
+          "kind": "figure",
+          "generator": "repo:outputs/i110-refinement-20261027/plot_refinement.py",
+          "inputs": [
+            "repo:outputs/i110-refinement-20261027/naip-2024.png",
+            "repo:outputs/i110-refinement-20261027/geometry-v03.json",
+            "repo:scenarios/i110/mlk-vernon-image-trace.json"
+          ],
+          "explanation": "Image interpretation/profile diagnostic from the geometry refinement step.",
+          "claim": "Shows declared envelopes, occlusions or fitted grade, not independently measured accuracy.",
+          "limits": "May 2024 source imagery; manual interpretation and interpolated spans remain explicit.",
+          "lineage_basis": "retrospective"
+        },
+        {
+          "path": "repo:outputs/i110-refinement-20261027/road-profiles.png",
+          "kind": "figure",
+          "generator": "repo:outputs/i110-refinement-20261027/plot_refinement.py",
+          "inputs": [
+            "repo:outputs/i110-refinement-20261027/geometry-v03.json",
+            "repo:scenarios/i110/mlk-vernon-image-trace.json"
+          ],
+          "explanation": "Image interpretation/profile diagnostic from the geometry refinement step.",
+          "claim": "Shows declared envelopes, occlusions or fitted grade, not independently measured accuracy.",
+          "limits": "May 2024 source imagery; manual interpretation and interpolated spans remain explicit.",
+          "lineage_basis": "retrospective"
+        },
+        {
+          "path": "repo:outputs/i110-refinement-20261027/native-viewer-final/follow.png",
+          "kind": "figure",
+          "generator": "repo:outputs/i110-refinement-20261027/run_viewer_final.py",
+          "inputs": [
+            "repo:outputs/i110-refinement-20261027/scene-v07/world.usda",
+            "repo:scripts/view_visual_twin.py"
+          ],
+          "explanation": "Follow-camera render from the retained scene-v07 viewer check.",
+          "claim": "Visual inspection of the refined scene and scripted display car.",
+          "limits": "A render does not prove tire physics or learned driving; supplied visual assets are local-only.",
+          "lineage_basis": "retrospective"
+        }
+      ],
+      "current": false
+    },
+    {
+      "id": "i110-sumo-baseline",
+      "title": "I-110 SUMO baseline and checkpoint audit",
+      "domain": "Ordinary driving",
+      "question": "Can the corridor run in SUMO, and can HudsonÃ¢â‚¬â„¢s checkpoint be reproduced from the repo?",
+      "why_now": "Sam authorized initial SUMO setup and a repository-only checkpoint search.",
+      "trigger": {
+        "text": "Sam authorized initial SUMO setup and a repository-only checkpoint search.",
+        "sources": [
+          "repo:documentation/i110-sumo-checkpoint-2026-10-27.md"
+        ]
+      },
+      "method": "Recover source hashes; build graph; run ACC/IDM and full trip accounting.",
+      "status": "recorded development",
+      "result": "Source/config recovered; actor absent. Network tests passed but fleet jerk reached 65 m/sÃ‚Â³.",
+      "limits": "No learned comparison; synthetic demand and provisional drop ports.",
+      "next_action": "Tune ordinary driving and prepare graph-aware observations while waiting on the actor.",
+      "references": [
+        "repo:documentation/i110-sumo-checkpoint-2026-10-27.md"
+      ],
+      "prefixes": [
+        "repo:outputs/i110-sumo-20261027",
+        "repo:documentation/i110-sumo-checkpoint-2026-10-27.md"
+      ],
+      "follow_up_to": [
+        "i110-road-contact"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/i110-sumo-20261027/network-and-acc.png",
+          "kind": "figure",
+          "generator": "repo:outputs/i110-sumo-20261027/summarize.py",
+          "inputs": [
+            "repo:outputs/i110-sumo-20261027/network-c/network.net.xml",
+            "repo:outputs/i110-sumo-20261027/braking_leader-c/trace.jsonl"
+          ],
+          "explanation": "Provisional network and original braking-leader response, generated from the retained run.",
+          "claim": "The initial setup runs, while ordinary comfort remains open.",
+          "limits": "Original baseline, not current tuned ACC.",
+          "lineage_basis": "retrospective"
+        }
+      ],
+      "current": false
+    },
+    {
+      "id": "i110-acc-comfort-20261027",
+      "title": "ACC smoothness and cause of abrupt braking",
+      "domain": "Ordinary driving",
+      "question": "Can acceleration/braking be smoother, and what caused the earlier jerk?",
+      "why_now": "Sam requested tuning after the prior baseline exposed 65 m/sÃ‚Â³ peak fleet jerk.",
+      "trigger": {
+        "text": "Sam requested tuning after the prior baseline exposed 65 m/sÃ‚Â³ peak fleet jerk.",
+        "sources": [
+          "repo:documentation/i110-acc-interface-2026-10-27.md",
+          "repo:experiments/configs/i110_acc_comfort_v1.json"
+        ]
+      },
+      "method": "Matched passing-rule ablation, ACC comfort filter, cruise approach and independent engineering verification seeds.",
+      "status": "recorded development",
+      "result": "Nine declared runs pass; the matched peak changes 65 Ã¢â€ â€™ 20 Ã¢â€ â€™ 2.01 m/sÃ‚Â³. Seven smooth runs pass the 2.05 engineering bound.",
+      "limits": "No real-road comfort certification; final SUMO authority can override commands. Exact actor still absent.",
+      "next_action": "Broaden cut-in/emergency and empirical calibration checks before wider driver acceptance.",
+      "references": [
+        "repo:documentation/i110-acc-interface-2026-10-27.md",
+        "repo:experiments/configs/i110_acc_comfort_v1.json"
+      ],
+      "prefixes": [
+        "repo:outputs/i110-acc-interface-20261027",
+        "repo:traffic/smooth_acc.py",
+        "repo:traffic/i110_baseline.py",
+        "repo:documentation/i110-acc-interface-2026-10-27.md",
+        "repo:experiments/configs/i110_acc_comfort_v1.json",
+        "repo:documentation/evidence/i110-acc-interface-20261027.json",
+        "repo:scripts/verify_i110_acc.py",
+        "repo:scripts/report_i110_acc.py"
+      ],
+      "follow_up_to": [
+        "i110-sumo-baseline"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/analysis-v2/acc-change-attribution.png",
+          "kind": "figure",
+          "generator": "repo:scripts/report_i110_acc.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-default/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-parallel/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730201/metrics.json"
+          ],
+          "explanation": "Matched one-factor steps separate the passing convention from the comfort-controller change.",
+          "claim": "The passing convention explains the 65Ã¢â€ â€™20 reduction in this fixture; filtering and cruise approach reduce the remaining peak to about 2.01.",
+          "limits": "Synthetic I-110 development graph and traffic; no trained Hudson actor loaded or real-road calibration.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/analysis-v2/acc-response-comparison.png",
+          "kind": "figure",
+          "generator": "repo:scripts/report_i110_acc.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-default/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-parallel/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730201/trace.jsonl"
+          ],
+          "explanation": "Actual motion of agent_0 shows the abrupt reactions alongside the slower adjacent-lane leader.",
+          "claim": "Measured motion, not just commanded acceleration, is smoother in the corrected controller case.",
+          "limits": "Synthetic I-110 development graph and traffic; no trained Hudson actor loaded or real-road calibration.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/analysis-v2/stop-and-restart.png",
+          "kind": "figure",
+          "generator": "repo:scripts/report_i110_acc.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730201/trace.jsonl"
+          ],
+          "explanation": "Actual leader and following-car response to the separate 15Ã¢â€ â€™0Ã¢â€ â€™15 m/s event schedule.",
+          "claim": "This synthetic stop/restart case completes without collisions and satisfies the declared engineering jerk bound.",
+          "limits": "Synthetic I-110 development graph and traffic; no trained Hudson actor loaded or real-road calibration.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/analysis-v2/summary.json",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_acc.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/verification.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/plan.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-default/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-parallel/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730201/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730202/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730201/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730202/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730201/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730202/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking-repeat/metrics.json"
+          ],
+          "explanation": "Machine-derived comparison and gates for every declared verification run, including repeats.",
+          "claim": "All accepted engineering results and limits are traced to the stored raw run metrics.",
+          "limits": "Synthetic I-110 development graph and traffic; no trained Hudson actor loaded or real-road calibration.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/analysis-v2/summary.csv",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_acc.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/verification.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/plan.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-default/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-parallel/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730201/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730202/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730201/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730202/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730201/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730202/metrics.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking-repeat/metrics.json"
+          ],
+          "explanation": "Machine-derived comparison and gates for every declared verification run, including repeats.",
+          "claim": "All accepted engineering results and limits are traced to the stored raw run metrics.",
+          "limits": "Synthetic I-110 development graph and traffic; no trained Hudson actor loaded or real-road calibration.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/dev/native-parallel/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/dev/native-parallel/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/dev/native-parallel/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/dev/native-parallel/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/dev/native-parallel/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/dev/native-parallel/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for dev/native-parallel.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "retrospective from retained source/config/trace"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/dev/smooth-b/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/dev/smooth-b/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/dev/smooth-b/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/dev/smooth-b/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/dev/smooth-b/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/dev/smooth-b/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for dev/smooth-b.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "retrospective from retained source/config/trace"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/dev/smooth-parallel/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/dev/smooth-parallel/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/dev/smooth-parallel/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/dev/smooth-parallel/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/dev/smooth-parallel/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/dev/smooth-parallel/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for dev/smooth-parallel.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "retrospective from retained source/config/trace"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/dev/stopped-a/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/dev/stopped-a/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/dev/stopped-a/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/dev/stopped-a/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/dev/stopped-a/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/dev/stopped-a/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for dev/stopped-a.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "retrospective from retained source/config/trace"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/verification-v1/braking-repeat/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/verification-v1/braking-repeat/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking-repeat/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking-repeat/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking-repeat/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking-repeat/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for verification-v1/braking-repeat.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730201/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730201/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730201/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730201/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730201/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730201/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for verification-v1/braking_leader-730201.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730202/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730202/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730202/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730202/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730202/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/braking_leader-730202/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for verification-v1/braking_leader-730202.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/verification-v1/native-default/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/verification-v1/native-default/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-default/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-default/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-default/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-default/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for verification-v1/native-default.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/verification-v1/native-parallel/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/verification-v1/native-parallel/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-parallel/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-parallel/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-parallel/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/native-parallel/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for verification-v1/native-parallel.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730201/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730201/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730201/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730201/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730201/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730201/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for verification-v1/ordinary-730201.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730202/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730202/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730202/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730202/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730202/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730202/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for verification-v1/ordinary-730202.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730201/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730201/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730201/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730201/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730201/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730201/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for verification-v1/stopped_leader-730201.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730202/metrics.json",
+          "generator": "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730202/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730202/trace.jsonl",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730202/resolved-config.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730202/tripinfo.xml",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/stopped_leader-730202/manifest.json"
+          ],
+          "explanation": "Measured controller response and complete trip accounting for verification-v1/stopped_leader-730202.",
+          "claim": "Read the actual per-run gates, including retained development failures; compare only matched verification arms.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/evidence/i110-acc-interface-20261027.json",
+          "generator": "repo:scripts/report_i110_acc.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/analysis-v2/summary.json"
+          ],
+          "explanation": "Byte-identical repository copy of the generated comparison summary.",
+          "claim": "Compact reviewable record; raw traces remain local.",
+          "limits": "Bounded synthetic engineering evidence, not empirical driving acceptance.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/verification-v1/verification.json",
+          "generator": "repo:scripts/verify_i110_acc.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/plan.json",
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/processes.json"
+          ],
+          "explanation": "Aggregate child-process completion and exact-repeat comparison.",
+          "claim": "Nine declared runs completed; same-seed smooth braking trace repeats exactly.",
+          "limits": "The supervisor gained a fail-closed plan-default guard afterward; child source/config identities are retained in each run.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/tests-final.xml",
+          "generator": "repo:tests/test_i110_policy_interface.py",
+          "inputs": [
+            "repo:tests/test_i110_policy_interface.py",
+            "repo:tests/test_i110_sumo.py",
+            "repo:tests/test_trip_accounting.py",
+            "repo:tests/test_sumo_backend.py",
+            "repo:tests/test_evidence_catalog.py"
+          ],
+          "explanation": "Pytest JUnit output from the five targeted modules.",
+          "claim": "34 tests passed, zero failures/errors; two existing timeout marker warnings.",
+          "limits": "Tests do not establish traffic realism; see actual simulation evidence separately.",
+          "lineage_basis": "recorded"
+        }
+      ],
+      "current": true
+    },
+    {
+      "id": "i110-policy-interface-20261027",
+      "title": "Graph-aware policy observations",
+      "domain": "Policy interface",
+      "question": "How can observations remain meaningful across I-110 lane additions, drops and ramps?",
+      "why_now": "The recovered v02 actor assumes three lanes and edge-local neighbor distances.",
+      "trigger": {
+        "text": "The recovered v02 actor assumes three lanes and edge-local neighbor distances.",
+        "sources": [
+          "repo:documentation/i110-acc-interface-2026-10-27.md",
+          "repo:traffic/i110_policy_interface.py"
+        ]
+      },
+      "method": "Directed lane graph, route-filtered neighbor distances, stable identities and explicit unknown-context masks.",
+      "status": "recorded development",
+      "result": "30-feature graph_v1 interface tested; original 27-feature actor explicitly rejected. Actual packets recorded without loading a policy.",
+      "limits": "This is a new candidate interface, not a validated legacy-weight transfer or a merging controller.",
+      "next_action": "Reproduce the exact actor on its original fixture, then review the transfer contract with Hudson.",
+      "references": [
+        "repo:documentation/i110-acc-interface-2026-10-27.md",
+        "repo:traffic/i110_policy_interface.py",
+        "repo:documentation/hudson-checkpoint-request-2026-10-27.md"
+      ],
+      "prefixes": [
+        "repo:traffic/i110_policy_interface.py",
+        "repo:tests/test_i110_policy_interface.py",
+        "repo:documentation/i110-acc-interface-2026-10-27.md",
+        "repo:documentation/hudson-checkpoint-request-2026-10-27.md"
+      ],
+      "follow_up_to": [
+        "i110-sumo-baseline"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/i110-acc-interface-20261027/analysis-v2/policy-lane-continuity.png",
+          "kind": "figure",
+          "generator": "repo:scripts/report_i110_acc.py",
+          "inputs": [
+            "repo:outputs/i110-acc-interface-20261027/verification-v1/ordinary-730201/trace.jsonl"
+          ],
+          "explanation": "The rightmost through lane stays identity 0 as the auxiliary lane changes SUMO indices.",
+          "claim": "The new graph observation preserves physical lane identity across edge boundaries; it is not the old 27-feature actor contract.",
+          "limits": "Synthetic I-110 development graph and traffic; no trained Hudson actor loaded or real-road calibration.",
+          "lineage_basis": "recorded"
+        }
+      ],
+      "current": true
+    },
+    {
+      "id": "evidence-organization-20261027",
+      "title": "Project-wide evidence organization",
+      "domain": "Research operations",
+      "question": "Can every graphic/result be traced to its purpose, inputs, run and interpretation?",
+      "why_now": "Sam requested a skill and extremely neat organization for all project work.",
+      "trigger": {
+        "text": "Sam requested a skill and extremely neat organization for all project work.",
+        "sources": [
+          "repo:skills/organize-av-evidence/SKILL.md",
+          "repo:documentation/evidence-catalog/README.md"
+        ]
+      },
+      "method": "Read-only inventory, curated activity registry, explicit lineage records and searchable generated catalogs.",
+      "status": "recorded development",
+      "result": "New artifacts have declared lineage; historical context is grouped with unresolved exact derivations exposed.",
+      "limits": "Inventory is not scientific validation, a backup or complete historical causal reconstruction.",
+      "next_action": "Apply the skill for every substantive session; backfill historical gaps using original evidence.",
+      "references": [
+        "repo:skills/organize-av-evidence/SKILL.md",
+        "repo:documentation/evidence-catalog/README.md",
+        "project:research/digital-twins/research-index/current-state.md",
+        "project:AGENTS.md"
+      ],
+      "prefixes": [
+        "repo:skills/organize-av-evidence",
+        "repo:documentation/evidence-catalog",
+        "repo:tests/test_evidence_catalog.py",
+        "repo:skills/organize-av-evidence/SKILL.md",
+        "repo:documentation/evidence-catalog/README.md",
+        "project:research/digital-twins/research-index",
+        "project:research/digital-twins/research-custodian-skill",
+        "project:exports/av-research-custodian-team-kit-2026-10-16",
+        "project:setup-downloads",
+        "project:PROJECT_REFERENCE.md",
+        "project:AGENTS.md",
+        "repo:AGENTS.md"
+      ],
+      "follow_up_to": [],
+      "artifacts": [],
+      "current": true
+    }
+  ]
+}
