@@ -1,5 +1,13 @@
 # PeMS access without blocking the twin build
 
+**27 October follow-up:** Sam reports that the PeMS account is approved. The
+application steps below are historical guidance. No username/password is needed
+in chat or repository files. Sam can sign in directly in an authenticated browser
+session, or provide exported data. Next data task: District 7 station metadata
+and health for southbound I-110 around MLK–Vernon, including relevant ramps;
+qualify coverage before requesting a small, dated historical traffic extract.
+Account approval alone does not establish detector coverage or data quality.
+
 27 October 2026. Sam has no account or District 7 downloads. No application has
 been submitted by Codex; Sam enters his details and reviews the terms personally.
 

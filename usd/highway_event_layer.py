@@ -8,6 +8,9 @@ def right_lane_offset(route,station):
     import bisect
     s=route['station_m'];i=min(len(s)-2,max(0,bisect.bisect_right(s,station)-1))
     f=max(0.,min(1.,(station-s[i])/(s[i+1]-s[i])))
+    if 'right_lane_offsets_m' in route:
+        offsets=route['right_lane_offsets_m']
+        return offsets[i]*(1-f)+offsets[i+1]*f
     width=route['widths_m'][i]*(1-f)+route['widths_m'][i+1]*f
     return -width/2+1.8
 

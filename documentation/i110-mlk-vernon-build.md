@@ -1,5 +1,10 @@
 # I-110 MLK–Vernon: first source-based road build
 
+**Later 27 October checkpoint:** [Imagery refinement and physical contact](i110-geometry-contact-refinement.md)
+supersede this initial build's nominal-envelope and untested-contact status.
+The launcher now opens the refined scene. Preserve this note as first-build
+history; independent survey accuracy and realistic ML driving remain open.
+
 27 October 2026 · Sam-selected site and authorized construction.
 
 Sam selected I-110 near USC and requested starting the MLK–Vernon road, separate

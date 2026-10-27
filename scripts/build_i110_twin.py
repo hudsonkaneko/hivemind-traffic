@@ -29,6 +29,24 @@ def group(stage,path,kind='group'):
     prim=UsdGeom.Xform.Define(stage,path).GetPrim();Usd.ModelAPI(prim).SetKind(kind);return prim
 
 
+def support_sampler(record,spacing=.5):
+    """Exact triangle height for flat paint; no cylinder markings above asphalt."""
+    vertices=np.array(record['points']);triangles=vertices[np.array(record['faces'])]
+    cells={}
+    for tri in triangles:
+        key=tuple(np.floor(tri[:,:2].mean(axis=0)/spacing).astype(int))
+        cells.setdefault(key,[]).append(tri)
+    def height(x,y):
+        key=(int(np.floor(x/spacing)),int(np.floor(y/spacing)))
+        for tri in cells.get(key,[]):
+            ab=tri[1,:2]-tri[0,:2];ac=tri[2,:2]-tri[0,:2]
+            uv=np.linalg.solve(np.column_stack([ab,ac]),np.array([x,y])-tri[0,:2])
+            if min(uv)>=-1e-7 and sum(uv)<=1+1e-7:
+                return float(tri[0,2]+uv[0]*(tri[1,2]-tri[0,2])+uv[1]*(tri[2,2]-tri[0,2]))
+        raise ValueError(f'Paint outside collision surface at {x},{y}')
+    return height
+
+
 def build(geometry,vehicle,output):
     data=json.loads(geometry.read_text());output.mkdir(parents=True,exist_ok=False)
     route=data['meshes']['Southbound'];(output/'event-route.json').write_text(json.dumps(route))
@@ -37,6 +55,8 @@ def build(geometry,vehicle,output):
     roadmat=(.16,.18,.19)
     for name,record in data['meshes'].items():
         context=name in ('Terrain','BridgeDecks')
+        if 'collision_mesh' in data and not context:
+            continue
         path='/World/Environment/Highway/'+name
         if name=='Terrain':
             # Cut context terrain beneath the separately fitted road surfaces.
@@ -55,15 +75,32 @@ def build(geometry,vehicle,output):
         if not context:
             # Render offset avoids z-fighting; collision uses the unshifted source fit.
             obj.AddTranslateOp().Set((0,0,.015))
+    if 'collision_mesh' in data:
+        obj=mesh(env,'/World/Environment/Highway/RoadSurface',data['collision_mesh'],roadmat)
+        obj.AddTranslateOp().Set((0,0,.015))
+        obj.GetPrim().SetCustomDataByKey('source','NAIP image-interpreted envelope + USGS lidar fit; common support mesh')
     env.GetRootLayer().Save()
 
     physics=new_stage(output/'physics.usda')
     group(physics,'/World/Physics')
     scene=UsdPhysics.Scene.Define(physics,'/World/Physics/Scene')
     scene.CreateGravityDirectionAttr((0,0,-1));scene.CreateGravityMagnitudeAttr(9.81)
-    for name in ('Southbound','MlkEntrance','VernonExit'):
-        obj=mesh(physics,'/World/Physics/'+name+'Support',data['meshes'][name],roadmat,True)
+    if 'collision_mesh' in data:
+        support=new_stage(output/'road-support.usda','/RoadSupport','component')
+        surface=mesh(support,'/RoadSupport/Surface',data['collision_mesh'],roadmat,True).GetPrim()
+        # Explicit margins: auto-scaled margins on an 815m mesh otherwise emit
+        # speculative chassis contacts while it is still >0.28m above the road.
+        surface.AddAppliedSchema('PhysxCollisionAPI')
+        surface.CreateAttribute('physxCollision:contactOffset',Sdf.ValueTypeNames.Float).Set(.02)
+        surface.CreateAttribute('physxCollision:restOffset',Sdf.ValueTypeNames.Float).Set(0.)
+        support.GetRootLayer().Save()
+        obj=UsdGeom.Xform.Define(physics,'/World/Physics/RoadSupport')
+        obj.GetPrim().GetReferences().AddReference('./road-support.usda')
         obj.CreatePurposeAttr('guide');obj.CreateVisibilityAttr('invisible')
+    else:
+        for name in ('Southbound','MlkEntrance','VernonExit'):
+            obj=mesh(physics,'/World/Physics/'+name+'Support',data['meshes'][name],roadmat,True)
+            obj.CreatePurposeAttr('guide');obj.CreateVisibilityAttr('invisible')
     physics.GetRootLayer().Save()
 
     props=new_stage(output/'cone.usda','/Cone','component')
@@ -115,6 +152,32 @@ def build(geometry,vehicle,output):
     for name in ('Overview','Follow'):
         camera=UsdGeom.Camera.Define(layout,'/World/Cameras/'+name);camera.CreateFocalLengthAttr(22 if name=='Overview' else 35)
         camera.CreateHorizontalApertureAttr(36);camera.CreateClippingRangeAttr((.1,3000))
+    if 'lane_boundaries_m' in route:
+        # Reconstructed markings are appearance/semantics, never extra colliders.
+        group(layout,'/World/Environment');group(layout,'/World/Environment/Highway','component')
+        UsdGeom.Scope.Define(layout,'/World/Environment/Highway/Markings')
+        s=np.array(route['station_m'])
+        boundaries=route['lane_boundaries_m']+[route['aux_outer_boundary_m']]
+        surface_z=support_sampler(data['collision_mesh'])
+        for i,offsets in enumerate(boundaries):
+            points=[];faces=[]
+            for a in np.arange(s[0],s[-1]-1,3):
+                auxiliary=float(np.interp(a,s,route['aux_fraction']))
+                if i==5 and auxiliary<=.001:continue
+                dashed=0<i<4 or (i==4 and auxiliary>.001)
+                if dashed and int(round(a/3))%4:continue
+                b=min(a+(3 if dashed else 3.05),s[-1])
+                corners=[]
+                for t,edge in ((a,-.065),(b,-.065),(b,.065),(a,.065)):
+                    lateral=float(np.interp(t,s,offsets))+edge;p,_=route_pose(route,float(t),lateral)
+                    try:z=surface_z(p[0],p[1])+.019
+                    except ValueError:break  # clipped boundary endpoint, never extrapolate paint
+                    corners.append((p[0],p[1],z))
+                if len(corners)!=4:continue
+                first=len(points);points.extend(corners);faces.extend([[first,first+1,first+2],[first,first+2,first+3]])
+            marking=mesh(layout,f'/World/Environment/Highway/Markings/Boundary_{i}',dict(points=points,faces=faces),
+                         (.95,.72,.12) if i==0 else (.85,.85,.8))
+            marking.GetPrim().SetCustomDataByKey('status','Flat reconstructed image-supported semantics; paint locations approximate')
     # Provisional centerline guide is explicitly separate from the road asset.
     UsdGeom.Scope.Define(layout,'/World/Debug')
     guide=UsdGeom.BasisCurves.Define(layout,'/World/Debug/ProvisionalAlignment')
@@ -132,7 +195,7 @@ def build(geometry,vehicle,output):
         units='metres',up_axis='Z',origin_6340=data['origin_6340'],z_offset_m=data['z_offset_m'],
         highway_events=True,event_route='event-route.json',probe_path=path,
         viewer_title='I-110 near USC | MLK to Vernon',viewer_heading='MLK → VERNON | FIRST ROAD BUILD',
-        viewer_subtitle='Lidar-fitted grade and separate bridges. Pavement widths/tapers provisional.',
+        viewer_subtitle=('Image-refined envelopes, reconstructed markings, unified road support.' if 'collision_mesh' in data else 'Lidar-fitted grade and separate bridges. Pavement widths/tapers provisional.'),
         viewer_footer='Scripted inspection car; no learned driving or calibrated traffic.\nEvents are synthetic and optional. PeMS is not required to open this scene.',
         geometry_sha256=sha(geometry),vehicle_sha256=sha(vehicle),limitations=data['limitations'],
         validated_physics_driving=False,pems_required=False,event_defaults='Off',

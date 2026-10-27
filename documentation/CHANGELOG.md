@@ -1,5 +1,20 @@
 # Change log
 
+## 2026-10-27 — I-110 imagery refinement and bounded physical contact
+
+- Refined pavement/ramp connections against date-pinned May 2024 NAIP, added
+  explicit lane/taper interpretation and bridge occlusion masks. Kept image
+  resolution, reconstruction assumptions and missing independent accuracy clear.
+- Replaced overlapping road colliders with a shared-vertex mesh; the viewer uses
+  the same surface, reconstructed markings and separate optional event layer.
+- Passed 12 bounded PhysX cases: four 60 mph mainline targets, two 30 mph ramp
+  routes, five stationary seam/bridge checks and a no-road negative control.
+  Every positive case retained four-wheel support after settling with no chassis
+  contacts. This tests a surrogate vehicle and scripted controller, not ML or
+  empirically calibrated driving. Rejected fits and test-harness failures retained.
+- Sam reports PeMS approval. No credentials requested/stored; sign in directly
+  or use exports. See [refinement evidence](i110-geometry-contact-refinement.md).
+
 ## 2026-10-27 — First MLK–Vernon road and optional event preview
 
 - Sam selected I-110 and authorized construction. Added bounded public lidar

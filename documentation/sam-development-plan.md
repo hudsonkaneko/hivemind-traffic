@@ -1,5 +1,12 @@
 # Sam's highway twin development plan
 
+27 October refinement checkpoint: [I-110 road/contact evidence](i110-geometry-contact-refinement.md)
+now covers image-interpreted edges/tapers, unified support and twelve passing
+bounded PhysX cases. This supersedes the untested-contact status below. Precise
+independent lane accuracy and realistic learned driving remain unaccepted.
+Sam reports PeMS account approval; next qualify District 7 station coverage/health
+through a direct sign-in or exported data. Keep credentials out of chat/files.
+
 27 October build started: Sam selected I-110. The [MLK–Vernon road](i110-mlk-vernon-build.md)
 now has a lidar-fitted mainline/ramps and separate event previews. Open the new
 I110 launcher. Next refine surveyed lane/taper/epoch evidence and native contact;

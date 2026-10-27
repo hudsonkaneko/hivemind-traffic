@@ -1,0 +1,92 @@
+{
+  "max_wall_s": 660,
+  "cases": [
+    {
+      "id": "no-hidden-plane",
+      "route": "main_1",
+      "speed": 0,
+      "start_m": 100,
+      "seconds": 1.2,
+      "negative_control": true
+    },
+    {
+      "id": "main-lane-0-60mph",
+      "route": "main_0",
+      "speed": 26.8224,
+      "start_m": 10
+    },
+    {
+      "id": "main-lane-1-60mph",
+      "route": "main_1",
+      "speed": 26.8224,
+      "start_m": 10
+    },
+    {
+      "id": "main-lane-2-60mph",
+      "route": "main_2",
+      "speed": 26.8224,
+      "start_m": 10
+    },
+    {
+      "id": "main-lane-3-60mph",
+      "route": "main_3",
+      "speed": 26.8224,
+      "start_m": 10
+    },
+    {
+      "id": "mlk-join-30mph",
+      "route": "entrance_join",
+      "speed": 13.4112,
+      "start_m": 10
+    },
+    {
+      "id": "vernon-exit-30mph",
+      "route": "exit_join",
+      "speed": 13.4112,
+      "start_m": 400
+    },
+    {
+      "id": "hold-mlk-seam",
+      "route": "entrance_join",
+      "speed": 0,
+      "start_m": 290,
+      "seconds": 4
+    },
+    {
+      "id": "hold-vernon-seam",
+      "route": "exit_join",
+      "speed": 0,
+      "start_m": 495,
+      "seconds": 4
+    },
+    {
+      "id": "hold-bridge1",
+      "route": "main_1",
+      "speed": 0,
+      "start_m": 390,
+      "seconds": 4
+    },
+    {
+      "id": "hold-bridge2",
+      "route": "main_3",
+      "speed": 0,
+      "start_m": 592,
+      "seconds": 4
+    },
+    {
+      "id": "hold-bridge3",
+      "route": "main_0",
+      "speed": 0,
+      "start_m": 790,
+      "seconds": 4
+    }
+  ],
+  "acceptance": {
+    "all_wheels_grounded_fraction_min": 0.995,
+    "upright_min": 0.95,
+    "expected_surface": "/World/Environment/Highway/Surface",
+    "no_chassis_contacts": true
+  },
+  "authority": "PhysX after spawn; steering/wheel torques only",
+  "scope": "Surrogate-car road support and route traversal, not calibrated human or learned driving"
+}
