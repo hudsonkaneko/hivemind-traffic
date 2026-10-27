@@ -1,0 +1,138 @@
+{
+  "date_local": "2026-10-27",
+  "actor": "Codex for Sam",
+  "site_status": "Sam selected and authorized first build",
+  "stage": "outputs/i110-mlk-vernon-v01/scene-v02/world.usda",
+  "source": {
+    "url": "https://s3-us-west-2.amazonaws.com/usgs-lidar-public/CA_LosAngeles_1_B23/",
+    "points": 2460015,
+    "points_sha256": "5a088fc67a2763d6c5ff1f90e39aeeef80d5a0261e43a66e7ac165cee419fcdf",
+    "classes": {
+      "1": 814721,
+      "2": 1334404,
+      "7": 239,
+      "17": 309642,
+      "18": 1009
+    },
+    "nodes": 123,
+    "max_depth_selected": 16,
+    "deepest_node": 12
+  },
+  "geometry_checks": {
+    "composition_errors": 0,
+    "metres_z_up_60fps": true,
+    "surfaces": {
+      "Southbound": {
+        "length_m": 814.5273013431289,
+        "source_to_collider_max_abs_error_m": 3.046874996925908e-05,
+        "interpolated_vertices": 207,
+        "total_vertices": 1911,
+        "max_bracketed_interpolation_m": 47.91337066724287,
+        "max_center_grade": 0.060946661846866285
+      },
+      "MlkEntrance": {
+        "length_m": 299.96620566816733,
+        "source_to_collider_max_abs_error_m": 1.464843751364242e-05,
+        "interpolated_vertices": 1,
+        "total_vertices": 707,
+        "max_bracketed_interpolation_m": 5.999324113363343,
+        "max_center_grade": 0.061460256694364154
+      },
+      "VernonExit": {
+        "length_m": 278.0264341721321,
+        "source_to_collider_max_abs_error_m": 3.0488281254292815e-05,
+        "interpolated_vertices": 53,
+        "total_vertices": 658,
+        "max_bracketed_interpolation_m": 26.905783952141817,
+        "max_center_grade": 0.09157956535973284
+      }
+    },
+    "event_modes": {
+      "Off": true,
+      "Construction": true,
+      "Disabled vehicle": true,
+      "Police traffic break": true
+    },
+    "seek_repeat_exact": true,
+    "event_off_collisions_disabled": true,
+    "source_layers_unchanged": true,
+    "source_layer_hashes": {
+      "cone.usda": "8eb87299ddcdce4ca57b1219ce7941cfb9f6abe378ac086b6f9aa22458654192",
+      "environment.usda": "32e056a76b7823907f83367ba48f69f211fa93cbecfcfb10d40b333d5a1e7591",
+      "events.usda": "e519b1237824f69c5b446ddfcf75a01f068b6f872f9f8a268dc5932f48a8fa2c",
+      "layout.usda": "1561b95d815a60f0bc7414be9c9c20d69bf498e44d538c9edabf9583beb7d958",
+      "motion.usda": "82b8c54a60a877a6673a5717c51234d9999c96f247a7f2d12c3ae8c8d942be57",
+      "physics.usda": "c9d03261282223b5e18a223c175cc8d2f1f2d47945c388f80e8e4b0a9064c94b",
+      "world.usda": "c1ff6f6bf129f5b26b801bd51cb195a6a87ccbb8ec53e927b5259ee9b8c43fd8"
+    },
+    "limitation": "Representation/source-fit checks, not independent survey or native physics driving"
+  },
+  "native_viewer": {
+    "frames": 240,
+    "control_callbacks": {
+      "event_Off": true,
+      "event_Construction": true,
+      "event_Disabled_vehicle": true,
+      "event_Police_traffic_break": true,
+      "play": true,
+      "pause": true,
+      "seek": true,
+      "reset": true,
+      "overview": true,
+      "selection_follow": true,
+      "free_camera_preserves_pose": true,
+      "free_camera_preserves_selection": true,
+      "follow_resumes": true,
+      "playback_advanced": true
+    },
+    "static_layers_unchanged": true,
+    "initial_replay_time": 50.0,
+    "final_replay_time": 53.181176899978894,
+    "captures": [
+      "follow.png",
+      "overview.png"
+    ],
+    "app_update_seconds_mean": 0.011387741670478135,
+    "limitation": "Bounded viewer check; update timing includes startup/warmup, not a throughput benchmark. Callback tests are not manual GUI interaction.",
+    "scene_sha256": "c1ff6f6bf129f5b26b801bd51cb195a6a87ccbb8ec53e927b5259ee9b8c43fd8"
+  },
+  "process_exit_code": 0,
+  "tests": {
+    "unique_targeted_passed": 16,
+    "cpu_suite": "12 passed",
+    "geo_suite": "4 passed",
+    "post_yaw_event_suite": "6 passed"
+  },
+  "code_sha256": {
+    "scripts/acquire_i110_lidar.py": "b5a69bd9fac85a4eee55e48add6a432824c214103cb9353e5cae57ad288614d8",
+    "scripts/prepare_i110_geometry.py": "1858929d503b387da65aad6cd34009c1abc33891810eacea4a2b23439efb99de",
+    "scripts/build_i110_twin.py": "2987d6b4e1dd16b0a1d322a8124e0c59bab5b71c63f26c32f0ff8650f7a7c2ab",
+    "scripts/check_i110_twin.py": "2f980882422ea6863af0f65b57f35f0438d8fb539d705df6c860a98d97b5f9c1",
+    "scripts/view_visual_twin.py": "42d099e6f1537b44e58c3eb0ceea52f51dc00a6785439e2947b918c5202e3169",
+    "scripts/open_i110_twin.cmd": "620ca29fb620f10bdc0d66e44c98c1b88f35b07b58e52902ce645168cfc890d8",
+    "traffic/highway_events.py": "7fb38c49b20a52f2e7a2100708566282526d05f3efca99a29abe2dae2123cfde",
+    "usd/highway_event_layer.py": "2babb6a28d02e01e4b006c9132b7d060d3241eb69bae5a3607b76dcdca28db5d",
+    "tests/test_highway_events.py": "fe05e8df29a55520d5f11170afb2b18853ec38d7343d593b6f6ab1f0a636079a",
+    "tests/test_i110_geometry.py": "40741ecb8dd3ffe0493dc90fd3eedb21a625046c4a986e0152d859afb75402cf"
+  },
+  "pems": {
+    "account": false,
+    "application_submitted": false,
+    "runtime_dependency": false,
+    "role": "Optional offline calibration source"
+  },
+  "limits": [
+    "Nominal horizontal widths/tapers; not surveyed lane-accurate geometry",
+    "Short unobserved pavement spans interpolated; maximum 47.9134 m bracket on mainline edge",
+    "Native tire contact/ramp seam validation pending",
+    "Synthetic one-car kinematic event preview, no calibrated SUMO or physical autonomy",
+    "Latest police sweep tangent heading covered by CPU checks after native construction capture",
+    "Native run retained nonfatal USD/fabric warnings; no Error or Traceback lines found",
+    "No training, empirical site admission or shared-doc write"
+  ],
+  "local_images": {
+    "follow.png": "d33e02f3c1b927d48a21a55ece0d3db0d923d44de492ce87e65d0bd18af78f2c",
+    "overview.png": "d1142216c262f437cbd8d31db2232c7c7d0f7ab1679735a69a43a3bf7894bb31"
+  },
+  "local_document_links_checked": 19
+}

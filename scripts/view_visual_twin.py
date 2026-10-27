@@ -54,10 +54,20 @@ def main():
         viewport.updates_enabled = True
         state = dict(t=0., playing=False, follow=False, free_camera=False, selected=manifest['ids'][0], rate=1.)
         checks = {}
+        event_controller = None
+        if manifest.get('highway_events'):
+            import sys
+            root = str(Path(__file__).resolve().parents[1])
+            if root not in sys.path: sys.path.insert(0, root)
+            from usd.highway_event_layer import EventLayerController
+            route = json.loads((scene.parent/manifest['event_route']).read_text())
+            event_controller = EventLayerController(stage, route, manifest['probe_path'])
+            event_controller.update(0, 'Off')
 
         def seek(value):
             state['t'] = max(0., min(times[-1],float(value)))
             timeline.set_current_time(state['t'])
+            if event_controller: event_controller.update(state['t'])
 
         def reset():
             state['playing'] = False
@@ -77,6 +87,12 @@ def main():
             if state['follow']:
                 eye = pos+Gf.Vec3d(-11,-14,8)
                 target = pos+Gf.Vec3d(-1,0,1)
+                if event_controller:
+                    matrix=UsdGeom.Xformable(stage.GetPrimAtPath(selected)).ComputeLocalToWorldTransform(state['t']*60)
+                    forward=matrix.TransformDir(Gf.Vec3d(1,0,0)).GetNormalized()
+                    left=Gf.Vec3d(-forward[1],forward[0],0)
+                    eye=pos-forward*14+left*8+Gf.Vec3d(0,0,9)
+                    target=pos+forward*12+Gf.Vec3d(0,0,1)
             else:
                 xmin,ymin,xmax,ymax=manifest.get('road_bounds_m',[0,-115,900,115])
                 span=max(xmax-xmin,ymax-ymin,50)
@@ -103,6 +119,13 @@ def main():
             with ui.VStack(spacing=8):
                 ui.Label(manifest.get('viewer_heading','SUPPLIED CAR / SUMO REPLAY'), height=24)
                 ui.Label(manifest.get('viewer_subtitle','Synthetic road · fallback materials · no physics'), height=44,word_wrap=True)
+                if event_controller:
+                    ui.Label('Optional bottleneck scenario (synthetic)', height=20)
+                    modes=list(event_controller.presets)
+                    events_combo=ui.ComboBox(0,*modes)
+                    def choose_event(model,item):
+                        event_controller.update(state['t'],modes[model.get_item_value_model().as_int])
+                    events_combo.model.add_item_changed_fn(choose_event)
                 with ui.HStack(height=30):
                     ui.Button('Play / Pause', clicked_fn=toggle)
                     ui.Button('Reset', clicked_fn=reset)
@@ -133,6 +156,11 @@ def main():
         app.update()
         print('VISUAL_TWIN_READY: scene loaded; playback panel and viewport initialized', flush=True)
         if args.check_controls:
+            if event_controller:
+                for mode in event_controller.presets:
+                    states=event_controller.update(20,mode)
+                    checks['event_'+mode.replace(' ','_')]=bool(states)==(mode!='Off')
+                event_controller.update(0,'Off')
             toggle(); checks['play']=state['playing']
             toggle(); checks['pause']=not state['playing']
             seek(10); app.update(); checks['seek']=abs(timeline.get_current_time()-10)<1e-6
@@ -152,6 +180,8 @@ def main():
             camera_mode('follow')
             checks['follow_resumes'] = not state['free_camera'] and free_op.Get() != moved
             state.update(selected=manifest['ids'][0]); seek(5)
+            if event_controller and args.frames:
+                event_controller.update(50,'Construction');seek(50)
             if not args.frames:
                 camera_mode('overview'); camera_mode('free')
             startup = dict(control_callbacks=checks.copy(), camera_mode='free' if state['free_camera'] else 'follow',
@@ -206,6 +236,13 @@ def main():
                 ledger=frame['accounting']
                 phase='DRAIN' if frame['time']>data['horizon_s'] else 'PRIMARY WINDOW'
                 status.text+=f"\n{phase} | requested {ledger['requested']} | waiting {ledger['waiting']}\ncompleted {ledger['completed']} | unfinished {ledger['unfinished']} | removed {ledger['removed']}"
+            if event_controller:
+                restrictions=event_controller.update(state['t'])
+                probe=event_controller.probe_state
+                status.text=(f"{'PLAYING' if state['playing'] else 'PAUSED'} | {camera_label} | {state['t']:.1f} / {times[-1]:.0f} s\n"
+                             f"{event_controller.mode} | {len(restrictions)} active disruption(s)\n"
+                             f"Inspection car: station {probe['station_m']:.1f} m | {probe['speed']:.2f} m/s\n"
+                             'Scripted kinematic preview; no calibrated traffic or vehicle physics.')
             camera()
             start=time.perf_counter(); app.update(); durations.append(time.perf_counter()-start)
             if index==min(120,max(1,args.frames//3)) and args.frames:

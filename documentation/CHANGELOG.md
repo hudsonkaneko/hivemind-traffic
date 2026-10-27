@@ -1,5 +1,17 @@
 # Change log
 
+## 2026-10-27 — First MLK–Vernon road and optional event preview
+
+- Sam selected I-110 and authorized construction. Added bounded public lidar
+  acquisition, source-fitted grade/crossfall and separate terrain/deck context,
+  composed USD road/support/event layers, a portable launcher and viewer controls.
+- Added deterministic construction, disabled-vehicle and police-break presets
+  with session-only visibility/collision toggles and a scripted inspection car.
+  These are synthetic previews, not live SUMO or physical autonomy validation.
+- Preserve provisional lane widths/tapers, flagged occlusions and the pending
+  native contact gate. PeMS access is optional for construction and offline runs.
+  See [build/evidence](i110-mlk-vernon-build.md) and [PeMS walkthrough](pems-access-and-offline-workflow.md).
+
 ## 2026-10-27 — LA corridor comparison, disruptions and current driving audit
 
 - Recommend I-110 southbound Exposition–Vernon, starting with the MLK entrance,

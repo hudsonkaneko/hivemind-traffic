@@ -2,6 +2,11 @@
 
 27 October 2026 · Sam-requested architecture; specification, not runtime implementation.
 
+Later same-day implementation: [MLK–Vernon build](i110-mlk-vernon-build.md)
+now provides deterministic event schedules, independent USD event assets and
+session-only collision/visibility/pose toggles, with a scripted inspection-car
+response. Live SUMO and native physical-driving integration remain pending.
+
 The base road owns permanent lanes, ramps, grade, signs and normal access rules.
 Normal traffic owns demand and calibrated driver behavior. An optional versioned
 event manifest owns temporary disruptions. A no-event run uses the same road and

@@ -1,5 +1,11 @@
 # Sam's highway twin development plan
 
+27 October build started: Sam selected I-110. The [MLK–Vernon road](i110-mlk-vernon-build.md)
+now has a lidar-fitted mainline/ramps and separate event previews. Open the new
+I110 launcher. Next refine surveyed lane/taper/epoch evidence and native contact;
+PeMS is an [optional offline calibration input](pems-access-and-offline-workflow.md),
+not a build/viewer dependency. No new trained driver or empirical admission.
+
 27 October exact-corridor refinement: [I-110 southbound Exposition–Vernon](la-corridor-selection-2026-10-27.md),
 starting at the MLK entrance/Vernon lane-reduction tile. Read the
 [event-layer contract](highway-disruption-layer.md) and
