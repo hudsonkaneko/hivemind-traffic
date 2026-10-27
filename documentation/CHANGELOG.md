@@ -4,6 +4,18 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-27 — exiD public qualification and audit preparation
+
+- Added the [access/site evidence sheet](exid-qualification-2026-10-27.md),
+  [geometry/audit acceptance plan](exid-geometry-audit-plan.md) and blank intake
+  manifest. No restricted package/grant was identified in the scoped search;
+  exact IDs, dates, direction, boundaries and independent blocks remain unknown.
+- Refreshed publisher metadata: the current format link is 2.1; flat-terrain
+  wording and package-dependent enrichment require clarification. No site gate
+  passed, audit partition reserved, road rebuilt, simulator launched or training
+  performed. The live master confirms the authorized 22 October publication;
+  today's status is prepared locally without a shared write.
+
 ## 2026-10-22 — Sam's supplied-car visual replay foundation
 
 - Added the [teammate handoff and resume checklist](team-handoff-2026-10-22.md),

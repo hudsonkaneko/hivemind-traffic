@@ -1,5 +1,9 @@
 # Sam's highway twin development plan
 
+Current qualification: [27 October evidence sheet](exid-qualification-2026-10-27.md)
+and [geometry/audit intake plan](exid-geometry-audit-plan.md). Package access and
+exact-site facts remain unresolved; no empirical gate has passed.
+
 Next-session entry point: [22 October team handoff](team-handoff-2026-10-22.md).
 Begin with exiD access and exact-site qualification; this plan's empirical gates
 remain open even where synthetic infrastructure has passed its own checks.
