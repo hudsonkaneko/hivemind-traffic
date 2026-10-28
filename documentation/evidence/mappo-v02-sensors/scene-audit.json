@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "missing": [],
+  "composition_errors": [],
+  "default_prim": "/World",
+  "root_children": [
+    "/World/Environment",
+    "/World/Lighting",
+    "/World/Vehicles",
+    "/World/Physics",
+    "/World/Cameras"
+  ],
+  "rigid_body_count": 0,
+  "camera_count": 8,
+  "layer_count": 8,
+  "opened_from_different_directory": true
+}
