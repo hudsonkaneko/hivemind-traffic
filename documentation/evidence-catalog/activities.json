@@ -921,6 +921,153 @@
       "follow_up_to": [],
       "artifacts": [],
       "current": true
+    },
+    {
+      "id": "hudson-v02-continuation-20261028",
+      "title": "Hudson frozen actor: reproduction and I-110 handoff",
+      "domain": "Policy reproduction",
+      "question": "Can the exact frozen v02 actor be reproduced without training before an I-110 transfer?",
+      "why_now": "Sam forwarded Hudson confirmation that weights exist locally and asked a new agent to continue the handoff.",
+      "trigger": {
+        "text": "Sam request and forwarded Hudson response, 28 October 2026.",
+        "sources": [
+          "repo:documentation/hudson-i110-continuation-2026-10-28.md"
+        ]
+      },
+      "method": "Reconstruct pinned source/config, hash before load, isolate original evaluator, verify native scaffold on preflight seeds; no training.",
+      "status": "verified scaffold; actor delivery pending",
+      "result": "10 targeted tests pass; two original native 600-step development episodes have identical metrics and unchanged sources. Missing actor blocks before load. No learned evaluation.",
+      "limits": "Missing weights; forwarded and aggregate results are not independently reproduced; I110 30-feature contract remains separate.",
+      "next_action": "Receive exact policy.pt and original per-seed evaluation; original smoke/repeat then fixed held-out run; transfer remains separately gated.",
+      "references": [
+        "repo:documentation/hudson-i110-continuation-2026-10-28.md",
+        "repo:scripts/evaluate_hudson_actor.py"
+      ],
+      "prefixes": [
+        "repo:outputs/hudson-continuation-20261028",
+        "repo:scripts/evaluate_hudson_actor.py",
+        "repo:scripts/hudson_actor_worker.py",
+        "repo:tests/test_hudson_actor_evaluation.py",
+        "repo:documentation/hudson-i110-continuation-2026-10-28.md",
+        "repo:documentation/evidence/hudson-continuation-20261028.json"
+      ],
+      "follow_up_to": [
+        "i110-policy-interface-20261027"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/hudson-continuation-20261028/summary.json",
+          "generator": "repo:outputs/hudson-continuation-20261028/summarize.py",
+          "inputs": [
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/result.json",
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/runtime.json",
+            "repo:outputs/hudson-continuation-20261028/tests-v2.xml",
+            "repo:outputs/hudson-continuation-20261028/releases.json",
+            "repo:outputs/hudson-continuation-20261028/branch-tree.json",
+            "repo:outputs/hudson-continuation-20261028/actions-artifacts.json",
+            "repo:outputs/hudson-continuation-20261028/published-latest.json",
+            "repo:outputs/hudson-continuation-20261028/missing-actor-check/manifest.json"
+          ],
+          "explanation": "Derived evidence for checkpoint availability, scaffold verification and runtime differences.",
+          "claim": "Source/config recovered, exact actor undelivered; native repeat and contract tests pass.",
+          "limits": "Native scaffold and contract checks only; no learned policy or I110 transfer result.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/evidence/hudson-continuation-20261028.json",
+          "generator": "repo:outputs/hudson-continuation-20261028/summarize.py",
+          "inputs": [
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/result.json",
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/runtime.json",
+            "repo:outputs/hudson-continuation-20261028/tests-v2.xml",
+            "repo:outputs/hudson-continuation-20261028/releases.json",
+            "repo:outputs/hudson-continuation-20261028/branch-tree.json",
+            "repo:outputs/hudson-continuation-20261028/actions-artifacts.json",
+            "repo:outputs/hudson-continuation-20261028/published-latest.json",
+            "repo:outputs/hudson-continuation-20261028/missing-actor-check/manifest.json"
+          ],
+          "explanation": "Derived evidence for checkpoint availability, scaffold verification and runtime differences.",
+          "claim": "Source/config recovered, exact actor undelivered; native repeat and contract tests pass.",
+          "limits": "Native scaffold and contract checks only; no learned policy or I110 transfer result.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/result.json",
+          "generator": "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/source/frozen_actor_driver.py",
+          "inputs": [
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/plan.json",
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/source/outputs/evaluation/evaluation.json",
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/source/outputs/repeat/evaluation.json"
+          ],
+          "explanation": "Original native evaluation and same-seed episode-metric comparison.",
+          "claim": "Two 600-step native episodes repeat metrics; all 14 recorded sources unchanged.",
+          "limits": "Native scaffold and contract checks only; no learned policy or I110 transfer result.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/source/outputs/evaluation/evaluation.json",
+          "generator": "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/source/experiments/run_sumo_mappo.py",
+          "inputs": [
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/plan.json",
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/actions.jsonl.gz",
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/source/outputs/evaluation/worker-0"
+          ],
+          "explanation": "Original evaluator metrics from the native evaluation development episode.",
+          "claim": "Development seed520001, fixed-horizon metrics; not 5km route completion.",
+          "limits": "Native scaffold and contract checks only; no learned policy or I110 transfer result.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/source/outputs/repeat/evaluation.json",
+          "generator": "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/source/experiments/run_sumo_mappo.py",
+          "inputs": [
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/plan.json",
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/actions.jsonl.gz",
+            "repo:outputs/hudson-continuation-20261028/native-scaffold-v2/source/outputs/repeat/worker-0"
+          ],
+          "explanation": "Original evaluator metrics from the native repeat development episode.",
+          "claim": "Development seed520001, fixed-horizon metrics; not 5km route completion.",
+          "limits": "Native scaffold and contract checks only; no learned policy or I110 transfer result.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-continuation-20261028/tests.xml",
+          "generator": "repo:tests/test_hudson_actor_evaluation.py",
+          "inputs": [
+            "repo:scripts/evaluate_hudson_actor.py",
+            "repo:scripts/hudson_actor_worker.py"
+          ],
+          "explanation": "Pytest result: retained first broad-mock failure.",
+          "claim": "First attempt had2 mock-caused failures; corrected suite has10passes.",
+          "limits": "Unit-test evidence only; original actor absent.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-continuation-20261028/tests-v2.xml",
+          "generator": "repo:tests/test_hudson_actor_evaluation.py",
+          "inputs": [
+            "repo:scripts/evaluate_hudson_actor.py",
+            "repo:scripts/hudson_actor_worker.py"
+          ],
+          "explanation": "Pytest result: corrected targeted contract and identity checks.",
+          "claim": "First attempt had2 mock-caused failures; corrected suite has10passes.",
+          "limits": "Unit-test evidence only; original actor absent.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-continuation-20261028/missing-actor-check/manifest.json",
+          "generator": "repo:scripts/evaluate_hudson_actor.py",
+          "inputs": [
+            "repo:outputs/hudson-continuation-20261028/missing-actor-check/plan.json",
+            "repo:outputs/hudson-continuation-20261028/missing-actor-check/published-evidence.json"
+          ],
+          "explanation": "Missing actor CLI gate recorded before child/model load.",
+          "claim": "Exact actor absent: blocked_missing_or_wrong_checkpoint, actor_loaded false.",
+          "limits": "Native scaffold and contract checks only; no learned policy or I110 transfer result.",
+          "lineage_basis": "recorded"
+        }
+      ],
+      "current": true
     }
   ]
 }

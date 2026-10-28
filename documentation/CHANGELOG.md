@@ -1,5 +1,19 @@
 # Change log
 
+## 2026-10-28 — Hudson frozen-actor continuation
+
+- Reconciled Hudson's forwarded confirmation with the pinned v02 evidence; exact
+  weights remain undelivered. Fresh public release/tree/artifact metadata checks
+  found no released checkpoint within the recorded scope.
+- Added hash-gated actor-only evaluation using isolated, hash-exact original
+  sources/config and the original evaluator. Kept 27-feature reproduction separate
+  from the I-110 30-feature candidate; no v01 recorder substitution or training.
+- Ten targeted tests pass. Original native scaffold repeats episode metrics on
+  development seed 520001 with clean exits and unchanged sources. The first output
+  path failure and initial test mock failure are retained. No learned result.
+- Added a complete [new-agent handoff](hudson-i110-continuation-2026-10-28.md),
+  acquisition requirements, ordered acceptance gates and evidence catalog update.
+
 ## 2026-10-27 — Smooth ACC, graph observations and evidence organization
 
 - Matched native/default, native/parallel and filtered/parallel ACC runs separate

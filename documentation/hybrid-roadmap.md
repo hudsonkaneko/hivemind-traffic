@@ -1,5 +1,14 @@
 # Active roadmap: physical research cars, economical background traffic
 
+28 October continuation: [Hudson actor and I-110 handoff](hudson-i110-continuation-2026-10-28.md).
+Hudson confirms the frozen actor exists locally but has not delivered it. An
+isolated hash-gated v02 actor evaluator is prepared; native scaffold/repeat and
+10 targeted tests pass. No actor loaded or numerical reproduction claimed.
+Next: exact actor plus per-seed reference, original smoke/repeat, original fixed
+held-out evaluation, then explicit I-110 transfer design. Independent ACC stress,
+event adapters, geometry review, optional PeMS and evidence backfill remain ordered
+in the handoff. Shared-document writes and training remain outside this tranche.
+
 27 October later increment: [ACC comfort and graph-interface evidence](i110-acc-interface-2026-10-27.md).
 Seven smooth engineering runs pass a declared 2.05 m/s³ jerk bound, with complete
 cohort accounting and no collisions/removals/teleports. This supersedes the earlier

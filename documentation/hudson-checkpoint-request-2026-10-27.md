@@ -1,5 +1,11 @@
 # What Sam should request from Hudson
 
+28 October follow-up: Sam supplied Hudson's confirmation. See the
+[continuation handoff](hudson-i110-continuation-2026-10-28.md). The actor is reported
+to exist on Hudson's machine; actual file delivery and per-seed reference remain
+pending. Preserve the request below as history rather than treating it as unsent
+current work.
+
 Prepared 27 October 2026. This is a draft for Sam; no message has been sent.
 
 > Could you share the frozen TorchScript `policy.pt` for your reported SUMO MAPPO

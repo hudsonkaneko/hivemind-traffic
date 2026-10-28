@@ -1,0 +1,121 @@
+{
+  "study_id": "hudson-v02-continuation-20261028",
+  "date_local": "2026-10-28",
+  "question": "Can frozen v02 reproduction be prepared before the missing actor is delivered?",
+  "trigger": "Sam forwarded Hudson confirmation and requested new-agent continuation.",
+  "checkpoint_delivered": false,
+  "actor_loaded": false,
+  "training": false,
+  "optimizer_steps": 0,
+  "expected_policy_sha256": "6ec2167aa2c769ec41c9221b77382fe74658430ce852703ce32568d089e591fd",
+  "source_commit": "c06e45eaa79698eda85d01a65fa6ae5a6811b6d7",
+  "availability": {
+    "releases": 0,
+    "referenced_branch_entries": 733,
+    "tree_truncated": false,
+    "binary_candidates": [],
+    "actions_artifact_total": 70,
+    "actions_names": [
+      "windows-py311-cpu-sumo"
+    ],
+    "limits": "Current referenced branch and public release/Actions metadata only; no Actions archives downloaded."
+  },
+  "tests": {
+    "tests": 10,
+    "failures": 0,
+    "errors": 0
+  },
+  "native_scaffold": {
+    "mode": "native-check",
+    "suite": "smoke",
+    "seeds": [
+      520001
+    ],
+    "repeat_episode_metrics_equal": true,
+    "evaluation_file": "source/outputs/evaluation/evaluation.json",
+    "original_acceptance": true,
+    "summary": {
+      "episodes": 1,
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "intervention_fraction": 0.0,
+      "mean_team_reward": -535.789862558752,
+      "std_team_reward": 0.0,
+      "mean_progress_m": 1593.03868940956,
+      "nominal_episodes": 1,
+      "peak_speed_m_s": 26.8224,
+      "accepted": true,
+      "selection_score": [
+        1,
+        0,
+        0,
+        1,
+        -535.789862558752,
+        -0.0
+      ]
+    },
+    "source_unchanged": true,
+    "reported_runtime_differences": {
+      "torch": {
+        "reported": "2.14.0+cpu",
+        "actual": "2.14.0+cu132"
+      },
+      "python": {
+        "reported": "3.11.9",
+        "actual": "3.11.16"
+      }
+    },
+    "interpretation": "Native scaffold verification only; no learned actor evaluated"
+  },
+  "runtime": {
+    "python": "3.11.16",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "versions": {
+      "torch": "2.14.0+cu132",
+      "numpy": "2.4.6",
+      "gymnasium": "1.3.0",
+      "pettingzoo": "1.27.0",
+      "traci": "1.27.1"
+    },
+    "sumo": "Eclipse SUMO sumo 1.27.1",
+    "device": "cpu",
+    "torch_threads": 1,
+    "deterministic": true,
+    "actor_loaded": false,
+    "training": false,
+    "optimizer_steps": 0,
+    "metric_scope": "Original fixed-horizon controlled-agent evaluation, not whole-network trip completion",
+    "reported_runtime_differences": {
+      "torch": {
+        "reported": "2.14.0+cpu",
+        "actual": "2.14.0+cu132"
+      },
+      "python": {
+        "reported": "3.11.9",
+        "actual": "3.11.16"
+      }
+    }
+  },
+  "missing_actor_check": "blocked_missing_or_wrong_checkpoint",
+  "retained_failures": [
+    "tests.xml: two overly broad mock failures",
+    "native-scaffold-v1: original output-root constraint",
+    "github-read-failure.txt: sandbox networking denied; public read then succeeded with reviewed escalation"
+  ],
+  "limits": [
+    "No learned policy result or I110 transfer acceptance",
+    "No whole-network completion claim from original fixed-horizon native metrics",
+    "Published held-out aggregate remains reported; per-seed reference missing"
+  ],
+  "next_action": "Obtain exact policy.pt and original held-out-learned/evaluation.json; run original smoke/repeat before fixed 20 held-out seeds.",
+  "inputs_sha256": {
+    "published-latest.json": "842cd87b560a2c8d153db3db1feaaa7777bb449e98338ea776a7c75cd1c0933e",
+    "releases.json": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f",
+    "branch-tree.json": "be85849d15c9c6239171d18e9e87d1d95e8ddf59777bd9ca63baa2ced0f08b93",
+    "actions-artifacts.json": "f457802943b7dc8ab9285eb7e3985bbd9c40365e2b7ed5c97246e5f0bf2adeb1",
+    "native-scaffold-v2/result.json": "9edfce2229d64b80ba828b22b05a2fbeab7b71020822cbd54a8e8e480fbdb7ea",
+    "native-scaffold-v2/runtime.json": "163a488a2c745ab55bf7a63726f87e5e6542899c8f2bd4631ca8b4d5f0f69215",
+    "tests-v2.xml": "59ab72bbe52fe0790a51015bbcb3954bc3f53294f3a3dc874ea356d49f1bd600",
+    "missing-actor-check/manifest.json": "3dbe56b5676de46627120f8d2811c75c17c564a4fc75154f3db272c582907915"
+  }
+}
