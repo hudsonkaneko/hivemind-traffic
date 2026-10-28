@@ -10,9 +10,9 @@ traffic, policy interfaces, learning, events and reporting. Repository and proje
 AGENTS.md make it a continuing session practice. It complements the research
 custodian; it does not create a second scientific plan.
 
-Current local edition: [open the searchable catalog](../../outputs/evidence-catalog/20261027-final/index.html).
-It covers 17 activities across the research folders and full repository, with
-26 explicitly traced artifacts. The edition's coverage.json gives exact counts and unresolved
+Current local edition: [open the searchable catalog](../../outputs/evidence-catalog/20261028-stress-final/index.html).
+It covers 19 activities across the research folders and full repository, including
+the cut-in/braking stress tranche. The edition's coverage.json gives exact counts and unresolved
 relationships. Generated catalogs are ignored local outputs and are not included
 in a Git clone. The installed skill is `organize-av-evidence`; this repository
 contains its maintained source. File-reference/schema tests pass. An automated
@@ -70,5 +70,5 @@ The scanner excludes vendor runtimes, caches, Git internals, recovery archives a
 catalog editions themselves. Protected research inputs are metadata-only; scanning
 does not authorize opening observations or consuming an audit holdout.
 
-For the current work, start with [ACC/interface results](../i110-acc-interface-2026-10-27.md)
-and [the checkpoint request](../hudson-checkpoint-request-2026-10-27.md).
+For the current work, start with [ACC stress/event results](../i110-acc-stress-2026-10-28.md)
+and [the ordered remaining tracks](../i110-transfer-and-next-tracks-2026-10-28.md).

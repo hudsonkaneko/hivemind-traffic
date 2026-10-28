@@ -1,5 +1,12 @@
 # Change log
 
+## 2026-10-28 — I-110 cut-in and braking stress tranche
+
+- Added independent synthetic SUMO event specifications/adapters and requested-versus-realized journals.
+- 13 matched verification runs pass realized-event/network gates; all 45 requests finish after drain. Repeat trace/journal exact. Four development runs include event-off equality.
+- All seven smooth stress runs fail the previous 2.05 m/s³ comfort bound; failures retained with safety authority enabled. 47 targeted tests pass.
+- Added semantic actor-transfer comparison, ordered next tracks and evidence lineage. No training, shared write or push. See [report](i110-acc-stress-2026-10-28.md).
+
 ## 2026-10-28 — Hudson frozen-actor continuation
 
 - Reconciled Hudson's forwarded confirmation with the pinned v02 evidence; exact

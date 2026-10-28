@@ -27,6 +27,7 @@ from traffic.sumo_backend import SumoBackend
 from traffic.trip_accounting import TripLedger, read_requests
 from traffic.smooth_acc import ComfortConfig, command as smooth_command
 from traffic.i110_policy_interface import LaneGraph, FEATURES, SCHEMA
+from traffic.i110_events import load_event, add_actor, EventAdapter
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTROLLED = tuple(f'agent_{i}' for i in range(4))
@@ -77,10 +78,14 @@ def prepare_demand(output, seed, case='ordinary'):
 
 def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90., wall_budget=90.,
         controller='native_acc', passing='default', comfort_config=None, observe_policy_interface=False,
-        study_id=None, reason=None):
+        study_id=None, reason=None, event_spec=None):
     if controller not in {'native_acc','smooth_acc'} or passing not in {'default','parallel'}:
         raise ValueError('Unknown controller or passing convention')
     comfort=ComfortConfig(**(comfort_config or {}))
+    event = load_event(event_spec) if event_spec else None
+    if event and (case != 'ordinary' or event['release_s'] >= horizon):
+        raise ValueError('External events require ordinary demand and release before the horizon')
+    adapter = EventAdapter(event) if event else None
     if not all(math.isfinite(v) for v in (horizon,drain,wall_budget)) or horizon<40 or drain<0 or wall_budget<=0:
         raise ValueError('Use finite H >= 40 s, nonnegative drain and positive wall budget')
     if any(abs(v/DT-round(v/DT))>1e-7 for v in (horizon,drain)):
@@ -94,6 +99,9 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
     output.mkdir(parents=True, exist_ok=False)
     shutil.copyfile(network, output/'network.net.xml')
     prepare_demand(output, seed, case)
+    if event:
+        add_actor(output/'routes.rou.xml', event)
+        shutil.copyfile(event_spec, output/'event-spec.json')
     config = ET.Element('configuration')
     inp = ET.SubElement(config, 'input')
     ET.SubElement(inp, 'net-file', value='network.net.xml')
@@ -104,7 +112,7 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
     write_xml(output/'scenario.sumocfg', config)
     source_names = ['traffic/i110_baseline.py','traffic/trip_accounting.py','traffic/sumo_backend.py',
                     'scripts/build_i110_sumo.py','scenarios/i110/sumo-road-profiles.json','traffic/smooth_acc.py',
-                    'traffic/i110_policy_interface.py']
+                    'traffic/i110_policy_interface.py','traffic/i110_events.py']
     for name in source_names:
         dest=output/'source'/name
         dest.parent.mkdir(parents=True,exist_ok=True)
@@ -126,6 +134,10 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
         primary_metric='Boundary-inclusive time through H; drain reported separately',
         comparison_status='Hudson arm unavailable: checkpoint missing and three-lane contract incompatible with this graph')
     write_json(output/'resolved-config.json',protocol)
+    if event:
+        protocol['event_layer'] = event
+        protocol['acceptance'] += '; event realization required; comfort is reported separately for stress events'
+        write_json(output/'resolved-config.json',protocol)
     manifest=dict(status='started',started_utc=datetime.now(timezone.utc).isoformat(),
         command=[sys.executable,*sys.argv],python=sys.version,platform=platform.platform(),
         git_commit=git('rev-parse','HEAD').strip(),git_status=git('status','--short'),
@@ -133,11 +145,14 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
         inputs={n:sha(output/n) for n in ('network.net.xml','routes.rou.xml','scenario.sumocfg','resolved-config.json')},
         source_sha256={n:sha(ROOT/n) for n in source_names},training=False,optimizer_steps=0)
     write_json(output/'manifest.json',manifest)
+    if event:
+        manifest['inputs']['event-spec.json'] = sha(output/'event-spec.json')
+        write_json(output/'manifest.json',manifest)
     backend=SumoBackend(output/'scenario.sumocfg',step_length=DT,extra_args=(
         '--tripinfo-output',str(output/'tripinfo.xml'),'--tripinfo-output.write-unfinished','true',
         '--tripinfo-output.write-undeparted','true','--end',str(horizon+drain+DT),
         '--duration-log.disable','true','--lanechange.overtake-right',str(passing=='parallel').lower(),
-        '--log',str(output/'sumo.log')))
+        '--log',str(output/'sumo.log'),'--lanechange-output',str(output/'lanechanges.xml')))
     ledger=TripLedger(read_requests(output/'routes.rou.xml',CONTROLLED))
     collisions=set(); emergency=set(); primary=None; previous_accel={}; lane_sets={v:set() for v in CONTROLLED}
     min_gap=None; min_ttc=None; max_jerk=0.; peak_speed=0.; event_records=[]; trace_hash=hashlib.sha256()
@@ -157,7 +172,7 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
                 active=set(result.states)
                 for vid in result.departed:
                     conn.vehicle.setSpeedMode(vid,31)
-                    if vid in CONTROLLED or vid=='brake_leader':
+                    if vid in CONTROLLED or vid=='brake_leader' or (event and vid==event['actor_id']):
                         conn.vehicle.setLaneChangeMode(vid,512)
                     if graph:
                         vehicle_meta[vid]=dict(route=list(conn.vehicle.getRoute(vid)),length=conn.vehicle.getLength(vid))
@@ -203,6 +218,8 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
                             if closing>1e-6:
                                 ttc=gap/closing
                                 min_ttc=ttc if min_ttc is None else min(min_ttc,ttc)
+                if adapter:
+                    adapter.observe(result.simulation_time, result.states)
                 frame=dict(time=result.simulation_time,states=result.states,departed=result.departed,
                     arrived=result.arrived,collisions=result.collisions,totals=current['totals'])
                 if graph:
@@ -218,6 +235,8 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
                 if result.simulation_time>=horizon-1e-7 and (not current['totals']['unfinished'] or result.simulation_time>=horizon+drain-1e-7):
                     break
                 t=result.simulation_time
+                if adapter:
+                    adapter.apply(conn, t, result.states, DT)
                 if case in {'braking_leader','stopped_leader'} and 'brake_leader' in active:
                     if case=='stopped_leader':
                         if t<8:target=15.
@@ -244,6 +263,9 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
         raise
     finally:
         backend.close()
+        if adapter:
+            write_json(output/'event-journal.json',adapter.records)
+            write_json(output/'event-summary.json',adapter.summary())
     try:
         native={v.attrib['id']:v.attrib for v in ET.parse(output/'tripinfo.xml').getroot().findall('tripinfo')}
         assert set(native)==set(ledger.trips), 'Native output omitted requested trips'
@@ -257,7 +279,9 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
         lane_pass=all(lane_sets[v]=={i} for i,v in enumerate(CONTROLLED))
         passed=bool(current['comparison_valid'] and not collisions and not current['totals']['unfinished'] and lane_pass)
         network_passed=passed
-        if controller=='smooth_acc':passed=passed and jerk_exceedances==0
+        if event and event['enabled']:
+            passed = passed and adapter.summary()['event_gate_passed']
+        elif controller=='smooth_acc':passed=passed and jerk_exceedances==0
         report=dict(passed=passed,network_gate_passed=network_passed,primary=primary,drain=current,collisions=sorted(collisions),
             emergency_stop_ids=sorted(emergency),controlled_physical_lanes={k:sorted(v) for k,v in lane_sets.items()},
             min_controlled_bumper_gap_m=min_gap,min_controlled_ttc_s=min_ttc,max_controlled_abs_jerk_m_s3=max_jerk,
@@ -270,6 +294,8 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
             comfort_gate_passed=bool(network_passed and jerk_exceedances==0) if controller=='smooth_acc' else None,
             interface_observations=observation_count,interface_unknown_adjacent_context=unknown_context,
             intervention_note='Native ACC collision-avoidance internals are not exposed as counters; null is not zero intervention.')
+        report['event_gate_passed'] = adapter.summary()['event_gate_passed'] if adapter else None
+        report['stress_event_enabled'] = bool(event and event['enabled'])
         write_json(output/'metrics.json',report)
         write_json(output/'event-actions.json',event_records)
         assert all(sha(output/n)==digest for n,digest in manifest['inputs'].items())
@@ -295,7 +321,8 @@ if __name__=='__main__':
     p.add_argument('--observe-policy-interface',action='store_true')
     p.add_argument('--study-id')
     p.add_argument('--reason')
+    p.add_argument('--event-spec',type=Path)
     args=p.parse_args()
     result=run(**vars(args))
     print(json.dumps({k:result[k] for k in ('passed','trace_sha256','peak_controlled_speed_m_s')}))
-    raise SystemExit(0 if result['passed'] and result['comfort_gate_passed'] is not False else 1)
+    raise SystemExit(0 if result['passed'] else 1)

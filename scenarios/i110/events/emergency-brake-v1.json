@@ -1,0 +1,13 @@
+{
+  "schema_version": 1, "event_id": "emergency-brake-v1", "enabled": true,
+  "kind": "leader_brake", "provenance": "synthetic", "motion_owner": "SUMO",
+  "actor_id": "event_actor", "route_id": "through", "origin": "mainline",
+  "depart_s": 0, "depart_position_m": 45, "initial_physical_lane": 1,
+  "cruise_speed_m_s": 15, "actor_deceleration_m_s2": 9,
+  "requested_deceleration_m_s2": 9, "onset_s": 8, "hold_s": 3,
+  "recovery_acceleration_m_s2": 1.5, "release_s": 26,
+  "follower_id": "agent_1",
+  "extent": {"edges": ["sb0", "sb1", "sb2", "sb3", "sb4", "sb5"]},
+  "speed_mode": 31, "lane_change_mode": 512,
+  "limits": "Only the event actor has 9 m/s^2 declared deceleration; controlled cars remain unchanged. This is a synthetic capability assumption, not calibrated physics."
+}

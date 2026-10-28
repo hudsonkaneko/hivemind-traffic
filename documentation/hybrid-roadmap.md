@@ -1,5 +1,11 @@
 # Active roadmap: physical research cars, economical background traffic
 
+28 October stress increment: [ACC stress/event results](i110-acc-stress-2026-10-28.md).
+13 realized/accounted synthetic fixtures pass; all seven smooth cases exceed the prior
+comfort bound. Next: targeted ramp interaction and cut-in response diagnosis, then the
+[ordered event/geometry/transfer tracks](i110-transfer-and-next-tracks-2026-10-28.md).
+Exact actor remains unavailable; no training or empirical driver acceptance.
+
 28 October continuation: [Hudson actor and I-110 handoff](hudson-i110-continuation-2026-10-28.md).
 Hudson confirms the frozen actor exists locally but has not delivered it. An
 isolated hash-gated v02 actor evaluator is prepared; native scaffold/repeat and

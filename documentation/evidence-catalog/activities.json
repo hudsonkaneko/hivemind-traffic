@@ -1084,6 +1084,546 @@
         }
       ],
       "current": true
+    },
+    {
+      "id": "i110-acc-stress-20261028",
+      "title": "I-110 cut-in and hard/emergency braking",
+      "domain": "Traffic events and scripted ACC",
+      "question": "Can ACC complete stronger synthetic disturbances and what comfort requests are overridden?",
+      "why_now": "Sam asked to progress without missing policy weights; seven smooth cases did not cover cut-ins/emergency braking.",
+      "trigger": {
+        "text": "October 28 continuation request, first bounded work package",
+        "sources": [
+          "repo:documentation/hudson-i110-continuation-2026-10-28.md"
+        ]
+      },
+      "method": "Predeclared matched native/smooth ACC, two seeds, independent event files, full cohort ledger, one repeat and event-off equivalence.",
+      "status": "completed synthetic verification; comfort failures retained",
+      "result": "13 realized/accounted stress runs pass; all seven smooth runs fail prior comfort bound; event adapter and transfer/next-track design documented.",
+      "limits": "No empirical safety/comfort, traffic benefit, trained actor or adopted team protocol.",
+      "next_action": "Targeted ramp interaction, cut-in response diagnosis and ordered event/geometry/transfer work; keep shared write hold.",
+      "references": [
+        "repo:experiments/configs/i110_acc_stress_v1.json",
+        "repo:scenarios/i110/events/cutin-v1.json",
+        "repo:scenarios/i110/events/hard-brake-v1.json",
+        "repo:scenarios/i110/events/emergency-brake-v1.json",
+        "repo:documentation/i110-acc-stress-2026-10-28.md",
+        "repo:documentation/i110-event-adapter-contract.md",
+        "repo:documentation/i110-transfer-and-next-tracks-2026-10-28.md",
+        "repo:traffic/i110_events.py",
+        "repo:traffic/i110_baseline.py",
+        "repo:scripts/verify_i110_stress.py",
+        "repo:scripts/report_i110_stress.py",
+        "repo:outputs/i110-acc-stress-20261028/shared-doc-read.json"
+      ],
+      "prefixes": [
+        "repo:outputs/i110-acc-stress-20261028"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/analysis-v1/summary.json",
+          "generator": "repo:scripts/report_i110_stress.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/verification.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-repeat/manifest.json"
+          ],
+          "explanation": "All run metrics and paired differences regenerated from hash-verified raw records.",
+          "claim": "13 realized/accounted stress runs pass; all seven smooth runs fail prior comfort bound; event adapter and transfer/next-track design documented.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/analysis-v1/results.md",
+          "generator": "repo:scripts/report_i110_stress.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/analysis-v1/summary.json"
+          ],
+          "explanation": "Readable all-run table with comfort failures and fixed-horizon/drain distinction.",
+          "claim": "No missing runs; filtered jerk exceeds 2.05 in all seven cases.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "table"
+        },
+        {
+          "path": "repo:documentation/evidence/i110-acc-stress-20261028.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/closeout.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/analysis-v1/summary.json",
+            "repo:outputs/i110-acc-stress-20261028/development-v1/verification.json",
+            "repo:outputs/i110-acc-stress-20261028/tests-v1.xml"
+          ],
+          "explanation": "Compact committed evidence record with raw source identity.",
+          "claim": "13 realized/accounted stress runs pass; all seven smooth runs fail prior comfort bound; event adapter and transfer/next-track design documented.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/tests-v1.xml",
+          "generator": "repo:tests/test_i110_events.py",
+          "inputs": [
+            "repo:traffic/i110_events.py",
+            "repo:traffic/i110_baseline.py"
+          ],
+          "explanation": "Targeted six-module test invocation recorded in the report.",
+          "claim": "47 tests pass; two existing timeout marker warnings.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/development-v1/verification.json",
+          "generator": "repo:scripts/verify_i110_stress.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/development-v1/plan.json",
+            "repo:outputs/i110-acc-stress-20261028/development-v1/processes.json",
+            "repo:outputs/i110-acc-stress-20261028/development-v1/ordinary/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/development-v1/event-off/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/development-v1/cutin-development/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/development-v1/emergency-development/manifest.json"
+          ],
+          "explanation": "Four development runs including event-off equality.",
+          "claim": "Event-off trace exact; two stress comfort failures retained.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/verification.json",
+          "generator": "repo:scripts/verify_i110_stress.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/plan.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/processes.json"
+          ],
+          "explanation": "Frozen thirteen-run supervisor with matched input and repeat checks.",
+          "claim": "All fixtures pass; all seven filtered comfort checks fail.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-native_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-native_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-native_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-smooth_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731101-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-native_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-native_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-native_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-smooth_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/cutin-v1-731102-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-native_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-native_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-native_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-smooth_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731101-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-native_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-native_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-native_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-smooth_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/hard-brake-v1-731102-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-native_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-native_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-native_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-smooth_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731101-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-native_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-native_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-native_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-native_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-native_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-smooth_acc/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-smooth_acc/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-brake-v1-731102-smooth_acc/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-repeat/metrics.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-repeat/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-repeat/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-repeat/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-repeat/event-journal.json"
+          ],
+          "explanation": "Network, comfort and whole-cohort accounting result.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-repeat/event-summary.json",
+          "generator": "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-repeat/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-repeat/manifest.json",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-repeat/trace.jsonl",
+            "repo:outputs/i110-acc-stress-20261028/verification-v1/emergency-repeat/event-journal.json"
+          ],
+          "explanation": "Realized maneuver and actor lifecycle gate.",
+          "claim": "Fixture gate passes; comfort evaluated separately.",
+          "limits": "Synthetic scripted engineering; SUMO internal intervention causes unavailable. No empirical safety/comfort, learned actor, ramp-conflict acceptance, traffic benefit or USD/physics event agreement.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/tests-v2.xml",
+          "generator": "repo:documentation/i110-acc-stress-2026-10-28.md",
+          "inputs": [
+            "repo:traffic/i110_baseline.py",
+            "repo:traffic/i110_events.py",
+            "repo:experiments/configs/i110_acc_stress_v1.json"
+          ],
+          "explanation": "47 targeted tests pass after final event-off gate correction.",
+          "claim": "47 targeted tests pass after final event-off gate correction.",
+          "limits": "Engineering/checking evidence only; no scientific acceptance.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/post-review-gate-check.json",
+          "generator": "repo:documentation/i110-acc-stress-2026-10-28.md",
+          "inputs": [
+            "repo:traffic/i110_baseline.py",
+            "repo:traffic/i110_events.py",
+            "repo:experiments/configs/i110_acc_stress_v1.json"
+          ],
+          "explanation": "All 17 stored outcomes remain unchanged by event-off gate correction.",
+          "claim": "All 17 stored outcomes remain unchanged by event-off gate correction.",
+          "limits": "Engineering/checking evidence only; no scientific acceptance.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        },
+        {
+          "path": "repo:outputs/i110-acc-stress-20261028/catalog-attempt-v1.json",
+          "generator": "repo:documentation/i110-acc-stress-2026-10-28.md",
+          "inputs": [
+            "repo:traffic/i110_baseline.py",
+            "repo:traffic/i110_events.py",
+            "repo:experiments/configs/i110_acc_stress_v1.json"
+          ],
+          "explanation": "First catalog attempt failed on a chronology-field type; corrected without changing simulator results.",
+          "claim": "First catalog attempt failed on a chronology-field type; corrected without changing simulator results.",
+          "limits": "Engineering/checking evidence only; no scientific acceptance.",
+          "lineage_basis": "recorded",
+          "kind": "result"
+        }
+      ],
+      "follow_up_to": [
+        "i110-acc-comfort-20261027"
+      ]
     }
   ]
 }

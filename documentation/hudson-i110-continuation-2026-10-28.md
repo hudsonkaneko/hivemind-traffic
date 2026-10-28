@@ -167,3 +167,15 @@ historical exiD next step. Shared Google Doc writes remain held.
 28 October 2026 fresh public GitHub check: zero releases, no model/checkpoint file in all 32 current branch-head trees (including the newly fetched MAPPO 3D replay branch), and 70 CI-named Actions artifacts. Archive contents/private drafts were not inspected. Exact policy.pt remains unavailable here; no model loaded or training. Next: obtain policy.pt and original per-seed evaluation.json from Hudson.
 
 Evidence: `outputs/github-policy-check-20261028-a/result-v2.json` and retained raw API metadata. The initial summary had a PowerShell array-enumeration error; it is superseded by the individually checked branch-tree result.
+
+
+## Later same-day engineering continuation without weights
+
+The new chat completed the [first stress/event tranche](i110-acc-stress-2026-10-28.md):
+13 verification runs pass realized-event/network gates; all 45 requests complete after drain.
+All seven filtered runs exceed 2.05 m/s³; preserve those comfort failures.
+Four development runs include exact event-off equivalence; 47 tests pass.
+No actor, training, public push or shared Doc write. Latest independent next action is
+targeted ramp interaction and cut-in response diagnosis. The [remaining ordered tracks
+and semantic transfer comparison](i110-transfer-and-next-tracks-2026-10-28.md) supersede
+the earlier broad stress-test next step. Raw package: outputs/i110-acc-stress-20261028/.

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "study_id": "i110-acc-stress-20261028",
+  "question": "Do the smooth ACC and native ACC retain complete, collision-free scripted fixture completion during cut-in and stronger braking, and what comfort requests does SUMO override?",
+  "trigger": "Sam requested continued bounded I-110 engineering without Hudson's unavailable policy.pt; the October 28 handoff explicitly calls for cut-in/hard/emergency braking tests.",
+  "status": "Predeclared engineering tranche; no empirical or policy efficacy claim",
+  "network": "outputs/i110-sumo-20261027/network-c/network.net.xml",
+  "development_seed": 731001,
+  "verification_seeds": [731101, 731102],
+  "controllers": ["native_acc", "smooth_acc"],
+  "passing": "parallel",
+  "step_s": 0.1,
+  "horizon_s": 60,
+  "drain_budget_s": 90,
+  "wall_limit_s": 120,
+  "comfort": {"max_acceleration": 1.5, "comfortable_deceleration": 2.5, "max_jerk": 2.0, "target_speed": 25.0, "cruise_approach_gain": 0.4, "realized_jerk_tolerance": 0.05},
+  "events": ["scenarios/i110/events/cutin-v1.json", "scenarios/i110/events/hard-brake-v1.json", "scenarios/i110/events/emergency-brake-v1.json"],
+  "repeat": {"event_id": "emergency-brake-v1", "seed": 731101, "controller": "smooth_acc"},
+  "acceptance": {
+    "network": "No collision, teleport, removal or unfinished trip after drain; fixed controlled through lanes and native tripinfo crosscheck",
+    "event": "Actor present for commands; cut-in must change physical lane and become agent_1's leader; braking actor must reach <=0.1 m/s and realize >=90% requested deceleration while agent_1 follows",
+    "comfort": "Report 2.05 m/s^3 engineering exceedances separately; never disable SUMO safety to satisfy comfort",
+    "repeat": "Canonical trace and event-journal hashes identical on one same-seed repeat",
+    "matched": "Byte-identical network, route demand and event specification within each seed/event pair; same passing and safety settings"
+  },
+  "no_event_check": "One development-seed event-off run and a matched ordinary run must have identical trace hashes; disabled event adds no actor",
+  "failure_policy": "Retain all runs; continue through acceptance failures, stop for infrastructure exceptions; do not retune this frozen tranche from its outcomes",
+  "training": false,
+  "limits": "Synthetic traffic, two development-verification seeds, exact-state ACC. Emergency actor has a declared 9 m/s^2 braking capacity; this is not measured vehicle physics. Request mismatches do not identify SUMO's internal override cause. No real-world safety/comfort or traffic-benefit claim."
+}
