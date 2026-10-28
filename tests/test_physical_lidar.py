@@ -284,7 +284,7 @@ def test_actual_constructor_enables_point_writer_before_sensor_snapshot_and_clea
     sensor = lidar.sensor
     assert events.index(('enable', 'isaacsim.sensors.rtx.nodes')) < events.index(('construct_sensor',))
     assert lidar.points_enabled is True
-    assert set(sensor.attached) == {'PhysicsLidarCapture', 'draw-point-cloud'}
+    assert set(sensor.attached) == {lidar.writer_name, 'draw-point-cloud'}
     assert lidar.metadata['frequencies_hz'] == {
         'sensor_tick': 20.0, 'rotary_scan': 20.0, 'pattern_firing': 7200.0, 'render': 30.0}
     assert lidar.metadata['trace_labels_used'] is False
@@ -293,16 +293,42 @@ def test_actual_constructor_enables_point_writer_before_sensor_snapshot_and_clea
     lidar.set_points(False)
     lidar.set_points(False)  # Idempotent toggle: no second detach.
     assert lidar.points_enabled is False
-    assert set(sensor.attached) == {'PhysicsLidarCapture'}
+    assert set(sensor.attached) == {lidar.writer_name}
     lidar.set_points(True)
     assert lidar.points_enabled is True
-    assert set(sensor.attached) == {'PhysicsLidarCapture', 'draw-point-cloud'}
+    assert set(sensor.attached) == {lidar.writer_name, 'draw-point-cloud'}
     lidar.close()
     assert lidar.sensor is None and lidar.lidar is None
     assert lidar.points_enabled is False and sensor.attached == {}
     assert [(action, name) for action, *rest in events
             if action in ('attach', 'detach') for name in rest] == [
-        ('attach', 'PhysicsLidarCapture'), ('attach', 'draw-point-cloud'),
+        ('attach', lidar.writer_name), ('attach', 'draw-point-cloud'),
         ('detach', 'draw-point-cloud'), ('attach', 'draw-point-cloud'),
-        ('detach', 'draw-point-cloud'), ('detach', 'PhysicsLidarCapture'),
+        ('detach', 'draw-point-cloud'), ('detach', lidar.writer_name),
     ]
+
+    # Several sensors share a global Replicator registry but must keep their
+    # per-instance capture closures independent, including after earlier close.
+    left = PhysicalLidar('/World/Vehicle', episode_id='left_ep', vehicle_id='left',
+                         tick_source=lambda: 21, sensor_path='/World/Vehicle/Left')
+    right = PhysicalLidar('/World/Vehicle', episode_id='right_ep', vehicle_id='right',
+                          tick_source=lambda: 22, sensor_path='/World/Vehicle/Right')
+    assert len({lidar.writer_name, left.writer_name, right.writer_name}) == 3
+    sample = SimpleNamespace(numElements=1, elementsCoordsType='CARTESIAN',
+                             frameOfReference='WORLD', motionCompensationState='NONCOMPENSATED',
+                             timestampNs=1234, scanComplete=1, x=[1], y=[2], z=[3],
+                             flags=[64], timeOffsetNs=[0],
+                             frameEnd=SimpleNamespace(timestampNs=1234, posM=[0, 0, 1]))
+    data = {'renderProducts': {'capture': {'GenericModelOutput': sample}}}
+    left.sensor.attached[left.writer_name].write(data)
+    assert left.packet_count == 1 and right.packet_count == 0 and right.latest is None
+    assert left.latest['episode_id'] == 'left_ep' and left.latest['vehicle_id'] == 'left'
+    assert left.latest['delivery_tick'] == 21
+    right.sensor.attached[right.writer_name].write(data)
+    assert right.latest['episode_id'] == 'right_ep' and right.latest['vehicle_id'] == 'right'
+    assert right.latest['delivery_tick'] == 22 and left.packet_count == 1
+    left_sensor, right_sensor = left.sensor, right.sensor
+    left.close()
+    assert left_sensor.attached == {} and set(right_sensor.attached) == {right.writer_name}
+    right.close()
+    assert right_sensor.attached == {}

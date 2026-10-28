@@ -717,3 +717,7 @@ Added explicit seeded V2V transport, a masked shared message encoder, fixed-lane
 ## 2026-10-27 — Frozen MAPPO v02 3D replay
 
 Validated a 60-second seed-410001 SUMO rollout and recorded 3D replay. Original seed metrics reproduced exactly; zero collisions, overspeed or safety overrides. Retained action/trajectory/timing evidence and real simulator screenshots. Added structured export and a session-only follow viewer. This is kinematic visualization, not physical control. See [evidence and limitations](mappo-v02-3d.md). Google guide update pending.
+
+## 2026-10-27 — Prepared sensor car in frozen v02 replay
+
+Completed the full 60-second recorded replay with v14 main car, seven cameras and five LiDARs; background traffic remains lightweight. Saved 840 RGB images and 600 complete scans with clocks, transforms, checksums and timing metrics. Zero replay root error, unchanged sources, fresh-process scene audit and 94 sensor tests pass. See [sensor evidence](mappo-v02-sensors.md). This is kinematic sensing, not physical policy control.

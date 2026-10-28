@@ -388,3 +388,7 @@ October 26: [MAPPO v03 communication/wave setup](sumo-mappo-v3.md) adds explicit
 ### 2026-10-27 checkpoint: frozen v02 in 3D
 
 Completed the bounded recorded-motion gate for v02: four actors, 60 seconds, seed 410001, exact original metrics and visible vehicles in Isaac captures. Evidence: [MAPPO v02 3D validation](mappo-v02-3d.md). Physical closed-loop transfer remains open; no training was started.
+
+### 2026-10-27 checkpoint: prepared-car replay sensing
+
+The v14 main-car sensor replay gate passed for 60 seconds: seven cameras, five LiDARs, 120 saved capture sets. Data and performance are retained in [sensor evidence](mappo-v02-sensors.md). Measured LiDAR lag is 66.7 ms; moving-object deskew and physical closed-loop control remain open.
