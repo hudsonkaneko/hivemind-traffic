@@ -936,12 +936,13 @@
       },
       "method": "Reconstruct pinned source/config, hash before load, isolate original evaluator, verify native scaffold on preflight seeds; no training.",
       "status": "verified scaffold; actor delivery pending",
-      "result": "10 targeted tests pass; two original native 600-step development episodes have identical metrics and unchanged sources. Missing actor blocks before load. No learned evaluation.",
+      "result": "10 targeted tests pass; two original native 600-step development episodes have identical metrics and unchanged sources. Missing actor blocks before load. No learned evaluation. Later same-day recheck found no checkpoint across all 32 current public branch heads.",
       "limits": "Missing weights; forwarded and aggregate results are not independently reproduced; I110 30-feature contract remains separate.",
       "next_action": "Receive exact policy.pt and original per-seed evaluation; original smoke/repeat then fixed held-out run; transfer remains separately gated.",
       "references": [
         "repo:documentation/hudson-i110-continuation-2026-10-28.md",
-        "repo:scripts/evaluate_hudson_actor.py"
+        "repo:scripts/evaluate_hudson_actor.py",
+        "repo:outputs/github-policy-check-20261028-a/result-v2.json"
       ],
       "prefixes": [
         "repo:outputs/hudson-continuation-20261028",
@@ -949,7 +950,8 @@
         "repo:scripts/hudson_actor_worker.py",
         "repo:tests/test_hudson_actor_evaluation.py",
         "repo:documentation/hudson-i110-continuation-2026-10-28.md",
-        "repo:documentation/evidence/hudson-continuation-20261028.json"
+        "repo:documentation/evidence/hudson-continuation-20261028.json",
+        "repo:outputs/github-policy-check-20261028-a"
       ],
       "follow_up_to": [
         "i110-policy-interface-20261027"
@@ -1064,6 +1066,20 @@
           "explanation": "Missing actor CLI gate recorded before child/model load.",
           "claim": "Exact actor absent: blocked_missing_or_wrong_checkpoint, actor_loaded false.",
           "limits": "Native scaffold and contract checks only; no learned policy or I110 transfer result.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/github-policy-check-20261028-a/result-v2.json",
+          "generator": "repo:outputs/github-policy-check-20261028-a/check_trees.py",
+          "inputs": [
+            "repo:outputs/github-policy-check-20261028-a/plan.json",
+            "repo:outputs/github-policy-check-20261028-a/branches.json",
+            "repo:outputs/github-policy-check-20261028-a/releases.json",
+            "repo:outputs/github-policy-check-20261028-a/actions.json"
+          ],
+          "explanation": "Fresh public availability check requested by Sam; every branch head inspected using fetched Git objects.",
+          "claim": "No checkpoint candidate in 32 public branch heads; zero releases; 70 artifacts named windows-py311-cpu-sumo.",
+          "limits": "Actions archive contents and private drafts not inspected. Earlier result.json has invalid nested-array counts and is superseded.",
           "lineage_basis": "recorded"
         }
       ],

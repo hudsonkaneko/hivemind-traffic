@@ -160,3 +160,10 @@ for this plumbing result; the catalog links the result records to this trigger.
 Parent successfully read the live master and Sam refresher on 28 October; its last
 modification remains 22 October 2026. Current direct Sam decisions supersede its
 historical exiD next step. Shared Google Doc writes remain held.
+
+
+## Later same-day availability recheck
+
+28 October 2026 fresh public GitHub check: zero releases, no model/checkpoint file in all 32 current branch-head trees (including the newly fetched MAPPO 3D replay branch), and 70 CI-named Actions artifacts. Archive contents/private drafts were not inspected. Exact policy.pt remains unavailable here; no model loaded or training. Next: obtain policy.pt and original per-seed evaluation.json from Hudson.
+
+Evidence: `outputs/github-policy-check-20261028-a/result-v2.json` and retained raw API metadata. The initial summary had a PowerShell array-enumeration error; it is superseded by the individually checked branch-tree result.
