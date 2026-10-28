@@ -713,3 +713,7 @@ earlier SUMO-motion results as evidence for the new physical-vehicle architectur
 ## 2026-10-26 — MAPPO v03 communication and wave setup
 
 Added explicit seeded V2V transport, a masked shared message encoder, fixed-lane braking-pulse scenario, affected-lane rewards/metrics and matched no-communication config. 124 targeted tests and native no-learning preflight pass; zero optimizer steps and unchanged actor weights. No communication-benefit or trained-wave claim. See [configuration and evidence](sumo-mappo-v3.md). Google guide append/native readback and all42-tab Markdown regeneration verified; prior native guide updates reconciled without changing unrelated source work.
+
+## 2026-10-27 — Frozen MAPPO v02 3D replay
+
+Validated a 60-second seed-410001 SUMO rollout and recorded 3D replay. Original seed metrics reproduced exactly; zero collisions, overspeed or safety overrides. Retained action/trajectory/timing evidence and real simulator screenshots. Added structured export and a session-only follow viewer. This is kinematic visualization, not physical control. See [evidence and limitations](mappo-v02-3d.md). Google guide update pending.
