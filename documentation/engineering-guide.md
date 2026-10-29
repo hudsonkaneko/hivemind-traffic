@@ -4344,3 +4344,19 @@ Implementation and complete evidence: [`https://github.com/hudsonkaneko/hivemind
 The frozen v02 trajectory was rendered in 3D, then replayed with the local v14 prepared main car and lightweight background vehicles. The 60-second sensor replay saved 840 RGB images from seven cameras and 600 complete scans from five LiDARs. Capture took 96.944 seconds plus startup; measured LiDAR frame-end lag was 66.667 ms. Source layers were unchanged. This is recorded kinematic sensing, not physical control or sensor-driven MAPPO. Local captures and metrics are retained; compact evidence is in documentation/mappo-v02-sensors.md.
 
 The original v02 policy.pt and matching held-out evaluation.json were published byte-for-byte with verified SHA256 checksums: [`https://github.com/hudsonkaneko/hivemind-traffic/releases/tag/mappo-v02-train-20261026T190003Z-9d133a8c`](<https://github.com/hudsonkaneko/hivemind-traffic/releases/tag/mappo-v02-train-20261026T190003Z-9d133a8c>)
+
+<a id="docs-h-gnx18pd18asn"></a>
+
+#### October 29, 2026 — MAPPO v04 completed pilot: not accepted
+
+User-approved run train-20261029T221921Z-3810ae99 completed without runtime errors in 1,284.421 seconds (21 min 24 s), consuming 1,000,000 agent transitions across 245 updates and 15,510 optimizer steps. The agent did not monitor training; review began after completion. No recovery or resume was needed and no extra training budget was used.
+
+The selected exported actor (update 175, 716,800 transitions) completed all 50 held-out episodes with zero collisions and overspeed, but failed acceptance: 7.7275% safety interventions versus the 5% ceiling, zero lane changes and zero passes. Mean per-car progress was 1,099.03 m; minimum headway 1.601 s and mean cooperative-eligible headway 1.886 s. There were 377 required-gap-deficit steps. These results do not demonstrate 0.8 s following or safety without active filters.
+
+Later checkpoints did learn passing on validation seeds: update 200 made 11 lane changes / 11 passes at 30.90% overrides; update 225 made 50 / 22 at 26.63%; latest update 245 made 106 / 12 at 21.40%, with up to 10 lane changes per car per minute against a limit of 6. Each validation used ten episodes. No evaluated checkpoint passed full acceptance. The configured reward-based ranking correctly selected the earlier following policy; this is an optimization/selection limitation, not evidence of a broken lane-action path.
+
+The scripted reference passed all 50 held-out episodes: 75 passes, 167 applied lane changes, zero collisions/overspeed, 0.2992% overrides and mean progress 1,468.69 m. Independent read-only review found finite training metrics and no evident implementation/runtime error requiring automatic recovery. A revised reward/curriculum/selection configuration and further training would require a reviewed budget; the approved transition budget is exhausted.
+
+Retained locally: outputs/sumo\_mappo/v04/train-20261029T221921Z-3810ae99/policy.pt, checkpoints/best.pt, checkpoints/latest.pt, exact config/runtime/source manifests, per-seed evaluations, training curves, episode logs, action journals and checksums. Exported actor SHA256: 96af779e9e93f0d6c7df643d753ac6f63516ac737e2cf5997ac6cb9cb0dd5f91. Source commit: `b0b63f76fe56db1cf13da6ef8f66a80fdf8ea3d0`. Runtime: Torch 2.14.0+cpu, NumPy 2.4.6, Gymnasium 1.3.0, PettingZoo 1.27.0 and SUMO/TraCI 1.27.1. Config SHA256: cc1800e164b7eef4d75958d718826d656ab129a9d87d51952283ad8f68720107.
+
+Published review evidence is in documentation/evidence/sumo-mappo-v4-training/ (summary, exact learned evaluation and per-seed CSV); documentation/sumo-mappo-v4.md explains the comparison. Bulk model weights and journals remain local. Runner passed=true means successful execution; learned\_acceptance=false is the policy result. This v04 pilot does not supersede the accepted v02 actor. No separately trained no-communication baseline, communication-benefit claim or 3D/physical validation was added.

@@ -1,8 +1,8 @@
 # MAPPO v04: lane changes, passing and cooperative following
 
-October 29, 2026. Setup and validation milestone; no v04 training authorized or
-started by this implementation. The accepted v02 actor remains available and
-unchanged. v04 has a different observation/action contract and starts fresh.
+October 29, 2026. Setup validated and the approved v04 pilot completed. The pilot
+failed learned-policy acceptance; see the results below. The accepted v02 actor
+remains available and unchanged. v04 has a different observation/action contract.
 
 ## Scope
 
@@ -14,13 +14,14 @@ The first pilot uses seeded mixed traffic, not a claimed staged-curriculum
 scheduler. Physical transfer, sensor-driven control, intersections and highway
 on-ramp merging are outside this setup.
 
-## Proposed pilot configuration
+## Approved pilot configuration
 
 The machine-readable files are
 [`sumo_mappo_v4.json`](../experiments/configs/sumo_mappo_v4.json) and the matched
 [`sumo_mappo_v4_no_comm.json`](../experiments/configs/sumo_mappo_v4_no_comm.json).
 Both retain identical traffic, architecture, rewards, budget and scenario seeds;
-the latter disables message delivery. Neither is a trained baseline yet.
+the latter disables message delivery and remains untrained. The communication
+configuration completed one pilot; no communication-benefit comparison exists.
 
 | Setting | Value |
 | --- | --- |
@@ -123,7 +124,7 @@ the driving checks; no-message runs never applied cooperative headway. Their
 near-identical progress does **not** prove a communication benefit. A separately
 trained matched no-communication policy remains required for that claim.
 Random and untrained policies failed driving acceptance as expected; the latter
-made no passes and had 73.23% interventions. No trained v04 checkpoint exists.
+made no passes and had 73.23% interventions. These are pre-training results.
 
 Review fixed an immediate cooldown-mask error, destination-lane acceleration and
 headway filtering, and confusion between the applied headway command and next-step
@@ -156,7 +157,7 @@ After review and approval, the training command is:
 .\.venv-traffic\Scripts\python.exe experiments/run_sumo_mappo.py --config experiments/configs/sumo_mappo_v4.json --mode train --approved-config-sha256 cc1800e164b7eef4d75958d718826d656ab129a9d87d51952283ad8f68720107
 ```
 
-This command has **not** been run. Policies will save to
+The approved command completed on October 29. Policies save to
 `outputs/sumo_mappo/v04/train-<timestamp>-<id>/policy.pt`, with full resumable
 `checkpoints/latest.pt` and `checkpoints/best.pt`. Existing v02/v03 checkpoints
 are incompatible. A matching v04 checkpoint can resume into a fresh run package
@@ -167,3 +168,61 @@ Recoverable errors may be corrected and resumed within approved scope; changed
 observations, actions, safety limits or budget require a new reviewed configuration.
 Execution remains headless and file-logged, with results reviewed on completion
 or failure rather than continuous agent monitoring.
+
+## Completed pilot: not accepted
+
+Run **train-20261029T221921Z-3810ae99** completed without runtime errors in
+1,284.421 seconds (21 min 24 s): 1,000,000 agent transitions, 245 updates and
+15,510 optimizer steps. No recovery or resume was needed. Training ran without
+agent monitoring; review began after process completion. The approved transition
+budget is exhausted. Configuration and safety constraints were not changed.
+
+| Held-out result, 50 seeds each | Learned exported actor | Scripted reference |
+| --- | ---: | ---: |
+| Collisions / overspeed steps | 0 / 0 | 0 / 0 |
+| Nominal episode endings | 50 / 50 | 50 / 50 |
+| Safety intervention fraction | 7.7275% | 0.2992% |
+| Applied lane changes / actual passes | 0 / 0 | 167 / 75 |
+| Mean per-car progress | 1,099.03 m | 1,468.69 m |
+| Minimum measured headway | 1.601 s | 1.629 s |
+| Mean headway while cooperative-eligible | 1.886 s | 2.105 s |
+| Accepted | **No** | Yes |
+
+The exported actor exceeds the 5% intervention limit and never passes. It also
+has 377 measured required-gap-deficit steps; zero collisions with active safety
+filters does not establish independent safety or achieved 0.8 s following.
+
+The configured validation ranking selected **update 175 (716,800 transitions)**
+for `policy.pt` and `checkpoints/best.pt`. Later checkpoints learned passing but
+scored worse overall. These are ten-seed validation results, not additional
+held-out tests:
+
+| Update | Applied lane changes | Passes | Overrides | Remaining failure |
+| --- | ---: | ---: | ---: | --- |
+| 175, exported | 0 | 0 | 7.77% | No passes; overrides |
+| 200 | 11 | 11 | 30.90% | Some episodes without a pass; overrides |
+| 225 | 50 | 22 | 26.63% | Overrides; driving targets otherwise met |
+| 245, latest | 106 | 12 | 21.40% | Overrides; up to 10 changes/car/min, limit 6 |
+
+All evaluated checkpoints failed full acceptance. Independent read-only review
+found finite update metrics and no evident runtime or action-path bug requiring
+automatic recovery. PPO includes categorical lane likelihood/entropy and exports
+deterministic lane selection. The observed limitation is optimization and
+checkpoint-selection tradeoffs. Revised reward shaping, curriculum or selection
+would be a new configuration; additional training needs a reviewed budget.
+The completed run is preserved rather than silently extended or relabeled.
+
+Retained locally under `outputs/sumo_mappo/v04/train-20261029T221921Z-3810ae99/`:
+`policy.pt`, full `checkpoints/best.pt` and `checkpoints/latest.pt`, per-seed
+evaluations, update/episode logs, action journals, source snapshots, exact config,
+runtime manifest and artifact hashes. Exported actor SHA256:
+`96af779e9e93f0d6c7df643d753ac6f63516ac737e2cf5997ac6cb9cb0dd5f91`.
+Source commit: `b0b63f7` (full identity and source hashes in evidence).
+
+GitHub review evidence: [summary and provenance](evidence/sumo-mappo-v4-training/summary.json),
+[all controller per-seed metrics](evidence/sumo-mappo-v4-training/held-out-metrics.csv),
+and [exact learned evaluation](evidence/sumo-mappo-v4-training/held-out-learned-evaluation.json).
+Bulk journals and model weights remain local. The runner's `passed: true` records
+successful execution, while `learned_acceptance: false` records the failed policy
+gate. No v04 checkpoint supersedes accepted v02; no 3D/physical validation or
+communication-benefit claim is made.

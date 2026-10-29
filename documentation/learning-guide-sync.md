@@ -386,3 +386,7 @@ Appended setup, final proposed pilot, actual preflight and limits to tab41; upda
 ## October 29: MAPPO v04 setup and v02 replay/release follow-up
 
 Full native read matched the existing mirror before editing. Appended verified v04 setup, final proposed pilot and actual preflight evidence to tab 41, plus the earlier v02 sensor/release milestones; updated the start-tab mirror URL to codex/mappo-v04-cooperative-passing. Revision-guarded edit and full native readback preserved all 42 tabs and 40 unaffected bodies. Mirror regeneration/check succeeded from outputs/doc-sync/mappo-v04/verified-source.json. Native pagination was not visually inspected. No training launched.
+
+## October 29: completed v04 training pilot
+
+Appended actual training outcome, failed learned acceptance, best-versus-latest checkpoint comparison, scripted baseline, retained metrics and budget status to tab 41. Fresh revision-guarded native editing and full readback preserved all 42 tabs and all 41 unaffected tab bodies. Regenerated and checked the complete mirror from `outputs/doc-sync/mappo-v04-training/verified-source.json`. Native pagination was not inspected. No accepted-checkpoint or physical-transfer claim was added.

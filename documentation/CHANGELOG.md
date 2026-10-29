@@ -725,3 +725,7 @@ Completed the full 60-second recorded replay with v14 main car, seven cameras an
 ## 2026-10-29 — MAPPO v04 cooperative-passing setup
 
 Implemented hybrid acceleration/lane actions, delivered lane intent, guarded cooperative headways, real passing rewards and per-car driving metrics. 145 tests and full native no-learning preflight passed: three scripted passes, seven lane changes, zero collisions/overspeed and one override across 4,800 decisions. Independent review corrected cooldown, destination-lane filtering and applied-vs-eligible telemetry. Final configuration awaits review; no v04 training started. See [setup and evidence](sumo-mappo-v4.md). Google guide and Markdown mirror synchronized, including the earlier v02 capture/release updates.
+
+## 2026-10-29 — MAPPO v04 completed pilot (not accepted)
+
+Completed the approved 1,000,000-agent-transition run in 21 min 24 s without runtime errors or monitoring. Exported update 175 failed held-out acceptance: zero collisions/overspeed, 7.7275% interventions and zero passes. Later validation checkpoints learned passing but failed other gates; no accepted v04 replaces v02. Retained checkpoints, raw metrics, exact held-out evaluation and per-seed CSV. Independent review found no evident recovery bug; the approved budget is exhausted. See [results](sumo-mappo-v4.md#completed-pilot-not-accepted). Google guide and full Markdown mirror synchronized.
