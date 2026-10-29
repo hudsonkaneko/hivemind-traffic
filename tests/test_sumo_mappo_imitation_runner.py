@@ -101,8 +101,11 @@ def test_invalid_demo_request_never_opens_workers(tmp_path, case):
         imitation.collect_demonstrations(cfg, tmp_path / 'out', tmp_path / 'logs', deadline, pool_factory=forbidden)
 
 
-def test_runner_counts_demos_retains_warmstart_candidate_and_skips_bc_on_resume(tmp_path, monkeypatch):
+@pytest.mark.parametrize('ppo_lane_weight', [None, 2.0])
+def test_runner_counts_demos_retains_warmstart_candidate_and_skips_bc_on_resume(tmp_path, monkeypatch, ppo_lane_weight):
     cfg = config()
+    if ppo_lane_weight is not None:
+        cfg['training']['imitation']['ppo_lane_change_weight'] = ppo_lane_weight
     cfg['training']['max_agent_transitions'] = 8
     monkeypatch.setattr(runner, 'ROOT', tmp_path)
     counts = dict(demos=0, bc=0, updates=0)
@@ -110,12 +113,16 @@ def test_runner_counts_demos_retains_warmstart_candidate_and_skips_bc_on_resume(
         def __init__(self, model, **options):
             self.optimizer = torch.optim.Adam(model.parameters())
             assert options['imitation_coef'] == 1.
+            self.imitation_lane_change_weight = options['imitation_lane_change_weight']
+            assert self.imitation_lane_change_weight == 10.
         def behavior_clone(self, obs, targets, **options):
             counts['bc'] += 1
             assert options['seed'] == cfg['training']['seed']
+            assert self.imitation_lane_change_weight == 10.
             return dict(optimizer_steps=3)
         def update(self, batch):
             counts['updates'] += 1
+            assert self.imitation_lane_change_weight == (10. if ppo_lane_weight is None else ppo_lane_weight)
             return dict(optimizer_steps=1)
     class Pool:
         forced_cleanup = []

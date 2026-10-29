@@ -309,6 +309,10 @@ def train(config, output, logs, deadline, resume=None):
                         next_seed, best_score, optimizer_steps, imitation_metadata)
         del demonstrations, teacher_actions
     if imitation_enabled:
+        # Initial fitting may upweight rare maneuver demonstrations more than
+        # the ongoing on-policy teacher loss. Missing setting preserves v04r1.
+        trainer.imitation_lane_change_weight = imitation_settings.get(
+            'ppo_lane_change_weight', imitation_settings['lane_change_weight'])
         # Retain the supervised actor as a candidate if subsequent PPO regresses.
         # Resume also evaluates its restored actor before taking another update.
         atomic_json(output / 'status.json', dict(status='training', agent_transitions=count, update=update,

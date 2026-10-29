@@ -132,7 +132,8 @@ def validate_config(config):
     if imitation is not None:
         expected = {'enabled', 'episodes', 'epochs', 'minibatch_size', 'learning_rate',
                     'initial_log_std', 'coefficient', 'lane_change_weight'}
-        if set(imitation) != expected or imitation['enabled'] is not True or not env.get('driving'):
+        if (not expected.issubset(imitation) or set(imitation) - expected - {'ppo_lane_change_weight'}
+                or imitation['enabled'] is not True or not env.get('driving')):
             raise ValueError('Imitation requires the explicit v04 training-only configuration')
         for key, low, high in [('episodes',1,100),('epochs',1,100),('minibatch_size',1,4096)]:
             if type(imitation[key]) is not int or not low <= imitation[key] <= high:
@@ -142,6 +143,11 @@ def validate_config(config):
                 raise ValueError('Invalid imitation ' + key)
         if not -5 <= imitation['initial_log_std'] <= 0 or not 1 <= imitation['lane_change_weight'] <= 20:
             raise ValueError('Invalid imitation exploration or lane weighting')
+        if 'ppo_lane_change_weight' in imitation:
+            value = imitation['ppo_lane_change_weight']
+            if (isinstance(value, bool) or not isinstance(value, (int, float))
+                    or not math.isfinite(value) or not 1 <= value <= 20):
+                raise ValueError('Invalid imitation PPO lane weighting')
         demo_budget = imitation['episodes'] * env['horizon'] * model['num_agents']
         if demo_budget + model['num_agents'] > train['max_agent_transitions']:
             raise ValueError('Demonstrations must leave room inside the total transition budget')

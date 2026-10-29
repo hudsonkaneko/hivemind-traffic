@@ -737,3 +737,7 @@ Added training-only scripted imitation initialization and on-policy auxiliary te
 ## 2026-10-29 — MAPPO v04r1 passing-capable result
 
 The authorized retraining completed without errors in 23 min 31 s, using 48,000 demonstration plus 952,000 PPO transitions. Frozen neural inference achieved 82 passes across all 50 fresh test episodes, 4.9583% aggregate overrides and zero collisions/overspeed/gap deficits. One episode exceeded the six-changes/car/minute limit (8), so full acceptance remains false. Retained all checkpoints, exact per-seed metrics and learning curves; no teacher runs at inference. See [results and limits](sumo-mappo-v4-refinement.md). Google guide and complete Markdown mirror synchronized.
+
+## 2026-10-29 — MAPPO v04r2 lane-stability preparation
+
+Prepared the authorized retraining with a stronger applied-lane-change cost, stronger auxiliary guidance, lower PPO maneuver-label weighting and reduced exploration. Initial rare-maneuver imitation remains weighted. Safety, inference, cooldown and acceptance limits are unchanged. 178 tests and native no-learning preflight pass. [Declared configuration and evidence](sumo-mappo-v4-stability.md); results and Google guide update follow completion.
