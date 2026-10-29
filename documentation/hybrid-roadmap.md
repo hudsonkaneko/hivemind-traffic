@@ -1,5 +1,14 @@
 # Active roadmap: physical research cars, economical background traffic
 
+29 October current increment: [ramp/cut-in results](i110-ramp-cutin-2026-10-29.md)
+and [delivered actor reproduction](hudson-reproduction-2026-10-29.md).
+22 verification fixtures expose all delayed ramp cases and retain comfort
+failures. The diagnostic cap leaves cut-in motion unchanged. Hudson's exact
+actor is now present: original acceptance passes, strict numerical reproduction
+does not. Follow the [current handoff](continuation-2026-10-29.md) for anticipation
+diagnostics and semantic transfer review. Earlier entries below are historical;
+the checkpoint-unavailable next action is superseded. No training or I-110 actor run.
+
 28 October stress increment: [ACC stress/event results](i110-acc-stress-2026-10-28.md).
 13 realized/accounted synthetic fixtures pass; all seven smooth cases exceed the prior
 comfort bound. Next: targeted ramp interaction and cut-in response diagnosis, then the

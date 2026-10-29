@@ -1,5 +1,19 @@
 # Change log
 
+## 2026-10-29 — Targeted ramp/cut-in diagnostics and delivered actor
+
+- Added a frozen ramp timing matrix, read-only interaction journals and matched
+  lateral-off cut-in controls. Nine development and 22 verification runs complete;
+  delayed ramps are exposed and repeats are exact. Later ramp/cut-in comfort
+  failures remain. A diagnostic cap changes requests but not realized motion.
+- Downloaded and hash-verified Hudson's supplied v02 actor/reference. Original
+  smoke/repeat and fixed 20 held-out seeds pass original acceptance. Strict
+  numerical comparison fails: 153 floating differences, 34 beyond 1e-9 tolerance;
+  all non-floating fields match. Runtime differences remain unresolved.
+- 71 targeted tests pass. Updated evidence, failure lineage and
+  [current handoff](continuation-2026-10-29.md). No training, I-110 actor execution,
+  shared write or push. Original actor delivery supersedes the missing-file gate.
+
 ## 2026-10-28 — I-110 cut-in and braking stress tranche
 
 - Added independent synthetic SUMO event specifications/adapters and requested-versus-realized journals.

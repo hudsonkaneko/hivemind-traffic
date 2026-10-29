@@ -28,6 +28,7 @@ from traffic.trip_accounting import TripLedger, read_requests
 from traffic.smooth_acc import ComfortConfig, command as smooth_command
 from traffic.i110_policy_interface import LaneGraph, FEATURES, SCHEMA
 from traffic.i110_events import load_event, add_actor, EventAdapter
+from traffic.i110_interactions import InteractionRecorder
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTROLLED = tuple(f'agent_{i}' for i in range(4))
@@ -42,10 +43,12 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def prepare_demand(output, seed, case='ordinary'):
+def prepare_demand(output, seed, case='ordinary', agent0_depart=0.):
     """Explicit requests, not hidden flows; identical seed defines a cohort."""
     if case not in {'ordinary', 'braking_leader','stopped_leader'}:
         raise ValueError('Unknown case')
+    if not math.isfinite(agent0_depart) or not 0<=agent0_depart<=50 or abs(agent0_depart*10-round(agent0_depart*10))>1e-7:
+        raise ValueError('agent_0 departure must be on the 0.1 s grid in [0,50]')
     rng = random.Random(seed)
     routes = ET.Element('routes')
     common = dict(length='4.8', width='1.9', minGap='2.5', accel='2', decel='4.5',
@@ -57,7 +60,7 @@ def prepare_demand(output, seed, case='ordinary'):
     ET.SubElement(routes, 'route', id='exit', edges='sb0 sb1 sb2 vernon_off')
     cohort = []
     for i, vid in enumerate(CONTROLLED):
-        cohort.append((0., vid, 'acc', 'through', str(i), 'mainline', 15.))
+        cohort.append((agent0_depart if i==0 else 0., vid, 'acc', 'through', str(i), 'mainline', 15.))
     # A reproducible non-calibrated mixture, including every boundary and exit.
     for i in range(32):
         depart = 2.+i*1.1
@@ -78,10 +81,14 @@ def prepare_demand(output, seed, case='ordinary'):
 
 def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90., wall_budget=90.,
         controller='native_acc', passing='default', comfort_config=None, observe_policy_interface=False,
-        study_id=None, reason=None, event_spec=None):
-    if controller not in {'native_acc','smooth_acc'} or passing not in {'default','parallel'}:
+        study_id=None, reason=None, event_spec=None, agent0_depart=0., observe_interactions=False):
+    if controller not in {'native_acc','smooth_acc','follow_cap_acc'} or passing not in {'default','parallel'}:
         raise ValueError('Unknown controller or passing convention')
     comfort=ComfortConfig(**(comfort_config or {}))
+    filtered_controller = controller in {'smooth_acc','follow_cap_acc'}
+    if (not math.isfinite(agent0_depart) or not 0<=agent0_depart<=50
+            or agent0_depart>=horizon or abs(agent0_depart*10-round(agent0_depart*10))>1e-7):
+        raise ValueError('Invalid agent_0 requested departure')
     event = load_event(event_spec) if event_spec else None
     if event and (case != 'ordinary' or event['release_s'] >= horizon):
         raise ValueError('External events require ordinary demand and release before the horizon')
@@ -98,7 +105,7 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
     output = Path(output).resolve()
     output.mkdir(parents=True, exist_ok=False)
     shutil.copyfile(network, output/'network.net.xml')
-    prepare_demand(output, seed, case)
+    prepare_demand(output, seed, case, agent0_depart)
     if event:
         add_actor(output/'routes.rou.xml', event)
         shutil.copyfile(event_spec, output/'event-spec.json')
@@ -112,7 +119,7 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
     write_xml(output/'scenario.sumocfg', config)
     source_names = ['traffic/i110_baseline.py','traffic/trip_accounting.py','traffic/sumo_backend.py',
                     'scripts/build_i110_sumo.py','scenarios/i110/sumo-road-profiles.json','traffic/smooth_acc.py',
-                    'traffic/i110_policy_interface.py','traffic/i110_events.py']
+                    'traffic/i110_policy_interface.py','traffic/i110_events.py','traffic/i110_interactions.py']
     for name in source_names:
         dest=output/'source'/name
         dest.parent.mkdir(parents=True,exist_ok=True)
@@ -121,7 +128,9 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
     (output/'source.diff').write_text(git('diff','HEAD'), encoding='utf-8')
     protocol = dict(seed=seed,case=case,controller=controller,human_model='IDM',
         evidence_context=dict(study_id=study_id,reason=reason,recorded=bool(study_id and reason)),
-        passing=passing,comfort_config=asdict(comfort) if controller=='smooth_acc' else None,
+        passing=passing,comfort_config=asdict(comfort) if filtered_controller else None,
+        agent0_depart_s=agent0_depart,observe_interactions=observe_interactions,
+        follow_cap_diagnostic=controller=='follow_cap_acc',
         policy_interface=dict(enabled=observe_policy_interface,schema=SCHEMA,features=FEATURES,actor_loaded=False),
         step_s=DT,horizon_s=horizon,drain_budget_s=drain,wall_budget_s=wall_budget,
         controlled_ids=CONTROLLED,controlled_lane_change_mode=512,speed_mode=31,
@@ -132,7 +141,9 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
         purpose='Engineering smoke; no real LA demand, no held-out efficacy claim',
         acceptance='No collision/teleport/removal; all requested trips complete within bounded drain; controlled vehicles retain physical through lane',
         primary_metric='Boundary-inclusive time through H; drain reported separately',
-        comparison_status='Hudson arm unavailable: checkpoint missing and three-lane contract incompatible with this graph')
+        comparison_status='No learned arm in this runner; original three-lane actor contract requires semantic review before graph transfer')
+    if observe_interactions:
+        protocol['acceptance'] += '; ramp exposure and comfort reported separately; see interaction-summary and study supervisor'
     write_json(output/'resolved-config.json',protocol)
     if event:
         protocol['event_layer'] = event
@@ -159,6 +170,7 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
     pending={};override_count=0;command_count=0;jerks=[];jerk_exceedances=0
     graph=LaneGraph(network) if observe_policy_interface else None
     vehicle_meta={};observation_count=0;unknown_context=0
+    interaction_recorder=InteractionRecorder(output/'interactions.jsonl') if observe_interactions else None
     deadline=time.monotonic()+wall_budget
     try:
         with (output/'trace.jsonl').open('x',encoding='utf-8') as trace:
@@ -220,6 +232,8 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
                                 min_ttc=ttc if min_ttc is None else min(min_ttc,ttc)
                 if adapter:
                     adapter.observe(result.simulation_time, result.states)
+                if interaction_recorder:
+                    interaction_recorder.observe(conn,result.simulation_time,result.states)
                 frame=dict(time=result.simulation_time,states=result.states,departed=result.departed,
                     arrived=result.arrived,collisions=result.collisions,totals=current['totals'])
                 if graph:
@@ -252,8 +266,9 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
                     conn.vehicle.setSpeed('brake_leader',target)
                     event_records.append(dict(time=t,vehicle='brake_leader',requested_speed_m_s=target))
                 pending={}
-                if controller=='smooth_acc':
-                    pending={vid:smooth_command(conn,vid,DT,comfort) for vid in sorted(active & set(CONTROLLED))}
+                if filtered_controller:
+                    pending={vid:smooth_command(conn,vid,DT,comfort,follow_cap=controller=='follow_cap_acc')
+                             for vid in sorted(active & set(CONTROLLED))}
                 result=backend.step({})
         if primary is None:
             raise AssertionError('Fixed-horizon accounting checkpoint missed')
@@ -263,6 +278,9 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
         raise
     finally:
         backend.close()
+        if interaction_recorder:
+            interaction_recorder.close()
+            write_json(output/'interaction-summary.json',interaction_recorder.summary())
         if adapter:
             write_json(output/'event-journal.json',adapter.records)
             write_json(output/'event-summary.json',adapter.summary())
@@ -281,7 +299,7 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
         network_passed=passed
         if event and event['enabled']:
             passed = passed and adapter.summary()['event_gate_passed']
-        elif controller=='smooth_acc':passed=passed and jerk_exceedances==0
+        elif filtered_controller and not observe_interactions:passed=passed and jerk_exceedances==0
         report=dict(passed=passed,network_gate_passed=network_passed,primary=primary,drain=current,collisions=sorted(collisions),
             emergency_stop_ids=sorted(emergency),controlled_physical_lanes={k:sorted(v) for k,v in lane_sets.items()},
             min_controlled_bumper_gap_m=min_gap,min_controlled_ttc_s=min_ttc,max_controlled_abs_jerk_m_s3=max_jerk,
@@ -290,12 +308,13 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
             jerk_limit_m_s3=comfort.max_jerk,jerk_samples=len(jerks),jerk_exceedance_steps=jerk_exceedances,
             realized_jerk_tolerance_m_s3=comfort.realized_jerk_tolerance,
             jerk_rms_m_s3=math.sqrt(sum(j*j for j in jerks)/len(jerks)) if jerks else None,
-            requested_command_count=command_count,realization_mismatch_steps=override_count if controller=='smooth_acc' else None,
-            comfort_gate_passed=bool(network_passed and jerk_exceedances==0) if controller=='smooth_acc' else None,
+            requested_command_count=command_count,realization_mismatch_steps=override_count if filtered_controller else None,
+            comfort_gate_passed=bool(network_passed and jerk_exceedances==0) if filtered_controller else None,
             interface_observations=observation_count,interface_unknown_adjacent_context=unknown_context,
             intervention_note='Native ACC collision-avoidance internals are not exposed as counters; null is not zero intervention.')
         report['event_gate_passed'] = adapter.summary()['event_gate_passed'] if adapter else None
         report['stress_event_enabled'] = bool(event and event['enabled'])
+        report['interaction_observed'] = interaction_recorder.summary()['interaction_observed'] if interaction_recorder else None
         write_json(output/'metrics.json',report)
         write_json(output/'event-actions.json',event_records)
         assert all(sha(output/n)==digest for n,digest in manifest['inputs'].items())
@@ -316,12 +335,14 @@ if __name__=='__main__':
     p.add_argument('--case',choices=['ordinary','braking_leader','stopped_leader'],default='ordinary')
     p.add_argument('--horizon',type=float,default=60.)
     p.add_argument('--drain',type=float,default=90.)
-    p.add_argument('--controller',choices=['native_acc','smooth_acc'],default='native_acc')
+    p.add_argument('--controller',choices=['native_acc','smooth_acc','follow_cap_acc'],default='native_acc')
     p.add_argument('--passing',choices=['default','parallel'],default='default')
     p.add_argument('--observe-policy-interface',action='store_true')
     p.add_argument('--study-id')
     p.add_argument('--reason')
     p.add_argument('--event-spec',type=Path)
+    p.add_argument('--agent0-depart',type=float,default=0.)
+    p.add_argument('--observe-interactions',action='store_true')
     args=p.parse_args()
     result=run(**vars(args))
     print(json.dumps({k:result[k] for k in ('passed','trace_sha256','peak_controlled_speed_m_s')}))

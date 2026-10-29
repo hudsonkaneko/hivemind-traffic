@@ -10,9 +10,9 @@ traffic, policy interfaces, learning, events and reporting. Repository and proje
 AGENTS.md make it a continuing session practice. It complements the research
 custodian; it does not create a second scientific plan.
 
-Current local edition: [open the searchable catalog](../../outputs/evidence-catalog/20261028-stress-final/index.html).
-It covers 19 activities across the research folders and full repository, including
-the cut-in/braking stress tranche. The edition's coverage.json gives exact counts and unresolved
+Current local edition: [open the searchable catalog](../../outputs/evidence-catalog/20261029-final-v2/index.html).
+It covers 21 activities across the research folders and full repository, including
+targeted ramp/cut-in diagnostics and the delivered actor. The edition's coverage.json gives exact counts and unresolved
 relationships. Generated catalogs are ignored local outputs and are not included
 in a Git clone. The installed skill is `organize-av-evidence`; this repository
 contains its maintained source. File-reference/schema tests pass. An automated

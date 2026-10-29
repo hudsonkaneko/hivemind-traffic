@@ -1,0 +1,22 @@
+{
+  "study_id": "hudson-delivery-20261029",
+  "trigger": "Sam supplied Hudson's public policy.pt, evaluation.json and SHA256SUMS release links during the October 29 ramp/cut-in task.",
+  "expected_policy_sha256": "6ec2167aa2c769ec41c9221b77382fe74658430ce852703ce32568d089e591fd",
+  "source_commit": "c06e45eaa79698eda85d01a65fa6ae5a6811b6d7",
+  "expected_reference_sha256": "6cb6a70ca72c7bc7796406d178d2b6e85a0c1fa4aafd578c54caadc28d712b12",
+  "procedure": "Use unchanged hash-gated evaluator and original recovered v02 sources/config. Original seed 520001 smoke twice; only after contract/repeat/acceptance passes, evaluate the original fixed 410001-410020 seeds once. No tuning or retraining.",
+  "smoke_wall_seconds": 180,
+  "held_out_wall_seconds": 1800,
+  "comparison": {
+    "expected_controller": "learned",
+    "seed_range_inclusive": [410001, 410020],
+    "required_episode_count": 20,
+    "exact": "All episode fields and summary fields compared; no fields omitted. Integers, booleans, nulls, strings, collection structure and seed identities exact.",
+    "float_absolute_tolerance": 1e-9,
+    "float_relative_tolerance": 1e-9,
+    "tolerance_scope": "Secondary diagnostic on floating-point scalars only; exact equality reported separately. Do not relax tolerances after outcomes.",
+    "failure_policy": "Retain all mismatches and failed attempts; original threshold acceptance is separate from numerical agreement."
+  },
+  "training": false,
+  "limits": "Original three-lane 60 s fixture with 27 exact-state observations, no communication or steering. No I110 transfer or physical driving acceptance; 60 s nominal ending is not whole-route completion. Record runtime build differences even if metrics match."
+}

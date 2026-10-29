@@ -28,8 +28,12 @@ def load_event(path):
               'extent', 'speed_mode', 'lane_change_mode', 'limits'}
     extra = ({'duration_s', 'target_physical_lane'} if spec.get('kind') == 'cut_in'
              else {'requested_deceleration_m_s2', 'hold_s', 'recovery_acceleration_m_s2'})
-    if set(spec) != common | extra or spec['kind'] not in {'cut_in', 'leader_brake'}:
+    optional = {'request_lane_change'} if spec.get('kind') == 'cut_in' else set()
+    if (not (common | extra) <= set(spec) or set(spec) - (common | extra | optional)
+            or spec['kind'] not in {'cut_in', 'leader_brake'}):
         raise ValueError('Unsupported event schema or fields')
+    if 'request_lane_change' in spec and type(spec['request_lane_change']) is not bool:
+        raise ValueError('request_lane_change must be boolean')
     if (spec['schema_version'] != 1 or type(spec['enabled']) is not bool
             or spec['provenance'] != 'synthetic' or spec['motion_owner'] != 'SUMO'
             or spec['speed_mode'] != 31 or spec['lane_change_mode'] != 512
@@ -165,7 +169,7 @@ class EventAdapter:
                 self.released = True
             return
         conn.vehicle.setSpeed(spec['actor_id'], row['requested_speed_m_s'])
-        if (spec['kind'] == 'cut_in' and not self.lane_requested
+        if (spec['kind'] == 'cut_in' and spec.get('request_lane_change',True) and not self.lane_requested
                 and spec['onset_s']-1e-9 <= time < spec['onset_s']+spec['duration_s']):
             road = actor['road_id']
             if road in spec['extent']['edges']:
@@ -181,7 +185,10 @@ class EventAdapter:
         enabled = self.spec['enabled']
         realized = (self.follower_seen and (self.lane_transition_seen if self.spec['kind'] == 'cut_in'
                     else self.min_speed is not None and self.min_speed <= .1 and self.braking_with_follower))
+        if self.spec['kind']=='cut_in' and not self.spec.get('request_lane_change',True):
+            realized = not self.lane_transition_seen and not self.lane_requested
         return dict(event_id=self.spec['event_id'], enabled=enabled,
+            request_lane_change=self.spec.get('request_lane_change',True) if self.spec['kind']=='cut_in' else None,
             event_gate_passed=bool(not enabled or (realized and not self.missing_steps and self.released)),
             follower_seen=self.follower_seen, lane_request_sent=self.lane_requested,
             lane_transition_seen=self.lane_transition_seen, min_actor_speed_m_s=self.min_speed,

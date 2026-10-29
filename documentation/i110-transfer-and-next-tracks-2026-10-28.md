@@ -1,5 +1,11 @@
 # I-110 transfer design and ordered continuation
 
+**29 October status:** targeted ramp/cut-in diagnostics are complete with comfort
+failures retained. Hudson's exact actor is delivered; original acceptance passes
+and strict numerical parity fails. The semantic comparison below still applies.
+Use the [current handoff](continuation-2026-10-29.md) for the updated next actions;
+older missing-actor and untested-ramp statements below describe October 28.
+
 28 October 2026 · Codex for Sam · engineering decisions proposed; no training.
 
 This updates the remaining tracks after the first ACC/event tranche. Hudson's

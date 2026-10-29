@@ -1624,6 +1624,1529 @@
       "follow_up_to": [
         "i110-acc-comfort-20261027"
       ]
+    },
+    {
+      "id": "i110-ramp-cutin-20261029",
+      "title": "Targeted ramp interactions and abrupt cut-in diagnosis",
+      "domain": "Traffic engineering",
+      "question": "Do ramp requests interact with controlled traffic, and why does cut-in response violate smoothness?",
+      "why_now": "Sam explicitly requested these follow-ups on October 29; previous ramps arrived after agent_0 and cut-in jerk reached 33.3704.",
+      "trigger": {
+        "text": "Sam: Go ahead with the ramp interaction tests and investigate the abrupt cut-in responses. Keep progressing without Hudson’s checkpoint and update the evidence and handoff as you go.",
+        "sources": [
+          "repo:documentation/i110-acc-stress-2026-10-28.md"
+        ]
+      },
+      "method": "Predeclared timing shifts, matched ACC controllers and lateral-event-off controls, complete trip ledgers, trace-level causal diagnosis and repeats.",
+      "status": "completed; comfort failures retained",
+      "result": "9 development + 22 verification runs; all shifted ramps exposed, exact repeats, complete post-drain cohorts. Later smooth ramp jerk 47.287–47.839; cut-in 33.3704 unchanged by diagnostic cap.",
+      "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+      "next_action": "Predeclare current-state anticipation/headway diagnostics; retain safety and realized jerk failures.",
+      "follow_up_to": [
+        "i110-acc-stress-20261028"
+      ],
+      "references": [
+        "repo:experiments/configs/i110_ramp_cutin_v1.json",
+        "repo:documentation/i110-ramp-cutin-2026-10-29.md",
+        "repo:documentation/continuation-2026-10-29.md"
+      ],
+      "prefixes": [
+        "repo:outputs/i110-ramp-cutin-20261029"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/verification.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/supervisor.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/plan.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/processes.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/input-hashes.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/telemetry-off/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/manifest.json"
+          ],
+          "explanation": "Frozen suite outcomes; fixture/exposure and comfort gates are distinct, with failures preserved.",
+          "claim": "Frozen suite outcomes; fixture/exposure and comfort gates are distinct, with failures preserved.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/telemetry-off/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/telemetry-off/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/telemetry-off/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/telemetry-off/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/event-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/source/traffic/i110_events.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/event-journal.json"
+          ],
+          "explanation": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "claim": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/event-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/source/traffic/i110_events.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/event-journal.json"
+          ],
+          "explanation": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "claim": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/event-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/source/traffic/i110_events.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-0/event-journal.json"
+          ],
+          "explanation": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "claim": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/event-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/source/traffic/i110_events.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-follow_cap_acc-1/event-journal.json"
+          ],
+          "explanation": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "claim": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/verification.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/supervisor.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/plan.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/processes.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/input-hashes.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-repeat/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/manifest.json"
+          ],
+          "explanation": "Frozen suite outcomes; fixture/exposure and comfort gates are distinct, with failures preserved.",
+          "claim": "Frozen suite outcomes; fixture/exposure and comfort gates are distinct, with failures preserved.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-native_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-native_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-native_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-native_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-native_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-smooth_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-smooth_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-smooth_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732101-smooth_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-native_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-native_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-native_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-native_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-native_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-smooth_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-smooth_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-smooth_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732101-smooth_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-native_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-native_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-native_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-native_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-native_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-smooth_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-smooth_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-smooth_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732101-smooth_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-native_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-native_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-native_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-native_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-native_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-smooth_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-smooth_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-smooth_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732101-smooth_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-native_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-native_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-native_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-native_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-native_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-smooth_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-smooth_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-smooth_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-0-732102-smooth_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-native_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-native_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-native_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-native_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-native_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-smooth_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-smooth_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-smooth_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-38-732102-smooth_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-native_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-native_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-native_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-native_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-native_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-smooth_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-smooth_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-smooth_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-44-732102-smooth_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-native_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-native_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-native_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-native_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-native_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-native_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-native_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-native_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-smooth_acc/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-smooth_acc/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-smooth_acc/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-smooth_acc/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-smooth_acc/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-smooth_acc/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-smooth_acc/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-50-732102-smooth_acc/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-repeat/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-repeat/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-repeat/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-repeat/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-repeat/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-repeat/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-repeat/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-repeat/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/ramp-repeat/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/event-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/source/traffic/i110_events.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-0/event-journal.json"
+          ],
+          "explanation": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "claim": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/event-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/source/traffic/i110_events.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-smooth_acc-1/event-journal.json"
+          ],
+          "explanation": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "claim": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/event-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/source/traffic/i110_events.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-0/event-journal.json"
+          ],
+          "explanation": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "claim": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/event-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/source/traffic/i110_events.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-follow_cap_acc-1/event-journal.json"
+          ],
+          "explanation": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "claim": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/metrics.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/source/traffic/i110_baseline.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/trace.jsonl"
+          ],
+          "explanation": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "claim": "Network/comfort and complete cohort results for this exact run; not traffic benefit.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/interaction-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/source/traffic/i110_interactions.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/interactions.jsonl"
+          ],
+          "explanation": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "claim": "Direct ramp exposure and sampled desire/block states; not independent human gap opportunities.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/event-summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/source/traffic/i110_events.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/trace.jsonl",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/cutin-repeat/event-journal.json"
+          ],
+          "explanation": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "claim": "Realized event/lifecycle gate, including lateral-off matched controls.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v1/summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v1/report-source.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/verification.json"
+          ],
+          "explanation": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained. Superseded labels/tolerance key; nonfatal cache warning; underlying simulation unchanged.",
+          "claim": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained. Superseded labels/tolerance key; nonfatal cache warning; underlying simulation unchanged.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v1/results.md",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v1/report-source.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/verification.json"
+          ],
+          "explanation": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained. Superseded labels/tolerance key; nonfatal cache warning; underlying simulation unchanged.",
+          "claim": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained. Superseded labels/tolerance key; nonfatal cache warning; underlying simulation unchanged.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v1/cutin-control-response.png",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v1/report-source.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/verification.json"
+          ],
+          "explanation": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained. Superseded labels/tolerance key; nonfatal cache warning; underlying simulation unchanged.",
+          "claim": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained. Superseded labels/tolerance key; nonfatal cache warning; underlying simulation unchanged.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "figure",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v2/summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v2/report-source.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v2/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/verification.json"
+          ],
+          "explanation": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "claim": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v2/results.md",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v2/report-source.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v2/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/verification.json"
+          ],
+          "explanation": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "claim": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v2/cutin-control-response.png",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v2/report-source.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-analysis-v2/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/verification.json"
+          ],
+          "explanation": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "claim": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "figure",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/analysis-v1/summary.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/analysis-v1/report-source.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/verification.json"
+          ],
+          "explanation": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "claim": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/analysis-v1/results.md",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/analysis-v1/report-source.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/verification.json"
+          ],
+          "explanation": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "claim": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/analysis-v1/cutin-control-response.png",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/analysis-v1/report-source.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/verification-v1/verification.json"
+          ],
+          "explanation": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "claim": "Trace-derived exposure, burden and cut-in response; safety enabled, comfort failures retained.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "figure",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/tests-events-v2.xml",
+          "generator": "repo:documentation/continuation-2026-10-29.md",
+          "inputs": [
+            "repo:tests/test_i110_interactions.py",
+            "repo:tests/test_i110_interaction_report.py",
+            "repo:traffic/i110_baseline.py"
+          ],
+          "explanation": "Targeted test record; tests-v1 retains the initial whitespace-comparison failure, later reports retain passing checks.",
+          "claim": "Targeted test record; tests-v1 retains the initial whitespace-comparison failure, later reports retain passing checks.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/tests-final-v1.xml",
+          "generator": "repo:documentation/continuation-2026-10-29.md",
+          "inputs": [
+            "repo:tests/test_i110_interactions.py",
+            "repo:tests/test_i110_interaction_report.py",
+            "repo:traffic/i110_baseline.py"
+          ],
+          "explanation": "Targeted test record; tests-v1 retains the initial whitespace-comparison failure, later reports retain passing checks.",
+          "claim": "Targeted test record; tests-v1 retains the initial whitespace-comparison failure, later reports retain passing checks.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/tests-report-v1.xml",
+          "generator": "repo:documentation/continuation-2026-10-29.md",
+          "inputs": [
+            "repo:tests/test_i110_interactions.py",
+            "repo:tests/test_i110_interaction_report.py",
+            "repo:traffic/i110_baseline.py"
+          ],
+          "explanation": "Targeted test record; tests-v1 retains the initial whitespace-comparison failure, later reports retain passing checks.",
+          "claim": "Targeted test record; tests-v1 retains the initial whitespace-comparison failure, later reports retain passing checks.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/tests-v1.xml",
+          "generator": "repo:documentation/continuation-2026-10-29.md",
+          "inputs": [
+            "repo:tests/test_i110_interactions.py",
+            "repo:tests/test_i110_interaction_report.py",
+            "repo:traffic/i110_baseline.py"
+          ],
+          "explanation": "Targeted test record; tests-v1 retains the initial whitespace-comparison failure, later reports retain passing checks.",
+          "claim": "Targeted test record; tests-v1 retains the initial whitespace-comparison failure, later reports retain passing checks.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/evidence/i110-ramp-cutin-20261029.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/close-records.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/analysis-v1/summary.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/verification.json",
+            "repo:outputs/i110-ramp-cutin-20261029/tests-final-v1.xml"
+          ],
+          "explanation": "Compact versioned projection of retained raw results, including comfort failures.",
+          "claim": "Compact versioned projection of retained raw results, including comfort failures.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/i110-ramp-cutin-2026-10-29.md",
+          "generator": "repo:documentation/continuation-2026-10-29.md",
+          "inputs": [
+            "repo:documentation/evidence/i110-ramp-cutin-20261029.json",
+            "repo:outputs/i110-ramp-cutin-20261029/analysis-v1/summary.json"
+          ],
+          "explanation": "Codex-authored interpretation; see report sections for procedure and scientific limits.",
+          "claim": "Codex-authored interpretation; see report sections for procedure and scientific limits.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/catalog-attempt-v1.json",
+          "generator": "repo:documentation/continuation-2026-10-29.md",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/close-records.py",
+            "repo:skills/organize-av-evidence/scripts/build_catalog.py"
+          ],
+          "explanation": "First catalog validation rejected empty acquisition inputs; exact download URLs added without changing results.",
+          "claim": "First catalog validation rejected empty acquisition inputs; exact download URLs added without changing results.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-ramp-cutin-20261029/catalog-attempt-v2.json",
+          "generator": "repo:documentation/continuation-2026-10-29.md",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/catalog-attempt-v1.json",
+            "repo:skills/organize-av-evidence/scripts/build_catalog.py"
+          ],
+          "explanation": "Existing-output guard refused reuse; fresh catalog edition selected without overwriting.",
+          "claim": "Existing-output guard refused reuse; fresh catalog edition selected without overwriting.",
+          "limits": "Synthetic engineering; no policy, calibrated traffic, physical safety or independent human gap opportunities.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        }
+      ]
+    },
+    {
+      "id": "hudson-delivery-20261029",
+      "title": "Delivered Hudson v02 actor: identity and original reproduction",
+      "domain": "Frozen actor evaluation",
+      "question": "Do Hudson’s supplied release bytes match the pinned actor, and can its original per-seed evaluation be reproduced?",
+      "why_now": "Sam supplied policy.pt, evaluation.json and SHA256SUMS release links during the October 29 ramp tests.",
+      "trigger": {
+        "text": "User supplied the three Hudson release links; this supersedes the earlier checkpoint-unavailable status when bytes are verified.",
+        "sources": [
+          "https://github.com/hudsonkaneko/hivemind-traffic/releases/tag/mappo-v02-train-20261026T190003Z-9d133a8c",
+          "repo:documentation/hudson-i110-continuation-2026-10-28.md"
+        ]
+      },
+      "method": "Hash downloaded bytes against release checksums AND pinned expected policy hash; reconstruct exact 14 sources/config; original smoke/repeat then fixed original 20 seeds, no tuning; compare actual supplied per-seed values.",
+      "status": "original acceptance passed; strict numerical reproduction failed",
+      "result": "Exact checkpoint and 14 sources/config verified; smoke/repeat and fixed 20 seeds accepted. All nonfloat fields match; 153 floats differ, 34 beyond 1e-9 tolerance; no training or I110 run.",
+      "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+      "next_action": "Keep strict numerical discrepancy open; semantic transfer review before any I110 execution. No training.",
+      "follow_up_to": [
+        "hudson-v02-continuation-20261028"
+      ],
+      "references": [
+        "repo:scripts/evaluate_hudson_actor.py",
+        "repo:outputs/hudson-delivery-20261029/acquire.py",
+        "repo:experiments/configs/hudson_delivered_reproduction_v1.json",
+        "repo:documentation/hudson-reproduction-2026-10-29.md"
+      ],
+      "prefixes": [
+        "repo:outputs/hudson-delivery-20261029"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/received-v1/manifest.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/acquire-v1.py",
+          "inputs": [
+            "https://github.com/hudsonkaneko/hivemind-traffic/releases/download/mappo-v02-train-20261026T190003Z-9d133a8c/policy.pt",
+            "https://github.com/hudsonkaneko/hivemind-traffic/releases/download/mappo-v02-train-20261026T190003Z-9d133a8c/evaluation.json",
+            "https://github.com/hudsonkaneko/hivemind-traffic/releases/download/mappo-v02-train-20261026T190003Z-9d133a8c/SHA256SUMS.txt"
+          ],
+          "explanation": "First sandbox network failure retained.",
+          "claim": "First sandbox network failure retained.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/received-v2/manifest.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/acquire-v2.py",
+          "inputs": [
+            "https://github.com/hudsonkaneko/hivemind-traffic/releases/download/mappo-v02-train-20261026T190003Z-9d133a8c/policy.pt",
+            "https://github.com/hudsonkaneko/hivemind-traffic/releases/download/mappo-v02-train-20261026T190003Z-9d133a8c/evaluation.json",
+            "https://github.com/hudsonkaneko/hivemind-traffic/releases/download/mappo-v02-train-20261026T190003Z-9d133a8c/SHA256SUMS.txt"
+          ],
+          "explanation": "Downloaded asset hashes match release checksum and pinned actor before loading.",
+          "claim": "Downloaded asset hashes match release checksum and pinned actor before loading.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/identity-v1/manifest.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/identity-v1/supervisor.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/received-v2/manifest.json",
+            "repo:outputs/hudson-delivery-20261029/identity-v1/plan.json"
+          ],
+          "explanation": "Identity/execution provenance with source/config/runtime and output hashes.",
+          "claim": "Identity/execution provenance with source/config/runtime and output hashes.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/smoke-v1/manifest.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/smoke-v1/supervisor.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/received-v2/manifest.json",
+            "repo:outputs/hudson-delivery-20261029/smoke-v1/plan.json"
+          ],
+          "explanation": "Identity/execution provenance with source/config/runtime and output hashes.",
+          "claim": "Identity/execution provenance with source/config/runtime and output hashes.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/smoke-v1/result.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/smoke-v1/supervisor.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/smoke-v1/manifest.json",
+            "repo:outputs/hudson-delivery-20261029/smoke-v1/plan.json"
+          ],
+          "explanation": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "claim": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/smoke-v1/runtime.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/smoke-v1/source/frozen_actor_driver.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/smoke-v1/manifest.json",
+            "repo:outputs/hudson-delivery-20261029/smoke-v1/plan.json"
+          ],
+          "explanation": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "claim": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/smoke-v1/source/outputs/evaluation/evaluation.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/smoke-v1/source/frozen_actor_driver.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/smoke-v1/manifest.json",
+            "repo:outputs/hudson-delivery-20261029/smoke-v1/plan.json"
+          ],
+          "explanation": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "claim": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/smoke-v1/source/outputs/repeat/evaluation.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/smoke-v1/source/frozen_actor_driver.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/smoke-v1/manifest.json",
+            "repo:outputs/hudson-delivery-20261029/smoke-v1/plan.json"
+          ],
+          "explanation": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "claim": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/held-out-v1/manifest.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/held-out-v1/supervisor.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/received-v2/manifest.json",
+            "repo:outputs/hudson-delivery-20261029/held-out-v1/plan.json"
+          ],
+          "explanation": "Identity/execution provenance with source/config/runtime and output hashes.",
+          "claim": "Identity/execution provenance with source/config/runtime and output hashes.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/held-out-v1/result.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/held-out-v1/supervisor.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/held-out-v1/manifest.json",
+            "repo:outputs/hudson-delivery-20261029/held-out-v1/plan.json"
+          ],
+          "explanation": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "claim": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/held-out-v1/runtime.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/held-out-v1/source/frozen_actor_driver.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/held-out-v1/manifest.json",
+            "repo:outputs/hudson-delivery-20261029/held-out-v1/plan.json"
+          ],
+          "explanation": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "claim": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/held-out-v1/source/outputs/evaluation/evaluation.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/held-out-v1/source/frozen_actor_driver.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/held-out-v1/manifest.json",
+            "repo:outputs/hudson-delivery-20261029/held-out-v1/plan.json"
+          ],
+          "explanation": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "claim": "Original-fixture result; threshold acceptance does not establish exact reproduction or I110 transfer.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/comparison-v1/comparison.json",
+          "generator": "repo:outputs/hudson-delivery-20261029/comparison-v1/compare-source.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/received-v2/evaluation.json",
+            "repo:outputs/hudson-delivery-20261029/held-out-v1/source/outputs/evaluation/evaluation.json",
+            "repo:outputs/hudson-delivery-20261029/comparison-v1/plan.json"
+          ],
+          "explanation": "Strict all-field comparison failed: 153 floating differences, 34 beyond frozen tolerance. Non-floating fields equal.",
+          "claim": "Strict all-field comparison failed: 153 floating differences, 34 beyond frozen tolerance. Non-floating fields equal.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/tests-comparison-v1.xml",
+          "generator": "repo:documentation/continuation-2026-10-29.md",
+          "inputs": [
+            "repo:tests/test_hudson_actor_evaluation.py",
+            "repo:tests/test_hudson_evaluation_comparison.py"
+          ],
+          "explanation": "Identity/evaluation and all-field comparison regression checks.",
+          "claim": "Identity/evaluation and all-field comparison regression checks.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/hudson-delivery-20261029/tests-identity-v1.xml",
+          "generator": "repo:documentation/continuation-2026-10-29.md",
+          "inputs": [
+            "repo:tests/test_hudson_actor_evaluation.py",
+            "repo:tests/test_hudson_evaluation_comparison.py"
+          ],
+          "explanation": "Identity/evaluation and all-field comparison regression checks.",
+          "claim": "Identity/evaluation and all-field comparison regression checks.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/evidence/hudson-delivery-20261029.json",
+          "generator": "repo:outputs/i110-ramp-cutin-20261029/close-records.py",
+          "inputs": [
+            "repo:outputs/hudson-delivery-20261029/received-v2/manifest.json",
+            "repo:outputs/hudson-delivery-20261029/smoke-v1/result.json",
+            "repo:outputs/hudson-delivery-20261029/held-out-v1/result.json",
+            "repo:outputs/hudson-delivery-20261029/comparison-v1/comparison.json"
+          ],
+          "explanation": "Versioned identity, acceptance and strict reproduction outcomes; runtime cause remains unresolved.",
+          "claim": "Versioned identity, acceptance and strict reproduction outcomes; runtime cause remains unresolved.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/hudson-reproduction-2026-10-29.md",
+          "generator": "repo:documentation/continuation-2026-10-29.md",
+          "inputs": [
+            "repo:documentation/evidence/hudson-delivery-20261029.json"
+          ],
+          "explanation": "Codex-authored interpretation distinguishing behavioral acceptance, numerical mismatch and transfer boundaries.",
+          "claim": "Codex-authored interpretation distinguishing behavioral acceptance, numerical mismatch and transfer boundaries.",
+          "limits": "Original 27-feature fixed-horizon fixture only; no I110 transfer, physical driving, full-trip traffic benefit or new training.",
+          "kind": "result",
+          "lineage_basis": "recorded"
+        }
+      ]
     }
   ]
 }

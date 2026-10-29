@@ -1,5 +1,11 @@
 # Hudson actor and I-110 continuation handoff
 
+**Superseded next action, 29 October:** Sam delivered the release assets. Exact
+identity is verified and original acceptance passes; strict numerical comparison
+fails the frozen tolerance. Use the [current handoff](continuation-2026-10-29.md)
+and [reproduction report](hudson-reproduction-2026-10-29.md). The dated account
+below remains historical evidence of what was available on October 28.
+
 28 October 2026 · Codex continuation agent for Sam · local work, not published.
 
 ## Question and authorized next work

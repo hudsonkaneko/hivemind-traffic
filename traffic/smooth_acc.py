@@ -31,7 +31,7 @@ def limit_acceleration(requested, realized_previous, speed, dt, config=ComfortCo
     return max(-speed/dt,filtered)
 
 
-def command(conn, vid, dt, config=ComfortConfig()):
+def command(conn, vid, dt, config=ComfortConfig(), *, follow_cap=False):
     speed=conn.vehicle.getSpeed(vid)
     previous=conn.vehicle.getAcceleration(vid)
     leader=conn.vehicle.getLeader(vid,150.)
@@ -48,8 +48,10 @@ def command(conn, vid, dt, config=ComfortConfig()):
     cruise_bound=config.cruise_approach_gain*(min(config.target_speed,conn.vehicle.getAllowedSpeed(vid))-speed)
     raw=min(raw,cruise_bound)
     filtered=limit_acceleration(raw,previous,speed,dt,config)
-    conn.vehicle.setAcceleration(vid,filtered,dt)
+    applied=min(filtered,raw) if follow_cap else filtered
+    conn.vehicle.setAcceleration(vid,applied,dt)
     return dict(requested_acceleration=raw,filtered_acceleration=filtered,
-        predicted_speed=speed+filtered*dt,previous_realized_acceleration=previous,
-        action_source='SUMO_ACC_followSpeed_with_comfort_filter',
+        applied_acceleration=applied,follow_cap_active=follow_cap,
+        predicted_speed=speed+applied*dt,previous_realized_acceleration=previous,
+        action_source='diagnostic_ACC_follow_cap' if follow_cap else 'SUMO_ACC_followSpeed_with_comfort_filter',
         leader_id=leader[0] if leader and leader[0] else None)
