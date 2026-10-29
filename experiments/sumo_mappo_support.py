@@ -57,16 +57,26 @@ def validate_config(config):
     from environments.sumo_mappo_env import SumoMappoEnv
     contract = SumoMappoEnv(config=env)  # Validate the exact environment contract without starting SUMO.
     wave = bool((env.get('wave') or {}).get('enabled', False))
+    driving = bool(env.get('driving'))
     if (contract.observation_size != model['observation_size'] or contract.state_size != model['state_size']):
         raise ValueError('Environment observation/state dimensions differ from model')
-    fixed = {'observation_size': 69 if wave else 27, 'state_size': 280 if wave else 112, 'num_agents': 4,
+    fixed = {'observation_size': 81 if driving else (69 if wave else 27), 'state_size': 328 if driving else (280 if wave else 112), 'num_agents': 4,
              'normalization': 'fixed_environment_feature_scaling', 'communication': (env.get('communication') or {}).get('mode', 'none'),
-             'action': 'tanh_gaussian_normalized_acceleration',
+             'action': 'hybrid_tanh_gaussian_categorical_lane' if driving else 'tanh_gaussian_normalized_acceleration',
              'critic_input': 'joint_observations_alive_masks_and_agent_one_hot'}
-    if type(model.get('message_encoder', False)) is not bool or model.get('message_encoder', False) != wave:
-        raise ValueError('Wave study requires the masked message encoder')
+    if type(model.get('message_encoder', False)) is not bool or model.get('message_encoder', False) != (wave or driving):
+        raise ValueError('Communication study requires the masked message encoder')
     if any(model[key] != value for key, value in fixed.items()):
         raise ValueError('Unsupported actor/critic contract')
+    if driving:
+        targets=config['evaluation'].get('driving_targets',{})
+        if set(targets) != {'minimum_passes_per_episode','maximum_lane_changes_per_vehicle_minute'}:
+            raise ValueError('Driving study requires explicit passing and weaving targets')
+        passes=targets['minimum_passes_per_episode'];changes=targets['maximum_lane_changes_per_vehicle_minute']
+        if type(passes) is not int or not 1<=passes<=100 or isinstance(changes,bool) or not isinstance(changes,(int,float)) or not math.isfinite(changes) or not 0<changes<=12:
+            raise ValueError('Invalid driving acceptance targets')
+    elif 'driving_targets' in config['evaluation']:
+        raise ValueError('Driving targets require the driving environment')
     if wave:
         targets = config['evaluation'].get('wave_targets', {})
         if targets != dict(minimum_variance_reduction=.15, maximum_throughput_loss=.02,
@@ -135,12 +145,15 @@ def sources():
               for path in sorted((ROOT / 'scenarios/mappo_highway').glob('*')) if path.is_file()]
     names += [str(path.relative_to(ROOT)).replace('\\', '/')
               for path in sorted((ROOT / 'experiments/configs').glob('sumo_mappo_v[2-9]*.json'))]
+    names += [str(path.relative_to(ROOT)).replace('\\', '/')
+              for path in sorted((ROOT / 'traffic').glob('mappo_*.py'))]
     return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in names}
 
 
 def create_run(config, mode):
     run_id = mode + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8]
-    version = 'v03' if (config['environment'].get('wave') or {}).get('enabled', False) else 'v01'
+    version = ('v04' if config['environment'].get('driving') else
+               ('v03' if (config['environment'].get('wave') or {}).get('enabled', False) else 'v01'))
     output = ROOT / 'outputs/sumo_mappo' / version / run_id
     logs = ROOT / 'logs/sumo_mappo' / run_id
     output.mkdir(parents=True, exist_ok=False)
@@ -200,6 +213,9 @@ def _worker_main(connection, config, run_directory, log_file):
                     observations, rewards, terminated, truncated, infos = environment.step(value)
                     response = dict(observations=observations, rewards=rewards,
                                     terminated=terminated, truncated=truncated, infos=infos)
+                elif command == 'scripted_action':
+                    response = dict(actions={agent: environment.scripted_action(agent, cooperative=bool(value))
+                                             for agent in environment.agents})
                 else:
                     raise ValueError('Unknown worker command')
                 response.update(state=environment.state(), agents=list(environment.agents))

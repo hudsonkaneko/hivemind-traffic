@@ -721,3 +721,7 @@ Validated a 60-second seed-410001 SUMO rollout and recorded 3D replay. Original 
 ## 2026-10-27 — Prepared sensor car in frozen v02 replay
 
 Completed the full 60-second recorded replay with v14 main car, seven cameras and five LiDARs; background traffic remains lightweight. Saved 840 RGB images and 600 complete scans with clocks, transforms, checksums and timing metrics. Zero replay root error, unchanged sources, fresh-process scene audit and 94 sensor tests pass. See [sensor evidence](mappo-v02-sensors.md). This is kinematic sensing, not physical policy control.
+
+## 2026-10-29 — MAPPO v04 cooperative-passing setup
+
+Implemented hybrid acceleration/lane actions, delivered lane intent, guarded cooperative headways, real passing rewards and per-car driving metrics. 145 tests and full native no-learning preflight passed: three scripted passes, seven lane changes, zero collisions/overspeed and one override across 4,800 decisions. Independent review corrected cooldown, destination-lane filtering and applied-vs-eligible telemetry. Final configuration awaits review; no v04 training started. See [setup and evidence](sumo-mappo-v4.md). Google guide and Markdown mirror synchronized, including the earlier v02 capture/release updates.

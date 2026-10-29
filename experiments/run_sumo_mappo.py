@@ -34,7 +34,8 @@ def make_model(config):
     from policies.mappo import MappoActorCritic
     keys = ('observation_size', 'state_size', 'num_agents', 'actor_hidden_sizes', 'critic_hidden_sizes')
     return MappoActorCritic(**{key: config['model'][key] for key in keys},
-                            message_encoder=config['model'].get('message_encoder', False))
+                            message_encoder=config['model'].get('message_encoder', False),
+                            hybrid_actions=config['model']['action'] == 'hybrid_tanh_gaussian_categorical_lane')
 
 
 def seed_runtime(config):
@@ -69,7 +70,11 @@ def baseline_actions(kind, observations, rng, model=None):
     actions = {}
     for agent in agents:
         if kind == 'random':
-            actions[agent] = np.asarray([rng.uniform(-1., 1.)], dtype=np.float32)
+            value = [rng.uniform(-1., 1.)]
+            if len(observations[agent]) == 81:
+                legal = np.flatnonzero(observations[agent][30:33] > .5)
+                value.append(float(rng.choice(legal) - 1) if len(legal) else 0.)
+            actions[agent] = np.asarray(value, dtype=np.float32)
             continue
         acceleration = 0.
         if kind in ('scripted', 'cooperative_scripted'):
@@ -91,7 +96,10 @@ def baseline_actions(kind, observations, rng, model=None):
                         acceleration = min(acceleration, float(.5 * leader[4] * 4.5))
         elif kind != 'native':
             raise ValueError('Unknown controller: ' + kind)
-        actions[agent] = np.asarray([physical_acceleration_to_action(acceleration)], dtype=np.float32)
+        value = [physical_acceleration_to_action(acceleration)]
+        if len(observations[agent]) == 81:
+            value.append(0.)
+        actions[agent] = np.asarray(value, dtype=np.float32)
     return actions
 
 
@@ -114,7 +122,10 @@ def evaluate(config, kind, seeds, output, logs, tag, *, model=None, deadline=Non
                 if deadline is not None and time.monotonic() >= deadline:
                     raise TimeoutError('Evaluation wall-time budget reached')
                 observations = {agent: packet['observations'][agent] for agent in packet['agents']}
-                actions = baseline_actions(kind, observations, rng, model)
+                if config['environment'].get('driving') and kind in ('scripted', 'cooperative_scripted'):
+                    actions = pool.request({0: ('scripted_action', kind == 'cooperative_scripted')})[0]['actions']
+                else:
+                    actions = baseline_actions(kind, observations, rng, model)
                 packet = pool.request({0: ('step', actions)})[0]
                 metrics.add(packet)
                 journal_packet(journal, kind, seed, actions, packet)
@@ -124,7 +135,7 @@ def evaluate(config, kind, seeds, output, logs, tag, *, model=None, deadline=Non
     if pool.forced_cleanup:
         raise RuntimeError('Evaluation workers required forced cleanup')
     result = dict(controller=kind, episodes=episodes,
-                  summary=aggregate(episodes, config['evaluation']['acceptance']))
+                  summary=aggregate(episodes, config['evaluation']['acceptance'],config['evaluation'].get('driving_targets')))
     atomic_json(run / 'evaluation.json', result)
     return result
 
@@ -218,11 +229,27 @@ def preflight(config, output, logs, deadline):
             variant['model']['communication'] = channel['mode']
             result['channel_checks'][name] = evaluate(variant, 'cooperative_scripted',
                 config['preflight']['seeds'][:1], output, logs, 'channel-' + name, deadline=deadline)
-        result['wave_benefit_verified'] = False
-        result['wave_benefit_status'] = 'setup only; requires separately trained matched no-communication baseline'
+        prefix = 'cooperation' if config['environment'].get('driving') else 'wave'
+        result[prefix + '_benefit_verified'] = False
+        result[prefix + '_benefit_status'] = 'setup only; requires separately trained matched no-communication baseline'
     result['parameters_unchanged'] = before == model_hash(model)
     result['passed'] = bool(result['scripted_repeat_equal'] and result['actor_export_equal']
                             and result['parameters_unchanged'] and not result['forced_worker_cleanup'])
+    if config['environment'].get('driving'):
+        reference=result['evaluations']['cooperative_scripted']['summary']
+        driving=reference.get('driving',{})
+        none=result['channel_checks']['none']['summary'].get('driving',{})
+        result['driving_setup_checks']=dict(
+            reference_acceptance=reference['accepted'],
+            nominal_reference_episodes=reference['nominal_episodes']==len(config['preflight']['seeds']),
+            reference_zero_collisions=reference['collision_vehicles']==0,
+            reference_zero_overspeed=reference['overspeed_steps']==0,
+            real_lane_change=driving.get('lane_change_applied',0)>0,
+            real_slower_vehicle_pass=driving.get('pass_completed',0)>0,
+            fresh_peer_following=(driving.get('applied_cooperative_steps',0)>0 or config['model']['communication']=='none'),
+            ordinary_or_stale_fallback=driving.get('applied_fallback_steps',0)>0,
+            no_messages_never_enable_cooperative_gap=none.get('applied_cooperative_steps',0)==0)
+        result['passed']=result['passed'] and all(result['driving_setup_checks'].values())
     return result
 
 
@@ -296,13 +323,14 @@ def train(config, output, logs, deadline, resume=None):
         for kind in ('learned', 'scripted', 'native'):
             held_out[kind] = evaluate(config, kind, config['evaluation']['test_seeds'], output, logs,
                                       'held-out-' + kind, model=selected, deadline=deadline, journal=journal)
+    benefit_prefix='cooperation' if config['environment'].get('driving') else 'wave'
     return dict(training=True, optimizer_steps=optimizer_steps, agent_transitions=count,
                 unused_transition_budget=settings['max_agent_transitions'] - count,
                 updates=update, held_out=held_out, best_validation_score=best_score,
                 policy='policy.pt', checkpoint='checkpoints/best.pt', latest_checkpoint='checkpoints/latest.pt',
                 passed=True, learned_acceptance=held_out['learned']['summary']['accepted'],
-                **(dict(wave_benefit_verified=False,
-                        wave_benefit_status='requires separately trained matched no-communication baseline')
+                **({benefit_prefix+'_benefit_verified':False,
+                        benefit_prefix+'_benefit_status':'requires separately trained matched no-communication baseline'}
                    if config['model'].get('message_encoder', False) else {}))
 
 

@@ -392,3 +392,7 @@ Completed the bounded recorded-motion gate for v02: four actors, 60 seconds, see
 ### 2026-10-27 checkpoint: prepared-car replay sensing
 
 The v14 main-car sensor replay gate passed for 60 seconds: seven cameras, five LiDARs, 120 saved capture sets. Data and performance are retained in [sensor evidence](mappo-v02-sensors.md). Measured LiDAR lag is 66.7 ms; moving-object deskew and physical closed-loop control remain open.
+
+### 2026-10-29 checkpoint: v04 passing/cooperative-following setup
+
+[MAPPO v04](sumo-mappo-v4.md) now supports acceleration plus masked lane requests, guarded short-headway eligibility and explicit passing metrics. Native no-learning setup gates pass; the pilot config is ready for review. Learned passing/cooperation, achieved short highway gaps, staged curriculum and physical policy transfer remain unverified. The stopping-distance floor dominates the 0.8-second target at highway speeds.

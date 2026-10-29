@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-communication-waves/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-communication-waves/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-v04-cooperative-passing/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-v04-cooperative-passing/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4308,3 +4308,39 @@ A seeded background leader brakes at -2 m/s² for four seconds, starting between
 Final proposed pilot: MAPPO, four CPU workers, one million agent decisions, two-hour total budget, 60-second episodes, ten validation seeds and fifty held-out seeds. A separate matched no-communication configuration is prepared. No training has started; review the final configuration before launching. Learned wave improvement requires the separate trained baseline comparison: at least 15% lower pooled speed variance and no more than 2% throughput loss, alongside the unchanged safety acceptance.
 
 Source and detailed configuration: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-communication-waves/documentation/sumo-mappo-v3.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-communication-waves/documentation/sumo-mappo-v3.md>)
+
+<a id="docs-h-7ku459q12ami"></a>
+
+#### October 29 — MAPPO v04 passing and cooperative-following setup
+
+Implemented a new SUMO task with four shared-policy cars, three lanes, longitudinal acceleration and discrete right/stay/left lane requests. Actor observations are 81 structured local/message features; the training critic uses 328 joint features plus four agent identity values. This is not camera/LiDAR control or physical steering. The first pilot uses seeded mixed traffic; no staged-curriculum scheduler is claimed.
+
+<a id="docs-h-ydwcafnpcj38"></a>
+
+#### Safety and following distances
+
+Lane changes check front and rear gaps, TTC, cooldown and simultaneous conflicts. The shield rechecks destination-lane acceleration and uses ordinary headway on lane entry. Fresh messages from the actual sensed controlled leader can enable a 0.8-second target; ordinary or stale leaders use 1.5 seconds. A conservative braking-distance rule dominates both targets at highway speed: about 50.5 metres at 60 mph. Thus the setup does not claim an achieved 0.8-second highway gap. Applied commands and subsequent eligibility are logged separately.
+
+<a id="docs-h-oje0ekwdrwuc"></a>
+
+#### Measured setup verification
+
+145 targeted tests passed, including legacy regression, native SUMO and PettingZoo checks. Preflight preflight-20261029T221040Z-a36f0ca0 completed in 39.453 seconds with zero optimizer updates, unchanged sources and weights, identical scripted repeat and actor-export parity. Across two scripted 60-second episodes: three passes, seven applied lane changes, zero collisions/overspeed/required-gap deficits, and one override in 4,800 decisions. Mean progress was 1,501.02 metres; minimum measured headway was 1.728 seconds. No-message, full, delayed and outage channel checks passed. These are setup/reference results, not learned cooperation gains; the untrained actor failed driving acceptance.
+
+<a id="docs-h-mg2wyetpc4ir"></a>
+
+#### Final proposed training configuration
+
+MAPPO with four CPU workers, 128x128 actor and 256x256 critic, 256 rollout steps per worker, minibatch 256, four PPO epochs, learning rates 0.0003, gamma 0.99, GAE 0.95, clip 0.2 and entropy coefficient 0.01. Limit: one million agent decisions or two hours including evaluation. Speed ceiling 60 mph, cruise 26 m/s. Ten validation seeds and fifty separate held-out seeds; a matched no-communication configuration is prepared. Acceptance additionally requires at least one actual pass in every episode and no car exceeding six lane changes per minute. No v04 training has started; review precedes launch. Frozen v02 weights are not compatible with the new hybrid-action contract.
+
+Configuration SHA256: cc1800e164b7eef4d75958d718826d656ab129a9d87d51952283ad8f68720107
+
+Implementation and complete evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-v04-cooperative-passing/documentation/sumo-mappo-v4.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-v04-cooperative-passing/documentation/sumo-mappo-v4.md>)
+
+<a id="docs-h-h9w6a85k72k1"></a>
+
+#### Earlier v02 replay and release updates
+
+The frozen v02 trajectory was rendered in 3D, then replayed with the local v14 prepared main car and lightweight background vehicles. The 60-second sensor replay saved 840 RGB images from seven cameras and 600 complete scans from five LiDARs. Capture took 96.944 seconds plus startup; measured LiDAR frame-end lag was 66.667 ms. Source layers were unchanged. This is recorded kinematic sensing, not physical control or sensor-driven MAPPO. Local captures and metrics are retained; compact evidence is in documentation/mappo-v02-sensors.md.
+
+The original v02 policy.pt and matching held-out evaluation.json were published byte-for-byte with verified SHA256 checksums: [`https://github.com/hudsonkaneko/hivemind-traffic/releases/tag/mappo-v02-train-20261026T190003Z-9d133a8c`](<https://github.com/hudsonkaneko/hivemind-traffic/releases/tag/mappo-v02-train-20261026T190003Z-9d133a8c>)

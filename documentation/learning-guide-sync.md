@@ -382,3 +382,7 @@ than the current state of every subsystem.
 ## October 26: MAPPO v03 communication and wave setup
 
 Appended setup, final proposed pilot, actual preflight and limits to tab41; updated start-tab mirror link to codex/mappo-communication-waves. Before editing, full native source matched the existing local mirror, reconciling prior native guide updates. Revision-guarded append and complete native readback preserved all42 tabs and40 unaffected tab bodies. Regeneration/check succeeded from outputs/doc-sync/mappo-waves-v03/verified-source.json. Native pagination not inspected. No training launched.
+
+## October 29: MAPPO v04 setup and v02 replay/release follow-up
+
+Full native read matched the existing mirror before editing. Appended verified v04 setup, final proposed pilot and actual preflight evidence to tab 41, plus the earlier v02 sensor/release milestones; updated the start-tab mirror URL to codex/mappo-v04-cooperative-passing. Revision-guarded edit and full native readback preserved all 42 tabs and 40 unaffected bodies. Mirror regeneration/check succeeded from outputs/doc-sync/mappo-v04/verified-source.json. Native pagination was not visually inspected. No training launched.

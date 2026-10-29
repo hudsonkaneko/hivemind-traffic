@@ -44,17 +44,19 @@ def _mlp(input_size: int, hidden_sizes: Sequence[int], output_size: int, gain: f
 
 class MessageObservationEncoder(nn.Module):
     """Permutation-invariant masked encoding of six delivered-message slots."""
-    def __init__(self):
+    def __init__(self, local_size: int = 27, message_size: int = 7):
         super().__init__()
-        self.message_net = _mlp(6, (16,), 16, 1.0)
+        self.local_size = local_size
+        self.message_size = message_size
+        self.message_net = _mlp(message_size - 1, (16,), 16, 1.0)
 
     def forward(self, observations: torch.Tensor) -> torch.Tensor:
-        slots = observations[..., 27:].unflatten(-1, (6, 7))
-        mask = slots[..., 6:7]
-        encoded = self.message_net(slots[..., :6] * mask) * mask
+        slots = observations[..., self.local_size:].unflatten(-1, (6, self.message_size))
+        mask = slots[..., -1:]
+        encoded = self.message_net(slots[..., :-1] * mask) * mask
         pooled = encoded.sum(-2) / mask.sum(-2).clamp_min(1.0)
         # Count distinguishes absent messages from messages whose embedding cancels.
-        return torch.cat((observations[..., :27], pooled, mask.sum(-2) / 6.0), dim=-1)
+        return torch.cat((observations[..., :self.local_size], pooled, mask.sum(-2) / 6.0), dim=-1)
 
 
 class LocalAccelerationActor(nn.Module):
@@ -76,6 +78,35 @@ class LocalAccelerationActor(nn.Module):
         return torch.tanh(self.mean_net(local_obs))
 
 
+class LocalDrivingActor(nn.Module):
+    """v04 deployment: local state/messages -> acceleration plus lane delta.
+
+    The mask is part of the stored observation. Category order is right, stay,
+    left, mapped to -1, 0, +1. An empty malformed mask conservatively permits
+    staying only; it never invents permission to cross a lane boundary.
+    """
+    def __init__(self, observation_size: int, hidden_sizes: Sequence[int]):
+        super().__init__()
+        if observation_size != 81:
+            raise ValueError('Driving actor requires 33 local plus six 8-feature messages')
+        self.observation_size = observation_size
+        self.mean_net = nn.Sequential(MessageObservationEncoder(33, 8), _mlp(50, hidden_sizes, 4, .01))
+
+    def lane_logits(self, local_obs: torch.Tensor, raw: torch.Tensor) -> torch.Tensor:
+        mask = local_obs[..., 30:33] > .5
+        fallback = torch.zeros_like(mask)
+        fallback[..., 1] = True
+        mask = torch.where(mask.any(dim=-1, keepdim=True), mask, fallback)
+        return raw[..., 1:4].masked_fill(~mask, -1e9)
+
+    def forward(self, local_obs: torch.Tensor) -> torch.Tensor:
+        if local_obs.shape[-1] != self.observation_size:
+            raise ValueError('Actor expects local observations of the configured width')
+        raw = self.mean_net(local_obs)
+        lane = self.lane_logits(local_obs, raw).argmax(-1, keepdim=True).to(raw.dtype) - 1.
+        return torch.cat((raw[..., :1].tanh(), lane), dim=-1)
+
+
 def _log_tanh_jacobian(pre_tanh: torch.Tensor) -> torch.Tensor:
     # log(1-tanh(z)^2), without cancellation when |z| is large.
     return 2.0 * (math.log(2.0) - pre_tanh - F.softplus(-2.0 * pre_tanh))
@@ -92,6 +123,7 @@ class MappoActorCritic(nn.Module):
         actor_hidden_sizes: Sequence[int] = (128, 128),
         critic_hidden_sizes: Sequence[int] = (256, 256),
         message_encoder: bool = False,
+        hybrid_actions: bool = False,
     ):
         super().__init__()
         if num_agents <= 0 or state_size <= 0:
@@ -99,7 +131,12 @@ class MappoActorCritic(nn.Module):
         self.observation_size = observation_size
         self.state_size = state_size
         self.num_agents = num_agents
-        self.actor = LocalAccelerationActor(observation_size, actor_hidden_sizes, message_encoder)
+        self.hybrid_actions = bool(hybrid_actions)
+        self.action_size = 2 if self.hybrid_actions else 1
+        if self.hybrid_actions and (not message_encoder or state_size != 328 or num_agents != 4):
+            raise ValueError('Driving actor requires the v04 message/state contract')
+        self.actor = (LocalDrivingActor(observation_size, actor_hidden_sizes) if self.hybrid_actions
+                      else LocalAccelerationActor(observation_size, actor_hidden_sizes, message_encoder))
         self.log_std = nn.Parameter(torch.zeros(1))
         self.critic = _mlp(state_size + num_agents, critic_hidden_sizes, 1, 1.0)
         nodes, weights = np.polynomial.hermite.hermgauss(20)
@@ -110,6 +147,8 @@ class MappoActorCritic(nn.Module):
         if local_obs.shape[-1] != self.observation_size:
             raise ValueError("Actor only accepts local observations")
         mean = self.actor.mean_net(local_obs)
+        if self.hybrid_actions:
+            mean = mean[..., :1]
         log_std = self.log_std.clamp(-5.0, 2.0).expand_as(mean)
         return torch.distributions.Normal(mean, log_std.exp())
 
@@ -126,7 +165,17 @@ class MappoActorCritic(nn.Module):
         pre_tanh = distribution.loc if deterministic else distribution.sample()
         actions = pre_tanh.tanh()
         log_prob = (distribution.log_prob(pre_tanh) - _log_tanh_jacobian(pre_tanh)).sum(-1)
-        return actions, log_prob, self._entropy(distribution), pre_tanh
+        entropy = self._entropy(distribution)
+        if self.hybrid_actions:
+            categorical = torch.distributions.Categorical(logits=self.actor.lane_logits(local_obs, self.actor.mean_net(local_obs)))
+            lane = categorical.logits.argmax(-1) if deterministic else categorical.sample()
+            log_prob = log_prob + categorical.log_prob(lane)
+            entropy = entropy + categorical.entropy()
+            delta = (lane - 1).to(actions.dtype).unsqueeze(-1)
+            actions = torch.cat((actions, delta), -1)
+            # Second stored latent is the exact categorical delta, not a Gaussian.
+            pre_tanh = torch.cat((pre_tanh, delta), -1)
+        return actions, log_prob, entropy, pre_tanh
 
     def evaluate_actions(
         self,
@@ -136,8 +185,24 @@ class MappoActorCritic(nn.Module):
     ):
         """Evaluate the stored latent sample; optional inversion rejects saturation."""
         distribution = self._distribution(local_obs)
-        if actions.shape != distribution.loc.shape or not torch.isfinite(actions).all():
-            raise ValueError("Actions must be finite with shape [...,1]")
+        expected = distribution.loc.shape[:-1] + (self.action_size,)
+        if actions.shape != expected or not torch.isfinite(actions).all():
+            raise ValueError('Actions must be finite with the configured action width')
+        lane_log_prob = lane_entropy = 0.
+        if self.hybrid_actions:
+            delta = actions[..., 1]
+            if ((delta < -1) | (delta > 1) | (delta != delta.round())).any():
+                raise ValueError('Lane action must be exactly -1, 0 or 1')
+            categorical = torch.distributions.Categorical(logits=self.actor.lane_logits(local_obs, self.actor.mean_net(local_obs)))
+            lane = (delta + 1).long()
+            if (categorical.logits.gather(-1, lane.unsqueeze(-1)) < -1e8).any():
+                raise ValueError('Stored lane action violates its observation mask')
+            lane_log_prob, lane_entropy = categorical.log_prob(lane), categorical.entropy()
+            if pre_tanh_actions is not None:
+                if pre_tanh_actions.shape != actions.shape or not torch.equal(pre_tanh_actions[..., 1], delta):
+                    raise ValueError('Stored categorical samples disagree')
+                pre_tanh_actions = pre_tanh_actions[..., :1]
+            actions = actions[..., :1]
         if pre_tanh_actions is None:
             if (actions.abs() >= 1.0).any():
                 raise ValueError("Saturated actions require their stored pre-tanh sample")
@@ -151,7 +216,7 @@ class MappoActorCritic(nn.Module):
         log_prob = (
             distribution.log_prob(pre_tanh_actions) - _log_tanh_jacobian(pre_tanh_actions)
         ).sum(-1)
-        return log_prob, self._entropy(distribution)
+        return log_prob + lane_log_prob, self._entropy(distribution) + lane_entropy
 
     def values(self, global_states: torch.Tensor, agent_indices: torch.Tensor) -> torch.Tensor:
         """Joint state [...,112] plus one-hot ID [...,4] -> per-agent value."""
@@ -253,8 +318,8 @@ class MappoTrainer:
         widths = {
             "local_obs": self.model.observation_size,
             "global_states": self.model.state_size,
-            "actions": 1,
-            "pre_tanh_actions": 1,
+            "actions": self.model.action_size,
+            "pre_tanh_actions": self.model.action_size,
         }
         scalar_names = ("agent_indices", "old_log_probs", "old_values", "advantages", "returns")
         leading = batch["active"].shape
