@@ -3147,6 +3147,359 @@
           "lineage_basis": "recorded"
         }
       ]
+    },
+    {
+      "id": "i110-anticipation-shadow-20261029",
+      "title": "Current-state anticipation and semantic transfer review",
+      "domain": "Traffic diagnostics and policy contract",
+      "question": "Can current neighbor state warn before retained cut-in/ramp jerk failures without future event truth, and does the frozen actor have a semantically supported I-110 region?",
+      "why_now": "Follow-cap requests changed without changing motion; later ramp comfort remains failed and the actor is now delivered.",
+      "trigger": {
+        "text": "Sam requested continuation from the current checkpoint.",
+        "sources": [
+          "repo:documentation/continuation-2026-10-29.md",
+          "repo:documentation/i110-ramp-cutin-2026-10-29.md"
+        ]
+      },
+      "method": "Frozen development-only shadow protocol; hash-verified existing traces; separate retrospective scoring; inspect original and graph contracts before transfer.",
+      "status": "completed development shadow diagnostics and static semantic review",
+      "result": "Six unchanged development runs reanalyzed with exact derived replay. The 2 s adjacent margin warns 0.9 s before cut-in leader entry but also extensively in controls; late ramp warning starts only after leader entry. No comfort fix or I-110 actor transfer admitted.",
+      "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+      "next_action": "Convergence-aware current state and jerk-feasible response diagnostics before intervention; no actor transfer admitted.",
+      "references": [
+        "repo:experiments/configs/i110_anticipation_shadow_v1.json",
+        "repo:documentation/hudson-reproduction-2026-10-29.md",
+        "repo:documentation/i110-anticipation-transfer-2026-10-29.md",
+        "repo:documentation/evidence/i110-anticipation-shadow-20261029.json",
+        "repo:scripts/report_i110_anticipation.py",
+        "repo:scripts/audit_i110_transfer_support.py",
+        "repo:traffic/i110_anticipation.py",
+        "repo:tests/test_i110_anticipation.py"
+      ],
+      "prefixes": [
+        "repo:outputs/i110-anticipation-shadow-20261029",
+        "repo:experiments/configs/i110_anticipation_shadow_v1.json",
+        "repo:documentation/i110-anticipation-transfer-2026-10-29.md",
+        "repo:documentation/evidence/i110-anticipation-shadow-20261029.json",
+        "repo:scripts/report_i110_anticipation.py",
+        "repo:scripts/audit_i110_transfer_support.py",
+        "repo:traffic/i110_anticipation.py",
+        "repo:tests/test_i110_anticipation.py"
+      ],
+      "follow_up_to": [
+        "i110-ramp-cutin-20261029"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/cutin-smooth_acc-0-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/cutin-smooth_acc-1-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-0-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-38-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-44-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-50-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/summary.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/cutin-smooth_acc-0-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/cutin-smooth_acc-1-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-0-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-38-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-44-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-50-warnings.jsonl"
+          ],
+          "explanation": "Derived warning timing, realized baseline jerk and unchanged cohort burdens; V2 table includes both headways.",
+          "claim": "Earlier cut-in warning with broad control exposure; no pre-entry warning for late ramp leaders.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/results.md",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/cutin-smooth_acc-0-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/cutin-smooth_acc-1-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-0-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-38-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-44-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/ramp-50-warnings.jsonl"
+          ],
+          "explanation": "Derived warning timing, realized baseline jerk and unchanged cohort burdens; V2 table includes both headways.",
+          "claim": "Earlier cut-in warning with broad control exposure; no pre-entry warning for late ramp leaders.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/cutin-smooth_acc-0-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/cutin-smooth_acc-1-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-0-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-38-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-44-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-50-warnings.jsonl",
+          "kind": "result",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/manifest.json",
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/trace.jsonl"
+          ],
+          "explanation": "Current-only headway warnings for each controlled vehicle; exact executed generator is copied into this analysis edition.",
+          "claim": "Read-only warning exposure and target-specific deficit; no actuator or efficacy finding.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/summary.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/manifest.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/cutin-smooth_acc-0-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/cutin-smooth_acc-1-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-0-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-38-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-44-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-50-warnings.jsonl"
+          ],
+          "explanation": "Derived warning timing, realized baseline jerk and unchanged cohort burdens; V2 table includes both headways.",
+          "claim": "Earlier cut-in warning with broad control exposure; no pre-entry warning for late ramp leaders.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/results.md",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_anticipation.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/manifest.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/cutin-smooth_acc-0-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/cutin-smooth_acc-1-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-0-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-38-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-44-warnings.jsonl",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/ramp-50-warnings.jsonl"
+          ],
+          "explanation": "Derived warning timing, realized baseline jerk and unchanged cohort burdens; V2 table includes both headways.",
+          "claim": "Earlier cut-in warning with broad control exposure; no pre-entry warning for late ramp leaders.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/transfer-v1/review.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/audit_i110_transfer_support.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/transfer-v1/manifest.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/summary.json"
+          ],
+          "explanation": "Static original-versus-graph contract review with network counts, source anchors and hashes.",
+          "claim": "No semantically exact supported I-110 restriction has been established for the unchanged original ABI/config. Four/five-lane packets cannot be consumed directly. A separately defined local-window adapter remains a proposal requiring explicit lane/route/time/history/guard semantics and support rejection tests.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/prefix-check.json",
+          "kind": "result",
+          "generator": "repo:outputs/i110-anticipation-shadow-20261029/close-records.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/manifest.json"
+          ],
+          "explanation": "Exact retained-source replay or pre-event matched-prefix check.",
+          "claim": "Signals and scoring repeat; identical pre-event state cannot reveal the later scripted command.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/replay-check.json",
+          "kind": "result",
+          "generator": "repo:outputs/i110-anticipation-shadow-20261029/close-records.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v1/manifest.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/manifest.json"
+          ],
+          "explanation": "Exact retained-source replay or pre-event matched-prefix check.",
+          "claim": "Signals and scoring repeat; identical pre-event state cannot reveal the later scripted command.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/evidence/i110-anticipation-shadow-20261029.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-anticipation-shadow-20261029/close-records.py",
+          "inputs": [
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/summary.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/transfer-v1/review.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/prefix-check.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/replay-check.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/tests-v1.xml"
+          ],
+          "explanation": "Compact versioned numerical record derived from retained diagnostics.",
+          "claim": "Six unchanged development runs reanalyzed with exact derived replay. The 2 s adjacent margin warns 0.9 s before cut-in leader entry but also extensively in controls; late ramp warning starts only after leader entry. No comfort fix or I-110 actor transfer admitted.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/i110-anticipation-transfer-2026-10-29.md",
+          "kind": "result/report",
+          "generator": "repo:documentation/i110-anticipation-transfer-2026-10-29.md",
+          "inputs": [
+            "repo:documentation/evidence/i110-anticipation-shadow-20261029.json"
+          ],
+          "explanation": "Codex authored interpretation under the question/method and explicit semantic-review sections.",
+          "claim": "Six unchanged development runs reanalyzed with exact derived replay. The 2 s adjacent margin warns 0.9 s before cut-in leader entry but also extensively in controls; late ramp warning starts only after leader entry. No comfort fix or I-110 actor transfer admitted.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-anticipation-shadow-20261029/tests-v1.xml",
+          "kind": "result",
+          "generator": "repo:tests/test_i110_anticipation.py",
+          "inputs": [
+            "repo:traffic/i110_anticipation.py",
+            "repo:scripts/report_i110_anticipation.py",
+            "repo:tests/test_i110_policy_interface.py"
+          ],
+          "explanation": "pytest tests/test_i110_anticipation.py tests/test_i110_policy_interface.py -q; 18 test cases pass.",
+          "claim": "Margin, scoring and integrity checks plus existing graph regressions pass; no traffic or empirical acceptance.",
+          "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+          "lineage_basis": "recorded"
+        }
+      ]
     }
   ]
 }

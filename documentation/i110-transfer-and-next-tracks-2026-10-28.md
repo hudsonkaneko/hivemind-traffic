@@ -1,5 +1,12 @@
 # I-110 transfer design and ordered continuation
 
+**Later 29 October review:** the [explicit semantic audit and current-state
+diagnostics](i110-anticipation-transfer-2026-10-29.md) now supersede the proposed
+review below. No exact restricted I-110 support was established. The audit also
+clarifies that both original and graph implementations read TraCI allowed speed,
+and records differing equal-position neighbor ties and time origins. No actor
+transfer is admitted; original numerical parity remains a separate failed gate.
+
 **29 October status:** targeted ramp/cut-in diagnostics are complete with comfort
 failures retained. Hudson's exact actor is delivered; original acceptance passes
 and strict numerical parity fails. The semantic comparison below still applies.

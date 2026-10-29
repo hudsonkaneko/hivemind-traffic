@@ -1,5 +1,18 @@
 # Change log
 
+## 2026-10-29 — Current-state anticipation and semantic transfer review
+
+- Added pure current-state shadow margins, frozen six-case development replay
+  and static transfer audit. Existing traces were hash-verified; no simulator
+  or actor evaluation was restarted. All six journals and summaries repeat.
+- The 2 s adjacent margin warns before cut-in entry but extensively in controls;
+  both margins miss pre-entry warning for the late ramp leaders. No comfort
+  fix adopted. Exact original/graph semantic support remains unestablished;
+  numerical parity stays a separate unresolved gate.
+- 18 targeted tests pass. [Report](i110-anticipation-transfer-2026-10-29.md),
+  compact evidence, catalog lineage and local continuity updated. No training,
+  actor transfer, shared write, teammate message or push.
+
 ## 2026-10-29 — Targeted ramp/cut-in diagnostics and delivered actor
 
 - Added a frozen ramp timing matrix, read-only interaction journals and matched

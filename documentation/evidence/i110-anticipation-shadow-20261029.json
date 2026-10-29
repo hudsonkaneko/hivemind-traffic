@@ -1,0 +1,1839 @@
+{
+  "study_id": "i110-anticipation-shadow-20261029",
+  "author": "Codex for Sam",
+  "date_local": "2026-10-29",
+  "phase": "retrospective development diagnostics; predeclared before new derivation, not blind confirmation",
+  "source": "outputs/i110-anticipation-shadow-20261029/analysis-v2/summary.json",
+  "source_sha256": "2e2761586605227c4cc88f46756e6386dfe2d10eb84a12af2ba772da2a68c4e4",
+  "new_traffic_runs": 0,
+  "actor_loaded": false,
+  "training": false,
+  "prefix_check": {
+    "label_time_s": 2.1,
+    "label": "first observed leader entry; retrospective label only",
+    "prefix_frames": 20,
+    "last_prefix_time_s": 2.0,
+    "state_and_observation_prefix_exact": true,
+    "warning_prefix_exact": true,
+    "inputs": {
+      "outputs\\i110-ramp-cutin-20261029\\development-v1\\cutin-smooth_acc-0\\trace.jsonl": "382850785fc7dbcfe4326ba5728d921e759845e715f5e47ec27d3148b0f939a8",
+      "outputs\\i110-ramp-cutin-20261029\\development-v1\\cutin-smooth_acc-1\\trace.jsonl": "59ce37b76495ebbaa90dbe6c44925a92d05871958b3c43f58f23d69c0cc1798c",
+      "outputs\\i110-anticipation-shadow-20261029\\analysis-v2\\cutin-smooth_acc-0-warnings.jsonl": "531caacaa5d0d34b466b6f3d39daeabc9fb6746c11055c3669375542d418ef7c",
+      "outputs\\i110-anticipation-shadow-20261029\\analysis-v2\\cutin-smooth_acc-1-warnings.jsonl": "b156b595eb33e18d32a2ab3a63b0f431922e94a6523c29fa5a8da3bb492a21e8"
+    },
+    "generator_sha256": "e2b7c316e3ea1136e746f431a2f5b3fa8913adf43f8fdffd38907f4b75cfcde1",
+    "interpretation": "Identical current pre-event inputs cannot identify the future scripted lateral command."
+  },
+  "repeat_checks": {
+    "summary.json": true,
+    "cutin-smooth_acc-0-warnings.jsonl": true,
+    "cutin-smooth_acc-1-warnings.jsonl": true,
+    "ramp-0-warnings.jsonl": true,
+    "ramp-38-warnings.jsonl": true,
+    "ramp-44-warnings.jsonl": true,
+    "ramp-50-warnings.jsonl": true
+  },
+  "semantic_review": {
+    "status": "reviewed_no_transfer_admitted",
+    "actor_loaded": false,
+    "training": false,
+    "original_network": {
+      "highway": {
+        "lane_count": 3,
+        "lane_lengths_m": [
+          5000.0,
+          5000.0,
+          5000.0
+        ]
+      }
+    },
+    "i110_network": {
+      "mlk_on": {
+        "lane_count": 1,
+        "lane_lengths_m": [
+          296.89
+        ]
+      },
+      "sb0": {
+        "lane_count": 4,
+        "lane_lengths_m": [
+          53.99,
+          53.99,
+          53.99,
+          53.99
+        ]
+      },
+      "sb1": {
+        "lane_count": 5,
+        "lane_lengths_m": [
+          223.21,
+          223.21,
+          223.21,
+          223.21,
+          223.21
+        ]
+      },
+      "sb2": {
+        "lane_count": 5,
+        "lane_lengths_m": [
+          173.15,
+          173.15,
+          173.15,
+          173.15,
+          173.15
+        ]
+      },
+      "sb3": {
+        "lane_count": 5,
+        "lane_lengths_m": [
+          193.0,
+          193.0,
+          193.0,
+          193.0,
+          193.0
+        ]
+      },
+      "sb4": {
+        "lane_count": 4,
+        "lane_lengths_m": [
+          98.01,
+          98.01,
+          98.01,
+          98.01
+        ]
+      },
+      "sb5": {
+        "lane_count": 4,
+        "lane_lengths_m": [
+          64.02,
+          64.02,
+          64.02,
+          64.02
+        ]
+      },
+      "vernon_off": {
+        "lane_count": 1,
+        "lane_lengths_m": [
+          315.42
+        ]
+      }
+    },
+    "observed_packets": {
+      "packets": 8361,
+      "lane_count_4": 2333,
+      "unknown_adjacency": 3,
+      "unknown_route": 0,
+      "lane_count_5": 6028
+    },
+    "source_anchors": {
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\outputs\\hudson-delivery-20261029\\held-out-v1\\source\\environments\\sumo_mappo_env.py": {
+        "action_to_acceleration": {
+          "start": 35,
+          "end": 40
+        },
+        "reset": {
+          "start": 114,
+          "end": 135
+        },
+        "step": {
+          "start": 137,
+          "end": 226
+        },
+        "_neighbor": {
+          "start": 228,
+          "end": 245
+        },
+        "_observations": {
+          "start": 247,
+          "end": 271
+        },
+        "_safety_filter": {
+          "start": 273,
+          "end": 290
+        }
+      },
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\traffic\\i110_policy_interface.py": {
+        "require_actor_schema": {
+          "start": 155,
+          "end": 157
+        },
+        "adjacent": {
+          "start": 82,
+          "end": 98
+        },
+        "neighbor": {
+          "start": 100,
+          "end": 113
+        },
+        "observe": {
+          "start": 115,
+          "end": 152
+        }
+      }
+    },
+    "verdict": "No semantically exact supported I-110 restriction has been established for the unchanged original ABI/config. Four/five-lane packets cannot be consumed directly. A separately defined local-window adapter remains a proposal requiring explicit lane/route/time/history/guard semantics and support rejection tests.",
+    "scope": "Static source/network and six development trace audit; not a proof that every possible restricted adapter is impossible. No policy execution or checkpoint bytes needed.",
+    "independent_gate": "Original acceptance passes; strict numerical parity remains failed at frozen 1e-9 tolerance. This review neither retests nor resolves it.",
+    "input_sha256": {
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\outputs\\i110-anticipation-shadow-20261029\\analysis-v2\\manifest.json": "431975b708c57e36b42a86e93fd1faf41739462c9d1ea47cd2deb435af5cb192",
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\outputs\\i110-anticipation-shadow-20261029\\analysis-v2\\summary.json": "2e2761586605227c4cc88f46756e6386dfe2d10eb84a12af2ba772da2a68c4e4",
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\outputs\\hudson-delivery-20261029\\held-out-v1\\manifest.json": "24d24f431051dcf208b24fabf8c6f79425872a13de2e18de6ac396fc8489cf76",
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\outputs\\hudson-delivery-20261029\\held-out-v1\\source\\environments\\sumo_mappo_env.py": "f7f4202e39109d642196c35e1050f73ae95e6b11df100dc41013b52175210b27",
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\outputs\\hudson-delivery-20261029\\held-out-v1\\source\\traffic\\mappo_sumo.py": "b23abbe5243ae1476139729ba3401e5f83a0e312b4085eddf7974d2eb71139c4",
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\outputs\\hudson-delivery-20261029\\held-out-v1\\source\\experiments\\configs\\sumo_mappo_v2.json": "6c0f81463d87b1c5c7115bf11005080bfd94978d15f82f3fe38a2c2c757e55c8",
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\outputs\\hudson-delivery-20261029\\held-out-v1\\source\\scenarios\\mappo_highway\\network.net.xml": "67aa49629d3bfe7316067adbc2d25b17eecd57ff3a81f627de50f45809508202",
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\traffic\\i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\traffic\\i110_baseline.py": "dc984cec63d6317910f4d3ccfa480e9d38cc5de1a0e2573d8874fe12b56cc11e",
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\traffic\\smooth_acc.py": "3ff1efd55ed073b51e33ec56d3e12323a67e768d8f85c471b80546bc5051cc34",
+      "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\outputs\\i110-sumo-20261027\\network-c\\network.net.xml": "387ae205266886039604970cc136e38d59217c9819c509938e8bd20004f6659f"
+    }
+  },
+  "runs": [
+    {
+      "run": "ramp-0",
+      "peak": {
+        "vehicle": "agent_0",
+        "time_s": 0.2,
+        "leader": null,
+        "old_leader": null,
+        "jerk_m_s3": 1.9999999999999574,
+        "road_id": "sb0",
+        "prior_warnings": {
+          "own-1.5": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          },
+          "own-2": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          },
+          "own_and_adjacent-1.5": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          },
+          "own_and_adjacent-2": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          }
+        }
+      },
+      "warning_exposure": {
+        "own-1.5": {
+          "primary": {
+            "samples": 1364,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own-2": {
+          "primary": {
+            "samples": 1364,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-1.5": {
+          "primary": {
+            "samples": 1364,
+            "warning_samples": 1320,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 132.0,
+            "warning_fraction": 0.967741935483871
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-2": {
+          "primary": {
+            "samples": 1364,
+            "warning_samples": 1320,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 132.0,
+            "warning_fraction": 0.967741935483871
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        }
+      },
+      "jerk_exceedance_episodes": [],
+      "network_gate": true,
+      "comfort_gate": true,
+      "primary_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 4,
+        "teleporting": 0,
+        "completed": 40,
+        "removed": 0,
+        "requested": 44,
+        "initial": 0,
+        "unfinished": 4,
+        "boundary_time_s": 1883.9000000000005,
+        "external_wait_s": 7.600000000000005,
+        "teleported": 0
+      },
+      "primary_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 136.8,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 4,
+          "teleporting": 0,
+          "completed": 36,
+          "removed": 0,
+          "requested": 40,
+          "initial": 0,
+          "unfinished": 4,
+          "boundary_time_s": 1747.1000000000006,
+          "external_wait_s": 7.600000000000005,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 36,
+          "removed": 0,
+          "requested": 36,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1323.2000000000005,
+          "external_wait_s": 7.600000000000005,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 4,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 4,
+          "boundary_time_s": 560.7,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      },
+      "drain_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 0,
+        "teleporting": 0,
+        "completed": 44,
+        "removed": 0,
+        "requested": 44,
+        "initial": 0,
+        "unfinished": 0,
+        "boundary_time_s": 1912.7000000000005,
+        "external_wait_s": 7.600000000000005,
+        "teleported": 0
+      },
+      "drain_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 136.8,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 40,
+          "removed": 0,
+          "requested": 40,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1775.9000000000008,
+          "external_wait_s": 7.600000000000005,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 36,
+          "removed": 0,
+          "requested": 36,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1323.2000000000005,
+          "external_wait_s": 7.600000000000005,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 8,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 589.4999999999999,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      }
+    },
+    {
+      "run": "ramp-38",
+      "peak": {
+        "vehicle": "agent_1",
+        "time_s": 0.2,
+        "leader": null,
+        "old_leader": null,
+        "jerk_m_s3": 1.9999999999999574,
+        "road_id": "sb0",
+        "prior_warnings": {
+          "own-1.5": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          },
+          "own-2": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          },
+          "own_and_adjacent-1.5": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          },
+          "own_and_adjacent-2": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          }
+        }
+      },
+      "warning_exposure": {
+        "own-1.5": {
+          "primary": {
+            "samples": 1368,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own-2": {
+          "primary": {
+            "samples": 1368,
+            "warning_samples": 266,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 26.6,
+            "warning_fraction": 0.19444444444444445
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-1.5": {
+          "primary": {
+            "samples": 1368,
+            "warning_samples": 1073,
+            "unknown_samples": 1,
+            "warning_vehicle_seconds": 107.3,
+            "warning_fraction": 0.7843567251461988
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-2": {
+          "primary": {
+            "samples": 1368,
+            "warning_samples": 1268,
+            "unknown_samples": 1,
+            "warning_vehicle_seconds": 126.8,
+            "warning_fraction": 0.9269005847953217
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        }
+      },
+      "jerk_exceedance_episodes": [],
+      "network_gate": true,
+      "comfort_gate": true,
+      "primary_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 4,
+        "teleporting": 0,
+        "completed": 40,
+        "removed": 0,
+        "requested": 44,
+        "initial": 0,
+        "unfinished": 4,
+        "boundary_time_s": 1883.0000000000005,
+        "external_wait_s": 7.200000000000005,
+        "teleported": 0
+      },
+      "primary_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 137.2,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 4,
+          "teleporting": 0,
+          "completed": 36,
+          "removed": 0,
+          "requested": 40,
+          "initial": 0,
+          "unfinished": 4,
+          "boundary_time_s": 1745.8000000000006,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 36,
+          "removed": 0,
+          "requested": 36,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1322.1000000000004,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 4,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 4,
+          "boundary_time_s": 560.9000000000001,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      },
+      "drain_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 0,
+        "teleporting": 0,
+        "completed": 44,
+        "removed": 0,
+        "requested": 44,
+        "initial": 0,
+        "unfinished": 0,
+        "boundary_time_s": 1911.8000000000006,
+        "external_wait_s": 7.200000000000005,
+        "teleported": 0
+      },
+      "drain_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 137.2,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 40,
+          "removed": 0,
+          "requested": 40,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1774.6000000000008,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 36,
+          "removed": 0,
+          "requested": 36,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1322.1000000000004,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 8,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 589.6999999999999,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      }
+    },
+    {
+      "run": "ramp-44",
+      "peak": {
+        "vehicle": "agent_0",
+        "time_s": 52.6,
+        "leader": "ramp_000",
+        "old_leader": "ramp_000",
+        "jerk_m_s3": -48.1703941063607,
+        "road_id": "sb1",
+        "prior_warnings": {
+          "own-1.5": {
+            "target": "ramp_000",
+            "prior_warning_samples": 1,
+            "earliest_lead_s": 0.1,
+            "latest_lead_s": 0.1
+          },
+          "own-2": {
+            "target": "ramp_000",
+            "prior_warning_samples": 1,
+            "earliest_lead_s": 0.1,
+            "latest_lead_s": 0.1
+          },
+          "own_and_adjacent-1.5": {
+            "target": "ramp_000",
+            "prior_warning_samples": 1,
+            "earliest_lead_s": 0.1,
+            "latest_lead_s": 0.1
+          },
+          "own_and_adjacent-2": {
+            "target": "ramp_000",
+            "prior_warning_samples": 1,
+            "earliest_lead_s": 0.1,
+            "latest_lead_s": 0.1
+          }
+        }
+      },
+      "warning_exposure": {
+        "own-1.5": {
+          "primary": {
+            "samples": 1423,
+            "warning_samples": 9,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.9,
+            "warning_fraction": 0.006324666198172874
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own-2": {
+          "primary": {
+            "samples": 1423,
+            "warning_samples": 177,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 17.7,
+            "warning_fraction": 0.12438510189739986
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-1.5": {
+          "primary": {
+            "samples": 1423,
+            "warning_samples": 999,
+            "unknown_samples": 1,
+            "warning_vehicle_seconds": 99.9,
+            "warning_fraction": 0.702037947997189
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-2": {
+          "primary": {
+            "samples": 1423,
+            "warning_samples": 1167,
+            "unknown_samples": 1,
+            "warning_vehicle_seconds": 116.7,
+            "warning_fraction": 0.8200983836964161
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        }
+      },
+      "jerk_exceedance_episodes": [
+        {
+          "vehicle": "agent_0",
+          "time_s": 52.6,
+          "leader": "ramp_000",
+          "old_leader": "ramp_000",
+          "jerk_m_s3": -48.1703941063607,
+          "road_id": "sb1",
+          "prior_warnings": {
+            "own-1.5": {
+              "target": "ramp_000",
+              "prior_warning_samples": 1,
+              "earliest_lead_s": 0.1,
+              "latest_lead_s": 0.1
+            },
+            "own-2": {
+              "target": "ramp_000",
+              "prior_warning_samples": 1,
+              "earliest_lead_s": 0.1,
+              "latest_lead_s": 0.1
+            },
+            "own_and_adjacent-1.5": {
+              "target": "ramp_000",
+              "prior_warning_samples": 1,
+              "earliest_lead_s": 0.1,
+              "latest_lead_s": 0.1
+            },
+            "own_and_adjacent-2": {
+              "target": "ramp_000",
+              "prior_warning_samples": 1,
+              "earliest_lead_s": 0.1,
+              "latest_lead_s": 0.1
+            }
+          }
+        },
+        {
+          "vehicle": "agent_0",
+          "time_s": 60.3,
+          "leader": "ramp_001",
+          "old_leader": "ramp_001",
+          "jerk_m_s3": -11.709395626112595,
+          "road_id": "sb2",
+          "prior_warnings": {
+            "own-1.5": {
+              "target": "ramp_001",
+              "prior_warning_samples": 0,
+              "earliest_lead_s": null,
+              "latest_lead_s": null
+            },
+            "own-2": {
+              "target": "ramp_001",
+              "prior_warning_samples": 0,
+              "earliest_lead_s": null,
+              "latest_lead_s": null
+            },
+            "own_and_adjacent-1.5": {
+              "target": "ramp_001",
+              "prior_warning_samples": 0,
+              "earliest_lead_s": null,
+              "latest_lead_s": null
+            },
+            "own_and_adjacent-2": {
+              "target": "ramp_001",
+              "prior_warning_samples": 0,
+              "earliest_lead_s": null,
+              "latest_lead_s": null
+            }
+          }
+        }
+      ],
+      "network_gate": true,
+      "comfort_gate": false,
+      "primary_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 5,
+        "teleporting": 0,
+        "completed": 39,
+        "removed": 0,
+        "requested": 44,
+        "initial": 0,
+        "unfinished": 5,
+        "boundary_time_s": 1891.1000000000004,
+        "external_wait_s": 7.200000000000005,
+        "teleported": 0
+      },
+      "primary_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 142.7,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 5,
+          "teleporting": 0,
+          "completed": 35,
+          "removed": 0,
+          "requested": 40,
+          "initial": 0,
+          "unfinished": 5,
+          "boundary_time_s": 1748.4000000000005,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 36,
+          "removed": 0,
+          "requested": 36,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1326.7000000000003,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 5,
+          "teleporting": 0,
+          "completed": 3,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 5,
+          "boundary_time_s": 564.4,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      },
+      "drain_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 0,
+        "teleporting": 0,
+        "completed": 44,
+        "removed": 0,
+        "requested": 44,
+        "initial": 0,
+        "unfinished": 0,
+        "boundary_time_s": 1927.7000000000005,
+        "external_wait_s": 7.200000000000005,
+        "teleported": 0
+      },
+      "drain_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 142.7,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 40,
+          "removed": 0,
+          "requested": 40,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1785.0000000000007,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 36,
+          "removed": 0,
+          "requested": 36,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1326.7000000000003,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 8,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 600.9999999999999,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      }
+    },
+    {
+      "run": "ramp-50",
+      "peak": {
+        "vehicle": "agent_0",
+        "time_s": 59.5,
+        "leader": "ramp_002",
+        "old_leader": "ramp_002",
+        "jerk_m_s3": -47.19560569881622,
+        "road_id": "sb1",
+        "prior_warnings": {
+          "own-1.5": {
+            "target": "ramp_002",
+            "prior_warning_samples": 1,
+            "earliest_lead_s": 0.1,
+            "latest_lead_s": 0.1
+          },
+          "own-2": {
+            "target": "ramp_002",
+            "prior_warning_samples": 1,
+            "earliest_lead_s": 0.1,
+            "latest_lead_s": 0.1
+          },
+          "own_and_adjacent-1.5": {
+            "target": "ramp_002",
+            "prior_warning_samples": 1,
+            "earliest_lead_s": 0.1,
+            "latest_lead_s": 0.1
+          },
+          "own_and_adjacent-2": {
+            "target": "ramp_002",
+            "prior_warning_samples": 1,
+            "earliest_lead_s": 0.1,
+            "latest_lead_s": 0.1
+          }
+        }
+      },
+      "warning_exposure": {
+        "own-1.5": {
+          "primary": {
+            "samples": 1408,
+            "warning_samples": 10,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 1.0,
+            "warning_fraction": 0.007102272727272727
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own-2": {
+          "primary": {
+            "samples": 1408,
+            "warning_samples": 14,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 1.4,
+            "warning_fraction": 0.009943181818181818
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-1.5": {
+          "primary": {
+            "samples": 1408,
+            "warning_samples": 1000,
+            "unknown_samples": 1,
+            "warning_vehicle_seconds": 100.0,
+            "warning_fraction": 0.7102272727272727
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-2": {
+          "primary": {
+            "samples": 1408,
+            "warning_samples": 1004,
+            "unknown_samples": 1,
+            "warning_vehicle_seconds": 100.4,
+            "warning_fraction": 0.7130681818181818
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        }
+      },
+      "jerk_exceedance_episodes": [
+        {
+          "vehicle": "agent_0",
+          "time_s": 59.5,
+          "leader": "ramp_002",
+          "old_leader": "ramp_002",
+          "jerk_m_s3": -47.19560569881622,
+          "road_id": "sb1",
+          "prior_warnings": {
+            "own-1.5": {
+              "target": "ramp_002",
+              "prior_warning_samples": 1,
+              "earliest_lead_s": 0.1,
+              "latest_lead_s": 0.1
+            },
+            "own-2": {
+              "target": "ramp_002",
+              "prior_warning_samples": 1,
+              "earliest_lead_s": 0.1,
+              "latest_lead_s": 0.1
+            },
+            "own_and_adjacent-1.5": {
+              "target": "ramp_002",
+              "prior_warning_samples": 1,
+              "earliest_lead_s": 0.1,
+              "latest_lead_s": 0.1
+            },
+            "own_and_adjacent-2": {
+              "target": "ramp_002",
+              "prior_warning_samples": 1,
+              "earliest_lead_s": 0.1,
+              "latest_lead_s": 0.1
+            }
+          }
+        }
+      ],
+      "network_gate": true,
+      "comfort_gate": false,
+      "primary_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 5,
+        "teleporting": 0,
+        "completed": 39,
+        "removed": 0,
+        "requested": 44,
+        "initial": 0,
+        "unfinished": 5,
+        "boundary_time_s": 1887.2000000000003,
+        "external_wait_s": 7.200000000000005,
+        "teleported": 0
+      },
+      "primary_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 141.2,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 5,
+          "teleporting": 0,
+          "completed": 35,
+          "removed": 0,
+          "requested": 40,
+          "initial": 0,
+          "unfinished": 5,
+          "boundary_time_s": 1746.0000000000005,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 36,
+          "removed": 0,
+          "requested": 36,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1325.2000000000003,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 5,
+          "teleporting": 0,
+          "completed": 3,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 5,
+          "boundary_time_s": 562.0,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      },
+      "drain_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 0,
+        "teleporting": 0,
+        "completed": 44,
+        "removed": 0,
+        "requested": 44,
+        "initial": 0,
+        "unfinished": 0,
+        "boundary_time_s": 1933.4000000000003,
+        "external_wait_s": 7.200000000000005,
+        "teleported": 0
+      },
+      "drain_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 141.2,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 40,
+          "removed": 0,
+          "requested": 40,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1792.2000000000005,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 36,
+          "removed": 0,
+          "requested": 36,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1325.2000000000003,
+          "external_wait_s": 7.200000000000005,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 8,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 608.2,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      }
+    },
+    {
+      "run": "cutin-smooth_acc-0",
+      "peak": {
+        "vehicle": "agent_0",
+        "time_s": 0.2,
+        "leader": null,
+        "old_leader": null,
+        "jerk_m_s3": 1.9999999999999574,
+        "road_id": "sb0",
+        "prior_warnings": {
+          "own-1.5": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          },
+          "own-2": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          },
+          "own_and_adjacent-1.5": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          },
+          "own_and_adjacent-2": {
+            "target": null,
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          }
+        }
+      },
+      "warning_exposure": {
+        "own-1.5": {
+          "primary": {
+            "samples": 1396,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own-2": {
+          "primary": {
+            "samples": 1396,
+            "warning_samples": 184,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 18.4,
+            "warning_fraction": 0.1318051575931232
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-1.5": {
+          "primary": {
+            "samples": 1396,
+            "warning_samples": 790,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 79.0,
+            "warning_fraction": 0.5659025787965616
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-2": {
+          "primary": {
+            "samples": 1396,
+            "warning_samples": 972,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 97.2,
+            "warning_fraction": 0.6962750716332379
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        }
+      },
+      "jerk_exceedance_episodes": [],
+      "network_gate": true,
+      "comfort_gate": true,
+      "primary_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 4,
+        "teleporting": 0,
+        "completed": 41,
+        "removed": 0,
+        "requested": 45,
+        "initial": 0,
+        "unfinished": 4,
+        "boundary_time_s": 1921.9000000000005,
+        "external_wait_s": 7.600000000000005,
+        "teleported": 0
+      },
+      "primary_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 140.0,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 4,
+          "teleporting": 0,
+          "completed": 37,
+          "removed": 0,
+          "requested": 41,
+          "initial": 0,
+          "unfinished": 4,
+          "boundary_time_s": 1781.9000000000005,
+          "external_wait_s": 7.600000000000005,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 37,
+          "removed": 0,
+          "requested": 37,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1361.2000000000005,
+          "external_wait_s": 7.600000000000005,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 4,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 4,
+          "boundary_time_s": 560.7,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      },
+      "drain_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 0,
+        "teleporting": 0,
+        "completed": 45,
+        "removed": 0,
+        "requested": 45,
+        "initial": 0,
+        "unfinished": 0,
+        "boundary_time_s": 1950.7000000000005,
+        "external_wait_s": 7.600000000000005,
+        "teleported": 0
+      },
+      "drain_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 140.0,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 41,
+          "removed": 0,
+          "requested": 41,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1810.7000000000007,
+          "external_wait_s": 7.600000000000005,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 37,
+          "removed": 0,
+          "requested": 37,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1361.2000000000005,
+          "external_wait_s": 7.600000000000005,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 8,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 589.4999999999999,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      }
+    },
+    {
+      "run": "cutin-smooth_acc-1",
+      "peak": {
+        "vehicle": "agent_1",
+        "time_s": 2.2,
+        "leader": "event_actor",
+        "old_leader": "event_actor",
+        "jerk_m_s3": -33.370399999999734,
+        "road_id": "sb0",
+        "prior_warnings": {
+          "own-1.5": {
+            "target": "event_actor",
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          },
+          "own-2": {
+            "target": "event_actor",
+            "prior_warning_samples": 1,
+            "earliest_lead_s": 0.1,
+            "latest_lead_s": 0.1
+          },
+          "own_and_adjacent-1.5": {
+            "target": "event_actor",
+            "prior_warning_samples": 0,
+            "earliest_lead_s": null,
+            "latest_lead_s": null
+          },
+          "own_and_adjacent-2": {
+            "target": "event_actor",
+            "prior_warning_samples": 10,
+            "earliest_lead_s": 1.0,
+            "latest_lead_s": 0.1
+          }
+        }
+      },
+      "warning_exposure": {
+        "own-1.5": {
+          "primary": {
+            "samples": 1402,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own-2": {
+          "primary": {
+            "samples": 1402,
+            "warning_samples": 232,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 23.2,
+            "warning_fraction": 0.16547788873038516
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-1.5": {
+          "primary": {
+            "samples": 1402,
+            "warning_samples": 512,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 51.2,
+            "warning_fraction": 0.3651925820256776
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        },
+        "own_and_adjacent-2": {
+          "primary": {
+            "samples": 1402,
+            "warning_samples": 683,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 68.3,
+            "warning_fraction": 0.4871611982881598
+          },
+          "drain": {
+            "samples": 0,
+            "warning_samples": 0,
+            "unknown_samples": 0,
+            "warning_vehicle_seconds": 0.0,
+            "warning_fraction": null
+          }
+        }
+      },
+      "jerk_exceedance_episodes": [
+        {
+          "vehicle": "agent_1",
+          "time_s": 2.2,
+          "leader": "event_actor",
+          "old_leader": "event_actor",
+          "jerk_m_s3": -33.370399999999734,
+          "road_id": "sb0",
+          "prior_warnings": {
+            "own-1.5": {
+              "target": "event_actor",
+              "prior_warning_samples": 0,
+              "earliest_lead_s": null,
+              "latest_lead_s": null
+            },
+            "own-2": {
+              "target": "event_actor",
+              "prior_warning_samples": 1,
+              "earliest_lead_s": 0.1,
+              "latest_lead_s": 0.1
+            },
+            "own_and_adjacent-1.5": {
+              "target": "event_actor",
+              "prior_warning_samples": 0,
+              "earliest_lead_s": null,
+              "latest_lead_s": null
+            },
+            "own_and_adjacent-2": {
+              "target": "event_actor",
+              "prior_warning_samples": 10,
+              "earliest_lead_s": 1.0,
+              "latest_lead_s": 0.1
+            }
+          }
+        }
+      ],
+      "network_gate": true,
+      "comfort_gate": false,
+      "primary_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 4,
+        "teleporting": 0,
+        "completed": 41,
+        "removed": 0,
+        "requested": 45,
+        "initial": 0,
+        "unfinished": 4,
+        "boundary_time_s": 1926.6000000000001,
+        "external_wait_s": 7.600000000000003,
+        "teleported": 0
+      },
+      "primary_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 140.60000000000002,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 4,
+          "teleporting": 0,
+          "completed": 37,
+          "removed": 0,
+          "requested": 41,
+          "initial": 0,
+          "unfinished": 4,
+          "boundary_time_s": 1786.0000000000002,
+          "external_wait_s": 7.600000000000003,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 37,
+          "removed": 0,
+          "requested": 37,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1365.9000000000003,
+          "external_wait_s": 7.600000000000003,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 4,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 4,
+          "boundary_time_s": 560.7,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      },
+      "drain_totals": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 0,
+        "teleporting": 0,
+        "completed": 45,
+        "removed": 0,
+        "requested": 45,
+        "initial": 0,
+        "unfinished": 0,
+        "boundary_time_s": 1955.4,
+        "external_wait_s": 7.600000000000003,
+        "teleported": 0
+      },
+      "drain_groups": {
+        "role:controlled": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 4,
+          "removed": 0,
+          "requested": 4,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 140.60000000000002,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        },
+        "role:human_proxy": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 41,
+          "removed": 0,
+          "requested": 41,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1814.8000000000002,
+          "external_wait_s": 7.600000000000003,
+          "teleported": 0
+        },
+        "origin:mainline": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 37,
+          "removed": 0,
+          "requested": 37,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 1365.9000000000003,
+          "external_wait_s": 7.600000000000003,
+          "teleported": 0
+        },
+        "origin:mlk_ramp": {
+          "scheduled": 0,
+          "waiting": 0,
+          "active": 0,
+          "teleporting": 0,
+          "completed": 8,
+          "removed": 0,
+          "requested": 8,
+          "initial": 0,
+          "unfinished": 0,
+          "boundary_time_s": 589.4999999999999,
+          "external_wait_s": 0.0,
+          "teleported": 0
+        }
+      }
+    }
+  ],
+  "tests": {
+    "path": "outputs/i110-anticipation-shadow-20261029/tests-v1.xml",
+    "sha256": "aa0caa8a93eca8c6cb3f7d446c4d509218287ac6b6931f90805baa15942735a0",
+    "passed": 18
+  },
+  "limits": "One previously inspected synthetic development seed, provisional geometry, simulator-state inputs. Warning in a no-event case is exposure, not a labeled false positive. No new traffic rollout, causal intervention, learned transfer, training, empirical safety or team adoption. Strict actor numerical parity remains independently unresolved.",
+  "next_action": "Convergence-aware current state and jerk-feasible response diagnostics before intervention; no actor transfer admitted."
+}

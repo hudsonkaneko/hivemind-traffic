@@ -1,5 +1,58 @@
 # Ramp, cut-in and delivered actor: current handoff
 
+## Latest continuation: anticipation and semantic review completed
+
+The new-chat continuation completed the next two bounded review tasks. Read
+[current-state anticipation and transfer review](i110-anticipation-transfer-2026-10-29.md)
+and `documentation/evidence/i110-anticipation-shadow-20261029.json` first.
+The prior next-action list below is historical where superseded by this section.
+
+Six existing smooth-ACC development traces were hash-verified and reanalyzed;
+no traffic/actor suite was restarted. Current-only shadow margins at 1.5/2.0 s
+were frozen before new derivation. The 2 s adjacent margin sees the scripted
+cut-in 0.9 s before leader entry, but warns on 69.63% of controlled samples in
+the lateral-off control. Both margins first warn about the late ramp leaders
+only after leader entry, 0.1 s before peak jerk. No comfort fix is adopted.
+The 8,361 inspected graph packets have four/five-lane context; original source
+review records lane, route, neighbor/tie, action-history, clock and shield
+differences. No semantically exact restricted I-110 transfer has been established;
+no actor was loaded or admitted. The 34-value strict numerical discrepancy is
+unchanged and remains a separate gate.
+
+18 targeted tests pass. All six shadow journals and summaries repeat exactly;
+cut-in on/off state and warning prefixes match through 2.0 s. Baseline motion,
+safety authority and complete primary/drain burdens remain unchanged. Raw
+package: `outputs/i110-anticipation-shadow-20261029/`; analysis-v1 is retained,
+analysis-v2 expands the table to both already-declared headways. No held-out
+case was used for this diagnostic extension. Full lineage is in the registry.
+
+**Next:** predeclare current-state convergence-aware diagnostics for incoming
+paths, including explicit signed distance and conflict-point uncertainty. Then
+check a jerk-feasible response envelope before a matched intervention. Adjacent
+proximity alone does not establish merge intent; never feed future scripted
+event truth to the controller. Do not install a naive adjacent-car brake rule
+or reinterpret a shadow lead time as efficacy. Keep unchanged smooth ACC,
+enabled safety, realized jerk and complete ramp/human/external burdens in any
+later intervention. The exact actor remains present; do not re-download it or
+restart its completed evaluation. No training, public push, shared Doc writes,
+teammate messages or I-110 learned inference are authorized by this handoff.
+
+The remaining event adapters, geometry uncertainty, optional offline PeMS and
+USD tracks stay ordered as below. The live master and Sam refresher were read
+again; shared state remains October 22 and the write hold persists. Local
+document-ready progress is prepared through the research custodian.
+
+Catalog: `outputs/evidence-catalog/20261029-anticipation-final/` inventories
+4,375 files across 22 activities, with 198 explicit-lineage and 1,009
+manifest-linked files; 594 historical backfill gaps remain. Validation and
+inventory checks report no issues. Earlier catalog editions remain retained;
+the first continuation edition exposed five newly added source/config files
+without context ownership, which the registry now records. Original activity
+records are preserved unchanged. Research index refresh remains 116 files /
+556 chunks with no inventory delta.
+
+## Earlier 29 October ramp/actor checkpoint
+
 29 October 2026 · Codex for Sam · local checkpoint, not published.
 
 Sam authorized targeted ramp interaction tests, abrupt cut-in investigation and

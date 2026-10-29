@@ -1,5 +1,13 @@
 # Active roadmap: physical research cars, economical background traffic
 
+29 October continuation: [anticipation and semantic transfer review](i110-anticipation-transfer-2026-10-29.md).
+Six retained development traces support current-only shadow diagnostics. Broader
+adjacent margins warn before the cut-in but extensively in controls; neither
+margin anticipates the late ramp leaders before entry. No comfort fix or I-110
+actor transfer admitted. Next: current-state convergence and jerk-feasible
+response diagnostics. Strict numerical parity remains independently unresolved.
+No new traffic run, actor inference or training; 18 targeted tests pass.
+
 29 October current increment: [ramp/cut-in results](i110-ramp-cutin-2026-10-29.md)
 and [delivered actor reproduction](hudson-reproduction-2026-10-29.md).
 22 verification fixtures expose all delayed ramp cases and retain comfort
