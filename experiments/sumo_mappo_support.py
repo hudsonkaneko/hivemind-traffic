@@ -122,8 +122,31 @@ def validate_config(config):
         raise ValueError('Training seeds overlap evaluation/preflight')
     if not 1 <= config['evaluation']['every_updates'] <= 100:
         raise ValueError('Invalid validation interval')
-    if config['evaluation']['selection'] != 'accepted_then_fewer_collisions_then_fewer_overspeed_steps_then_nominal_episodes_then_reward_then_fewer_interventions':
+    selection = config['evaluation']['selection']
+    if selection not in ('accepted_then_fewer_collisions_then_fewer_overspeed_steps_then_nominal_episodes_then_reward_then_fewer_interventions',
+                          'accepted_then_safety_then_driving_targets_then_fewer_interventions_then_reward'):
         raise ValueError('Unsupported checkpoint selection rule')
+    if selection == 'accepted_then_safety_then_driving_targets_then_fewer_interventions_then_reward' and not env.get('driving'):
+        raise ValueError('Driving checkpoint selection requires the driving task')
+    imitation = train.get('imitation')
+    if imitation is not None:
+        expected = {'enabled', 'episodes', 'epochs', 'minibatch_size', 'learning_rate',
+                    'initial_log_std', 'coefficient', 'lane_change_weight'}
+        if set(imitation) != expected or imitation['enabled'] is not True or not env.get('driving'):
+            raise ValueError('Imitation requires the explicit v04 training-only configuration')
+        for key, low, high in [('episodes',1,100),('epochs',1,100),('minibatch_size',1,4096)]:
+            if type(imitation[key]) is not int or not low <= imitation[key] <= high:
+                raise ValueError('Invalid imitation ' + key)
+        for key in ('learning_rate','coefficient','lane_change_weight'):
+            if not math.isfinite(imitation[key]) or imitation[key] <= 0:
+                raise ValueError('Invalid imitation ' + key)
+        if not -5 <= imitation['initial_log_std'] <= 0 or not 1 <= imitation['lane_change_weight'] <= 20:
+            raise ValueError('Invalid imitation exploration or lane weighting')
+        demo_budget = imitation['episodes'] * env['horizon'] * model['num_agents']
+        if demo_budget + model['num_agents'] > train['max_agent_transitions']:
+            raise ValueError('Demonstrations must leave room inside the total transition budget')
+        if train['episode_seed_start'] + imitation['episodes'] > train['episode_seed_end']:
+            raise ValueError('Imitation leaves no PPO training seed')
     execution = config['execution']
     if (execution['rendering'] is not False or execution['log_mode'] != 'files_only'
             or execution['requires_explicit_train_mode'] is not True):
@@ -138,7 +161,8 @@ def validate_config(config):
 
 def sources():
     names = ['experiments/run_sumo_mappo.py', 'experiments/sumo_mappo_support.py',
-             'experiments/sumo_mappo_rollout.py', 'experiments/configs/sumo_mappo_v1.json',
+             'experiments/sumo_mappo_rollout.py', 'experiments/sumo_mappo_imitation.py',
+             'experiments/configs/sumo_mappo_v1.json',
              'policies/mappo.py', 'environments/sumo_mappo_env.py', 'traffic/mappo_sumo.py',
              'traffic/sumo_backend.py', 'traffic/mappo_communication.py', 'requirements.txt']
     names += [str(path.relative_to(ROOT)).replace('\\', '/')

@@ -135,22 +135,26 @@ def evaluate(config, kind, seeds, output, logs, tag, *, model=None, deadline=Non
     if pool.forced_cleanup:
         raise RuntimeError('Evaluation workers required forced cleanup')
     result = dict(controller=kind, episodes=episodes,
-                  summary=aggregate(episodes, config['evaluation']['acceptance'],config['evaluation'].get('driving_targets')))
+                  summary=aggregate(episodes, config['evaluation']['acceptance'],config['evaluation'].get('driving_targets'),
+                                    selection=config['evaluation']['selection']))
     atomic_json(run / 'evaluation.json', result)
     return result
 
 
-def save_checkpoint(path, model, trainer, config, transitions, update, next_seed, best_score, optimizer_steps=0):
+def save_checkpoint(path, model, trainer, config, transitions, update, next_seed, best_score, optimizer_steps=0,
+                    imitation_metadata=None):
     import numpy as np
     import torch
     numpy_state = np.random.get_state()
     payload = dict(schema_version=1, model_state=model.state_dict(), optimizer_state=trainer.optimizer.state_dict(),
                    config=config, config_sha256=config_digest(config), agent_transitions=transitions,
                    update=update, next_episode_seed=next_seed, best_score=list(best_score),
-                   optimizer_steps_in_run=optimizer_steps,
+                   optimizer_steps_in_run=optimizer_steps, optimizer_steps_total=optimizer_steps,
                    torch_rng_state=torch.get_rng_state(), python_rng_state=random.getstate(),
                    numpy_rng_state=[numpy_state[0], numpy_state[1].tolist(), *numpy_state[2:]],
                    resume_boundary='fresh episodes; in-flight SUMO state is not checkpointed')
+    if imitation_metadata is not None:
+        payload['imitation'] = deepcopy(imitation_metadata)
     temporary = Path(path).with_suffix('.tmp')
     torch.save(payload, temporary)
     os.replace(temporary, path)
@@ -261,18 +265,62 @@ def train(config, output, logs, deadline, resume=None):
     model = make_model(config)
     keys = ('actor_lr', 'critic_lr', 'clip', 'value_clip', 'entropy_coef', 'value_coef',
             'max_grad_norm', 'epochs', 'minibatch_size', 'target_kl')
-    trainer = MappoTrainer(model, **{key: settings[key] for key in keys})
+    imitation_settings = settings.get('imitation')
+    imitation_enabled = bool(imitation_settings and imitation_settings['enabled'])
+    trainer_options = {key: settings[key] for key in keys}
+    if imitation_enabled:
+        trainer_options.update(imitation_coef=imitation_settings['coefficient'],
+                               imitation_lane_change_weight=imitation_settings['lane_change_weight'])
+    trainer = MappoTrainer(model, **trainer_options)
     count = update = optimizer_steps = 0
     best_score = ()
     next_seed = settings['episode_seed_start']
+    imitation_metadata = None
     checkpoints = output / 'checkpoints'
     checkpoints.mkdir()
     if resume:
         restored = load_checkpoint(resume, model, config, trainer)
         count, update, next_seed = restored['agent_transitions'], restored['update'], restored['next_episode_seed']
+        optimizer_steps = restored.get('optimizer_steps_total', restored.get('optimizer_steps_in_run', 0))
+        if imitation_enabled:
+            imitation_metadata = restored.get('imitation')
+            if not imitation_metadata or not imitation_metadata.get('warm_start_completed'):
+                raise ValueError('Imitation resume requires completed warm-start metadata')
+            if imitation_metadata['agent_transitions'] > count:
+                raise ValueError('Imitation checkpoint transition accounting is inconsistent')
         # A resumed run selects its own best snapshot on fresh validation; the parent remains immutable.
         if settings['max_agent_transitions'] - count < config['model']['num_agents']:
             raise ValueError('Checkpoint leaves insufficient budget for a fresh four-agent step')
+    elif imitation_enabled:
+        from experiments.sumo_mappo_imitation import collect_demonstrations
+        demonstrations, teacher_actions, imitation_metadata = collect_demonstrations(config, output, logs, deadline)
+        count = imitation_metadata['agent_transitions']
+        next_seed = imitation_metadata['next_episode_seed']
+        atomic_json(output / 'status.json', dict(status='imitation', agent_transitions=count, update=0,
+                    optimizer_steps=0, imitation=imitation_metadata, rendering=False))
+        imitation_losses = trainer.behavior_clone(demonstrations, teacher_actions,
+            epochs=imitation_settings['epochs'], minibatch_size=imitation_settings['minibatch_size'],
+            learning_rate=imitation_settings['learning_rate'], initial_log_std=imitation_settings['initial_log_std'],
+            deadline=deadline, seed=settings['seed'])
+        optimizer_steps += imitation_losses['optimizer_steps']
+        imitation_metadata.update(warm_start_completed=True, optimization=imitation_losses)
+        atomic_json(output / 'imitation' / 'warm-start.json', imitation_metadata)
+        save_checkpoint(checkpoints / 'latest.pt', model, trainer, config, count, update,
+                        next_seed, best_score, optimizer_steps, imitation_metadata)
+        del demonstrations, teacher_actions
+    if imitation_enabled:
+        # Retain the supervised actor as a candidate if subsequent PPO regresses.
+        # Resume also evaluates its restored actor before taking another update.
+        atomic_json(output / 'status.json', dict(status='training', agent_transitions=count, update=update,
+                    optimizer_steps=optimizer_steps, imitation=imitation_metadata, rendering=False))
+        validation = evaluate(config, 'learned', config['evaluation']['validation_seeds'], output, logs,
+                              'validation-' + str(update), model=model, deadline=deadline)
+        best_score = tuple(validation['summary']['selection_score'])
+        save_checkpoint(checkpoints / 'best.pt', model, trainer, config, count, update,
+                        next_seed, best_score, optimizer_steps, imitation_metadata)
+        save_checkpoint(checkpoints / 'latest.pt', model, trainer, config, count, update,
+                        next_seed, best_score, optimizer_steps, imitation_metadata)
+        export_actor(model, output / 'policy.pt')
     with gzip.open(output / 'training-actions.jsonl.gz', 'wt', encoding='utf-8') as journal, \
             (output / 'updates.jsonl').open('x', encoding='utf-8', buffering=1) as updates, \
             (output / 'episodes.jsonl').open('x', encoding='utf-8', buffering=1) as episodes:
@@ -291,7 +339,7 @@ def train(config, output, logs, deadline, resume=None):
                 update += 1
                 # Persist learned work before validation can fail or reach its deadline.
                 save_checkpoint(checkpoints / 'latest.pt', model, trainer, config, count, update,
-                                collector.next_seed, best_score, optimizer_steps)
+                                collector.next_seed, best_score, optimizer_steps, imitation_metadata)
                 atomic_json(output / 'status.json', dict(status='training', agent_transitions=count, update=update,
                     optimizer_steps=optimizer_steps, environment_agent_transitions=collector.total_agent_transitions,
                     rendering=False))
@@ -307,10 +355,10 @@ def train(config, output, logs, deadline, resume=None):
                     if score > best_score:
                         best_score = score
                         save_checkpoint(checkpoints / 'best.pt', model, trainer, config, count, update,
-                                        collector.next_seed, best_score, optimizer_steps)
+                                        collector.next_seed, best_score, optimizer_steps, imitation_metadata)
                         export_actor(model, output / 'policy.pt')
                 save_checkpoint(checkpoints / 'latest.pt', model, trainer, config, count, update,
-                                collector.next_seed, best_score, optimizer_steps)
+                                collector.next_seed, best_score, optimizer_steps, imitation_metadata)
                 updates.write(json.dumps(jsonable(row), allow_nan=False) + '\n')
                 atomic_json(output / 'status.json', dict(status='training', agent_transitions=count, update=update,
                                                          optimizer_steps=optimizer_steps, rendering=False))
@@ -325,6 +373,8 @@ def train(config, output, logs, deadline, resume=None):
                                       'held-out-' + kind, model=selected, deadline=deadline, journal=journal)
     benefit_prefix='cooperation' if config['environment'].get('driving') else 'wave'
     return dict(training=True, optimizer_steps=optimizer_steps, agent_transitions=count,
+                imitation=imitation_metadata,
+                ppo_agent_transitions=count - (imitation_metadata['agent_transitions'] if imitation_metadata else 0),
                 unused_transition_budget=settings['max_agent_transitions'] - count,
                 updates=update, held_out=held_out, best_validation_score=best_score,
                 policy='policy.pt', checkpoint='checkpoints/best.pt', latest_checkpoint='checkpoints/latest.pt',

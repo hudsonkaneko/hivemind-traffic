@@ -61,3 +61,16 @@ def test_actual_headway_commands_are_separate_from_next_observation_eligibility(
     result=metrics.result()['driving']
     assert result['applied_cooperative_steps']==1 and result['applied_fallback_steps']==1
     assert result['cooperative_eligible_steps']==1 and result['fallback_following_steps']==1
+
+
+def test_refined_selection_does_not_prefer_reward_without_passing_or_ignore_safety():
+    rule='accepted_then_safety_then_driving_targets_then_fewer_interventions_then_reward'
+    follows=episode(1,passes=0); follows['team_reward']=10000
+    passes=episode(1); passes['interventions']=240  # 10%, still rejected
+    safe=episode(1); safe['team_reward']=-10000
+    score=lambda row: tuple(aggregate([row],ACCEPTANCE,TARGETS,selection=rule)['selection_score'])
+    assert score(safe)>score(passes)>score(follows)
+    crash=copy.deepcopy(passes);crash['collision_vehicles']=1
+    assert score(follows)>score(crash)
+    lower=copy.deepcopy(passes);lower['interventions']=144;lower['team_reward']=-20000
+    assert score(lower)>score(passes)

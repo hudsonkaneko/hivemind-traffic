@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import copy
 import math
+import time
 from pathlib import Path
 from typing import Mapping, Sequence
 
@@ -295,11 +296,18 @@ class MappoTrainer:
         epochs: int = 4,
         minibatch_size: int = 256,
         target_kl: float = 0.02,
+        imitation_coef: float = 0.0,
+        imitation_lane_change_weight: float = 10.0,
     ):
         if any(not math.isfinite(v) or v <= 0 for v in (actor_lr, critic_lr, clip, value_clip, max_grad_norm, target_kl)):
             raise ValueError("Optimizer rates, clipping bounds and KL limit must be positive")
         if epochs <= 0 or minibatch_size <= 0 or entropy_coef < 0 or value_coef < 0:
             raise ValueError("Invalid PPO update parameters")
+        if (not math.isfinite(imitation_coef) or imitation_coef < 0
+                or not math.isfinite(imitation_lane_change_weight) or imitation_lane_change_weight < 1):
+            raise ValueError('Invalid imitation loss settings')
+        if imitation_coef and not model.hybrid_actions:
+            raise ValueError('Imitation assistance requires the hybrid driving actor')
         self.model = model
         self.clip = clip
         self.value_clip = value_clip
@@ -309,10 +317,95 @@ class MappoTrainer:
         self.epochs = epochs
         self.minibatch_size = minibatch_size
         self.target_kl = target_kl
+        self.imitation_coef = imitation_coef
+        self.imitation_lane_change_weight = imitation_lane_change_weight
         self.optimizer = torch.optim.Adam([
             {"params": list(model.actor.parameters()) + [model.log_std], "lr": actor_lr},
             {"params": model.critic.parameters(), "lr": critic_lr},
         ], eps=1e-5)
+
+    def _imitation_loss(self, observations: torch.Tensor, teacher_actions: torch.Tensor):
+        """Training-only supervision; never changes deployment action selection.
+
+        Labels must use the observation's legal lane mask. The continuous mean
+        is fit in the normalized action space, so saturated teacher actions do
+        not require an undefined inverse tanh. Lane-change rows receive the
+        declared relative weight to account for their rarity in demonstrations.
+        """
+        if not self.model.hybrid_actions:
+            raise ValueError('Imitation assistance requires the hybrid driving actor')
+        if (observations.ndim != 2 or observations.shape[-1] != self.model.observation_size
+                or teacher_actions.shape != (observations.shape[0], self.model.action_size)
+                or not len(observations)):
+            raise ValueError('Imitation observations/actions have incompatible shapes')
+        if not torch.isfinite(observations).all() or not torch.isfinite(teacher_actions).all():
+            raise ValueError('Imitation observations/actions must be finite')
+        delta = teacher_actions[:, 1]
+        if (teacher_actions[:, 0].abs() > 1).any() or (
+                (delta < -1) | (delta > 1) | (delta != delta.round())).any():
+            raise ValueError('Imitation action is outside the hybrid action contract')
+        raw = self.model.actor.mean_net(observations)
+        logits = self.model.actor.lane_logits(observations, raw)
+        labels = (delta + 1).long()
+        if (logits.gather(-1, labels.unsqueeze(-1)) < -1e8).any():
+            raise ValueError('Imitation lane label violates its observation mask')
+        acceleration_loss = F.mse_loss(raw[:, :1].tanh(), teacher_actions[:, :1].detach())
+        weights = torch.where(delta == 0, torch.ones_like(delta),
+                              torch.full_like(delta, self.imitation_lane_change_weight))
+        lane_loss = (F.cross_entropy(logits, labels, reduction='none') * weights).mean()
+        return acceleration_loss + lane_loss, acceleration_loss, lane_loss
+
+    def behavior_clone(self, observations: torch.Tensor, teacher_actions: torch.Tensor, *,
+                       epochs: int, minibatch_size: int = 512, learning_rate: float = 3e-4,
+                       initial_log_std: float = -2., deadline: float | None = None,
+                       seed: int = 0) -> dict:
+        """Fit only actor parameters on training demonstrations before MAPPO.
+
+        Uses a separate optimizer, leaving critic and PPO optimizer state
+        untouched. The caller owns transition/seed accounting and persists this
+        stage's dataset, metrics and resulting full checkpoint before PPO.
+        """
+        if (type(epochs) is not int or epochs <= 0 or type(minibatch_size) is not int
+                or minibatch_size <= 0 or not math.isfinite(learning_rate) or learning_rate <= 0
+                or not math.isfinite(initial_log_std) or not -5 <= initial_log_std <= 2
+                or type(seed) is not int or seed < 0):
+            raise ValueError('Invalid behavior-cloning settings')
+        observations, teacher_actions = observations.detach(), teacher_actions.detach()
+        with torch.no_grad():
+            initial_loss = float(self._imitation_loss(observations, teacher_actions)[0])
+        if not math.isfinite(initial_loss):
+            raise ValueError('Nonfinite initial behavior-cloning loss')
+        parameters = list(self.model.actor.parameters())
+        optimizer = torch.optim.Adam(parameters, lr=learning_rate, eps=1e-5)
+        generator = torch.Generator(device=observations.device).manual_seed(seed)
+        totals = np.zeros(3, dtype=np.float64)
+        steps = samples_seen = 0
+        for _epoch in range(epochs):
+            permutation = torch.randperm(len(observations), generator=generator, device=observations.device)
+            for start in range(0, len(observations), minibatch_size):
+                if deadline is not None and time.monotonic() >= deadline:
+                    raise TimeoutError('Experiment wall-time budget reached during behavior cloning')
+                indices = permutation[start:start + minibatch_size]
+                losses = self._imitation_loss(observations[indices], teacher_actions[indices])
+                if not all(torch.isfinite(value) for value in losses):
+                    raise ValueError('Nonfinite behavior-cloning loss')
+                optimizer.zero_grad(set_to_none=True)
+                losses[0].backward()
+                nn.utils.clip_grad_norm_(parameters, self.max_grad_norm, error_if_nonfinite=True)
+                optimizer.step()
+                totals += np.asarray([float(value.detach()) for value in losses]) * len(indices)
+                samples_seen += len(indices)
+                steps += 1
+        with torch.no_grad():
+            final_loss = float(self._imitation_loss(observations, teacher_actions)[0])
+            if not math.isfinite(final_loss):
+                raise ValueError('Nonfinite final behavior-cloning loss')
+            self.model.log_std.fill_(initial_log_std)
+        means = totals / samples_seen
+        return dict(optimizer_steps=steps, examples=len(observations), samples_seen=samples_seen,
+                    epochs=epochs, initial_loss=initial_loss, final_loss=final_loss,
+                    imitation_loss=float(means[0]), imitation_acceleration_loss=float(means[1]),
+                    imitation_lane_loss=float(means[2]), initial_log_std=initial_log_std, seed=seed)
 
     def update(self, batch: Mapping[str, torch.Tensor]) -> dict:
         widths = {
@@ -321,6 +414,8 @@ class MappoTrainer:
             "actions": self.model.action_size,
             "pre_tanh_actions": self.model.action_size,
         }
+        if self.imitation_coef:
+            widths['teacher_actions'] = self.model.action_size
         scalar_names = ("agent_indices", "old_log_probs", "old_values", "advantages", "returns")
         leading = batch["active"].shape
         active = batch["active"].bool().reshape(-1)
@@ -329,6 +424,8 @@ class MappoTrainer:
             raise ValueError("MAPPO update needs at least one active transition")
         data = {}
         for name in (*widths, *scalar_names):
+            if name not in batch:
+                raise ValueError(f'Missing required batch field {name}')
             expected = leading + ((widths[name],) if name in widths else ())
             if batch[name].shape != expected:
                 raise ValueError(f"Batch field {name} expected shape {expected}")
@@ -369,6 +466,14 @@ class MappoTrainer:
                 ).mean()
                 entropy_mean = entropy.mean()
                 loss = actor_loss + self.value_coef * value_loss - self.entropy_coef * entropy_mean
+                imitation_stats = {}
+                if self.imitation_coef:
+                    imitation_loss, acceleration_imitation, lane_imitation = self._imitation_loss(
+                        part['local_obs'], part['teacher_actions'])
+                    loss = loss + self.imitation_coef * imitation_loss
+                    imitation_stats = dict(imitation_loss=float(imitation_loss.detach()),
+                        imitation_acceleration_loss=float(acceleration_imitation.detach()),
+                        imitation_lane_loss=float(lane_imitation.detach()))
                 if not torch.isfinite(loss):
                     raise ValueError("Nonfinite MAPPO loss")
                 self.optimizer.zero_grad(set_to_none=True)
@@ -382,6 +487,7 @@ class MappoTrainer:
                     "approx_kl": last_kl,
                     "clip_fraction": float(((ratio - 1.0).abs() > self.clip).float().mean().detach()),
                     "grad_norm_before_clip": float(grad_norm),
+                    **imitation_stats,
                 })
             if early_stopped:
                 break

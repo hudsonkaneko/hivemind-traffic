@@ -729,3 +729,7 @@ Implemented hybrid acceleration/lane actions, delivered lane intent, guarded coo
 ## 2026-10-29 — MAPPO v04 completed pilot (not accepted)
 
 Completed the approved 1,000,000-agent-transition run in 21 min 24 s without runtime errors or monitoring. Exported update 175 failed held-out acceptance: zero collisions/overspeed, 7.7275% interventions and zero passes. Later validation checkpoints learned passing but failed other gates; no accepted v04 replaces v02. Retained checkpoints, raw metrics, exact held-out evaluation and per-seed CSV. Independent review found no evident recovery bug; the approved budget is exhausted. See [results](sumo-mappo-v4.md#completed-pilot-not-accepted). Google guide and full Markdown mirror synchronized.
+
+## 2026-10-29 — MAPPO v04r1 retraining preparation
+
+Added training-only scripted imitation initialization and on-policy auxiliary teacher labels, within a single one-million-transition budget. Preserved safety/reward/action contracts and made checkpoint selection prioritize driving targets and intervention rate over reward. Fresh validation/test seeds, 167 passing tests and successful native no-learning preflight are recorded in [the refinement note](sumo-mappo-v4-refinement.md). The user authorized retraining; learned results and Google guide synchronization follow completion.

@@ -193,6 +193,8 @@ class RolloutCollector:
                 action, log_prob, _, latent = self.model.act(torch.from_numpy(local))
                 values = self.model.values(torch.from_numpy(states), identities)
             commands = {index: ('step', {}) for index in selected}
+            teacher = (self.pool.request({index: ('scripted_action', False) for index in selected})
+                       if self.config['training'].get('imitation', {}).get('enabled', False) else None)
             positions = {}
             for n, (index, agent) in enumerate(keys):
                 commands[index][1][agent] = action[n].numpy().copy()
@@ -212,6 +214,8 @@ class RolloutCollector:
                            rewards=np.zeros(4, np.float32), next_values=next_values.numpy(),
                            terminated=np.ones(4, dtype=bool), truncated=np.zeros(4, dtype=bool),
                            active=np.zeros(4, dtype=bool))
+                if teacher is not None:
+                    row['teacher_actions'] = np.zeros((4, action.shape[-1]), np.float32)
                 for agent in before['agents']:
                     slot, n = AGENTS.index(agent), positions[index, agent]
                     row['local_obs'][slot] = local[n]
@@ -223,6 +227,8 @@ class RolloutCollector:
                     row['terminated'][slot] = packet['terminated'][agent]
                     row['truncated'][slot] = packet['truncated'][agent]
                     row['active'][slot] = True
+                    if teacher is not None:
+                        row['teacher_actions'][slot] = teacher[index]['actions'][agent]
                 rows[index].append(row)
                 count += len(before['agents'])
                 self.total_agent_transitions += len(before['agents'])
@@ -249,7 +255,7 @@ class RolloutCollector:
         return batch, summaries, count
 
 
-def aggregate(episodes, acceptance=None, driving_targets=None):
+def aggregate(episodes, acceptance=None, driving_targets=None, selection=None):
     if not episodes:
         raise ValueError('Cannot aggregate zero episodes')
     transitions = sum(row['agent_transitions'] for row in episodes)
@@ -310,6 +316,12 @@ def aggregate(episodes, acceptance=None, driving_targets=None):
     result['selection_score'] = [int(result.get('accepted', False)), -result['collision_vehicles'],
                                  -result['overspeed_steps'], result['nominal_episodes'],
                                  result['mean_team_reward'], -result['intervention_fraction']]
+    if selection == 'accepted_then_safety_then_driving_targets_then_fewer_interventions_then_reward':
+        if driving_targets is None:
+            raise ValueError('Driving selection requires declared driving targets')
+        result['selection_score'] = [int(result.get('accepted', False)), -result['collision_vehicles'],
+            -result['overspeed_steps'], result['nominal_episodes'], int(result['driving_targets_met']),
+            -result['intervention_fraction'], result['mean_team_reward']]
     return result
 
 

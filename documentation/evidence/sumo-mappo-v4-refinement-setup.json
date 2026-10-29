@@ -1,0 +1,30 @@
+{
+  "status": "completed",
+  "passed": true,
+  "wall_seconds": 46.188000000081956,
+  "source_unchanged": true,
+  "parameters_unchanged": true,
+  "actor_export_equal": true,
+  "scripted_repeat_equal": true,
+  "rollout": {
+    "agent_transitions": 512,
+    "environment_steps": 128,
+    "likelihood_max_error": 9.5367431640625e-07,
+    "finite": true,
+    "optimizer_steps": 0
+  },
+  "driving_setup_checks": {
+    "reference_acceptance": true,
+    "nominal_reference_episodes": true,
+    "reference_zero_collisions": true,
+    "reference_zero_overspeed": true,
+    "real_lane_change": true,
+    "real_slower_vehicle_pass": true,
+    "fresh_peer_following": true,
+    "ordinary_or_stale_fallback": true,
+    "no_messages_never_enable_cooperative_gap": true
+  },
+  "run_id": "preflight-20261029T230312Z-a42cad2f",
+  "tests_passed": 167,
+  "prior_preflight": "preflight-20261029T230213Z-e07dd24d: checks passed, source-integrity failed because resume-accounting fix overlapped; rerun supersedes validation only, original evidence retained"
+}
