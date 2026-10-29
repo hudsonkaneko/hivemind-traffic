@@ -74,6 +74,68 @@ journals, per-seed evaluations and optimization metrics are retained under a
 unique `outputs/sumo_mappo/v04/` run. Compact evidence belongs in `documentation/`.
 No claim of successful learning is made before evaluation.
 
+## Completed retraining result
+
+Run **train-20261029T230444Z-1a5f80b7** completed without runtime errors in
+**1,410.844 seconds (23 min 31 s)**. The agent waited without monitoring or
+analyzing progress. Sources stayed unchanged. The full budget was consumed:
+48,000 demonstration transitions plus 952,000 on-policy transitions, 5,640
+supervised optimizer steps and 14,537 PPO optimizer steps over 233 PPO updates.
+No recovery or resume was needed. No extra training was launched.
+
+The frozen actor now passes slower cars in all 50 fresh held-out episodes and
+meets the aggregate 5% intervention ceiling. **Full acceptance still fails**
+because one episode exceeds the per-car lane-change frequency limit.
+
+| Held-out result, 50 episodes each | Refined neural actor | Scripted reference |
+| --- | ---: | ---: |
+| Safety interventions | 4.9583% | 0.1117% |
+| Slower-car passes | 82 | 80 |
+| Episodes with at least one pass | 50 / 50 | 50 / 50 |
+| Applied lane changes | 331 | 171 |
+| Maximum changes / car / minute | 8 | 1 |
+| Collisions / overspeed / required-gap deficits | 0 / 0 / 0 | 0 / 0 / 0 |
+| Mean per-car progress | 1,449.63 m | 1,488.69 m |
+| Minimum measured headway | 1.614 s | 1.630 s |
+| Mean cooperative-eligible headway | 2.665 s | 2.043 s |
+| Full acceptance | **No** | Yes |
+
+The frequency failure is seed **2210006**: `agent_2` made eight lane changes
+in 60 seconds; the episode still completed two passes. The remaining 49
+episodes meet the frequency gate. The aggregate intervention result is close
+to its limit and does not imply every individual episode is below 5%.
+The original v04 held-out set differed, so the previous 7.7275% versus current
+4.9583% is a descriptive comparison, not a paired same-seed improvement estimate.
+
+The declared validation rule selected **update 225 (969,600 total transitions)**.
+Its ten validation episodes had 6.6625% interventions, 18 passes and at most
+five changes/car/minute. The final update 233 had 8.2875% interventions, 15
+passes and at most four changes/car/minute. Neither passed every validation
+gate. Selection did not use held-out results. The supervised-only update-0
+candidate had 9.692% validation interventions; the selected actor includes
+actual PPO updates, not only demonstration fitting. Independent post-run review
+confirmed no skipped optimizer updates, teacher at inference or scripted fallback.
+
+The initial supervised loss fell from 0.797593 to 0.002545; this measures fitting
+the teacher labels, not independent driving acceptance. The unchanged stopping
+bound still takes precedence over the desired 0.8 s cooperative headway. No
+short-gap advantage, causal communication benefit or 3D/physical capability is
+established. Accepted v02 remains available and is not superseded.
+
+Source commit: `584dd9760d91560f019340b14f85a25acc7db4b8`. Exported actor SHA256:
+`6695282f8128168316feec7e26692d1644e6815deaa458ad625555bbc025ce52`.
+Full local policy, best/latest resumable checkpoints, demonstration dataset,
+action journals, per-seed evaluations and manifests remain under
+`outputs/sumo_mappo/v04/train-20261029T230444Z-1a5f80b7/`.
+
+Versioned review files: [summary and checkpoint provenance](evidence/sumo-mappo-v4-refinement/summary.json),
+[exact learned evaluation](evidence/sumo-mappo-v4-refinement/held-out-learned-evaluation.json),
+[all-controller per-seed metrics](evidence/sumo-mappo-v4-refinement/held-out-metrics.csv),
+and [optimization curves](evidence/sumo-mappo-v4-refinement/training-updates.csv).
+The next remaining behavior is unnecessary lane switching. Any further training
+should use a declared refinement and fresh test set rather than tune against
+seed 2210006 or silently extend this exhausted budget.
+
 Configuration SHA256: `b092e1ceb14b6f42d2f5a3b3ba8324d9a3cac2b4ca19562221158a2142d14018`.
 
 167 targeted tests passed. Independent review confirmed that teacher labels

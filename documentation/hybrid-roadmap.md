@@ -396,3 +396,7 @@ The v14 main-car sensor replay gate passed for 60 seconds: seven cameras, five L
 ### 2026-10-29 checkpoint: v04 passing/cooperative-following setup
 
 [MAPPO v04](sumo-mappo-v4.md) now supports acceleration plus masked lane requests, guarded short-headway eligibility and explicit passing metrics. Native no-learning setup gates pass; the pilot config is ready for review. Learned passing/cooperation, achieved short highway gaps, staged curriculum and physical policy transfer remain unverified. The stopping-distance floor dominates the 0.8-second target at highway speeds.
+
+## October 29: v04r1 SUMO passing refinement
+
+Imitation-assisted MAPPO now passes slower cars in all 50 fresh held-out episodes (82 passes), with 4.9583% aggregate safety interventions and zero collisions/overspeed/required-gap deficits. One episode exceeds the lane-change-frequency limit, so full v04 acceptance remains open and accepted v02 is preserved. Training used the declared one-million-transition budget without runtime errors or agent monitoring. Checkpoints, per-seed metrics and optimization curves are retained; see [v04r1 evidence](sumo-mappo-v4-refinement.md). Next behavior gate is unnecessary lane switching. No new 3D, physical-steering or causal communication benefit is established.

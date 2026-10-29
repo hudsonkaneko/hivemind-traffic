@@ -4,6 +4,12 @@ October 29, 2026. Setup validated and the approved v04 pilot completed. The pilo
 failed learned-policy acceptance; see the results below. The accepted v02 actor
 remains available and unchanged. v04 has a different observation/action contract.
 
+Follow-up: the [v04r1 refinement](sumo-mappo-v4-refinement.md) completed after user
+authorization. Its neural actor passed slower cars in all 50 new test episodes
+with 4.9583% aggregate overrides, but one episode exceeded the lane-change
+frequency limit. Full v04 acceptance remains open. The original pilot below
+is preserved as historical evidence.
+
 ## Scope
 
 Four shared-policy cars drive a straight, three-lane SUMO highway with ordinary

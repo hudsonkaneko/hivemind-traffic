@@ -733,3 +733,7 @@ Completed the approved 1,000,000-agent-transition run in 21 min 24 s without run
 ## 2026-10-29 — MAPPO v04r1 retraining preparation
 
 Added training-only scripted imitation initialization and on-policy auxiliary teacher labels, within a single one-million-transition budget. Preserved safety/reward/action contracts and made checkpoint selection prioritize driving targets and intervention rate over reward. Fresh validation/test seeds, 167 passing tests and successful native no-learning preflight are recorded in [the refinement note](sumo-mappo-v4-refinement.md). The user authorized retraining; learned results and Google guide synchronization follow completion.
+
+## 2026-10-29 — MAPPO v04r1 passing-capable result
+
+The authorized retraining completed without errors in 23 min 31 s, using 48,000 demonstration plus 952,000 PPO transitions. Frozen neural inference achieved 82 passes across all 50 fresh test episodes, 4.9583% aggregate overrides and zero collisions/overspeed/gap deficits. One episode exceeded the six-changes/car/minute limit (8), so full acceptance remains false. Retained all checkpoints, exact per-seed metrics and learning curves; no teacher runs at inference. See [results and limits](sumo-mappo-v4-refinement.md). Google guide and complete Markdown mirror synchronized.

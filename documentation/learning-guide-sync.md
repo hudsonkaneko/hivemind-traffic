@@ -390,3 +390,7 @@ Full native read matched the existing mirror before editing. Appended verified v
 ## October 29: completed v04 training pilot
 
 Appended actual training outcome, failed learned acceptance, best-versus-latest checkpoint comparison, scripted baseline, retained metrics and budget status to tab 41. Fresh revision-guarded native editing and full readback preserved all 42 tabs and all 41 unaffected tab bodies. Regenerated and checked the complete mirror from `outputs/doc-sync/mappo-v04-training/verified-source.json`. Native pagination was not inspected. No accepted-checkpoint or physical-transfer claim was added.
+
+## October 29: v04r1 retraining and results
+
+Appended the imitation-assisted training method, exact budget/splits, measured passing and intervention results, one excessive-lane-switching episode and retained evidence to tab 41. Revision-guarded edit and full readback preserved all 42 tabs and all 41 unaffected tab bodies. Regenerated and checked from `outputs/doc-sync/mappo-v04-refinement/verified-source.json`. Native pagination was not inspected. No full acceptance, matched-seed gain or physical-transfer claim was added.
