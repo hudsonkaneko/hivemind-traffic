@@ -146,6 +146,9 @@ ran. The final committed source can be checked against those hashes.
 Independent review verified all 238 recorded artifact hashes, 13 source hashes
 and 10 source-vehicle hashes. All 24 barriers needed one extra render-only
 update; assigned-point ages range from 0.128388 to 50 ms, with no future returns.
+The 44 tests also pass from a fresh archive of committed source `39df28f`,
+without the workspace's unrelated untracked preparation tools. The local
+check is retained in `outputs/validation/semantic-lidar-clean-39df28f/verification.log`.
 
 [Compact metrics and provenance](evidence/semantic-lidar-fusion-v01/results.json)
 are committed alongside these actual sensor screenshots:
