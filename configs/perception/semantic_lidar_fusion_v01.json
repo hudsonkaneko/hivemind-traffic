@@ -1,0 +1,35 @@
+{
+  "version": "semantic-lidar-fusion-v01",
+  "training": false,
+  "source_vehicle": "vehicles/sim_ready/americano-i7-ev/v14",
+  "frames": 8,
+  "capture_start_s": 1.2,
+  "frame_stride_s": 0.1,
+  "max_wall_seconds_per_case": 180,
+  "fusion": {
+    "max_time_delta_s": 0.05,
+    "occlusion_cell_px": 2,
+    "occlusion_tolerance_m": 0.15,
+    "boundary_margin_px": 2,
+    "min_confidence": 0.0
+  },
+  "gates": {
+    "minimum_class_accuracy": 0.9,
+    "minimum_class_points": 20,
+    "minimum_roi_coverage": 0.2,
+    "minimum_vehicle_frames": 4,
+    "minimum_oracle_coverage": 0.98
+  },
+  "cases": [
+    {"scene_id": "static-101", "mode": "static", "seed": 101, "moving_speed_m_s": 0.0, "minimum_accuracy": 0.97},
+    {"scene_id": "moving-2mps-201", "mode": "moving", "seed": 201, "moving_speed_m_s": 2.0, "minimum_accuracy": 0.95},
+    {"scene_id": "moving-10mps-301", "mode": "moving", "seed": 301, "moving_speed_m_s": 10.0, "minimum_accuracy": 0.95}
+  ],
+  "limitations": [
+    "Ground-truth camera masks validate geometry; no trained perception model",
+    "Ground-truth object IDs and depth are evaluation-only, never fusion inputs",
+    "WORLD NONCOMPENSATED returns are time-gated, not moving-object deskewed",
+    "Sparse LiDAR depth cannot resolve every camera-only occluder",
+    "Parked ego and scripted traffic fixtures do not validate highway-speed ego-motion"
+  ]
+}
