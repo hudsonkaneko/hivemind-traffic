@@ -10,11 +10,32 @@ import json
 import math
 from pathlib import Path
 import sys
+import time
 import traceback
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 CLASSES = dict(background=0, drivable=1, lane=2, vehicle=3, pedestrian=4, obstacle=5)
+
+
+def canonical_classes(names):
+    """The prepared asset's 'car' semantic is a member of vehicle class 3."""
+    return {'vehicle' if name == 'car' else name for name in names}
+
+
+def aligned_capture_schedule(origin_steps, origin_time_s, warmup_s, stride_ticks, frame_count):
+    """Align native 20 Hz LiDAR and 10 Hz cameras after manager startup ticks."""
+    if (not math.isclose(origin_steps/120., origin_time_s, rel_tol=0, abs_tol=1e-6)
+            or stride_ticks % 12):
+        raise ValueError('Native origin/capture stride is incompatible with the 10 Hz sensor grid')
+    first_absolute_tick = math.ceil((origin_time_s+warmup_s)*10.-1e-9)*12
+    first_relative_tick = first_absolute_tick-origin_steps
+    ticks = [first_relative_tick+stride_ticks*i for i in range(frame_count)]
+    return ticks, dict(requested_warmup_s=warmup_s, origin_physics_steps=origin_steps,
+        origin_time_s=origin_time_s, render_absolute_tick_modulus=6,
+        camera_absolute_tick_modulus=12, first_relative_tick=ticks[0], last_relative_tick=ticks[-1],
+        actual_warmup_s=ticks[0]/120., first_capture_absolute_s=(origin_steps+ticks[0])/120.,
+        last_capture_absolute_s=(origin_steps+ticks[-1])/120.)
 
 
 def main():
@@ -39,10 +60,8 @@ def main():
         raise ValueError('Capture start/stride must be bounded finite seconds')
     start_tick, stride_ticks = round(start_s*120), round(stride_s*120)
     if (abs(start_tick-start_s*120)>1e-7 or abs(stride_ticks-stride_s*120)>1e-7 or
-            start_tick%6 or stride_ticks%6 or start_s+(frames_requested-1)*stride_s>4.):
-        raise ValueError('Capture times must align with 120Hz physics / 20Hz rendering and finish within four seconds')
-    capture_ticks = set(start_tick+stride_ticks*i for i in range(frames_requested))
-    window_midpoint_s = start_s+(frames_requested-1)*stride_s/2.
+            start_tick%6 or stride_ticks%12 or start_s+(frames_requested-1)*stride_s>4.):
+        raise ValueError('Capture stride must align with 10Hz cameras; requested window must finish within four seconds')
     scene_id = cfg.get('scene_id', 'fusion-'+mode)
     source = (ROOT/cfg.get('source_vehicle', 'vehicles/sim_ready/americano-i7-ev/v14')).resolve()
     if not source.is_relative_to(ROOT/'vehicles/sim_ready'): raise ValueError('Prepared asset must be inside workspace')
@@ -92,7 +111,7 @@ def main():
                 api = UsdSemantics.LabelsAPI(prim, 'class')
                 values = api.GetLabelsAttr().Get() if api else None
                 if values:
-                    names = set(map(str, values))
+                    names = canonical_classes(map(str, values))
                     if len(names) != 1 or not names.issubset(CLASSES): raise RuntimeError('Unknown/ambiguous oracle labels '+str(names))
                     return CLASSES[next(iter(names))]
                 prim = prim.GetParent()
@@ -155,13 +174,22 @@ def main():
             runtime_namespace_exceptions=['/Render', '/OmniverseKit_Persp'])
         reopened = None
 
-        # Direct camera and LiDAR render products work without a UI viewport.
-        # Readiness is checked on native image/packet data after physics warmup.
+        # Let Hydra consume the composed stage before attaching six sensor
+        # products. Headless execution has no viewport readiness handle.
+        for _ in range(40):
+            session.renderer.render()
+            time.sleep(.02)
+        if not session.timeline.is_stopped():
+            raise RuntimeError('Render warmup unexpectedly started the timeline')
+        result['renderer_warmup'] = dict(stopped_timeline_updates=40,
+            sleep_per_update_s=.02, viewport_required=False)
         camera_path = vehicle.path+'/Sensors/CameraFront'
         camera = NativeCamera(camera_path, resolution=(640,360), episode_id=scene_id,
                               calibration_id=vehicle.metadata['multi_camera_rig']['version']+'/CameraFront')
         camera.sensor.attach_annotators(['semantic_segmentation'])
         usd_camera = UsdGeom.Camera(stage.GetPrimAtPath(camera_path))
+        if not math.isclose(float(usd_camera.GetPrim().GetAttribute('omni:sensor:tickRate').Get()),10.):
+            raise RuntimeError('This capture schedule requires the prepared camera tick rate of 10 Hz')
         if str(usd_camera.GetProjectionAttr().Get()) != 'perspective': raise RuntimeError('Only calibrated perspective capture is supported')
         focal = float(usd_camera.GetFocalLengthAttr().Get())
         horizontal = float(usd_camera.GetHorizontalApertureAttr().Get())
@@ -178,8 +206,39 @@ def main():
                 episode_id=scene_id, vehicle_id=spec['name'], tick_source=lambda:session.physics_steps,
                 sensor_path=vehicle.path+'/Sensors/'+spec['name']+'/Scan', mount_translation_m=(0,0,0),
                 scan_profile=spec['runtime_profile']))
+
+        def sensor_status(now_s=None):
+            channels = {}
+            for name in ('rgb', 'distance_to_image_plane', 'semantic_segmentation'):
+                value, _ = camera.sensor.get_data(name)
+                channels[name] = value is not None
+            lidar_rows = []
+            for x in lidars:
+                packet = x.latest
+                row = dict(path=x.path, packet_count=x.packet_count,
+                    timestamp_ns=packet['timestamp_ns'] if packet else None,
+                    frame_end_ns=packet['frame_end_ns'] if packet else None,
+                    delivery_tick=packet['delivery_tick'] if packet else None,
+                    errors=x.errors+x.base.errors)
+                if packet is not None and now_s is not None:
+                    hits = (packet['flags'].astype(np.uint32)&64) != 0
+                    age = now_s-packet['timestamp_s']
+                    row.update(frame_end_age_s=now_s-packet['frame_end_ns']*1e-9,
+                        newest_point_age_s=float(age.min()), oldest_point_age_s=float(age.max()),
+                        eligible_hits_within_50ms=int(np.count_nonzero(hits & (age >= -1e-5) & (age <= .05))))
+                lidar_rows.append(row)
+            return dict(camera_channels=channels,
+                camera_render_product=str(camera.sensor.render_product.GetPath()),
+                camera_tick_rate_hz=float(stage.GetPrimAtPath(camera_path).GetAttribute('omni:sensor:tickRate').Get()),
+                lidars=lidar_rows)
+
         vehicle.apply(AppliedControl(0,0,1,'fusion_capture_parked',None,True),700,1500)
         session.start()
+        origin_steps = session.startup['origin_steps']
+        capture_tick_list, result['capture_schedule'] = aligned_capture_schedule(
+            origin_steps, session.startup['origin_time_s'], start_s, stride_ticks, frames_requested)
+        capture_ticks = set(capture_tick_list)
+        window_midpoint_s = (capture_tick_list[0]+capture_tick_list[-1])/240.
         captured_lidar_stamps = {}
         palette = np.array([[30,35,45],[70,180,90],[250,230,60],[60,130,240],[230,80,180],[240,120,40]],dtype=np.uint8)
         for tick in range(1, max(capture_ticks)+1):
@@ -188,16 +247,42 @@ def main():
                 positions = [(16.+speed*elapsed,0.,0.), (20.-speed*.4*elapsed,3.6,0.)]
                 for op, position in zip(ops, positions): op.Set(Gf.Vec3d(*position))
             session.step()
-            if tick%6 == 0: session.render()
+            if (origin_steps+tick)%6 == 0:
+                session.render()
+                # Allow the renderer's asynchronous product work to progress;
+                # this never advances simulation or changes the capture times.
+                time.sleep(.01)
             if tick not in capture_ticks: continue
             absolute_time = session.absolute_time_s
+            # Delivery at this render tick is not acquisition freshness: RTX can
+            # deliver an older in-flight scan. Drain at unchanged simulation time
+            # until native return timestamps support the fixed 50 ms fusion gate.
+            ready_deadline = time.monotonic()+(8. if not frames else 2.)
+            extra_renders = 0
+            while True:
+                status = sensor_status(absolute_time)
+                ready = (all(status['camera_channels'].values()) and all(
+                    row.get('eligible_hits_within_50ms', 0) >= 20 and
+                    abs(row.get('frame_end_age_s', float('inf'))) <= 2e-6 and
+                    row['delivery_tick'] == session.physics_steps
+                    for row in status['lidars']))
+                if ready or time.monotonic() >= ready_deadline: break
+                session.render()
+                extra_renders += 1
+                time.sleep(.02)
+            barrier = dict(ready=ready, max_pairing_skew_s=.05, frame_end_tolerance_s=2e-6,
+                extra_render_only_updates=extra_renders, status=status,
+                physics_steps=session.physics_steps, absolute_time_s=session.absolute_time_s)
+            if not frames: result['first_capture_readiness'] = barrier
+            if not ready:
+                raise RuntimeError('Native sensors could not satisfy the 50 ms pairing barrier: '+json.dumps(status))
             frame, depth = camera.read(absolute_time)
             raw, info = camera.sensor.get_data('semantic_segmentation')
             if raw is None: raise RuntimeError('Missing semantic image')
             raw = raw.numpy().squeeze()
             mask = np.zeros(raw.shape,dtype=np.uint8)
             for key, values in info['idToLabels'].items():
-                names = set(values.get('class','').split(','))-{''}
+                names = canonical_classes(set(values.get('class','').split(','))-{''})
                 known = names & CLASSES.keys()
                 if len(known)>1 or names-CLASSES.keys()-{'BACKGROUND','UNLABELLED'}: raise RuntimeError('Unknown semantic labels '+str(names))
                 if known: mask[raw==int(key)] = CLASSES[next(iter(known))]
@@ -238,6 +323,7 @@ def main():
                 camera_depth_role='evaluation-only; never fusion input',oracle_class_role='evaluation-only per-return RTX object IDs; never fusion input',
                 semantic_mask_role='native simulator ground truth used as prototype mask; no trained perception model',
                 scan_deskewed=False,render_count=session.render_count,physics_steps=session.physics_steps,
+                pairing_barrier=barrier,
                 actor_positions={path:list(UsdGeom.Xformable(stage.GetPrimAtPath(path)).ComputeLocalToWorldTransform(Usd.TimeCode.Default()).ExtractTranslation()) for path in traffic_paths},lidar_timing=timing,
                 rgb_sha256=hashlib.sha256(frame.rgb.tobytes()).hexdigest(),semantic_sha256=hashlib.sha256(mask.tobytes()).hexdigest())
             (output/(stem+'-metadata.json')).write_text(json.dumps(metadata,indent=2))
@@ -258,6 +344,9 @@ def main():
         (output/'object-id-oracle-map.json').write_text(json.dumps(mapping,indent=2))
     except Exception as error:
         result.update(error=repr(error),traceback=traceback.format_exc(),frames=frames)
+        if camera and lidars:
+            try: result['failure_sensor_status'] = sensor_status()
+            except Exception as diagnostic_error: result['diagnostic_error'] = repr(diagnostic_error)
         traceback.print_exc()
     finally:
         result['source_vehicle_unchanged']=package_hashes(source)==source_hashes

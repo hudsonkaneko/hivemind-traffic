@@ -29,6 +29,8 @@ def validate_config(config):
     if any(abs(value * 20 - round(value * 20)) > 1e-8
            for value in (config['capture_start_s'], config['frame_stride_s'])):
         raise ValueError('Capture timing must align with the 20 Hz render clock')
+    if abs(config['frame_stride_s'] * 10 - round(config['frame_stride_s'] * 10)) > 1e-8:
+        raise ValueError('Capture timing must also align with the 10 Hz camera clock')
     if not 30 <= config['max_wall_seconds_per_case'] <= 300:
         raise ValueError('Native process budget must be 30..300 seconds')
     source=(ROOT/config['source_vehicle']).resolve()

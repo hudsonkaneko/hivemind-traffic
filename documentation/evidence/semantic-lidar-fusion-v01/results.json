@@ -1,0 +1,5520 @@
+{
+  "run_id": "20261030T223941Z-65f18896",
+  "passed": true,
+  "training": false,
+  "git_commit_at_run": "749f4e2585c0f471d2219cdd9b749955a43e16fb",
+  "source_hashes": {
+    "experiments/verify_semantic_lidar_fusion.py": "4d0ca753943c2968565fbd3f15412dc66fe0cfa165c349799114d3bfab930d5e",
+    "scripts/capture_semantic_lidar_fusion.py": "73901121b306c8ca7bd19504513628445da886b5fc0953b7487b86f816934c2a",
+    "scripts/evaluate_semantic_lidar_capture.py": "979033f2f50b78c6bec2105e0d10f3626366bf905c1200d478a6c5bfdc2c48ce",
+    "traffic/semantic_lidar_capture.py": "b938282bc23aebacfee075fe2f651fced460b54d97e8cfeb815aed0d4c290187",
+    "traffic/semantic_lidar_fusion.py": "4772144e1b65550eadd9d7f858f8cdf8a72969525d5949c746f3af1e29a5ff53",
+    "traffic/semantic_lidar_evaluation.py": "44719afa3cd264f6635fc69288acd3ccf6dd5661f4814764bbbcdd95e1c275a0",
+    "configs/perception/semantic_lidar_fusion_v01.json": "4577d0d04e5a5ad0fb1c13353471ff49108402ca16e3a2ccd557c8d8b55ea748",
+    "traffic/native_sensor_capture.py": "a5d02e758c558a328074b984699867e487289e6f82c4c40616e74e408800a26b",
+    "traffic/physical_lidar.py": "ded857da402a56d1cc46f91fa12db1f919584c6c4fff9195e499dda9603d54bc",
+    "traffic/rendered_physics_session.py": "2780f1b55b833c2d37fceab2c66b62b2582d1bc96701bd0e523bd8f80652fce9",
+    "usd/showcase_vehicle.py": "f7a5d68176f7c28a42cab2ad8b1272811cda765d59af30812c335432fc046dac",
+    "usd/physical_scene.py": "2f7a0283cf2165538a6d0bf0336e042bf7c46c5110b63a3842fde7435d5e91f9",
+    "visualization/physics_road_view.py": "b1f2b0d473a7ae6c6d9a70262f1c2b6c0a0c9fa5528d4f8a7f8995d81bd6c219"
+  },
+  "source_changed_during_run": [],
+  "config": {
+    "version": "semantic-lidar-fusion-v01",
+    "training": false,
+    "source_vehicle": "vehicles/sim_ready/americano-i7-ev/v14",
+    "frames": 8,
+    "capture_start_s": 1.2,
+    "frame_stride_s": 0.1,
+    "max_wall_seconds_per_case": 180,
+    "fusion": {
+      "max_time_delta_s": 0.05,
+      "occlusion_cell_px": 2,
+      "occlusion_tolerance_m": 0.15,
+      "boundary_margin_px": 2,
+      "min_confidence": 0.0
+    },
+    "gates": {
+      "minimum_class_accuracy": 0.9,
+      "minimum_class_points": 20,
+      "minimum_roi_coverage": 0.2,
+      "minimum_vehicle_frames": 4,
+      "minimum_oracle_coverage": 0.98
+    },
+    "cases": [
+      {
+        "scene_id": "static-101",
+        "mode": "static",
+        "seed": 101,
+        "moving_speed_m_s": 0.0,
+        "minimum_accuracy": 0.97
+      },
+      {
+        "scene_id": "moving-2mps-201",
+        "mode": "moving",
+        "seed": 201,
+        "moving_speed_m_s": 2.0,
+        "minimum_accuracy": 0.95
+      },
+      {
+        "scene_id": "moving-10mps-301",
+        "mode": "moving",
+        "seed": 301,
+        "moving_speed_m_s": 10.0,
+        "minimum_accuracy": 0.95
+      }
+    ],
+    "limitations": [
+      "Ground-truth camera masks validate geometry; no trained perception model",
+      "Ground-truth object IDs and depth are evaluation-only, never fusion inputs",
+      "WORLD NONCOMPENSATED returns are time-gated, not moving-object deskewed",
+      "Sparse LiDAR depth cannot resolve every camera-only occluder",
+      "Parked ego and scripted traffic fixtures do not validate highway-speed ego-motion"
+    ]
+  },
+  "wall_seconds": 99.39099999982864,
+  "runtime": {
+    "isaac_version_file_after_run": "6.0.1-rc.7+release.42383.32955d8d.gl",
+    "rtx_extension_from_log": "1.4.6",
+    "driver_from_log": "621.01",
+    "capture_gpu": "NVIDIA GeForce RTX 5070"
+  },
+  "cases": [
+    {
+      "scene_id": "static-101",
+      "passed": true,
+      "motion_speed_m_s": 0.0,
+      "summary": {
+        "input_points": 313660,
+        "roi_points": 58945,
+        "oracle_known_roi_points": 58945,
+        "assigned_points": 54919,
+        "compared_points": 54919,
+        "correct_points": 54894,
+        "invalid_assigned_points": 0,
+        "frames": 8,
+        "accuracy": 0.9995447841366376,
+        "roi_coverage": 0.9316990414793451,
+        "oracle_roi_coverage": 1.0,
+        "reason_counts": {
+          "accepted": 54919,
+          "invalid_return": 0,
+          "nonfinite_point": 0,
+          "invalid_time": 0,
+          "future_return": 0,
+          "time_skew": 0,
+          "outside_depth_range": 221549,
+          "outside_image": 33166,
+          "sparse_occlusion": 1100,
+          "semantic_boundary": 2926,
+          "unknown_label": 0,
+          "low_confidence": 0
+        },
+        "confusion_matrix": [
+          [
+            3575,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            48467,
+            0,
+            0,
+            0,
+            23
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            1463,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1389
+          ]
+        ],
+        "per_class": {
+          "background": {
+            "roi_truth_points": 4550,
+            "compared_points": 3575,
+            "correct_points": 3575,
+            "predicted_points": 3575,
+            "conditional_accuracy": 1.0,
+            "precision": 1.0,
+            "assignment_coverage": 0.7857142857142857,
+            "frames_with_assigned_truth": 8
+          },
+          "drivable": {
+            "roi_truth_points": 50465,
+            "compared_points": 48490,
+            "correct_points": 48467,
+            "predicted_points": 48467,
+            "conditional_accuracy": 0.9995256753969891,
+            "precision": 1.0,
+            "assignment_coverage": 0.9608639651243436,
+            "frames_with_assigned_truth": 8
+          },
+          "lane": {
+            "roi_truth_points": 189,
+            "compared_points": 2,
+            "correct_points": 0,
+            "predicted_points": 0,
+            "conditional_accuracy": 0.0,
+            "precision": null,
+            "assignment_coverage": 0.010582010582010581,
+            "frames_with_assigned_truth": 2
+          },
+          "vehicle": {
+            "roi_truth_points": 2040,
+            "compared_points": 1463,
+            "correct_points": 1463,
+            "predicted_points": 1463,
+            "conditional_accuracy": 1.0,
+            "precision": 1.0,
+            "assignment_coverage": 0.717156862745098,
+            "frames_with_assigned_truth": 8
+          },
+          "pedestrian": {
+            "roi_truth_points": 0,
+            "compared_points": 0,
+            "correct_points": 0,
+            "predicted_points": 0,
+            "conditional_accuracy": null,
+            "precision": null,
+            "assignment_coverage": null,
+            "frames_with_assigned_truth": 0
+          },
+          "obstacle": {
+            "roi_truth_points": 1701,
+            "compared_points": 1389,
+            "correct_points": 1389,
+            "predicted_points": 1414,
+            "conditional_accuracy": 1.0,
+            "precision": 0.9823196605374823,
+            "assignment_coverage": 0.8165784832451499,
+            "frames_with_assigned_truth": 8
+          }
+        },
+        "gates": {
+          "minimum_accuracy": 0.97,
+          "minimum_class_accuracy": 0.9,
+          "minimum_class_points": 20,
+          "minimum_roi_coverage": 0.2,
+          "minimum_vehicle_frames": 4,
+          "minimum_oracle_coverage": 0.98
+        },
+        "checks": {
+          "overall_accuracy": true,
+          "roi_coverage": true,
+          "oracle_coverage": true,
+          "no_invalid_or_stale_assignments": true,
+          "moving_vehicle_support": true,
+          "vehicle_support": true,
+          "vehicle_accuracy": true,
+          "vehicle_precision": true,
+          "obstacle_support": true,
+          "obstacle_accuracy": true,
+          "obstacle_precision": true
+        },
+        "passed": true,
+        "metric_scope": "Accuracy/precision on assigned independently mapped returns; coverage denominator is all geometrically projectable valid returns before fusion filters"
+      },
+      "actor_support": {
+        "actors": {
+          "/World/Vehicles/vehicle_fusion_adjacent": {
+            "roi_points": 673,
+            "assigned_points": 438,
+            "correct_vehicle_points": 438,
+            "vehicle_accuracy": 1.0,
+            "assignment_coverage": 0.6508172362555721,
+            "frames_with_assigned_points": 8,
+            "first_position_world_m": [
+              20.0,
+              3.6,
+              0.0
+            ],
+            "last_position_world_m": [
+              20.0,
+              3.6,
+              0.0
+            ],
+            "displacement_m": 0.0,
+            "checks": {
+              "assigned_support": true,
+              "frame_support": true,
+              "vehicle_accuracy": true,
+              "nonzero_displacement": false
+            },
+            "passed": false
+          },
+          "/World/Vehicles/vehicle_fusion_lead": {
+            "roi_points": 1367,
+            "assigned_points": 1025,
+            "correct_vehicle_points": 1025,
+            "vehicle_accuracy": 1.0,
+            "assignment_coverage": 0.7498171177761521,
+            "frames_with_assigned_points": 8,
+            "first_position_world_m": [
+              16.0,
+              0.0,
+              0.0
+            ],
+            "last_position_world_m": [
+              16.0,
+              0.0,
+              0.0
+            ],
+            "displacement_m": 0.0,
+            "checks": {
+              "assigned_support": true,
+              "frame_support": true,
+              "vehicle_accuracy": true,
+              "nonzero_displacement": false
+            },
+            "passed": false
+          }
+        },
+        "checks": {
+          "stable_actor_inventory": true,
+          "two_traffic_actors": true,
+          "each_actor_supported": false
+        },
+        "required": false,
+        "passed": true,
+        "scope": "Evaluation-only RTX IDs grouped by actor prim ancestry; displacement from captured actor metadata",
+        "gates": {
+          "minimum_assigned_points": 20,
+          "minimum_frames": 4,
+          "minimum_vehicle_accuracy": 0.9,
+          "minimum_displacement_m": 1e-06
+        }
+      },
+      "negative_controls": {
+        "stale_camera_plus_250ms": {
+          "accepted_points": 0,
+          "passed": true
+        },
+        "camera_lateral_offset_3m": {
+          "input_points": 39200,
+          "roi_points": 4363,
+          "oracle_known_roi_points": 4363,
+          "assigned_points": 3803,
+          "compared_points": 3803,
+          "correct_points": 3008,
+          "roi_coverage": 0.8716479486591795,
+          "oracle_roi_coverage": 1.0,
+          "accuracy": 0.790954509597686,
+          "invalid_assigned_points": 0,
+          "reason_counts": {
+            "accepted": 3803,
+            "invalid_return": 0,
+            "nonfinite_point": 0,
+            "invalid_time": 0,
+            "future_return": 0,
+            "time_skew": 0,
+            "outside_depth_range": 27695,
+            "outside_image": 7142,
+            "sparse_occlusion": 146,
+            "semantic_boundary": 414,
+            "unknown_label": 0,
+            "low_confidence": 0
+          },
+          "confusion_matrix": [
+            [
+              269,
+              210,
+              0,
+              0,
+              0,
+              34
+            ],
+            [
+              265,
+              2680,
+              0,
+              3,
+              0,
+              0
+            ],
+            [
+              8,
+              14,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              127,
+              0,
+              0,
+              59,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              10,
+              50,
+              0,
+              74,
+              0,
+              0
+            ]
+          ],
+          "per_class": {
+            "background": {
+              "roi_truth_points": 602,
+              "compared_points": 513,
+              "correct_points": 269,
+              "predicted_points": 679,
+              "conditional_accuracy": 0.5243664717348928,
+              "precision": 0.3961708394698085,
+              "assignment_coverage": 0.8521594684385382
+            },
+            "drivable": {
+              "roi_truth_points": 3265,
+              "compared_points": 2948,
+              "correct_points": 2680,
+              "predicted_points": 2954,
+              "conditional_accuracy": 0.9090909090909091,
+              "precision": 0.9072444143534191,
+              "assignment_coverage": 0.9029096477794794
+            },
+            "lane": {
+              "roi_truth_points": 23,
+              "compared_points": 22,
+              "correct_points": 0,
+              "predicted_points": 0,
+              "conditional_accuracy": 0.0,
+              "precision": null,
+              "assignment_coverage": 0.9565217391304348
+            },
+            "vehicle": {
+              "roi_truth_points": 256,
+              "compared_points": 186,
+              "correct_points": 59,
+              "predicted_points": 136,
+              "conditional_accuracy": 0.3172043010752688,
+              "precision": 0.4338235294117647,
+              "assignment_coverage": 0.7265625
+            },
+            "pedestrian": {
+              "roi_truth_points": 0,
+              "compared_points": 0,
+              "correct_points": 0,
+              "predicted_points": 0,
+              "conditional_accuracy": null,
+              "precision": null,
+              "assignment_coverage": null
+            },
+            "obstacle": {
+              "roi_truth_points": 217,
+              "compared_points": 134,
+              "correct_points": 0,
+              "predicted_points": 34,
+              "conditional_accuracy": 0.0,
+              "precision": 0.0,
+              "assignment_coverage": 0.6175115207373272
+            }
+          },
+          "absolute_roi_time_skew_s": {
+            "min": 0.0001283880000000348,
+            "median": 0.04402077799999993,
+            "p95": 0.049576333999999944,
+            "max": 0.049992999999999954
+          },
+          "signed_assigned_time_delta_s": {
+            "min": -0.049992999999999954,
+            "median": -0.044295055999999944,
+            "p95": -0.0005485560000000334,
+            "max": -0.0001283880000000348
+          }
+        }
+      },
+      "depth_per_frame": [
+        {
+          "checked_points": 6860,
+          "behind_camera_visible_surface_points": 122,
+          "behind_surface_fraction": 0.017784256559766762,
+          "signed_depth_residual_m": {
+            "min": -0.4291546599576943,
+            "median": -8.989254873070784e-05,
+            "p95": 0.04977003144219814,
+            "max": 3.0270146004916647
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6868,
+          "behind_camera_visible_surface_points": 112,
+          "behind_surface_fraction": 0.016307513104251603,
+          "signed_depth_residual_m": {
+            "min": -0.42539809029195474,
+            "median": -0.00011534509142241411,
+            "p95": 0.04982273656129469,
+            "max": 3.0238869061054903
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6868,
+          "behind_camera_visible_surface_points": 115,
+          "behind_surface_fraction": 0.016744321490972627,
+          "signed_depth_residual_m": {
+            "min": -0.41958192080089773,
+            "median": -0.00010452686570860958,
+            "p95": 0.049333387408188475,
+            "max": 3.0227483718863954
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6861,
+          "behind_camera_visible_surface_points": 118,
+          "behind_surface_fraction": 0.01719865908759656,
+          "signed_depth_residual_m": {
+            "min": -0.42150580290503825,
+            "median": -9.66549358424329e-05,
+            "p95": 0.050620102081047946,
+            "max": 6.282299768242947
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6878,
+          "behind_camera_visible_surface_points": 127,
+          "behind_surface_fraction": 0.018464669962198314,
+          "signed_depth_residual_m": {
+            "min": -0.41788644020482835,
+            "median": -4.153525258732138e-05,
+            "p95": 0.05049797520887264,
+            "max": 3.0273002676640584
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6874,
+          "behind_camera_visible_surface_points": 120,
+          "behind_surface_fraction": 0.017457084666860634,
+          "signed_depth_residual_m": {
+            "min": -0.42676113065395604,
+            "median": -7.22936470524127e-05,
+            "p95": 0.04951374284948524,
+            "max": 6.285015990680092
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6850,
+          "behind_camera_visible_surface_points": 114,
+          "behind_surface_fraction": 0.016642335766423356,
+          "signed_depth_residual_m": {
+            "min": -0.41693914472540783,
+            "median": -5.0996564276373224e-05,
+            "p95": 0.04908392721054616,
+            "max": 3.027829531334678
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6860,
+          "behind_camera_visible_surface_points": 109,
+          "behind_surface_fraction": 0.015889212827988337,
+          "signed_depth_residual_m": {
+            "min": -0.411346180746488,
+            "median": -4.8404971838111877e-05,
+            "p95": 0.049210296140509195,
+            "max": 3.0293243268729473
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        }
+      ],
+      "clock": {
+        "physics_steps": 238,
+        "render_count": 48,
+        "time_s": 1.9833333333333334,
+        "absolute_time_s": 2.0,
+        "native_physics_steps": 240,
+        "physics_hz": 120,
+        "render_hz": 20,
+        "origin_time_s": 0.016666666666666666,
+        "origin_physics_steps": 2
+      },
+      "schedule": {
+        "requested_warmup_s": 1.2,
+        "origin_physics_steps": 2,
+        "origin_time_s": 0.016666666666666666,
+        "render_absolute_tick_modulus": 6,
+        "camera_absolute_tick_modulus": 12,
+        "first_relative_tick": 154,
+        "last_relative_tick": 238,
+        "actual_warmup_s": 1.2833333333333334,
+        "first_capture_absolute_s": 1.3,
+        "last_capture_absolute_s": 2.0
+      },
+      "composition": {
+        "sublayers": [
+          "./traffic-initial.usda",
+          "./debug.usda",
+          "./road-layout.usda",
+          "./source-vehicle-world.usda"
+        ],
+        "errors": [],
+        "default_prim": "/World",
+        "dependency_layers": 15,
+        "missing_dependencies": [],
+        "all_dependencies_local": true,
+        "runtime_namespace_exceptions": [
+          "/Render",
+          "/OmniverseKit_Persp"
+        ]
+      },
+      "source_vehicle_unchanged": true,
+      "buffer_changes": {
+        "unique_rgb": 8,
+        "unique_semantic_masks": 1
+      },
+      "frame_metrics": [
+        {
+          "index": 0,
+          "image_time_s": 1.3,
+          "metrics": {
+            "input_points": 39200,
+            "roi_points": 7357,
+            "oracle_known_roi_points": 7357,
+            "assigned_points": 6860,
+            "compared_points": 6860,
+            "correct_points": 6857,
+            "roi_coverage": 0.9324452901998097,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995626822157434,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6860,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27695,
+              "outside_image": 4148,
+              "sparse_occlusion": 131,
+              "semantic_boundary": 366,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                443,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6054,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                184,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                176
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 560,
+                "compared_points": 443,
+                "correct_points": 443,
+                "predicted_points": 443,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7910714285714285
+              },
+              "drivable": {
+                "roi_truth_points": 6300,
+                "compared_points": 6057,
+                "correct_points": 6054,
+                "predicted_points": 6054,
+                "conditional_accuracy": 0.9995047052996533,
+                "precision": 1.0,
+                "assignment_coverage": 0.9614285714285714
+              },
+              "lane": {
+                "roi_truth_points": 24,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 256,
+                "compared_points": 184,
+                "correct_points": 184,
+                "predicted_points": 184,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.71875
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 217,
+                "compared_points": 176,
+                "correct_points": 176,
+                "predicted_points": 179,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9832402234636871,
+                "assignment_coverage": 0.8110599078341014
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.0001283880000000348,
+              "median": 0.041385388999999995,
+              "p95": 0.0495728339999999,
+              "max": 0.050000000000000044
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.050000000000000044,
+              "median": -0.04152077799999998,
+              "p95": -0.0006839439999999364,
+              "max": -0.0001283880000000348
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6860,
+              "behind_camera_visible_surface_points": 122,
+              "behind_surface_fraction": 0.017784256559766762,
+              "signed_depth_residual_m": {
+                "min": -0.4291546599576943,
+                "median": -8.989254873070784e-05,
+                "p95": 0.04977003144219814,
+                "max": 3.0270146004916647
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 1,
+          "image_time_s": 1.4,
+          "metrics": {
+            "input_points": 39212,
+            "roi_points": 7377,
+            "oracle_known_roi_points": 7377,
+            "assigned_points": 6868,
+            "compared_points": 6868,
+            "correct_points": 6865,
+            "roi_coverage": 0.9310017622339705,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.999563191613279,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6868,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27687,
+              "outside_image": 4148,
+              "sparse_occlusion": 141,
+              "semantic_boundary": 368,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                447,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6058,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                182,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                178
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 572,
+                "compared_points": 447,
+                "correct_points": 447,
+                "predicted_points": 447,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7814685314685315
+              },
+              "drivable": {
+                "roi_truth_points": 6312,
+                "compared_points": 6061,
+                "correct_points": 6058,
+                "predicted_points": 6058,
+                "conditional_accuracy": 0.9995050321729088,
+                "precision": 1.0,
+                "assignment_coverage": 0.960234474017744
+              },
+              "lane": {
+                "roi_truth_points": 22,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 256,
+                "compared_points": 182,
+                "correct_points": 182,
+                "predicted_points": 182,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7109375
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 215,
+                "compared_points": 178,
+                "correct_points": 178,
+                "predicted_points": 181,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9834254143646409,
+                "assignment_coverage": 0.827906976744186
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.04138538899999977,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999976,
+              "p95": -0.0006839439999997143,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6868,
+              "behind_camera_visible_surface_points": 112,
+              "behind_surface_fraction": 0.016307513104251603,
+              "signed_depth_residual_m": {
+                "min": -0.42539809029195474,
+                "median": -0.00011534509142241411,
+                "p95": 0.04982273656129469,
+                "max": 3.0238869061054903
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 2,
+          "image_time_s": 1.5,
+          "metrics": {
+            "input_points": 39214,
+            "roi_points": 7364,
+            "oracle_known_roi_points": 7364,
+            "assigned_points": 6868,
+            "compared_points": 6868,
+            "correct_points": 6865,
+            "roi_coverage": 0.9326453014665942,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.999563191613279,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6868,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27704,
+              "outside_image": 4146,
+              "sparse_occlusion": 138,
+              "semantic_boundary": 358,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                444,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6061,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                182,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                178
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 569,
+                "compared_points": 444,
+                "correct_points": 444,
+                "predicted_points": 444,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7803163444639719
+              },
+              "drivable": {
+                "roi_truth_points": 6304,
+                "compared_points": 6064,
+                "correct_points": 6061,
+                "predicted_points": 6061,
+                "conditional_accuracy": 0.9995052770448549,
+                "precision": 1.0,
+                "assignment_coverage": 0.9619289340101523
+              },
+              "lane": {
+                "roi_truth_points": 23,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 252,
+                "compared_points": 182,
+                "correct_points": 182,
+                "predicted_points": 182,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7222222222222222
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 216,
+                "compared_points": 178,
+                "correct_points": 178,
+                "predicted_points": 181,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9834254143646409,
+                "assignment_coverage": 0.8240740740740741
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.041385388999999995,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999998,
+              "p95": -0.0006839439999999364,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6868,
+              "behind_camera_visible_surface_points": 115,
+              "behind_surface_fraction": 0.016744321490972627,
+              "signed_depth_residual_m": {
+                "min": -0.41958192080089773,
+                "median": -0.00010452686570860958,
+                "p95": 0.049333387408188475,
+                "max": 3.0227483718863954
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 3,
+          "image_time_s": 1.6,
+          "metrics": {
+            "input_points": 39198,
+            "roi_points": 7361,
+            "oracle_known_roi_points": 7361,
+            "assigned_points": 6861,
+            "compared_points": 6861,
+            "correct_points": 6858,
+            "roi_coverage": 0.9320744464067382,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995627459554001,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6861,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27690,
+              "outside_image": 4147,
+              "sparse_occlusion": 134,
+              "semantic_boundary": 366,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                447,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6057,
+                0,
+                0,
+                0,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                184,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                170
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 566,
+                "compared_points": 447,
+                "correct_points": 447,
+                "predicted_points": 447,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7897526501766784
+              },
+              "drivable": {
+                "roi_truth_points": 6309,
+                "compared_points": 6059,
+                "correct_points": 6057,
+                "predicted_points": 6057,
+                "conditional_accuracy": 0.9996699125268196,
+                "precision": 1.0,
+                "assignment_coverage": 0.9603740687906166
+              },
+              "lane": {
+                "roi_truth_points": 25,
+                "compared_points": 1,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": 0.0,
+                "precision": null,
+                "assignment_coverage": 0.04
+              },
+              "vehicle": {
+                "roi_truth_points": 253,
+                "compared_points": 184,
+                "correct_points": 184,
+                "predicted_points": 184,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7272727272727273
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 208,
+                "compared_points": 170,
+                "correct_points": 170,
+                "predicted_points": 173,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9826589595375722,
+                "assignment_coverage": 0.8173076923076923
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.0001283880000000348,
+              "median": 0.041385388999999995,
+              "p95": 0.0495728339999999,
+              "max": 0.050000000000000044
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.050000000000000044,
+              "median": -0.04152077799999998,
+              "p95": -0.0006839439999999364,
+              "max": -0.0001283880000000348
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6861,
+              "behind_camera_visible_surface_points": 118,
+              "behind_surface_fraction": 0.01719865908759656,
+              "signed_depth_residual_m": {
+                "min": -0.42150580290503825,
+                "median": -9.66549358424329e-05,
+                "p95": 0.050620102081047946,
+                "max": 6.282299768242947
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 4,
+          "image_time_s": 1.7,
+          "metrics": {
+            "input_points": 39234,
+            "roi_points": 7386,
+            "oracle_known_roi_points": 7386,
+            "assigned_points": 6878,
+            "compared_points": 6878,
+            "correct_points": 6875,
+            "roi_coverage": 0.9312212293528297,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995638266938064,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6878,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27705,
+              "outside_image": 4143,
+              "sparse_occlusion": 140,
+              "semantic_boundary": 368,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                456,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6064,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                184,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                171
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 578,
+                "compared_points": 456,
+                "correct_points": 456,
+                "predicted_points": 456,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7889273356401384
+              },
+              "drivable": {
+                "roi_truth_points": 6314,
+                "compared_points": 6067,
+                "correct_points": 6064,
+                "predicted_points": 6064,
+                "conditional_accuracy": 0.9995055216746332,
+                "precision": 1.0,
+                "assignment_coverage": 0.9608805828318023
+              },
+              "lane": {
+                "roi_truth_points": 24,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 258,
+                "compared_points": 184,
+                "correct_points": 184,
+                "predicted_points": 184,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7131782945736435
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 212,
+                "compared_points": 171,
+                "correct_points": 171,
+                "predicted_points": 174,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9827586206896551,
+                "assignment_coverage": 0.8066037735849056
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.04138538899999977,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999976,
+              "p95": -0.0006839439999999364,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6878,
+              "behind_camera_visible_surface_points": 127,
+              "behind_surface_fraction": 0.018464669962198314,
+              "signed_depth_residual_m": {
+                "min": -0.41788644020482835,
+                "median": -4.153525258732138e-05,
+                "p95": 0.05049797520887264,
+                "max": 3.0273002676640584
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 5,
+          "image_time_s": 1.8,
+          "metrics": {
+            "input_points": 39191,
+            "roi_points": 7372,
+            "oracle_known_roi_points": 7372,
+            "assigned_points": 6874,
+            "compared_points": 6874,
+            "correct_points": 6870,
+            "roi_coverage": 0.9324470971242539,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9994180971777713,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6874,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27671,
+              "outside_image": 4148,
+              "sparse_occlusion": 137,
+              "semantic_boundary": 361,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                451,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6065,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                183,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                171
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 575,
+                "compared_points": 451,
+                "correct_points": 451,
+                "predicted_points": 451,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7843478260869565
+              },
+              "drivable": {
+                "roi_truth_points": 6306,
+                "compared_points": 6068,
+                "correct_points": 6065,
+                "predicted_points": 6065,
+                "conditional_accuracy": 0.9995056031641397,
+                "precision": 1.0,
+                "assignment_coverage": 0.9622581668252458
+              },
+              "lane": {
+                "roi_truth_points": 26,
+                "compared_points": 1,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": 0.0,
+                "precision": null,
+                "assignment_coverage": 0.038461538461538464
+              },
+              "vehicle": {
+                "roi_truth_points": 255,
+                "compared_points": 183,
+                "correct_points": 183,
+                "predicted_points": 183,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7176470588235294
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 210,
+                "compared_points": 171,
+                "correct_points": 171,
+                "predicted_points": 175,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9771428571428571,
+                "assignment_coverage": 0.8142857142857143
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.0001283880000000348,
+              "median": 0.041385388999999995,
+              "p95": 0.0495728339999999,
+              "max": 0.050000000000000044
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.050000000000000044,
+              "median": -0.04152077799999998,
+              "p95": -0.0006839439999999364,
+              "max": -0.0001283880000000348
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6874,
+              "behind_camera_visible_surface_points": 120,
+              "behind_surface_fraction": 0.017457084666860634,
+              "signed_depth_residual_m": {
+                "min": -0.42676113065395604,
+                "median": -7.22936470524127e-05,
+                "p95": 0.04951374284948524,
+                "max": 6.285015990680092
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 6,
+          "image_time_s": 1.9,
+          "metrics": {
+            "input_points": 39203,
+            "roi_points": 7360,
+            "oracle_known_roi_points": 7360,
+            "assigned_points": 6850,
+            "compared_points": 6850,
+            "correct_points": 6847,
+            "roi_coverage": 0.9307065217391305,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995620437956204,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6850,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27700,
+              "outside_image": 4143,
+              "sparse_occlusion": 140,
+              "semantic_boundary": 370,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                441,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6054,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                180,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                172
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 562,
+                "compared_points": 441,
+                "correct_points": 441,
+                "predicted_points": 441,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7846975088967971
+              },
+              "drivable": {
+                "roi_truth_points": 6312,
+                "compared_points": 6057,
+                "correct_points": 6054,
+                "predicted_points": 6054,
+                "conditional_accuracy": 0.9995047052996533,
+                "precision": 1.0,
+                "assignment_coverage": 0.9596007604562737
+              },
+              "lane": {
+                "roi_truth_points": 23,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 253,
+                "compared_points": 180,
+                "correct_points": 180,
+                "predicted_points": 180,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7114624505928854
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 210,
+                "compared_points": 172,
+                "correct_points": 172,
+                "predicted_points": 175,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9828571428571429,
+                "assignment_coverage": 0.819047619047619
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.04145133349999974,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999976,
+              "p95": -0.0006839439999997143,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6850,
+              "behind_camera_visible_surface_points": 114,
+              "behind_surface_fraction": 0.016642335766423356,
+              "signed_depth_residual_m": {
+                "min": -0.41693914472540783,
+                "median": -5.0996564276373224e-05,
+                "p95": 0.04908392721054616,
+                "max": 3.027829531334678
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 7,
+          "image_time_s": 2.0,
+          "metrics": {
+            "input_points": 39208,
+            "roi_points": 7368,
+            "oracle_known_roi_points": 7368,
+            "assigned_points": 6860,
+            "compared_points": 6860,
+            "correct_points": 6857,
+            "roi_coverage": 0.9310532030401737,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995626822157434,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6860,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27697,
+              "outside_image": 4143,
+              "sparse_occlusion": 139,
+              "semantic_boundary": 369,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                446,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6054,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                184,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                173
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 568,
+                "compared_points": 446,
+                "correct_points": 446,
+                "predicted_points": 446,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7852112676056338
+              },
+              "drivable": {
+                "roi_truth_points": 6308,
+                "compared_points": 6057,
+                "correct_points": 6054,
+                "predicted_points": 6054,
+                "conditional_accuracy": 0.9995047052996533,
+                "precision": 1.0,
+                "assignment_coverage": 0.9602092580849715
+              },
+              "lane": {
+                "roi_truth_points": 22,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 257,
+                "compared_points": 184,
+                "correct_points": 184,
+                "predicted_points": 184,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7159533073929961
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 213,
+                "compared_points": 173,
+                "correct_points": 173,
+                "predicted_points": 176,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9829545454545454,
+                "assignment_coverage": 0.812206572769953
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.041451333499999854,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999998,
+              "p95": -0.0006839439999999364,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6860,
+              "behind_camera_visible_surface_points": 109,
+              "behind_surface_fraction": 0.015889212827988337,
+              "signed_depth_residual_m": {
+                "min": -0.411346180746488,
+                "median": -4.8404971838111877e-05,
+                "p95": 0.049210296140509195,
+                "max": 3.0293243268729473
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "scene_id": "moving-2mps-201",
+      "passed": true,
+      "motion_speed_m_s": 2.0,
+      "summary": {
+        "input_points": 313676,
+        "roi_points": 58960,
+        "oracle_known_roi_points": 58960,
+        "assigned_points": 54812,
+        "compared_points": 54812,
+        "correct_points": 54787,
+        "invalid_assigned_points": 0,
+        "frames": 8,
+        "accuracy": 0.9995438954973364,
+        "roi_coverage": 0.9296472184531887,
+        "oracle_roi_coverage": 1.0,
+        "reason_counts": {
+          "accepted": 54812,
+          "invalid_return": 0,
+          "nonfinite_point": 0,
+          "invalid_time": 0,
+          "future_return": 0,
+          "time_skew": 0,
+          "outside_depth_range": 221546,
+          "outside_image": 33170,
+          "sparse_occlusion": 1107,
+          "semantic_boundary": 3041,
+          "unknown_label": 0,
+          "low_confidence": 0
+        },
+        "confusion_matrix": [
+          [
+            3589,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            48427,
+            0,
+            0,
+            0,
+            23
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            1378,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1393
+          ]
+        ],
+        "per_class": {
+          "background": {
+            "roi_truth_points": 4551,
+            "compared_points": 3589,
+            "correct_points": 3589,
+            "predicted_points": 3589,
+            "conditional_accuracy": 1.0,
+            "precision": 1.0,
+            "assignment_coverage": 0.7886178861788617,
+            "frames_with_assigned_truth": 8
+          },
+          "drivable": {
+            "roi_truth_points": 50455,
+            "compared_points": 48450,
+            "correct_points": 48427,
+            "predicted_points": 48427,
+            "conditional_accuracy": 0.9995252837977296,
+            "precision": 1.0,
+            "assignment_coverage": 0.9602616192646913,
+            "frames_with_assigned_truth": 8
+          },
+          "lane": {
+            "roi_truth_points": 187,
+            "compared_points": 2,
+            "correct_points": 0,
+            "predicted_points": 0,
+            "conditional_accuracy": 0.0,
+            "precision": null,
+            "assignment_coverage": 0.0106951871657754,
+            "frames_with_assigned_truth": 2
+          },
+          "vehicle": {
+            "roi_truth_points": 2067,
+            "compared_points": 1378,
+            "correct_points": 1378,
+            "predicted_points": 1378,
+            "conditional_accuracy": 1.0,
+            "precision": 1.0,
+            "assignment_coverage": 0.6666666666666666,
+            "frames_with_assigned_truth": 8
+          },
+          "pedestrian": {
+            "roi_truth_points": 0,
+            "compared_points": 0,
+            "correct_points": 0,
+            "predicted_points": 0,
+            "conditional_accuracy": null,
+            "precision": null,
+            "assignment_coverage": null,
+            "frames_with_assigned_truth": 0
+          },
+          "obstacle": {
+            "roi_truth_points": 1700,
+            "compared_points": 1393,
+            "correct_points": 1393,
+            "predicted_points": 1418,
+            "conditional_accuracy": 1.0,
+            "precision": 0.9823695345557123,
+            "assignment_coverage": 0.8194117647058824,
+            "frames_with_assigned_truth": 8
+          }
+        },
+        "gates": {
+          "minimum_accuracy": 0.95,
+          "minimum_class_accuracy": 0.9,
+          "minimum_class_points": 20,
+          "minimum_roi_coverage": 0.2,
+          "minimum_vehicle_frames": 4,
+          "minimum_oracle_coverage": 0.98
+        },
+        "checks": {
+          "overall_accuracy": true,
+          "roi_coverage": true,
+          "oracle_coverage": true,
+          "no_invalid_or_stale_assignments": true,
+          "moving_vehicle_support": true,
+          "vehicle_support": true,
+          "vehicle_accuracy": true,
+          "vehicle_precision": true,
+          "obstacle_support": true,
+          "obstacle_accuracy": true,
+          "obstacle_precision": true
+        },
+        "passed": true,
+        "metric_scope": "Accuracy/precision on assigned independently mapped returns; coverage denominator is all geometrically projectable valid returns before fusion filters"
+      },
+      "actor_support": {
+        "actors": {
+          "/World/Vehicles/vehicle_fusion_adjacent": {
+            "roi_points": 674,
+            "assigned_points": 438,
+            "correct_vehicle_points": 438,
+            "vehicle_accuracy": 1.0,
+            "assignment_coverage": 0.6498516320474778,
+            "frames_with_assigned_points": 8,
+            "first_position_world_m": [
+              20.28,
+              3.6,
+              0.0
+            ],
+            "last_position_world_m": [
+              19.72,
+              3.6,
+              0.0
+            ],
+            "displacement_m": 0.5600000000000023,
+            "checks": {
+              "assigned_support": true,
+              "frame_support": true,
+              "vehicle_accuracy": true,
+              "nonzero_displacement": true
+            },
+            "passed": true
+          },
+          "/World/Vehicles/vehicle_fusion_lead": {
+            "roi_points": 1393,
+            "assigned_points": 940,
+            "correct_vehicle_points": 940,
+            "vehicle_accuracy": 1.0,
+            "assignment_coverage": 0.674802584350323,
+            "frames_with_assigned_points": 8,
+            "first_position_world_m": [
+              15.3,
+              0.0,
+              0.0
+            ],
+            "last_position_world_m": [
+              16.7,
+              0.0,
+              0.0
+            ],
+            "displacement_m": 1.3999999999999986,
+            "checks": {
+              "assigned_support": true,
+              "frame_support": true,
+              "vehicle_accuracy": true,
+              "nonzero_displacement": true
+            },
+            "passed": true
+          }
+        },
+        "checks": {
+          "stable_actor_inventory": true,
+          "two_traffic_actors": true,
+          "each_actor_supported": true
+        },
+        "required": true,
+        "passed": true,
+        "scope": "Evaluation-only RTX IDs grouped by actor prim ancestry; displacement from captured actor metadata",
+        "gates": {
+          "minimum_assigned_points": 20,
+          "minimum_frames": 4,
+          "minimum_vehicle_accuracy": 0.9,
+          "minimum_displacement_m": 1e-06
+        }
+      },
+      "negative_controls": {
+        "stale_camera_plus_250ms": {
+          "accepted_points": 0,
+          "passed": true
+        },
+        "camera_lateral_offset_3m": {
+          "input_points": 39217,
+          "roi_points": 4381,
+          "oracle_known_roi_points": 4381,
+          "assigned_points": 3795,
+          "compared_points": 3795,
+          "correct_points": 2977,
+          "roi_coverage": 0.8662405843414746,
+          "oracle_roi_coverage": 1.0,
+          "accuracy": 0.7844532279314888,
+          "invalid_assigned_points": 0,
+          "reason_counts": {
+            "accepted": 3795,
+            "invalid_return": 0,
+            "nonfinite_point": 0,
+            "invalid_time": 0,
+            "future_return": 0,
+            "time_skew": 0,
+            "outside_depth_range": 27695,
+            "outside_image": 7141,
+            "sparse_occlusion": 175,
+            "semantic_boundary": 411,
+            "unknown_label": 0,
+            "low_confidence": 0
+          },
+          "confusion_matrix": [
+            [
+              266,
+              208,
+              0,
+              0,
+              0,
+              34
+            ],
+            [
+              265,
+              2670,
+              0,
+              2,
+              0,
+              0
+            ],
+            [
+              8,
+              14,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              148,
+              2,
+              0,
+              41,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              5,
+              49,
+              0,
+              83,
+              0,
+              0
+            ]
+          ],
+          "per_class": {
+            "background": {
+              "roi_truth_points": 602,
+              "compared_points": 508,
+              "correct_points": 266,
+              "predicted_points": 692,
+              "conditional_accuracy": 0.5236220472440944,
+              "precision": 0.38439306358381503,
+              "assignment_coverage": 0.8438538205980066
+            },
+            "drivable": {
+              "roi_truth_points": 3263,
+              "compared_points": 2937,
+              "correct_points": 2670,
+              "predicted_points": 2943,
+              "conditional_accuracy": 0.9090909090909091,
+              "precision": 0.9072375127420998,
+              "assignment_coverage": 0.9000919399325774
+            },
+            "lane": {
+              "roi_truth_points": 23,
+              "compared_points": 22,
+              "correct_points": 0,
+              "predicted_points": 0,
+              "conditional_accuracy": 0.0,
+              "precision": null,
+              "assignment_coverage": 0.9565217391304348
+            },
+            "vehicle": {
+              "roi_truth_points": 276,
+              "compared_points": 191,
+              "correct_points": 41,
+              "predicted_points": 126,
+              "conditional_accuracy": 0.21465968586387435,
+              "precision": 0.3253968253968254,
+              "assignment_coverage": 0.6920289855072463
+            },
+            "pedestrian": {
+              "roi_truth_points": 0,
+              "compared_points": 0,
+              "correct_points": 0,
+              "predicted_points": 0,
+              "conditional_accuracy": null,
+              "precision": null,
+              "assignment_coverage": null
+            },
+            "obstacle": {
+              "roi_truth_points": 217,
+              "compared_points": 137,
+              "correct_points": 0,
+              "predicted_points": 34,
+              "conditional_accuracy": 0.0,
+              "precision": 0.0,
+              "assignment_coverage": 0.631336405529954
+            }
+          },
+          "absolute_roi_time_skew_s": {
+            "min": 0.0001283880000000348,
+            "median": 0.04402077799999993,
+            "p95": 0.049576333999999944,
+            "max": 0.049992999999999954
+          },
+          "signed_assigned_time_delta_s": {
+            "min": -0.049992999999999954,
+            "median": -0.04429855599999999,
+            "p95": -0.0005485560000000334,
+            "max": -0.0001283880000000348
+          }
+        }
+      },
+      "depth_per_frame": [
+        {
+          "checked_points": 6844,
+          "behind_camera_visible_surface_points": 123,
+          "behind_surface_fraction": 0.017971946230274694,
+          "signed_depth_residual_m": {
+            "min": -0.42920545148459155,
+            "median": -0.0001524526919707836,
+            "p95": 0.04832988531232292,
+            "max": 3.026360435312329
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6853,
+          "behind_camera_visible_surface_points": 111,
+          "behind_surface_fraction": 0.01619728586020721,
+          "signed_depth_residual_m": {
+            "min": -0.4267881847287178,
+            "median": -0.00018752297517599104,
+            "p95": 0.04848205285362697,
+            "max": 3.023820514609632
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6859,
+          "behind_camera_visible_surface_points": 118,
+          "behind_surface_fraction": 0.017203674004956992,
+          "signed_depth_residual_m": {
+            "min": -0.42101079566181276,
+            "median": -0.00018381501889586094,
+            "p95": 0.049088311053527144,
+            "max": 3.0236455024005267
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6845,
+          "behind_camera_visible_surface_points": 116,
+          "behind_surface_fraction": 0.016946676406135865,
+          "signed_depth_residual_m": {
+            "min": -0.4242620962714767,
+            "median": -0.000167813270079753,
+            "p95": 0.05127786722499196,
+            "max": 6.282940845231181
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6863,
+          "behind_camera_visible_surface_points": 127,
+          "behind_surface_fraction": 0.01850502695614163,
+          "signed_depth_residual_m": {
+            "min": -0.4195003160742221,
+            "median": -0.00011938788989285243,
+            "p95": 0.05052889029477563,
+            "max": 3.027310272288508
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6863,
+          "behind_camera_visible_surface_points": 118,
+          "behind_surface_fraction": 0.01719364709310797,
+          "signed_depth_residual_m": {
+            "min": -0.42770064200835556,
+            "median": -0.00013707597031253904,
+            "p95": 0.05063266270386664,
+            "max": 6.28620427863771
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6836,
+          "behind_camera_visible_surface_points": 116,
+          "behind_surface_fraction": 0.016968987712112346,
+          "signed_depth_residual_m": {
+            "min": -0.4146242551499295,
+            "median": -7.557689853870952e-05,
+            "p95": 0.04972207510156923,
+            "max": 3.02757061350181
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6849,
+          "behind_camera_visible_surface_points": 116,
+          "behind_surface_fraction": 0.016936779091838224,
+          "signed_depth_residual_m": {
+            "min": -0.4132529914422207,
+            "median": -0.0001136600767511764,
+            "p95": 0.049323910115290526,
+            "max": 3.0286904276238644
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        }
+      ],
+      "clock": {
+        "physics_steps": 238,
+        "render_count": 48,
+        "time_s": 1.9833333333333334,
+        "absolute_time_s": 2.0,
+        "native_physics_steps": 240,
+        "physics_hz": 120,
+        "render_hz": 20,
+        "origin_time_s": 0.016666666666666666,
+        "origin_physics_steps": 2
+      },
+      "schedule": {
+        "requested_warmup_s": 1.2,
+        "origin_physics_steps": 2,
+        "origin_time_s": 0.016666666666666666,
+        "render_absolute_tick_modulus": 6,
+        "camera_absolute_tick_modulus": 12,
+        "first_relative_tick": 154,
+        "last_relative_tick": 238,
+        "actual_warmup_s": 1.2833333333333334,
+        "first_capture_absolute_s": 1.3,
+        "last_capture_absolute_s": 2.0
+      },
+      "composition": {
+        "sublayers": [
+          "./traffic-initial.usda",
+          "./debug.usda",
+          "./road-layout.usda",
+          "./source-vehicle-world.usda"
+        ],
+        "errors": [],
+        "default_prim": "/World",
+        "dependency_layers": 15,
+        "missing_dependencies": [],
+        "all_dependencies_local": true,
+        "runtime_namespace_exceptions": [
+          "/Render",
+          "/OmniverseKit_Persp"
+        ]
+      },
+      "source_vehicle_unchanged": true,
+      "buffer_changes": {
+        "unique_rgb": 8,
+        "unique_semantic_masks": 8
+      },
+      "frame_metrics": [
+        {
+          "index": 0,
+          "image_time_s": 1.3,
+          "metrics": {
+            "input_points": 39217,
+            "roi_points": 7373,
+            "oracle_known_roi_points": 7373,
+            "assigned_points": 6844,
+            "compared_points": 6844,
+            "correct_points": 6841,
+            "roi_coverage": 0.9282517292825173,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995616598480421,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6844,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27695,
+              "outside_image": 4149,
+              "sparse_occlusion": 131,
+              "semantic_boundary": 398,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                441,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6037,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                186,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                177
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 560,
+                "compared_points": 441,
+                "correct_points": 441,
+                "predicted_points": 441,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7875
+              },
+              "drivable": {
+                "roi_truth_points": 6296,
+                "compared_points": 6040,
+                "correct_points": 6037,
+                "predicted_points": 6037,
+                "conditional_accuracy": 0.9995033112582782,
+                "precision": 1.0,
+                "assignment_coverage": 0.9593392630241423
+              },
+              "lane": {
+                "roi_truth_points": 24,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 276,
+                "compared_points": 186,
+                "correct_points": 186,
+                "predicted_points": 186,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.6739130434782609
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 217,
+                "compared_points": 177,
+                "correct_points": 177,
+                "predicted_points": 180,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9833333333333333,
+                "assignment_coverage": 0.815668202764977
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.0001283880000000348,
+              "median": 0.041385388999999995,
+              "p95": 0.0495728339999999,
+              "max": 0.050000000000000044
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.050000000000000044,
+              "median": -0.04152077799999998,
+              "p95": -0.0006839439999999364,
+              "max": -0.0001283880000000348
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6844,
+              "behind_camera_visible_surface_points": 123,
+              "behind_surface_fraction": 0.017971946230274694,
+              "signed_depth_residual_m": {
+                "min": -0.42920545148459155,
+                "median": -0.0001524526919707836,
+                "p95": 0.04832988531232292,
+                "max": 3.026360435312329
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 1,
+          "image_time_s": 1.4,
+          "metrics": {
+            "input_points": 39225,
+            "roi_points": 7385,
+            "oracle_known_roi_points": 7385,
+            "assigned_points": 6853,
+            "compared_points": 6853,
+            "correct_points": 6850,
+            "roi_coverage": 0.9279620853080569,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995622355172917,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6853,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27692,
+              "outside_image": 4148,
+              "sparse_occlusion": 138,
+              "semantic_boundary": 394,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                448,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6045,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                178,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                179
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 571,
+                "compared_points": 448,
+                "correct_points": 448,
+                "predicted_points": 448,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7845884413309983
+              },
+              "drivable": {
+                "roi_truth_points": 6305,
+                "compared_points": 6048,
+                "correct_points": 6045,
+                "predicted_points": 6045,
+                "conditional_accuracy": 0.9995039682539683,
+                "precision": 1.0,
+                "assignment_coverage": 0.959238699444885
+              },
+              "lane": {
+                "roi_truth_points": 23,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 272,
+                "compared_points": 178,
+                "correct_points": 178,
+                "predicted_points": 178,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.6544117647058824
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 214,
+                "compared_points": 179,
+                "correct_points": 179,
+                "predicted_points": 182,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9835164835164835,
+                "assignment_coverage": 0.8364485981308412
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.04138538899999977,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999976,
+              "p95": -0.0006839439999997143,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6853,
+              "behind_camera_visible_surface_points": 111,
+              "behind_surface_fraction": 0.01619728586020721,
+              "signed_depth_residual_m": {
+                "min": -0.4267881847287178,
+                "median": -0.00018752297517599104,
+                "p95": 0.04848205285362697,
+                "max": 3.023820514609632
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 2,
+          "image_time_s": 1.5,
+          "metrics": {
+            "input_points": 39220,
+            "roi_points": 7373,
+            "oracle_known_roi_points": 7373,
+            "assigned_points": 6859,
+            "compared_points": 6859,
+            "correct_points": 6856,
+            "roi_coverage": 0.9302861793028618,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.999562618457501,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6859,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27701,
+              "outside_image": 4146,
+              "sparse_occlusion": 134,
+              "semantic_boundary": 380,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                447,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6052,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                179,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                178
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 569,
+                "compared_points": 447,
+                "correct_points": 447,
+                "predicted_points": 447,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7855887521968365
+              },
+              "drivable": {
+                "roi_truth_points": 6304,
+                "compared_points": 6055,
+                "correct_points": 6052,
+                "predicted_points": 6052,
+                "conditional_accuracy": 0.9995045417010735,
+                "precision": 1.0,
+                "assignment_coverage": 0.960501269035533
+              },
+              "lane": {
+                "roi_truth_points": 22,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 262,
+                "compared_points": 179,
+                "correct_points": 179,
+                "predicted_points": 179,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.683206106870229
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 216,
+                "compared_points": 178,
+                "correct_points": 178,
+                "predicted_points": 181,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9834254143646409,
+                "assignment_coverage": 0.8240740740740741
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.041385388999999995,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999998,
+              "p95": -0.0006839439999999364,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6859,
+              "behind_camera_visible_surface_points": 118,
+              "behind_surface_fraction": 0.017203674004956992,
+              "signed_depth_residual_m": {
+                "min": -0.42101079566181276,
+                "median": -0.00018381501889586094,
+                "p95": 0.049088311053527144,
+                "max": 3.0236455024005267
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 3,
+          "image_time_s": 1.6,
+          "metrics": {
+            "input_points": 39200,
+            "roi_points": 7359,
+            "oracle_known_roi_points": 7359,
+            "assigned_points": 6845,
+            "compared_points": 6845,
+            "correct_points": 6842,
+            "roi_coverage": 0.9301535534719392,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995617238860482,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6845,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27691,
+              "outside_image": 4150,
+              "sparse_occlusion": 140,
+              "semantic_boundary": 374,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                450,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6044,
+                0,
+                0,
+                0,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                177,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                171
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 567,
+                "compared_points": 450,
+                "correct_points": 450,
+                "predicted_points": 450,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7936507936507936
+              },
+              "drivable": {
+                "roi_truth_points": 6304,
+                "compared_points": 6046,
+                "correct_points": 6044,
+                "predicted_points": 6044,
+                "conditional_accuracy": 0.9996692027786966,
+                "precision": 1.0,
+                "assignment_coverage": 0.9590736040609137
+              },
+              "lane": {
+                "roi_truth_points": 24,
+                "compared_points": 1,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": 0.0,
+                "precision": null,
+                "assignment_coverage": 0.041666666666666664
+              },
+              "vehicle": {
+                "roi_truth_points": 256,
+                "compared_points": 177,
+                "correct_points": 177,
+                "predicted_points": 177,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.69140625
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 208,
+                "compared_points": 171,
+                "correct_points": 171,
+                "predicted_points": 174,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9827586206896551,
+                "assignment_coverage": 0.8221153846153846
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.0001283880000000348,
+              "median": 0.041385388999999995,
+              "p95": 0.0495728339999999,
+              "max": 0.050000000000000044
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.050000000000000044,
+              "median": -0.04152077799999998,
+              "p95": -0.0006839439999999364,
+              "max": -0.0001283880000000348
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6845,
+              "behind_camera_visible_surface_points": 116,
+              "behind_surface_fraction": 0.016946676406135865,
+              "signed_depth_residual_m": {
+                "min": -0.4242620962714767,
+                "median": -0.000167813270079753,
+                "p95": 0.05127786722499196,
+                "max": 6.282940845231181
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 4,
+          "image_time_s": 1.7,
+          "metrics": {
+            "input_points": 39225,
+            "roi_points": 7380,
+            "oracle_known_roi_points": 7380,
+            "assigned_points": 6863,
+            "compared_points": 6863,
+            "correct_points": 6860,
+            "roi_coverage": 0.9299457994579946,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995628733789887,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6863,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27701,
+              "outside_image": 4144,
+              "sparse_occlusion": 147,
+              "semantic_boundary": 370,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                460,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6061,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                166,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                173
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 579,
+                "compared_points": 460,
+                "correct_points": 460,
+                "predicted_points": 460,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7944732297063903
+              },
+              "drivable": {
+                "roi_truth_points": 6311,
+                "compared_points": 6064,
+                "correct_points": 6061,
+                "predicted_points": 6061,
+                "conditional_accuracy": 0.9995052770448549,
+                "precision": 1.0,
+                "assignment_coverage": 0.9608619870068135
+              },
+              "lane": {
+                "roi_truth_points": 23,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 255,
+                "compared_points": 166,
+                "correct_points": 166,
+                "predicted_points": 166,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.6509803921568628
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 212,
+                "compared_points": 173,
+                "correct_points": 173,
+                "predicted_points": 176,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9829545454545454,
+                "assignment_coverage": 0.8160377358490566
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.04138538899999977,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999976,
+              "p95": -0.0006839439999999364,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6863,
+              "behind_camera_visible_surface_points": 127,
+              "behind_surface_fraction": 0.01850502695614163,
+              "signed_depth_residual_m": {
+                "min": -0.4195003160742221,
+                "median": -0.00011938788989285243,
+                "p95": 0.05052889029477563,
+                "max": 3.027310272288508
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 5,
+          "image_time_s": 1.8,
+          "metrics": {
+            "input_points": 39190,
+            "roi_points": 7374,
+            "oracle_known_roi_points": 7374,
+            "assigned_points": 6863,
+            "compared_points": 6863,
+            "correct_points": 6859,
+            "roi_coverage": 0.930702468131272,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9994171645053184,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6863,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27669,
+              "outside_image": 4147,
+              "sparse_occlusion": 135,
+              "semantic_boundary": 376,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                454,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6066,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                167,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                172
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 575,
+                "compared_points": 454,
+                "correct_points": 454,
+                "predicted_points": 454,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7895652173913044
+              },
+              "drivable": {
+                "roi_truth_points": 6309,
+                "compared_points": 6069,
+                "correct_points": 6066,
+                "predicted_points": 6066,
+                "conditional_accuracy": 0.9995056846267919,
+                "precision": 1.0,
+                "assignment_coverage": 0.9619591060389919
+              },
+              "lane": {
+                "roi_truth_points": 26,
+                "compared_points": 1,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": 0.0,
+                "precision": null,
+                "assignment_coverage": 0.038461538461538464
+              },
+              "vehicle": {
+                "roi_truth_points": 254,
+                "compared_points": 167,
+                "correct_points": 167,
+                "predicted_points": 167,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.65748031496063
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 210,
+                "compared_points": 172,
+                "correct_points": 172,
+                "predicted_points": 176,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9772727272727273,
+                "assignment_coverage": 0.819047619047619
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.0001283880000000348,
+              "median": 0.04138188899999995,
+              "p95": 0.0495728339999999,
+              "max": 0.050000000000000044
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.050000000000000044,
+              "median": -0.041385388999999995,
+              "p95": -0.0006839439999999364,
+              "max": -0.0001283880000000348
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6863,
+              "behind_camera_visible_surface_points": 118,
+              "behind_surface_fraction": 0.01719364709310797,
+              "signed_depth_residual_m": {
+                "min": -0.42770064200835556,
+                "median": -0.00013707597031253904,
+                "p95": 0.05063266270386664,
+                "max": 6.28620427863771
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 6,
+          "image_time_s": 1.9,
+          "metrics": {
+            "input_points": 39200,
+            "roi_points": 7353,
+            "oracle_known_roi_points": 7353,
+            "assigned_points": 6836,
+            "compared_points": 6836,
+            "correct_points": 6833,
+            "roi_coverage": 0.9296885624915001,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995611468695144,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6836,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27703,
+              "outside_image": 4144,
+              "sparse_occlusion": 144,
+              "semantic_boundary": 373,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                441,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6060,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                162,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                170
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 563,
+                "compared_points": 441,
+                "correct_points": 441,
+                "predicted_points": 441,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.783303730017762
+              },
+              "drivable": {
+                "roi_truth_points": 6313,
+                "compared_points": 6063,
+                "correct_points": 6060,
+                "predicted_points": 6060,
+                "conditional_accuracy": 0.9995051954477981,
+                "precision": 1.0,
+                "assignment_coverage": 0.9603991763028671
+              },
+              "lane": {
+                "roi_truth_points": 22,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 245,
+                "compared_points": 162,
+                "correct_points": 162,
+                "predicted_points": 162,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.6612244897959184
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 210,
+                "compared_points": 170,
+                "correct_points": 170,
+                "predicted_points": 173,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9826589595375722,
+                "assignment_coverage": 0.8095238095238095
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.04138538899999977,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999976,
+              "p95": -0.0006839439999997143,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6836,
+              "behind_camera_visible_surface_points": 116,
+              "behind_surface_fraction": 0.016968987712112346,
+              "signed_depth_residual_m": {
+                "min": -0.4146242551499295,
+                "median": -7.557689853870952e-05,
+                "p95": 0.04972207510156923,
+                "max": 3.02757061350181
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 7,
+          "image_time_s": 2.0,
+          "metrics": {
+            "input_points": 39199,
+            "roi_points": 7363,
+            "oracle_known_roi_points": 7363,
+            "assigned_points": 6849,
+            "compared_points": 6849,
+            "correct_points": 6846,
+            "roi_coverage": 0.930191498030694,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995619798510732,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6849,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27694,
+              "outside_image": 4142,
+              "sparse_occlusion": 138,
+              "semantic_boundary": 376,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                448,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6062,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                163,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                173
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 567,
+                "compared_points": 448,
+                "correct_points": 448,
+                "predicted_points": 448,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7901234567901234
+              },
+              "drivable": {
+                "roi_truth_points": 6313,
+                "compared_points": 6065,
+                "correct_points": 6062,
+                "predicted_points": 6062,
+                "conditional_accuracy": 0.9995053586150041,
+                "precision": 1.0,
+                "assignment_coverage": 0.9607159828924442
+              },
+              "lane": {
+                "roi_truth_points": 23,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 247,
+                "compared_points": 163,
+                "correct_points": 163,
+                "predicted_points": 163,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.659919028340081
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 213,
+                "compared_points": 173,
+                "correct_points": 173,
+                "predicted_points": 176,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9829545454545454,
+                "assignment_coverage": 0.812206572769953
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.041517277999999935,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999998,
+              "p95": -0.0006839439999999364,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6849,
+              "behind_camera_visible_surface_points": 116,
+              "behind_surface_fraction": 0.016936779091838224,
+              "signed_depth_residual_m": {
+                "min": -0.4132529914422207,
+                "median": -0.0001136600767511764,
+                "p95": 0.049323910115290526,
+                "max": 3.0286904276238644
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "scene_id": "moving-10mps-301",
+      "passed": true,
+      "motion_speed_m_s": 10.0,
+      "summary": {
+        "input_points": 313827,
+        "roi_points": 59113,
+        "oracle_known_roi_points": 59113,
+        "assigned_points": 54725,
+        "compared_points": 54725,
+        "correct_points": 54699,
+        "invalid_assigned_points": 0,
+        "frames": 8,
+        "accuracy": 0.9995248972133394,
+        "roi_coverage": 0.9257692893272208,
+        "oracle_roi_coverage": 1.0,
+        "reason_counts": {
+          "accepted": 54725,
+          "invalid_return": 0,
+          "nonfinite_point": 0,
+          "invalid_time": 0,
+          "future_return": 0,
+          "time_skew": 0,
+          "outside_depth_range": 221532,
+          "outside_image": 33182,
+          "sparse_occlusion": 1275,
+          "semantic_boundary": 3113,
+          "unknown_label": 0,
+          "low_confidence": 0
+        },
+        "confusion_matrix": [
+          [
+            3585,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            48365,
+            0,
+            2,
+            0,
+            22
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            1343,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            1406
+          ]
+        ],
+        "per_class": {
+          "background": {
+            "roi_truth_points": 4561,
+            "compared_points": 3585,
+            "correct_points": 3585,
+            "predicted_points": 3585,
+            "conditional_accuracy": 1.0,
+            "precision": 1.0,
+            "assignment_coverage": 0.7860118395088797,
+            "frames_with_assigned_truth": 8
+          },
+          "drivable": {
+            "roi_truth_points": 50408,
+            "compared_points": 48389,
+            "correct_points": 48365,
+            "predicted_points": 48365,
+            "conditional_accuracy": 0.999504019508566,
+            "precision": 1.0,
+            "assignment_coverage": 0.9599468338358991,
+            "frames_with_assigned_truth": 8
+          },
+          "lane": {
+            "roi_truth_points": 181,
+            "compared_points": 2,
+            "correct_points": 0,
+            "predicted_points": 0,
+            "conditional_accuracy": 0.0,
+            "precision": null,
+            "assignment_coverage": 0.011049723756906077,
+            "frames_with_assigned_truth": 2
+          },
+          "vehicle": {
+            "roi_truth_points": 2258,
+            "compared_points": 1343,
+            "correct_points": 1343,
+            "predicted_points": 1345,
+            "conditional_accuracy": 1.0,
+            "precision": 0.9985130111524163,
+            "assignment_coverage": 0.5947741364038972,
+            "frames_with_assigned_truth": 8
+          },
+          "pedestrian": {
+            "roi_truth_points": 0,
+            "compared_points": 0,
+            "correct_points": 0,
+            "predicted_points": 0,
+            "conditional_accuracy": null,
+            "precision": null,
+            "assignment_coverage": null,
+            "frames_with_assigned_truth": 0
+          },
+          "obstacle": {
+            "roi_truth_points": 1705,
+            "compared_points": 1406,
+            "correct_points": 1406,
+            "predicted_points": 1430,
+            "conditional_accuracy": 1.0,
+            "precision": 0.9832167832167832,
+            "assignment_coverage": 0.8246334310850439,
+            "frames_with_assigned_truth": 8
+          }
+        },
+        "gates": {
+          "minimum_accuracy": 0.95,
+          "minimum_class_accuracy": 0.9,
+          "minimum_class_points": 20,
+          "minimum_roi_coverage": 0.2,
+          "minimum_vehicle_frames": 4,
+          "minimum_oracle_coverage": 0.98
+        },
+        "checks": {
+          "overall_accuracy": true,
+          "roi_coverage": true,
+          "oracle_coverage": true,
+          "no_invalid_or_stale_assignments": true,
+          "moving_vehicle_support": true,
+          "vehicle_support": true,
+          "vehicle_accuracy": true,
+          "vehicle_precision": true,
+          "obstacle_support": true,
+          "obstacle_accuracy": true,
+          "obstacle_precision": true
+        },
+        "passed": true,
+        "metric_scope": "Accuracy/precision on assigned independently mapped returns; coverage denominator is all geometrically projectable valid returns before fusion filters"
+      },
+      "actor_support": {
+        "actors": {
+          "/World/Vehicles/vehicle_fusion_adjacent": {
+            "roi_points": 676,
+            "assigned_points": 442,
+            "correct_vehicle_points": 442,
+            "vehicle_accuracy": 1.0,
+            "assignment_coverage": 0.6538461538461539,
+            "frames_with_assigned_points": 8,
+            "first_position_world_m": [
+              21.4,
+              3.6,
+              0.0
+            ],
+            "last_position_world_m": [
+              18.6,
+              3.6,
+              0.0
+            ],
+            "displacement_m": 2.799999999999997,
+            "checks": {
+              "assigned_support": true,
+              "frame_support": true,
+              "vehicle_accuracy": true,
+              "nonzero_displacement": true
+            },
+            "passed": true
+          },
+          "/World/Vehicles/vehicle_fusion_lead": {
+            "roi_points": 1582,
+            "assigned_points": 901,
+            "correct_vehicle_points": 901,
+            "vehicle_accuracy": 1.0,
+            "assignment_coverage": 0.5695322376738305,
+            "frames_with_assigned_points": 8,
+            "first_position_world_m": [
+              12.500000000000002,
+              0.0,
+              0.0
+            ],
+            "last_position_world_m": [
+              19.5,
+              0.0,
+              0.0
+            ],
+            "displacement_m": 6.999999999999998,
+            "checks": {
+              "assigned_support": true,
+              "frame_support": true,
+              "vehicle_accuracy": true,
+              "nonzero_displacement": true
+            },
+            "passed": true
+          }
+        },
+        "checks": {
+          "stable_actor_inventory": true,
+          "two_traffic_actors": true,
+          "each_actor_supported": true
+        },
+        "required": true,
+        "passed": true,
+        "scope": "Evaluation-only RTX IDs grouped by actor prim ancestry; displacement from captured actor metadata",
+        "gates": {
+          "minimum_assigned_points": 20,
+          "minimum_frames": 4,
+          "minimum_vehicle_accuracy": 0.9,
+          "minimum_displacement_m": 1e-06
+        }
+      },
+      "negative_controls": {
+        "stale_camera_plus_250ms": {
+          "accepted_points": 0,
+          "passed": true
+        },
+        "camera_lateral_offset_3m": {
+          "input_points": 39316,
+          "roi_points": 4463,
+          "oracle_known_roi_points": 4463,
+          "assigned_points": 3855,
+          "compared_points": 3855,
+          "correct_points": 2893,
+          "roi_coverage": 0.8637687654044365,
+          "oracle_roi_coverage": 1.0,
+          "accuracy": 0.7504539559014267,
+          "invalid_assigned_points": 0,
+          "reason_counts": {
+            "accepted": 3855,
+            "invalid_return": 0,
+            "nonfinite_point": 0,
+            "invalid_time": 0,
+            "future_return": 0,
+            "time_skew": 0,
+            "outside_depth_range": 27702,
+            "outside_image": 7151,
+            "sparse_occlusion": 250,
+            "semantic_boundary": 358,
+            "unknown_label": 0,
+            "low_confidence": 0
+          },
+          "confusion_matrix": [
+            [
+              272,
+              211,
+              0,
+              0,
+              0,
+              33
+            ],
+            [
+              263,
+              2619,
+              0,
+              14,
+              0,
+              0
+            ],
+            [
+              5,
+              14,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              244,
+              16,
+              0,
+              2,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              33,
+              0,
+              129,
+              0,
+              0
+            ]
+          ],
+          "per_class": {
+            "background": {
+              "roi_truth_points": 616,
+              "compared_points": 516,
+              "correct_points": 272,
+              "predicted_points": 784,
+              "conditional_accuracy": 0.5271317829457365,
+              "precision": 0.3469387755102041,
+              "assignment_coverage": 0.8376623376623377
+            },
+            "drivable": {
+              "roi_truth_points": 3224,
+              "compared_points": 2896,
+              "correct_points": 2619,
+              "predicted_points": 2893,
+              "conditional_accuracy": 0.9043508287292817,
+              "precision": 0.9052886277220878,
+              "assignment_coverage": 0.8982630272952854
+            },
+            "lane": {
+              "roi_truth_points": 21,
+              "compared_points": 19,
+              "correct_points": 0,
+              "predicted_points": 0,
+              "conditional_accuracy": 0.0,
+              "precision": null,
+              "assignment_coverage": 0.9047619047619048
+            },
+            "vehicle": {
+              "roi_truth_points": 388,
+              "compared_points": 262,
+              "correct_points": 2,
+              "predicted_points": 145,
+              "conditional_accuracy": 0.007633587786259542,
+              "precision": 0.013793103448275862,
+              "assignment_coverage": 0.6752577319587629
+            },
+            "pedestrian": {
+              "roi_truth_points": 0,
+              "compared_points": 0,
+              "correct_points": 0,
+              "predicted_points": 0,
+              "conditional_accuracy": null,
+              "precision": null,
+              "assignment_coverage": null
+            },
+            "obstacle": {
+              "roi_truth_points": 214,
+              "compared_points": 162,
+              "correct_points": 0,
+              "predicted_points": 33,
+              "conditional_accuracy": 0.0,
+              "precision": 0.0,
+              "assignment_coverage": 0.7570093457943925
+            }
+          },
+          "absolute_roi_time_skew_s": {
+            "min": 0.0001283880000000348,
+            "median": 0.04415966699999996,
+            "p95": 0.049576333999999944,
+            "max": 0.049992999999999954
+          },
+          "signed_assigned_time_delta_s": {
+            "min": -0.049992999999999954,
+            "median": -0.04457633400000005,
+            "p95": -0.0005485560000000334,
+            "max": -0.0001283880000000348
+          }
+        }
+      },
+      "depth_per_frame": [
+        {
+          "checked_points": 6856,
+          "behind_camera_visible_surface_points": 105,
+          "behind_surface_fraction": 0.015315052508751459,
+          "signed_depth_residual_m": {
+            "min": -12.145053999752296,
+            "median": -0.00016188249915927155,
+            "p95": 0.047168411879249916,
+            "max": 10.395798572882853
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6881,
+          "behind_camera_visible_surface_points": 107,
+          "behind_surface_fraction": 0.015550065397471297,
+          "signed_depth_residual_m": {
+            "min": -0.5639706459627973,
+            "median": -0.00020055449693345828,
+            "p95": 0.04795058941077013,
+            "max": 3.032032765956913
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6845,
+          "behind_camera_visible_surface_points": 116,
+          "behind_surface_fraction": 0.016946676406135865,
+          "signed_depth_residual_m": {
+            "min": -0.9340913421320991,
+            "median": -0.00014061700165735047,
+            "p95": 0.047776786974133,
+            "max": 3.0259940177420166
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6840,
+          "behind_camera_visible_surface_points": 108,
+          "behind_surface_fraction": 0.015789473684210527,
+          "signed_depth_residual_m": {
+            "min": -0.5093377784030295,
+            "median": -0.00022797657280193562,
+            "p95": 0.048814833631009386,
+            "max": 3.0229874914715325
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6837,
+          "behind_camera_visible_surface_points": 120,
+          "behind_surface_fraction": 0.017551557700745943,
+          "signed_depth_residual_m": {
+            "min": -0.5728949280466171,
+            "median": -0.00015293163612151162,
+            "p95": 0.050194468856886526,
+            "max": 3.0207739421144097
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6822,
+          "behind_camera_visible_surface_points": 125,
+          "behind_surface_fraction": 0.018323072412782176,
+          "signed_depth_residual_m": {
+            "min": -0.6855575291458926,
+            "median": -0.0001303427258140255,
+            "p95": 0.05142628910489514,
+            "max": 6.281985366571483
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6830,
+          "behind_camera_visible_surface_points": 128,
+          "behind_surface_fraction": 0.018740849194729136,
+          "signed_depth_residual_m": {
+            "min": -0.5258992800916591,
+            "median": -6.0727801621918154e-05,
+            "p95": 0.05094753859114835,
+            "max": 3.0264968710622284
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        },
+        {
+          "checked_points": 6814,
+          "behind_camera_visible_surface_points": 122,
+          "behind_surface_fraction": 0.017904314646316408,
+          "signed_depth_residual_m": {
+            "min": -0.5483438126568583,
+            "median": -0.00011263907106984217,
+            "p95": 0.04996497240955136,
+            "max": 6.287784100009143
+          },
+          "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+        }
+      ],
+      "clock": {
+        "physics_steps": 238,
+        "render_count": 48,
+        "time_s": 1.9833333333333334,
+        "absolute_time_s": 2.0,
+        "native_physics_steps": 240,
+        "physics_hz": 120,
+        "render_hz": 20,
+        "origin_time_s": 0.016666666666666666,
+        "origin_physics_steps": 2
+      },
+      "schedule": {
+        "requested_warmup_s": 1.2,
+        "origin_physics_steps": 2,
+        "origin_time_s": 0.016666666666666666,
+        "render_absolute_tick_modulus": 6,
+        "camera_absolute_tick_modulus": 12,
+        "first_relative_tick": 154,
+        "last_relative_tick": 238,
+        "actual_warmup_s": 1.2833333333333334,
+        "first_capture_absolute_s": 1.3,
+        "last_capture_absolute_s": 2.0
+      },
+      "composition": {
+        "sublayers": [
+          "./traffic-initial.usda",
+          "./debug.usda",
+          "./road-layout.usda",
+          "./source-vehicle-world.usda"
+        ],
+        "errors": [],
+        "default_prim": "/World",
+        "dependency_layers": 15,
+        "missing_dependencies": [],
+        "all_dependencies_local": true,
+        "runtime_namespace_exceptions": [
+          "/Render",
+          "/OmniverseKit_Persp"
+        ]
+      },
+      "source_vehicle_unchanged": true,
+      "buffer_changes": {
+        "unique_rgb": 8,
+        "unique_semantic_masks": 8
+      },
+      "frame_metrics": [
+        {
+          "index": 0,
+          "image_time_s": 1.3,
+          "metrics": {
+            "input_points": 39316,
+            "roi_points": 7463,
+            "oracle_known_roi_points": 7463,
+            "assigned_points": 6856,
+            "compared_points": 6856,
+            "correct_points": 6852,
+            "roi_coverage": 0.9186654160525258,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9994165694282381,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6856,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27702,
+              "outside_image": 4151,
+              "sparse_occlusion": 184,
+              "semantic_boundary": 423,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                449,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                5985,
+                0,
+                2,
+                0,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                241,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                177
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 576,
+                "compared_points": 449,
+                "correct_points": 449,
+                "predicted_points": 449,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7795138888888888
+              },
+              "drivable": {
+                "roi_truth_points": 6262,
+                "compared_points": 5989,
+                "correct_points": 5985,
+                "predicted_points": 5985,
+                "conditional_accuracy": 0.9993321088662548,
+                "precision": 1.0,
+                "assignment_coverage": 0.9564037048866177
+              },
+              "lane": {
+                "roi_truth_points": 23,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 388,
+                "compared_points": 241,
+                "correct_points": 241,
+                "predicted_points": 243,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9917695473251029,
+                "assignment_coverage": 0.6211340206185567
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 214,
+                "compared_points": 177,
+                "correct_points": 177,
+                "predicted_points": 179,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9888268156424581,
+                "assignment_coverage": 0.8271028037383178
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.0001283880000000348,
+              "median": 0.04152077799999998,
+              "p95": 0.0495728339999999,
+              "max": 0.050000000000000044
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.050000000000000044,
+              "median": -0.041656166999999966,
+              "p95": -0.0006874439999999815,
+              "max": -0.0001283880000000348
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6856,
+              "behind_camera_visible_surface_points": 105,
+              "behind_surface_fraction": 0.015315052508751459,
+              "signed_depth_residual_m": {
+                "min": -12.145053999752296,
+                "median": -0.00016188249915927155,
+                "p95": 0.047168411879249916,
+                "max": 10.395798572882853
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 1,
+          "image_time_s": 1.4,
+          "metrics": {
+            "input_points": 39251,
+            "roi_points": 7421,
+            "oracle_known_roi_points": 7421,
+            "assigned_points": 6881,
+            "compared_points": 6881,
+            "correct_points": 6878,
+            "roi_coverage": 0.9272335264789112,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995640168580148,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6881,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27684,
+              "outside_image": 4146,
+              "sparse_occlusion": 141,
+              "semantic_boundary": 399,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                446,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6029,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                224,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                179
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 562,
+                "compared_points": 446,
+                "correct_points": 446,
+                "predicted_points": 446,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7935943060498221
+              },
+              "drivable": {
+                "roi_truth_points": 6277,
+                "compared_points": 6032,
+                "correct_points": 6029,
+                "predicted_points": 6029,
+                "conditional_accuracy": 0.9995026525198939,
+                "precision": 1.0,
+                "assignment_coverage": 0.9609686155806915
+              },
+              "lane": {
+                "roi_truth_points": 23,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 341,
+                "compared_points": 224,
+                "correct_points": 224,
+                "predicted_points": 224,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.656891495601173
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 218,
+                "compared_points": 179,
+                "correct_points": 179,
+                "predicted_points": 182,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9835164835164835,
+                "assignment_coverage": 0.8211009174311926
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.04152077799999976,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.041524277999999804,
+              "p95": -0.0006839439999997143,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6881,
+              "behind_camera_visible_surface_points": 107,
+              "behind_surface_fraction": 0.015550065397471297,
+              "signed_depth_residual_m": {
+                "min": -0.5639706459627973,
+                "median": -0.00020055449693345828,
+                "p95": 0.04795058941077013,
+                "max": 3.032032765956913
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 2,
+          "image_time_s": 1.5,
+          "metrics": {
+            "input_points": 39247,
+            "roi_points": 7407,
+            "oracle_known_roi_points": 7407,
+            "assigned_points": 6845,
+            "compared_points": 6845,
+            "correct_points": 6842,
+            "roi_coverage": 0.9241258269204806,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995617238860482,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6845,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27690,
+              "outside_image": 4150,
+              "sparse_occlusion": 161,
+              "semantic_boundary": 401,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                448,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6036,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                181,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                177
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 564,
+                "compared_points": 448,
+                "correct_points": 448,
+                "predicted_points": 448,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7943262411347518
+              },
+              "drivable": {
+                "roi_truth_points": 6292,
+                "compared_points": 6039,
+                "correct_points": 6036,
+                "predicted_points": 6036,
+                "conditional_accuracy": 0.9995032290114257,
+                "precision": 1.0,
+                "assignment_coverage": 0.9597902097902098
+              },
+              "lane": {
+                "roi_truth_points": 22,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 313,
+                "compared_points": 181,
+                "correct_points": 181,
+                "predicted_points": 181,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.5782747603833865
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 216,
+                "compared_points": 177,
+                "correct_points": 177,
+                "predicted_points": 180,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9833333333333333,
+                "assignment_coverage": 0.8194444444444444
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.04152077799999998,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04165966700000001,
+              "p95": -0.0006874439999999815,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6845,
+              "behind_camera_visible_surface_points": 116,
+              "behind_surface_fraction": 0.016946676406135865,
+              "signed_depth_residual_m": {
+                "min": -0.9340913421320991,
+                "median": -0.00014061700165735047,
+                "p95": 0.047776786974133,
+                "max": 3.0259940177420166
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 3,
+          "image_time_s": 1.6,
+          "metrics": {
+            "input_points": 39218,
+            "roi_points": 7379,
+            "oracle_known_roi_points": 7379,
+            "assigned_points": 6840,
+            "compared_points": 6840,
+            "correct_points": 6837,
+            "roi_coverage": 0.9269548719338664,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.999561403508772,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6840,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27690,
+              "outside_image": 4149,
+              "sparse_occlusion": 153,
+              "semantic_boundary": 386,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                445,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6041,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                174,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                177
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 567,
+                "compared_points": 445,
+                "correct_points": 445,
+                "predicted_points": 445,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7848324514991182
+              },
+              "drivable": {
+                "roi_truth_points": 6306,
+                "compared_points": 6044,
+                "correct_points": 6041,
+                "predicted_points": 6041,
+                "conditional_accuracy": 0.9995036399735274,
+                "precision": 1.0,
+                "assignment_coverage": 0.9584522676815731
+              },
+              "lane": {
+                "roi_truth_points": 22,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 273,
+                "compared_points": 174,
+                "correct_points": 174,
+                "predicted_points": 174,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.6373626373626373
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 211,
+                "compared_points": 177,
+                "correct_points": 177,
+                "predicted_points": 180,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9833333333333333,
+                "assignment_coverage": 0.8388625592417062
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.0001283880000000348,
+              "median": 0.041385388999999995,
+              "p95": 0.0495728339999999,
+              "max": 0.050000000000000044
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.050000000000000044,
+              "median": -0.04152077799999998,
+              "p95": -0.0006874439999999815,
+              "max": -0.0001283880000000348
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6840,
+              "behind_camera_visible_surface_points": 108,
+              "behind_surface_fraction": 0.015789473684210527,
+              "signed_depth_residual_m": {
+                "min": -0.5093377784030295,
+                "median": -0.00022797657280193562,
+                "p95": 0.048814833631009386,
+                "max": 3.0229874914715325
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 4,
+          "image_time_s": 1.7,
+          "metrics": {
+            "input_points": 39206,
+            "roi_points": 7361,
+            "oracle_known_roi_points": 7361,
+            "assigned_points": 6837,
+            "compared_points": 6837,
+            "correct_points": 6834,
+            "roi_coverage": 0.9288140198342616,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995612110574813,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6837,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27700,
+              "outside_image": 4145,
+              "sparse_occlusion": 160,
+              "semantic_boundary": 364,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                444,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6070,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                148,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                172
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 568,
+                "compared_points": 444,
+                "correct_points": 444,
+                "predicted_points": 444,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7816901408450704
+              },
+              "drivable": {
+                "roi_truth_points": 6304,
+                "compared_points": 6073,
+                "correct_points": 6070,
+                "predicted_points": 6070,
+                "conditional_accuracy": 0.9995060102091223,
+                "precision": 1.0,
+                "assignment_coverage": 0.9633565989847716
+              },
+              "lane": {
+                "roi_truth_points": 23,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 258,
+                "compared_points": 148,
+                "correct_points": 148,
+                "predicted_points": 148,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.5736434108527132
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 208,
+                "compared_points": 172,
+                "correct_points": 172,
+                "predicted_points": 175,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9828571428571429,
+                "assignment_coverage": 0.8269230769230769
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.04138538899999977,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999976,
+              "p95": -0.0006839439999999364,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6837,
+              "behind_camera_visible_surface_points": 120,
+              "behind_surface_fraction": 0.017551557700745943,
+              "signed_depth_residual_m": {
+                "min": -0.5728949280466171,
+                "median": -0.00015293163612151162,
+                "p95": 0.050194468856886526,
+                "max": 3.0207739421144097
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 5,
+          "image_time_s": 1.8,
+          "metrics": {
+            "input_points": 39211,
+            "roi_points": 7364,
+            "oracle_known_roi_points": 7364,
+            "assigned_points": 6822,
+            "compared_points": 6822,
+            "correct_points": 6819,
+            "roi_coverage": 0.9263986963606735,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995602462620933,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6822,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27696,
+              "outside_image": 4151,
+              "sparse_occlusion": 160,
+              "semantic_boundary": 382,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                447,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6075,
+                0,
+                0,
+                0,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                124,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                173
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 566,
+                "compared_points": 447,
+                "correct_points": 447,
+                "predicted_points": 447,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7897526501766784
+              },
+              "drivable": {
+                "roi_truth_points": 6320,
+                "compared_points": 6077,
+                "correct_points": 6075,
+                "predicted_points": 6075,
+                "conditional_accuracy": 0.9996708902418957,
+                "precision": 1.0,
+                "assignment_coverage": 0.9615506329113924
+              },
+              "lane": {
+                "roi_truth_points": 23,
+                "compared_points": 1,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": 0.0,
+                "precision": null,
+                "assignment_coverage": 0.043478260869565216
+              },
+              "vehicle": {
+                "roi_truth_points": 245,
+                "compared_points": 124,
+                "correct_points": 124,
+                "predicted_points": 124,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.5061224489795918
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 210,
+                "compared_points": 173,
+                "correct_points": 173,
+                "predicted_points": 176,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9829545454545454,
+                "assignment_coverage": 0.8238095238095238
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.0001283880000000348,
+              "median": 0.041385388999999995,
+              "p95": 0.0495728339999999,
+              "max": 0.050000000000000044
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.050000000000000044,
+              "median": -0.04152077799999998,
+              "p95": -0.0006874439999999815,
+              "max": -0.0001283880000000348
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6822,
+              "behind_camera_visible_surface_points": 125,
+              "behind_surface_fraction": 0.018323072412782176,
+              "signed_depth_residual_m": {
+                "min": -0.6855575291458926,
+                "median": -0.0001303427258140255,
+                "p95": 0.05142628910489514,
+                "max": 6.281985366571483
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 6,
+          "image_time_s": 1.9,
+          "metrics": {
+            "input_points": 39211,
+            "roi_points": 7365,
+            "oracle_known_roi_points": 7365,
+            "assigned_points": 6830,
+            "compared_points": 6830,
+            "correct_points": 6827,
+            "roi_coverage": 0.9273591310251188,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9995607613469986,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6830,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27704,
+              "outside_image": 4142,
+              "sparse_occlusion": 157,
+              "semantic_boundary": 378,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                455,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6063,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                133,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                176
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 581,
+                "compared_points": 455,
+                "correct_points": 455,
+                "predicted_points": 455,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7831325301204819
+              },
+              "drivable": {
+                "roi_truth_points": 6326,
+                "compared_points": 6066,
+                "correct_points": 6063,
+                "predicted_points": 6063,
+                "conditional_accuracy": 0.9995054401582592,
+                "precision": 1.0,
+                "assignment_coverage": 0.958899778691116
+              },
+              "lane": {
+                "roi_truth_points": 22,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": 0.0
+              },
+              "vehicle": {
+                "roi_truth_points": 220,
+                "compared_points": 133,
+                "correct_points": 133,
+                "predicted_points": 133,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.6045454545454545
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 216,
+                "compared_points": 176,
+                "correct_points": 176,
+                "predicted_points": 179,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9832402234636871,
+                "assignment_coverage": 0.8148148148148148
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.04138538899999977,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999976,
+              "p95": -0.0006874439999997595,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6830,
+              "behind_camera_visible_surface_points": 128,
+              "behind_surface_fraction": 0.018740849194729136,
+              "signed_depth_residual_m": {
+                "min": -0.5258992800916591,
+                "median": -6.0727801621918154e-05,
+                "p95": 0.05094753859114835,
+                "max": 3.0264968710622284
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        },
+        {
+          "index": 7,
+          "image_time_s": 2.0,
+          "metrics": {
+            "input_points": 39167,
+            "roi_points": 7353,
+            "oracle_known_roi_points": 7353,
+            "assigned_points": 6814,
+            "compared_points": 6814,
+            "correct_points": 6810,
+            "roi_coverage": 0.9266965864273086,
+            "oracle_roi_coverage": 1.0,
+            "accuracy": 0.9994129732902847,
+            "invalid_assigned_points": 0,
+            "reason_counts": {
+              "accepted": 6814,
+              "invalid_return": 0,
+              "nonfinite_point": 0,
+              "invalid_time": 0,
+              "future_return": 0,
+              "time_skew": 0,
+              "outside_depth_range": 27666,
+              "outside_image": 4148,
+              "sparse_occlusion": 159,
+              "semantic_boundary": 380,
+              "unknown_label": 0,
+              "low_confidence": 0
+            },
+            "confusion_matrix": [
+              [
+                451,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                6066,
+                0,
+                0,
+                0,
+                3
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                118,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                175
+              ]
+            ],
+            "per_class": {
+              "background": {
+                "roi_truth_points": 577,
+                "compared_points": 451,
+                "correct_points": 451,
+                "predicted_points": 451,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.7816291161178509
+              },
+              "drivable": {
+                "roi_truth_points": 6321,
+                "compared_points": 6069,
+                "correct_points": 6066,
+                "predicted_points": 6066,
+                "conditional_accuracy": 0.9995056846267919,
+                "precision": 1.0,
+                "assignment_coverage": 0.9601328903654485
+              },
+              "lane": {
+                "roi_truth_points": 23,
+                "compared_points": 1,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": 0.0,
+                "precision": null,
+                "assignment_coverage": 0.043478260869565216
+              },
+              "vehicle": {
+                "roi_truth_points": 220,
+                "compared_points": 118,
+                "correct_points": 118,
+                "predicted_points": 118,
+                "conditional_accuracy": 1.0,
+                "precision": 1.0,
+                "assignment_coverage": 0.5363636363636364
+              },
+              "pedestrian": {
+                "roi_truth_points": 0,
+                "compared_points": 0,
+                "correct_points": 0,
+                "predicted_points": 0,
+                "conditional_accuracy": null,
+                "precision": null,
+                "assignment_coverage": null
+              },
+              "obstacle": {
+                "roi_truth_points": 212,
+                "compared_points": 175,
+                "correct_points": 175,
+                "predicted_points": 179,
+                "conditional_accuracy": 1.0,
+                "precision": 0.9776536312849162,
+                "assignment_coverage": 0.8254716981132075
+              }
+            },
+            "absolute_roi_time_skew_s": {
+              "min": 0.00012838799999981276,
+              "median": 0.04138188899999995,
+              "p95": 0.0495728339999999,
+              "max": 0.04999999999999982
+            },
+            "signed_assigned_time_delta_s": {
+              "min": -0.04999999999999982,
+              "median": -0.04152077799999998,
+              "p95": -0.0006874439999999815,
+              "max": -0.00012838799999981276
+            },
+            "depth_evaluation_only": {
+              "checked_points": 6814,
+              "behind_camera_visible_surface_points": 122,
+              "behind_surface_fraction": 0.017904314646316408,
+              "signed_depth_residual_m": {
+                "min": -0.5483438126568583,
+                "median": -0.00011263907106984217,
+                "p95": 0.04996497240955136,
+                "max": 6.287784100009143
+              },
+              "threshold": "max(0.1m, 1% of rendered image-plane depth); diagnostic, not a fusion input"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

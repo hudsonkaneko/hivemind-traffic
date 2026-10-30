@@ -32,7 +32,7 @@ only and measures remaining camera-visibility errors.
 ## Protocol and acceptance
 
 [`semantic_lidar_fusion_v01.json`](../configs/perception/semantic_lidar_fusion_v01.json)
-declares eight frames per fixture, captured at 10 Hz after warm-up. A parked,
+declares eight frames per fixture, captured at 10 Hz after at least 1.2 s warm-up. A parked,
 braked PhysX ego vehicle observes reusable scripted traffic and a stationary
 obstacle. The static fixture must pass before 2 m/s and 10 m/s traffic cases
 are attempted. Ego motion is not commanded; this is a sensing fixture, not
@@ -46,6 +46,14 @@ not moving-object deskewing. The native camera uses a synchronous render-barrier
 caller timestamp; its annotator does not guarantee an independent acquisition
 clock. Moving tests must show changing RGB/mask buffers and increasing LiDAR
 timestamps.
+
+Rendering aligns with the absolute 20 Hz native sensor clock; captures align
+with the 10 Hz camera clock, accounting for startup physics ticks. A bounded
+render-only barrier drains pending sensor outputs at the unchanged simulation
+time. It requires current scan ends before reading the image, and records each
+extra render, eligible return count and actual age. Timestamps are never shifted
+to make stale packets pass. The prepared asset's `car` semantic is explicitly
+mapped to the shared `vehicle` class in both native mask and oracle decoding.
 
 Declared gates: assigned-point class accuracy at least 97% static / 95% moving,
 vehicle and obstacle accuracy at least 90% with at least 20 evaluated points
@@ -93,12 +101,77 @@ perception errors and integration into the MAPPO observation adapter remain
 separate work. A clean simulator label projection does not establish those
 capabilities or authorize training.
 
-## Validation status
+## Verified results
 
-The initial implementation checkpoint passes 41 focused offline tests. Native
-attempt `20261030T221925Z-f48d4323` stopped before physics because it incorrectly
-waited for a UI viewport in headless mode. That dependency was removed; sensor
-readiness now depends on actual image and fresh LiDAR packets. The failed
-package and log are preserved. Its saved scene independently reopened with
-183 prims, 15 dependency layers, no composition errors and no missing assets.
-Static and moving capture acceptance is pending the corrected native run.
+Run **`20261030T223941Z-65f18896`** passes all three declared fixtures, in static,
+2 m/s and 10 m/s order. Each contains eight actual captures at absolute native
+times 1.3–2.0 s. The whole validation took 99.39 s wall time, including three
+fresh simulator startups and offline analysis. **44 focused offline tests pass.**
+No training ran and no MAPPO actor or observation contract changed.
+
+| Fixture | Assigned-label accuracy | In-image return coverage | Vehicle accuracy | Vehicle coverage | Result |
+| --- | ---: | ---: | ---: | ---: | --- |
+| Static | 99.9545% | 93.1699% | 100% | 71.72% | Pass |
+| Lead 2 m/s, adjacent -0.8 m/s | 99.9544% | 92.9647% | 100% | 66.67% | Pass |
+| Lead 10 m/s, adjacent -4 m/s | 99.9525% | 92.5769% | 100% | 59.48% | Pass |
+
+Accuracy is conditional on assignment; coverage includes rejected returns in
+its denominator. The road dominates the overall point count. In the fast
+fixture, the lead car has 901 correct assigned returns across all eight frames
+and travels 7 m; the adjacent car has 442 across eight frames and travels 2.8 m.
+The opposite linear motions deliberately test changing relative geometry;
+these are scripted visual fixtures, not traffic-controller behavior or a
+physical driving-policy validation. The numeric seed fields identify fixed
+fixtures; this is not randomized or held-out traffic testing.
+
+Independent object-ID coverage is 100%. The stale-image negative control assigns
+zero returns in every case. A deliberately incorrect camera translation lowers
+the static first-frame accuracy to 79.10%, demonstrating sensitivity to
+calibration. Neither oracle IDs nor rendered camera depth enter fusion.
+
+Thin lane markings are largely rejected by the two-pixel boundary margin;
+pedestrians are not present. The independent depth diagnostic still finds
+1.70–1.72% of assigned points behind the camera-visible surface. Correct class
+labels do not prove perfect visibility or point alignment, particularly when
+one vehicle occludes another. These limitations, ego motion, high-speed sensing
+and learned segmentation remain open work.
+
+Native logs identify RTX extension 1.4.6 and NVIDIA driver 621.01 on the RTX 5070.
+The installed Isaac version file read after the run is
+`6.0.1-rc.7+release.42383.32955d8d.gl`. Each saved composed scene reopens with
+15 local dependency layers, zero composition errors and no missing assets.
+All prepared source-vehicle hashes remain unchanged. The run records base commit
+`749f4e2` plus the exact dirty source snapshot/hashes; no source changed while it
+ran. The final committed source can be checked against those hashes.
+Independent review verified all 238 recorded artifact hashes, 13 source hashes
+and 10 source-vehicle hashes. All 24 barriers needed one extra render-only
+update; assigned-point ages range from 0.128388 to 50 ms, with no future returns.
+
+[Compact metrics and provenance](evidence/semantic-lidar-fusion-v01/results.json)
+are committed alongside these actual sensor screenshots:
+
+![Static RGB, semantic mask, fused LiDAR overlay and measured cloud](evidence/semantic-lidar-fusion-v01/static-101.png)
+
+![Moving traffic at 2 m/s](evidence/semantic-lidar-fusion-v01/moving-2mps-201.png)
+
+![Moving traffic at 10 m/s](evidence/semantic-lidar-fusion-v01/moving-10mps-301.png)
+
+Full raw captures, per-point labels/reasons, calibration, timestamps, source
+snapshots, manifests and evaluation JSON remain locally under
+`outputs/semantic-lidar-fusion/v01/20261030T223941Z-65f18896/`; logs are in
+`logs/semantic-lidar-fusion/`. Those bulk artifacts are ignored, not included in
+a Git clone. No source vehicle assets are redistributed.
+
+### Preserved development failures
+
+| Run | Observed failure | Correction |
+| --- | --- | --- |
+| `20261030T221925Z-f48d4323` | Headless viewport wait failed before physics | Use direct sensor render products |
+| `20261030T223020Z-03e06b78` | Empty camera buffers | Bounded native render warm-up/readiness |
+| `20261030T223256Z-8d397428` | Prepared asset used `car` semantics | Explicit `car` → `vehicle` taxonomy mapping |
+| `20261030T223411Z-af1866cc` | All returns exceeded 50 ms age | Drain asynchronous rendering without advancing physics |
+| `20261030T223638Z-01d85c50` | Startup-clock offset made obstacle returns stale | Align scheduling to absolute camera/LiDAR ticks |
+
+All attempts retain their original artifacts. A separate timing-bypassed static
+diagnostic helped isolate geometry; it is labeled **not acceptance evidence**.
+The accepted run uses the original 50 ms age, accuracy and coverage thresholds.

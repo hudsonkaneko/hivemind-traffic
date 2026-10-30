@@ -404,3 +404,14 @@ Imitation-assisted MAPPO now passes slower cars in all 50 fresh held-out episode
 ## October 29: v04r2 passes declared SUMO checks
 
 The selected v04r2 neural actor passes all acceptance gates on 50 fresh scenarios: 74 passes, at least one per episode; 3.175% aggregate overrides; maximum two lane changes/car/minute; zero collisions, overspeed or required-gap deficits. Use the frozen policy/best checkpoint at update 175; the final checkpoint regressed. The declared one-million-transition run completed without runtime errors or monitoring, and all evidence is retained in [v04r2 results](sumo-mappo-v4-stability.md). Existing v02 integrations remain intact; physical steering, sensor inputs, 3D transfer and causal communication benefits remain separate gates.
+
+
+## October 30 sensor milestone — semantic mask/LiDAR fusion v01
+
+Verified calibrated front-camera semantic projection with all five RTX scanners:
+static then moving 2/10 m/s fixtures pass, with per-actor support and retained
+metrics/screenshots. See [fusion v01 evidence](semantic-lidar-fusion-v01.md).
+This adds an evaluated sensor-data product; MAPPO still uses its existing
+observation contract. Learned segmentation, ego-motion compensation, robust
+visibility, lane-marking/pedestrian validation and policy observation adaptation
+remain open. No training was started.
