@@ -394,3 +394,7 @@ Appended actual training outcome, failed learned acceptance, best-versus-latest 
 ## October 29: v04r1 retraining and results
 
 Appended the imitation-assisted training method, exact budget/splits, measured passing and intervention results, one excessive-lane-switching episode and retained evidence to tab 41. Revision-guarded edit and full readback preserved all 42 tabs and all 41 unaffected tab bodies. Regenerated and checked from `outputs/doc-sync/mappo-v04-refinement/verified-source.json`. Native pagination was not inspected. No full acceptance, matched-seed gain or physical-transfer claim was added.
+
+## October 29: v04r2 accepted lane-stability result
+
+Appended the training refinement, exact budget/splits, accepted held-out result, selected-versus-final checkpoint distinction and retained metrics to tab 41. Revision-guarded native edit and full readback preserved all 42 tabs and all 41 unaffected tab bodies. Regenerated and checked from `outputs/doc-sync/mappo-v04-stability/verified-source.json`. Native pagination was not inspected. Simulator acceptance is explicitly separated from physical transfer and communication-benefit claims.

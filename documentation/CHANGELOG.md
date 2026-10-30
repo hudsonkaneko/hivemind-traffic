@@ -741,3 +741,7 @@ The authorized retraining completed without errors in 23 min 31 s, using 48,000 
 ## 2026-10-29 — MAPPO v04r2 lane-stability preparation
 
 Prepared the authorized retraining with a stronger applied-lane-change cost, stronger auxiliary guidance, lower PPO maneuver-label weighting and reduced exploration. Initial rare-maneuver imitation remains weighted. Safety, inference, cooldown and acceptance limits are unchanged. 178 tests and native no-learning preflight pass. [Declared configuration and evidence](sumo-mappo-v4-stability.md); results and Google guide update follow completion.
+
+## 2026-10-29 — MAPPO v04r2 accepted SUMO passing actor
+
+Authorized retraining completed in 21 min 31 s without runtime errors or agent monitoring. Selected update 175 passes all declared gates across 50 fresh test scenarios: 74 passes, 3.175% aggregate interventions, at most two lane changes/car/minute and zero collisions/overspeed/gap deficits. Latest update 233 regressed and is not the accepted actor. All metrics/checkpoints retained, independently audited, and [documented](sumo-mappo-v4-stability.md). Google guide and Markdown mirror synchronized. This is SUMO acceptance, not physical or sensor-driven validation.

@@ -66,6 +66,67 @@ journals under a unique `outputs/sumo_mappo/v04/` run. Recoverable failures reta
 evidence and resume completed checkpoints within the remaining budget. Results
 are reviewed only after process completion or failure.
 
+## Completed result: accepted for the declared SUMO task
+
+Run **train-20261029T235954Z-cc89b964** completed without runtime errors in
+**1,291.031 seconds (21 min 31 s)**. The agent waited without monitoring or
+analyzing training. Sources stayed unchanged; no recovery or extra training was
+needed. The full one-million-transition budget comprised 48,000 demonstrations
+and 952,000 on-policy transitions. There were 233 PPO updates, 13,878 PPO
+optimizer steps and 5,640 supervised optimizer steps; no PPO update was skipped.
+
+The selected frozen neural actor passes all declared safety/progress/passing
+and lane-frequency acceptance gates on the 50 fresh held-out scenarios.
+
+| Held-out result, 50 episodes each | Selected neural actor | Scripted reference |
+| --- | ---: | ---: |
+| Accepted | **Yes** | Yes |
+| Aggregate safety intervention fraction | 3.175% | 0.2367% |
+| Actual slower-car passes | 74 | 84 |
+| Episodes with at least one pass | 50 / 50 | 50 / 50 |
+| Applied lane changes | 212 | 176 |
+| Maximum changes / car / minute | 2 | 2 |
+| Collisions / overspeed / required-gap deficits | 0 / 0 / 0 | 0 / 0 / 0 |
+| Nominal episode endings | 50 / 50 | 50 / 50 |
+| Mean per-car progress | 1,446.91 m | 1,487.60 m |
+| Minimum measured headway | 1.638 s | 1.625 s |
+| Mean cooperative-eligible headway | 3.086 s | 2.048 s |
+
+The intervention ceiling is an aggregate gate, not a claim that every episode
+individually has fewer than 5% overrides. Safety filters remain active. The
+scripted reference still has fewer interventions and higher average progress;
+passing acceptance is not evidence the learned actor outperforms that baseline.
+Cross-refinement test seeds differ, so reduced intervention/switching figures
+are descriptive rather than paired causal improvement estimates.
+
+**Use `policy.pt` or `checkpoints/best.pt`, selected update 175 at 764,800 total
+transitions.** Its ten validation episodes also passed: 1.9708% interventions,
+14 passes with at least one in every episode, and at most two changes/car/minute.
+The final update 233 regressed to 9.2708% validation interventions; its
+`checkpoints/latest.pt` is retained for recovery/history and is not the accepted
+deployment actor. Checkpoint selection used validation only, before held-out
+evaluation. Independent review verified the exact selection maximum and all
+50 declared test seeds without exclusions. Frozen export and best checkpoint
+matched exactly on 960 saved observation samples (zero maximum action error).
+
+Source commit: `bd59d2f008c4c59615276c759377562fc339e826`. Accepted actor SHA256:
+`4cf4898df997a444624552515ea987e7e994b1ca40bb002cf91f0647be8a7245`.
+Full local artifacts: `outputs/sumo_mappo/v04/train-20261029T235954Z-cc89b964/`.
+This includes the actor, best/latest checkpoints, demonstrations, journals,
+all update/episode metrics, source/runtime manifests and exact configuration.
+
+Versioned review evidence: [summary/provenance](evidence/sumo-mappo-v4-stability/summary.json),
+[exact learned evaluation](evidence/sumo-mappo-v4-stability/held-out-learned-evaluation.json),
+[per-seed controller metrics](evidence/sumo-mappo-v4-stability/held-out-metrics.csv),
+and [optimization curves](evidence/sumo-mappo-v4-stability/training-updates.csv).
+No model weights or bulk journals were committed to Git.
+
+This is an accepted **v04 SUMO passing/following actor under the declared
+fixtures**, with no teacher or scripted fallback at inference. It does not
+replace the different-contract v02 actor in existing integrations automatically.
+Physical steering, cameras/LiDAR as policy inputs, 3D integration, much closer
+following and causal communication benefits remain separate validation tasks.
+
 Configuration SHA256: `8d926dc86f53473ef64fcb5f7f36bfec5801554fe26e1773ecfb803c882485e9`.
 Independent code review confirmed that the stage-specific weight switches only
 the training objective, including resume; the actor inference and environment
