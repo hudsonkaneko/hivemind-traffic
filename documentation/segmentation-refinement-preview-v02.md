@@ -143,6 +143,11 @@ include the independent audits. Actual grids and error PNGs were inspected.
 The combined focused suite passes **98 tests**, covering preprocessing parity,
 padding restoration, boundaries, geometric abstention, occlusion/timestamps,
 source contracts and the existing fusion/preview behavior.
+The same 98 tests pass from a clean archive of commit `80f534a`, without the
+workspace's unrelated untracked modules. All 12 captured runtime sources match
+that commit's content; the LiDAR helper and environment lockfile differ only in
+CRLF/LF line endings. Original byte hashes remain preserved, with a separate
+normalized comparison under `outputs/validation/segmentation-refinement-clean-80f534a/`.
 
 ## Proposed training, not started
 
