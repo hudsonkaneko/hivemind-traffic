@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/pretrained-segmentation-preview/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/pretrained-segmentation-preview/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-refinement-preview/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-refinement-preview/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4430,3 +4430,23 @@ Twenty-six focused tests pass. Reviewers recomputed all 24 frame scores, verifie
 Results, screenshots, model attribution and reproduction command: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/pretrained-segmentation-preview/documentation/pretrained-segmentation-preview-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/pretrained-segmentation-preview/documentation/pretrained-segmentation-preview-v01.md>)
 
 Local artifacts: outputs/perception-preview/v01/20261031T020708Z-69f78dab/
+
+<a id="docs-h-bh3njhm2uve1"></a>
+
+#### October 31: Saved-capture segmentation refinement v02
+
+Implemented CPU-only preprocessing comparisons, boundary diagnostics and independent sparse LiDAR occupancy on the 24 existing captures. No training, new simulator run, scene change or MAPPO update occurred. Three sub-agents implemented and independently reviewed the work.
+
+Stretched512 / aspect-preserving512 / aspect-preserving1024 shared-class mean IoU: 71.52% / 84.56% / 86.06%. Road boundary F1 at two pixels: 12.46% / 22.63% / 46.27%; vehicle boundary F1: 29.94% / 53.20% / 50.68%. Non-road GT pixels mislabeled road: 28.48% / 6.80% / 6.25%, including obstacle errors. Vehicle recall: 99.39% / 88.52% / 99.57%. The higher-resolution variant improves roads most; 512 has better vehicle-boundary precision but loses recall. The variants change padding context as well as resolution.
+
+LiDAR ground fitting uses measured XYZ only, with timing/calibration/visibility gates. It found 10,437 true occupied points, zero false positives and 741 misses among eligible samples (93.37% recall). Generic obstacle occupancy recall is 89.28% eligible, 88.92% including projectable rejected samples. This is sparse geometric occupancy, not learned obstacle semantics. Predicted-mask point semantic accuracy is 89.93% / 92.29% / 93.74%; generic-obstacle semantic recognition remains zero. A rendered-depth evaluation found 1.58% of depth-comparable occupied points behind the visible surface. Missing points are unknown, not clear road.
+
+All 98 focused tests pass. Independent audits verified 72 predictions, all 24 baseline masks equal to v01, 12 source hashes, 96 input hashes, 450 outputs and 306 screenshot panels. Run 20261031T211308Z-4e1fb1a4 completed in 41.01 seconds; CPU median inference was 218 / 232 / 508 ms. These 24 correlated frames are exploratory, not held-out driving acceptance.
+
+Disabled training proposal: pretrained SegFormer B0 features with a new six-class head; 3,600 future images in 180 disjoint scene groups; 640x384 padded input; weighted CE + 0.5 Dice + 0.2 boundary Dice; effective batch16; at most20 epochs,3600 updates or two hours including validation. Dataset, trainer, six-class evaluator and CUDA preflight remain prerequisites. No launch command or training authorization exists; new data capture is a separate decision.
+
+Results, screenshots and reproduction: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-refinement-preview/documentation/segmentation-refinement-preview-v02.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-refinement-preview/documentation/segmentation-refinement-preview-v02.md>)
+
+Training proposal: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-refinement-preview/configs/perception/segmentation_refinement_training_v02.proposed.json`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-refinement-preview/configs/perception/segmentation_refinement_training_v02.proposed.json>)
+
+Local run: outputs/perception-refinement/v02/20261031T211308Z-4e1fb1a4/

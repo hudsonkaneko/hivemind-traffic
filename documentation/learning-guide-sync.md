@@ -421,3 +421,13 @@ native editing and full readback preserved all 42 tabs, target history and 40
 unaffected tab bodies. Regenerated and checked the Markdown/manifest from
 `outputs/doc-sync/pretrained-segmentation-preview-v01/verified-source.json`.
 Native pagination was not inspected; the actual four-panel PNGs were inspected.
+
+
+## October 31: Saved-capture segmentation refinement v02
+
+Appended measured preprocessing/boundary/occupancy results, limitations and the
+disabled training proposal to tab 41; updated the start-tab mirror link. Guarded
+native editing and full readback preserved all 42 tabs, existing target history
+and 40 unaffected bodies. Regenerated/checked the mirror from
+`outputs/doc-sync/segmentation-refinement-v02/verified-source.json`. Native
+pagination not inspected; actual comparison/error screenshots were inspected.

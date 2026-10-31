@@ -1,0 +1,11 @@
+{
+  "version": "segmentation-refinement-preview-v02",
+  "training": false,
+  "new_simulator_runs": false,
+  "base_config": "configs/perception/pretrained_segmentation_preview_v01.json",
+  "variants": ["square512", "letterbox512", "letterbox1024"],
+  "boundary_tolerance_px": 2,
+  "scope": "Exploratory comparison on all 24 previously inspected saved frames; no held-out acceptance claim",
+  "selection": "Report all three variants; no deployment or automatic checkpoint selection",
+  "lidar": "Geometry-only ground estimate and sparse occupancy; original sensor time/calibration gates; no GT, IDs or rendered depth as inference inputs"
+}
