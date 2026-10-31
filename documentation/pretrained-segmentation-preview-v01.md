@@ -109,6 +109,9 @@ Strict weight loading reports no missing/unexpected keys; evaluation mode,
 disabled gradients and unchanged source weights are recorded. Original captures
 and existing policy/training files remain unchanged. The run records base commit
 `9641d92` plus the exact new-source snapshots and hashes.
+The 26 tests also pass from a fresh archive of committed source `c98ca34`,
+without unrelated untracked workspace tools. The clean-source verification log
+is retained under `outputs/validation/segmentation-preview-clean-c98ca34/`.
 
 ## Reproduce without training or a simulator
 
