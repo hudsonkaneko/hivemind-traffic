@@ -771,3 +771,15 @@ The model visibly overpredicts drivable space; quality is not accepted for drivi
 26 focused tests and independent artifact/panel audits pass. No training, new
 simulator run, policy change or predicted-mask-to-LiDAR integration occurred.
 [Actual previews, provenance and limitations](pretrained-segmentation-preview-v01.md).
+
+
+## October 31: Saved-capture segmentation refinement v02
+
+Added frozen aspect-preserving preprocessing comparisons, two-pixel boundary
+metrics and geometry-only sparse LiDAR occupancy on 24 saved captures. All 98
+focused tests pass. Shared mIoU improves from 71.52% to 86.06%; non-road false-road
+rate falls from 28.48% to 6.25%, but boundaries and generic obstacle semantics
+remain unaccepted. Three agents implemented/reviewed the work; 72 predictions,
+raw metrics and screenshots retained in [the evidence note](segmentation-refinement-preview-v02.md).
+A disabled six-class training proposal is included; no training/new simulation
+started. Google guide and Markdown verified synchronized.

@@ -426,3 +426,15 @@ oversized vehicle masks and unsupported lane/generic-obstacle classes remain
 visible limitations. This is offline inference, not accepted driving perception.
 Predicted-mask-to-LiDAR evaluation, more varied saved-scene comparisons and
 policy adaptation remain separate work; no training or simulator run was started.
+
+
+## October 31: Frozen perception refinement on saved captures
+
+[Refinement v02](segmentation-refinement-preview-v02.md) compares three input
+transforms and adds boundary metrics plus measured sparse occupancy. The 1024
+variant has 86.06% shared mIoU; geometric generic-obstacle point recall is 89.28%
+among eligible returns, while learned generic-obstacle semantics remain zero.
+This is exploratory sensing evidence, not policy integration or driving
+acceptance. A disabled [training proposal](segmentation-refinement-training-proposal.md)
+requires varied data, a trainer and CUDA preflight before authorization.
+No new training or simulator runs occurred.
