@@ -153,7 +153,8 @@ checkpoint or new model-quality claim is produced by this milestone.
 
 The focused segmentation, dataset, preview and LiDAR regression suite passes
 **139 CPU tests**, including 29 trainer tests, seven preflight tests and five new
-dataset tests. Missing or changed reviewed manifests are rejected before model
+dataset tests. The same 139 tests also pass from a clean archive of commit
+`81cf626`, without copying generated data or runtimes into that archive. Missing or changed reviewed manifests are rejected before model
 construction. The final no-learning trainer check revalidates the real dataset.
 Raw captures, full manifests, logs, CUDA runtime and weights stay local under
 ignored `outputs/`, `logs/` and `runtimes/`; GitHub contains source, pinned setup,
