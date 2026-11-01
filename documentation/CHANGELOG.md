@@ -783,3 +783,14 @@ remain unaccepted. Three agents implemented/reviewed the work; 72 predictions,
 raw metrics and screenshots retained in [the evidence note](segmentation-refinement-preview-v02.md).
 A disabled six-class training proposal is included; no training/new simulation
 started. Google guide and Markdown verified synchronized.
+
+## 2026-10-31 — Segmentation training preparation v02
+
+Prepared 3,600 native six-class captures in 180 split scenes, the guarded SegFormer
+trainer and isolated CUDA runtime using three sub-agents. Reviewed dataset readiness
+passed; original manifests and three smoke attempts remain intact. RTX 5070 no-update
+preflight passed at batch4 x accumulation4, 1,475.64 MiB peak allocated; zero optimizer
+steps and restored state. 139 CPU tests pass. Training remains disabled pending final
+config review. Shared car geometry, static human poses and deferred advanced metrics
+limit interpretation. [Results, screenshots and config](segmentation-training-preparation-v02.md).
+Native engineering guide and full 42-tab Markdown mirror verified in sync.

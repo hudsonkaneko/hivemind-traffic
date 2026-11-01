@@ -431,3 +431,13 @@ native editing and full readback preserved all 42 tabs, existing target history
 and 40 unaffected bodies. Regenerated/checked the mirror from
 `outputs/doc-sync/segmentation-refinement-v02/verified-source.json`. Native
 pagination not inspected; actual comparison/error screenshots were inspected.
+
+## October 31: Segmentation training preparation v02
+
+Appended actual dataset, trainer, no-update GPU results, disabled final configuration
+and explicit limits to tab 41; start-tab link follows
+`codex/segmentation-training-preparation`. Revision-guarded native editing and full
+readback preserved all 42 tabs and 40 unaffected tab bodies. Regeneration/check
+passed from `outputs/doc-sync/segmentation-training-preparation-v02/verified-source.json`.
+Native pagination was not inspected. Actual screenshots remain in the
+[preparation note](segmentation-training-preparation-v02.md).
