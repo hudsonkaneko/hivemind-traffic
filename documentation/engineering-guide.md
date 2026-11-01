@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-refinement-preview/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-refinement-preview/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4450,3 +4450,25 @@ Results, screenshots and reproduction: [`https://github.com/hudsonkaneko/hivemin
 Training proposal: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-refinement-preview/configs/perception/segmentation_refinement_training_v02.proposed.json`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-refinement-preview/configs/perception/segmentation_refinement_training_v02.proposed.json>)
 
 Local run: outputs/perception-refinement/v02/20261031T211308Z-4e1fb1a4/
+
+<a id="docs-h-yfx0lovzo727"></a>
+
+#### Segmentation training preparation v02 — October 31, 2026
+
+Dataset, trainer and GPU readiness are implemented with three sub-agents; full training remains disabled pending final configuration review.
+
+Native run 20261101T005956Z-51a9fc5b captured 3,600 RGB/semantic/instance/depth frames in 180 scene groups, split 2,880 train / 360 validation / 360 test. All six classes occur in every split: background, road, lane, vehicle, pedestrian and obstacle. Native capture took 452.4 seconds; full launcher/finalization took 476.01 seconds. Independent audit verified 18,757 output hashes, seven source hashes, 18 original asset hashes and all 180 composed scenes.
+
+Original manifests retain near\_duplicate\_review\_pending. A separately hash-bound reviewed manifest resolves that gate: no exact duplicates; the first 100 low-resolution hash matches had RGB differences 9.60–27.65/255, with six representative and four supplemental cross-split pairs visually checked. This bounded review does not establish generalization. Road/obstacle families and three real NVIDIA human identities are split-disjoint; car geometry is shared. Humans have static rest poses; scenes are procedural. No LiDAR or motion vectors are in this corpus, and prior 24-frame regression data is excluded.
+
+The guarded trainer implements six-class losses, training-only class weights, validation-only checkpoint selection, frozen test evaluation and resumable model/optimizer/scheduler/scaler/RNG/cursor state. Missing or checksum-mismatched reviewed manifests stop before model construction. Focused CPU verification: 139 tests passed. Instance matching, distance/size bins, motion-compensated flicker, bootstrap intervals, confidence calibration/abstention and matched fresh-corpus fusion comparisons remain deferred.
+
+GPU preflight 20261101T011205Z-5456aadf passed on RTX 5070, driver 621.01, isolated PyTorch 2.9.1+cu128/CUDA 12.8. Batch four times accumulation four used peak allocated 1,475.64 MiB / reserved 1,754 MiB, including allocated AdamW moments. Zero optimizer steps ran. Gradients were finite; parameters and full restored state match initialization. Only training-split inputs were used. Warmup was 18.89 seconds; later resident-input forward/backward batches took 48–56 ms. Compute-only epoch projection 39.79 seconds excludes IO, optimizer steps and checkpointing and is not a completion promise.
+
+Final config: SegFormer B0 pinned Cityscapes initialization with new six-class head; RGB 640x360 padded to 640x384; AdamW encoder LR 3e-5, decoder/head LR 3e-4, decay 0.01; weighted CE + 0.5 foreground Dice + 0.2 boundary Dice; effective batch 16, FP16, scaler 128; seed 20261102. Budget is 20 epochs / 3,600 updates / two-hour cumulative training-validation loop, whichever stops first, with patience five. Loop time is checked between bounded updates/batches, excludes initial integrity QA/model loading and permits checkpoint-save overshoot. Both launch and training authorization flags remain false. No trained six-class checkpoint exists yet.
+
+Source and actual screenshots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/documentation/segmentation-training-preparation-v02.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/documentation/segmentation-training-preparation-v02.md>)
+
+Final config: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/configs/perception/segmentation_training_v02.json`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/configs/perception/segmentation_training_v02.json>)
+
+Future checkpoints: outputs/perception-training/segmentation-refinement-v02/&lt;run&gt;/best.pt and last.pt. Raw data, runtime, weights and logs remain local; GitHub contains source, compact evidence and screenshots. The previous failed smoke attempts and capture review state are preserved.
