@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "study_id": "i110-preview-v2_1-20261102",
+  "trigger": "Follow-up to Sam-authorized braking/recovery repair: fully completed v2 matrix removes cost failures but fails four primary comfort cases. Retain it and separately freeze one conditional-preview refinement.",
+  "phase": "bounded synthetic development comparison; inspected seed, not held-out confirmation",
+  "source_suite": "outputs/i110-ramp-cutin-20261029/development-v1",
+  "network": "outputs/i110-sumo-20261027/network-c/network.net.xml",
+  "runs": [
+    "ramp-0",
+    "ramp-38",
+    "ramp-44",
+    "ramp-50",
+    "cutin-smooth_acc-0",
+    "cutin-smooth_acc-1"
+  ],
+  "seed": 732001,
+  "horizon_s": 90,
+  "drain_s": 90,
+  "step_s": 0.1,
+  "wall_limit_s": 120,
+  "primary_range_m": 240,
+  "sensitivity_range_m": 120,
+  "preview": {
+    "range_m": 240.0,
+    "headway_s": 2.0,
+    "reserve_m": 10.0,
+    "speed_gain": 0.8,
+    "gap_gain": 0.04,
+    "low_speed_offset_max_m": 2.0,
+    "path_limit_m": 300.0,
+    "standstill_gap_m": 2.5
+  },
+  "controller": "Start with v2 current native route-local leader request. Also project current nearby vehicles onto reachable same/adjacent paths (v1 graph, limit300m). For same-path forward candidates use v2 continuous following request with projected bumper gap minus2.5m. For adjacent candidates require projected bumper gap>2.5m, and floor their request at0.8*(other_speed-ego_speed), so they can request closing-speed matching but not opening a following gap. Take the minimum candidate/native/cruise request; unchanged measured jerk filter and terminal release. No dwell/latch, future event, role or intent oracle. speedMode31 and native ACC safety stay unchanged.",
+  "safety": {
+    "speed_mode": 31,
+    "lane_change_mode": 512,
+    "native_human_lane_changes": true,
+    "max_jerk_m_s3": 2.0,
+    "comfort_tolerance": 0.05
+  },
+  "baseline": "Reuse all six hash-verified original smooth-ACC runs. Re-run ramp-44 once with the edited runner and require the complete canonical trace to match the frozen baseline before new treatment runs.",
+  "repeats": [
+    "ramp-44-r240",
+    "cutin-smooth_acc-1-r240"
+  ],
+  "matrix": "One exact baseline regression; six cases at 240 m and six at 120 m; first primary case repeated before scaling, plus ramp44 and cutin-on primary repeats: 16 bounded simulations. No outcome-driven v2 tuning. This is a combined engineering revision, not a component-causal ablation.",
+  "metrics": "Paired maximum/RMS jerk, exceedance/mismatch counts, native gaps/TTC, all requested/completed/waiting/removed/teleported counts, fixed-H and separate-drain total/role/origin boundary time and external wait, ramp exposure/event realization, latch/unknown/terminal-release counts. Report all pairs and repeat hashes.",
+  "acceptance": "No collision/removal/teleport; all requests complete by bounded drain, physical lanes retained and events realized. Comfort <=2.05 m/s3 for every case; total primary boundary time <= baseline*1.05 for each case as a predeclared engineering cost screen, with every group burden still reported. Passing these inspected fixtures is not scientific or physical acceptance.",
+  "viewer": "No new render needed for this controller comparison. Inspect and hash existing supplied car/source and its current road reference; keep private asset local.",
+  "github": "Follow normal tested feature checkpoint workflow; no new asset release or private-car publication. Prior release remains immutable.",
+  "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects. This is an explicitly adaptive development refinement informed by failed v2; not independent confirmation. Adjacent projected positions are conditional and may not represent actual future conflicts. No further outcome-driven retuning within this edition.",
+  "controller_mode": "preview_v2_1_acc",
+  "smoke_repeat": "ramp-0-r240",
+  "rationale": "Current route-local leaders appear too late after lane entry. Restore static same/adjacent forward path possibilities without v1 full-brake latch. Exclude adjacent projections whose whole body is not ahead by the standstill reserve; never request gap-opening relative to an adjacent car below speed matching. Preserve every failed v2 result.",
+  "primary_metric": "Maximum realized controlled jerk across all six primary cases; paired fixed-H complete-cohort boundary time is co-acceptance gate.",
+  "no_training": true,
+  "sources": [
+    "https://sumo.dlr.de/docs/Car-Following-Models/ACC.html",
+    "https://raw.githubusercontent.com/eclipse-sumo/sumo/v1_27_1/src/microsim/cfmodels/MSCFModel_ACC.cpp"
+  ],
+  "display_version": "v2.1"
+}

@@ -13,12 +13,17 @@ ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT))
 from scripts.report_i110_anticipation import read,write,sha,verify_run
 from traffic.i110_preview import PreviewConfig
+from traffic.i110_preview_v2 import PreviewV2Config
+from traffic.i110_preview_v2_1 import PreviewV21Config
 
 
-def verify(output):
+def verify(output, config=None):
     output=Path(output).resolve();output.mkdir(parents=True,exist_ok=False)
-    plan=read(ROOT/'experiments/configs/i110_preview_v1.json')
-    if asdict(PreviewConfig())!=plan['preview']:
+    plan_path=Path(config) if config else ROOT/'experiments/configs/i110_preview_v1.json'
+    plan=read(plan_path)
+    kind=plan.get('controller_mode','preview_acc')
+    defaults={'preview_v2_acc':PreviewV2Config,'preview_v2_1_acc':PreviewV21Config,'preview_acc':PreviewConfig}[kind]()
+    if asdict(defaults)!=plan['preview']:
         raise ValueError('Executed defaults differ from frozen preview contract')
     write(output/'plan.json',plan)
     shutil.copyfile(__file__,output/'supervisor.py')
@@ -61,16 +66,25 @@ def verify(output):
         baseline=execute('baseline-regression','ramp-44','smooth_acc',240)
         baseline_exact=baseline['trace_sha256']==read(baselines['ramp-44']/'metrics.json')['trace_sha256']
         if not baseline_exact:raise ValueError('Edited runner changed the complete baseline trace')
+        # Repeat the first bounded primary case before scaling the new controller.
+        smoke_repeats={}
         for radius in [plan['primary_range_m'],plan['sensitivity_range_m']]:
             for case in plan['runs']:
-                execute(f'{case}-r{radius}',case,'preview_acc',radius)
+                name=f'{case}-r{radius}'
+                measured=execute(name,case,kind,radius)
+                if plan.get('smoke_repeat')==name:
+                    repeated=execute(name+'-smoke-repeat',case,kind,radius)
+                    exact=dict(trace_exact=measured['trace_sha256']==repeated['trace_sha256'],
+                        interaction_exact=sha(output/name/'interactions.jsonl')==sha(output/(name+'-smoke-repeat')/'interactions.jsonl'))
+                    smoke_repeats[name]=exact
+                    if not all(exact.values()):raise ValueError('Smoke repeat differs; refusing to scale')
         repeats={}
         for name in plan['repeats']:
             original=next(r for r in records if r['name']==name)
-            repeated=execute(name+'-repeat',original['case'],'preview_acc',original['range_m'])
+            repeated=execute(name+'-repeat',original['case'],kind,original['range_m'])
             repeats[name]=dict(trace_exact=repeated['trace_sha256']==read(output/name/'metrics.json')['trace_sha256'],
                 interaction_exact=sha(output/(name+'-repeat')/'interactions.jsonl')==sha(output/name/'interactions.jsonl'))
-        result=dict(status='completed',baseline_trace_exact=baseline_exact,repeats=repeats,
+        result=dict(status='completed',baseline_trace_exact=baseline_exact,repeats=repeats,smoke_repeats=smoke_repeats,
             input_matching=True,executed_runs=len(records),records=records,
             infrastructure_passed=all(all(v.values()) for v in repeats.values()),
             limits=plan['limits'])
@@ -84,4 +98,5 @@ def verify(output):
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--config',type=Path)
     verify(**vars(parser.parse_args()))

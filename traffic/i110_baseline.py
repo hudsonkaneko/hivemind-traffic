@@ -30,6 +30,8 @@ from traffic.i110_policy_interface import LaneGraph, FEATURES, SCHEMA
 from traffic.i110_events import load_event, add_actor, EventAdapter
 from traffic.i110_interactions import InteractionRecorder
 from traffic.i110_preview import PreviewConfig, PreviewController
+from traffic.i110_preview_v2 import PreviewV2Config, PreviewV2Controller
+from traffic.i110_preview_v2_1 import PreviewV21Config, PreviewV21Controller
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTROLLED = tuple(f'agent_{i}' for i in range(4))
@@ -84,11 +86,15 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
         controller='native_acc', passing='default', comfort_config=None, observe_policy_interface=False,
         study_id=None, reason=None, event_spec=None, agent0_depart=0., observe_interactions=False,
         preview_range=240.):
-    if controller not in {'native_acc','smooth_acc','follow_cap_acc','preview_acc'} or passing not in {'default','parallel'}:
+    if controller not in {'native_acc','smooth_acc','follow_cap_acc','preview_acc','preview_v2_acc','preview_v2_1_acc'} or passing not in {'default','parallel'}:
         raise ValueError('Unknown controller or passing convention')
     comfort=ComfortConfig(**(comfort_config or {}))
-    filtered_controller = controller in {'smooth_acc','follow_cap_acc','preview_acc'}
+    filtered_controller = controller in {'smooth_acc','follow_cap_acc','preview_acc','preview_v2_acc','preview_v2_1_acc'}
     preview = PreviewController(network,PreviewConfig(range_m=preview_range)) if controller=='preview_acc' else None
+    if controller == 'preview_v2_acc':
+        preview = PreviewV2Controller(PreviewV2Config(range_m=preview_range))
+    if controller == 'preview_v2_1_acc':
+        preview = PreviewV21Controller(network,PreviewV21Config(range_m=preview_range))
     if preview:
         observe_policy_interface=True
     if (not math.isfinite(agent0_depart) or not 0<=agent0_depart<=50
@@ -126,11 +132,12 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
                     'scripts/build_i110_sumo.py','scenarios/i110/sumo-road-profiles.json','traffic/smooth_acc.py',
                     'traffic/i110_policy_interface.py','traffic/i110_events.py','traffic/i110_interactions.py']
     source_names += ['traffic/i110_preview.py','traffic/i110_convergence.py']
+    source_names += ['traffic/i110_preview_v2.py','traffic/i110_preview_v2_1.py']
     for name in source_names:
         dest=output/'source'/name
         dest.parent.mkdir(parents=True,exist_ok=True)
         shutil.copyfile(ROOT/name,dest)
-    git = lambda *args: subprocess.check_output(['git','-c',f'safe.directory={ROOT.as_posix()}',*args],cwd=ROOT,text=True)
+    git = lambda *args: subprocess.check_output(['git','-c',f'safe.directory={ROOT.as_posix()}',*args],cwd=ROOT,text=True,encoding='utf-8')
     (output/'source.diff').write_text(git('diff','HEAD'), encoding='utf-8')
     protocol = dict(seed=seed,case=case,controller=controller,human_model='IDM',
         evidence_context=dict(study_id=study_id,reason=reason,recorded=bool(study_id and reason)),
@@ -277,9 +284,14 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
                 pending={}
                 if preview:
                     for vid in sorted(active & set(CONTROLLED)):
-                        decision=preview.observe(vid,result.states,t)
+                        decision=(preview.observe(conn,vid,result.states,t) if controller in {'preview_v2_acc','preview_v2_1_acc'}
+                                  else preview.observe(vid,result.states,t))
                         pending[vid]=smooth_command(conn,vid,DT,comfort,
                             requested_ceiling=decision['requested_ceiling_m_s2'],terminal_release=True)
+                        if controller=='preview_v2_acc':
+                            pending[vid]['action_source']='continuous_route_local_preview_v2_with_terminal_release'
+                        if controller=='preview_v2_1_acc':
+                            pending[vid]['action_source']='continuous_conditional_preview_v2_1_with_terminal_release'
                         pending[vid]['preview']=decision
                         preview_counts['commands']+=1
                         preview_counts['active']+=decision['active']
@@ -357,7 +369,7 @@ if __name__=='__main__':
     p.add_argument('--case',choices=['ordinary','braking_leader','stopped_leader'],default='ordinary')
     p.add_argument('--horizon',type=float,default=60.)
     p.add_argument('--drain',type=float,default=90.)
-    p.add_argument('--controller',choices=['native_acc','smooth_acc','follow_cap_acc','preview_acc'],default='native_acc')
+    p.add_argument('--controller',choices=['native_acc','smooth_acc','follow_cap_acc','preview_acc','preview_v2_acc','preview_v2_1_acc'],default='native_acc')
     p.add_argument('--preview-range',type=float,default=240.)
     p.add_argument('--passing',choices=['default','parallel'],default='default')
     p.add_argument('--observe-policy-interface',action='store_true')

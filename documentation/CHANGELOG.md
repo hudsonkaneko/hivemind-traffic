@@ -1,5 +1,14 @@
 # Change log
 
+## Preview v2/v2.1 follow-up — 2 November 2026
+
+V2.1 passes all six primary development acceptance checks. The rejected v2 edition is retained. Two separately frozen matrices
+completed 32 runs, with exact baseline/repeat traces and 54 passing targeted
+CPU tests. See [comparison and original-car status](i110-preview-v2-2026-11-02.md).
+The original supplied car/source remain intact locally; the public replay uses
+procedural cars because redistribution rights are unqualified. The released v1
+ZIP is unchanged. Freeze new, uninspected verification seeds and merge/cut-in conditions before further tuning; test range sensitivity and realization limits. Keep smooth ACC as the reference baseline.
+
 ## 2026-11-02 — Approved GitHub road/replay publication
 
 - Published tested checkpoint `1c9c27d` to Sam's feature branch, updated [PR #16](https://github.com/hudsonkaneko/hivemind-traffic/pull/16),

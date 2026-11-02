@@ -4272,6 +4272,176 @@
           "lineage_basis": "recorded"
         }
       ]
+    },
+    {
+      "id": "i110-preview-v2-20261102",
+      "title": "Preview v2 braking/recovery against unchanged baseline",
+      "domain": "Traffic control",
+      "question": "Does continuous route-local preview remove v1 overbraking/recovery failures without sacrificing comfort, safety or complete-cohort cost?",
+      "why_now": "V1 adjacent conditional paths caused persistent braking, including cut-in-off. Its stop-oriented latch delayed recovery. Peaks coincide with native ACC mode transition around 100 m; v2 closes speed differences before that transition. Same-path leader observation cannot predict an unannounced instantaneous cut-in; failure remains visible.",
+      "trigger": {
+        "text": "Sam requested fixing preview braking/recovery and testing v2 against the same baseline, and asked what happened to the original car.",
+        "sources": [
+          "repo:outputs/i110-preview-v2-20261102/predeclared-plan.json",
+          "repo:documentation/i110-preview-2026-11-02.md"
+        ]
+      },
+      "method": "Use current route-local TraCI getLeader within 240 m (120 m sensitivity); do not brake for other vehicles merely on an adjacent possible path. Apply continuous early gap-closing request 0.8*(leader_speed-ego_speed)+0.04*(net_gap-2*ego_speed-10-low_speed_offset), with low_speed_offset=clamp(75/speed-5,0,2) (2 at rest). Take the lower of this and native ACC/cruise request, apply unchanged measured-acceleration comfort filter and v1 terminal-release guard. No latch, dwell or stale target; immediate state-based recovery still bounded by measured jerk. Speed mode31 and native ACC authority remain. No hypothetical followSpeed queries (they may update ACC mode); one original current-state query per command remains. One exact baseline regression; six cases at 240 m and six at 120 m; first primary case repeated before scaling, plus ramp44 and cutin-on primary repeats: 16 bounded simulations. No outcome-driven v2 tuning. This is a combined engineering revision, not a component-causal ablation.",
+      "status": "completed development; rejected",
+      "result": "16 matrix runs; exact baseline and all repeats. Primary comfort failures: ['ramp-38', 'ramp-44', 'ramp-50', 'cutin-smooth_acc-1']; cost failures: [].",
+      "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects.",
+      "next_action": "Freeze new, uninspected verification seeds and merge/cut-in conditions before further tuning; test range sensitivity and realization limits. Keep smooth ACC as the reference baseline.",
+      "references": [
+        "repo:experiments/configs/i110_preview_v2.json",
+        "repo:outputs/i110-preview-v2-20261102/predeclared-plan.json",
+        "https://sumo.dlr.de/docs/Car-Following-Models/ACC.html",
+        "https://raw.githubusercontent.com/eclipse-sumo/sumo/v1_27_1/src/microsim/cfmodels/MSCFModel_ACC.cpp",
+        "repo:documentation/i110-preview-v2-2026-11-02.md",
+        "repo:documentation/evidence/i110-preview-v2-20261102.json",
+        "repo:outputs/i110-preview-v2-20261102/analysis-v1/revision-manifest.json"
+      ],
+      "prefixes": [
+        "repo:outputs/i110-preview-v2-20261102",
+        "repo:traffic/i110_preview_v2.py",
+        "repo:tests/test_i110_preview_v2.py",
+        "repo:experiments/configs/i110_preview_v2.json"
+      ],
+      "follow_up_to": [
+        "i110-preview-20261102"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/i110-preview-v2-20261102/car-status.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-preview-v2-20261102/prepare.py",
+          "inputs": [
+            "repo:vehicles/sim_ready/sam-collected/v01/provenance.json",
+            "repo:outputs/i110-refinement-20261027/scene-v07/motion.usda"
+          ],
+          "explanation": "Check whether the original car was removed and distinguish local use from release packaging.",
+          "claim": "Private car source hash matches its original provenance and existing road scene still references its wrapper.",
+          "limits": "No redistribution approval, original textures, new render or physical dynamics established.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-v2-20261102/analysis-v1/summary.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_preview.py",
+          "inputs": [
+            "repo:outputs/i110-preview-v2-20261102/development-v1/verification.json"
+          ],
+          "explanation": "All frozen cases compared to original baseline and v1 with complete cohort burden and realized control.",
+          "claim": "16 matrix runs; exact baseline and all repeats. Primary comfort failures: ['ramp-38', 'ramp-44', 'ramp-50', 'cutin-smooth_acc-1']; cost failures: [].",
+          "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-v2-20261102/analysis-v1/v1-v2-comparison.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_preview_revision.py",
+          "inputs": [
+            "repo:outputs/i110-preview-v2-20261102/analysis-v1/summary.json",
+            "repo:outputs/i110-preview-v2-20261102/analysis-v1/revision-manifest.json"
+          ],
+          "explanation": "All frozen cases compared to original baseline and v1 with complete cohort burden and realized control.",
+          "claim": "16 matrix runs; exact baseline and all repeats. Primary comfort failures: ['ramp-38', 'ramp-44', 'ramp-50', 'cutin-smooth_acc-1']; cost failures: [].",
+          "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects.",
+          "lineage_basis": "recorded"
+        }
+      ]
+    },
+    {
+      "id": "i110-preview-v2_1-20261102",
+      "title": "Preview v2.1 conditional speed matching after v2 failures",
+      "domain": "Traffic control",
+      "question": "Can conditional preview regain warning without v1 overbraking and stop/dwell costs?",
+      "why_now": "Current route-local leaders appear too late after lane entry. Restore static same/adjacent forward path possibilities without v1 full-brake latch. Exclude adjacent projections whose whole body is not ahead by the standstill reserve; never request gap-opening relative to an adjacent car below speed matching. Preserve every failed v2 result.",
+      "trigger": {
+        "text": "Follow-up to Sam-authorized braking/recovery repair: fully completed v2 matrix removes cost failures but fails four primary comfort cases. Retain it and separately freeze one conditional-preview refinement.",
+        "sources": [
+          "repo:outputs/i110-preview-v2-20261102/analysis-v1/v1-v2-comparison.json",
+          "repo:outputs/i110-preview-v2_1-20261102/predeclared-plan.json"
+        ]
+      },
+      "method": "Start with v2 current native route-local leader request. Also project current nearby vehicles onto reachable same/adjacent paths (v1 graph, limit300m). For same-path forward candidates use v2 continuous following request with projected bumper gap minus2.5m. For adjacent candidates require projected bumper gap>2.5m, and floor their request at0.8*(other_speed-ego_speed), so they can request closing-speed matching but not opening a following gap. Take the minimum candidate/native/cruise request; unchanged measured jerk filter and terminal release. No dwell/latch, future event, role or intent oracle. speedMode31 and native ACC safety stay unchanged. One exact baseline regression; six cases at 240 m and six at 120 m; first primary case repeated before scaling, plus ramp44 and cutin-on primary repeats: 16 bounded simulations. No outcome-driven v2 tuning. This is a combined engineering revision, not a component-causal ablation.",
+      "status": "completed development; primary fixture gates pass",
+      "result": "16 matrix runs; exact baseline and all repeats. Primary comfort failures: []; cost failures: [].",
+      "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects. This is an explicitly adaptive development refinement informed by failed v2; not independent confirmation. Adjacent projected positions are conditional and may not represent actual future conflicts. No further outcome-driven retuning within this edition.",
+      "next_action": "Freeze new, uninspected verification seeds and merge/cut-in conditions before further tuning; test range sensitivity and realization limits. Keep smooth ACC as the reference baseline.",
+      "references": [
+        "repo:experiments/configs/i110_preview_v2_1.json",
+        "repo:outputs/i110-preview-v2_1-20261102/predeclared-plan.json",
+        "repo:documentation/i110-preview-v2-2026-11-02.md",
+        "repo:documentation/evidence/i110-preview-v2-20261102.json",
+        "repo:outputs/i110-preview-v2_1-20261102/analysis-v1/revision-manifest.json"
+      ],
+      "prefixes": [
+        "repo:outputs/i110-preview-v2_1-20261102",
+        "repo:traffic/i110_preview_v2_1.py",
+        "repo:tests/test_i110_preview_v2_1.py",
+        "repo:experiments/configs/i110_preview_v2_1.json",
+        "repo:scripts/report_i110_preview_revision.py",
+        "repo:documentation/i110-preview-v2-2026-11-02.md",
+        "repo:documentation/evidence/i110-preview-v2-20261102.json"
+      ],
+      "follow_up_to": [
+        "i110-preview-v2-20261102"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/i110-preview-v2_1-20261102/analysis-v1/summary.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_preview.py",
+          "inputs": [
+            "repo:outputs/i110-preview-v2_1-20261102/development-v1/verification.json"
+          ],
+          "explanation": "All frozen cases compared to original baseline and v1 with complete cohort burden and realized control.",
+          "claim": "16 matrix runs; exact baseline and all repeats. Primary comfort failures: []; cost failures: [].",
+          "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects. This is an explicitly adaptive development refinement informed by failed v2; not independent confirmation. Adjacent projected positions are conditional and may not represent actual future conflicts. No further outcome-driven retuning within this edition.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-v2_1-20261102/analysis-v1/v1-v2-comparison.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_preview_revision.py",
+          "inputs": [
+            "repo:outputs/i110-preview-v2_1-20261102/analysis-v1/summary.json",
+            "repo:outputs/i110-preview-v2_1-20261102/analysis-v1/revision-manifest.json"
+          ],
+          "explanation": "All frozen cases compared to original baseline and v1 with complete cohort burden and realized control.",
+          "claim": "16 matrix runs; exact baseline and all repeats. Primary comfort failures: []; cost failures: [].",
+          "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects. This is an explicitly adaptive development refinement informed by failed v2; not independent confirmation. Adjacent projected positions are conditional and may not represent actual future conflicts. No further outcome-driven retuning within this edition.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/i110-preview-v2-2026-11-02.md",
+          "kind": "document",
+          "generator": "repo:outputs/i110-preview-v2_1-20261102/close-records.py",
+          "inputs": [
+            "repo:outputs/i110-preview-v2-20261102/analysis-v1/v1-v2-comparison.json",
+            "repo:outputs/i110-preview-v2_1-20261102/analysis-v1/v1-v2-comparison.json",
+            "repo:outputs/i110-preview-v2-20261102/car-status.json"
+          ],
+          "explanation": "Evidence-backed response to Sam braking/recovery and car-location request; preserves failed first revision.",
+          "claim": "V2.1 passes all six primary development acceptance checks.",
+          "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects. This is an explicitly adaptive development refinement informed by failed v2; not independent confirmation. Adjacent projected positions are conditional and may not represent actual future conflicts. No further outcome-driven retuning within this edition.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/evidence/i110-preview-v2-20261102.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-preview-v2_1-20261102/close-records.py",
+          "inputs": [
+            "repo:outputs/i110-preview-v2-20261102/analysis-v1/v1-v2-comparison.json",
+            "repo:outputs/i110-preview-v2_1-20261102/analysis-v1/v1-v2-comparison.json",
+            "repo:outputs/i110-preview-v2-20261102/car-status.json"
+          ],
+          "explanation": "Evidence-backed response to Sam braking/recovery and car-location request; preserves failed first revision.",
+          "claim": "V2.1 passes all six primary development acceptance checks.",
+          "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects. This is an explicitly adaptive development refinement informed by failed v2; not independent confirmation. Adjacent projected positions are conditional and may not represent actual future conflicts. No further outcome-driven retuning within this edition.",
+          "lineage_basis": "recorded"
+        }
+      ]
     }
   ]
 }
