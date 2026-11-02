@@ -1,0 +1,114 @@
+{
+  "study_id": "repo-review-20261102",
+  "actor": "Codex for Sam",
+  "date_local": "2026-11-02",
+  "scope": {
+    "hudson_branches": 37,
+    "sam_branches": 20,
+    "upstream_prs": 34,
+    "open_prs": 23,
+    "draft_open_prs": 22,
+    "ci_runs": 97
+  },
+  "local_start_commit": "e8cdbeea7ed7ef15e558104c194e7d66f2670fdf",
+  "unpublished_implementation_commits": 11,
+  "source_hash_checks": 23,
+  "source_identity_passed": true,
+  "config_identity_passed": true,
+  "v04r2": {
+    "learned": {
+      "episodes": 50,
+      "passes": 74,
+      "intervention_fraction": 0.03175,
+      "mean_progress_m": 1446.9079590941637,
+      "maximum_lane_changes_per_vehicle_minute": 2.0,
+      "max_abs_jerk_m_s3": 42.007436437875256,
+      "collisions": 0,
+      "overspeed": 0,
+      "required_gap_deficit_steps": 0,
+      "minimum_passes": 1,
+      "episodes_over_5pct": 8
+    },
+    "scripted": {
+      "episodes": 50,
+      "passes": 84,
+      "intervention_fraction": 0.0023666666666666667,
+      "mean_progress_m": 1487.5992943796173,
+      "maximum_lane_changes_per_vehicle_minute": 2.0,
+      "max_abs_jerk_m_s3": 31.84264379808397,
+      "collisions": 0,
+      "overspeed": 0,
+      "required_gap_deficit_steps": 0,
+      "minimum_passes": 1,
+      "episodes_over_5pct": 0
+    },
+    "native": {
+      "episodes": 50,
+      "passes": 0,
+      "intervention_fraction": 0.0,
+      "mean_progress_m": 1110.3994496017306,
+      "maximum_lane_changes_per_vehicle_minute": 0.0,
+      "max_abs_jerk_m_s3": 64.99999999999986,
+      "collisions": 0,
+      "overspeed": 0,
+      "required_gap_deficit_steps": 3310,
+      "minimum_passes": 0,
+      "episodes_over_5pct": 0
+    }
+  },
+  "v04_export_sha256": "4cf4898df997a444624552515ea987e7e994b1ca40bb002cf91f0647be8a7245",
+  "v04_selected_update": 175,
+  "integration": {
+    "base": "edb71259a29741f6ea12e33aedf946b58d876c58",
+    "sam_changed_files": 129,
+    "hudson_changed_files": 329,
+    "overlap": [
+      "AGENTS.md",
+      "README.md",
+      "documentation/CHANGELOG.md",
+      "documentation/hybrid-roadmap.md"
+    ],
+    "limits": "Overlap identifies review hotspots, not actual merge conflicts. No merge attempted."
+  },
+  "training_disabled": true,
+  "perception_preparation": {
+    "tests_passed": 139,
+    "trainer_tests": 29,
+    "preflight_tests": 7,
+    "dataset_tests": 5,
+    "dataset_check_passed": true,
+    "learner_created": false,
+    "training_started": false,
+    "configuration_sha256": "76b626700cd53d936bd13c424bebdd673d7fadb25d37bc654aa4537521866059",
+    "launch_enabled": false,
+    "training_authorized": false,
+    "google_tabs_preserved": 42,
+    "unaffected_google_tab_bodies_verified": 40,
+    "mirror_check_passed": true,
+    "native_google_pagination_inspected": false,
+    "post_preflight_change": "Trainer manifest missing/hash guards and tests only; model, loss and preprocessing unchanged",
+    "clean_archive": {
+      "commit": "81cf626ea33375217c17b4f3b929b9394d6e5f27",
+      "tests_passed": 139,
+      "seconds": 5.66,
+      "path": "outputs/validation/segmentation-training-preparation-v02-clean/source",
+      "generated_dataset_or_runtime_copied": false
+    },
+    "source_byte_note": "Git normalizes text line endings. Capture source hashes describe original runtime bytes; dataset module subsequently lost one trailing blank line and trainer gained manifest guards. Historical evidence is preserved."
+  },
+  "live_master_modified": "2026-10-22T23:05:59.677Z",
+  "engineering_guide_modified": "2026-11-01T01:14:50.876Z",
+  "recommendation": "Sam: shared qualified I-110 integration/evaluation testbed; current handoff, current-state convergence/comfort and parallel corridor evidence, v04 handoff/support gate, aligned replay, then frozen matched research comparison.",
+  "limits": "Published sources/compact records reviewed and arithmetic checked, not independently rerun actor, raw native datasets or all historical code. No inference/training/merge/push/message/shared write. No new team assignment or scientific gate closure.",
+  "evidence": {
+    "repo:outputs/repo-review-20261102/review-plan.json": "e93e025014a8543894ec239f774e356b78a87d38b5ebf73b03d92b9902f3f374",
+    "repo:outputs/repo-review-20261102/all-published-branches.json": "7e6f31b4ad421dc409c6ed0956a5ee16b77941e5dfd8bdabf2642c259b31d9a6",
+    "repo:outputs/repo-review-20261102/consistency-review-v2.json": "34b8d3368ebda6acd17b25da4ca68a0177c51d3c27ba4a91821ca44dab9fa593",
+    "repo:outputs/repo-review-20261102/api-access.json": "e9541920452d61fc401978d8d12ad2b059bb2aeb0f31cb50939317c2bccbe969",
+    "repo:outputs/repo-review-20261102/api-followup-access.json": "581a75126aeca0d11cb156bb3b0b45693685f54a81d17ce80abeeefa8cd30f64",
+    "repo:outputs/repo-review-20261102/source-inventory.json": "2f8a66e28ca79131f23301414a535fbcbc4d27b5a22b7d3ac96bca1d64ad5967",
+    "repo:outputs/repo-review-20261102/latest-source-inventory.json": "165d2fbc9873a390bab2611cb592c73d82866afef46c4540b38ac62be71e1c33",
+    "repo:outputs/repo-review-20261102/shared-doc-read.json": "c0d69c1b88f24eb7a25e1cc751d2643c33470f9ca3a13a4da28cba7bb014c974",
+    "repo:outputs/repo-review-20261102/engineering-guide-read.json": "d3d5070e0287942d1231e1fa1a73e1b326882e26579934e2ae3cfc14adaf16ab"
+  }
+}

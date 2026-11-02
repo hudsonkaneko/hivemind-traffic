@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "study_id": "i110-acc-comfort-20261027",
+  "question": "Can ACC requests be made smoother without losing safe fixture completion, and which change explains the earlier jerk?",
+  "trigger": "Sam requested ACC tuning after the first I-110 braking run showed 65 m/s^3 fleet jerk.",
+  "status": "Engineering verification configuration declared after development probes, before verification runs",
+  "development_seed": 730101,
+  "verification_seeds": [730201, 730202],
+  "cases": ["ordinary", "braking_leader", "stopped_leader"],
+  "step_s": 0.1,
+  "horizon_s": 60,
+  "drain_budget_s": 90,
+  "comfort": {"max_acceleration": 1.5, "comfortable_deceleration": 2.5, "max_jerk": 2.0, "target_speed": 25.0, "cruise_approach_gain": 0.4, "realized_jerk_tolerance": 0.05},
+  "verification_gate": "No collision, teleport or removal; complete cohort within drain; fixed through lanes; measured fleet jerk <= 2.05 m/s^3; finite graph observations; repeat trace equality",
+  "tolerance_reason": "Development measured a 0.00954 m/s^3 excess from SUMO final authority. Freeze a disclosed 0.05 m/s^3 tracking margin before new verification seeds; this is an engineering target, not a clinical or legal comfort standard.",
+  "causal_checks": "At braking_leader seed 730201 compare native/default passing, native/parallel passing, and smooth/parallel passing. Keep demand/network/seed unchanged and distinguish passing-rule effect from controller-filter effect.",
+  "repeat": {"case": "braking_leader", "seed": 730201, "controller": "smooth_acc", "passing": "parallel"},
+  "training": false,
+  "limits": ["Synthetic traffic; no calibrated LA demand", "Safety authority may override a comfort request; report every measured mismatch", "No frozen-policy comparison until exact checkpoint and reviewed contract exist"]
+}

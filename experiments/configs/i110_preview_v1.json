@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "study_id": "i110-preview-20261102",
+  "trigger": "Sam requested continuing with the preview controller, testing against baseline, seeing it in Isaac Sim, and checking GitHub road/progress availability.",
+  "phase": "bounded synthetic development comparison; inspected seed, not held-out confirmation",
+  "source_suite": "outputs/i110-ramp-cutin-20261029/development-v1",
+  "network": "outputs/i110-sumo-20261027/network-c/network.net.xml",
+  "runs": [
+    "ramp-0",
+    "ramp-38",
+    "ramp-44",
+    "ramp-50",
+    "cutin-smooth_acc-0",
+    "cutin-smooth_acc-1"
+  ],
+  "seed": 732001,
+  "horizon_s": 90,
+  "drain_s": 90,
+  "step_s": 0.1,
+  "wall_limit_s": 120,
+  "primary_range_m": 240,
+  "sensitivity_range_m": 120,
+  "preview": {
+    "range_m": 240,
+    "path_limit_m": 300,
+    "other_model": "constant_speed",
+    "headway_s": 2.0,
+    "reserve_m": 10.0,
+    "release_reserve_m": 20.0,
+    "release_dwell_s": 1.0,
+    "reaction_s": 0.1,
+    "jerk_m_s3": 2.0,
+    "deceleration_m_s2": 2.5,
+    "standstill_gap_m": 2.5
+  },
+  "controller": "Every controlled car uses current reachable same/adjacent-path forward projections. Latch preview braking when any known h2 envelope margin falls below 10 m. While latched cap the native ACC request at -2.5 m/s2; release after all currently assessed margins exceed 20 m for 1 s (no candidates also permits release if ego context is known). Unknown initial response profiles do not become clear: retain an existing latch; baseline safety remains active. No intent, route label, actor name or event schedule is an input. The same measured-acceleration jerk filter applies; a discrete-speed release guard prevents continuing braking past a recoverable near-stop state. Report guard conflicts when existing native acceleration already makes the jerk-limited release infeasible.",
+  "safety": {
+    "speed_mode": 31,
+    "lane_change_mode": 512,
+    "native_human_lane_changes": true,
+    "max_jerk_m_s3": 2.0,
+    "comfort_tolerance": 0.05
+  },
+  "baseline": "Reuse all six hash-verified original smooth-ACC runs. Re-run ramp-44 once with the edited runner and require the complete canonical trace to match the frozen baseline before new treatment runs.",
+  "repeats": [
+    "ramp-44-r240",
+    "cutin-smooth_acc-1-r240"
+  ],
+  "matrix": "Six cases at each of two ranges, plus two primary repeats and one unchanged-baseline regression: 15 bounded simulations. Preserve all failed cases and forbid outcome-driven parameter tuning within v1.",
+  "metrics": "Paired maximum/RMS jerk, exceedance/mismatch counts, native gaps/TTC, all requested/completed/waiting/removed/teleported counts, fixed-H and separate-drain total/role/origin boundary time and external wait, ramp exposure/event realization, latch/unknown/terminal-release counts. Report all pairs and repeat hashes.",
+  "acceptance": "No collision/removal/teleport; all requests complete by bounded drain, physical lanes retained and events realized. Comfort <=2.05 m/s3 for every case; total primary boundary time <= baseline*1.05 for each case as a predeclared engineering cost screen, with every group burden still reported. Passing these inspected fixtures is not scientific or physical acceptance.",
+  "viewer": "Compose immutable baseline and primary ramp-44 traces on two copies of the current source-fitted I-110 road in one Isaac replay; original source IDs/time and lane/world coordinates remain traceable. SUMO owns motion, no Isaac traffic physics. Use locally generated vehicle visuals in the portable package so the supplied private car is not a dependency. Verify all poses/headings/visibility, source layers unchanged, render and inspect, then open GUI.",
+  "github": "Read current remote head and paths; prepare a concrete local portable road/replay package and progress handoff. No publication inferred from the status question; no shared Doc writes.",
+  "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit."
+}

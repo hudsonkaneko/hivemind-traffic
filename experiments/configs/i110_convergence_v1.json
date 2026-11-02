@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "study_id": "i110-convergence-20261102",
+  "phase": "predeclared retrospective development diagnostic; previously inspected cases, not blind validation",
+  "question": "Can current incoming-lane topology expose late-ramp encounters before leader entry, and does a jerk-bounded stopping profile fit the conditional longitudinal clearance?",
+  "trigger": "Sam: Let's continue, after the 2 November repository review and roadmap; previous nearest-neighbor margins missed pre-entry ramp warning.",
+  "source_suite": "outputs/i110-ramp-cutin-20261029/development-v1",
+  "runs": [
+    "ramp-0",
+    "ramp-38",
+    "ramp-44",
+    "ramp-50",
+    "cutin-smooth_acc-0",
+    "cutin-smooth_acc-1"
+  ],
+  "network": "outputs/i110-sumo-20261027/network-c/network.net.xml",
+  "seed": 732001,
+  "controller": "smooth_acc",
+  "step_s": 0.1,
+  "horizon_s": 90,
+  "comfort_bound_m_s3": 2.05,
+  "ranges_m": [
+    120.0,
+    240.0
+  ],
+  "path_limit_m": 300.0,
+  "warning_window_s": 10.0,
+  "jerk_m_s3": 2.0,
+  "comfortable_deceleration_m_s2": 2.5,
+  "reaction_s": 0.1,
+  "standstill_gap_m": 2.5,
+  "headways_s": [
+    0.0,
+    2.0
+  ],
+  "other_models": [
+    "constant_speed",
+    "brake_9"
+  ],
+  "method": "Stream current states only; graph reachable non-internal common edges without hypothetical lane changes, pair same/adjacent lane endpoints, select nearest common edge by summed forward distances with deterministic ties. Routes/IDs/event schedule/leader labels cannot select candidates. Signed positions before the anchor yield a conditional projected gap, never a measured bumper gap on different paths. Current Euclidean range 120 m is the information-matched diagnostic; 240 m is an explicitly expanded range. Unreachable/invalid topology and infeasible initial braking states stay unknown. Adjacent paths are possible lateral interactions with unknown intent, not guaranteed convergence.",
+  "envelope": "Continuous piecewise-polynomial ego stop: hold current acceleration 0.1 s, jerk -2 to at most -2.5 m/s2, hold as needed, jerk +2 to zero acceleration exactly at zero speed. Reject initial states for which this bounded monotone stopping profile cannot be constructed. Other car either holds current speed or brakes immediately at 9 m/s2 to rest; both are assumptions. Evaluate exact extrema of displacement closure plus h*ego speed, h=0 and 2, including all segment boundaries and polynomial roots. Required gap = 2.5 + maximum of that expression. This constructs a conditional response, not a safety proof or optimal controller.",
+  "scoring": "Emit every current-only candidate and envelope before retrospective scoring. Report exposure/unknowns by primary/drain, target-specific earliest and latest warnings before all leader switches and jerk episodes within 10 s, plus first observed target candidate, margin and stopping duration. Keep target identity out of the signal. Retain all six cases and complete original burden ledgers. Prefix-invariance check against cut-in on/off through 2.0 s and exact rerun of journals/summary.",
+  "acceptance": "Verified immutable inputs; analytic profile checks against independent numerical integration; topology tests with disconnected/adjacent/internal/current-edge cases; no future information; exact rerun. No controller/traffic change or performance gate closure.",
+  "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+  "no_checkpoint_reason": "Pure offline diagnostics; no actor loaded or trained"
+}

@@ -1,0 +1,126 @@
+{
+  "date_local": "2026-10-27",
+  "timezone": "America/Los_Angeles",
+  "actor": "Codex for Sam",
+  "scope": "LA-first site screening and high-fidelity construction strategy; no site admission, data analysis or scene build",
+  "sources": [
+    {
+      "id": "LA01",
+      "title": "Caltrans District 7 Mobility Performance Report, 2025 Q2",
+      "url": "https://dot.ca.gov/-/media/dot-media/programs/traffic-operations/documents/mpr/2025/2025--d7-q2-a11y.pdf",
+      "read": "PDF pp. 4–5 (zero-based 3–4), findings and Table 1; table text inspected",
+      "finding": "Table is explicitly for calendar 2024. Adams I110-N #4, Vernon I110-S #9, Robertson I10-W #7, Howard Hughes I405-S #2. District detector-health warning requires station-level checks.",
+      "limits": "Not a 2026 site ranking; report has a 5/1/2025 footer despite Q2 cover. No individual station records read."
+    },
+    {
+      "id": "LA02",
+      "title": "Caltrans 2026 HOV Facilities Degradation Action Plan",
+      "url": "https://dot.ca.gov/-/media/dot-media/programs/traffic-operations/documents/hov/2026-ca-hov-facilities-degradation-action-plan-a11y.pdf",
+      "read": "PDF p.49 (printed p.44), Action Plan for HOT Facilities on I-110",
+      "finding": "Adams north HOT terminus release depends on signals; I110 assessment used Metro data and limited PeMS data.",
+      "limits": "Managed-lane terminus finding does not establish cause of every adjacent general-purpose-lane bottleneck; proposed projects not treated as completed."
+    },
+    {
+      "id": "LA03",
+      "title": "Caltrans PeMS Data Source",
+      "url": "https://dot.ca.gov/programs/traffic-operations/mpr/pems-source",
+      "read": "Account, observations and processing-history sections",
+      "finding": "Free account application; detector archive and auxiliary sources; historical speed-processing changes.",
+      "limits": "Sam account status, station health, ramp coverage and file terms unknown."
+    },
+    {
+      "id": "LA04",
+      "title": "NOAA/USGS 2023–2024 Los Angeles County and Channel Islands lidar DEM metadata",
+      "url": "https://www.fisheries.noaa.gov/inport/item/80274/full-list",
+      "read": "Abstract, temporal coverage, CRS, access, accuracy and processing metadata",
+      "finding": "2023–24 acquisition; 0.5 m ground DEM, LAS 1.4 and breakline deliverables described; CC0 listing. Multiple projected CRSs in catalog require per-file verification.",
+      "limits": "No selected corridor tile, LAS header, deck coverage or accuracy independently inspected. Grid resolution and project-wide accuracy are not local road accuracy."
+    },
+    {
+      "id": "LA05",
+      "title": "USGS Lidar Base Specification: DEM Surface Treatments",
+      "url": "https://www.usgs.gov/ngp-standards-and-specifications/lidar-base-specification-digital-elevation-model-surface",
+      "read": "2025 rev. A, Bridges subsection",
+      "finding": "Bridge decks removed from bare-earth surface; terrain beneath interpolated.",
+      "limits": "Specification explains DEM limitation; actual bridge returns must be inspected."
+    },
+    {
+      "id": "LA06",
+      "title": "FHWA Traffic Analysis Toolbox III, 2019, Chapter 2",
+      "url": "https://ops.fhwa.dot.gov/publications/fhwahop18036/chapter2.htm",
+      "read": "Data for travel conditions, bottleneck throughput, travel time, calibration and quality checks",
+      "finding": "Concurrent field evidence, localized bottleneck and system-level measures, data quality and travel-condition classification.",
+      "limits": "Guidance, not validation of this project or prescription for its numerical tolerances."
+    },
+    {
+      "id": "LA07",
+      "title": "FHWA Traffic Analysis Toolbox III, 2019, Chapter 5",
+      "url": "https://ops.fhwa.dot.gov/publications/fhwahop18036/chapter5.htm",
+      "read": "Calibration process, variation envelopes and throughput parameters",
+      "finding": "Representative travel conditions; speed/travel-time and bottleneck measures; constrain adjustable parameters.",
+      "limits": "Our A/B/C and matched-controller requirements come from approved project contracts and remain additional."
+    },
+    {
+      "id": "LA08",
+      "title": "Ameli et al., CIRCLES methodology, arXiv:2404.15533v1 (2024)",
+      "url": "https://arxiv.org/html/2404.15533v1",
+      "read": "Abstract and sections 3.2–3.3, network creation and supply/HDV calibration",
+      "finding": "SUMO network and map checks; separate demand/supply inputs; calibration to flow and speed; behavioral sensitivity.",
+      "limits": "Methods reading only, no replication; one CIRCLES source family, not independent proof of our communication effects or LA transfer."
+    },
+    {
+      "id": "LA09",
+      "title": "LA City LARIAC7 participation record",
+      "url": "https://cityclerk.lacity.org/onlinedocs/2023/23-0638_rpt_cao_06-14-23.pdf",
+      "read": "Indexed product-list excerpt only",
+      "finding": "High-resolution imagery acquisition route.",
+      "limits": "Not fully read; source/entitlement lead only. USC membership and offline export/derivative permissions unverified; not an adopted asset."
+    },
+    {
+      "id": "LA10",
+      "title": "USC ITS Computing Centers",
+      "url": "https://itservices.usc.edu/its-computing-centers/",
+      "read": "Official indexed software-list excerpt; direct page returned 502",
+      "finding": "ArcGIS Pro listed in computing centers with account requirement.",
+      "limits": "Does not establish Sam's license, CityEngine access or imagery entitlement. Older USC software page has retirement warning; SSI page timed out."
+    },
+    {
+      "id": "LA11",
+      "title": "NVIDIA Isaac Sim 6.0 RTX Lidar documentation",
+      "url": "https://docs.isaacsim.omniverse.nvidia.com/6.0.0/sensors/isaacsim_sensors_rtx_lidar.html",
+      "read": "Sensor/material behavior documentation",
+      "finding": "Lidar returns depend on nonvisual material properties; scene rendering alone does not specify sensor response.",
+      "limits": "Platform capability, not measured real-sensor fidelity. Sensor/perception training is not added to present study."
+    },
+    {
+      "id": "LA12",
+      "title": "SCAG I110/Adams project consultation record, 2023",
+      "url": "https://scag.ca.gov/sites/default/files/2024-05/tcwg022823agn4-1-2.pdf",
+      "read": "Project description and location, PDF p.1; indexed bottleneck explanation",
+      "finding": "Proposed elevated terminus connector; relevant evidence of topology/epoch complexity.",
+      "limits": "Planning record, not as-built geometry or confirmation construction occurred."
+    },
+    {
+      "id": "LA13",
+      "title": "Caltrans quarterly report index",
+      "url": "https://dot.ca.gov/programs/traffic-operations/mpr/quarterly",
+      "read": "District 7 listing",
+      "finding": "2025 Q2 newest District 7 item shown in retrieved listing.",
+      "limits": "Does not prove no newer report exists elsewhere."
+    }
+  ],
+  "access_failures": [
+    "USC SSI software page timeout",
+    "USC computing-centers direct read 502; indexed official excerpt only",
+    "LARIAC hub returned no readable text",
+    "Metro Adams project page 404",
+    "An attempted arXiv v2 URL returned 404; followed publisher link to actual v1"
+  ],
+  "not_acquired": [
+    "PeMS station observations",
+    "lidar/imagery corridor tiles",
+    "traffic trajectories",
+    "engineering as-builts"
+  ],
+  "live_master": "Google Drive connector read succeeded; 22 October checkpoint and Sam refresher. New direct LA preference supersedes prior geographic recommendation for Sam, not a team-wide decision."
+}

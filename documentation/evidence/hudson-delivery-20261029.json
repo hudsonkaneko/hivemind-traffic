@@ -1,0 +1,1384 @@
+{
+  "study_id": "hudson-delivery-20261029",
+  "author": "Codex for Sam",
+  "date_local": "2026-10-29",
+  "acquisition": "outputs/hudson-delivery-20261029/received-v2/manifest.json",
+  "acquisition_sha256": "f83c8d9859caa2772b470407bee59942939dd269d980c1856c6680212be69680",
+  "smoke": {
+    "mode": "evaluate",
+    "suite": "smoke",
+    "seeds": [
+      520001
+    ],
+    "repeat_episode_metrics_equal": true,
+    "evaluation_file": "source/outputs/evaluation/evaluation.json",
+    "original_acceptance": true,
+    "summary": {
+      "episodes": 1,
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "intervention_fraction": 0.0,
+      "mean_team_reward": 530.360186677073,
+      "std_team_reward": 0.0,
+      "mean_progress_m": 1452.4448441672675,
+      "nominal_episodes": 1,
+      "peak_speed_m_s": 25.47002706859218,
+      "accepted": true,
+      "selection_score": [
+        1,
+        0,
+        0,
+        1,
+        530.360186677073,
+        -0.0
+      ]
+    },
+    "source_unchanged": true,
+    "reported_runtime_differences": {
+      "torch": {
+        "reported": "2.14.0+cpu",
+        "actual": "2.14.0+cu132"
+      },
+      "python": {
+        "reported": "3.11.9",
+        "actual": "3.11.16"
+      }
+    },
+    "interpretation": "Frozen actor on original v02 fixture; exact numerical reproduction unestablished without original per-episode reference"
+  },
+  "held_out": {
+    "mode": "evaluate",
+    "suite": "held-out",
+    "seeds": [
+      410001,
+      410002,
+      410003,
+      410004,
+      410005,
+      410006,
+      410007,
+      410008,
+      410009,
+      410010,
+      410011,
+      410012,
+      410013,
+      410014,
+      410015,
+      410016,
+      410017,
+      410018,
+      410019,
+      410020
+    ],
+    "repeat_episode_metrics_equal": null,
+    "evaluation_file": "source/outputs/evaluation/evaluation.json",
+    "original_acceptance": true,
+    "summary": {
+      "episodes": 20,
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "intervention_fraction": 0.0,
+      "mean_team_reward": 500.2473407267162,
+      "std_team_reward": 29.58919676367989,
+      "mean_progress_m": 1445.4534486141483,
+      "nominal_episodes": 20,
+      "peak_speed_m_s": 26.066446597597132,
+      "accepted": true,
+      "selection_score": [
+        1,
+        0,
+        0,
+        20,
+        500.2473407267162,
+        -0.0
+      ]
+    },
+    "source_unchanged": true,
+    "reported_runtime_differences": {
+      "torch": {
+        "reported": "2.14.0+cpu",
+        "actual": "2.14.0+cu132"
+      },
+      "python": {
+        "reported": "3.11.9",
+        "actual": "3.11.16"
+      }
+    },
+    "interpretation": "Frozen actor on original v02 fixture; exact numerical reproduction unestablished without original per-episode reference"
+  },
+  "comparison": {
+    "reference": "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\outputs\\hudson-delivery-20261029\\received-v2\\evaluation.json",
+    "actual": "C:\\Users\\ACADstudent\\Documents\\ChatGPT\\Omniverse AV Directed Research\\research\\digital-twins\\repository-review\\source\\outputs\\hudson-delivery-20261029\\held-out-v1\\source\\outputs\\evaluation\\evaluation.json",
+    "reference_sha256": "6cb6a70ca72c7bc7796406d178d2b6e85a0c1fa4aafd578c54caadc28d712b12",
+    "actual_sha256": "c824959a8d72630f878b840bc73ecf54e8f3c9d28c19658f801d422f2d923ef3",
+    "compared_episodes": 20,
+    "all_fields_exact": false,
+    "all_fields_within_declared_tolerance": false,
+    "exact_differences": [
+      {
+        "path": "$.episodes[0].mean_progress_m",
+        "reference": 1450.7389217549548,
+        "actual": 1450.7389214481582,
+        "absolute_difference": 3.067966645176057e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[0].min_ttc_s",
+        "reference": 21.600302510480237,
+        "actual": 21.6003025488094,
+        "absolute_difference": 3.8329162066474964e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[0].peak_speed_m_s",
+        "reference": 25.64563096967728,
+        "actual": 25.645630940014648,
+        "absolute_difference": 2.9662633238558556e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[0].progress_by_agent_m.agent_0",
+        "reference": 1447.3761533969741,
+        "actual": 1447.376152935933,
+        "absolute_difference": 4.610410542227328e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[0].progress_by_agent_m.agent_1",
+        "reference": 1440.4890149587445,
+        "actual": 1440.4890146168368,
+        "absolute_difference": 3.4190770747954957e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[0].progress_by_agent_m.agent_2",
+        "reference": 1437.2431154976084,
+        "actual": 1437.2431153930013,
+        "absolute_difference": 1.0460712474014144e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[0].progress_by_agent_m.agent_3",
+        "reference": 1477.8474031664914,
+        "actual": 1477.8474028468622,
+        "absolute_difference": 3.196291800122708e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[0].team_reward",
+        "reference": 490.74822535336375,
+        "actual": 490.7482241798047,
+        "absolute_difference": 1.1735590419448272e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[1].mean_progress_m",
+        "reference": 1425.1135551562456,
+        "actual": 1425.113555406897,
+        "absolute_difference": 2.506512828404084e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[1].min_ttc_s",
+        "reference": 15.568864274690371,
+        "actual": 15.568864286047315,
+        "absolute_difference": 1.1356943829810007e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[1].peak_speed_m_s",
+        "reference": 25.75845727795058,
+        "actual": 25.758457285214888,
+        "absolute_difference": 7.264308266030639e-09,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[1].progress_by_agent_m.agent_0",
+        "reference": 1417.756848963162,
+        "actual": 1417.7568495075059,
+        "absolute_difference": 5.443439476948697e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[1].progress_by_agent_m.agent_1",
+        "reference": 1422.1941913771639,
+        "actual": 1422.1941914149377,
+        "absolute_difference": 3.7773816075059585e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[1].progress_by_agent_m.agent_2",
+        "reference": 1405.5194969776699,
+        "actual": 1405.519497126469,
+        "absolute_difference": 1.4879924492561258e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[1].progress_by_agent_m.agent_3",
+        "reference": 1454.9836833069878,
+        "actual": 1454.9836835786753,
+        "absolute_difference": 2.7168744054506533e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[1].team_reward",
+        "reference": 522.5564697844469,
+        "actual": 522.5564712385997,
+        "absolute_difference": 1.4541527662004228e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[2].mean_progress_m",
+        "reference": 1440.7302190689531,
+        "actual": 1440.7302193422115,
+        "absolute_difference": 2.732583652687026e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[2].peak_speed_m_s",
+        "reference": 25.71950496766687,
+        "actual": 25.71950496766689,
+        "absolute_difference": 1.7763568394002505e-14,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[2].progress_by_agent_m.agent_0",
+        "reference": 1433.6592620449471,
+        "actual": 1433.6592624391558,
+        "absolute_difference": 3.942086550523527e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[2].progress_by_agent_m.agent_1",
+        "reference": 1442.2041922185836,
+        "actual": 1442.204192547414,
+        "absolute_difference": 3.288305379101075e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[2].progress_by_agent_m.agent_2",
+        "reference": 1421.029474685326,
+        "actual": 1421.0294749788015,
+        "absolute_difference": 2.9347552299441304e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[2].progress_by_agent_m.agent_3",
+        "reference": 1466.0279473269559,
+        "actual": 1466.0279474034742,
+        "absolute_difference": 7.651829037058633e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[2].team_reward",
+        "reference": 522.3211202002284,
+        "actual": 522.3211187011475,
+        "absolute_difference": 1.4990808949733037e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[3].mean_progress_m",
+        "reference": 1459.0536212269537,
+        "actual": 1459.0536211880892,
+        "absolute_difference": 3.886452759616077e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[3].peak_speed_m_s",
+        "reference": 25.79374162800407,
+        "actual": 25.793741608632576,
+        "absolute_difference": 1.9371494630604502e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[3].progress_by_agent_m.agent_0",
+        "reference": 1445.0725685026314,
+        "actual": 1445.0725689409096,
+        "absolute_difference": 4.3827822082675993e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[3].progress_by_agent_m.agent_1",
+        "reference": 1457.9974307777268,
+        "actual": 1457.997430438722,
+        "absolute_difference": 3.3900482776516583e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[3].progress_by_agent_m.agent_2",
+        "reference": 1447.0020106163788,
+        "actual": 1447.002010563108,
+        "absolute_difference": 5.327092367224395e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[3].progress_by_agent_m.agent_3",
+        "reference": 1486.142475011077,
+        "actual": 1486.1424748096167,
+        "absolute_difference": 2.014603524003178e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[3].team_reward",
+        "reference": 491.2510473081345,
+        "actual": 491.25105046974124,
+        "absolute_difference": 3.161606741741707e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[4].mean_progress_m",
+        "reference": 1414.6649336552164,
+        "actual": 1414.6649340330796,
+        "absolute_difference": 3.7786321627208963e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[4].peak_speed_m_s",
+        "reference": 25.34664452529741,
+        "actual": 25.346644496240124,
+        "absolute_difference": 2.9057286354827738e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[4].progress_by_agent_m.agent_0",
+        "reference": 1434.4132955828852,
+        "actual": 1434.4132954695608,
+        "absolute_difference": 1.1332440408295952e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[4].progress_by_agent_m.agent_1",
+        "reference": 1434.3434657044218,
+        "actual": 1434.343466113157,
+        "absolute_difference": 4.0873533180274535e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[4].progress_by_agent_m.agent_2",
+        "reference": 1409.884883767203,
+        "actual": 1409.8848841710967,
+        "absolute_difference": 4.0389363675785717e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[4].progress_by_agent_m.agent_3",
+        "reference": 1380.0180895663552,
+        "actual": 1380.018090378504,
+        "absolute_difference": 8.121487553580664e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[4].team_reward",
+        "reference": 555.4188787985479,
+        "actual": 555.4188790882254,
+        "absolute_difference": 2.896774731198093e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[5].mean_progress_m",
+        "reference": 1430.6304032066987,
+        "actual": 1430.6304032258583,
+        "absolute_difference": 1.915964276122395e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[5].peak_speed_m_s",
+        "reference": 25.40260213931537,
+        "actual": 25.40260216837263,
+        "absolute_difference": 2.9057261485831987e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[5].progress_by_agent_m.agent_0",
+        "reference": 1418.3719305904924,
+        "actual": 1418.371930528503,
+        "absolute_difference": 6.198933988343924e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[5].progress_by_agent_m.agent_1",
+        "reference": 1429.731832777191,
+        "actual": 1429.731833126849,
+        "absolute_difference": 3.49658193954383e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[5].progress_by_agent_m.agent_2",
+        "reference": 1419.0046471452486,
+        "actual": 1419.0046471976732,
+        "absolute_difference": 5.242463885224424e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[5].progress_by_agent_m.agent_3",
+        "reference": 1455.413202313863,
+        "actual": 1455.4132020504082,
+        "absolute_difference": 2.634546945046168e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[5].team_reward",
+        "reference": 545.4897385022482,
+        "actual": 545.4897375271197,
+        "absolute_difference": 9.751285006132093e-07,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[6].mean_progress_m",
+        "reference": 1461.527531194254,
+        "actual": 1461.5275311596733,
+        "absolute_difference": 3.4580580177134834e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[6].peak_speed_m_s",
+        "reference": 25.82939922378374,
+        "actual": 25.829399223783728,
+        "absolute_difference": 1.0658141036401503e-14,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[6].progress_by_agent_m.agent_0",
+        "reference": 1444.2744417651609,
+        "actual": 1444.2744418292702,
+        "absolute_difference": 6.410937203327194e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[6].progress_by_agent_m.agent_1",
+        "reference": 1463.5332256325544,
+        "actual": 1463.5332258030242,
+        "absolute_difference": 1.7046977518475614e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[6].progress_by_agent_m.agent_2",
+        "reference": 1451.6125582772338,
+        "actual": 1451.6125581735969,
+        "absolute_difference": 1.0363692126702517e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[6].progress_by_agent_m.agent_3",
+        "reference": 1486.6898991020669,
+        "actual": 1486.6898988328019,
+        "absolute_difference": 2.6926500140689313e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[6].team_reward",
+        "reference": 451.8342123481209,
+        "actual": 451.8342115385579,
+        "absolute_difference": 8.095630050775071e-07,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[7].mean_progress_m",
+        "reference": 1447.5044015349615,
+        "actual": 1447.5044019963098,
+        "absolute_difference": 4.613482360582566e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[7].peak_speed_m_s",
+        "reference": 25.642870925605294,
+        "actual": 25.642870925605322,
+        "absolute_difference": 2.842170943040401e-14,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[7].progress_by_agent_m.agent_0",
+        "reference": 1440.3115621359682,
+        "actual": 1440.311562718083,
+        "absolute_difference": 5.821148079121485e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[7].progress_by_agent_m.agent_1",
+        "reference": 1450.4188872050183,
+        "actual": 1450.4188876176368,
+        "absolute_difference": 4.1261841943196487e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[7].progress_by_agent_m.agent_2",
+        "reference": 1434.8094134669957,
+        "actual": 1434.80941387501,
+        "absolute_difference": 4.0801432987791486e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[7].progress_by_agent_m.agent_3",
+        "reference": 1464.4777433318638,
+        "actual": 1464.4777437745086,
+        "absolute_difference": 4.4264470488997176e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[7].team_reward",
+        "reference": 507.3046286848054,
+        "actual": 507.30462687067165,
+        "absolute_difference": 1.8141337250199285e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[8].mean_progress_m",
+        "reference": 1448.523500974486,
+        "actual": 1448.5235009486823,
+        "absolute_difference": 2.5803728931350634e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[8].min_ttc_s",
+        "reference": 11.356340867425923,
+        "actual": 11.356340841128867,
+        "absolute_difference": 2.6297055200075192e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[8].peak_speed_m_s",
+        "reference": 26.066446626654404,
+        "actual": 26.066446597597132,
+        "absolute_difference": 2.9057272143973023e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[8].progress_by_agent_m.agent_0",
+        "reference": 1441.5048240626747,
+        "actual": 1441.5048243991937,
+        "absolute_difference": 3.3651895137154497e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[8].progress_by_agent_m.agent_1",
+        "reference": 1445.3010341155712,
+        "actual": 1445.3010339935292,
+        "absolute_difference": 1.2204191079945303e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[8].progress_by_agent_m.agent_2",
+        "reference": 1433.5526370376494,
+        "actual": 1433.552637034743,
+        "absolute_difference": 2.9065176931908354e-09,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[8].progress_by_agent_m.agent_3",
+        "reference": 1473.7355086820494,
+        "actual": 1473.735508367263,
+        "absolute_difference": 3.147863480990054e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[8].team_reward",
+        "reference": 495.9044866480551,
+        "actual": 495.9044877569861,
+        "absolute_difference": 1.1089309737144504e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[9].mean_progress_m",
+        "reference": 1448.0540643030274,
+        "actual": 1448.0540642289918,
+        "absolute_difference": 7.403559720842168e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[9].peak_speed_m_s",
+        "reference": 25.623457076522115,
+        "actual": 25.623457115265133,
+        "absolute_difference": 3.8743017682918435e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[9].progress_by_agent_m.agent_0",
+        "reference": 1439.8731420036704,
+        "actual": 1439.8731423419451,
+        "absolute_difference": 3.382747308933176e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[9].progress_by_agent_m.agent_1",
+        "reference": 1445.552421985982,
+        "actual": 1445.552422026661,
+        "absolute_difference": 4.067896952619776e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[9].progress_by_agent_m.agent_2",
+        "reference": 1436.9123865118179,
+        "actual": 1436.9123862483673,
+        "absolute_difference": 2.634506017784588e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[9].progress_by_agent_m.agent_3",
+        "reference": 1469.8783067106397,
+        "actual": 1469.878306298994,
+        "absolute_difference": 4.116457148484187e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[9].team_reward",
+        "reference": 530.0391287157317,
+        "actual": 530.0391276227884,
+        "absolute_difference": 1.0929433074124972e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[10].mean_progress_m",
+        "reference": 1460.2700316952962,
+        "actual": 1460.2700323521126,
+        "absolute_difference": 6.568163826159434e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[10].peak_speed_m_s",
+        "reference": 25.794150770871635,
+        "actual": 25.794150722442854,
+        "absolute_difference": 4.842878098543224e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[10].progress_by_agent_m.agent_0",
+        "reference": 1448.0933721745798,
+        "actual": 1448.0933729387878,
+        "absolute_difference": 7.642079253855627e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[10].progress_by_agent_m.agent_1",
+        "reference": 1464.8060542368937,
+        "actual": 1464.8060545647554,
+        "absolute_difference": 3.278616986790439e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[10].progress_by_agent_m.agent_2",
+        "reference": 1455.180242295902,
+        "actual": 1455.1802429525974,
+        "absolute_difference": 6.566954198206076e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[10].progress_by_agent_m.agent_3",
+        "reference": 1473.0004580738096,
+        "actual": 1473.0004589523103,
+        "absolute_difference": 8.785007139522349e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[10].team_reward",
+        "reference": 457.2228671771661,
+        "actual": 457.2228658367378,
+        "absolute_difference": 1.3404282981355209e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[11].mean_progress_m",
+        "reference": 1430.8674914222584,
+        "actual": 1430.8674914327944,
+        "absolute_difference": 1.0536041372688487e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[11].peak_speed_m_s",
+        "reference": 25.542274464995735,
+        "actual": 25.542274474681495,
+        "absolute_difference": 9.685759749800127e-09,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[11].progress_by_agent_m.agent_0",
+        "reference": 1421.2949201269607,
+        "actual": 1421.2949202015452,
+        "absolute_difference": 7.458447726094164e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[11].progress_by_agent_m.agent_1",
+        "reference": 1427.3434093405428,
+        "actual": 1427.343408902748,
+        "absolute_difference": 4.377948243927676e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[11].progress_by_agent_m.agent_2",
+        "reference": 1413.2171957208095,
+        "actual": 1413.2171956593068,
+        "absolute_difference": 6.150276021799073e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[11].progress_by_agent_m.agent_3",
+        "reference": 1461.6144405007208,
+        "actual": 1461.6144409675785,
+        "absolute_difference": 4.6685772758792154e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[11].team_reward",
+        "reference": 521.5261663315132,
+        "actual": 521.5261662477692,
+        "absolute_difference": 8.37439984024968e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[12].mean_progress_m",
+        "reference": 1458.7924108805555,
+        "actual": 1458.792411052235,
+        "absolute_difference": 1.7167940313811414e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[12].min_ttc_s",
+        "reference": 18.119160516674555,
+        "actual": 18.119160530136888,
+        "absolute_difference": 1.3462333470215526e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[12].peak_speed_m_s",
+        "reference": 25.69642742338179,
+        "actual": 25.696427413696043,
+        "absolute_difference": 9.68574909165909e-09,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[12].progress_by_agent_m.agent_0",
+        "reference": 1451.6796775610876,
+        "actual": 1451.6796778129194,
+        "absolute_difference": 2.5183180696330965e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[12].progress_by_agent_m.agent_1",
+        "reference": 1461.6437261174647,
+        "actual": 1461.6437262700165,
+        "absolute_difference": 1.5255182006512769e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[12].progress_by_agent_m.agent_2",
+        "reference": 1444.3305869310873,
+        "actual": 1444.3305870260062,
+        "absolute_difference": 9.491895980318077e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[12].progress_by_agent_m.agent_3",
+        "reference": 1477.5156529125825,
+        "actual": 1477.5156530999977,
+        "absolute_difference": 1.874152530945139e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[12].team_reward",
+        "reference": 494.6630536974797,
+        "actual": 494.66305327142067,
+        "absolute_difference": 4.260590458216029e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[13].mean_progress_m",
+        "reference": 1460.862532622311,
+        "actual": 1460.8625321825175,
+        "absolute_difference": 4.3979343899991363e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[13].peak_speed_m_s",
+        "reference": 25.803815556328264,
+        "actual": 25.80381559264986,
+        "absolute_difference": 3.632159462085838e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[13].progress_by_agent_m.agent_0",
+        "reference": 1453.9882008713507,
+        "actual": 1453.98820052242,
+        "absolute_difference": 3.489308255666401e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[13].progress_by_agent_m.agent_1",
+        "reference": 1459.1297200467563,
+        "actual": 1459.1297196467365,
+        "absolute_difference": 4.000198714493308e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[13].progress_by_agent_m.agent_2",
+        "reference": 1447.5344043180683,
+        "actual": 1447.534403721425,
+        "absolute_difference": 5.966433036519447e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[13].progress_by_agent_m.agent_3",
+        "reference": 1482.7978052530684,
+        "actual": 1482.7978048394891,
+        "absolute_difference": 4.1357930058438797e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[13].team_reward",
+        "reference": 469.30621030329513,
+        "actual": 469.30621300722214,
+        "absolute_difference": 2.7039270094064705e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[14].mean_progress_m",
+        "reference": 1446.6149583495567,
+        "actual": 1446.6149573069167,
+        "absolute_difference": 1.0426399512653006e-06,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[14].min_ttc_s",
+        "reference": 33.35772956729506,
+        "actual": 33.35772934671614,
+        "absolute_difference": 2.2057891868598745e-07,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[14].peak_speed_m_s",
+        "reference": 26.001146889026643,
+        "actual": 26.001146830912116,
+        "absolute_difference": 5.811452652437765e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[14].progress_by_agent_m.agent_0",
+        "reference": 1443.950984710719,
+        "actual": 1443.9509832752883,
+        "absolute_difference": 1.4354307040775893e-06,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[14].progress_by_agent_m.agent_1",
+        "reference": 1446.6161583342925,
+        "actual": 1446.6161571193386,
+        "absolute_difference": 1.2149539543315768e-06,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[14].progress_by_agent_m.agent_2",
+        "reference": 1428.7800063488678,
+        "actual": 1428.780005402087,
+        "absolute_difference": 9.467808013141621e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[14].progress_by_agent_m.agent_3",
+        "reference": 1467.112684004347,
+        "actual": 1467.1126834309528,
+        "absolute_difference": 5.733943453378743e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[14].team_reward",
+        "reference": 480.9513092664663,
+        "actual": 480.95131327299947,
+        "absolute_difference": 4.0065331745609e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[15].mean_progress_m",
+        "reference": 1436.5471651121616,
+        "actual": 1436.5471648845469,
+        "absolute_difference": 2.2761469153920189e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[15].min_ttc_s",
+        "reference": 159.22061009000913,
+        "actual": 159.22060730064123,
+        "absolute_difference": 2.7893678975488e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[15].peak_speed_m_s",
+        "reference": 25.586586985990746,
+        "actual": 25.586587015048003,
+        "absolute_difference": 2.9057257933118308e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[15].progress_by_agent_m.agent_0",
+        "reference": 1425.250191750524,
+        "actual": 1425.2501915296914,
+        "absolute_difference": 2.2083258954808116e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[15].progress_by_agent_m.agent_1",
+        "reference": 1435.4452831410324,
+        "actual": 1435.4452828088124,
+        "absolute_difference": 3.322199972899398e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[15].progress_by_agent_m.agent_2",
+        "reference": 1424.480199496016,
+        "actual": 1424.4801992945504,
+        "absolute_difference": 2.0146558199485298e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[15].progress_by_agent_m.agent_3",
+        "reference": 1461.0129860610743,
+        "actual": 1461.0129859051326,
+        "absolute_difference": 1.5594173419231083e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[15].team_reward",
+        "reference": 514.0572414847105,
+        "actual": 514.057241996734,
+        "absolute_difference": 5.120234618516406e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[16].mean_progress_m",
+        "reference": 1444.7388126242492,
+        "actual": 1444.7388121092106,
+        "absolute_difference": 5.150386641616933e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[16].min_ttc_s",
+        "reference": 106.81718614608195,
+        "actual": 106.81718306855352,
+        "absolute_difference": 3.077528432982035e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[16].peak_speed_m_s",
+        "reference": 25.854239191276054,
+        "actual": 25.85423923001909,
+        "absolute_difference": 3.874303544648683e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[16].progress_by_agent_m.agent_0",
+        "reference": 1430.45103862414,
+        "actual": 1430.4510382502713,
+        "absolute_difference": 3.7386871554190293e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[16].progress_by_agent_m.agent_1",
+        "reference": 1446.0515205333031,
+        "actual": 1446.0515202272354,
+        "absolute_difference": 3.060677045141347e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[16].progress_by_agent_m.agent_2",
+        "reference": 1437.2175744258043,
+        "actual": 1437.217573949267,
+        "absolute_difference": 4.765372523252154e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[16].progress_by_agent_m.agent_3",
+        "reference": 1465.2351169137503,
+        "actual": 1465.2351160100689,
+        "absolute_difference": 9.036814390128711e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[16].team_reward",
+        "reference": 455.9616776735855,
+        "actual": 455.96167797956065,
+        "absolute_difference": 3.059751634282293e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[17].mean_progress_m",
+        "reference": 1464.4052814597258,
+        "actual": 1464.4052814495585,
+        "absolute_difference": 1.0167241271119565e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[17].peak_speed_m_s",
+        "reference": 25.903305509488114,
+        "actual": 25.90330548043084,
+        "absolute_difference": 2.9057272143973023e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[17].progress_by_agent_m.agent_0",
+        "reference": 1459.7012832077437,
+        "actual": 1459.701283120572,
+        "absolute_difference": 8.717165655980352e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[17].progress_by_agent_m.agent_1",
+        "reference": 1458.848309304259,
+        "actual": 1458.8483092713327,
+        "absolute_difference": 3.292620931460988e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[17].progress_by_agent_m.agent_2",
+        "reference": 1454.5733975262217,
+        "actual": 1454.5733975049163,
+        "absolute_difference": 2.130536813638173e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[17].progress_by_agent_m.agent_3",
+        "reference": 1484.4981358006787,
+        "actual": 1484.4981359014128,
+        "absolute_difference": 1.0073404155264143e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[17].team_reward",
+        "reference": 463.109810505438,
+        "actual": 463.1098122543947,
+        "absolute_difference": 1.748956663050194e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[18].mean_progress_m",
+        "reference": 1444.1660134782892,
+        "actual": 1444.1660135844693,
+        "absolute_difference": 1.0618009582685772e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[18].min_ttc_s",
+        "reference": 11.564384211371156,
+        "actual": 11.564384246259834,
+        "absolute_difference": 3.488867861278777e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[18].peak_speed_m_s",
+        "reference": 25.71863249669243,
+        "actual": 25.71863242889215,
+        "absolute_difference": 6.780027916875042e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[18].progress_by_agent_m.agent_0",
+        "reference": 1437.0848431833529,
+        "actual": 1437.0848434109682,
+        "absolute_difference": 2.2761537366022822e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[18].progress_by_agent_m.agent_1",
+        "reference": 1443.923106532769,
+        "actual": 1443.9231066971827,
+        "absolute_difference": 1.6441367733932566e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[18].progress_by_agent_m.agent_2",
+        "reference": 1426.1323316677353,
+        "actual": 1426.1323316142236,
+        "absolute_difference": 5.3511712394538336e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[18].progress_by_agent_m.agent_3",
+        "reference": 1469.5237725292995,
+        "actual": 1469.5237726155026,
+        "absolute_difference": 8.620304470241535e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[18].team_reward",
+        "reference": 526.6555359082623,
+        "actual": 526.6555361559233,
+        "absolute_difference": 2.476609779478167e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[19].mean_progress_m",
+        "reference": 1435.2631231649475,
+        "actual": 1435.263122950652,
+        "absolute_difference": 2.1429559637908824e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[19].peak_speed_m_s",
+        "reference": 25.635209538218746,
+        "actual": 25.635209547904513,
+        "absolute_difference": 9.685766855227484e-09,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[19].progress_by_agent_m.agent_0",
+        "reference": 1424.0366380430014,
+        "actual": 1424.03663817376,
+        "absolute_difference": 1.3075850802124478e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[19].progress_by_agent_m.agent_1",
+        "reference": 1438.2460804892955,
+        "actual": 1438.2460804999507,
+        "absolute_difference": 1.065518517862074e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[19].progress_by_agent_m.agent_2",
+        "reference": 1427.8672916350233,
+        "actual": 1427.8672911846386,
+        "absolute_difference": 4.503847321757348e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[19].progress_by_agent_m.agent_3",
+        "reference": 1450.90248249247,
+        "actual": 1450.902481944258,
+        "absolute_difference": 5.4821202866151e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.episodes[19].team_reward",
+        "reference": 508.6249983740814,
+        "actual": 508.6249995179174,
+        "absolute_difference": 1.1438360161264427e-06,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.summary.mean_progress_m",
+        "reference": 1445.4534486442549,
+        "actual": 1445.4534486141483,
+        "absolute_difference": 3.010654836543836e-08,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.summary.mean_team_reward",
+        "reference": 500.24734035328413,
+        "actual": 500.2473407267162,
+        "absolute_difference": 3.734320443982142e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.summary.peak_speed_m_s",
+        "reference": 26.066446626654404,
+        "actual": 26.066446597597132,
+        "absolute_difference": 2.9057272143973023e-08,
+        "within_tolerance": false,
+        "reason": "float"
+      },
+      {
+        "path": "$.summary.selection_score[4]",
+        "reference": 500.24734035328413,
+        "actual": 500.2473407267162,
+        "absolute_difference": 3.734320443982142e-07,
+        "within_tolerance": true,
+        "reason": "float"
+      },
+      {
+        "path": "$.summary.std_team_reward",
+        "reference": 29.589197127120404,
+        "actual": 29.58919676367989,
+        "absolute_difference": 3.6344051324022075e-07,
+        "within_tolerance": false,
+        "reason": "float"
+      }
+    ],
+    "original_reference_acceptance": true,
+    "local_original_acceptance": true,
+    "local_summary": {
+      "episodes": 20,
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "intervention_fraction": 0.0,
+      "mean_team_reward": 500.2473407267162,
+      "std_team_reward": 29.58919676367989,
+      "mean_progress_m": 1445.4534486141483,
+      "nominal_episodes": 20,
+      "peak_speed_m_s": 26.066446597597132,
+      "accepted": true,
+      "selection_score": [
+        1,
+        0,
+        0,
+        20,
+        500.2473407267162,
+        -0.0
+      ]
+    },
+    "tolerance": {
+      "absolute": 1e-09,
+      "relative": 1e-09
+    },
+    "training": false,
+    "limits": "All supplied per-seed and summary metrics compared. Equality does not prove every unprovided state/action is identical, erase runtime differences, or establish I110/physical acceptance.",
+    "exact_difference_counts": {
+      "float_differences": 153,
+      "outside_tolerance": 34,
+      "reasons": {
+        "float": 153
+      },
+      "maximum_absolute_difference": 4.0065331745609e-06,
+      "all_nonfloat_fields_equal": true
+    }
+  },
+  "comparison_sha256": "3d608c188db3301da7576ce5c357cd206aa471e16ad911f7a4b04ae1bc851a3f",
+  "next_action": "Keep strict numerical discrepancy open; semantic transfer review before any I110 execution. No training."
+}

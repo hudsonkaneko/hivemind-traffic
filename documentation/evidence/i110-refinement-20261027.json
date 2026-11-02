@@ -1,0 +1,549 @@
+{
+  "date_local": "2026-10-27",
+  "actor": "Codex for Sam",
+  "authorization": "User requested image refinement and tire-contact tests; user reports PeMS approval",
+  "stage": "outputs/i110-refinement-20261027/scene-v07/world.usda",
+  "imagery": {
+    "service": "https://apps.geo.fpac.usda.gov/geo-imagery/rest/services/naip/conus_naip/ImageServer",
+    "parameters": {
+      "f": "image",
+      "bbox": "381602.546870016,3763168.929151129,381772.546870016,3764153.929151129",
+      "bboxSR": 6340,
+      "imageSR": 6340,
+      "size": "340,1970",
+      "format": "png",
+      "bandIds": "0,1,2",
+      "mosaicRule": "{\"mosaicMethod\": \"esriMosaicLockRaster\", \"lockRasterIds\": [24362, 25602]}"
+    },
+    "local_extent": [
+      -85,
+      -940,
+      85,
+      45
+    ],
+    "origin_6340": [
+      381687.546870016,
+      3764108.929151129
+    ],
+    "native_gsd_m": 0.6,
+    "export_pixel_m": 0.5,
+    "acquisition_date": "2024-05-06",
+    "source_ids": [
+      24362,
+      25602
+    ],
+    "sha256": "5d99a0ad3ff97867b82f02dc9284aa49c2b1b0f0ec4f0c8ca2c7b4a9c9e71088"
+  },
+  "geometry": {
+    "roads": {
+      "Southbound": {
+        "max_smoothing_adjustment_m": 0.010431889712499753,
+        "interpolated_vertices": 175,
+        "length_m": 815.0979314006206
+      },
+      "MlkEntrance": {
+        "max_smoothing_adjustment_m": 0.06654859711063921,
+        "interpolated_vertices": 0,
+        "length_m": 317.875914520892
+      },
+      "VernonExit": {
+        "max_smoothing_adjustment_m": 0.051209227204175534,
+        "interpolated_vertices": 49,
+        "length_m": 316.0627911244121
+      }
+    },
+    "joins": {
+      "grid_m": 0.5,
+      "overlap_grid_points": 3046,
+      "preblend_max_height_difference_m": 0.06451383928071408,
+      "preblend_p95_height_difference_m": 0.04779038295132787,
+      "seam_policy": "Shared XY vertices, one Z and one triangle mesh; no overlapping road colliders",
+      "edge_policy": "Conservative 0.5m grid inset, no bridging disconnected ribbons"
+    }
+  },
+  "artifact_check": {
+    "passed": true,
+    "composition_errors": 0,
+    "vertices": 92438,
+    "triangles": 179490,
+    "distinct_road_colliders": [
+      "/World/Physics/RoadSupport/Surface"
+    ],
+    "positive_triangle_normals": true,
+    "shared_vertex_identity": true,
+    "visual_and_collision_vertices_identical": true,
+    "representation_error_m": 9.535652836234476e-07,
+    "maximum_triangle_slope": 0.14618460834026337,
+    "event_modes": 4,
+    "static_layers_unchanged": true,
+    "warning": "Representation precision and geometric checks do not establish survey accuracy"
+  },
+  "physical_cases": [
+    {
+      "case": {
+        "id": "no-hidden-plane",
+        "route": "main_1",
+        "speed": 0,
+        "start_m": 100,
+        "seconds": 1.2,
+        "negative_control": true
+      },
+      "passed": true,
+      "gates": {
+        "no_hidden_ground": true,
+        "falls_without_surface": true
+      },
+      "grounded_fraction": 0.0,
+      "contact_shapes": [],
+      "final_progress_m": 98.93468044230461,
+      "requested_end_m": 805.1105530169032,
+      "peak_speed_m_s": 0.0,
+      "minimum_upright_z": 1.0,
+      "chassis_contacts": 0,
+      "negative_control": true
+    },
+    {
+      "case": {
+        "id": "main-lane-0-60mph",
+        "route": "main_0",
+        "speed": 26.8224,
+        "start_m": 10
+      },
+      "passed": true,
+      "gates": {
+        "all_wheels_grounded": true,
+        "correct_surface": true,
+        "upright": true,
+        "completion": true,
+        "no_chassis_contacts": true
+      },
+      "grounded_fraction": 1.0,
+      "contact_shapes": [
+        "/World/Environment/Highway/Surface"
+      ],
+      "final_progress_m": 806.1361372153167,
+      "requested_end_m": 805.1262473603766,
+      "peak_speed_m_s": 26.958969547129872,
+      "minimum_upright_z": 0.9979385938387142,
+      "chassis_contacts": 0,
+      "negative_control": false
+    },
+    {
+      "case": {
+        "id": "main-lane-1-60mph",
+        "route": "main_1",
+        "speed": 26.8224,
+        "start_m": 10
+      },
+      "passed": true,
+      "gates": {
+        "all_wheels_grounded": true,
+        "correct_surface": true,
+        "upright": true,
+        "completion": true,
+        "no_chassis_contacts": true
+      },
+      "grounded_fraction": 1.0,
+      "contact_shapes": [
+        "/World/Environment/Highway/Surface"
+      ],
+      "final_progress_m": 806.1204428718432,
+      "requested_end_m": 805.1105530169032,
+      "peak_speed_m_s": 26.958762829139534,
+      "minimum_upright_z": 0.9979581760586327,
+      "chassis_contacts": 0,
+      "negative_control": false
+    },
+    {
+      "case": {
+        "id": "main-lane-2-60mph",
+        "route": "main_2",
+        "speed": 26.8224,
+        "start_m": 10
+      },
+      "passed": true,
+      "gates": {
+        "all_wheels_grounded": true,
+        "correct_surface": true,
+        "upright": true,
+        "completion": true,
+        "no_chassis_contacts": true
+      },
+      "grounded_fraction": 1.0,
+      "contact_shapes": [
+        "/World/Environment/Highway/Surface"
+      ],
+      "final_progress_m": 806.1047488366656,
+      "requested_end_m": 805.0948589817256,
+      "peak_speed_m_s": 26.95896767485047,
+      "minimum_upright_z": 0.9979585153814323,
+      "chassis_contacts": 0,
+      "negative_control": false
+    },
+    {
+      "case": {
+        "id": "main-lane-3-60mph",
+        "route": "main_3",
+        "speed": 26.8224,
+        "start_m": 10
+      },
+      "passed": true,
+      "gates": {
+        "all_wheels_grounded": true,
+        "correct_surface": true,
+        "upright": true,
+        "completion": true,
+        "no_chassis_contacts": true
+      },
+      "grounded_fraction": 1.0,
+      "contact_shapes": [
+        "/World/Environment/Highway/Surface"
+      ],
+      "final_progress_m": 806.0890551099952,
+      "requested_end_m": 805.0791652550552,
+      "peak_speed_m_s": 26.960154233767483,
+      "minimum_upright_z": 0.9979651318388822,
+      "chassis_contacts": 0,
+      "negative_control": false
+    },
+    {
+      "case": {
+        "id": "mlk-join-30mph",
+        "route": "entrance_join",
+        "speed": 13.4112,
+        "start_m": 10
+      },
+      "passed": true,
+      "gates": {
+        "all_wheels_grounded": true,
+        "correct_surface": true,
+        "upright": true,
+        "completion": true,
+        "no_chassis_contacts": true
+      },
+      "grounded_fraction": 1.0,
+      "contact_shapes": [
+        "/World/Environment/Highway/Surface"
+      ],
+      "final_progress_m": 824.1851007779717,
+      "requested_end_m": 823.1752109230316,
+      "peak_speed_m_s": 13.571958832387622,
+      "minimum_upright_z": 0.9971781105045656,
+      "chassis_contacts": 0,
+      "negative_control": false
+    },
+    {
+      "case": {
+        "id": "vernon-exit-30mph",
+        "route": "exit_join",
+        "speed": 13.4112,
+        "start_m": 400
+      },
+      "passed": true,
+      "gates": {
+        "all_wheels_grounded": true,
+        "correct_surface": true,
+        "upright": true,
+        "completion": true,
+        "no_chassis_contacts": true
+      },
+      "grounded_fraction": 1.0,
+      "contact_shapes": [
+        "/World/Environment/Highway/Surface"
+      ],
+      "final_progress_m": 762.9984843151068,
+      "requested_end_m": 761.9436576488166,
+      "peak_speed_m_s": 13.37797297839964,
+      "minimum_upright_z": 0.9954911423037871,
+      "chassis_contacts": 0,
+      "negative_control": false
+    },
+    {
+      "case": {
+        "id": "hold-mlk-seam",
+        "route": "entrance_join",
+        "speed": 0,
+        "start_m": 290,
+        "seconds": 4
+      },
+      "passed": true,
+      "gates": {
+        "all_wheels_grounded": true,
+        "correct_surface": true,
+        "upright": true,
+        "completion": true,
+        "no_chassis_contacts": true
+      },
+      "grounded_fraction": 1.0,
+      "contact_shapes": [
+        "/World/Environment/Highway/Surface"
+      ],
+      "final_progress_m": 290.88598705565994,
+      "requested_end_m": 823.1752109230316,
+      "peak_speed_m_s": 0.18566643563324403,
+      "minimum_upright_z": 0.9979458763138989,
+      "chassis_contacts": 0,
+      "negative_control": false
+    },
+    {
+      "case": {
+        "id": "hold-vernon-seam",
+        "route": "exit_join",
+        "speed": 0,
+        "start_m": 495,
+        "seconds": 4
+      },
+      "passed": true,
+      "gates": {
+        "all_wheels_grounded": true,
+        "correct_surface": true,
+        "upright": true,
+        "completion": true,
+        "no_chassis_contacts": true
+      },
+      "grounded_fraction": 1.0,
+      "contact_shapes": [
+        "/World/Environment/Highway/Surface"
+      ],
+      "final_progress_m": 494.64747144352395,
+      "requested_end_m": 761.9436576488166,
+      "peak_speed_m_s": 0.061596805233495894,
+      "minimum_upright_z": 0.9998579519324544,
+      "chassis_contacts": 0,
+      "negative_control": false
+    },
+    {
+      "case": {
+        "id": "hold-bridge1",
+        "route": "main_1",
+        "speed": 0,
+        "start_m": 390,
+        "seconds": 4
+      },
+      "passed": true,
+      "gates": {
+        "all_wheels_grounded": true,
+        "correct_surface": true,
+        "upright": true,
+        "completion": true,
+        "no_chassis_contacts": true
+      },
+      "grounded_fraction": 1.0,
+      "contact_shapes": [
+        "/World/Environment/Highway/Surface"
+      ],
+      "final_progress_m": 389.4307278823856,
+      "requested_end_m": 805.1105530169032,
+      "peak_speed_m_s": 0.09098743990331468,
+      "minimum_upright_z": 0.999382086752858,
+      "chassis_contacts": 0,
+      "negative_control": false
+    },
+    {
+      "case": {
+        "id": "hold-bridge2",
+        "route": "main_3",
+        "speed": 0,
+        "start_m": 592,
+        "seconds": 4
+      },
+      "passed": true,
+      "gates": {
+        "all_wheels_grounded": true,
+        "correct_surface": true,
+        "upright": true,
+        "completion": true,
+        "no_chassis_contacts": true
+      },
+      "grounded_fraction": 1.0,
+      "contact_shapes": [
+        "/World/Environment/Highway/Surface"
+      ],
+      "final_progress_m": 593.3222715910033,
+      "requested_end_m": 805.0791652550552,
+      "peak_speed_m_s": 0.034858870857580125,
+      "minimum_upright_z": 0.9999555931482249,
+      "chassis_contacts": 0,
+      "negative_control": false
+    },
+    {
+      "case": {
+        "id": "hold-bridge3",
+        "route": "main_0",
+        "speed": 0,
+        "start_m": 790,
+        "seconds": 4
+      },
+      "passed": true,
+      "gates": {
+        "all_wheels_grounded": true,
+        "correct_surface": true,
+        "upright": true,
+        "completion": true,
+        "no_chassis_contacts": true
+      },
+      "grounded_fraction": 1.0,
+      "contact_shapes": [
+        "/World/Environment/Highway/Surface"
+      ],
+      "final_progress_m": 791.1526203068835,
+      "requested_end_m": 805.1262473603766,
+      "peak_speed_m_s": 0.0575085541895502,
+      "minimum_upright_z": 0.9998812121460072,
+      "chassis_contacts": 0,
+      "negative_control": false
+    }
+  ],
+  "physical_passed": true,
+  "physical_sources_unchanged": true,
+  "physics_process": {
+    "exit_code": 0,
+    "elapsed_s": 375.02825769997435,
+    "limit_s": 700
+  },
+  "support_identical_between_test_and_final_scene": true,
+  "support_sha256": "396e233444baee7dfde791b576aaf9d19901dcf399c2657b18ecf1f3c409f5e8",
+  "tracking_diagnostics": {
+    "main-lane-0-60mph": {
+      "maximum_route_distance_m": 0.21785067228647054,
+      "p95_route_distance_m": 0.15371256355606003,
+      "maximum_speed_m_s": 26.958969547129872,
+      "grounded_fraction": 1.0
+    },
+    "main-lane-1-60mph": {
+      "maximum_route_distance_m": 0.2180716839196226,
+      "p95_route_distance_m": 0.15363661862124123,
+      "maximum_speed_m_s": 26.958762829139534,
+      "grounded_fraction": 1.0
+    },
+    "main-lane-2-60mph": {
+      "maximum_route_distance_m": 0.2179965483019986,
+      "p95_route_distance_m": 0.1533949086073709,
+      "maximum_speed_m_s": 26.95896767485047,
+      "grounded_fraction": 1.0
+    },
+    "main-lane-3-60mph": {
+      "maximum_route_distance_m": 0.2168043231717663,
+      "p95_route_distance_m": 0.1530057734969724,
+      "maximum_speed_m_s": 26.960154233767483,
+      "grounded_fraction": 1.0
+    },
+    "mlk-join-30mph": {
+      "maximum_route_distance_m": 0.47035358585474096,
+      "p95_route_distance_m": 0.11846987807280131,
+      "maximum_speed_m_s": 13.571958832387622,
+      "grounded_fraction": 1.0
+    },
+    "vernon-exit-30mph": {
+      "maximum_route_distance_m": 0.7611320609458615,
+      "p95_route_distance_m": 0.26522483132018837,
+      "maximum_speed_m_s": 13.37797297839964,
+      "grounded_fraction": 1.0
+    },
+    "hold-mlk-seam": {
+      "maximum_route_distance_m": 0.05285782777267133,
+      "p95_route_distance_m": 0.052010127871055564,
+      "maximum_speed_m_s": 0.18566643563324403,
+      "grounded_fraction": 1.0
+    },
+    "hold-vernon-seam": {
+      "maximum_route_distance_m": 0.03143344208226163,
+      "p95_route_distance_m": 0.03095006413182108,
+      "maximum_speed_m_s": 0.061596805233495894,
+      "grounded_fraction": 1.0
+    },
+    "hold-bridge1": {
+      "maximum_route_distance_m": 0.03245377784420156,
+      "p95_route_distance_m": 0.03194394787955204,
+      "maximum_speed_m_s": 0.09098743990331468,
+      "grounded_fraction": 1.0
+    },
+    "hold-bridge2": {
+      "maximum_route_distance_m": 0.01782619213876397,
+      "p95_route_distance_m": 0.01755840035151576,
+      "maximum_speed_m_s": 0.034858870857580125,
+      "grounded_fraction": 1.0
+    },
+    "hold-bridge3": {
+      "maximum_route_distance_m": 0.02972770548975111,
+      "p95_route_distance_m": 0.029263350982084945,
+      "maximum_speed_m_s": 0.0575085541895502,
+      "grounded_fraction": 1.0
+    }
+  },
+  "native_viewer": {
+    "frames": 240,
+    "control_callbacks": {
+      "event_Off": true,
+      "event_Construction": true,
+      "event_Disabled_vehicle": true,
+      "event_Police_traffic_break": true,
+      "play": true,
+      "pause": true,
+      "seek": true,
+      "reset": true,
+      "overview": true,
+      "selection_follow": true,
+      "free_camera_preserves_pose": true,
+      "free_camera_preserves_selection": true,
+      "follow_resumes": true,
+      "playback_advanced": true
+    },
+    "static_layers_unchanged": true,
+    "initial_replay_time": 50.0,
+    "final_replay_time": 53.24342140001245,
+    "captures": [
+      "follow.png",
+      "overview.png"
+    ],
+    "app_update_seconds_mean": 0.011777548749766236,
+    "limitation": "Bounded viewer check; update timing includes startup/warmup, not a throughput benchmark. Callback tests are not manual GUI interaction.",
+    "scene_sha256": "c1ff6f6bf129f5b26b801bd51cb195a6a87ccbb8ec53e927b5259ee9b8c43fd8"
+  },
+  "viewer_process": {
+    "exit_code": 0,
+    "elapsed_s": 30.01207399996929,
+    "limit_s": 240
+  },
+  "targeted_tests_passed": 18,
+  "tests": "9 geometry/refinement + 9 event/viewer tests",
+  "code_sha256": {
+    "scripts/acquire_i110_imagery.py": "f05609d83ed7545f5479f073112bf4f69a468086674f7b26efbe12823e6ea3c7",
+    "scripts/refine_i110_geometry.py": "f5ae82b5037a7dd4eec50783f9c640afb3ff013bbcb07f4ed9dabde614c0f479",
+    "scripts/build_i110_twin.py": "2c725b5093f005f3a68b6504b7a110b64ce3411b9df80f5b631bdc058d9055bd",
+    "scripts/check_i110_refinement.py": "46fafedaefed649c5d0dfd3c1fe97ee808c3b54375500b4bdff53268f3f04aea",
+    "scripts/probe_i110_contact.py": "0e8572d96c2cd5abeda06add8991ebb910d22a3a561e8056723ee23fead08629",
+    "scripts/open_i110_twin.cmd": "9fa710182b4ff750bf29ad3f9111337f9bec66855de3d701c450fb8f1749755a",
+    "usd/highway_event_layer.py": "eed2c6af38d2e33d88dd87398a4663554c8f60d3bd6f9ae15914c3d8d4ebe624",
+    "scenarios/i110/mlk-vernon-image-trace.json": "1816853a8d6958fe0be8a9f860da84d30471257228ed7362b4feeb466a5ade32",
+    "scenarios/i110/contact-acceptance.json": "b6233f038e1ac2593f24ba51f2bd5881d5e7d984590382faf16b0800143e716c",
+    "tests/test_i110_refinement.py": "25733a1731dd3d3e3d214710c8e1a9076eadd0d4d6fdda93ef5f658c2a933b1a"
+  },
+  "pems": {
+    "status": "Sam reports approved account",
+    "credentials_received": false,
+    "authenticated_access_used": false,
+    "runtime_dependency": false
+  },
+  "limits": [
+    "Image-interpreted 0.6m imagery, not independently surveyed lane accuracy or current as-built",
+    "Occluded bridge spans interpolated; cross-section edge extrapolation and smoothing declared",
+    "Surrogate raycast-suspension car and privileged-map scripted driver, not supplied-car/ML/human calibration",
+    "Four mainline lane passes at 60mph targets; ramp routes at 30mph, not 60mph ramp acceptance",
+    "One deterministic pass per case, not statistical robustness or real-world vehicle validation",
+    "No barriers/traffic/event physical acceptance; event layer remains synthetic viewer logic",
+    "Runtime retains nonfatal USD reference-count/plugin warnings; CPU/native results are separately qualified",
+    "No training, empirical site admission, shared Doc write or new GitHub push"
+  ],
+  "preserved_attempts": {
+    "geometry-v02": "rejected overpass contamination",
+    "contact-a": "failed speculative contact-margin gate",
+    "contact-b": "failed guard compared height to spawn elevation"
+  },
+  "shared_doc": "Live master and Sam refresher read; latest checkpoint 22 October; write hold retained",
+  "fresh_process_other_working_directory": {
+    "composition_errors": 0,
+    "used_layers": 11,
+    "expected_world_branches": true
+  }
+}

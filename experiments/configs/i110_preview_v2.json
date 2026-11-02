@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "study_id": "i110-preview-v2-20261102",
+  "trigger": "Sam requested fixing preview braking/recovery and testing v2 against the same baseline, and asked what happened to the original car.",
+  "phase": "bounded synthetic development comparison; inspected seed, not held-out confirmation",
+  "source_suite": "outputs/i110-ramp-cutin-20261029/development-v1",
+  "network": "outputs/i110-sumo-20261027/network-c/network.net.xml",
+  "runs": [
+    "ramp-0",
+    "ramp-38",
+    "ramp-44",
+    "ramp-50",
+    "cutin-smooth_acc-0",
+    "cutin-smooth_acc-1"
+  ],
+  "seed": 732001,
+  "horizon_s": 90,
+  "drain_s": 90,
+  "step_s": 0.1,
+  "wall_limit_s": 120,
+  "primary_range_m": 240,
+  "sensitivity_range_m": 120,
+  "preview": {
+    "range_m": 240.0,
+    "headway_s": 2.0,
+    "reserve_m": 10.0,
+    "speed_gain": 0.8,
+    "gap_gain": 0.04,
+    "low_speed_offset_max_m": 2.0
+  },
+  "controller": "Use current route-local TraCI getLeader within 240 m (120 m sensitivity); do not brake for other vehicles merely on an adjacent possible path. Apply continuous early gap-closing request 0.8*(leader_speed-ego_speed)+0.04*(net_gap-2*ego_speed-10-low_speed_offset), with low_speed_offset=clamp(75/speed-5,0,2) (2 at rest). Take the lower of this and native ACC/cruise request, apply unchanged measured-acceleration comfort filter and v1 terminal-release guard. No latch, dwell or stale target; immediate state-based recovery still bounded by measured jerk. Speed mode31 and native ACC authority remain. No hypothetical followSpeed queries (they may update ACC mode); one original current-state query per command remains.",
+  "safety": {
+    "speed_mode": 31,
+    "lane_change_mode": 512,
+    "native_human_lane_changes": true,
+    "max_jerk_m_s3": 2.0,
+    "comfort_tolerance": 0.05
+  },
+  "baseline": "Reuse all six hash-verified original smooth-ACC runs. Re-run ramp-44 once with the edited runner and require the complete canonical trace to match the frozen baseline before new treatment runs.",
+  "repeats": [
+    "ramp-44-r240",
+    "cutin-smooth_acc-1-r240"
+  ],
+  "matrix": "One exact baseline regression; six cases at 240 m and six at 120 m; first primary case repeated before scaling, plus ramp44 and cutin-on primary repeats: 16 bounded simulations. No outcome-driven v2 tuning. This is a combined engineering revision, not a component-causal ablation.",
+  "metrics": "Paired maximum/RMS jerk, exceedance/mismatch counts, native gaps/TTC, all requested/completed/waiting/removed/teleported counts, fixed-H and separate-drain total/role/origin boundary time and external wait, ramp exposure/event realization, latch/unknown/terminal-release counts. Report all pairs and repeat hashes.",
+  "acceptance": "No collision/removal/teleport; all requests complete by bounded drain, physical lanes retained and events realized. Comfort <=2.05 m/s3 for every case; total primary boundary time <= baseline*1.05 for each case as a predeclared engineering cost screen, with every group burden still reported. Passing these inspected fixtures is not scientific or physical acceptance.",
+  "viewer": "No new render needed for this controller comparison. Inspect and hash existing supplied car/source and its current road reference; keep private asset local.",
+  "github": "Follow normal tested feature checkpoint workflow; no new asset release or private-car publication. Prior release remains immutable.",
+  "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects.",
+  "controller_mode": "preview_v2_acc",
+  "smoke_repeat": "ramp-0-r240",
+  "rationale": "V1 adjacent conditional paths caused persistent braking, including cut-in-off. Its stop-oriented latch delayed recovery. Peaks coincide with native ACC mode transition around 100 m; v2 closes speed differences before that transition. Same-path leader observation cannot predict an unannounced instantaneous cut-in; failure remains visible.",
+  "primary_metric": "Maximum realized controlled jerk across all six primary cases; paired fixed-H complete-cohort boundary time is co-acceptance gate.",
+  "no_training": true,
+  "sources": [
+    "https://sumo.dlr.de/docs/Car-Following-Models/ACC.html",
+    "https://raw.githubusercontent.com/eclipse-sumo/sumo/v1_27_1/src/microsim/cfmodels/MSCFModel_ACC.cpp"
+  ]
+}

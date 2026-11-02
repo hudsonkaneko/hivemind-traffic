@@ -1,5 +1,68 @@
 # Active roadmap: physical research cars, economical background traffic
 
+2 November review: [repository catch-up](repository-review-2026-11-02.md) and
+[Sam's proposed next-work sequence](sam-roadmap-2026-11-02.md). Hudson's v04r2
+passing actor now supersedes v02 as the newest reported accepted SUMO candidate;
+its 81-field/lane-action contract still needs a separate I-110 review. Sam's
+next contribution is the qualified I-110 integration/evaluation testbed, with
+ordinary traffic/comfort and evidence qualification first. Existing v02 and
+comfort failures remain. Perception training is prepared but disabled. This
+review establishes no team assignment, new training authority or empirical gate.
+
+29 October continuation: [anticipation and semantic transfer review](i110-anticipation-transfer-2026-10-29.md).
+Six retained development traces support current-only shadow diagnostics. Broader
+adjacent margins warn before the cut-in but extensively in controls; neither
+margin anticipates the late ramp leaders before entry. No comfort fix or I-110
+actor transfer admitted. Next: current-state convergence and jerk-feasible
+response diagnostics. Strict numerical parity remains independently unresolved.
+No new traffic run, actor inference or training; 18 targeted tests pass.
+
+29 October current increment: [ramp/cut-in results](i110-ramp-cutin-2026-10-29.md)
+and [delivered actor reproduction](hudson-reproduction-2026-10-29.md).
+22 verification fixtures expose all delayed ramp cases and retain comfort
+failures. The diagnostic cap leaves cut-in motion unchanged. Hudson's exact
+actor is now present: original acceptance passes, strict numerical reproduction
+does not. Follow the [current handoff](continuation-2026-10-29.md) for anticipation
+diagnostics and semantic transfer review. Earlier entries below are historical;
+the checkpoint-unavailable next action is superseded. No training or I-110 actor run.
+
+28 October stress increment: [ACC stress/event results](i110-acc-stress-2026-10-28.md).
+13 realized/accounted synthetic fixtures pass; all seven smooth cases exceed the prior
+comfort bound. Next: targeted ramp interaction and cut-in response diagnosis, then the
+[ordered event/geometry/transfer tracks](i110-transfer-and-next-tracks-2026-10-28.md).
+Exact actor remains unavailable; no training or empirical driver acceptance.
+
+28 October continuation: [Hudson actor and I-110 handoff](hudson-i110-continuation-2026-10-28.md).
+Hudson confirms the frozen actor exists locally but has not delivered it. An
+isolated hash-gated v02 actor evaluator is prepared; native scaffold/repeat and
+10 targeted tests pass. No actor loaded or numerical reproduction claimed.
+Next: exact actor plus per-seed reference, original smoke/repeat, original fixed
+held-out evaluation, then explicit I-110 transfer design. Independent ACC stress,
+event adapters, geometry review, optional PeMS and evidence backfill remain ordered
+in the handoff. Shared-document writes and training remain outside this tranche.
+
+27 October later increment: [ACC comfort and graph-interface evidence](i110-acc-interface-2026-10-27.md).
+Seven smooth engineering runs pass a declared 2.05 m/s³ jerk bound, with complete
+cohort accounting and no collisions/removals/teleports. This supersedes the earlier
+ACC comfort blocker for these bounded fixtures only. A 30-feature graph interface
+is tested; Hudson's exact actor remains pending and its 27-feature inputs are
+incompatible. Next: obtain/reproduce the original actor and agree the transfer
+contract; extend scripted checks to cut-ins/emergency/ramp interactions. Apply the
+[evidence organization workflow](evidence-catalog/README.md) to all project work.
+
+27 October Sam setup: [I-110 SUMO network and checkpoint audit](i110-sumo-checkpoint-2026-10-27.md).
+The synthetic ACC baseline now runs with ramp/exit topology and complete accounting.
+Hudson's exact actor is absent from published repository artifacts inspected here;
+three-lane observations also need explicit graph-aware transfer. Twenty tests and
+six bounded smoke runs pass; abrupt ACC acceleration changes leave comfortable
+ordinary driving unaccepted. No learned comparison, new training or site admission.
+
+27 October audit: read [current learned-driving evidence](driving-readiness-2026-10-27.md)
+for newer upstream branch work not merged into this checkout. Sam's LA direction
+is refined to [I-110 southbound Exposition–Vernon](la-corridor-selection-2026-10-27.md),
+with a [separate optional disruption layer](highway-disruption-layer.md). These
+are scoped recommendations/design records; physical driver acceptance remains open.
+
 Updated: October 4, 2026. Status: physical lane following and bounded visible
 LiDAR-braking subset verified;
 scene-lifecycle reliability and full shared-map integration **in progress**.
@@ -24,6 +87,26 @@ preserving the 3 m/s baseline. Validation is in progress; this does not advance
 mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
+
+October 27 Sam geographic amendment: [LA corridor and fidelity strategy](la-highway-twin-strategy-2026-10-27.md).
+Los Angeles now takes priority over the exiD target. This is site/architecture
+qualification for Sam's scoped study, not a new physical-fleet or training result.
+
+October 22 end-of-day handoff: [current status and next session](team-handoff-2026-10-22.md)
+distinguish verified viewer/accounting work, conditional site selection and pending
+driver/communication evidence. No new training or physical acceptance is claimed.
+
+October 22 geographic-site amendment: Sam requested an evidence-based site
+selection and realistic road reconstruction using the existing viewer. The
+[site decision](highway-twin-site-decision-2026-10-22.md) recommends exiD's A44
+Aachen-Brand merge at its recording epoch, pending package access, exact location
+and factual qualification. This is a scoped research contribution; no new physical
+fleet, sensing, learned-policy or shared-map gate passes through this decision.
+
+October 22 scoped Sam contribution: [Sam's research development plan](sam-development-plan.md)
+and [supplied-car visual replay](visual-twin.md) develop the bounded research
+visualization path. This does not replace the broader hybrid-fleet roadmap or
+advance its physics, trained-control or mixed-traffic acceptance gates.
 
 October 15 portability increment: [clean-clone readiness](clean-clone.md) adds
 Windows CPU/SUMO CI and an opt-in procedural public car for the loop showcase.

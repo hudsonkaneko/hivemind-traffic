@@ -1,0 +1,18 @@
+<routes>
+  <vType id="controlled_car" length="5" minGap="2.5" accel="2.6" decel="4.5" maxSpeed="22" sigma="0" speedDev="0"/>
+  <vType id="human_proxy" length="5" minGap="2.5" accel="1.5" decel="4.5" maxSpeed="10" sigma="0" speedDev="0"/>
+  <route id="main" edges="main_in out"/>
+  <route id="ramp" edges="ramp_in out"/>
+  <vehicle id="agent_0" type="controlled_car" route="main" depart="0" departLane="0" departSpeed="12"><param key="research.origin" value="mainline"/></vehicle>
+  <vehicle id="agent_1" type="controlled_car" route="main" depart="0" departLane="1" departSpeed="12"><param key="research.origin" value="mainline"/></vehicle>
+  <vehicle id="main_0" type="human_proxy" route="main" depart="0" departLane="0"><param key="research.origin" value="mainline"/></vehicle>
+  <vehicle id="main_1" type="human_proxy" route="main" depart="0" departLane="0"><param key="research.origin" value="mainline"/></vehicle>
+  <vehicle id="main_2" type="human_proxy" route="main" depart="0" departLane="0"><param key="research.origin" value="mainline"/></vehicle>
+  <vehicle id="main_3" type="human_proxy" route="main" depart="0" departLane="0"><param key="research.origin" value="mainline"/></vehicle>
+  <vehicle id="ramp_0" type="human_proxy" route="ramp" depart="0"><param key="research.origin" value="ramp"/></vehicle>
+  <vehicle id="ramp_1" type="human_proxy" route="ramp" depart="0"><param key="research.origin" value="ramp"/></vehicle>
+  <vehicle id="ramp_2" type="human_proxy" route="ramp" depart="0"><param key="research.origin" value="ramp"/></vehicle>
+  <vehicle id="ramp_3" type="human_proxy" route="ramp" depart="0"><param key="research.origin" value="ramp"/></vehicle>
+  <vehicle id="main_late" type="human_proxy" route="main" depart="35"><param key="research.origin" value="mainline"/></vehicle>
+  <vehicle id="ramp_late" type="human_proxy" route="ramp" depart="35"><param key="research.origin" value="ramp"/></vehicle>
+</routes>

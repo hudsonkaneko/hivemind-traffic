@@ -1,0 +1,26 @@
+{
+ "schema_version": 1,
+ "author": "Codex for Sam; manual image interpretation, 2026-10-27",
+ "source": "USDA FPAC-BC GEO NAIP 2024-05-06; m_3411862_se_11_060_20240506 and m_3311806_ne_11_060_20240506",
+ "source_native_gsd_m": 0.6,
+ "coordinates": "EPSG:6340 minus [381687.546870016,3764108.929151129]; metres",
+ "point_format": "[local_y, western_pavement_edge_x, eastern_pavement_edge_x]",
+ "accuracy": "Image-interpreted development geometry, NOT surveyed or independently accepted; roughly 1 m tracing uncertainty is a working sensitivity assumption, not a measured error bound",
+ "imagery_occlusion_y_ranges": [[-403,-380],[-604,-582],[-813,-779]],
+ "roads": {
+  "Southbound": [[0,-13.0,10.0],[-30,-13.2,9.8],[-100,-14.0,9.0],[-160,-15.2,7.8],[-220,-16.4,6.6],[-280,-17.0,6.0],[-320,-16.2,6.8],[-370,-14.8,8.2],[-410,-13.8,9.2],[-460,-13.5,9.5],[-500,-14.3,8.7],[-550,-15.0,8.0],[-610,-15.8,7.2],[-650,-16.2,6.8],[-690,-16.4,6.4],[-730,-15.9,6.0],[-760,-15.4,5.6],[-815,-15.8,4.8]],
+  "MlkEntrance": [[17,-32.5,-24.5],[-50,-31.5,-23.5],[-110,-30.7,-22.7],[-160,-29,-21],[-190,-26.3,-18.3],[-220,-22.5,-14.5],[-250,-18.7,-10.7],[-280,-15,-7],[-300,-14.5,-6.5]],
+  "VernonExit": [[-455,-13.5,-5.5],[-480,-17,-9],[-510,-22,-14],[-550,-25,-17],[-580,-27,-19],[-620,-28,-20],[-670,-28.5,-20.5],[-710,-31,-23],[-740,-35,-23],[-770,-39,-23]]
+ },
+ "lane_model": {
+  "lane_width_m": 3.7,
+  "lane_width_status": "Approximate repeated divider spacing in 0.6m NAIP; individual markings partly hidden by traffic; not survey measured",
+  "main_east_lane_edge_inset_m": 1.6,
+  "main_west_lane_edge_inset_m": 2.9,
+  "aux_lane_fraction_by_s": [[0,0],[25,0],[55,1],[590,1],[650,0.65],[700,0.2],[750,0],[815,0]],
+  "taper_status": "NAIP-supported lane addition/reduction envelope; exact stripe endpoints under traffic remain uncertain",
+  "ramp_lane_edge_inset_m": 1.5,
+  "markings_status": "Reconstructed semantic markings from image-supported envelopes, not pixel-exact paint tracing"
+ },
+ "limitations": ["Elevated expressway decks obscure some road pixels; do not trace roof/deck parallax as ground lane boundaries", "Bridge spans are connected by explicit interpolation", "Road shoulders are distinct from travel lanes", "May 2024 imagery is not a verified October 2026 as-built", "No claim of independent geometric accuracy"]
+}

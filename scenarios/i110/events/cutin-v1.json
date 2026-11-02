@@ -1,0 +1,12 @@
+{
+  "schema_version": 1, "event_id": "cutin-v1", "enabled": true,
+  "kind": "cut_in", "provenance": "synthetic", "motion_owner": "SUMO",
+  "actor_id": "event_actor", "route_id": "through", "origin": "mainline",
+  "depart_s": 0, "depart_position_m": 45, "initial_physical_lane": 2,
+  "cruise_speed_m_s": 15, "actor_deceleration_m_s2": 4.5,
+  "onset_s": 2, "duration_s": 3, "release_s": 8,
+  "target_physical_lane": 1, "follower_id": "agent_1",
+  "extent": {"edges": ["sb0", "sb1", "sb2", "sb3", "sb4", "sb5"]},
+  "speed_mode": 31, "lane_change_mode": 512,
+  "limits": "A safe TraCI lane request can be delayed or denied. No teleport or forced unsafe insertion. Realized extent is recorded separately."
+}

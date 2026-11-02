@@ -70,11 +70,13 @@ class SumoBackend:
         sumo_binary: str | Path | None = None,
         gui: bool = False,
         gui_delay_ms: int = 50,
+        extra_args: tuple[str, ...] = (),
     ) -> None:
         self.config_path = Path(config_path).resolve()
         self.step_length = float(step_length)
         self.gui = bool(gui)
         self.gui_delay_ms = int(gui_delay_ms)
+        self.extra_args = tuple(extra_args)
         self.sumo_binary = (
             Path(sumo_binary).resolve() if sumo_binary else find_sumo_binary(gui=self.gui)
         )
@@ -112,6 +114,7 @@ class SumoBackend:
         ]
         if self.gui:
             command.extend(["--delay", str(self.gui_delay_ms), "--start"])
+        command.extend(self.extra_args)
         try:
             traci.start(command, label=self._label)
             self._connection = traci.getConnection(self._label)
@@ -172,9 +175,10 @@ class SumoBackend:
         departed = tuple(sorted(connection.simulation.getDepartedIDList()))
         arrived = tuple(sorted(connection.simulation.getArrivedIDList()))
         collisions = tuple(sorted(connection.simulation.getCollidingVehiclesIDList()))
-        self._active.update(departed)
-        self._active.difference_update(arrived)
-        for vehicle_id in departed:
+        # A vehicle can disappear through removal/teleport as well as arrival.
+        # Never manufacture a zero-valued state from a stale subscription.
+        self._active = set(connection.vehicle.getIDList())
+        for vehicle_id in set(departed) & self._active:
             connection.vehicle.subscribe(
                 vehicle_id,
                 (

@@ -1,0 +1,1195 @@
+{
+  "study_id": "i110-convergence-20261102",
+  "date": "2026-11-02",
+  "author": "Codex for Sam",
+  "status": "completed offline development diagnostic",
+  "question": "Can current incoming-lane topology expose late-ramp encounters before leader entry, and does a jerk-bounded stopping profile fit the conditional longitudinal clearance?",
+  "source_commit": "0508b5d27b3a2101b29888e3c70cd09f15e0dabc",
+  "protocol": "experiments/configs/i110_convergence_v1.json",
+  "inputs": {
+    "outputs\\i110-convergence-20261102\\predeclared-plan.json": "cf03d599e2a95e94e7cf493c9cd4b3fd87d90e8107242ce7eecc4db9b1748bd8",
+    "outputs\\i110-convergence-20261102\\analysis-v1\\manifest.json": "02b47cd6fa332d28633272475ab1a83edf47790ef87472ca3258ad5de413a6ca",
+    "outputs\\i110-convergence-20261102\\analysis-v2\\manifest.json": "d412ac4bac29952246c60de8343b495008f134f91b159274d92bc695b0d576f4",
+    "outputs\\i110-convergence-20261102\\analysis-v1\\summary.json": "2bb303ce48e08db0d623b434a40faa1fb7f66648a0fe7204d9192894f42b07aa",
+    "outputs\\i110-convergence-20261102\\verification.json": "9e751cd4f1e12f687c722b1285c49bdbac17db24077320066522d0f5c4ae6e82",
+    "outputs\\i110-convergence-20261102\\tests-v1.xml": "629bef2ab8057b3f522b85f1c94bbd2190dbe93339847c0fa70fc4d5b6819e9c"
+  },
+  "test_count": 37,
+  "test_failures": 0,
+  "exact_repeat": true,
+  "prefix": {
+    "through_s": 2.0,
+    "rows": 80,
+    "identical": true
+  },
+  "targets": [
+    {
+      "run": "ramp-44",
+      "range_m": 120.0,
+      "vehicle": "agent_0",
+      "target": "ramp_000",
+      "leader_entry_s": 52.5,
+      "peak_s": 52.6,
+      "peak_jerk_m_s3": 48.1703941063607,
+      "first_supported_s": 51.9,
+      "support_lead_to_entry_s": 0.6,
+      "first_projection_m": 113.42399567517973,
+      "first_model_margins_m": {
+        "r120-constant_speed-h0": -10.5637791211132,
+        "r120-constant_speed-h2": -18.8732014350108,
+        "r120-brake_9-h0": -27.518533340627556,
+        "r120-brake_9-h2": -32.35577292396093
+      },
+      "deficit_leads_to_peak": {
+        "r120-constant_speed-h0": 0.7,
+        "r120-constant_speed-h2": 0.7,
+        "r120-brake_9-h0": 0.7,
+        "r120-brake_9-h2": 0.7
+      }
+    },
+    {
+      "run": "ramp-44",
+      "range_m": 240.0,
+      "vehicle": "agent_0",
+      "target": "ramp_000",
+      "leader_entry_s": 52.5,
+      "peak_s": 52.6,
+      "peak_jerk_m_s3": 48.1703941063607,
+      "first_supported_s": 46.3,
+      "support_lead_to_entry_s": 6.2,
+      "first_projection_m": 233.59199999999998,
+      "first_model_margins_m": {
+        "r240-constant_speed-h0": 135.35908625000047,
+        "r240-constant_speed-h2": 130.52184666666713,
+        "r240-brake_9-h0": 135.35908625000047,
+        "r240-brake_9-h2": 130.52184666666713
+      },
+      "deficit_leads_to_peak": {
+        "r240-constant_speed-h0": 1.8,
+        "r240-constant_speed-h2": 1.9,
+        "r240-brake_9-h0": 1.8,
+        "r240-brake_9-h2": 1.9
+      }
+    },
+    {
+      "run": "ramp-50",
+      "range_m": 120.0,
+      "vehicle": "agent_0",
+      "target": "ramp_002",
+      "leader_entry_s": 59.4,
+      "peak_s": 59.5,
+      "peak_jerk_m_s3": 47.19560569881622,
+      "first_supported_s": 57.6,
+      "support_lead_to_entry_s": 1.8,
+      "first_projection_m": 114.75771832157922,
+      "first_model_margins_m": {
+        "r120-constant_speed-h0": 5.708033417178896,
+        "r120-constant_speed-h2": -5.612264425488917,
+        "r120-brake_9-h0": -25.252459287008193,
+        "r120-brake_9-h2": -30.089698870341536
+      },
+      "deficit_leads_to_peak": {
+        "r120-constant_speed-h0": 1.7,
+        "r120-constant_speed-h2": 1.9,
+        "r120-brake_9-h0": 1.9,
+        "r120-brake_9-h2": 1.9
+      }
+    },
+    {
+      "run": "ramp-50",
+      "range_m": 240.0,
+      "vehicle": "agent_0",
+      "target": "ramp_002",
+      "leader_entry_s": 59.4,
+      "peak_s": 59.5,
+      "peak_jerk_m_s3": 47.19560569881622,
+      "first_supported_s": 51.4,
+      "support_lead_to_entry_s": 8.0,
+      "first_projection_m": 234.48100534860504,
+      "first_model_margins_m": {
+        "r240-constant_speed-h0": 147.8787486415987,
+        "r240-constant_speed-h2": 143.04099610340472,
+        "r240-brake_9-h0": 147.87699160074192,
+        "r240-brake_9-h2": 143.0397520174086
+      },
+      "deficit_leads_to_peak": {
+        "r240-constant_speed-h0": 1.7,
+        "r240-constant_speed-h2": 2.0,
+        "r240-brake_9-h0": 3.0,
+        "r240-brake_9-h2": 3.2
+      }
+    },
+    {
+      "run": "cutin-smooth_acc-1",
+      "range_m": 120.0,
+      "vehicle": "agent_1",
+      "target": "event_actor",
+      "leader_entry_s": 2.1,
+      "peak_s": 2.2,
+      "peak_jerk_m_s3": 33.370399999999734,
+      "first_supported_s": 0.1,
+      "support_lead_to_entry_s": 2.0,
+      "first_projection_m": 35.300000000000004,
+      "first_model_margins_m": {
+        "r120-constant_speed-h0": 32.800000000000004,
+        "r120-constant_speed-h2": 2.8000000000000043,
+        "r120-brake_9-h0": -10.574999999999989,
+        "r120-brake_9-h2": -15.412239583333324
+      },
+      "deficit_leads_to_peak": {
+        "r120-constant_speed-h0": null,
+        "r120-constant_speed-h2": 1.4,
+        "r120-brake_9-h0": 2.1,
+        "r120-brake_9-h2": 2.1
+      }
+    },
+    {
+      "run": "cutin-smooth_acc-1",
+      "range_m": 240.0,
+      "vehicle": "agent_1",
+      "target": "event_actor",
+      "leader_entry_s": 2.1,
+      "peak_s": 2.2,
+      "peak_jerk_m_s3": 33.370399999999734,
+      "first_supported_s": 0.1,
+      "support_lead_to_entry_s": 2.0,
+      "first_projection_m": 35.300000000000004,
+      "first_model_margins_m": {
+        "r240-constant_speed-h0": 32.800000000000004,
+        "r240-constant_speed-h2": 2.8000000000000043,
+        "r240-brake_9-h0": -10.574999999999989,
+        "r240-brake_9-h2": -15.412239583333324
+      },
+      "deficit_leads_to_peak": {
+        "r240-constant_speed-h0": null,
+        "r240-constant_speed-h2": 1.4,
+        "r240-brake_9-h0": 2.1,
+        "r240-brake_9-h2": 2.1
+      }
+    }
+  ],
+  "runs": [
+    {
+      "run": "ramp-0",
+      "peak_jerk_m_s3": 1.9999999999999574,
+      "exposure": {
+        "r120-constant_speed-h0": {
+          "primary": {
+            "samples": 1364,
+            "candidate_samples": 1364,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-constant_speed-h2": {
+          "primary": {
+            "samples": 1364,
+            "candidate_samples": 1364,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h0": {
+          "primary": {
+            "samples": 1364,
+            "candidate_samples": 1364,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h2": {
+          "primary": {
+            "samples": 1364,
+            "candidate_samples": 1364,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h0": {
+          "primary": {
+            "samples": 1364,
+            "candidate_samples": 1364,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h2": {
+          "primary": {
+            "samples": 1364,
+            "candidate_samples": 1364,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h0": {
+          "primary": {
+            "samples": 1364,
+            "candidate_samples": 1364,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h2": {
+          "primary": {
+            "samples": 1364,
+            "candidate_samples": 1364,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": 0.0
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        }
+      },
+      "unchanged_baseline_reference": "outputs/i110-ramp-cutin-20261029/development-v1/ramp-0/metrics.json",
+      "baseline_metrics_sha256": "2637df47794680fceff95928e3b41f7dd48a42acd6f8efc5bdc76f913fed7e28"
+    },
+    {
+      "run": "ramp-38",
+      "peak_jerk_m_s3": 1.9999999999999574,
+      "exposure": {
+        "r120-constant_speed-h0": {
+          "primary": {
+            "samples": 1368,
+            "candidate_samples": 1345,
+            "forward_candidate_samples": 322,
+            "deficit_samples": 99,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 9.9,
+            "deficit_fraction": 0.07236842105263158
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-constant_speed-h2": {
+          "primary": {
+            "samples": 1368,
+            "candidate_samples": 1345,
+            "forward_candidate_samples": 322,
+            "deficit_samples": 316,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 31.6,
+            "deficit_fraction": 0.2309941520467836
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h0": {
+          "primary": {
+            "samples": 1368,
+            "candidate_samples": 1345,
+            "forward_candidate_samples": 322,
+            "deficit_samples": 322,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 32.2,
+            "deficit_fraction": 0.23538011695906433
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h2": {
+          "primary": {
+            "samples": 1368,
+            "candidate_samples": 1345,
+            "forward_candidate_samples": 322,
+            "deficit_samples": 322,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 32.2,
+            "deficit_fraction": 0.23538011695906433
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h0": {
+          "primary": {
+            "samples": 1368,
+            "candidate_samples": 1368,
+            "forward_candidate_samples": 322,
+            "deficit_samples": 99,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 9.9,
+            "deficit_fraction": 0.07236842105263158
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h2": {
+          "primary": {
+            "samples": 1368,
+            "candidate_samples": 1368,
+            "forward_candidate_samples": 322,
+            "deficit_samples": 316,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 31.6,
+            "deficit_fraction": 0.2309941520467836
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h0": {
+          "primary": {
+            "samples": 1368,
+            "candidate_samples": 1368,
+            "forward_candidate_samples": 322,
+            "deficit_samples": 322,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 32.2,
+            "deficit_fraction": 0.23538011695906433
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h2": {
+          "primary": {
+            "samples": 1368,
+            "candidate_samples": 1368,
+            "forward_candidate_samples": 322,
+            "deficit_samples": 322,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 32.2,
+            "deficit_fraction": 0.23538011695906433
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        }
+      },
+      "unchanged_baseline_reference": "outputs/i110-ramp-cutin-20261029/development-v1/ramp-38/metrics.json",
+      "baseline_metrics_sha256": "c0e1f8f493c6eb1f49bc9d95ce59cadc47cf24ae7961ca0352b33a573841a924"
+    },
+    {
+      "run": "ramp-44",
+      "peak_jerk_m_s3": 48.1703941063607,
+      "exposure": {
+        "r120-constant_speed-h0": {
+          "primary": {
+            "samples": 1423,
+            "candidate_samples": 1412,
+            "forward_candidate_samples": 368,
+            "deficit_samples": 68,
+            "unknown_samples": 31,
+            "deficit_vehicle_seconds": 6.8,
+            "deficit_fraction": 0.04778636683063949
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-constant_speed-h2": {
+          "primary": {
+            "samples": 1423,
+            "candidate_samples": 1412,
+            "forward_candidate_samples": 368,
+            "deficit_samples": 240,
+            "unknown_samples": 31,
+            "deficit_vehicle_seconds": 24.0,
+            "deficit_fraction": 0.16865776528461
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h0": {
+          "primary": {
+            "samples": 1423,
+            "candidate_samples": 1412,
+            "forward_candidate_samples": 368,
+            "deficit_samples": 316,
+            "unknown_samples": 31,
+            "deficit_vehicle_seconds": 31.6,
+            "deficit_fraction": 0.22206605762473647
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h2": {
+          "primary": {
+            "samples": 1423,
+            "candidate_samples": 1412,
+            "forward_candidate_samples": 368,
+            "deficit_samples": 319,
+            "unknown_samples": 31,
+            "deficit_vehicle_seconds": 31.9,
+            "deficit_fraction": 0.2241742796907941
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h0": {
+          "primary": {
+            "samples": 1423,
+            "candidate_samples": 1423,
+            "forward_candidate_samples": 379,
+            "deficit_samples": 74,
+            "unknown_samples": 31,
+            "deficit_vehicle_seconds": 7.4,
+            "deficit_fraction": 0.05200281096275474
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h2": {
+          "primary": {
+            "samples": 1423,
+            "candidate_samples": 1423,
+            "forward_candidate_samples": 379,
+            "deficit_samples": 245,
+            "unknown_samples": 31,
+            "deficit_vehicle_seconds": 24.5,
+            "deficit_fraction": 0.17217146872803935
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h0": {
+          "primary": {
+            "samples": 1423,
+            "candidate_samples": 1423,
+            "forward_candidate_samples": 379,
+            "deficit_samples": 316,
+            "unknown_samples": 31,
+            "deficit_vehicle_seconds": 31.6,
+            "deficit_fraction": 0.22206605762473647
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h2": {
+          "primary": {
+            "samples": 1423,
+            "candidate_samples": 1423,
+            "forward_candidate_samples": 379,
+            "deficit_samples": 319,
+            "unknown_samples": 31,
+            "deficit_vehicle_seconds": 31.9,
+            "deficit_fraction": 0.2241742796907941
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        }
+      },
+      "unchanged_baseline_reference": "outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/metrics.json",
+      "baseline_metrics_sha256": "1c56c9cffc9744ac804ca9f56ff51034104a8572aa094bf03680f13014c49f78"
+    },
+    {
+      "run": "ramp-50",
+      "peak_jerk_m_s3": 47.19560569881622,
+      "exposure": {
+        "r120-constant_speed-h0": {
+          "primary": {
+            "samples": 1408,
+            "candidate_samples": 1352,
+            "forward_candidate_samples": 296,
+            "deficit_samples": 63,
+            "unknown_samples": 28,
+            "deficit_vehicle_seconds": 6.3,
+            "deficit_fraction": 0.044744318181818184
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-constant_speed-h2": {
+          "primary": {
+            "samples": 1408,
+            "candidate_samples": 1352,
+            "forward_candidate_samples": 296,
+            "deficit_samples": 63,
+            "unknown_samples": 28,
+            "deficit_vehicle_seconds": 6.3,
+            "deficit_fraction": 0.044744318181818184
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h0": {
+          "primary": {
+            "samples": 1408,
+            "candidate_samples": 1352,
+            "forward_candidate_samples": 296,
+            "deficit_samples": 241,
+            "unknown_samples": 28,
+            "deficit_vehicle_seconds": 24.1,
+            "deficit_fraction": 0.17116477272727273
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h2": {
+          "primary": {
+            "samples": 1408,
+            "candidate_samples": 1352,
+            "forward_candidate_samples": 296,
+            "deficit_samples": 249,
+            "unknown_samples": 28,
+            "deficit_vehicle_seconds": 24.9,
+            "deficit_fraction": 0.1768465909090909
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h0": {
+          "primary": {
+            "samples": 1408,
+            "candidate_samples": 1408,
+            "forward_candidate_samples": 352,
+            "deficit_samples": 68,
+            "unknown_samples": 28,
+            "deficit_vehicle_seconds": 6.8,
+            "deficit_fraction": 0.048295454545454544
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h2": {
+          "primary": {
+            "samples": 1408,
+            "candidate_samples": 1408,
+            "forward_candidate_samples": 352,
+            "deficit_samples": 70,
+            "unknown_samples": 28,
+            "deficit_vehicle_seconds": 7.0,
+            "deficit_fraction": 0.04971590909090909
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h0": {
+          "primary": {
+            "samples": 1408,
+            "candidate_samples": 1408,
+            "forward_candidate_samples": 352,
+            "deficit_samples": 250,
+            "unknown_samples": 28,
+            "deficit_vehicle_seconds": 25.0,
+            "deficit_fraction": 0.17755681818181818
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h2": {
+          "primary": {
+            "samples": 1408,
+            "candidate_samples": 1408,
+            "forward_candidate_samples": 352,
+            "deficit_samples": 260,
+            "unknown_samples": 28,
+            "deficit_vehicle_seconds": 26.0,
+            "deficit_fraction": 0.1846590909090909
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        }
+      },
+      "unchanged_baseline_reference": "outputs/i110-ramp-cutin-20261029/development-v1/ramp-50/metrics.json",
+      "baseline_metrics_sha256": "2ff4c30ba8f2d4eef919f16a75431228d312204bfdc8df894d912339a13a4080"
+    },
+    {
+      "run": "cutin-smooth_acc-0",
+      "peak_jerk_m_s3": 1.9999999999999574,
+      "exposure": {
+        "r120-constant_speed-h0": {
+          "primary": {
+            "samples": 1396,
+            "candidate_samples": 1396,
+            "forward_candidate_samples": 501,
+            "deficit_samples": 103,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 10.3,
+            "deficit_fraction": 0.07378223495702006
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-constant_speed-h2": {
+          "primary": {
+            "samples": 1396,
+            "candidate_samples": 1396,
+            "forward_candidate_samples": 501,
+            "deficit_samples": 381,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 38.1,
+            "deficit_fraction": 0.27292263610315187
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h0": {
+          "primary": {
+            "samples": 1396,
+            "candidate_samples": 1396,
+            "forward_candidate_samples": 501,
+            "deficit_samples": 501,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 50.1,
+            "deficit_fraction": 0.35888252148997135
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h2": {
+          "primary": {
+            "samples": 1396,
+            "candidate_samples": 1396,
+            "forward_candidate_samples": 501,
+            "deficit_samples": 501,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 50.1,
+            "deficit_fraction": 0.35888252148997135
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h0": {
+          "primary": {
+            "samples": 1396,
+            "candidate_samples": 1396,
+            "forward_candidate_samples": 501,
+            "deficit_samples": 103,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 10.3,
+            "deficit_fraction": 0.07378223495702006
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h2": {
+          "primary": {
+            "samples": 1396,
+            "candidate_samples": 1396,
+            "forward_candidate_samples": 501,
+            "deficit_samples": 381,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 38.1,
+            "deficit_fraction": 0.27292263610315187
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h0": {
+          "primary": {
+            "samples": 1396,
+            "candidate_samples": 1396,
+            "forward_candidate_samples": 501,
+            "deficit_samples": 501,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 50.1,
+            "deficit_fraction": 0.35888252148997135
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h2": {
+          "primary": {
+            "samples": 1396,
+            "candidate_samples": 1396,
+            "forward_candidate_samples": 501,
+            "deficit_samples": 501,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 50.1,
+            "deficit_fraction": 0.35888252148997135
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        }
+      },
+      "unchanged_baseline_reference": "outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-0/metrics.json",
+      "baseline_metrics_sha256": "a985287d4d0a60b358035994b7d2d41ea7a4b47b9d5c212ce9f35e7341fe6847"
+    },
+    {
+      "run": "cutin-smooth_acc-1",
+      "peak_jerk_m_s3": 33.370399999999734,
+      "exposure": {
+        "r120-constant_speed-h0": {
+          "primary": {
+            "samples": 1402,
+            "candidate_samples": 1402,
+            "forward_candidate_samples": 770,
+            "deficit_samples": 195,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 19.5,
+            "deficit_fraction": 0.1390870185449358
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-constant_speed-h2": {
+          "primary": {
+            "samples": 1402,
+            "candidate_samples": 1402,
+            "forward_candidate_samples": 770,
+            "deficit_samples": 658,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 65.8,
+            "deficit_fraction": 0.4693295292439372
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h0": {
+          "primary": {
+            "samples": 1402,
+            "candidate_samples": 1402,
+            "forward_candidate_samples": 770,
+            "deficit_samples": 770,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 77.0,
+            "deficit_fraction": 0.5492154065620543
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r120-brake_9-h2": {
+          "primary": {
+            "samples": 1402,
+            "candidate_samples": 1402,
+            "forward_candidate_samples": 770,
+            "deficit_samples": 770,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 77.0,
+            "deficit_fraction": 0.5492154065620543
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h0": {
+          "primary": {
+            "samples": 1402,
+            "candidate_samples": 1402,
+            "forward_candidate_samples": 770,
+            "deficit_samples": 195,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 19.5,
+            "deficit_fraction": 0.1390870185449358
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-constant_speed-h2": {
+          "primary": {
+            "samples": 1402,
+            "candidate_samples": 1402,
+            "forward_candidate_samples": 770,
+            "deficit_samples": 658,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 65.8,
+            "deficit_fraction": 0.4693295292439372
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h0": {
+          "primary": {
+            "samples": 1402,
+            "candidate_samples": 1402,
+            "forward_candidate_samples": 770,
+            "deficit_samples": 770,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 77.0,
+            "deficit_fraction": 0.5492154065620543
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        },
+        "r240-brake_9-h2": {
+          "primary": {
+            "samples": 1402,
+            "candidate_samples": 1402,
+            "forward_candidate_samples": 770,
+            "deficit_samples": 770,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 77.0,
+            "deficit_fraction": 0.5492154065620543
+          },
+          "drain": {
+            "samples": 0,
+            "candidate_samples": 0,
+            "forward_candidate_samples": 0,
+            "deficit_samples": 0,
+            "unknown_samples": 0,
+            "deficit_vehicle_seconds": 0.0,
+            "deficit_fraction": null
+          }
+        }
+      },
+      "unchanged_baseline_reference": "outputs/i110-ramp-cutin-20261029/development-v1/cutin-smooth_acc-1/metrics.json",
+      "baseline_metrics_sha256": "bb56c77f52db07b83ca2043e56e0805c38b229b8f882ece42bda54335fd441b3"
+    }
+  ],
+  "interpretation": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+  "next_action": "Predeclare a bounded preview-control contract: observation range and uncertainty, conditional lateral-path handling, positive braking reserve, other-motion assumptions, recovery and native safety authority. Then test matched development interventions with full controlled/human/ramp/external burdens before any comfort acceptance; keep geometry qualification and v04 handoff separate.",
+  "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+  "methodological_notes": [
+    "120 m matches the prior nominal radius, not an identical observation set: this diagnostic uses Euclidean inclusion and all reachable incoming same/adjacent paths; the old front-neighbor margin used directed lane gaps and nearest candidates.",
+    "Only positive projected front-position differences receive a front stopping envelope. Rear and exactly side-by-side candidates remain in journals without a front-envelope assessment; absence of a deficit is not a safe label.",
+    "First supported projection is not first warning. Negative margin means the constructed profile already lacks reserve. Earliest support/deficit labels are retrospective and limited to the predeclared 10 s window.",
+    "Signals use lane, lane position, length, speed, acceleration and x/y only. IDs identify records; routes, roles, schedules, observed future motion and native leader labels do not select candidates.",
+    "Unknown initial braking profiles remain unknown. Primary/drain counts, all leader switches and all jerk episodes are retained. No protected observations or new simulator trajectory were read/generated."
+  ],
+  "simulator_launched": false,
+  "actor_loaded": false,
+  "training": false,
+  "shared_document_written": false
+}

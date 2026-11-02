@@ -1,8 +1,257 @@
 # Change log
 
+## Preview v2/v2.1 follow-up — 2 November 2026
+
+V2.1 passes all six primary development acceptance checks. The rejected v2 edition is retained. Two separately frozen matrices
+completed 32 runs, with exact baseline/repeat traces and 54 passing targeted
+CPU tests. See [comparison and original-car status](i110-preview-v2-2026-11-02.md).
+The original supplied car/source remain intact locally; the public replay uses
+procedural cars because redistribution rights are unqualified. The released v1
+ZIP is unchanged. Freeze new, uninspected verification seeds and merge/cut-in conditions before further tuning; test range sensitivity and realization limits. Keep smooth ACC as the reference baseline.
+
+## 2026-11-02 — Approved GitHub road/replay publication
+
+- Published tested checkpoint `1c9c27d` to Sam's feature branch, updated [PR #16](https://github.com/hudsonkaneko/hivemind-traffic/pull/16),
+  and uploaded the [portable road/replay ZIP](https://github.com/samfrausto/hivemind-traffic/releases/tag/sam-i110-handoff-20261102-v1) as a versioned prerelease.
+- Verified remote commit, saved PR title/body/review status, asset size and SHA256.
+  Follow-up documentation records these links; the release remains pinned to the
+  tested source checkpoint. No main merge or shared Google Doc write occurred.
+
+## 2026-11-02 — Preview controller comparison and Isaac road handoff
+
+- Implemented current-state preview braking with fixed reserve/hysteresis and
+  terminal release; retained native SUMO safety and the original smooth-ACC default.
+  Baseline trace regression is exact. Fifteen declared runs complete; primary
+  repeats match. Five of six primary cases fail comfort and both cut-in cases
+  exceed the 5% complete-cohort cost screen. Preview v1 is not adopted.
+- Built a paired baseline/preview Isaac replay with the current road, exact
+  recorded positions and explicit reconstructed attitudes. 95,920 pose/lifecycle
+  checks, 240-frame native rendering/control checks, and 53 targeted CPU tests pass.
+  GUI opened on the desktop; source road layers remain unchanged.
+- Prepared a portable road/replay handoff using procedural cars, excluding the
+  private supplied car and raw imagery/lidar. Published feature head still
+  b23f24c with no I-110 paths. Added [comparison](i110-preview-2026-11-02.md) and
+  [team handoff](i110-team-handoff-2026-11-02.md); no upload or shared Doc write.
+
+## 2026-11-02 — Incoming-path convergence and jerk-feasibility
+
+- Added offline current-state incoming-path projection and an analytic stopping
+  envelope that bounds jerk through braking and release to rest. The two late
+  ramp targets appear before native leader entry, but 120 m stopping reserve
+  is insufficient or fragile; 240 m is an explicitly expanded-information case.
+- Retained all six development traces, both ranges, both other-motion assumptions,
+  headway variants, unknown masks and original burden ledgers. No traffic or
+  controller changed. Both complete derivations match exactly; the cut-in on/off
+  prefix is identical through 2 s. 37 targeted tests pass.
+- Added [report](i110-convergence-2026-11-02.md), compact evidence and lineage.
+  Next is an explicit preview-control contract before matched intervention.
+  No comfort acceptance, actor transfer, training, shared write or push.
+
+## 2026-11-02 — Repository catch-up and Sam roadmap
+
+- Inspected all 57 published branch heads across Hudson's repository and Sam's
+  fork, all 34 upstream PRs, complete release lists and 97 CI runs. Explicit
+  all-head fetch recovered five branches missed by the main-only fetch rule.
+- Verified all 23 v04r2 source hashes/config identity and recomputed headline
+  committed per-seed metrics. Accepted passing is scoped to the original SUMO
+  task; peak jerk remains 42.0074 m/s³ and no I-110 transfer is established.
+- Reconciled fusion, frozen segmentation and the prepared-but-disabled six-class
+  training pipeline. Added [review](repository-review-2026-11-02.md) and
+  [Sam roadmap](sam-roadmap-2026-11-02.md), with evidence and local continuity.
+  No simulation, training, model load, merge, push or shared-document edit.
+
+## 2026-10-29 — Current-state anticipation and semantic transfer review
+
+- Added pure current-state shadow margins, frozen six-case development replay
+  and static transfer audit. Existing traces were hash-verified; no simulator
+  or actor evaluation was restarted. All six journals and summaries repeat.
+- The 2 s adjacent margin warns before cut-in entry but extensively in controls;
+  both margins miss pre-entry warning for the late ramp leaders. No comfort
+  fix adopted. Exact original/graph semantic support remains unestablished;
+  numerical parity stays a separate unresolved gate.
+- 18 targeted tests pass. [Report](i110-anticipation-transfer-2026-10-29.md),
+  compact evidence, catalog lineage and local continuity updated. No training,
+  actor transfer, shared write, teammate message or push.
+
+## 2026-10-29 — Targeted ramp/cut-in diagnostics and delivered actor
+
+- Added a frozen ramp timing matrix, read-only interaction journals and matched
+  lateral-off cut-in controls. Nine development and 22 verification runs complete;
+  delayed ramps are exposed and repeats are exact. Later ramp/cut-in comfort
+  failures remain. A diagnostic cap changes requests but not realized motion.
+- Downloaded and hash-verified Hudson's supplied v02 actor/reference. Original
+  smoke/repeat and fixed 20 held-out seeds pass original acceptance. Strict
+  numerical comparison fails: 153 floating differences, 34 beyond 1e-9 tolerance;
+  all non-floating fields match. Runtime differences remain unresolved.
+- 71 targeted tests pass. Updated evidence, failure lineage and
+  [current handoff](continuation-2026-10-29.md). No training, I-110 actor execution,
+  shared write or push. Original actor delivery supersedes the missing-file gate.
+
+## 2026-10-28 — I-110 cut-in and braking stress tranche
+
+- Added independent synthetic SUMO event specifications/adapters and requested-versus-realized journals.
+- 13 matched verification runs pass realized-event/network gates; all 45 requests finish after drain. Repeat trace/journal exact. Four development runs include event-off equality.
+- All seven smooth stress runs fail the previous 2.05 m/s³ comfort bound; failures retained with safety authority enabled. 47 targeted tests pass.
+- Added semantic actor-transfer comparison, ordered next tracks and evidence lineage. No training, shared write or push. See [report](i110-acc-stress-2026-10-28.md).
+
+## 2026-10-28 — Hudson frozen-actor continuation
+
+- Reconciled Hudson's forwarded confirmation with the pinned v02 evidence; exact
+  weights remain undelivered. Fresh public release/tree/artifact metadata checks
+  found no released checkpoint within the recorded scope.
+- Added hash-gated actor-only evaluation using isolated, hash-exact original
+  sources/config and the original evaluator. Kept 27-feature reproduction separate
+  from the I-110 30-feature candidate; no v01 recorder substitution or training.
+- Ten targeted tests pass. Original native scaffold repeats episode metrics on
+  development seed 520001 with clean exits and unchanged sources. The first output
+  path failure and initial test mock failure are retained. No learned result.
+- Added a complete [new-agent handoff](hudson-i110-continuation-2026-10-28.md),
+  acquisition requirements, ordered acceptance gates and evidence catalog update.
+
+## 2026-10-27 — Smooth ACC, graph observations and evidence organization
+
+- Matched native/default, native/parallel and filtered/parallel ACC runs separate
+  passing-rule and comfort-filter effects: peak controlled-fleet jerk 65 → 20 →
+  2.010 m/s³. Seven smooth runs pass the declared 2.05 engineering bound, complete
+  their cohorts after drain, and record no collisions, removals or teleports.
+- Added a 30-feature graph-aware observation contract, stable lane identities,
+  connected-path neighbor distances and unknown-context masks. Legacy 27-feature
+  weights are rejected; no actor loaded or training launched.
+- Added the project-wide `organize-av-evidence` skill, 17 activity records,
+  explicit current result/figure lineage and searchable local inventory with
+  historical gaps exposed. Prepared an exact checkpoint request for Sam.
+- See [results and limits](i110-acc-interface-2026-10-27.md),
+  [Hudson request](hudson-checkpoint-request-2026-10-27.md), and
+  [catalog workflow](evidence-catalog/README.md). Shared-document writes remain held.
+
+## 2026-10-27 — I-110 SUMO setup and repository checkpoint audit
+
+- Recovered all 14 recorded Hudson MAPPO v02 source hashes (two CRLF restorations)
+  and the configuration digest. Published weights remain absent from inspected
+  Git history/releases; original three-lane observations need explicit corridor
+  adaptation. No reproduction or learned-versus-ACC result claimed.
+- Added a portable profile-based I-110 lane graph, MLK entry/Vernon exit, ACC/IDM
+  engineering fixture, separate leader-speed event and complete trip accounting.
+  Corrected backward automatic junction connectors and retained earlier outputs.
+- Twenty targeted tests and six bounded scenario runs pass; exact same-seed
+  replay and different-seed sensitivity verified. All cohorts finish in the
+  separate drain without collisions/removals/teleports. High fleet jerk leaves
+  comfortable ordinary driving unaccepted. No PeMS dependency or new training.
+- See [checkpoint audit and runnable setup](i110-sumo-checkpoint-2026-10-27.md).
+
+## 2026-10-27 — I-110 imagery refinement and bounded physical contact
+
+- Refined pavement/ramp connections against date-pinned May 2024 NAIP, added
+  explicit lane/taper interpretation and bridge occlusion masks. Kept image
+  resolution, reconstruction assumptions and missing independent accuracy clear.
+- Replaced overlapping road colliders with a shared-vertex mesh; the viewer uses
+  the same surface, reconstructed markings and separate optional event layer.
+- Passed 12 bounded PhysX cases: four 60 mph mainline targets, two 30 mph ramp
+  routes, five stationary seam/bridge checks and a no-road negative control.
+  Every positive case retained four-wheel support after settling with no chassis
+  contacts. This tests a surrogate vehicle and scripted controller, not ML or
+  empirically calibrated driving. Rejected fits and test-harness failures retained.
+- Sam reports PeMS approval. No credentials requested/stored; sign in directly
+  or use exports. See [refinement evidence](i110-geometry-contact-refinement.md).
+
+## 2026-10-27 — First MLK–Vernon road and optional event preview
+
+- Sam selected I-110 and authorized construction. Added bounded public lidar
+  acquisition, source-fitted grade/crossfall and separate terrain/deck context,
+  composed USD road/support/event layers, a portable launcher and viewer controls.
+- Added deterministic construction, disabled-vehicle and police-break presets
+  with session-only visibility/collision toggles and a scripted inspection car.
+  These are synthetic previews, not live SUMO or physical autonomy validation.
+- Preserve provisional lane widths/tapers, flagged occlusions and the pending
+  native contact gate. PeMS access is optional for construction and offline runs.
+  See [build/evidence](i110-mlk-vernon-build.md) and [PeMS walkthrough](pems-access-and-offline-workflow.md).
+
+## 2026-10-27 — LA corridor comparison, disruptions and current driving audit
+
+- Recommend I-110 southbound Exposition–Vernon, starting with the MLK entrance,
+  Vernon exit and auxiliary-lane reduction. Retrieved bounded OSM extracts,
+  actual lidar samples and official ramp counts; preserved missing/stale traffic
+  evidence. Sam confirms no PeMS account/data. No LA scene or calibration claim.
+- Specify a separate event manifest and SUMO/USD/Isaac adapter contract for
+  crashes, construction and police traffic breaks; runtime implementation pending.
+- Audit October 25–26 upstream branches: passing fixed-lane SUMO cruise is
+  distinct from pending physical highway acceptance and untrained V2V comparison.
+  See [corridor evidence](la-corridor-selection-2026-10-27.md) and
+  [driving audit](driving-readiness-2026-10-27.md). No simulation/training launched.
+
 This is a curated guide to meaningful changes, not a replacement for Git history.
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
+
+## 2026-10-27 — exiD public qualification and audit preparation
+
+- Later on 27 October, Sam changed the geographic priority to an American/LA
+  highway near USC. Added the [LA fidelity strategy](la-highway-twin-strategy-2026-10-27.md)
+  and source ledger, with Caltrans-supported corridor leads, Adams signal-control
+  caveat, public LA lidar route and separate geometry/traffic/vehicle checks.
+  No LA site is admitted; no scene, observation analysis or training performed.
+
+- Added the [access/site evidence sheet](exid-qualification-2026-10-27.md),
+  [geometry/audit acceptance plan](exid-geometry-audit-plan.md) and blank intake
+  manifest. No restricted package/grant was identified in the scoped search;
+  exact IDs, dates, direction, boundaries and independent blocks remain unknown.
+- Refreshed publisher metadata: the current format link is 2.1; flat-terrain
+  wording and package-dependent enrichment require clarification. No site gate
+  passed, audit partition reserved, road rebuilt, simulator launched or training
+  performed. The live master confirms the authorized 22 October publication;
+  today's status is prepared locally without a shared write.
+
+## 2026-10-22 — Sam's supplied-car visual replay foundation
+
+- Added the [teammate handoff and resume checklist](team-handoff-2026-10-22.md),
+  linked it from the README and active plans, and aligned viewer instructions with
+  free/follow/overview camera behavior. Next session begins with exiD access and
+  exact-site qualification. Shared-master synchronization is specifically
+  authorized by Sam's end-of-day documentation request and verified saved with
+  all prior text preserved; no new runtime claim.
+
+- Added a [site-selection decision and complete build contract](highway-twin-site-decision-2026-10-22.md)
+  after Sam requested a more realistic highway and delegated candidate selection.
+  Recommend recording-era exiD A44 Aachen-Brand; exact site files/rights and
+  factual admission remain pending. Verified public NRW I3S metadata; retained
+  bounded I-80 LiDAR acquisition and failed imagery attempts as local evidence.
+  No new road reconstruction, simulator acceptance or training is claimed.
+
+- Released the viewer camera from its per-frame pose reset: Free camera is now
+  the interactive default, with explicit Follow and Overview controls. Added
+  startup callback evidence for camera-pose preservation and resuming Follow.
+
+- Continued [I-80/Powell qualification](i80-powell-qualification-2026-10-22.md):
+  recovered readable original support/TXT sources, matched the early API sample
+  exactly, and documented the remaining demand/queue and gap-evidence gaps.
+  Site is usable for historical development but not admitted for the full study.
+- Added a separate observed-track/GIS inspection scene through the existing
+  viewer, with explicit source labels and no fabricated trip-completion ledger.
+  Reused motion-layer authoring; synthetic accounted replay remains available.
+
+- Follow-up: added fixed-horizon, boundary-inclusive trip accounting with a
+  separate bounded drain, native tripinfo crosschecks, a synthetic merge fixture,
+  and ledger telemetry in the existing viewer. Preserved the old replay prefix.
+- Audited a bounded public I-80 development sample and Esri context metadata;
+  historical site admission remains conditional. Recorded Hudson's actual
+  experimental driver interface and proposed research integration gates.
+  See [accounting and qualification evidence](merge-accounting-2026-10-22.md).
+
+- Added a scoped [development plan](sam-development-plan.md) under the master
+  research boundaries, without adopting the broader physical-fleet roadmap.
+- Added private-source asset composition and a layered SUMO replay builder,
+  explicit fallback materials, stable vehicle identities and shortest-arc heading
+  interpolation. The original collection and baseline inputs remain unchanged.
+- Added an Isaac viewer with playback, scrub, selection, telemetry and camera
+  controls plus a portable launch wrapper. See [usage and evidence limits](visual-twin.md).
+- Three public-fixture tests pass for pose/heading/lifecycle, input immutability,
+  invalid times, output preservation and heading wrap. Local full-recording checks
+  passed 1,350 pose/heading/lifecycle checks; actual runtime evidence is recorded
+  separately. Private assets, installed runtime and raw outputs are excluded.
+- Isaac 6.0.1 completed a 360-update RTX check with follow/overview PNGs, seven
+  passing control/state checks and unchanged saved layers. Added a standalone
+  composition checker, short-runtime-path launcher support and synchronized
+  capture completion. See [runtime evidence and failures](visual-twin-2026-10-22.md).
 
 ## 2026-10-15 — Clean-clone readiness
 

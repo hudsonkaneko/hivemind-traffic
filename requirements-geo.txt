@@ -1,0 +1,7 @@
+# Optional isolated acquisition/geometry environment; never install into Isaac.
+# Versions used for the 27 October 2026 MLK--Vernon build.
+numpy==2.4.6
+scipy==1.17.1
+laspy==2.7.0
+lazrs==0.8.2
+pyproj==3.7.2
