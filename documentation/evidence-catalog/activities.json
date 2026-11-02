@@ -3599,6 +3599,289 @@
           "lineage_basis": "recorded"
         }
       ]
+    },
+    {
+      "id": "i110-convergence-20261102",
+      "title": "I-110 incoming-path convergence and jerk-feasibility diagnostics",
+      "domain": "Traffic observation and comfort diagnostics",
+      "question": "Can current incoming-lane topology expose late-ramp encounters before leader entry, and does a jerk-bounded stopping profile fit the conditional longitudinal clearance?",
+      "why_now": "Late-ramp leader entries precede large native braking jerk; prior current-neighbor margins offered no pre-entry ramp warning.",
+      "trigger": {
+        "text": "Sam: Let's continue, after the 2 November repository review and roadmap; previous nearest-neighbor margins missed pre-entry ramp warning.",
+        "sources": [
+          "repo:outputs/i110-convergence-20261102/predeclared-plan.json",
+          "repo:documentation/sam-roadmap-2026-11-02.md",
+          "repo:documentation/i110-anticipation-transfer-2026-10-29.md"
+        ]
+      },
+      "method": "Stream current states only; graph reachable non-internal common edges without hypothetical lane changes, pair same/adjacent lane endpoints, select nearest common edge by summed forward distances with deterministic ties. Routes/IDs/event schedule/leader labels cannot select candidates. Signed positions before the anchor yield a conditional projected gap, never a measured bumper gap on different paths. Current Euclidean range 120 m is the information-matched diagnostic; 240 m is an explicitly expanded range. Unreachable/invalid topology and infeasible initial braking states stay unknown. Adjacent paths are possible lateral interactions with unknown intent, not guaranteed convergence. Continuous piecewise-polynomial ego stop: hold current acceleration 0.1 s, jerk -2 to at most -2.5 m/s2, hold as needed, jerk +2 to zero acceleration exactly at zero speed. Reject initial states for which this bounded monotone stopping profile cannot be constructed. Other car either holds current speed or brakes immediately at 9 m/s2 to rest; both are assumptions. Evaluate exact extrema of displacement closure plus h*ego speed, h=0 and 2, including all segment boundaries and polynomial roots. Required gap = 2.5 + maximum of that expression. This constructs a conditional response, not a safety proof or optimal controller.",
+      "status": "completed offline development diagnostic",
+      "result": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+      "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+      "next_action": "Predeclare a bounded preview-control contract: observation range and uncertainty, conditional lateral-path handling, positive braking reserve, other-motion assumptions, recovery and native safety authority. Then test matched development interventions with full controlled/human/ramp/external burdens before any comfort acceptance; keep geometry qualification and v04 handoff separate.",
+      "references": [
+        "repo:outputs/i110-convergence-20261102/predeclared-plan.json",
+        "repo:experiments/configs/i110_convergence_v1.json",
+        "repo:outputs/i110-sumo-20261027/network-c/network.net.xml",
+        "repo:traffic/i110_convergence.py",
+        "repo:scripts/report_i110_convergence.py",
+        "repo:tests/test_i110_convergence.py",
+        "repo:outputs/i110-convergence-20261102/analysis-v1/manifest.json",
+        "repo:outputs/i110-convergence-20261102/analysis-v2/manifest.json",
+        "repo:outputs/i110-convergence-20261102/verification.json",
+        "repo:outputs/i110-convergence-20261102/tests-v1.xml",
+        "repo:documentation/i110-convergence-2026-11-02.md",
+        "repo:documentation/evidence/i110-convergence-20261102.json"
+      ],
+      "prefixes": [
+        "repo:outputs/i110-convergence-20261102",
+        "repo:traffic/i110_convergence.py",
+        "repo:scripts/report_i110_convergence.py",
+        "repo:tests/test_i110_convergence.py",
+        "repo:experiments/configs/i110_convergence_v1.json",
+        "repo:documentation/i110-convergence-2026-11-02.md",
+        "repo:documentation/evidence/i110-convergence-20261102.json"
+      ],
+      "follow_up_to": [
+        "i110-anticipation-shadow-20261029",
+        "repo-review-20261102"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v1/summary.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v1/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v1/results.md",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v1/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v1/ramp-0-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v1/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v1/ramp-38-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v1/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v1/ramp-44-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v1/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v1/ramp-50-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v1/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v1/cutin-smooth_acc-0-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v1/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v1/cutin-smooth_acc-1-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v1/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v2/summary.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v2/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v2/results.md",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v2/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v2/ramp-0-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v2/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v2/ramp-38-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v2/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v2/ramp-44-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v2/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v2/ramp-50-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v2/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v2/cutin-smooth_acc-0-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v2/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/analysis-v2/cutin-smooth_acc-1-signals.jsonl",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_convergence.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v2/manifest.json"
+          ],
+          "explanation": "Current-only conditional path/envelope records and retrospective labels/exposure with untouched burden ledgers.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-convergence-20261102/verification.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-convergence-20261102/verify.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v1/manifest.json",
+            "repo:outputs/i110-convergence-20261102/analysis-v2/manifest.json",
+            "repo:outputs/i110-anticipation-shadow-20261029/analysis-v2/summary.json"
+          ],
+          "explanation": "Exact derived replay, identical pre-event prefixes, original burden equality and extracted target-entry timing.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/i110-convergence-2026-11-02.md",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-convergence-20261102/close-records.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v1/summary.json",
+            "repo:outputs/i110-convergence-20261102/verification.json",
+            "repo:outputs/i110-convergence-20261102/tests-v1.xml"
+          ],
+          "explanation": "Generated results and interpreted limits for Sam’s next preview-control design decision.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/evidence/i110-convergence-20261102.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-convergence-20261102/close-records.py",
+          "inputs": [
+            "repo:outputs/i110-convergence-20261102/analysis-v1/summary.json",
+            "repo:outputs/i110-convergence-20261102/verification.json",
+            "repo:outputs/i110-convergence-20261102/tests-v1.xml"
+          ],
+          "explanation": "Generated results and interpreted limits for Sam’s next preview-control design decision.",
+          "claim": "Current topology exposes the two late-ramp targets before leader entry, but the 120 m conditional stopping margins are insufficient in ramp-44 and fragile in ramp-50. Expanded 240 m context offers earlier supported projections; it is an additional information requirement, not demonstrated sensing or a validated control fix. A deficit marks failure of this response profile, not proof that no other response is possible.",
+          "limits": "One previously inspected synthetic seed; provisional geometry; exact simulator positions and map; expanded 240 m range is not demonstrated sensing/communication. Conditional lateral projection has no merge-time or intent evidence. Braking models are assumptions; other road users, SUMO intervention and delayed insertions are not counterfactually resolved. No rollout, actor, training, protected audit inspection or shared writes.",
+          "lineage_basis": "recorded"
+        }
+      ]
     }
   ]
 }

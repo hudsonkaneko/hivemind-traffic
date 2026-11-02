@@ -1,5 +1,25 @@
 # Ramp, cut-in and delivered actor: current handoff
 
+## 2 November continuation: convergence diagnostic complete
+
+Read [convergence and jerk-feasibility](i110-convergence-2026-11-02.md) and
+`documentation/evidence/i110-convergence-20261102.json` first. Six existing
+development traces were reanalysed twice with identical journals/summaries;
+37 targeted tests pass, and cut-in on/off prefixes match through 2.0 s.
+At 120 m, late-ramp targets appear 0.6/1.8 s before leader entry. Initial
+constant-speed h0 stopping margins are −10.564/+5.708 m; ramp-50 also lacks
+reserve under h2 or hard-braking assumptions. Expanded 240 m context offers
+6.2/8.0 s of lead, requiring additional state availability. It is not a fix.
+
+Next: freeze observation range, conditional lateral-path handling, positive
+braking reserve, other-motion assumptions and recovery for a preview controller,
+then bounded matched development intervention with complete cohort costs. Keep
+native safety authority, original smooth-ACC baselines and all failed comfort
+evidence. No controller/simulation/training ran in this continuation. Factual
+corridor qualification and v04 delivery/support review remain separate tracks.
+Raw package: `outputs/i110-convergence-20261102/`, local and ignored. Shared
+document hold, no-push boundary and all scientific/transfer gates remain.
+
 ## 2 November repository review supersedes the actor-next-action context
 
 Read the [fresh repository audit](repository-review-2026-11-02.md) and

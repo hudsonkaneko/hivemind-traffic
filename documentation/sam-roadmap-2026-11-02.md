@@ -51,6 +51,17 @@ research before a particular deadline.
 
 ## First concrete engineering task
 
+**Continuation checkpoint, 2 November:** the offline convergence and stopping
+diagnostic is now complete. See [results](i110-convergence-2026-11-02.md).
+At 120 m, the two late ramp targets are exposed 0.6/1.8 s before leader entry,
+but their first constant-speed stopping margins are −10.564/+5.708 m; the latter
+also fails the 2 s headway or hard-braking assumption. Expanded 240 m context
+appears earlier but requires extra available state. All six derivations repeat,
+37 targeted tests pass, and no trajectory changed. Next: predeclare the preview
+controller's observation range, conditional-path rule, braking reserve and
+recovery before a bounded matched intervention. Geometry qualification remains
+an independent next track. The original task specification below is preserved.
+
 Start from the existing six development traces. The current adjacent margin
 warns before the scripted cut-in but excessively in controls; it does not see
 the critical ramp car until it is already a leader. Therefore:

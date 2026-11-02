@@ -1,5 +1,19 @@
 # Change log
 
+## 2026-11-02 — Incoming-path convergence and jerk-feasibility
+
+- Added offline current-state incoming-path projection and an analytic stopping
+  envelope that bounds jerk through braking and release to rest. The two late
+  ramp targets appear before native leader entry, but 120 m stopping reserve
+  is insufficient or fragile; 240 m is an explicitly expanded-information case.
+- Retained all six development traces, both ranges, both other-motion assumptions,
+  headway variants, unknown masks and original burden ledgers. No traffic or
+  controller changed. Both complete derivations match exactly; the cut-in on/off
+  prefix is identical through 2 s. 37 targeted tests pass.
+- Added [report](i110-convergence-2026-11-02.md), compact evidence and lineage.
+  Next is an explicit preview-control contract before matched intervention.
+  No comfort acceptance, actor transfer, training, shared write or push.
+
 ## 2026-11-02 — Repository catch-up and Sam roadmap
 
 - Inspected all 57 published branch heads across Hudson's repository and Sam's
