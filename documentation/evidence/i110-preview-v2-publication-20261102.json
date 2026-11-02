@@ -1,0 +1,20 @@
+{
+  "utc": "2026-11-02T23:54:21.469013+00:00",
+  "authorized_by": "Sam: Publish v2/v2.1 and update PR #16",
+  "commit": "b693dc17cf7a92390406a64f04e4102f76a16a53",
+  "remote_head": "b693dc17cf7a92390406a64f04e4102f76a16a53",
+  "pr_url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/16",
+  "pr_title": "Add I-110 testbed, repaired preview control and portable Isaac replay",
+  "pr_draft": false,
+  "pr_body_verified": true,
+  "branch": "codex/sam-visual-twin",
+  "new_asset_upload": false,
+  "old_release_unchanged": true,
+  "shared_doc_updated": false,
+  "working_tree": "clean",
+  "resolved_approval": "Initial automatic publication rejection required explicit new-payload approval; Sam approved before this execution.",
+  "freeze_audit_sha256": "b6a9e833e6ede3ee53d3daa050020cf87a2fd272d5b177585290b9c29b327266",
+  "reviewed_report_sha256": "0a92894664a186681f9a033e4766af467bcd622eb1bd82b2a43c4b049f5369a9",
+  "report_review": "Clarified 240 m acceptance, retained 120 m failure, zero primary realization mismatches, freeze audit and exact local raw-result paths after generated draft.",
+  "report_url": "https://github.com/samfrausto/hivemind-traffic/blob/codex/sam-visual-twin/documentation/i110-preview-v2-2026-11-02.md"
+}

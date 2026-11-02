@@ -4365,7 +4365,7 @@
       },
       "method": "Start with v2 current native route-local leader request. Also project current nearby vehicles onto reachable same/adjacent paths (v1 graph, limit300m). For same-path forward candidates use v2 continuous following request with projected bumper gap minus2.5m. For adjacent candidates require projected bumper gap>2.5m, and floor their request at0.8*(other_speed-ego_speed), so they can request closing-speed matching but not opening a following gap. Take the minimum candidate/native/cruise request; unchanged measured jerk filter and terminal release. No dwell/latch, future event, role or intent oracle. speedMode31 and native ACC safety stay unchanged. One exact baseline regression; six cases at 240 m and six at 120 m; first primary case repeated before scaling, plus ramp44 and cutin-on primary repeats: 16 bounded simulations. No outcome-driven v2 tuning. This is a combined engineering revision, not a component-causal ablation.",
       "status": "completed development; primary fixture gates pass",
-      "result": "16 matrix runs; exact baseline and all repeats. Primary comfort failures: []; cost failures: [].",
+      "result": "16 matrix runs; exact baseline and all repeats. Primary comfort failures: []; cost failures: []. Published tested controller/source checkpoint b693dc1 and updated PR 16 after explicit new-payload approval; existing ZIP/private car unchanged.",
       "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects. This is an explicitly adaptive development refinement informed by failed v2; not independent confirmation. Adjacent projected positions are conditional and may not represent actual future conflicts. No further outcome-driven retuning within this edition.",
       "next_action": "Freeze new, uninspected verification seeds and merge/cut-in conditions before further tuning; test range sensitivity and realization limits. Keep smooth ACC as the reference baseline.",
       "references": [
@@ -4373,7 +4373,10 @@
         "repo:outputs/i110-preview-v2_1-20261102/predeclared-plan.json",
         "repo:documentation/i110-preview-v2-2026-11-02.md",
         "repo:documentation/evidence/i110-preview-v2-20261102.json",
-        "repo:outputs/i110-preview-v2_1-20261102/analysis-v1/revision-manifest.json"
+        "repo:outputs/i110-preview-v2_1-20261102/analysis-v1/revision-manifest.json",
+        "repo:documentation/evidence/i110-preview-v2-publication-20261102.json",
+        "https://github.com/hudsonkaneko/hivemind-traffic/pull/16",
+        "https://github.com/samfrausto/hivemind-traffic/blob/codex/sam-visual-twin/documentation/i110-preview-v2-2026-11-02.md"
       ],
       "prefixes": [
         "repo:outputs/i110-preview-v2_1-20261102",
@@ -4382,7 +4385,8 @@
         "repo:experiments/configs/i110_preview_v2_1.json",
         "repo:scripts/report_i110_preview_revision.py",
         "repo:documentation/i110-preview-v2-2026-11-02.md",
-        "repo:documentation/evidence/i110-preview-v2-20261102.json"
+        "repo:documentation/evidence/i110-preview-v2-20261102.json",
+        "repo:documentation/evidence/i110-preview-v2-publication-20261102.json"
       ],
       "follow_up_to": [
         "i110-preview-v2-20261102"
@@ -4439,6 +4443,48 @@
           "explanation": "Evidence-backed response to Sam braking/recovery and car-location request; preserves failed first revision.",
           "claim": "V2.1 passes all six primary development acceptance checks.",
           "limits": "Same previously inspected synthetic seed and provisional road; not held-out or physical validation. Current route-local leader observation uses SUMO route context; no event schedule, future trajectory, role or merge-intent oracle. Excluding adjacent vehicles cannot guarantee comfortable response to a sudden cut-in. No communication or learned-policy claim; combined revision does not identify component effects. This is an explicitly adaptive development refinement informed by failed v2; not independent confirmation. Adjacent projected positions are conditional and may not represent actual future conflicts. No further outcome-driven retuning within this edition.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-v2_1-20261102/freeze-audit.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-preview-v2_1-20261102/audit.py",
+          "inputs": [
+            "repo:outputs/i110-preview-v2-20261102/predeclared-plan.json",
+            "repo:outputs/i110-preview-v2_1-20261102/predeclared-plan.json",
+            "repo:outputs/i110-preview-v2-20261102/development-v1/verification.json",
+            "repo:outputs/i110-preview-v2_1-20261102/development-v1/verification.json"
+          ],
+          "explanation": "All 32 matrix runs began after their declaration and match frozen controller/configuration/supervisor sources.",
+          "claim": "All 32 matrix runs began after their declaration and match frozen controller/configuration/supervisor sources.",
+          "limits": "No new simulation, acceptance expansion, main merge or private-asset publication.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-v2_1-20261102/publication-result.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-preview-v2_1-20261102/publish.py",
+          "inputs": [
+            "repo:outputs/i110-preview-v2_1-20261102/pr-body.md",
+            "repo:outputs/i110-preview-v2_1-20261102/freeze-audit.json"
+          ],
+          "explanation": "Explicitly approved b693dc1 and PR16 update verified on GitHub.",
+          "claim": "Explicitly approved b693dc1 and PR16 update verified on GitHub.",
+          "limits": "No new simulation, acceptance expansion, main merge or private-asset publication.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/evidence/i110-preview-v2-publication-20261102.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-preview-v2_1-20261102/publication-record-procedure.md",
+          "inputs": [
+            "repo:outputs/i110-preview-v2_1-20261102/publication-result.json",
+            "repo:outputs/i110-preview-v2_1-20261102/freeze-audit.json",
+            "repo:documentation/i110-preview-v2-2026-11-02.md"
+          ],
+          "explanation": "Codex curated the verified publication record, source audit hash and final report-review hash.",
+          "claim": "Codex curated the verified publication record, source audit hash and final report-review hash.",
+          "limits": "No new simulation, acceptance expansion, main merge or private-asset publication.",
           "lineage_basis": "recorded"
         }
       ]
