@@ -1,5 +1,23 @@
 # Ramp, cut-in and delivered actor: current handoff
 
+## 2 November: preview tested, baseline retained, Isaac comparison available
+
+Read [preview comparison](i110-preview-2026-11-02.md) and
+[team handoff](i110-team-handoff-2026-11-02.md) first. Fifteen frozen simulations
+complete, with an exact baseline regression and exact primary repeats. The 240 m
+preview reduces late-ramp peaks from 48.170/47.196 to 18.698/2.437 m/s³, but fails
+comfort in five of six cases and adds 21.234/31.075% fixed-H boundary time in
+cut-in-off/on. Do not adopt it or hide the adverse control cases. Smooth ACC
+remains the default; native safety authority is unchanged.
+
+Next engineering task: current-path relevance, native ACC realization and
+preview recovery, then a freshly predeclared v2 comparison with full burdens.
+The actual ramp-44 pair is available in Isaac through
+`scripts/open_i110_comparison.cmd`; source poses and separate ledgers remain
+traceable. A portable road/replay ZIP and progress handoff are prepared locally.
+Published head remains b23f24c; the current I-110 work is not uploaded. Shared
+Doc hold remains. All original failures, v02 parity and v04 support gates persist.
+
 ## 2 November continuation: convergence diagnostic complete
 
 Read [convergence and jerk-feasibility](i110-convergence-2026-11-02.md) and

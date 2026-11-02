@@ -16,6 +16,8 @@ def main():
     parser.add_argument('--frames', type=int, default=0, help='0 keeps the GUI open')
     parser.add_argument('--check-controls', action='store_true')
     parser.add_argument('--evidence', type=Path)
+    parser.add_argument('--start-time', type=float, help='Replay seconds; defaults to the scene checkpoint')
+    parser.add_argument('--select-vehicle', help='Stable replay ID to focus at startup')
     args, _ = parser.parse_known_args()
     scene = args.scene.resolve()
     data = json.loads((scene.parent/'recording.json').read_text())
@@ -87,6 +89,13 @@ def main():
             if state['follow']:
                 eye = pos+Gf.Vec3d(-11,-14,8)
                 target = pos+Gf.Vec3d(-1,0,1)
+                if manifest.get('comparison'):
+                    pair=manifest['comparison_pairs'].get(state['selected'])
+                    other=stage.GetPrimAtPath('/World/Vehicles/v_'+pair.encode().hex()) if pair else None
+                    if other:
+                        other_pos=UsdGeom.Xformable(other).ComputeLocalToWorldTransform(state['t']*60).ExtractTranslation()
+                        target=(pos+other_pos)/2+Gf.Vec3d(0,0,1)
+                        eye=target+Gf.Vec3d(0,-150,260)
                 if event_controller:
                     matrix=UsdGeom.Xformable(stage.GetPrimAtPath(selected)).ComputeLocalToWorldTransform(state['t']*60)
                     forward=matrix.TransformDir(Gf.Vec3d(1,0,0)).GetNormalized()
@@ -135,6 +144,7 @@ def main():
                     ui.Button('Overview', clicked_fn=lambda:camera_mode('overview'))
                 ui.Label('Scrub replay seconds (pauses playback)', height=20)
                 slider = ui.FloatSlider(min=0,max=times[-1])
+                slider.model.set_value(args.start_time if args.start_time is not None else manifest.get('initial_replay_time_s',0.))
                 def scrub(model):
                     state['playing']=False
                     seek(model.as_float)
@@ -143,7 +153,8 @@ def main():
                     ui.Label('Playback rate')
                     for rate in (.5,1,2):
                         ui.Button(f'{rate:g}x',clicked_fn=lambda r=rate:state.update(rate=r))
-                combo = ui.ComboBox(0,*manifest['ids'])
+                initial_id=args.select_vehicle or manifest.get('initial_vehicle',manifest['ids'][0])
+                combo = ui.ComboBox(manifest['ids'].index(initial_id),*manifest['ids'])
                 def select(model, item):
                     state['selected']=manifest['ids'][model.get_item_value_model().as_int]
                     context.get_selection().set_selected_prim_paths(['/World/Vehicles/v_'+state['selected'].encode().hex()],True)
@@ -193,6 +204,15 @@ def main():
                 raise RuntimeError('Startup camera/control check failed')
         if args.frames:
             camera_mode('follow')
+        initial_vehicle=args.select_vehicle or manifest.get('initial_vehicle')
+        if initial_vehicle:
+            if initial_vehicle not in manifest['ids']:
+                raise ValueError('Selected replay vehicle is absent from the manifest')
+            state['selected']=initial_vehicle
+        initial_time=args.start_time if args.start_time is not None else manifest.get('initial_replay_time_s')
+        if initial_time is not None:
+            seek(initial_time)
+            camera_mode(manifest.get('initial_camera','follow'))
         def capture_image(name):
             capture=capture_viewport_to_file(viewport,str(evidence/name))
             pending=asyncio.ensure_future(capture.wait_for_result())
@@ -230,12 +250,19 @@ def main():
             frame=frames[max(0,bisect.bisect_right(times,state['t'])-1)]
             vehicle=next((v for v in frame['vehicles'] if v['id']==state['selected']),None)
             details=(f"{vehicle['speed']:.2f} m/s | x {vehicle['x']:.2f}, y {vehicle['y']:.2f} m" if vehicle else 'not present at this source sample')
+            if vehicle and 'acceleration' in vehicle:
+                details+=f" | a {vehicle['acceleration']:.2f} m/s2"
             camera_label = 'FREE CAMERA' if state['free_camera'] else ('FOLLOW' if state['follow'] else 'OVERVIEW')
             status.text=f"{'PLAYING' if state['playing'] else 'PAUSED'} | {camera_label} | {state['t']:.2f} / {times[-1]:.2f} s\n{state['selected']} | {details}\n{len(frame['vehicles'])} present | source time {frame['time']:.2f} s"
             if 'accounting' in frame:
                 ledger=frame['accounting']
                 phase='DRAIN' if frame['time']>data['horizon_s'] else 'PRIMARY WINDOW'
                 status.text+=f"\n{phase} | requested {ledger['requested']} | waiting {ledger['waiting']}\ncompleted {ledger['completed']} | unfinished {ledger['unfinished']} | removed {ledger['removed']}"
+            if 'comparison' in frame:
+                left,right=frame['comparison']['baseline'],frame['comparison']['preview']
+                status.text+=(f"\nBLUE baseline: completed {left['completed']} / {left['requested']} | unfinished {left['unfinished']}"
+                              f"\nGREEN preview: completed {right['completed']} / {right['requested']} | unfinished {right['unfinished']}"
+                              f"\nRun peak jerk: {manifest['baseline_metrics']:.2f} vs {manifest['preview_metrics']:.2f} m/s3")
             if event_controller:
                 restrictions=event_controller.update(state['t'])
                 probe=event_controller.probe_state

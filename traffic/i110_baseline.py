@@ -29,6 +29,7 @@ from traffic.smooth_acc import ComfortConfig, command as smooth_command
 from traffic.i110_policy_interface import LaneGraph, FEATURES, SCHEMA
 from traffic.i110_events import load_event, add_actor, EventAdapter
 from traffic.i110_interactions import InteractionRecorder
+from traffic.i110_preview import PreviewConfig, PreviewController
 
 ROOT = Path(__file__).resolve().parents[1]
 CONTROLLED = tuple(f'agent_{i}' for i in range(4))
@@ -81,11 +82,15 @@ def prepare_demand(output, seed, case='ordinary', agent0_depart=0.):
 
 def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90., wall_budget=90.,
         controller='native_acc', passing='default', comfort_config=None, observe_policy_interface=False,
-        study_id=None, reason=None, event_spec=None, agent0_depart=0., observe_interactions=False):
-    if controller not in {'native_acc','smooth_acc','follow_cap_acc'} or passing not in {'default','parallel'}:
+        study_id=None, reason=None, event_spec=None, agent0_depart=0., observe_interactions=False,
+        preview_range=240.):
+    if controller not in {'native_acc','smooth_acc','follow_cap_acc','preview_acc'} or passing not in {'default','parallel'}:
         raise ValueError('Unknown controller or passing convention')
     comfort=ComfortConfig(**(comfort_config or {}))
-    filtered_controller = controller in {'smooth_acc','follow_cap_acc'}
+    filtered_controller = controller in {'smooth_acc','follow_cap_acc','preview_acc'}
+    preview = PreviewController(network,PreviewConfig(range_m=preview_range)) if controller=='preview_acc' else None
+    if preview:
+        observe_policy_interface=True
     if (not math.isfinite(agent0_depart) or not 0<=agent0_depart<=50
             or agent0_depart>=horizon or abs(agent0_depart*10-round(agent0_depart*10))>1e-7):
         raise ValueError('Invalid agent_0 requested departure')
@@ -120,6 +125,7 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
     source_names = ['traffic/i110_baseline.py','traffic/trip_accounting.py','traffic/sumo_backend.py',
                     'scripts/build_i110_sumo.py','scenarios/i110/sumo-road-profiles.json','traffic/smooth_acc.py',
                     'traffic/i110_policy_interface.py','traffic/i110_events.py','traffic/i110_interactions.py']
+    source_names += ['traffic/i110_preview.py','traffic/i110_convergence.py']
     for name in source_names:
         dest=output/'source'/name
         dest.parent.mkdir(parents=True,exist_ok=True)
@@ -142,6 +148,8 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
         acceptance='No collision/teleport/removal; all requested trips complete within bounded drain; controlled vehicles retain physical through lane',
         primary_metric='Boundary-inclusive time through H; drain reported separately',
         comparison_status='No learned arm in this runner; original three-lane actor contract requires semantic review before graph transfer')
+    if preview:
+        protocol['preview_config']=asdict(preview.config)
     if observe_interactions:
         protocol['acceptance'] += '; ramp exposure and comfort reported separately; see interaction-summary and study supervisor'
     write_json(output/'resolved-config.json',protocol)
@@ -170,6 +178,7 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
     pending={};override_count=0;command_count=0;jerks=[];jerk_exceedances=0
     graph=LaneGraph(network) if observe_policy_interface else None
     vehicle_meta={};observation_count=0;unknown_context=0
+    preview_counts=dict(commands=0,active=0,unknown=0,terminal_release=0,release_conflicts=0)
     interaction_recorder=InteractionRecorder(output/'interactions.jsonl') if observe_interactions else None
     deadline=time.monotonic()+wall_budget
     try:
@@ -266,7 +275,18 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
                     conn.vehicle.setSpeed('brake_leader',target)
                     event_records.append(dict(time=t,vehicle='brake_leader',requested_speed_m_s=target))
                 pending={}
-                if filtered_controller:
+                if preview:
+                    for vid in sorted(active & set(CONTROLLED)):
+                        decision=preview.observe(vid,result.states,t)
+                        pending[vid]=smooth_command(conn,vid,DT,comfort,
+                            requested_ceiling=decision['requested_ceiling_m_s2'],terminal_release=True)
+                        pending[vid]['preview']=decision
+                        preview_counts['commands']+=1
+                        preview_counts['active']+=decision['active']
+                        preview_counts['unknown']+=not decision['context_known']
+                        preview_counts['terminal_release']+=pending[vid]['terminal_release']['active']
+                        preview_counts['release_conflicts']+=pending[vid]['terminal_release']['existing_state_conflict']
+                elif filtered_controller:
                     pending={vid:smooth_command(conn,vid,DT,comfort,follow_cap=controller=='follow_cap_acc')
                              for vid in sorted(active & set(CONTROLLED))}
                 result=backend.step({})
@@ -315,6 +335,8 @@ def run(network, output, *, seed=730101, case='ordinary', horizon=60., drain=90.
         report['event_gate_passed'] = adapter.summary()['event_gate_passed'] if adapter else None
         report['stress_event_enabled'] = bool(event and event['enabled'])
         report['interaction_observed'] = interaction_recorder.summary()['interaction_observed'] if interaction_recorder else None
+        if preview:
+            report['preview_counts']=preview_counts
         write_json(output/'metrics.json',report)
         write_json(output/'event-actions.json',event_records)
         assert all(sha(output/n)==digest for n,digest in manifest['inputs'].items())
@@ -335,7 +357,8 @@ if __name__=='__main__':
     p.add_argument('--case',choices=['ordinary','braking_leader','stopped_leader'],default='ordinary')
     p.add_argument('--horizon',type=float,default=60.)
     p.add_argument('--drain',type=float,default=90.)
-    p.add_argument('--controller',choices=['native_acc','smooth_acc','follow_cap_acc'],default='native_acc')
+    p.add_argument('--controller',choices=['native_acc','smooth_acc','follow_cap_acc','preview_acc'],default='native_acc')
+    p.add_argument('--preview-range',type=float,default=240.)
     p.add_argument('--passing',choices=['default','parallel'],default='default')
     p.add_argument('--observe-policy-interface',action='store_true')
     p.add_argument('--study-id')

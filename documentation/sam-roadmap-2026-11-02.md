@@ -51,6 +51,15 @@ research before a particular deadline.
 
 ## First concrete engineering task
 
+**Preview implementation checkpoint, 2 November:** Sam authorized the controller
+and matched test. [Preview v1](i110-preview-2026-11-02.md) now has 15 completed
+runs, exact baseline/repeat checks and a paired Isaac replay. It is rejected as
+the new baseline: five primary comfort failures and 21–31% cut-in cohort cost.
+Next is path relevance and native-ACC/recovery diagnosis before predeclaring v2.
+The [portable team handoff](i110-team-handoff-2026-11-02.md) is prepared locally;
+GitHub still has the older b23f24c feature head. Corridor qualification and v04
+delivery/support remain independent work, not blocked by this failed candidate.
+
 **Continuation checkpoint, 2 November:** the offline convergence and stopping
 diagnostic is now complete. See [results](i110-convergence-2026-11-02.md).
 At 120 m, the two late ramp targets are exposed 0.6/1.8 s before leader entry,

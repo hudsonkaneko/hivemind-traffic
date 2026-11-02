@@ -3882,6 +3882,364 @@
           "lineage_basis": "recorded"
         }
       ]
+    },
+    {
+      "id": "i110-preview-20261102",
+      "title": "I-110 preview control, baseline comparison and Isaac replay handoff",
+      "domain": "Traffic control and portable visual integration",
+      "question": "Does a current-state preview controller reduce late-ramp/cut-in jerk at an acceptable complete-cohort cost, and can Sam and teammates inspect the actual runs on the road?",
+      "why_now": "The offline convergence diagnostic found insufficient or fragile 120 m braking reserve; Sam explicitly requested implementation, comparison and an Isaac view.",
+      "trigger": {
+        "text": "Sam requested continuing with the preview controller, testing against baseline, seeing it in Isaac Sim, and checking GitHub road/progress availability.",
+        "sources": [
+          "repo:outputs/i110-preview-20261102/predeclared-plan.json",
+          "repo:documentation/i110-convergence-2026-11-02.md"
+        ]
+      },
+      "method": "Every controlled car uses current reachable same/adjacent-path forward projections. Latch preview braking when any known h2 envelope margin falls below 10 m. While latched cap the native ACC request at -2.5 m/s2; release after all currently assessed margins exceed 20 m for 1 s (no candidates also permits release if ego context is known). Unknown initial response profiles do not become clear: retain an existing latch; baseline safety remains active. No intent, route label, actor name or event schedule is an input. The same measured-acceleration jerk filter applies; a discrete-speed release guard prevents continuing braking past a recoverable near-stop state. Report guard conflicts when existing native acceleration already makes the jerk-limited release infeasible. Six cases at each of two ranges, plus two primary repeats and one unchanged-baseline regression: 15 bounded simulations. Preserve all failed cases and forbid outcome-driven parameter tuning within v1.",
+      "status": "completed preview comparison; candidate rejected, portable replay prepared",
+      "result": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+      "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+      "next_action": "Investigate current-path relevance and native ACC realization/recovery before predeclaring a new candidate. Preserve these failed v1 results and the original baseline.",
+      "references": [
+        "repo:experiments/configs/i110_preview_v1.json",
+        "repo:outputs/i110-preview-20261102/predeclared-plan.json",
+        "repo:documentation/i110-preview-2026-11-02.md",
+        "repo:documentation/i110-team-handoff-2026-11-02.md",
+        "repo:documentation/evidence/i110-preview-20261102.json",
+        "repo:outputs/i110-preview-20261102/development-v1/verification.json",
+        "repo:outputs/i110-preview-20261102/viewer-headless-v1/runtime.json",
+        "repo:outputs/i110-preview-20261102/gui-status.json",
+        "repo:outputs/i110-preview-20261102/github-status.json",
+        "repo:outputs/i110-preview-20261102/shared-doc-read.json",
+        "repo:outputs/i110-preview-20261102/portable-check.json",
+        "repo:outputs/i110-preview-20261102/team-package-v1-archive.json"
+      ],
+      "prefixes": [
+        "repo:outputs/i110-preview-20261102",
+        "repo:traffic/i110_preview.py",
+        "repo:scripts/verify_i110_preview.py",
+        "repo:scripts/report_i110_preview.py",
+        "repo:scripts/build_i110_comparison.py",
+        "repo:tests/test_i110_preview.py",
+        "repo:tests/test_i110_comparison.py",
+        "repo:experiments/configs/i110_preview_v1.json",
+        "repo:documentation/i110-preview-2026-11-02.md",
+        "repo:documentation/i110-team-handoff-2026-11-02.md",
+        "repo:documentation/evidence/i110-preview-20261102.json",
+        "repo:scripts/open_i110_comparison.cmd",
+        "repo:scripts/package_i110_comparison.py"
+      ],
+      "follow_up_to": [
+        "i110-convergence-20261102"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/i110-preview-20261102/analysis-v1/summary.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_preview.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/development-v1/verification.json"
+          ],
+          "explanation": "All twelve paired treatments, failures, peak samples and complete primary/drain burdens.",
+          "claim": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/analysis-v1/results.md",
+          "kind": "result/report",
+          "generator": "repo:scripts/report_i110_preview.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/development-v1/verification.json"
+          ],
+          "explanation": "All twelve paired treatments, failures, peak samples and complete primary/drain burdens.",
+          "claim": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/comparison-v2/world.usda",
+          "kind": "scene/asset",
+          "generator": "repo:scripts/build_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/manifest.json",
+            "repo:outputs/i110-preview-20261102/development-v1/ramp-44-r240/manifest.json",
+            "repo:outputs/i110-refinement-20261027/scene-v07/manifest.json"
+          ],
+          "explanation": "Paired actual traffic traces on translated copies of unchanged road layers, using procedural cars.",
+          "claim": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/comparison-v2/recording.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/build_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/manifest.json",
+            "repo:outputs/i110-preview-20261102/development-v1/ramp-44-r240/manifest.json",
+            "repo:outputs/i110-refinement-20261027/scene-v07/manifest.json"
+          ],
+          "explanation": "Paired actual traffic traces on translated copies of unchanged road layers, using procedural cars.",
+          "claim": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/build_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-ramp-cutin-20261029/development-v1/ramp-44/manifest.json",
+            "repo:outputs/i110-preview-20261102/development-v1/ramp-44-r240/manifest.json",
+            "repo:outputs/i110-refinement-20261027/scene-v07/manifest.json"
+          ],
+          "explanation": "Paired actual traffic traces on translated copies of unchanged road layers, using procedural cars.",
+          "claim": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/viewer-headless-v1/follow.png",
+          "kind": "graphic",
+          "generator": "repo:scripts/view_visual_twin.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json"
+          ],
+          "explanation": "Native Isaac render/control check of the paired replay; no physical driving claim.",
+          "claim": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/viewer-headless-v1/overview.png",
+          "kind": "graphic",
+          "generator": "repo:scripts/view_visual_twin.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json"
+          ],
+          "explanation": "Native Isaac render/control check of the paired replay; no physical driving claim.",
+          "claim": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/viewer-headless-v1/runtime.json",
+          "kind": "result/report",
+          "generator": "repo:scripts/view_visual_twin.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json"
+          ],
+          "explanation": "Native Isaac render/control check of the paired replay; no physical driving claim.",
+          "claim": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/i110-preview-2026-11-02.md",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-preview-20261102/close-records.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/analysis-v1/summary.json",
+            "repo:outputs/i110-preview-20261102/viewer-headless-v1/runtime.json"
+          ],
+          "explanation": "Generated comparison report and attributed current handoff, including failure and publication status.",
+          "claim": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/i110-team-handoff-2026-11-02.md",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-preview-20261102/close-records.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/analysis-v1/summary.json",
+            "repo:outputs/i110-preview-20261102/viewer-headless-v1/runtime.json"
+          ],
+          "explanation": "Generated comparison report and attributed current handoff, including failure and publication status.",
+          "claim": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/evidence/i110-preview-20261102.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-preview-20261102/close-records.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/analysis-v1/summary.json",
+            "repo:outputs/i110-preview-20261102/viewer-headless-v1/runtime.json"
+          ],
+          "explanation": "Generated comparison report and attributed current handoff, including failure and publication status.",
+          "claim": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/comparison-v2/motion.usda",
+          "kind": "scene/asset",
+          "generator": "repo:scripts/build_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json"
+          ],
+          "explanation": "Paired motion, reusable illustrative cars and layered static-road composition.",
+          "claim": "Source positions preserved under explicit display translations; no physical driving claim.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/comparison-v2/static.usda",
+          "kind": "scene/asset",
+          "generator": "repo:scripts/build_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json"
+          ],
+          "explanation": "Paired motion, reusable illustrative cars and layered static-road composition.",
+          "claim": "Source positions preserved under explicit display translations; no physical driving claim.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/comparison-v2/assets/baseline.usda",
+          "kind": "scene/asset",
+          "generator": "repo:scripts/build_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json"
+          ],
+          "explanation": "Paired motion, reusable illustrative cars and layered static-road composition.",
+          "claim": "Source positions preserved under explicit display translations; no physical driving claim.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/comparison-v2/assets/preview.usda",
+          "kind": "scene/asset",
+          "generator": "repo:scripts/build_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json"
+          ],
+          "explanation": "Paired motion, reusable illustrative cars and layered static-road composition.",
+          "claim": "Source positions preserved under explicit display translations; no physical driving claim.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/comparison-v2/assets/human.usda",
+          "kind": "scene/asset",
+          "generator": "repo:scripts/build_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json"
+          ],
+          "explanation": "Paired motion, reusable illustrative cars and layered static-road composition.",
+          "claim": "Source positions preserved under explicit display translations; no physical driving claim.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/comparison-v2/assets/ramp.usda",
+          "kind": "scene/asset",
+          "generator": "repo:scripts/build_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json"
+          ],
+          "explanation": "Paired motion, reusable illustrative cars and layered static-road composition.",
+          "claim": "Source positions preserved under explicit display translations; no physical driving claim.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/comparison-v2/road/world.usda",
+          "kind": "scene/asset",
+          "generator": "repo:scripts/build_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json"
+          ],
+          "explanation": "Paired motion, reusable illustrative cars and layered static-road composition.",
+          "claim": "Source positions preserved under explicit display translations; no physical driving claim.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/comparison-v2/road/provenance.json",
+          "kind": "scene/asset",
+          "generator": "repo:scripts/build_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json"
+          ],
+          "explanation": "Paired motion, reusable illustrative cars and layered static-road composition.",
+          "claim": "Source positions preserved under explicit display translations; no physical driving claim.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/team-package-v1.zip",
+          "kind": "delivery artifact",
+          "generator": "repo:scripts/package_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json",
+            "repo:documentation/i110-preview-2026-11-02.md",
+            "repo:documentation/i110-team-handoff-2026-11-02.md"
+          ],
+          "explanation": "Portable local road/replay ZIP and exact hashes, excluding private vehicle/raw lidar/imagery.",
+          "claim": "41 packaged files, all composed dependencies contained; prepared locally, not uploaded.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/team-package-v1/package-manifest.json",
+          "kind": "delivery artifact",
+          "generator": "repo:scripts/package_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json",
+            "repo:documentation/i110-preview-2026-11-02.md",
+            "repo:documentation/i110-team-handoff-2026-11-02.md"
+          ],
+          "explanation": "Portable local road/replay ZIP and exact hashes, excluding private vehicle/raw lidar/imagery.",
+          "claim": "41 packaged files, all composed dependencies contained; prepared locally, not uploaded.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/team-package-v1-archive.json",
+          "kind": "delivery artifact",
+          "generator": "repo:scripts/package_i110_comparison.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json",
+            "repo:documentation/i110-preview-2026-11-02.md",
+            "repo:documentation/i110-team-handoff-2026-11-02.md"
+          ],
+          "explanation": "Portable local road/replay ZIP and exact hashes, excluding private vehicle/raw lidar/imagery.",
+          "claim": "41 packaged files, all composed dependencies contained; prepared locally, not uploaded.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/portable-check.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-preview-20261102/portable-check.json",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/team-package-v1-archive.json",
+            "repo:outputs/i110-preview-20261102/team-package-v1/package-manifest.json"
+          ],
+          "explanation": "One-off Python ZIP extraction and relocated-stage audit; the exact method is summarized in the result method field. It independently checked every packaged hash and dependency.",
+          "claim": "40 content hashes and 11 dependency references verified; zero composition errors.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/gui-status.json",
+          "kind": "result/report",
+          "generator": "repo:documentation/i110-preview-2026-11-02.md",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/comparison-v2/manifest.json",
+            "repo:outputs/i110-preview-20261102/viewer-headless-v1/runtime.json"
+          ],
+          "explanation": "Codex recorded the desktop-window observation and retained launch attempts; controls left to Sam after user input.",
+          "claim": "Interactive Isaac comparison window observed; active GUI is not a completed timing run.",
+          "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        }
+      ]
     }
   ]
 }

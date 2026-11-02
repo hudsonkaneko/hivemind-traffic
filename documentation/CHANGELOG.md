@@ -1,5 +1,21 @@
 # Change log
 
+## 2026-11-02 — Preview controller comparison and Isaac road handoff
+
+- Implemented current-state preview braking with fixed reserve/hysteresis and
+  terminal release; retained native SUMO safety and the original smooth-ACC default.
+  Baseline trace regression is exact. Fifteen declared runs complete; primary
+  repeats match. Five of six primary cases fail comfort and both cut-in cases
+  exceed the 5% complete-cohort cost screen. Preview v1 is not adopted.
+- Built a paired baseline/preview Isaac replay with the current road, exact
+  recorded positions and explicit reconstructed attitudes. 95,920 pose/lifecycle
+  checks, 240-frame native rendering/control checks, and 53 targeted CPU tests pass.
+  GUI opened on the desktop; source road layers remain unchanged.
+- Prepared a portable road/replay handoff using procedural cars, excluding the
+  private supplied car and raw imagery/lidar. Published feature head still
+  b23f24c with no I-110 paths. Added [comparison](i110-preview-2026-11-02.md) and
+  [team handoff](i110-team-handoff-2026-11-02.md); no upload or shared Doc write.
+
 ## 2026-11-02 — Incoming-path convergence and jerk-feasibility
 
 - Added offline current-state incoming-path projection and an analytic stopping
