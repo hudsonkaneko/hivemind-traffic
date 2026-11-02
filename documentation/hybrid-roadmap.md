@@ -1,5 +1,14 @@
 # Active roadmap: physical research cars, economical background traffic
 
+2 November review: [repository catch-up](repository-review-2026-11-02.md) and
+[Sam's proposed next-work sequence](sam-roadmap-2026-11-02.md). Hudson's v04r2
+passing actor now supersedes v02 as the newest reported accepted SUMO candidate;
+its 81-field/lane-action contract still needs a separate I-110 review. Sam's
+next contribution is the qualified I-110 integration/evaluation testbed, with
+ordinary traffic/comfort and evidence qualification first. Existing v02 and
+comfort failures remain. Perception training is prepared but disabled. This
+review establishes no team assignment, new training authority or empirical gate.
+
 29 October continuation: [anticipation and semantic transfer review](i110-anticipation-transfer-2026-10-29.md).
 Six retained development traces support current-only shadow diagnostics. Broader
 adjacent margins warn before the cut-in but extensively in controls; neither

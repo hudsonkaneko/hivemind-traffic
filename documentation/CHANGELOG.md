@@ -1,5 +1,18 @@
 # Change log
 
+## 2026-11-02 — Repository catch-up and Sam roadmap
+
+- Inspected all 57 published branch heads across Hudson's repository and Sam's
+  fork, all 34 upstream PRs, complete release lists and 97 CI runs. Explicit
+  all-head fetch recovered five branches missed by the main-only fetch rule.
+- Verified all 23 v04r2 source hashes/config identity and recomputed headline
+  committed per-seed metrics. Accepted passing is scoped to the original SUMO
+  task; peak jerk remains 42.0074 m/s³ and no I-110 transfer is established.
+- Reconciled fusion, frozen segmentation and the prepared-but-disabled six-class
+  training pipeline. Added [review](repository-review-2026-11-02.md) and
+  [Sam roadmap](sam-roadmap-2026-11-02.md), with evidence and local continuity.
+  No simulation, training, model load, merge, push or shared-document edit.
+
 ## 2026-10-29 — Current-state anticipation and semantic transfer review
 
 - Added pure current-state shadow margins, frozen six-case development replay

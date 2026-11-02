@@ -1,5 +1,24 @@
 # Ramp, cut-in and delivered actor: current handoff
 
+## 2 November repository review supersedes the actor-next-action context
+
+Read the [fresh repository audit](repository-review-2026-11-02.md) and
+[Sam roadmap](sam-roadmap-2026-11-02.md) before resuming. All 57 published branch
+heads were inventoried; the usual origin fetch only tracks main, and five newer
+Hudson branches required an explicit all-head fetch. V04r2 now reports accepted
+three-lane SUMO passing, with 81 observations and acceleration/lane actions.
+Its 23 source hashes and published metric arithmetic were checked here; its
+weights were not delivered or executed. The accepted update is 175, not latest.
+Original v02 parity, I-110 comfort and transfer remain separate open gates.
+
+The prepared six-class perception pipeline is untrained/disabled, and sensed
+driving/physical highway transfer remain unaccepted. Sam's current public branch
+still omits the 11 implementation commits through e8cdbee. Prepare a truthful
+current handoff, then current-state ramp-convergence/jerk-feasibility work and
+parallel corridor evidence qualification. Do not repeat the completed v02
+evaluation or treat v04 as a drop-in graph actor. No training, merge, push,
+teammate message or shared Doc write occurred in this review.
+
 ## Latest continuation: anticipation and semantic review completed
 
 The new-chat continuation completed the next two bounded review tasks. Read

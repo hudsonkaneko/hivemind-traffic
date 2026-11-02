@@ -3500,6 +3500,105 @@
           "lineage_basis": "recorded"
         }
       ]
+    },
+    {
+      "id": "repo-review-20261102",
+      "title": "November repository catch-up and Sam roadmap",
+      "domain": "Repository review and research planning",
+      "question": "What has Hudson actually published across the team repositories, and what should Sam do next?",
+      "why_now": "Fresh Hudson work may supersede the October 29 integration checkpoint.",
+      "trigger": {
+        "text": "Sam on 2 November: check everything in the repos, get up to speed with Hudson, and roadmap Sam's next work.",
+        "sources": [
+          "repo:outputs/repo-review-20261102/review-plan.json"
+        ]
+      },
+      "method": "Read-only remote inventory and fetch without merge/prune; inspect all heads and change history, PR/release/CI records, latest roadmap/evidence and integration contracts; verify important claims against committed artifacts and distinguish reports from reruns.",
+      "status": "completed read-only review and proposed roadmap",
+      "result": "57 API/Git branch heads matched; 23 v04 source hashes/config verified; headline metrics recomputed. New v04 passing and perception milestones reviewed; transfer, comfort, sensor-driven control and matched communication benefit remain open.",
+      "limits": "Published sources/compact records reviewed and arithmetic checked, not independently rerun actor, raw native datasets or all historical code. No inference/training/merge/push/message/shared write. No new team assignment or scientific gate closure.",
+      "next_action": "Sam: shared qualified I-110 integration/evaluation testbed; current handoff, current-state convergence/comfort and parallel corridor evidence, v04 handoff/support gate, aligned replay, then frozen matched research comparison.",
+      "references": [
+        "repo:outputs/repo-review-20261102/review-plan.json",
+        "repo:documentation/continuation-2026-10-29.md",
+        "repo:documentation/repository-review-2026-11-02.md",
+        "repo:documentation/sam-roadmap-2026-11-02.md",
+        "repo:documentation/evidence/repo-review-20261102.json",
+        "repo:outputs/repo-review-20261102/consistency-review-v2.json",
+        "https://github.com/hudsonkaneko/hivemind-traffic/pull/30",
+        "https://github.com/hudsonkaneko/hivemind-traffic/pull/34"
+      ],
+      "prefixes": [
+        "repo:outputs/repo-review-20261102",
+        "repo:documentation/repository-review-2026-11-02.md",
+        "repo:documentation/sam-roadmap-2026-11-02.md",
+        "repo:documentation/evidence/repo-review-20261102.json"
+      ],
+      "follow_up_to": [
+        "i110-anticipation-shadow-20261029"
+      ],
+      "artifacts": [
+        {
+          "path": "repo:outputs/repo-review-20261102/consistency-review-v2.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/repo-review-20261102/verify-records.py",
+          "inputs": [
+            "repo:outputs/repo-review-20261102/all-published-branches.json",
+            "repo:outputs/repo-review-20261102/latest-source/documentation/evidence/sumo-mappo-v4-stability/summary.json",
+            "repo:outputs/repo-review-20261102/latest-source/documentation/evidence/sumo-mappo-v4-stability/held-out-metrics.csv",
+            "repo:outputs/repo-review-20261102/latest-source/documentation/evidence/sumo-mappo-v4-stability/held-out-learned-evaluation.json"
+          ],
+          "explanation": "Recomputed committed metrics, matched source/config identity and branch-head checks.",
+          "claim": "57 API/Git branch heads matched; 23 v04 source hashes/config verified; headline metrics recomputed. New v04 passing and perception milestones reviewed; transfer, comfort, sensor-driven control and matched communication benefit remain open.",
+          "limits": "Published sources/compact records reviewed and arithmetic checked, not independently rerun actor, raw native datasets or all historical code. No inference/training/merge/push/message/shared write. No new team assignment or scientific gate closure.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/evidence/repo-review-20261102.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/repo-review-20261102/close-records.py",
+          "inputs": [
+            "repo:outputs/repo-review-20261102/consistency-review-v2.json",
+            "repo:outputs/repo-review-20261102/api/hudsonkaneko-pulls.json",
+            "repo:outputs/repo-review-20261102/api/hudsonkaneko-actions-all.json",
+            "repo:outputs/repo-review-20261102/shared-doc-read.json",
+            "repo:outputs/repo-review-20261102/engineering-guide-read.json"
+          ],
+          "explanation": "Compact review counts, current result evidence and proposed disposition.",
+          "claim": "57 API/Git branch heads matched; 23 v04 source hashes/config verified; headline metrics recomputed. New v04 passing and perception milestones reviewed; transfer, comfort, sensor-driven control and matched communication benefit remain open.",
+          "limits": "Published sources/compact records reviewed and arithmetic checked, not independently rerun actor, raw native datasets or all historical code. No inference/training/merge/push/message/shared write. No new team assignment or scientific gate closure.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/repository-review-2026-11-02.md",
+          "kind": "result/report",
+          "generator": "repo:documentation/repository-review-2026-11-02.md",
+          "inputs": [
+            "repo:documentation/evidence/repo-review-20261102.json",
+            "repo:outputs/repo-review-20261102/source-inventory.json",
+            "repo:outputs/repo-review-20261102/latest-source-inventory.json",
+            "repo:outputs/repo-review-20261102/api-followup-access.json"
+          ],
+          "explanation": "Codex authored review using the What was checked and Review evidence procedures; upstream reports remain distinguished from new verification.",
+          "claim": "57 API/Git branch heads matched; 23 v04 source hashes/config verified; headline metrics recomputed. New v04 passing and perception milestones reviewed; transfer, comfort, sensor-driven control and matched communication benefit remain open.",
+          "limits": "Published sources/compact records reviewed and arithmetic checked, not independently rerun actor, raw native datasets or all historical code. No inference/training/merge/push/message/shared write. No new team assignment or scientific gate closure.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/sam-roadmap-2026-11-02.md",
+          "kind": "result/report",
+          "generator": "repo:documentation/repository-review-2026-11-02.md",
+          "inputs": [
+            "repo:documentation/repository-review-2026-11-02.md",
+            "repo:documentation/evidence/repo-review-20261102.json",
+            "repo:documentation/i110-anticipation-transfer-2026-10-29.md"
+          ],
+          "explanation": "Proposed Sam task order, exit checks and dependencies based on actual published progress and local blockers.",
+          "claim": "Sam: shared qualified I-110 integration/evaluation testbed; current handoff, current-state convergence/comfort and parallel corridor evidence, v04 handoff/support gate, aligned replay, then frozen matched research comparison.",
+          "limits": "Published sources/compact records reviewed and arithmetic checked, not independently rerun actor, raw native datasets or all historical code. No inference/training/merge/push/message/shared write. No new team assignment or scientific gate closure.",
+          "lineage_basis": "recorded"
+        }
+      ]
     }
   ]
 }
