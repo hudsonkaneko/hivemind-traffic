@@ -1,5 +1,13 @@
 # Change log
 
+## 2026-11-02 — Approved GitHub road/replay publication
+
+- Published tested checkpoint `1c9c27d` to Sam's feature branch, updated [PR #16](https://github.com/hudsonkaneko/hivemind-traffic/pull/16),
+  and uploaded the [portable road/replay ZIP](https://github.com/samfrausto/hivemind-traffic/releases/tag/sam-i110-handoff-20261102-v1) as a versioned prerelease.
+- Verified remote commit, saved PR title/body/review status, asset size and SHA256.
+  Follow-up documentation records these links; the release remains pinned to the
+  tested source checkpoint. No main merge or shared Google Doc write occurred.
+
 ## 2026-11-02 — Preview controller comparison and Isaac road handoff
 
 - Implemented current-state preview braking with fixed reserve/hysteresis and

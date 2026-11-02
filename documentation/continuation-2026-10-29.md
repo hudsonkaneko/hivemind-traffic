@@ -1,5 +1,13 @@
 # Ramp, cut-in and delivered actor: current handoff
 
+## Publication follow-up — 2 November 2026
+
+Sam approved publishing the prepared work. Checkpoint `1c9c27d`, the updated
+[PR #16](https://github.com/hudsonkaneko/hivemind-traffic/pull/16), and [portable road/replay release](https://github.com/samfrausto/hivemind-traffic/releases/tag/sam-i110-handoff-20261102-v1) are published and
+verified. See [current team handoff](i110-team-handoff-2026-11-02.md). Earlier
+local-only statements remain dated history. Preview v1 is still rejected;
+next work is relevance/native-ACC/recovery before a predeclared v2 comparison.
+
 ## 2 November: preview tested, baseline retained, Isaac comparison available
 
 Read [preview comparison](i110-preview-2026-11-02.md) and

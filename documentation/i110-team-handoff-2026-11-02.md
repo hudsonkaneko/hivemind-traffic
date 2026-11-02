@@ -1,7 +1,28 @@
 # I-110 team handoff — 2 November 2026
 
-Prepared by Codex for Sam. This is a local reviewable handoff; publishing status is
-recorded below. It introduces no permanent team assignments or new scientific acceptance.
+## Published handoff — 2 November 2026
+
+Sam approved publication after reviewing the prepared package. Source checkpoint
+`1c9c27d` is now on `samfrausto/hivemind-traffic`, branch
+`codex/sam-visual-twin`. [PR #16](https://github.com/hudsonkaneko/hivemind-traffic/pull/16) now describes the I-110 work and its
+actual acceptance failures; its existing open/non-draft review status is preserved.
+The branch has not been merged into main.
+
+Download the [portable road and paired Isaac replay](https://github.com/samfrausto/hivemind-traffic/releases/tag/sam-i110-handoff-20261102-v1)
+(`team-package-v1.zip`, 8,024,356 bytes). GitHub's asset SHA256 matches the verified
+local ZIP: `ed0052aed1bfc6c4819c9f7049eb74fa713e17c29a1842cffca8bfe624c9347f`.
+Extract it, set `HIVEMIND_ISAAC_PYTHON` to your existing Isaac Sim Python, and run
+`Open Comparison.cmd`; the road alone is `scene/road/world.usda`.
+The immutable ZIP contains the preparation-time progress notes. This repository
+handoff and release page provide the subsequent publication status.
+
+Preview v1 remains rejected; smooth ACC remains the baseline. The next engineering
+task is current-path relevance and native ACC realization/recovery before a fresh
+predeclared v2 comparison. Shared Google Doc writes remain on hold.
+Verification: [publication record](evidence/i110-publication-20261102.json).
+
+Prepared by Codex for Sam. This handoff introduces no permanent team assignments
+or new scientific acceptance.
 
 ## Current entry points
 
@@ -52,7 +73,7 @@ geometry/traffic qualification and the v04 handoff separate. Do not feed the
 three-lane actor an invented I-110 observation mapping or begin training without
 the agreed contract and budget.
 
-## What is actually published
+## Preparation checkpoint (historical, before publication)
 
 Verified remote feature head: `b23f24c07711080045c65f41c5254ab90df5929a`.
 It has no I-110 files; PR 16 still reflects the older I-80/exiD work. Thirteen

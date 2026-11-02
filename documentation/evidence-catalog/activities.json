@@ -3897,8 +3897,8 @@
         ]
       },
       "method": "Every controlled car uses current reachable same/adjacent-path forward projections. Latch preview braking when any known h2 envelope margin falls below 10 m. While latched cap the native ACC request at -2.5 m/s2; release after all currently assessed margins exceed 20 m for 1 s (no candidates also permits release if ego context is known). Unknown initial response profiles do not become clear: retain an existing latch; baseline safety remains active. No intent, route label, actor name or event schedule is an input. The same measured-acceleration jerk filter applies; a discrete-speed release guard prevents continuing braking past a recoverable near-stop state. Report guard conflicts when existing native acceleration already makes the jerk-limited release infeasible. Six cases at each of two ranges, plus two primary repeats and one unchanged-baseline regression: 15 bounded simulations. Preserve all failed cases and forbid outcome-driven parameter tuning within v1.",
-      "status": "completed preview comparison; candidate rejected, portable replay prepared",
-      "result": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance.",
+      "status": "completed preview comparison; candidate rejected; road/replay handoff published with Sam approval",
+      "result": "Preview lowers the hardest ramp peaks but creates new failures in previously smooth cases and large cut-in cohort/external-wait costs. Keep the smooth-ACC baseline; no comfort acceptance. After explicit Sam approval, source checkpoint 1c9c27d, PR 16 update and immutable road/replay prerelease were published; remote head, PR fields and asset SHA256 verified.",
       "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
       "next_action": "Investigate current-path relevance and native ACC realization/recovery before predeclaring a new candidate. Preserve these failed v1 results and the original baseline.",
       "references": [
@@ -3913,7 +3913,11 @@
         "repo:outputs/i110-preview-20261102/github-status.json",
         "repo:outputs/i110-preview-20261102/shared-doc-read.json",
         "repo:outputs/i110-preview-20261102/portable-check.json",
-        "repo:outputs/i110-preview-20261102/team-package-v1-archive.json"
+        "repo:outputs/i110-preview-20261102/team-package-v1-archive.json",
+        "repo:documentation/evidence/i110-publication-20261102.json",
+        "repo:outputs/i110-preview-20261102/publication-result.json",
+        "https://github.com/samfrausto/hivemind-traffic/releases/tag/sam-i110-handoff-20261102-v1",
+        "https://github.com/hudsonkaneko/hivemind-traffic/pull/16"
       ],
       "prefixes": [
         "repo:outputs/i110-preview-20261102",
@@ -3928,7 +3932,8 @@
         "repo:documentation/i110-team-handoff-2026-11-02.md",
         "repo:documentation/evidence/i110-preview-20261102.json",
         "repo:scripts/open_i110_comparison.cmd",
-        "repo:scripts/package_i110_comparison.py"
+        "repo:scripts/package_i110_comparison.py",
+        "repo:documentation/evidence/i110-publication-20261102.json"
       ],
       "follow_up_to": [
         "i110-convergence-20261102"
@@ -4237,6 +4242,33 @@
           "explanation": "Codex recorded the desktop-window observation and retained launch attempts; controls left to Sam after user input.",
           "claim": "Interactive Isaac comparison window observed; active GUI is not a completed timing run.",
           "limits": "Previously inspected synthetic seed; provisional road/demand; exact simulator state, 240 m is an information advantage. Unknown merge intent and other-motion assumptions. No learned policy/training, empirical safety, physical driving or communication benefit.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:outputs/i110-preview-20261102/publication-result.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-preview-20261102/publish.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/publication-plan.json",
+            "repo:outputs/i110-preview-20261102/publication-asset.json",
+            "repo:outputs/i110-preview-20261102/publication-pr.json"
+          ],
+          "explanation": "Record the explicitly approved publication and verified remote identity of the prepared handoff.",
+          "claim": "Branch, PR description and ZIP published; asset hash matches the verified local package.",
+          "limits": "Publication is not acceptance of the preview controller, independent road qualification, or a main merge.",
+          "lineage_basis": "recorded"
+        },
+        {
+          "path": "repo:documentation/evidence/i110-publication-20261102.json",
+          "kind": "result/report",
+          "generator": "repo:outputs/i110-preview-20261102/record-publication.py",
+          "inputs": [
+            "repo:outputs/i110-preview-20261102/publication-result.json",
+            "repo:outputs/i110-preview-20261102/portable-check.json"
+          ],
+          "explanation": "Record the explicitly approved publication and verified remote identity of the prepared handoff.",
+          "claim": "Branch, PR description and ZIP published; asset hash matches the verified local package.",
+          "limits": "Publication is not acceptance of the preview controller, independent road qualification, or a main merge.",
           "lineage_basis": "recorded"
         }
       ]

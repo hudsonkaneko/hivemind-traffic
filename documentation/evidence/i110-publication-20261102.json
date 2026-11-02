@@ -1,0 +1,17 @@
+{
+  "utc": "2026-11-02T23:30:21.474772+00:00",
+  "commit": "1c9c27db51a5124ac95bd2cf57714244466f5cd9",
+  "branch_url": "https://github.com/samfrausto/hivemind-traffic/tree/codex/sam-visual-twin",
+  "pr_url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/16",
+  "pr_draft": false,
+  "release_url": "https://github.com/samfrausto/hivemind-traffic/releases/tag/sam-i110-handoff-20261102-v1",
+  "asset_url": "https://github.com/samfrausto/hivemind-traffic/releases/download/sam-i110-handoff-20261102-v1/team-package-v1.zip",
+  "asset_size": 8024356,
+  "asset_sha256": "ed0052aed1bfc6c4819c9f7049eb74fa713e17c29a1842cffca8bfe624c9347f",
+  "verification": "Git remote head, saved PR title/body/draft/head and GitHub asset SHA256 all match",
+  "shared_doc_updated": false,
+  "authorization": "Sam explicitly approved: Publish branch, PR update and ZIP",
+  "artifact_checks": "Fresh extraction: 40 content hashes, 11 internal dependencies, zero composition errors; GitHub upload digest matches local ZIP.",
+  "source_checkpoint": "1c9c27db51a5124ac95bd2cf57714244466f5cd9",
+  "limits": "Publication does not change preview rejection or scientific qualification. ZIP retains its immutable pre-publication progress snapshot; linked repository handoff records current publication status."
+}

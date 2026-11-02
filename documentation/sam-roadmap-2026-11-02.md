@@ -12,12 +12,11 @@ an inferred permanent division of labor or a newly adopted team commitment.
 
 ## Immediate checkpoint: make the collaboration state accurate
 
-Prepare one current handoff containing your I-110 entry point, scene/network
-versions, tested capabilities, known comfort failures, complete accounting,
-local-artifact prerequisites and the current controller candidates. Your public
-PR 16 still says I-80/exiD; your 11 local implementation commits are not in it.
-The review is already prepared locally; publishing/updating the PR is a separate
-action under the existing no-push boundary.
+Completed: [current I-110 handoff](i110-team-handoff-2026-11-02.md), tested
+source checkpoint `1c9c27d`, [updated PR #16](https://github.com/hudsonkaneko/hivemind-traffic/pull/16), and the
+[portable road/replay release](https://github.com/samfrausto/hivemind-traffic/releases/tag/sam-i110-handoff-20261102-v1) are now published under Sam's explicit
+approval. Earlier no-push statements below describe historical checkpoints.
+The preview candidate remains rejected, and main is unchanged.
 
 Pin Hudson's candidate to **v04r2 selected update 175**, not `latest.pt` and not
 the older v02 actor. Prepare a precise handoff request for the existing export
