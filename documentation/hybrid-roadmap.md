@@ -483,3 +483,13 @@ progress and failures. The next gate is Stage 1 diagnostics/merge observations/
 teacher preparation, followed by final-config review. All new learning budgets
 are proposals; no training or simulator run started for this planning milestone.
 The overall project roadmap remains this file.
+
+
+## November 2, 2026: sensor-driven roadmap Stage 1 preparation
+
+[Structured highway preparation v02](highway-stage1-preparation-v02.md) adds the
+93-field merge observation contract, feasible teacher, intervention diagnostics,
+BC/MAPPO runner and corrected right-entry generated geometry. Historical failures
+remain evidence. Preparation is distinct from learned driving acceptance: no new
+training has started. The [living sensor-driven plan](sensor-driven-training-roadmap.md)
+tracks exact results and the final configuration review before a launch.

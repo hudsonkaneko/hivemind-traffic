@@ -834,3 +834,11 @@ remain explicit. Two sub-agents audited evidence/research and reviewed the plan.
 [Living plan and sources](sensor-driven-training-roadmap.md).
 Documentation-only change: no training, simulator run, model download or runtime
 change. Native guide and full 42-tab Markdown mirror synchronized and verified.
+
+
+## November 2, 2026: Stage 1 structured highway preparation v02
+
+- Added a separate 93-field graph/message actor contract, connected-road merge observations and causal action journals; historical runners and policies remain unchanged.
+- Added an observation-only feasible teacher, BC plus fresh on-policy MAPPO preparation, fixed mixed curriculum, bounded resume accounting and immutable selected actor generations. Training remains disabled.
+- Corrected generated ramps in a separate right-entry v02 geometry bank after the first full preflight exposed crossing through-lane connectors. Preserve failed tests and original networks; imported I-110 is unchanged.
+- Results, exact disabled configuration and retained evidence: [Stage 1 preparation v02](highway-stage1-preparation-v02.md). The [living plan](sensor-driven-training-roadmap.md) records the next training-review gate.

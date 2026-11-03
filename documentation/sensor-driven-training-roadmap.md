@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v01**, created/updated **November 2, 2026, America/Los_Angeles**.
-Status: **planning only; no new learning or simulator run authorized by this plan**.
+Revision **v02**, created/updated **November 2, 2026, America/Los_Angeles**.
+Status: **Stage 1 preparation verified; new learning awaits final configuration approval**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,13 +14,13 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** prepare Stage 1 intervention diagnostics, the merge-observation
-contract and a feasible demonstration controller; then present the exact learning
-configuration and bounded budget for review. This document does not start that work.
+**Next action:** review the [final disabled Stage 1 configuration](highway-stage1-preparation-v02.md#proposed-training-configuration)
+and authorize the first bounded BC/MAPPO attempt if desired. Preparation passed
+243 regression tests and a 30-case scripted preflight; no learning has started.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
-| 1. Learn driving with structured observations | Broad highway pilot completed, quality failed; revision planned | Per-task driving gates with low intervention and a frozen held-out evaluation |
+| 1. Learn driving with structured observations | Prior pilot quality failed; v02 observation/teacher/runner preparation verified, learning pending | Per-task driving gates with low intervention and a frozen held-out evaluation |
 | 2. Learn with imperfect observations | Planned; existing message delay is only part of the problem | Paired clean/noisy results, leakage audit and reliable stale/missing-data behavior |
 | 3. Replace ideal fields with sensor estimates | Frozen segmentation/fusion previews and dataset/trainer preparation exist; policy integration open | Perception/tracking accuracy and latency, then physical closed-loop validation |
 
@@ -281,3 +281,21 @@ After each meaningful implementation, evaluation, failed attempt or decision:
   no model downloaded and no training started. Next gate is Stage 1 preparation
   followed by a concrete configuration review. Guide sync evidence is recorded in
   the [sync ledger](learning-guide-sync.md).
+
+### v02 — November 2, 2026: Stage 1 implemented and prepared
+
+- Added intervention diagnostics, a versioned 93-field merge contract, feasible
+  observation-only teacher, BC/MAPPO runner, mixed curriculum and bounded recovery.
+- The first full preflight passed 27/30 teacher cases and exposed crossing
+  connectors in generated ramps. A separate right-entry v02 geometry bank fixes
+  those fixtures while preserving original networks, imported I-110 and failures.
+- Final preflight: 30/30 cases pass, 30/30 ramp merges, passing in all five passing
+  cases, zero collisions/teleports/overspeed, maximum case overrides 4.39%. These
+  are scripted results on corrected scenarios, not learned-policy acceptance.
+- 243 regression tests pass. No BC/PPO learning, held-out traffic, new sensor
+  captures or physical simulator runs occurred. Existing protection thresholds
+  remain unchanged. [Results/config/evidence](highway-stage1-preparation-v02.md).
+- Next gate: approve the resolved disabled configuration for one attempt capped
+  at 500k active-agent transitions/two hours. No automatic second attempt; evaluate
+  learned driving before Stage 2. Agent waits while future training runs; the
+  runner retains metrics and signals completion/failure.
