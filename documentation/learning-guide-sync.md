@@ -488,3 +488,14 @@ bodies and prior target history; exact append and start-link replacement verifie
 Regenerated and checked the complete mirror from
 `outputs/doc-sync/highway-stage1-v02/verified-source.json`. Native pagination
 was not inspected. See [preparation evidence](highway-stage1-preparation-v02.md).
+
+
+## November 3: completed Stage 1 training and versioned policy catalog
+
+Appended the authorized run outcome, actual failed intervention gates, selected
+versus lower-intervention phase comparison, retained weights/metrics and requested
+versioned policy catalog to tab 41. Revision-guarded native editing and full
+readback preserved all 42 tabs, 41 unaffected bodies and prior target history;
+the exact append was verified. Regenerated and checked the complete mirror from
+`outputs/doc-sync/highway-stage1-training-v02/verified-source.json`. Native
+pagination was not inspected. No second training or held-out evaluation ran.

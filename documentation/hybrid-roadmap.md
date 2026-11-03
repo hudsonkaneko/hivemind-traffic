@@ -493,3 +493,12 @@ BC/MAPPO runner and corrected right-entry generated geometry. Historical failure
 remain evidence. Preparation is distinct from learned driving acceptance: no new
 training has started. The [living sensor-driven plan](sensor-driven-training-roadmap.md)
 tracks exact results and the final configuration review before a launch.
+
+
+## November 3, 2026: Stage 1 learning result
+
+The [authorized Stage 1 run](highway-stage1-training-v02.md) completed 499,992
+transitions in 59m24s. The final actor merges and passes in validation, but the
+18.15% pooled override rate fails driving acceptance. No held-out test or sensor/
+physical transfer was run. The living plan now prioritizes intervention diagnosis
+and a reviewed revision before a second attempt; all metrics and weights are retained.

@@ -842,3 +842,12 @@ change. Native guide and full 42-tab Markdown mirror synchronized and verified.
 - Added an observation-only feasible teacher, BC plus fresh on-policy MAPPO preparation, fixed mixed curriculum, bounded resume accounting and immutable selected actor generations. Training remains disabled.
 - Corrected generated ramps in a separate right-entry v02 geometry bank after the first full preflight exposed crossing through-lane connectors. Preserve failed tests and original networks; imported I-110 is unchanged.
 - Results, exact disabled configuration and retained evidence: [Stage 1 preparation v02](highway-stage1-preparation-v02.md). The [living plan](sensor-driven-training-roadmap.md) records the next training-review gate.
+
+
+## November 3, 2026: Stage 1 training completed; not accepted
+
+- Completed the explicitly approved BC/MAPPO run: 499,992 transitions, 162 updates, 59m24s, no runtime failure or source drift.
+- Final validation achieved 6/6 merges, 12 passes and zero collisions/teleports/overspeed, but overrides remain 18.15% pooled (53.56% worst case); eight of twelve cases fail the unchanged 5% gate.
+- Preserved all phase results, policy/checkpoint hashes and metrics. No held-out test or second attempt. [Results and policy location](highway-stage1-training-v02.md).
+
+- Added the requested [versioned policy catalog](../policies/versions/README.md), intentionally publishing the accepted v04r2 actor and experimental highway-stage1-v02 actor with exact configs, contracts, evaluations and hashes. Historical actor files are preserved.

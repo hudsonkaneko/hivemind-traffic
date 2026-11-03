@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v02**, created/updated **November 2, 2026, America/Los_Angeles**.
-Status: **Stage 1 preparation verified; new learning awaits final configuration approval**.
+Revision **v03**, updated **November 3, 2026, America/Los_Angeles**.
+Status: **Stage 1 learning attempt completed; intervention quality gate failed**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,13 +14,15 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** review the [final disabled Stage 1 configuration](highway-stage1-preparation-v02.md#proposed-training-configuration)
-and authorize the first bounded BC/MAPPO attempt if desired. Preparation passed
-243 regression tests and a 30-case scripted preflight; no learning has started.
+**Next action:** diagnose native acceleration differences in the failing following/
+passing cases and assess feasibility learning and checkpoint ranking. The first
+[authorized Stage 1 run](highway-stage1-training-v02.md) completed with 6/6 merges
+and 12 passes, but 18.15% pooled overrides. Present a scoped revision before any
+second launch; do not proceed to sensor uncertainty as if driving were accepted.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
-| 1. Learn driving with structured observations | Prior pilot quality failed; v02 observation/teacher/runner preparation verified, learning pending | Per-task driving gates with low intervention and a frozen held-out evaluation |
+| 1. Learn driving with structured observations | v02 training completed; merges/passes work in validation, override gate failed | Per-task driving gates with low intervention and a frozen held-out evaluation |
 | 2. Learn with imperfect observations | Planned; existing message delay is only part of the problem | Paired clean/noisy results, leakage audit and reliable stale/missing-data behavior |
 | 3. Replace ideal fields with sensor estimates | Frozen segmentation/fusion previews and dataset/trainer preparation exist; policy integration open | Perception/tracking accuracy and latency, then physical closed-loop validation |
 
@@ -299,3 +301,23 @@ After each meaningful implementation, evaluation, failed attempt or decision:
   at 500k active-agent transitions/two hours. No automatic second attempt; evaluate
   learned driving before Stage 2. Agent waits while future training runs; the
   runner retains metrics and signals completion/failure.
+
+### v03 — November 3, 2026: authorized Stage 1 learning completed
+
+- User approved the presented configuration. Ran one bounded CPU attempt with
+  no progress inspection or analysis until process exit. Runtime sources unchanged.
+- 499,992 transitions (49,998 demonstrations + 449,994 PPO), 162 updates, 59m24s.
+  Completed normally at the transition cap; no mechanical recovery needed.
+- Selected final actor: 6/6 validation merges, 12 passes, cruise speed
+  96.59–97.42% of limit, zero collisions/teleports/overspeed under protections.
+  Overrides 6,965/38,380 (18.15%); worst case 53.56%; eight of twelve cases fail.
+- Phase 2 had lower pooled overrides (12.47%) than the selected final actor, but
+  also failed acceptance. Preserved phase results, hashes, sources and checkpoints.
+- [Full result and policy location](highway-stage1-training-v02.md). No held-out
+  test, sensor/physical transfer or second attempt. Next gate is a documented
+  intervention diagnosis and reviewed revision; Stage 1 remains unaccepted.
+
+- User-requested publication: [policy versions](../policies/versions/README.md) now
+  retain the frozen accepted v04r2 and experimental Stage 1 v02 actors with short
+  change notes, exact configs/contracts, measured results and checksums. Newer
+  publication does not imply acceptance or compatible observations.

@@ -3,6 +3,10 @@
 November 2, 2026 local (run identifiers use November 3 UTC).
 Parent: [living sensor-driven roadmap](sensor-driven-training-roadmap.md).
 
+Subsequent November 3 authorized training is recorded in
+[Stage 1 training v02](highway-stage1-training-v02.md). The preparation results
+and disabled proposal below remain historical evidence.
+
 This milestone prepares the next learning attempt. No real behavior cloning or
 MAPPO training has started. The historical v1 runner/checkpoints and accepted
 v04r2 remain separate. SUMO owns motion; this is not physical steering or

@@ -4570,3 +4570,21 @@ Source and final config: [`https://github.com/hudsonkaneko/hivemind-traffic/blob
 Final local evidence: outputs/highway-stage1/v02/preflight-20261103T040408Z-52a6d162/. Compact per-case results and provenance are published with the note; full source snapshots/journals remain local. Future last.pt and selection.json belong under outputs/highway-stage1/v02/train-&lt;timestamp&gt;-&lt;id&gt;/; selection.json identifies the immutable generation containing policy.pt. No trained weights exist for this milestone.
 
 The living sensor-driven roadmap now records preparation as verified, preserves the failed pilot and preflight history, and identifies final configuration approval as the next gate. Stage 1 remains incomplete until the learned policy passes its independent driving checks.
+
+<a id="docs-h-s596sqg1plj2"></a>
+
+#### November 3, 2026 — Stage 1 training completed and versioned policy catalog
+
+The user approved the prepared configuration. Run train-20261103T190020Z-8469072d completed without runtime errors or source drift: 499,992 active-agent transitions (49,998 teacher demonstrations plus 449,994 PPO), 162 updates, 59 minutes 24 seconds. The chat waited for exit without inspecting progress or analyzing training while it ran. Automated metrics, scheduled validation and checkpoints were retained. Source commit: `38c3b41b1dbc6a5a6d4417e8a5f60a958d193bd9`.
+
+Final twelve-case validation achieved 6/6 merges, four passes per passing case (12 total), cruise speed 96.59–97.42% of the limit, and zero collisions, teleports or overspeed under protections. It is not quality-accepted: 6,965/38,380 decisions needed overrides (18.15% pooled), worst case 53.56%; eight cases fail the unchanged 5% limit. Phase 2 had lower pooled overrides (12.47%) but also failed. The final actor was selected by the frozen competence-first ranking; it is not the lowest-intervention checkpoint. No held-out traffic test or second attempt was launched.
+
+The next diagnosis is native acceleration realization in following/passing cases and feasibility learning/ranking. Journals label 6,962 overrides as native realization differences and three as analytical speed-ceiling interventions; the underlying native causes are not inferred. No safety guard or acceptance threshold was weakened. The living plan now records completed but unaccepted learning.
+
+At the user's request, policies/versions provides a GitHub-readable catalog with frozen policy.pt weights, a short README per version, exact training configuration, observation/action contract, measured evaluation and checksums/provenance. The accepted v04r2 straight-road baseline and experimental highway-stage1-v02 have separate folders and compatibility/status labels. New versions must preserve earlier packages, describe intended versus verified behavior, and never silently replace an accepted actor. The source Python files under policies remain in place.
+
+The new highway actor is a deterministic shared MAPPO TorchScript export with 93 inputs and two outputs: normalized acceleration and masked lane intent. The environment converts acceleration with -4.5 + (a + 1) \* 3.25 m/s² and applies safety protections. It still uses exact SUMO/map state plus delivered messages, not camera/LiDAR perception or physical steering. SHA-256: 07ef91a2e7591becd235862c9b2ebb0dd5707ef364546ec251f8bf8964e1a6b3. Bulk journals and resume state remain local; the selected inference weights are intentionally included in the catalog, not published as a release asset.
+
+Policy catalog: [`https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-preparation/policies/versions`](<https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-preparation/policies/versions>)
+
+Training results: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/highway-stage1-training-v02.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/highway-stage1-training-v02.md>)
