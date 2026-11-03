@@ -472,3 +472,14 @@ No held-out seeds, new training budget or physical transfer were used. Next work
 is a reviewed acceleration-tracking/merge-learning revision with training-only
 demonstrations, retained guards and the same validation gates. Accepted v04r2
 remains separate.
+
+
+## November 2: living plan for sensor-driven training
+
+The [persistent three-stage roadmap](sensor-driven-training-roadmap.md) now tracks
+structured highway competence, robustness to imperfect observations and eventual
+camera/LiDAR-driven physical control. AGENTS.md requires updates after relevant
+progress and failures. The next gate is Stage 1 diagnostics/merge observations/
+teacher preparation, followed by final-config review. All new learning budgets
+are proposals; no training or simulator run started for this planning milestone.
+The overall project roadmap remains this file.

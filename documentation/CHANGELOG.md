@@ -820,3 +820,17 @@ Engineering guide and full 42-tab Markdown mirror synchronized and verified.
   test claim. Faster diagnostic actor and all original evidence retained locally.
 - Recorded [results and artifact hashes](highway-curriculum-training-v01.md),
   and synchronized the native engineering guide and complete Markdown mirror.
+
+
+## November 2, 2026: persistent sensor-driven training roadmap
+
+Saved a research-backed three-stage plan for structured highway driving, robust
+imperfect observations and camera/LiDAR perception with physical closed-loop
+validation. Added an AGENTS.md instruction to maintain status, evidence, next
+actions and append-only progress during future relevant work. Proposed budgets
+are bounded and unapproved; training will use script-managed metrics while the
+agent waits for completion/failure. Existing failed pilot and perception limits
+remain explicit. Two sub-agents audited evidence/research and reviewed the plan.
+[Living plan and sources](sensor-driven-training-roadmap.md).
+Documentation-only change: no training, simulator run, model download or runtime
+change. Native guide and full 42-tab Markdown mirror synchronized and verified.

@@ -463,3 +463,15 @@ was verified. Full mirror regeneration/check passed from
 `outputs/doc-sync/highway-curriculum-training-v01/verified-source.json`.
 Native pagination was not inspected. No acceptance, held-out adaptation or
 additional training claim was added. See [results](highway-curriculum-training-v01.md).
+
+
+## November 2: persistent sensor-driven training roadmap
+
+Appended the three-stage plan, actual starting limits, proposed budgets, research
+basis, project-memory procedure and low-usage execution rules to tab 41. Guarded
+native editing and exact full readback preserved all 42 tabs, all 41 unaffected
+tab bodies and prior target history. Full mirror regeneration/check used
+`outputs/doc-sync/sensor-driven-roadmap-v01/verified-source.json`.
+Native pagination was not inspected. No new training or simulator capability
+was claimed; proposed budgets remain unapproved.
+See [living roadmap](sensor-driven-training-roadmap.md).
