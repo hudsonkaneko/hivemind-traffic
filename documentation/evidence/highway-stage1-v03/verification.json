@@ -1,0 +1,30 @@
+{
+  "date_local": "2026-11-03",
+  "tests": {
+    "passed": 98,
+    "warnings": 12,
+    "seconds": 4.46,
+    "log": "logs/highway-stage1-v03-tests.log",
+    "sha256": "89255e64d8d0e25ffc6b02151a702998b16245e3c04dd7545765c0bcf102ca67"
+  },
+  "preflight": {
+    "run": "outputs/highway-stage1/v03/preflight-20261103T210301Z-7c9a12cd",
+    "passed": true,
+    "teacher_ready": true,
+    "cases": 30,
+    "optimizer_steps": 0,
+    "bc_optimizer_steps": 0,
+    "source_drift": [],
+    "wall_seconds": 380.2650000001304
+  },
+  "training_authorized": false,
+  "readiness_check_passed": true,
+  "final_config_canonical_sha256": "7c6cb1922727f73b62c502deeb8c1417f769ad7ec3aca6363ad782b8c884428b",
+  "runtime": {
+    "python": "3.11.9",
+    "torch": "2.14.0+cpu",
+    "traci": "1.27.1"
+  },
+  "source_commit_at_execution": "c45d9b1fdbc53daa2b96b9761c805a7083fa2a8d",
+  "actual_runtime_snapshots": "outputs/highway-stage1/v03/preflight-20261103T210301Z-7c9a12cd/source/"
+}

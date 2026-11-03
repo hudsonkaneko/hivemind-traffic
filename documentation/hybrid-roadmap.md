@@ -502,3 +502,13 @@ transitions in 59m24s. The final actor merges and passes in validation, but the
 18.15% pooled override rate fails driving acceptance. No held-out test or sensor/
 physical transfer was run. The living plan now prioritizes intervention diagnosis
 and a reviewed revision before a second attempt; all metrics and weights are retained.
+
+
+## November 3, 2026: Stage 1 intervention revision prepared
+
+[Stage 1 v03 preparation](highway-stage1-v03-preparation.md) quantifies the
+acceleration-fitting gap, validates the teacher on the same roads and adds
+intervention-aware checkpoint ranking. Teacher conservatism remains a measured
+speed/throughput tradeoff. The new BC/teacher-retention configuration is disabled
+pending review; Stage 1 driving remains unaccepted and sensor uncertainty is next
+only after that gate. The published policy catalog remains frozen.

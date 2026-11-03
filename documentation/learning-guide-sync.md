@@ -499,3 +499,15 @@ readback preserved all 42 tabs, 41 unaffected bodies and prior target history;
 the exact append was verified. Regenerated and checked the complete mirror from
 `outputs/doc-sync/highway-stage1-training-v02/verified-source.json`. Native
 pagination was not inspected. No second training or held-out evaluation ran.
+
+
+## November 3: Stage 1 v03 diagnostics and disabled revision
+
+Appended the saved-journal audit, frozen training-label fit, matched teacher
+comparison and measured speed tradeoff, ranking revision, disabled final config
+and actual 98-test/30-case results to tab 41. Updated the start-tab mirror link
+to `codex/highway-stage1-v03`. Revision-guarded native editing and full readback
+preserved all 42 tabs, 40 unaffected bodies and prior target history; the exact
+append and start-link replacement were verified. Mirror regeneration/check passed
+from `outputs/doc-sync/highway-stage1-v03/verified-source.json`. Native pagination
+was not inspected. No v03 learning or held-out test traffic was run.

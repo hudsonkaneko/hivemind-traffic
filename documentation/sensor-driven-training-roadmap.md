@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v03**, updated **November 3, 2026, America/Los_Angeles**.
-Status: **Stage 1 learning attempt completed; intervention quality gate failed**.
+Revision **v04**, updated **November 3, 2026, America/Los_Angeles**.
+Status: **Stage 1 remains unaccepted; v03 diagnostics and training revision prepared for review**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,15 +14,14 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** diagnose native acceleration differences in the failing following/
-passing cases and assess feasibility learning and checkpoint ranking. The first
-[authorized Stage 1 run](highway-stage1-training-v02.md) completed with 6/6 merges
-and 12 passes, but 18.15% pooled overrides. Present a scoped revision before any
-second launch; do not proceed to sensor uncertainty as if driving were accepted.
+**Next action:** review the [v03 disabled training revision](highway-stage1-v03-preparation.md#final-proposal-for-review).
+Matched teacher validation and saved-journal diagnosis support targeting acceleration
+fitting, with measured teacher conservatism kept visible. Preparation passes 98
+regression checks and a full 30-case preflight. No v03 learning is authorized.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
-| 1. Learn driving with structured observations | v02 training completed; merges/passes work in validation, override gate failed | Per-task driving gates with low intervention and a frozen held-out evaluation |
+| 1. Learn driving with structured observations | v02 override gate failed; diagnosed v03 revision prepared, learning pending | Per-task driving gates with low intervention and a frozen held-out evaluation |
 | 2. Learn with imperfect observations | Planned; existing message delay is only part of the problem | Paired clean/noisy results, leakage audit and reliable stale/missing-data behavior |
 | 3. Replace ideal fields with sensor estimates | Frozen segmentation/fusion previews and dataset/trainer preparation exist; policy integration open | Perception/tracking accuracy and latency, then physical closed-loop validation |
 
@@ -321,3 +320,21 @@ After each meaningful implementation, evaluation, failed attempt or decision:
   retain the frozen accepted v04r2 and experimental Stage 1 v02 actors with short
   change notes, exact configs/contracts, measured results and checksums. Newer
   publication does not imply acceptance or compatible observations.
+
+### v04 — November 3, 2026: diagnosis and v03 preparation
+
+- Offline audit: 94.90% of final native-change decisions realize the logged
+  feasible acceleration target within 0.05 m/s². Native internal causes remain
+  unlogged; merge discrepancies are less well explained.
+- Frozen after-BC actor: training-label acceleration RMSE 0.2013 m/s² versus
+  99.886% lane-label agreement. No fitting occurred during this audit.
+- Teacher on the same twelve validation cases: 1.168% pooled overrides, worst
+  4.156%, all gates passed; two-lane following/passing is materially slower.
+  No validation trajectories enter learning and no held-out traffic ran.
+- Implemented ranking v5 and disabled v03 proposal: 12 BC epochs, 4× BC
+  acceleration loss, imitation 0.05→0.01 over 400k PPO decisions. Fixed 500k/two-hour
+  attempt budget, observations, rewards and safety protections remain unchanged.
+- 98 tests and frozen full 30-case no-learning preflight pass. Original selected
+  actors/catalog remain intact; phase 2 is favored only in the recorded reranking.
+- [Diagnosis, exact config and evidence](highway-stage1-v03-preparation.md). Next
+  gate is configuration approval before the second bounded learning attempt.

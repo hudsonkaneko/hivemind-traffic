@@ -851,3 +851,11 @@ change. Native guide and full 42-tab Markdown mirror synchronized and verified.
 - Preserved all phase results, policy/checkpoint hashes and metrics. No held-out test or second attempt. [Results and policy location](highway-stage1-training-v02.md).
 
 - Added the requested [versioned policy catalog](../policies/versions/README.md), intentionally publishing the accepted v04r2 actor and experimental highway-stage1-v02 actor with exact configs, contracts, evaluations and hashes. Historical actor files are preserved.
+
+
+## November 3, 2026: Stage 1 v03 diagnostics and disabled revision
+
+- Measured retained acceleration mismatch magnitude/duration and target agreement; the after-BC actor has 0.2013 m/s² training-label acceleration RMSE despite 99.886% lane-label agreement.
+- Matched scripted teacher passes all twelve validation cases at 1.168% pooled overrides, with a documented two-lane speed tradeoff. No validation data enters learning.
+- Added versioned ranking that prioritizes per-case interventions after safety/task gates and rejects invalid/incomplete evidence. Offline ranking favors retained phase 2; original selections and published weights are preserved.
+- Prepared twelve-epoch, acceleration-weighted BC and longer retained imitation within the existing 500k/two-hour budget. Training remains disabled. [Diagnosis, configuration and verification](highway-stage1-v03-preparation.md).
