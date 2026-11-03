@@ -2,9 +2,9 @@
   "schema_version": 1,
   "document_id": "1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c",
   "document_url": "https://docs.google.com/document/d/1qeYucQnP4nznmLNJrlUz1hCIcY7KOigRPuhBVH-Zo0c/edit",
-  "source_revision_id": "AHj4eMTFAzSSq4uekvLisbXK9MjjNPfGGrnneRVf_mPea-xCKcqwAt8JlUM5s_tqLBkp7axSpCqgjaFioBw0A0jEmCSMFiGyAcw0-7g7S3I",
+  "source_revision_id": "AHj4eMSdOUfnI5xMoql8DJtlnjiBWqrUNguluf20a49LT8FpQXkavvZaseZrp1rV0uQ7VsUe_A9n3c2eSd73sHZ71oxceYbhjibxA88JllQ",
   "markdown_path": "documentation/engineering-guide.md",
-  "markdown_sha256": "6614ff812117d963ee50a77a6117c55a6735418f05fc7d843ec7cff626aaf0f7",
+  "markdown_sha256": "fc5090bcc97524f1814f29285df1174ad294100f5dfad82e0b09f00e7919cad5",
   "sync_mode": "chat_managed_after_verified_google_edit",
   "renderer": "scripts/sync_engineering_guide.py",
   "tabs": [
@@ -14,7 +14,7 @@
       "parent_tab_id": null,
       "paragraphs": 72,
       "tables": 0,
-      "source_body_sha256": "efbd7704108029622814a395fb6bf7643a6efaf8f06ee5e2d90eb1206aeb9190"
+      "source_body_sha256": "e383ef6f945c4c3a115d5d10065b2053ce85c34dc9d5f2e808335374f750699c"
     },
     {
       "tab_id": "t.w2twc8yzdth8",
@@ -340,14 +340,14 @@
       "tab_id": "t.k82ts3ro3qz9",
       "title": "41 Isaac Lab lane task",
       "parent_tab_id": null,
-      "paragraphs": 357,
+      "paragraphs": 366,
       "tables": 8,
-      "source_body_sha256": "88f64c111c21334072d5e79628272e119ddf3c34b239aec608024a1704678745"
+      "source_body_sha256": "bff232b9d0fe9f290adfbb68b1a2dfd54ed67b5fea936fae52de852567f62096"
     }
   ],
   "totals": {
     "tabs": 42,
-    "paragraphs": 2427,
+    "paragraphs": 2436,
     "tables": 14,
     "code_blocks": 182
   },

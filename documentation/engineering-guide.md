@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4472,3 +4472,21 @@ Source and actual screenshots: [`https://github.com/hudsonkaneko/hivemind-traffi
 Final config: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/configs/perception/segmentation_training_v02.json`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/configs/perception/segmentation_training_v02.json>)
 
 Future checkpoints: outputs/perception-training/segmentation-refinement-v02/&lt;run&gt;/best.pt and last.pt. Raw data, runtime, weights and logs remain local; GitHub contains source, compact evidence and screenshots. The previous failed smoke attempts and capture review state are preserved.
+
+<a id="docs-h-6zr2wl20ov3h"></a>
+
+#### Highway curriculum v01 with I-110 — November 2, 2026
+
+The new SUMO MAPPO setup covers ordinary highway driving as well as merging. Selected I-110 road/graph/accounting source was imported from Sam's PR 16 at `b4f19e2b450ea585d1b80fa7472a091f928976de`; the PR itself was not merged. The corridor remains provisional engineering geometry, not calibrated real traffic.
+
+Training cycles through 20 cases: four tasks (cruise, dense following, passing a slower leader, and ramp/auxiliary-lane merging) on generated two-, three-, four- and five-through-lane layouts plus I-110. Following/passing include vehicles already ahead in every lane. Gaps, speeds and background routes vary by seed. Mainline training limits are 50/60 mph; ramps 30 mph, all under the 60 mph ceiling. Separate validation layouts use 55 mph; held-out layouts include six through lanes, different bends and 45/60 mph conditions. No held-out traffic outcome has been inspected.
+
+This is a fresh highway\_curriculum\_graph\_messages\_v1 actor, not a relabeling of v04r2 weights. Its 81 fields contain 33 graph/local features and six eight-field delivered peer messages; the centralized critic has 328 joint-state fields. Actors receive current local SUMO state/map and delayed messages, not camera/LiDAR output or privileged critic state. Actions are acceleration -4.5 to 2 m/s2 and masked lane changes. SUMO owns vehicle motion and steering. Messages use 150 m range, 10 Hz, 0.1 s delay and 0.5 s expiry, with configurable seeded loss. Following uses a 1.5 s gap and stopping-distance lane-change floor, not an achieved short-headway claim.
+
+Final no-learning preflight preflight-20261103T002100Z-596c57ad passed in 367.844 seconds: 20 scripted cases, two random cases, two native cases, an exact repeat, PettingZoo API/seed checks and finite untrained forward/collector checks. Zero optimizer steps ran; source hashes stayed unchanged. 129 focused CPU tests pass. Scripted cases had zero collisions/teleports, 10/10 ramp merges and 2/3/4/4/4 passes across the five passing layouts. Cruise speed averaged 94.5–99.4% of the applicable limit. Dense following still needed 60.6–77.9% interventions and passing 40.4–67.1%; this is plumbing readiness, not accepted policy quality or demonstrated adaptation.
+
+Proposed pilot: fresh shared-actor MAPPO on CPU, one worker, 500,000 active-agent transitions or two hours; actor/critic LR 3e-5/3e-4, four PPO epochs, batch 256, clip 0.2, entropy 0.001, target KL 0.02. Episodes have 0.1 s steps and an 80 s control horizon, complete requested-trip accounting and a separate native drain. Validation runs every ten episodes on twelve fixed seeds; twenty-four test seeds remain reserved. Resume/best checkpoints, actor contract/hash, action journals and per-case metrics are retained. Per-task acceptance is separate from validation ranking. Training remains disabled for final configuration review; no new learned controller exists yet.
+
+Results and limitations: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/highway-curriculum-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/highway-curriculum-v01.md>)
+
+Final configuration: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/experiments/configs/i110_merge_v1.json`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/experiments/configs/i110_merge_v1.json>)

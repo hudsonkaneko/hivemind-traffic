@@ -794,3 +794,15 @@ steps and restored state. 139 CPU tests pass. Training remains disabled pending 
 config review. Shared car geometry, static human poses and deferred advanced metrics
 limit interpretation. [Results, screenshots and config](segmentation-training-preparation-v02.md).
 Native engineering guide and full 42-tab Markdown mirror verified in sync.
+
+## 2026-11-02 — Broad highway curriculum with I-110
+
+Selectively imported Sam's I-110 road/graph/accounting source and added a distinct
+graph-aware MAPPO environment. Twenty training cases cover cruising, dense
+following, passing and merging on 2–5 through-lane layouts plus I-110; separate
+validation/test layouts include unseen six-lane geometry. Final no-learning
+preflight passes, with zero collisions/teleports but high dense-traffic interventions.
+129 tests pass; training remains disabled for review of the 500,000-transition /
+two-hour pilot. Existing v04r2 and segmentation work are preserved.
+[Configuration, measured results and limits](highway-curriculum-v01.md).
+Engineering guide and full 42-tab Markdown mirror synchronized and verified.

@@ -1,0 +1,10 @@
+{
+  "cpu_tests_passed": 129,
+  "training_started": false,
+  "optimizer_steps": 0,
+  "config_sha256": "644486261e854cc6c6d3505daf9792527c0c92c827f305b94e47b87b63547d02",
+  "guide_tabs": 42,
+  "unaffected_tabs_preserved": 40,
+  "mirror_verified": true,
+  "google_pagination_inspected": false
+}

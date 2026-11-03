@@ -448,3 +448,14 @@ training disabled. Next gate is user review and explicit supervised-training lau
 then validation-only checkpoint selection and frozen held-out evaluation. No trained
 six-class quality, new-corpus LiDAR fusion or driving-policy integration is claimed.
 Instance/distance/temporal/calibration gates and broader scene diversity remain open.
+
+## 2026-11-02 checkpoint — General highway curriculum, including I-110
+
+[New graph-policy preparation](highway-curriculum-v01.md) now covers cruise, dense
+following, passing and merges across 2–5 through-lane training roads. Six-lane
+and changed-speed/geometry conditions remain held out. Native no-learning
+preflight and 129 CPU tests pass; high scripted dense-traffic intervention rates
+are retained as a limitation. The new 81-field ABI is not compatible with v04r2
+weights. Next gate is final-config review and the bounded MAPPO pilot, followed
+by per-task validation and untouched transfer tests. No learned adaptation,
+physical steering, sensor-policy integration or arbitrary-road competence is claimed.

@@ -441,3 +441,13 @@ readback preserved all 42 tabs and 40 unaffected tab bodies. Regeneration/check
 passed from `outputs/doc-sync/segmentation-training-preparation-v02/verified-source.json`.
 Native pagination was not inspected. Actual screenshots remain in the
 [preparation note](segmentation-training-preparation-v02.md).
+
+## November 2: Highway curriculum with I-110
+
+Appended selected Sam-source provenance, the 20-case driving curriculum, new actor
+contract, actual no-learning results, high intervention limitation and disabled
+pilot configuration to tab 41. Updated the start-tab mirror link to
+`codex/i110-merge-training`. Revision-guarded full native readback preserved all
+42 tabs and 40 unaffected tab bodies. Mirror regeneration/check passed from
+`outputs/doc-sync/highway-curriculum-v01/verified-source.json`; native pagination
+was not inspected.
