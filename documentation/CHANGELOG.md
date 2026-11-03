@@ -794,3 +794,43 @@ steps and restored state. 139 CPU tests pass. Training remains disabled pending 
 config review. Shared car geometry, static human poses and deferred advanced metrics
 limit interpretation. [Results, screenshots and config](segmentation-training-preparation-v02.md).
 Native engineering guide and full 42-tab Markdown mirror verified in sync.
+
+## 2026-11-02 — Broad highway curriculum with I-110
+
+Selectively imported Sam's I-110 road/graph/accounting source and added a distinct
+graph-aware MAPPO environment. Twenty training cases cover cruising, dense
+following, passing and merging on 2–5 through-lane layouts plus I-110; separate
+validation/test layouts include unseen six-lane geometry. Final no-learning
+preflight passes, with zero collisions/teleports but high dense-traffic interventions.
+129 tests pass; training remains disabled for review of the 500,000-transition /
+two-hour pilot. Existing v04r2 and segmentation work are preserved.
+[Configuration, measured results and limits](highway-curriculum-v01.md).
+Engineering guide and full 42-tab Markdown mirror synchronized and verified.
+
+
+## November 2, 2026: highway curriculum pilot completed, not accepted
+
+- Completed the approved MAPPO pilot: 499,998 transitions, 177 updates and 8,184
+  optimizer steps in 1 h 52 min 39 s. No monitoring or analysis while learning ran.
+- Preserved the original slow selected actor; corrected validation ranking to
+  prioritize driving competence and strengthened bounded completion/resume,
+  ranking migration and actor integrity checks. 137 regression tests pass.
+- Final frozen validation: 98.76% cruise speed ratio, eight counted passes,
+  zero of six merges and 96.44% safety overrides. No quality acceptance or held-out
+  test claim. Faster diagnostic actor and all original evidence retained locally.
+- Recorded [results and artifact hashes](highway-curriculum-training-v01.md),
+  and synchronized the native engineering guide and complete Markdown mirror.
+
+
+## November 2, 2026: persistent sensor-driven training roadmap
+
+Saved a research-backed three-stage plan for structured highway driving, robust
+imperfect observations and camera/LiDAR perception with physical closed-loop
+validation. Added an AGENTS.md instruction to maintain status, evidence, next
+actions and append-only progress during future relevant work. Proposed budgets
+are bounded and unapproved; training will use script-managed metrics while the
+agent waits for completion/failure. Existing failed pilot and perception limits
+remain explicit. Two sub-agents audited evidence/research and reviewed the plan.
+[Living plan and sources](sensor-driven-training-roadmap.md).
+Documentation-only change: no training, simulator run, model download or runtime
+change. Native guide and full 42-tab Markdown mirror synchronized and verified.
