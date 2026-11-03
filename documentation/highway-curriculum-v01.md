@@ -161,3 +161,6 @@ and [exact observation contract](evidence/i110-merge-training-v01/curriculum-pre
 are retained. Per-episode full trip ledgers and compressed action journals remain
 under the local run directory. Earlier merge-only and lighter-front-traffic checks
 remain preserved; no validation or held-out traffic seeds have been evaluated.
+
+The same 129 tests also pass in a clean archive of commit `571b4d5`, without
+copying generated roads or runtime packages into the archived source tree.
