@@ -83,7 +83,7 @@ def test_missing_agent_critic_slot_is_zero():
 
 
 def test_selection_prioritizes_safety_before_merge_reward():
-    good=dict(collisions=0,teleports=0,overspeed_steps=0,successful_merges=1,
+    good=dict(task='cruise',mean_fraction_of_speed_limit=1.,passes=0,collisions=0,teleports=0,overspeed_steps=0,successful_merges=1,
               accounting={'totals':{'unfinished':0}},overrides=0,agent_steps=10,reward=0.)
     bad=copy.deepcopy(good);bad.update(collisions=1,successful_merges=2,reward=1000.)
     assert rank([good])>rank([bad])

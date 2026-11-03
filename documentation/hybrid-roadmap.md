@@ -459,3 +459,16 @@ are retained as a limitation. The new 81-field ABI is not compatible with v04r2
 weights. Next gate is final-config review and the bounded MAPPO pilot, followed
 by per-task validation and untouched transfer tests. No learned adaptation,
 physical steering, sensor-policy integration or arbitrary-road competence is claimed.
+
+
+## November 2 follow-up: completed highway curriculum pilot
+
+The [first broad highway pilot](highway-curriculum-training-v01.md) completed its
+approved 500k-transition budget (499,998 usable joint transitions). It is not an
+accepted controller: final validation passes the cruise and passing targets,
+but merges are 0/6 and interventions are 96.44%. Ranking/recovery fixes are tested;
+the final diagnostic export and original selected actor are both preserved.
+No held-out seeds, new training budget or physical transfer were used. Next work
+is a reviewed acceleration-tracking/merge-learning revision with training-only
+demonstrations, retained guards and the same validation gates. Accepted v04r2
+remains separate.

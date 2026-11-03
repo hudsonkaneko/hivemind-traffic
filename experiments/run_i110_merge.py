@@ -6,6 +6,7 @@ import hashlib
 import json
 from pathlib import Path
 import random
+import shutil
 import platform
 import subprocess
 import time
@@ -19,6 +20,41 @@ from experiments.sumo_mappo_support import atomic_json, config_digest
 
 ROOT=Path(__file__).resolve().parents[1]
 DEFAULT=ROOT/'experiments/configs/i110_merge_v1.json'
+RANKING_VERSION=2
+
+
+class PilotBudgetExhausted(TimeoutError):
+    """Normal completion of the explicitly bounded training budget."""
+
+
+def restore_selected_checkpoint(resume, output, fingerprint):
+    source=Path(resume).parent/'best.pt'
+    if not source.exists():return
+    selected=torch.load(source,map_location='cpu',weights_only=False)
+    if selected.get('schema')!=SCHEMA or selected.get('config_sha256')!=fingerprint or selected.get('selection_status')!='validation_selected':
+        raise ValueError('Prior selected checkpoint contract mismatch')
+    actor=source.parent/'policy.pt';contract_source=source.parent/'policy-contract.json'
+    if not actor.exists() or not contract_source.exists():
+        raise ValueError('Prior selected actor export or contract is missing')
+    sidecar=json.loads(contract_source.read_text())
+    if sidecar.get('policy_sha256')!=hashlib.sha256(actor.read_bytes()).hexdigest():
+        raise ValueError('Prior selected actor checksum mismatch')
+    score=selected['best_rank']
+    if selected.get('ranking_version')!=RANKING_VERSION:
+        reports=source.parent/f"validation-{selected['update']:05d}.json"
+        if not reports.exists():raise ValueError('Prior validation reports required to migrate checkpoint ranking')
+        score=rank(json.loads(reports.read_text()))
+    for name in ('best.pt','policy.pt','policy-contract.json'):
+        item=source.parent/name
+        shutil.copyfile(item,Path(output)/name)
+    selected.update(best_rank=score,ranking_version=RANKING_VERSION)
+    save_checkpoint(Path(output)/'best.pt',selected)
+    contract=Path(output)/'policy-contract.json'
+    if contract.exists():
+        sidecar=json.loads(contract.read_text())
+        sidecar.update(validation_rank=score,ranking_version=RANKING_VERSION)
+        atomic_json(contract,sidecar)
+    return tuple(score)
 
 
 def load_config(path):
@@ -60,7 +96,7 @@ def episode(env, seed, *, model=None, kind='scripted', collect=False, deadline=N
     rows=[];reward_sum=0.;transitions=0
     try:
         while env.agents:
-            if deadline is not None and time.monotonic()>=deadline:raise TimeoutError('Pilot wall budget exhausted')
+            if deadline is not None and time.monotonic()>=deadline:raise PilotBudgetExhausted('Pilot wall budget exhausted')
             if limit is not None and transitions+len(env.agents)>limit:break
             active=torch.tensor([a in env.agents for a in AGENTS]);indices=torch.arange(4)
             local=torch.tensor(np.stack([obs.get(a,np.zeros(81,np.float32)) for a in AGENTS]))
@@ -105,8 +141,20 @@ def episode(env, seed, *, model=None, kind='scripted', collect=False, deadline=N
 
 
 def rank(reports):
+    # Passing the basic driving task must precede intervention minimization.
+    # Otherwise a stationary policy can beat a useful moving policy merely by
+    # requesting fewer actions while both leave long-corridor trips unfinished.
+    missing=0
+    cruise=[]
+    for r in reports:
+        if r['task']=='cruise':
+            cruise.append(r['mean_fraction_of_speed_limit'])
+            missing+=r['mean_fraction_of_speed_limit']<.9
+        elif r['task']=='passing':missing+=r['passes']<1
+        elif r['task']=='merge':missing+=r['successful_merges']<2
     return (-sum(r['collisions']+r['teleports']+r['overspeed_steps'] for r in reports),
-        sum(r['successful_merges'] for r in reports),
+        -missing, sum(r['successful_merges'] for r in reports),sum(r['passes'] for r in reports),
+        min(cruise,default=0.),
         -sum(r['accounting']['totals']['unfinished'] for r in reports),
         -sum(r['overrides'] for r in reports)/max(1,sum(r['agent_steps'] for r in reports)),
         sum(r['reward'] for r in reports))
@@ -200,11 +248,14 @@ def main(argv=None):
                 model.load_state_dict(saved['model']);trainer.optimizer.load_state_dict(saved['optimizer'])
                 counter,update,best,prior,next_seed=(saved[k] for k in ('transitions','update','best_rank','elapsed_seconds','next_seed'))
                 torch.set_rng_state(saved['torch_rng'])
+                best=restore_selected_checkpoint(args.resume,run,fingerprint)
+                if saved['best_rank'] is not None and best is None:
+                    raise ValueError('Resume is missing the prior selected actor')
             deadline=started+max(0,cfg['training']['max_wall_seconds']-prior)
             def checkpoint(name):
                 save_checkpoint(run/name,dict(schema=SCHEMA,model=model.state_dict(),optimizer=trainer.optimizer.state_dict(),
                     selection_status='validation_selected' if name=='best.pt' else 'resume_only',
-                    config_sha256=fingerprint,config=cfg,transitions=counter,update=update,best_rank=best,
+                    config_sha256=fingerprint,config=cfg,transitions=counter,update=update,best_rank=best,ranking_version=RANKING_VERSION,
                     elapsed_seconds=prior+time.monotonic()-started,next_seed=next_seed,torch_rng=torch.get_rng_state()))
             checkpoint('last.pt')
             while counter<cfg['training']['max_agent_transitions'] and time.monotonic()<deadline:
@@ -225,7 +276,7 @@ def main(argv=None):
                     if best is None or score>tuple(best):
                         best=score;checkpoint('best.pt');export_actor(model,run/'policy.pt')
                         atomic_json(run/'policy-contract.json',dict(schema=SCHEMA,config_sha256=fingerprint,
-                            validation_rank=best,observation_size=81,action_size=2,legacy_v04_compatible=False,
+                            validation_rank=best,ranking_version=RANKING_VERSION,observation_size=81,action_size=2,legacy_v04_compatible=False,
                             policy_sha256=hashlib.sha256((run/'policy.pt').read_bytes()).hexdigest()))
                 checkpoint('last.pt')
             result.update(passed=True,transitions=counter,updates=update,best_rank=best,held_out_test_run=False)
@@ -234,7 +285,12 @@ def main(argv=None):
             saved=torch.load(run/'last.pt',map_location='cpu',weights_only=False)
             saved['elapsed_seconds']=prior+time.monotonic()-started
             save_checkpoint(run/'last.pt',saved)
-        result.update(error=repr(error),traceback=traceback.format_exc());traceback.print_exc()
+            if isinstance(error,PilotBudgetExhausted):
+                result.update(passed=True,stop_reason='wall_time_budget',transitions=saved['transitions'],
+                    updates=saved['update'],best_rank=saved['best_rank'],held_out_test_run=False,
+                    incomplete_episode_or_validation_discarded=True)
+        if not result['passed']:
+            result.update(error=repr(error),traceback=traceback.format_exc());traceback.print_exc()
     finally:
         result['sources_changed']=[p for p,h in hashes.items() if hashlib.sha256((ROOT/p).read_bytes()).hexdigest()!=h]
         if result['sources_changed']:result['passed']=False

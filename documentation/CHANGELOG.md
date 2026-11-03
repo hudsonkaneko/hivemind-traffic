@@ -806,3 +806,17 @@ preflight passes, with zero collisions/teleports but high dense-traffic interven
 two-hour pilot. Existing v04r2 and segmentation work are preserved.
 [Configuration, measured results and limits](highway-curriculum-v01.md).
 Engineering guide and full 42-tab Markdown mirror synchronized and verified.
+
+
+## November 2, 2026: highway curriculum pilot completed, not accepted
+
+- Completed the approved MAPPO pilot: 499,998 transitions, 177 updates and 8,184
+  optimizer steps in 1 h 52 min 39 s. No monitoring or analysis while learning ran.
+- Preserved the original slow selected actor; corrected validation ranking to
+  prioritize driving competence and strengthened bounded completion/resume,
+  ranking migration and actor integrity checks. 137 regression tests pass.
+- Final frozen validation: 98.76% cruise speed ratio, eight counted passes,
+  zero of six merges and 96.44% safety overrides. No quality acceptance or held-out
+  test claim. Faster diagnostic actor and all original evidence retained locally.
+- Recorded [results and artifact hashes](highway-curriculum-training-v01.md),
+  and synchronized the native engineering guide and complete Markdown mirror.

@@ -451,3 +451,15 @@ pilot configuration to tab 41. Updated the start-tab mirror link to
 42 tabs and 40 unaffected tab bodies. Mirror regeneration/check passed from
 `outputs/doc-sync/highway-curriculum-v01/verified-source.json`; native pagination
 was not inspected.
+
+
+## November 2: completed highway curriculum training pilot
+
+Appended the approved run outcome, actual failed quality gates, original versus
+final checkpoint comparison, ranking/recovery revisions and retained artifact
+paths to tab 41. Revision-guarded native editing and full readback preserved all
+42 tabs, all 41 unaffected tab bodies and prior target history. The exact append
+was verified. Full mirror regeneration/check passed from
+`outputs/doc-sync/highway-curriculum-training-v01/verified-source.json`.
+Native pagination was not inspected. No acceptance, held-out adaptation or
+additional training claim was added. See [results](highway-curriculum-training-v01.md).

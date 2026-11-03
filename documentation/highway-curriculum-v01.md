@@ -1,5 +1,9 @@
 # Highway driving curriculum v01, including I-110
 
+Follow-up: the approved pilot has now completed. See [training results and
+revisions](highway-curriculum-training-v01.md). The preparation record below
+preserves the original preflight status and selection rule.
+
 November 2, 2026. The user requested Sam's I-110 merge road for MAPPO, then clarified
 that training should cover highway speed, ordinary traffic, passing and different
 lane counts. This is a new SUMO policy experiment. Segmentation preparation remains

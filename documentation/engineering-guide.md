@@ -4490,3 +4490,21 @@ Proposed pilot: fresh shared-actor MAPPO on CPU, one worker, 500,000 active-agen
 Results and limitations: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/highway-curriculum-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/highway-curriculum-v01.md>)
 
 Final configuration: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/experiments/configs/i110_merge_v1.json`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/experiments/configs/i110_merge_v1.json>)
+
+<a id="docs-h-au22rd5c0026"></a>
+
+#### November 2, 2026: Highway curriculum pilot completed; not accepted
+
+The approved 500,000-transition / two-hour CPU MAPPO pilot completed 499,998 active-agent transitions, 177 updates and 8,184 optimizer steps in 6,758.797 seconds. No runtime failure occurred. The assistant waited for process exit without monitoring or analysis during training. Run: train-20261103T003534Z-eaf909f7. No Isaac or rendering job ran.
+
+The original validation ranking selected update 10, which averaged only 7.64% of the speed limit. It favored lower interventions ahead of driving competence. The original best.pt and policy.pt are preserved. Ranking now prioritizes safety and per-task competence before intervention minimization; versioned resume re-scores saved validation and checks actor completeness/checksum. These changes do not rewrite the historical run.
+
+Frozen final-checkpoint validation covered 12 cases on independent 2/4/5-through-lane roads at 55 mph: cruise averaged 98.76% of the applicable speed limit; passing cases recorded 3, 2 and 3 passes. Merge success was 0/6 ramp cars. Overall safety overrides were 96.44%, far above the proposed 5% maximum. Zero collisions, teleports and overspeed steps were measured with protections enabled. All 504 requested cohort trips remained unfinished at the primary accounting horizon and remained in the ledger.
+
+The faster final actor is retained separately at outputs/i110-merge/v01/postrun-review-20261103-v01/policy.pt with quality\_accepted=false. A successful actor export round trip and 137 focused regression tests verify implementation, not driving acceptance. Only update 10 and final update 177 weights were retained, so this is a posthoc comparison of those two models. No held-out test seeds were used, and no six-lane or arbitrary-road adaptation claim is supported.
+
+The read-only post-run audit found persistent acceleration saturation: a late merge episode requested over 1.8 m/s² on 90.6% of steps while guards heavily reduced actual acceleration. The next reviewed experiment should address feasible acceleration tracking and deterministic merge learning using training-only demonstrations and a staged curriculum. No additional learning was started beyond this approved pilot budget. The default configuration remains disabled; prior accepted v04r2 is unchanged.
+
+The exact authorized configuration, runtime/source hashes, per-seed validation, action audit and artifact checksums are retained in repository evidence. Weights, raw journals and full source snapshots remain local under outputs/ and are not included in GitHub. Source HEAD was `3dbcdaa5edaecc65c4536ec30a00a9ff86ff22de` plus recorded recovery changes; Python 3.11.9, Torch 2.14.0+cpu and TraCI 1.27.1. The new 81-observation/two-action graph contract uses SUMO state and messages, not camera/LiDAR inputs or physical steering.
+
+Results and retained artifact paths: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/highway-curriculum-training-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/highway-curriculum-training-v01.md>)

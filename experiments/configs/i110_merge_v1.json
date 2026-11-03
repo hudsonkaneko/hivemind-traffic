@@ -101,7 +101,7 @@
       5410019
     ],
     "every_episodes": 10,
-    "selection": "safety, ramp merges, unfinished cohort, interventions, reward; validation only",
+    "selection": "safety, per-task competence gates, merges and passes, minimum cruise speed, unfinished cohort, interventions, reward; validation only",
     "test_status": "reserved; no automatic test execution",
     "adaptation_gate": "Report each task/layout separately. Unseen six-through-lane geometry is test-only. Do not claim adaptation from aggregate training reward.",
     "provisional_targets": {
@@ -114,7 +114,7 @@
       "maximum_intervention_fraction": 0.05,
       "status": "Proposed per-task research gates; not achieved; assess alongside complete cohort burden and native/scripted baselines"
     },
-    "selection_limit": "Lexicographic validation selection is implemented; passing all per-task acceptance targets is a separate review, never inferred from rank or run completion"
+    "selection_limit": "Revised after pilot: a stationary actor cannot win solely on fewer interventions. Passing all per-task acceptance targets is still separate from rank."
   },
   "contract": {
     "speed_ceiling_m_s": 26.8224,
