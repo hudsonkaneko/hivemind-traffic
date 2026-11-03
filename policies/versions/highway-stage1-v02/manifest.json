@@ -1,0 +1,60 @@
+{
+  "version": "highway-stage1-v02",
+  "policy_type": "Shared hybrid actor trained with behavior cloning and MAPPO; actor-only deterministic TorchScript",
+  "status": "experimental_not_accepted",
+  "run_id": "train-20261103T190020Z-8469072d",
+  "source_commit": "38c3b41b1dbc6a5a6d4417e8a5f60a958d193bd9",
+  "selected_generation": "selected-00162-cfaa8b0a",
+  "trained_on": "2026-11-03",
+  "observation_schema": "highway_stage1_graph_messages_v2",
+  "observation_size": 93,
+  "output": {
+    "shape": [
+      "batch",
+      2
+    ],
+    "fields": [
+      "normalized_acceleration",
+      "lane_delta"
+    ],
+    "normalized_acceleration_range": [
+      -1,
+      1
+    ],
+    "physical_acceleration_formula": "-4.5 + (normalized_acceleration + 1) * 3.25",
+    "physical_acceleration_m_s2": [
+      -4.5,
+      2
+    ],
+    "lane_delta": {
+      "0": "stay",
+      "1": "left",
+      "-1": "right"
+    }
+  },
+  "runtime": {
+    "python": "3.11.9",
+    "torch": "2.14.0+cpu",
+    "traci": "1.27.1"
+  },
+  "quality_accepted": false,
+  "held_out_test_run": false,
+  "files": {
+    "policy.pt": {
+      "sha256": "07ef91a2e7591becd235862c9b2ebb0dd5707ef364546ec251f8bf8964e1a6b3",
+      "bytes": 108536
+    },
+    "training-config.json": {
+      "sha256": "e53d70a2a200eae35934eba7055f49955227c070e37f4c4f4b5c5fb1a2a0b638",
+      "bytes": 36249
+    },
+    "contract.json": {
+      "sha256": "82d9c20bfe26ce1acee02fcc6c1e2f7780891bd98c47c36d32ceb12d1853d51b",
+      "bytes": 3637
+    },
+    "evaluation.json": {
+      "sha256": "74dad5f0c15785ff76003a90483ed3da20b5e5e93e2da53cf7986dd7ce462bbb",
+      "bytes": 42028
+    }
+  }
+}

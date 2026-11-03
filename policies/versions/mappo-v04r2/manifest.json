@@ -1,0 +1,46 @@
+{
+  "version": "mappo-v04r2",
+  "policy_type": "Imitation-assisted shared MAPPO; deterministic actor-only TorchScript",
+  "status": "accepted_in_straight_three_lane_sumo_fixture",
+  "run_id": "train-20261029T235954Z-cc89b964",
+  "source_commit": "bd59d2f008c4c59615276c759377562fc339e826",
+  "selected_update": 175,
+  "selected_total_agent_transitions": 764800,
+  "run_budget_agent_transitions": 1000000,
+  "trained_on": "2026-10-29",
+  "observation_size": 81,
+  "quality_accepted": true,
+  "acceptance_scope": "Original 50-case straight-three-lane passing/following evaluation; intervention threshold is aggregate. Not the newer highway per-case acceptance matrix.",
+  "held_out_test_run": true,
+  "config_canonical_sha256": "8d926dc86f53473ef64fcb5f7f36bfec5801554fe26e1773ecfb803c882485e9",
+  "runtime": {
+    "python": "3.11.9",
+    "versions": {
+      "torch": "2.14.0+cpu",
+      "numpy": "2.4.6",
+      "gymnasium": "1.3.0",
+      "pettingzoo": "1.27.0",
+      "traci": "1.27.1",
+      "sumo": "Eclipse SUMO sumo 1.27.1"
+    }
+  },
+  "source_environment_sha256": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+  "files": {
+    "policy.pt": {
+      "sha256": "4cf4898df997a444624552515ea987e7e994b1ca40bb002cf91f0647be8a7245",
+      "bytes": 102392
+    },
+    "training-config.json": {
+      "sha256": "61a2a4175e882eaafcbaad161a394f700922f5c877c8c24033fb0c21c0e6bae6",
+      "bytes": 4686
+    },
+    "contract.json": {
+      "sha256": "abc3f41d83901ea6e3264f90c0ba095a6874c438fc4c58a625be40211a286985",
+      "bytes": 3813
+    },
+    "evaluation.json": {
+      "sha256": "7b4c4463948ee89e818c2db66da7f932b567ff54060c53ba9a6478cab9f01e71",
+      "bytes": 119954
+    }
+  }
+}

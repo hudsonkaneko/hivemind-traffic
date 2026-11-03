@@ -1,0 +1,71 @@
+{
+  "source_path": "outputs/highway-curriculum/v02/geometry-verification.json",
+  "source_sha256": "15e72d9b510a930a9bb2ee6eaf9feb7edf7d7e1d1fb3ac9551ab176b9efa613d",
+  "geometry_version": "highway_right_entry_v2",
+  "normalized_repeat_compiles_match": true,
+  "historical_v01_and_i110_network_hashes_unchanged": true,
+  "optimizer_steps": 0,
+  "traffic_episodes_run": 0,
+  "checks": [
+    {
+      "id": "train-2-lane",
+      "normalized_hash_matches_previous_compile": true,
+      "current_builder_hash_matches_manifest": true,
+      "structural_passed": true
+    },
+    {
+      "id": "train-3-lane",
+      "normalized_hash_matches_previous_compile": true,
+      "current_builder_hash_matches_manifest": true,
+      "structural_passed": true
+    },
+    {
+      "id": "train-4-lane",
+      "normalized_hash_matches_previous_compile": true,
+      "current_builder_hash_matches_manifest": true,
+      "structural_passed": true
+    },
+    {
+      "id": "train-5-lane",
+      "normalized_hash_matches_previous_compile": true,
+      "current_builder_hash_matches_manifest": true,
+      "structural_passed": true
+    },
+    {
+      "id": "validation-2-lane",
+      "normalized_hash_matches_previous_compile": true,
+      "current_builder_hash_matches_manifest": true,
+      "structural_passed": true
+    },
+    {
+      "id": "validation-4-lane",
+      "normalized_hash_matches_previous_compile": true,
+      "current_builder_hash_matches_manifest": true,
+      "structural_passed": true
+    },
+    {
+      "id": "validation-5-lane",
+      "normalized_hash_matches_previous_compile": true,
+      "current_builder_hash_matches_manifest": true,
+      "structural_passed": true
+    },
+    {
+      "id": "test-3-lane",
+      "normalized_hash_matches_previous_compile": true,
+      "current_builder_hash_matches_manifest": true,
+      "structural_passed": true
+    },
+    {
+      "id": "test-5-lane",
+      "normalized_hash_matches_previous_compile": true,
+      "current_builder_hash_matches_manifest": true,
+      "structural_passed": true
+    },
+    {
+      "id": "test-6-lane",
+      "normalized_hash_matches_previous_compile": true,
+      "current_builder_hash_matches_manifest": true,
+      "structural_passed": true
+    }
+  ]
+}

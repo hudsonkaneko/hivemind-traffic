@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v01**, created/updated **November 2, 2026, America/Los_Angeles**.
-Status: **planning only; no new learning or simulator run authorized by this plan**.
+Revision **v03**, updated **November 3, 2026, America/Los_Angeles**.
+Status: **Stage 1 learning attempt completed; intervention quality gate failed**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,13 +14,15 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** prepare Stage 1 intervention diagnostics, the merge-observation
-contract and a feasible demonstration controller; then present the exact learning
-configuration and bounded budget for review. This document does not start that work.
+**Next action:** diagnose native acceleration differences in the failing following/
+passing cases and assess feasibility learning and checkpoint ranking. The first
+[authorized Stage 1 run](highway-stage1-training-v02.md) completed with 6/6 merges
+and 12 passes, but 18.15% pooled overrides. Present a scoped revision before any
+second launch; do not proceed to sensor uncertainty as if driving were accepted.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
-| 1. Learn driving with structured observations | Broad highway pilot completed, quality failed; revision planned | Per-task driving gates with low intervention and a frozen held-out evaluation |
+| 1. Learn driving with structured observations | v02 training completed; merges/passes work in validation, override gate failed | Per-task driving gates with low intervention and a frozen held-out evaluation |
 | 2. Learn with imperfect observations | Planned; existing message delay is only part of the problem | Paired clean/noisy results, leakage audit and reliable stale/missing-data behavior |
 | 3. Replace ideal fields with sensor estimates | Frozen segmentation/fusion previews and dataset/trainer preparation exist; policy integration open | Perception/tracking accuracy and latency, then physical closed-loop validation |
 
@@ -281,3 +283,41 @@ After each meaningful implementation, evaluation, failed attempt or decision:
   no model downloaded and no training started. Next gate is Stage 1 preparation
   followed by a concrete configuration review. Guide sync evidence is recorded in
   the [sync ledger](learning-guide-sync.md).
+
+### v02 — November 2, 2026: Stage 1 implemented and prepared
+
+- Added intervention diagnostics, a versioned 93-field merge contract, feasible
+  observation-only teacher, BC/MAPPO runner, mixed curriculum and bounded recovery.
+- The first full preflight passed 27/30 teacher cases and exposed crossing
+  connectors in generated ramps. A separate right-entry v02 geometry bank fixes
+  those fixtures while preserving original networks, imported I-110 and failures.
+- Final preflight: 30/30 cases pass, 30/30 ramp merges, passing in all five passing
+  cases, zero collisions/teleports/overspeed, maximum case overrides 4.39%. These
+  are scripted results on corrected scenarios, not learned-policy acceptance.
+- 243 regression tests pass. No BC/PPO learning, held-out traffic, new sensor
+  captures or physical simulator runs occurred. Existing protection thresholds
+  remain unchanged. [Results/config/evidence](highway-stage1-preparation-v02.md).
+- Next gate: approve the resolved disabled configuration for one attempt capped
+  at 500k active-agent transitions/two hours. No automatic second attempt; evaluate
+  learned driving before Stage 2. Agent waits while future training runs; the
+  runner retains metrics and signals completion/failure.
+
+### v03 — November 3, 2026: authorized Stage 1 learning completed
+
+- User approved the presented configuration. Ran one bounded CPU attempt with
+  no progress inspection or analysis until process exit. Runtime sources unchanged.
+- 499,992 transitions (49,998 demonstrations + 449,994 PPO), 162 updates, 59m24s.
+  Completed normally at the transition cap; no mechanical recovery needed.
+- Selected final actor: 6/6 validation merges, 12 passes, cruise speed
+  96.59–97.42% of limit, zero collisions/teleports/overspeed under protections.
+  Overrides 6,965/38,380 (18.15%); worst case 53.56%; eight of twelve cases fail.
+- Phase 2 had lower pooled overrides (12.47%) than the selected final actor, but
+  also failed acceptance. Preserved phase results, hashes, sources and checkpoints.
+- [Full result and policy location](highway-stage1-training-v02.md). No held-out
+  test, sensor/physical transfer or second attempt. Next gate is a documented
+  intervention diagnosis and reviewed revision; Stage 1 remains unaccepted.
+
+- User-requested publication: [policy versions](../policies/versions/README.md) now
+  retain the frozen accepted v04r2 and experimental Stage 1 v02 actors with short
+  change notes, exact configs/contracts, measured results and checksums. Newer
+  publication does not imply acceptance or compatible observations.

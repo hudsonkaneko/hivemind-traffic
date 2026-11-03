@@ -1,0 +1,45 @@
+{
+  "torch": "2.14.0+cpu",
+  "reports": [
+    {
+      "version": "mappo-v04r2",
+      "all_file_hashes_match": true,
+      "input_shape": [
+        3,
+        81
+      ],
+      "output_shape": [
+        3,
+        2
+      ],
+      "finite": true,
+      "stay_mask_respected": true,
+      "smoke_only_no_simulator_or_training": true
+    },
+    {
+      "version": "highway-stage1-v02",
+      "all_file_hashes_match": true,
+      "input_shape": [
+        3,
+        93
+      ],
+      "output_shape": [
+        3,
+        2
+      ],
+      "finite": true,
+      "stay_mask_respected": true,
+      "smoke_only_no_simulator_or_training": true
+    }
+  ],
+  "git_staged_artifact_bytes_verified": [
+    "mappo-v04r2/policy.pt",
+    "mappo-v04r2/training-config.json",
+    "mappo-v04r2/contract.json",
+    "mappo-v04r2/evaluation.json",
+    "highway-stage1-v02/policy.pt",
+    "highway-stage1-v02/training-config.json",
+    "highway-stage1-v02/contract.json",
+    "highway-stage1-v02/evaluation.json"
+  ]
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "highway_stage1_graph_messages_v2",
+  "reward_version": "highway_stage1_feasible_acceleration_v2",
+  "geometry": {
+    "version": "highway_right_entry_v2",
+    "bank_manifest": "outputs/highway-curriculum/v02/bank.json",
+    "bank_manifest_sha256": "487c83de7e8dc96804fadadc90fe46a092b17f8c937a790d58a41dfa870effc5",
+    "preserved_i110": {
+      "network": "outputs/i110-merge/v01/network/network.net.xml",
+      "network_sha256": "a216efd0a451845c19147437284fe0014d503c8015aca1d29bb4b4b8e1ac8623",
+      "geometry_version": "i110_provisional_v1"
+    }
+  },
+  "observation_size": 93,
+  "state_size": 376,
+  "action_size": 2,
+  "model": {
+    "observation_size": 93,
+    "state_size": 376,
+    "num_agents": 4,
+    "driving_local_size": 45,
+    "driving_message_size": 8,
+    "driving_mask_start": 30
+  },
+  "local_features": [
+    "speed_over_cap",
+    "acceleration_over_4p5",
+    "lane_index_fraction",
+    "remaining_route_fraction",
+    "allowed_speed_over_cap",
+    "previous_request_over_4p5",
+    "own_front_gap_over_120",
+    "own_front_relative_speed_over_cap",
+    "own_front_present",
+    "own_rear_gap_over_120",
+    "own_rear_relative_speed_over_cap",
+    "own_rear_present",
+    "left_front_gap_over_120",
+    "left_front_relative_speed_over_cap",
+    "left_front_present",
+    "left_rear_gap_over_120",
+    "left_rear_relative_speed_over_cap",
+    "left_rear_present",
+    "right_front_gap_over_120",
+    "right_front_relative_speed_over_cap",
+    "right_front_present",
+    "right_rear_gap_over_120",
+    "right_rear_relative_speed_over_cap",
+    "right_rear_present",
+    "left_lane_exists",
+    "right_lane_exists",
+    "lane_count_over_7",
+    "distance_to_required_merge_over_240",
+    "requires_merge",
+    "lane_cooldown_over_5",
+    "mask_right",
+    "mask_stay",
+    "mask_left",
+    "merge_context_known",
+    "merge_target_lane_index_over_7",
+    "merge_target_lane_delta",
+    "distance_to_target_lane_start_over_240",
+    "target_front_gap_over_120",
+    "target_front_relative_speed_over_cap",
+    "target_front_present",
+    "target_rear_gap_over_120",
+    "target_rear_relative_speed_over_cap",
+    "target_rear_present",
+    "feasible_acceleration_ceiling_over_4p5",
+    "target_allowed_speed_over_cap"
+  ],
+  "message_features": [
+    "southbound_position_delta_over_150",
+    "sender_requires_merge",
+    "relative_speed_over_cap",
+    "acceleration_over_4p5",
+    "previous_acceleration_request_over_4p5",
+    "age_over_0p5",
+    "previous_lane_request",
+    "present"
+  ],
+  "mask_slice": [
+    30,
+    33
+  ],
+  "message_slice": [
+    45,
+    93
+  ],
+  "normalization": "fixed analytic scaling; no running statistics",
+  "acceleration_m_s2": [
+    -4.5,
+    2.0
+  ],
+  "lane_delta": [
+    -1,
+    0,
+    1
+  ],
+  "legacy_checkpoint_compatible": false,
+  "information_source": "current exact SUMO state/map plus delivered delayed messages; not camera/LiDAR",
+  "config_sha256": "1fa2582534c201cdf623a877a0ac03c70da554842e9cd998e066bb7116185d39",
+  "validation_rank": [
+    0,
+    0,
+    0,
+    6,
+    12,
+    0.9658944066617826,
+    -503,
+    -0.18147472642001042,
+    30782.689241671033
+  ],
+  "ranking_version": 4,
+  "quality_accepted": false,
+  "validation_report": "validation-phase-3.json",
+  "policy_sha256": "07ef91a2e7591becd235862c9b2ebb0dd5707ef364546ec251f8bf8964e1a6b3",
+  "checkpoint_sha256": "91c1752996cb2fcc40f06b0ecbdff4f621e51c492571d17dcce98e5740de8ee7",
+  "validation_sha256": "910252bb2ddc56b4e9611d4b8892fa56cd28c4f28b18ed51199029b759387a1e"
+}
