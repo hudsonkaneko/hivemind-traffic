@@ -866,3 +866,10 @@ change. Native guide and full 42-tab Markdown mirror synchronized and verified.
 - Ran the approved twelve-epoch, acceleration-weighted BC/MAPPO revision: 499,990 transitions, 162 PPO updates and 59m04s aggregate runtime. One Windows checkpoint access failure resumed from the valid checkpoint without changing sources or resetting budget.
 - Selected validation improves pooled overrides from 18.15% to 14.97% and failing cases from eight to five; 6/6 merges and 12 passes remain. Four-lane passing regressed, and retained phase 0 has fewer pooled overrides than final; the actor remains unaccepted.
 - Preserved failed/resumed logs, intermediate metrics and exact provenance. Published the frozen experimental actor in the versioned catalog and verified CPU inference/previous-package preservation. No held-out traffic or further learning ran. [Results](highway-stage1-training-v03.md).
+
+
+## November 4, 2026: Stage 1 v04 improved training plan
+
+- Saved a proposed matched A/B comparison of current-rollout imitation and retained training-only acceleration corrections, starting from the verified v03 phase-0 model.
+- Defined explicit warm-start provenance, buffer/PPO separation, fixed evaluation milestones, worst-case-first selection, efficiency protections and unchanged acceptance gates. Proposed screen: 100k decisions/30 minutes per arm; no automatic scale-up.
+- Updated the living roadmap and synchronized the engineering guide. This is planning only; no learner/config implementation, simulator run or training occurred. [Complete plan](highway-stage1-v04-training-plan.md).

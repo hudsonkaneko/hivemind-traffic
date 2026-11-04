@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v05**, updated **November 3, 2026, America/Los_Angeles**.
-Status: **Stage 1 v03 training completed after recovery; five intervention gates still fail**.
+Revision **v06**, updated **November 4, 2026, America/Los_Angeles**.
+Status: **Stage 1 remains unaccepted; v04 correction-memory comparison planned, not implemented**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,7 +14,7 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** diagnose the five remaining following/passing intervention failures and the 4-lane passing regression using the [v03 retained results](highway-stage1-training-v03.md). Selected pooled overrides fell to 14.97%, but Stage 1 remains unaccepted. Review a new scoped configuration before further learning.
+**Next action:** implement the [v04 correction-memory training plan](highway-stage1-v04-training-plan.md), beginning with saved-journal diagnosis. The proposed matched A/B pilot uses the same frozen phase-0 model, 100k new training decisions or 30 minutes per arm, with explicit leakage checks and regression guards. Present runnable configs after preparation; no new learning is authorized.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
@@ -345,3 +345,12 @@ After each meaningful implementation, evaluation, failed attempt or decision:
 - Selected validation: 14.97% pooled/51.47% worst overrides, five failing cases, 6/6 merges and 12 passes; zero collisions/teleports/overspeed under protections. Four-lane passing regressed; older phase-2 v02 still has lower pooled interventions.
 - [Run, failure and comparison evidence](highway-stage1-training-v03.md); [frozen experimental actor](../policies/versions/highway-stage1-v03/README.md). No held-out traffic or physical transfer was run.
 - Stage 1 is still open. Diagnose the remaining per-case failures and present a revised setup before another learning attempt; existing safety/acceptance criteria stay fixed.
+
+
+### v06 — November 4, 2026: improved training plan
+
+- Saved the [v04 training plan](highway-stage1-v04-training-plan.md): diagnose following/passing errors, then compare current-only imitation with retained acceleration corrections from training states.
+- Proposed shared warm start from verified v03 phase 0; explicit import is required because ordinary resume cannot reuse selected checkpoints for a new experiment. Keep observations, reward, safety guards and lane imitation unchanged.
+- Proposed paired screen: 100k new PPO decisions or 30 minutes per arm; deterministic 20k task-balanced memory for B, no validation/test data or historical PPO replay. Predeclare worst-case-first selection and compare fixed endpoints with efficiency protections.
+- Screening success is distinct from the unchanged per-case 5% acceptance gate. A repeated-seed study and held-out evaluation require later scoped proposals; sensors remain a subsequent stage.
+- Research basis: dataset aggregation and on-policy PPO, linked in the plan. No runtime changes, new simulator runs or learning occurred. Next deliverable is implementation/preflight plus exact disabled configurations for review.
