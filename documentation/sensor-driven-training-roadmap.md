@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v04**, updated **November 3, 2026, America/Los_Angeles**.
-Status: **Stage 1 remains unaccepted; v03 diagnostics and training revision prepared for review**.
+Revision **v05**, updated **November 3, 2026, America/Los_Angeles**.
+Status: **Stage 1 v03 training completed after recovery; five intervention gates still fail**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,14 +14,11 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** review the [v03 disabled training revision](highway-stage1-v03-preparation.md#final-proposal-for-review).
-Matched teacher validation and saved-journal diagnosis support targeting acceleration
-fitting, with measured teacher conservatism kept visible. Preparation passes 98
-regression checks and a full 30-case preflight. No v03 learning is authorized.
+**Next action:** diagnose the five remaining following/passing intervention failures and the 4-lane passing regression using the [v03 retained results](highway-stage1-training-v03.md). Selected pooled overrides fell to 14.97%, but Stage 1 remains unaccepted. Review a new scoped configuration before further learning.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
-| 1. Learn driving with structured observations | v02 override gate failed; diagnosed v03 revision prepared, learning pending | Per-task driving gates with low intervention and a frozen held-out evaluation |
+| 1. Learn driving with structured observations | v03 completed; 6/6 merges and 12 passes, five override gates still fail | Per-task driving gates with low intervention and a frozen held-out evaluation |
 | 2. Learn with imperfect observations | Planned; existing message delay is only part of the problem | Paired clean/noisy results, leakage audit and reliable stale/missing-data behavior |
 | 3. Replace ideal fields with sensor estimates | Frozen segmentation/fusion previews and dataset/trainer preparation exist; policy integration open | Perception/tracking accuracy and latency, then physical closed-loop validation |
 
@@ -338,3 +335,13 @@ After each meaningful implementation, evaluation, failed attempt or decision:
   actors/catalog remain intact; phase 2 is favored only in the recorded reranking.
 - [Diagnosis, exact config and evidence](highway-stage1-v03-preparation.md). Next
   gate is configuration approval before the second bounded learning attempt.
+
+
+### v05 — November 3, 2026: v03 learning and checkpoint recovery
+
+- User approved the reviewed configuration. Only the authorization flag changed in a retained launch copy; the tracked proposal remains disabled for future launches.
+- One Windows checkpoint replacement failed; the valid closed checkpoint resumed with identical sources/configuration and retained consumed budget. No runtime change or repeated failure occurred.
+- Total 499,990 transitions, 162 PPO updates and 3,544.125 seconds charged runtime. The chat waited for exit; automated metrics and journals remain preserved.
+- Selected validation: 14.97% pooled/51.47% worst overrides, five failing cases, 6/6 merges and 12 passes; zero collisions/teleports/overspeed under protections. Four-lane passing regressed; older phase-2 v02 still has lower pooled interventions.
+- [Run, failure and comparison evidence](highway-stage1-training-v03.md); [frozen experimental actor](../policies/versions/highway-stage1-v03/README.md). No held-out traffic or physical transfer was run.
+- Stage 1 is still open. Diagnose the remaining per-case failures and present a revised setup before another learning attempt; existing safety/acceptance criteria stay fixed.

@@ -4606,3 +4606,23 @@ The disabled v03 proposal keeps the 93-field actor, rewards, protection threshol
 Verification: 98 regression tests pass. The frozen full preflight passes all 30 cases in 380.265 seconds with zero BC/PPO optimizer steps, no source drift, worst case 4.386% overrides, and successful API/seed/repeat/collector/export/geometry checks. Readiness passes, but training\_authorized remains false. Canonical disabled config SHA-256: 7c6cb1922727f73b62c502deeb8c1417f769ad7ec3aca6363ad782b8c884428b. There are no v03 learned weights; the next gate is review of the configuration before a new bounded attempt.
 
 Configuration, evidence and commands: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/highway-stage1-v03-preparation.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/highway-stage1-v03-preparation.md>)
+
+<a id="docs-h-x5si1i69sfxl"></a>
+
+#### November 3, 2026 — Stage 1 v03 training completed after checkpoint recovery
+
+The user approved the reviewed v03 configuration. Only its authorization flag changed in the retained launch copy; its canonical SHA-256 is 4df2efa0955d84de1bca101b1dd45d5e72e4a8709a4596165f0f36e6281ea5a8. Runtime source commit `cf6ae5096ebac9f165e9811ed3916195227f3146` remained unchanged. The chat waited for process completion/failure without monitoring progress; scheduled metrics, validation and checkpoints were collected automatically.
+
+Initial run train-20261103T230113Z-dbea1564 stopped after a Windows checkpoint replacement access denial. The external lock owner is unknown. Its valid closed last.pt resumed as train-20261103T230506Z-04ba1761 using identical sources/configuration and the remaining budget. One uncommitted BC update was discarded; both logs, failure evidence and source snapshots are retained. No checkpoint was patched or runtime code changed, and the resumed process completed without another error.
+
+The aggregate attempt consumed 499,990 active-agent transitions (49,998 demonstrations plus 449,992 PPO), 162 PPO updates and 3,544.125 seconds (59m04s) charged runtime. It stopped at the transition allocation, below the two-hour cap. The selected final actor completes 6/6 merges and 12 passes with zero collisions, teleports or overspeed under protections; cruise speed is 96.44–96.97% of limit.
+
+Quality remains unaccepted: 5,745/38,380 decisions require overrides (14.97% pooled, 51.47% worst), and five of twelve cases exceed the unchanged 5% gate. Compared with selected v02, failures fall from eight to five and pooled overrides fall by 3.18 percentage points. However, four-lane passing regresses from 35.56% to 51.47%. No held-out test or physical transfer was run.
+
+The retained phase-0 v03 actor has lower pooled/worst overrides (11.34%/32.63%) but six failing cases; ranking v5 correctly selects final because it prioritizes failing-case count. Better BC training-label fit (acceleration RMSE 0.20134 to 0.14399 m/s²) did not itself yield better driving: after-BC overrides were 29.02%, with two cruise task failures. These are one-seed combined-pilot results, not independently attributed effects.
+
+The frozen experimental actor is now in policies/versions/highway-stage1-v03 with exact config/contract, measured evaluation and checksums. SHA-256: a6d59d3acf58fcca9d7fc33406cb61ca3863d1a3dffad6dd316b195a66c7166f. CPU TorchScript loading, shape and finite-output checks pass; earlier packages are unchanged. Inputs remain exact SUMO/map state plus delivered messages, not cameras/LiDAR. Next: diagnose actor-visited following/passing acceleration errors and per-case regressions before reviewing another configuration. No further training is authorized by this completed attempt.
+
+Training evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/highway-stage1-training-v03.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/highway-stage1-training-v03.md>)
+
+Frozen policy: [`https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-v03/policies/versions/highway-stage1-v03`](<https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-v03/policies/versions/highway-stage1-v03>)
