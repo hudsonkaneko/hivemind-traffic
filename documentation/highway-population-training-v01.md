@@ -1,6 +1,6 @@
 # Variable autonomous-vehicle population pilot v01
 
-November 4, 2026, America/Los_Angeles. Implemented and verified; the user-authorized bounded run is ready to launch.
+November 4, 2026, America/Los_Angeles. Completed pilot; final policy regressed and is not accepted.
 
 ## Plan and scope
 
@@ -77,4 +77,28 @@ Training launch command (from the project root, existing traffic environment):
 .venv-traffic/Scripts/python.exe -m experiments.run_highway_population --mode train --config outputs/highway-population/v01/launch-20261104T225147Z/authorized-config.json --approved-config-sha256 9917f0b103e97671492fc4dd0e63aaf6b73b0f17cdd2387fce67883ad545033c
 ```
 
-Progress and results will be recorded after process exit. Google-guide milestone synchronization is pending the result; the existing generated mirror is unchanged.
+The completed result is recorded below. The Google guide was updated with revision-guarded scoped edits and verified native readback. All 42 tabs and historical content were preserved; the 40 unaffected tab bodies were unchanged. The Markdown mirror regenerated and passed its check from `outputs/doc-sync/highway-population-v01/verified-source.json`. Native pagination was not inspected.
+
+
+## Completed pilot and decision
+
+Run: `outputs/highway-population/v01/train-20261104T225405Z-302c4943`. Runtime source commit: `07482466f4d85805d931e4f9c639acb9600aafa0`. The run completed with exit 0 and no runtime-source drift, failure recovery, automatic extension or held-out execution. Source provenance truthfully records unrelated dirty workspace files; the training sources were committed and hash-verified.
+
+The process consumed 99,999 active-agent decisions (4,096 critic-only and 95,903 PPO), 41 rollout updates, 76 critic warmup optimizer steps and 1,392 PPO optimizer steps. Charged elapsed time was 474.296 seconds. One decision remained unusable for the next active cohort. The chat waited for process exit without reading metrics, changing code or running agents while learning proceeded.
+
+| Matched 16-case validation | Frozen start | Final |
+| --- | --- | --- |
+| Pooled interventions | 11,926 / 57,783 = 20.6393% | 18,266 / 57,619 = 31.7013% |
+| Worst case | 44.875% | 75.125% |
+| Cases failing existing gates | 15 / 16 | 15 / 16 |
+| Completed controlled merge targets | 4 / 4 | 4 / 4 |
+| Passes | 13 | 14 |
+| Final collisions / teleports / overspeed | — | 0 / 0 / 0 under SUMO protections |
+
+All sixteen initial and final accounting windows were complete and valid. Thirteen cases worsened in intervention rate; three improved. The worst final case was one AV among 24 cars with no messages on the two-lane cruise fixture. Intermediate counts 3/5/7 also regressed as a group: 20.5668% to 31.2406% pooled interventions across nine matched cases. The all-AV 8/8 cruise case passed, but that isolated result does not establish slider robustness. See [all per-case results](evidence/highway-population-v01/comparison.md) and [machine-readable evidence](evidence/highway-population-v01/results.json).
+
+**Native emergency warning discrepancy:** sampled `emergency_braking_observed` counters were zero, but SUMO warning logs contain four controlled-car emergency stops at lane ends during training and one during initial validation. Final validation has no such warning. The native warnings and their paths/hashes are retained in the [independent audit](evidence/highway-population-v01/audit.json); do not describe the entire run as emergency-free or assume the sampled counter covers every native event.
+
+**Decision: reject promotion.** The final actor is retained in [the experimental policy catalog](../policies/versions/highway-population-v01/README.md), SHA-256 `8d2e8793072e8a575acba03391da6783705b87521e0848ba14401345d4616e59`. It does not supersede the parent or any accepted policy. Full resume checkpoints, raw journals, native logs and per-case ledgers stay local under the run directory; the frozen actor, exact configuration, compact metrics and checksums are published.
+
+Next action: diagnose acceleration/native-response mismatch and the missed lane-end warning events using the saved journals. Establish a scripted baseline on the same population matrix before proposing a targeted correction and another bounded run. Do not increase the budget, combine the unfinished correction-memory study or enable live slider handoffs automatically. Camera/LiDAR integration and physical transfer remain separate gates.

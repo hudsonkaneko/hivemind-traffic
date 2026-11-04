@@ -18,7 +18,8 @@ def compact(report):
              'intervention_fraction', 'override_causes', 'collisions', 'teleports',
              'overspeed_steps', 'mean_fraction_of_speed_limit', 'passes',
              'successful_merges', 'merge_target_count', 'lane_changes',
-             'mean_abs_jerk', 'minimum_headway_s', 'minimum_ttc_s',
+             'mean_abs_jerk', 'peak_abs_jerk', 'emergency_braking_observed',
+             'minimum_headway_s', 'minimum_ttc_s',
              'population_metrics', 'delivered_messages', 'dropped_messages',
              'delivered_bytes', 'primary_horizon_complete',
              'accounting_comparison_valid', 'episode_directory')
@@ -66,7 +67,8 @@ def main():
             f"{a['mean_fraction_of_speed_limit']:.3f} / {b['mean_fraction_of_speed_limit']:.3f} | "
             f"{a['passes']} / {b['passes']} | {a['successful_merges']} / {b['successful_merges']} ({b['merge_target_count']}) |")
     (HERE / 'comparison.md').write_text('\n'.join(lines) + '\n', encoding='utf-8')
-    print(json.dumps(dict(initial=data['comparison.json']['initial'], final=data['comparison.json']['final'],
+    brief = lambda s: {k: (len(v) if k == 'failures' else v) for k, v in s.items()}
+    print(json.dumps(dict(initial=brief(data['comparison.json']['initial']), final=brief(data['comparison.json']['final']),
         run=evidence['run'], policy_sha256=evidence['artifact_sha256']['policy.pt']), indent=2))
 
 

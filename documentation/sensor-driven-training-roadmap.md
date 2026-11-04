@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
 Revision **v07**, updated **November 4, 2026, America/Los_Angeles**.
-Status: **Stage 1 remains unaccepted; variable-population pilot in preparation**.
+Status: **Stage 1 remains unaccepted; variable-population pilot completed with regression**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,11 +14,11 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** prepare and run the user-authorized [variable-population pilot](highway-population-training-v01.md), after tests, bounded no-learning preflight and presentation of its resolved configuration. Train changing controlled-car counts independently of traffic density and communication availability. The separate [v04 correction-memory comparison](highway-stage1-v04-training-plan.md) remains planned and unimplemented; do not combine its learning change with this population experiment.
+**Next action:** diagnose the failed [population pilot](highway-population-training-v01.md) using saved journals: interventions increased from 20.64% to 31.70%, and native lane-end emergency warnings escaped the sampled counter. Prepare a matched scripted baseline and a targeted correction before any new training proposal. The v04 correction-memory comparison remains separate and unimplemented; no further learning is authorized by this completed pilot.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
-| 1. Learn driving with structured observations | v03 completed; 6/6 merges and 12 passes, five override gates still fail | Per-task driving gates with low intervention and a frozen held-out evaluation |
+| 1. Learn driving with structured observations | Population v01 completed; 4/4 merge targets and 14 passes, 15/16 cases fail; interventions regressed | Per-task driving gates with low intervention and a frozen held-out evaluation |
 | 2. Learn with imperfect observations | Planned; existing message delay is only part of the problem | Paired clean/noisy results, leakage audit and reliable stale/missing-data behavior |
 | 3. Replace ideal fields with sensor estimates | Frozen segmentation/fusion previews and dataset/trainer preparation exist; policy integration open | Perception/tracking accuracy and latency, then physical closed-loop validation |
 
@@ -362,3 +362,11 @@ After each meaningful implementation, evaluation, failed attempt or decision:
 - Implemented reset-based mixed cohorts, nearest-six messages, a masked eight-slot critic and an unchanged 93-field actor.
 - 157 targeted tests plus frozen no-learning API/seed/collector/export preflight pass; spawn and reset-option failures remain recorded.
 - [Resolved configuration and evidence](highway-population-training-v01.md). Next action: launch the authorized 100k/30-minute run, wait for exit, retain results and synchronize the guide. Live handoff, held-out acceptance and sensor transfer remain open.
+
+
+### v07 result — November 4, 2026: population pilot completed, not accepted
+
+- Ran the approved configuration once: 99,999 decisions, 474.296 charged seconds, no runtime failure/source drift or monitoring during learning.
+- Matched validation regressed from 20.6393% pooled/44.875% worst interventions to 31.7013%/75.125%; both endpoints fail 15/16 cases. Final 4/4 merge targets and 14 passes do not outweigh this regression.
+- All initial/final ledgers are complete; final collision/teleport/overspeed counts are zero under protections. Four training and one initial-validation native emergency lane-end warnings were missed by sampled counters; none appear in final validation.
+- [Result, raw-evidence locations and next action](highway-population-training-v01.md). Preserve the final experimental actor without promoting it. No new run, live handoff, held-out or sensor/physical evaluation follows automatically.
