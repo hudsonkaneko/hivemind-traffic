@@ -1,0 +1,1420 @@
+{
+  "schema": "highway_population_v01_saved_artifact_audit_v1",
+  "date": "2026-11-04",
+  "run": "outputs/highway-population/v01/train-20261104T225405Z-302c4943",
+  "scope": "Read-only analysis of retained run artifacts; no additional simulation, learning, or runtime changes.",
+  "sources": {
+    "reports": [
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/summary.json",
+        "sha256": "0fc8c350b6b3a2b037db319698f05357c37942620bfb443022c38d6cfc221561"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/config.json",
+        "sha256": "107961b6c007e4439e24690b0904be51abe058839ce2264e1b4de51137940f62"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation.json",
+        "sha256": "3aef44df81e489f71872b0fb0caed1123e5a1c1b57fdaad237df7403c5fbd74a"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation.json",
+        "sha256": "9d08a768ef77dac1d4eb1f2d3ca21ebfd9447380ad9b8fbe9cc95e8cc4efb38a"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/training-coverage.json",
+        "sha256": "3871c70a9ca5ab6e3b6e4e4030c066eedb04afb46170a079573c6a3201bcec67"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/policy-contract.json",
+        "sha256": "7a18455510d4535cb3ed5552d244cd4faf81bacb3466b8e59a0c4dd25e2782ed"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/provenance.json",
+        "sha256": "cfd6bdce9a4898e1c20a59bdc529ab68221b5cde0808004719763df7bc2178fc"
+      }
+    ],
+    "updates": [
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00001.json",
+        "sha256": "c77866b110c8df9235950ebc8e8a83bc7823fb1545548a5abd5b349c34dfb062"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00002.json",
+        "sha256": "5c5368fea8e786f222d5b34508f4c24de03de302f3b6e757212e26e13815047e"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00003.json",
+        "sha256": "51251e80694b551ed063ad1f82843d855ca499aa4c8208b3887cf1c4a7ad7e69"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00004.json",
+        "sha256": "e2b000857fdb5494c0228940013b7e1781872e955dd5272ba244f45e5db92456"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00005.json",
+        "sha256": "12f29e928332f8b4b23202e2e70af0fb6f426e119ca87def8807776fc48e36a2"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00006.json",
+        "sha256": "ffc60b816ecbb447e4c3630a4f7ad02c536393643e2c487c5d3e3d3b1d93dc86"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00007.json",
+        "sha256": "6df7105b64a27f80e5d34f1a39f31f0a31fe8ab9fb91ebf372d7250489c65902"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00008.json",
+        "sha256": "79413dbf4093c8bcdffa05d6acadc2a0ddadf742083e404c44e7f0ecee828b0f"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00009.json",
+        "sha256": "4fca82fcfe2adb7d897d9b96aef87b3170779bf916b3cc264f68022343ca10e0"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00010.json",
+        "sha256": "de10b0b6d9e4afce6db59d9b52c39338dfb065bed73e463ed98a44e8afd9d77b"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00011.json",
+        "sha256": "d2cc0abfeac78097da0e59f0302effa4b83c0b11e346f6fd923d3924f77dfc12"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00012.json",
+        "sha256": "55f7ab2065aed010f7273806b34f5ecb6bf32699eeb4e2d78a594b7ba0bec1ea"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00013.json",
+        "sha256": "3adede1082a51760034be5251da61eb6a252b063846e4615380caf5244cef74d"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00014.json",
+        "sha256": "f20c42d492f1dfa3f651870dbd78050f34bd073b55773438dbb4786a7eba8ad9"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00015.json",
+        "sha256": "3173e35efc1b5efa728b5c6f38cf61aa72d3900bde9c03200db09ea8a1665e68"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00016.json",
+        "sha256": "a5d6103e2f7b9deda6c721be7f43fdf389122919df7077cf4f58939d9f202e8d"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00017.json",
+        "sha256": "15d2dd1760183bca1a0b3d3e504aeb19a65480a36a8e821757e0414612357d33"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00018.json",
+        "sha256": "1beb44ba67b9b22e7e8c929c696a1233cbd7e4a581a9eb26210c47faaddb023d"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00019.json",
+        "sha256": "fdb95e6b964164a12ca229c2dc36f781a1321b8e9e0f89b01112b5e6eecb9139"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00020.json",
+        "sha256": "c5936d06a0dd1a4b33f9c7e770ab109fa0f6a40279cb1873ef51849df87c1f81"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00021.json",
+        "sha256": "fe91ab037162b2f2ae388d7d8fef12db636636970e42983177802f65c47a0160"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00022.json",
+        "sha256": "e4d28e0be9fb6491137c0d748a41c0728fdbfc0324aae88653fb8c2b87ffa9e0"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00023.json",
+        "sha256": "897503ddcb3bde9ffc1251c7c470c7e938b594b08ef978e1667e8ec6e55f5784"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00024.json",
+        "sha256": "5b1d2117d165c63d04d6b0b2d3e2e62180cbbc8de30a705d3d159b7bdb09c55c"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00025.json",
+        "sha256": "814d719beec246430e4a83ec3d64f6d3e4543d237d165c46e2fc6e2f10aaea89"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00026.json",
+        "sha256": "3b50bf6e78a616106b2e9e772e11fef0e722caa12c0802e726026a7caccd6c28"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00027.json",
+        "sha256": "ff108647ea84fadf4d37b847af366af9eab852ed5ff5ac1fe1a4671a9d630168"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00028.json",
+        "sha256": "e42bdff873d505707ce014b911121c9fa87d2c9926b51286959a9cebe178fe4a"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00029.json",
+        "sha256": "5b07f1564f6c204b082243bd2d7af4f57b12652afe7372b8908ff15ee7419518"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00030.json",
+        "sha256": "098d43476a1629fc2678732f3289e6fb3bfb99020c98e68055ae14d8676ad881"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00031.json",
+        "sha256": "690d50afbcaa7c89576a11b7fbabae0529f76f79fcb4ae334e4c98f7b64830ff"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00032.json",
+        "sha256": "fd578659252d0de64506123cb6fb02f3601c7c3198859e50fbee30dd9a2772fd"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00033.json",
+        "sha256": "b321ea64e459712fa73bb4f257a7b8a5cf4927593be9de1b9d6f8520843f1545"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00034.json",
+        "sha256": "6c44806384934ae6386e4820aca8fb73b48a5f48b3361eb2495e6d6a3ba0f27c"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00035.json",
+        "sha256": "50c193387a79991946a87429cf7724b2062f0f9c28bf8adbba8b110986498460"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00036.json",
+        "sha256": "4759749d870d681aac84f69fa57c19787a3de392e0226466297d8820d1c6797f"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00037.json",
+        "sha256": "93228ddeb61139bc28e722ae1f1168a3a5152d8735c4ce3e4287c07662a07645"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00038.json",
+        "sha256": "7e4c13a516ea9b296d6189c688b78ed2fba20acee68e4a9f833b1b585be5d8be"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00039.json",
+        "sha256": "d3b38fb7a7a7fa846e9728673c702d5f35af4bfac4ae43f3cf9c8fa5d5544e47"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00040.json",
+        "sha256": "9bd634e5867d017cd9ffe4b5fa05637b37e23b95d3d05315dbe75b37ceac188b"
+      },
+      {
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/update-00041.json",
+        "sha256": "718b0f0b8338dd4c945c2b6f36d09f2f22dc3e38c18a0539febe843ab507ae86"
+      }
+    ],
+    "native_logs": [
+      {
+        "partition": "training",
+        "seed": 6500000,
+        "case_id": "train-2-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/1/episode-6500000-fe58f702/sumo-errors.log",
+        "sha256": "f23f4b9b9dd01e3d18a5dc8a45fcdc7a1088bcdfb2bbceab6e2d5d5404cb68ca",
+        "matched_warning_lines": [
+          "Warning: Vehicle 'agent_0' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-23.19, offset=0.87), time=60.00."
+        ]
+      },
+      {
+        "partition": "training",
+        "seed": 6500001,
+        "case_id": "train-3-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/2/episode-6500001-690a8f46/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500002,
+        "case_id": "train-4-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/3/episode-6500002-f7fe9add/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500003,
+        "case_id": "train-5-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/4/episode-6500003-3618c6c9/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500004,
+        "case_id": "i110-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/5/episode-6500004-1ea3dea3/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500005,
+        "case_id": "train-2-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/6/episode-6500005-5eb4dd19/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500006,
+        "case_id": "train-3-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/7/episode-6500006-1ac2a72a/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500007,
+        "case_id": "train-4-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/8/episode-6500007-e3231341/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500008,
+        "case_id": "train-5-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/9/episode-6500008-295ff24b/sumo-errors.log",
+        "sha256": "3e298ea9027f5559a4ec946a0c863d6663ed6ad36034bfa1aca084966be889ad",
+        "matched_warning_lines": [
+          "Warning: Vehicle 'agent_7' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-26.92, offset=1.04), time=58.00.",
+          "Warning: Vehicle 'agent_3' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-17.41, offset=0.25), time=73.70."
+        ]
+      },
+      {
+        "partition": "training",
+        "seed": 6500009,
+        "case_id": "i110-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/10/episode-6500009-7feae163/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500010,
+        "case_id": "train-2-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/11/episode-6500010-0d8c32c6/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500011,
+        "case_id": "train-3-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/12/episode-6500011-3c18450a/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500012,
+        "case_id": "train-4-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/13/episode-6500012-a841332f/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500013,
+        "case_id": "train-5-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/14/episode-6500013-1c9d0924/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500014,
+        "case_id": "i110-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/15/episode-6500014-d54b89ed/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500015,
+        "case_id": "train-2-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/16/episode-6500015-41a7abe0/sumo-errors.log",
+        "sha256": "c7342c53a36210b7275e31f43c198250cc080ce28874f4753113e17d8069aee0",
+        "matched_warning_lines": [
+          "Warning: Vehicle 'agent_1' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-17.94, offset=0.75), time=54.80."
+        ]
+      },
+      {
+        "partition": "training",
+        "seed": 6500016,
+        "case_id": "train-3-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/17/episode-6500016-960a3ed7/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500017,
+        "case_id": "train-4-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/18/episode-6500017-4fa2fad2/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500018,
+        "case_id": "train-5-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/19/episode-6500018-f8463718/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500019,
+        "case_id": "i110-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/20/episode-6500019-a783024b/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500020,
+        "case_id": "train-2-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/21/episode-6500020-f6782749/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500021,
+        "case_id": "train-3-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/22/episode-6500021-a0e1dc15/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500022,
+        "case_id": "train-4-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/23/episode-6500022-5ad933f1/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500023,
+        "case_id": "train-5-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/24/episode-6500023-64a702c0/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500024,
+        "case_id": "i110-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/25/episode-6500024-7e0ccd61/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500025,
+        "case_id": "train-2-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/26/episode-6500025-b42afdd3/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500026,
+        "case_id": "train-3-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/27/episode-6500026-cd82c38a/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500027,
+        "case_id": "train-4-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/28/episode-6500027-05c1eb65/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500028,
+        "case_id": "train-5-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/29/episode-6500028-c1eebcc0/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500029,
+        "case_id": "i110-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/30/episode-6500029-d9df2bce/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500030,
+        "case_id": "train-2-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/31/episode-6500030-77d184d1/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500031,
+        "case_id": "train-3-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/32/episode-6500031-65cfcc92/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500032,
+        "case_id": "train-4-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/33/episode-6500032-9b74c44e/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500033,
+        "case_id": "train-5-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/34/episode-6500033-5cf4a450/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500034,
+        "case_id": "i110-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/35/episode-6500034-976e5c3d/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500035,
+        "case_id": "train-2-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/36/episode-6500035-6c764d7f/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500036,
+        "case_id": "train-3-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/37/episode-6500036-e1e8da1a/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500037,
+        "case_id": "train-4-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/38/episode-6500037-9fa4aae7/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500038,
+        "case_id": "train-5-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/39/episode-6500038-5e425b18/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500039,
+        "case_id": "i110-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/40/episode-6500039-b66f8da5/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "training",
+        "seed": 6500040,
+        "case_id": "train-2-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/train/41/episode-6500040-a45ec474/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510000,
+        "case_id": "validation-2-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/0/episode-6510000-912cd16b/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510001,
+        "case_id": "validation-2-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/1/episode-6510001-9f11be56/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510002,
+        "case_id": "validation-2-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/2/episode-6510002-fe1915ef/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510003,
+        "case_id": "validation-2-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/3/episode-6510003-d60615b9/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510004,
+        "case_id": "validation-4-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/4/episode-6510004-cd8f4e11/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510005,
+        "case_id": "validation-4-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/5/episode-6510005-6b80f12a/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510006,
+        "case_id": "validation-4-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/6/episode-6510006-fd1504ef/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510007,
+        "case_id": "validation-4-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/7/episode-6510007-1bf078d8/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510008,
+        "case_id": "validation-5-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/8/episode-6510008-da22e869/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510009,
+        "case_id": "validation-5-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/9/episode-6510009-ad87ba89/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510010,
+        "case_id": "validation-5-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/10/episode-6510010-18869267/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510011,
+        "case_id": "validation-5-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/11/episode-6510011-b561ba5c/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510012,
+        "case_id": "validation-2-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/12/episode-6510012-6860cc12/sumo-errors.log",
+        "sha256": "71c31da9aebde748526bccb34e13b2f3507f839dd6341b568036bfbd742b5436",
+        "matched_warning_lines": [
+          "Warning: Vehicle 'agent_4' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-26.71, offset=0.60), time=54.20."
+        ]
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510013,
+        "case_id": "validation-2-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/13/episode-6510013-f43119dc/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510014,
+        "case_id": "validation-2-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/14/episode-6510014-782b3998/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "initial_validation",
+        "seed": 6510015,
+        "case_id": "validation-2-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation/15/episode-6510015-74b81745/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510000,
+        "case_id": "validation-2-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/0/episode-6510000-81fbb4cb/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510001,
+        "case_id": "validation-2-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/1/episode-6510001-438adf18/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510002,
+        "case_id": "validation-2-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/2/episode-6510002-62d83f57/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510003,
+        "case_id": "validation-2-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/3/episode-6510003-21fbb0be/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510004,
+        "case_id": "validation-4-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/4/episode-6510004-64c27174/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510005,
+        "case_id": "validation-4-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/5/episode-6510005-8e99808c/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510006,
+        "case_id": "validation-4-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/6/episode-6510006-b6ad8448/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510007,
+        "case_id": "validation-4-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/7/episode-6510007-8527279e/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510008,
+        "case_id": "validation-5-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/8/episode-6510008-8bcd12ec/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510009,
+        "case_id": "validation-5-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/9/episode-6510009-a8624870/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510010,
+        "case_id": "validation-5-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/10/episode-6510010-caeb3df1/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510011,
+        "case_id": "validation-5-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/11/episode-6510011-06c62562/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510012,
+        "case_id": "validation-2-lane-cruise",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/12/episode-6510012-55a2ea27/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510013,
+        "case_id": "validation-2-lane-following",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/13/episode-6510013-363f6c78/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510014,
+        "case_id": "validation-2-lane-passing",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/14/episode-6510014-123a4e02/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      },
+      {
+        "partition": "final_validation",
+        "seed": 6510015,
+        "case_id": "validation-2-lane-merge",
+        "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation/15/episode-6510015-afa22ce0/sumo-errors.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "matched_warning_lines": []
+      }
+    ]
+  },
+  "initial": {
+    "cases": 16,
+    "agent_steps": 57783,
+    "overrides": 11926,
+    "pooled_override_fraction": 0.2063928837201253,
+    "worst_override_fraction": 0.44875,
+    "failing_cases": 15,
+    "all_accounting_valid": true,
+    "collisions": 0,
+    "teleports": 0,
+    "overspeed_steps": 0,
+    "sampled_emergency_braking_observed": 0,
+    "native_emergency_warning_events": 1,
+    "passes": 13,
+    "successful_merges": 4,
+    "merge_targets": 4,
+    "cruise_speed_gate_passes": 3,
+    "cruise_cases": 4,
+    "policy_filter_changes": 1188,
+    "native_realization_changes": 10765,
+    "lane_changes": 177
+  },
+  "final": {
+    "cases": 16,
+    "agent_steps": 57619,
+    "overrides": 18266,
+    "pooled_override_fraction": 0.3170134851351117,
+    "worst_override_fraction": 0.75125,
+    "failing_cases": 15,
+    "all_accounting_valid": true,
+    "collisions": 0,
+    "teleports": 0,
+    "overspeed_steps": 0,
+    "sampled_emergency_braking_observed": 0,
+    "native_emergency_warning_events": 0,
+    "passes": 14,
+    "successful_merges": 4,
+    "merge_targets": 4,
+    "cruise_speed_gate_passes": 3,
+    "cruise_cases": 4,
+    "policy_filter_changes": 1710,
+    "native_realization_changes": 16697,
+    "lane_changes": 171
+  },
+  "matched_comparison": {
+    "pooled_override_delta": 0.11062060141498639,
+    "cases_improved": 3,
+    "cases_worsened": 13,
+    "unseen_counts": [
+      {
+        "controlled_count": 3,
+        "initial": {
+          "cases": 3,
+          "steps": 7200,
+          "overrides": 1333,
+          "fraction": 0.18513888888888888,
+          "peers": 2
+        },
+        "final": {
+          "cases": 3,
+          "steps": 7146,
+          "overrides": 2021,
+          "fraction": 0.28281556115309264,
+          "peers": 2
+        }
+      },
+      {
+        "controlled_count": 5,
+        "initial": {
+          "cases": 3,
+          "steps": 11548,
+          "overrides": 2999,
+          "fraction": 0.2596986491167302,
+          "peers": 4
+        },
+        "final": {
+          "cases": 3,
+          "steps": 11539,
+          "overrides": 4768,
+          "fraction": 0.4132073836554294,
+          "peers": 4
+        }
+      },
+      {
+        "controlled_count": 7,
+        "initial": {
+          "cases": 3,
+          "steps": 16712,
+          "overrides": 2961,
+          "fraction": 0.17717807563427476,
+          "peers": 6
+        },
+        "final": {
+          "cases": 3,
+          "steps": 16708,
+          "overrides": 4268,
+          "fraction": 0.2554464926981087,
+          "peers": 6
+        }
+      }
+    ],
+    "unseen_combined": {
+      "initial": {
+        "cases": 9,
+        "steps": 35460,
+        "overrides": 7293,
+        "fraction": 0.205668358714044
+      },
+      "final": {
+        "cases": 9,
+        "steps": 35393,
+        "overrides": 11057,
+        "fraction": 0.31240640804678893
+      }
+    },
+    "cases": [
+      {
+        "seed": 6510000,
+        "case_id": "validation-2-lane-cruise",
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.32625,
+        "final_override_fraction": 0.75125,
+        "override_delta": 0.425,
+        "initial_speed_ratio": 0.8911285825570158,
+        "final_speed_ratio": 0.8919027263267661,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 0.041666666666666664,
+        "final_mean_on_road_av_fraction": 0.04581659757839489
+      },
+      {
+        "seed": 6510001,
+        "case_id": "validation-2-lane-following",
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.3933333333333333,
+        "final_override_fraction": 0.5754475703324808,
+        "override_delta": 0.18211423699914753,
+        "initial_speed_ratio": 0.7066841337081939,
+        "final_speed_ratio": 0.8325892498474766,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 0.1875,
+        "final_mean_on_road_av_fraction": 0.18645629484670553
+      },
+      {
+        "seed": 6510002,
+        "case_id": "validation-2-lane-passing",
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.2274520856820744,
+        "final_override_fraction": 0.42017519073184517,
+        "override_delta": 0.19272310504977078,
+        "initial_speed_ratio": 0.9191857452971952,
+        "final_speed_ratio": 0.9233115803257281,
+        "initial_passes": 5,
+        "final_passes": 5,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 0.20833333333333334,
+        "final_mean_on_road_av_fraction": 0.18872880278822718
+      },
+      {
+        "seed": 6510003,
+        "case_id": "validation-2-lane-merge",
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.18535714285714286,
+        "final_override_fraction": 0.19375,
+        "override_delta": 0.008392857142857146,
+        "initial_speed_ratio": 0.9147101045085285,
+        "final_speed_ratio": 0.9130951013023194,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 1,
+        "final_merges": 1,
+        "final_requested_av_fraction": 0.875,
+        "final_mean_on_road_av_fraction": 0.875
+      },
+      {
+        "seed": 6510004,
+        "case_id": "validation-4-lane-cruise",
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.01453125,
+        "final_override_fraction": 0.04078125,
+        "override_delta": 0.026249999999999996,
+        "initial_speed_ratio": 0.9595004618270143,
+        "final_speed_ratio": 0.9616535739424382,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 1,
+        "final_mean_on_road_av_fraction": 1
+      },
+      {
+        "seed": 6510005,
+        "case_id": "validation-4-lane-following",
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.44875,
+        "final_override_fraction": 0.15,
+        "override_delta": -0.29874999999999996,
+        "initial_speed_ratio": 0.6649473931090085,
+        "final_speed_ratio": 0.9380814246563604,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 0.125,
+        "final_mean_on_road_av_fraction": 0.125
+      },
+      {
+        "seed": 6510006,
+        "case_id": "validation-4-lane-passing",
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.06958333333333333,
+        "final_override_fraction": 0.21166666666666667,
+        "override_delta": 0.14208333333333334,
+        "initial_speed_ratio": 0.8178616321742923,
+        "final_speed_ratio": 0.9527677682401984,
+        "initial_passes": 3,
+        "final_passes": 3,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 0.1875,
+        "final_mean_on_road_av_fraction": 0.18731951320132012
+      },
+      {
+        "seed": 6510007,
+        "case_id": "validation-4-lane-merge",
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.232,
+        "final_override_fraction": 0.485,
+        "override_delta": 0.253,
+        "initial_speed_ratio": 0.88278296094874,
+        "final_speed_ratio": 0.8638833827269503,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 1,
+        "final_merges": 1,
+        "final_requested_av_fraction": 0.20833333333333334,
+        "final_mean_on_road_av_fraction": 0.2083333333333341
+      },
+      {
+        "seed": 6510008,
+        "case_id": "validation-5-lane-cruise",
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "initial_override_fraction": 0.05035714285714286,
+        "final_override_fraction": 0.15607142857142858,
+        "override_delta": 0.10571428571428573,
+        "initial_speed_ratio": 0.9465310727954241,
+        "final_speed_ratio": 0.9542465312772419,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 0.4375,
+        "final_mean_on_road_av_fraction": 0.4375
+      },
+      {
+        "seed": 6510009,
+        "case_id": "validation-5-lane-following",
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "initial_override_fraction": 0.1696875,
+        "final_override_fraction": 0.4459375,
+        "override_delta": 0.27625,
+        "initial_speed_ratio": 0.8626984689771153,
+        "final_speed_ratio": 0.9371064841816619,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 0.3333333333333333,
+        "final_mean_on_road_av_fraction": 0.33333333333333615
+      },
+      {
+        "seed": 6510010,
+        "case_id": "validation-5-lane-passing",
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "initial_override_fraction": 0.2425,
+        "final_override_fraction": 0.1325,
+        "override_delta": -0.10999999999999999,
+        "initial_speed_ratio": 0.9702716459778626,
+        "final_speed_ratio": 0.9695873505601394,
+        "initial_passes": 1,
+        "final_passes": 1,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 0.125,
+        "final_mean_on_road_av_fraction": 0.125
+      },
+      {
+        "seed": 6510011,
+        "case_id": "validation-5-lane-merge",
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "initial_override_fraction": 0.0925,
+        "final_override_fraction": 0.06791666666666667,
+        "override_delta": -0.024583333333333332,
+        "initial_speed_ratio": 0.9463791743989145,
+        "final_speed_ratio": 0.9522965588890004,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 1,
+        "final_merges": 1,
+        "final_requested_av_fraction": 0.1875,
+        "final_mean_on_road_av_fraction": 0.1875
+      },
+      {
+        "seed": 6510012,
+        "case_id": "validation-2-lane-cruise",
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.316,
+        "final_override_fraction": 0.33525,
+        "override_delta": 0.01924999999999999,
+        "initial_speed_ratio": 0.9161597793377665,
+        "final_speed_ratio": 0.948422192511658,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 0.625,
+        "final_mean_on_road_av_fraction": 0.6253344034242911
+      },
+      {
+        "seed": 6510013,
+        "case_id": "validation-2-lane-following",
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.29771407837445574,
+        "final_override_fraction": 0.4192084241103849,
+        "override_delta": 0.12149434573592915,
+        "initial_speed_ratio": 0.8608629894076317,
+        "final_speed_ratio": 0.8511441239573575,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 0.4375,
+        "final_mean_on_road_av_fraction": 0.4381642909732799
+      },
+      {
+        "seed": 6510014,
+        "case_id": "validation-2-lane-passing",
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.387025665249567,
+        "final_override_fraction": 0.4868925831202046,
+        "override_delta": 0.09986691787063762,
+        "initial_speed_ratio": 0.7514420310051241,
+        "final_speed_ratio": 0.8074858620313061,
+        "initial_passes": 4,
+        "final_passes": 5,
+        "initial_merges": 0,
+        "final_merges": 0,
+        "final_requested_av_fraction": 0.3333333333333333,
+        "final_mean_on_road_av_fraction": 0.3411674858059065
+      },
+      {
+        "seed": 6510015,
+        "case_id": "validation-2-lane-merge",
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0
+        },
+        "initial_override_fraction": 0.23575129533678757,
+        "final_override_fraction": 0.287012987012987,
+        "override_delta": 0.05126169167619943,
+        "initial_speed_ratio": 0.9383611183927799,
+        "final_speed_ratio": 0.9412048575338188,
+        "initial_passes": 0,
+        "final_passes": 0,
+        "initial_merges": 1,
+        "final_merges": 1,
+        "final_requested_av_fraction": 0.125,
+        "final_mean_on_road_av_fraction": 0.12016229712858927
+      }
+    ]
+  },
+  "training": {
+    "counters": {
+      "spent": 99999,
+      "actual": 99999,
+      "critic_actual": 4096,
+      "ppo_actual": 95903,
+      "updates": 41,
+      "optimizer_steps": 1392,
+      "critic_optimizer_steps": 76,
+      "elapsed_seconds": 474.2960000000894
+    },
+    "stop_reason": "learning_time_or_remainder",
+    "episodes": 41,
+    "ppo_episodes": 37,
+    "critic_warmup_episodes": 4,
+    "by_controlled_count": {
+      "1": {
+        "episodes": 8,
+        "agent_transitions": 5051
+      },
+      "2": {
+        "episodes": 12,
+        "agent_transitions": 15956
+      },
+      "4": {
+        "episodes": 6,
+        "agent_transitions": 16924
+      },
+      "6": {
+        "episodes": 10,
+        "agent_transitions": 38113
+      },
+      "8": {
+        "episodes": 5,
+        "agent_transitions": 23955
+      }
+    },
+    "ppo_by_controlled_count": {
+      "1": {
+        "episodes": 7,
+        "agent_transitions": 5049
+      },
+      "2": {
+        "episodes": 10,
+        "agent_transitions": 12762
+      },
+      "4": {
+        "episodes": 6,
+        "agent_transitions": 16924
+      },
+      "6": {
+        "episodes": 9,
+        "agent_transitions": 37213
+      },
+      "8": {
+        "episodes": 5,
+        "agent_transitions": 23955
+      }
+    },
+    "by_task": {
+      "cruise": {
+        "episodes": 11,
+        "agent_transitions": 25071
+      },
+      "following": {
+        "episodes": 12,
+        "agent_transitions": 19910
+      },
+      "merge": {
+        "episodes": 7,
+        "agent_transitions": 25536
+      },
+      "passing": {
+        "episodes": 11,
+        "agent_transitions": 29482
+      }
+    },
+    "ppo_by_task": {
+      "cruise": {
+        "episodes": 9,
+        "agent_transitions": 24169
+      },
+      "following": {
+        "episodes": 12,
+        "agent_transitions": 19910
+      },
+      "merge": {
+        "episodes": 7,
+        "agent_transitions": 25536
+      },
+      "passing": {
+        "episodes": 9,
+        "agent_transitions": 26288
+      }
+    },
+    "total_vehicles": [
+      8,
+      16,
+      24
+    ],
+    "channels": [
+      "none / packet_loss=0",
+      "local / packet_loss=0",
+      "local / packet_loss=0.3"
+    ],
+    "requested_av_fractions": [
+      0.041666666666666664,
+      0.0625,
+      0.08333333333333333,
+      0.125,
+      0.16666666666666666,
+      0.25,
+      0.3333333333333333,
+      0.375,
+      0.5,
+      0.75,
+      1
+    ],
+    "all_recorded_cohorts_match_requested_counts": true,
+    "sampled_emergency_braking_observed": 0,
+    "native_emergency_warning_events": 4,
+    "collisions": 0,
+    "teleports": 0,
+    "overspeed_steps": 0
+  },
+  "communication_coverage": {
+    "histogram_unit": "Observation constructions including reset/final observations, not unique training decisions.",
+    "all_training_selected_peer_histogram": {
+      "0": 41896,
+      "1": 12559,
+      "2": 7711,
+      "3": 14014,
+      "4": 7283,
+      "5": 12443,
+      "6": 4204
+    },
+    "ppo_selected_peer_histogram": {
+      "0": 37790,
+      "1": 12559,
+      "2": 7711,
+      "3": 14014,
+      "4": 7283,
+      "5": 12443,
+      "6": 4204
+    },
+    "final_validation_selected_peer_histogram": {
+      "0": 31381,
+      "1": 2604,
+      "2": 2346,
+      "3": 1476,
+      "4": 4751,
+      "5": 2787,
+      "6": 12338
+    },
+    "training_overflow_observations": 3939,
+    "final_validation_overflow_observations": 7643
+  },
+  "findings": [
+    "Execution completed without source drift, but final policy regressed in pooled/worst overrides and 13 of 16 matched cases; it is not accepted.",
+    "All 16 initial and final cases have complete accounting. Different active-agent step totals reflect vehicle arrivals, so use exact recorded denominators.",
+    "Unseen controlled counts 3, 5 and 7 all regress in grouped pooled overrides. This is a single-seed sparse screen, not a full population/density/channel factorial or a causal communication ablation.",
+    "Training includes actual controlled counts 1/2/4/6/8, traffic totals 8/16/24, all three channels, and selected peer counts 0 through 6 with overflow. Controller assignments change at reset only; live slider handoff remains unimplemented.",
+    "Sampled emergency counters report zero, while retained native logs contain four controlled-car emergency lane-end stops in training and one in initial validation. Final validation native logs contain no matching emergency, collision or teleport warnings. These native warnings must be retained separately, not erased by the sampled counter."
+  ],
+  "priority_next_step": "Before another learning version, reconcile the missed native emergency-stop warnings with sampled safety metrics and diagnose the sb3_0 lane-end transitions from saved action journals. Then inspect the systematic increase in native-realization differences (10765 to 16697) and filter changes (1188 to 1710) across matched validation. The logs do not establish all native intervention causes; do not infer them from counts alone.",
+  "accepted": false,
+  "held_out_test_run": false
+}

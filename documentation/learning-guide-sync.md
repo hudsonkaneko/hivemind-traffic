@@ -534,3 +534,8 @@ and full readback preserved all 42 tabs, 40 unaffected bodies and prior history;
 the exact append and scoped link change were verified. Regeneration/check passed
 from `outputs/doc-sync/highway-stage1-v04-plan/verified-source.json`. Native
 pagination was not inspected. No implementation or training outcome was claimed.
+
+
+## November 4: variable-population MAPPO pilot
+
+Appended the actual population implementation, final reviewed configuration, failed preparation checks, completed training, regressed matched results and native emergency-counter discrepancy to tab 41. Updated the start-tab GitHub link to codex/highway-population-v01. Revision-guarded native editing/readback preserved all 42 tabs, historical target content and the 40 unaffected tabs. The mirror regenerated and checked from `outputs/doc-sync/highway-population-v01/verified-source.json` (2,533 paragraphs, 14 tables, 182 code blocks). Native pagination was not inspected. No held-out, sensor, physical or live-handoff capability is implied.

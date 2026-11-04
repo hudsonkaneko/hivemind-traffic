@@ -7,6 +7,7 @@ Frozen inference weights and short, evidence-backed model records.
 | [MAPPO v04r2](mappo-v04r2/README.md) | Imitation-assisted MAPPO / 81 fields | Accepted in its original SUMO fixture | Straight three-lane following and passing |
 | [Highway Stage 1 v02](highway-stage1-v02/README.md) | BC + MAPPO / 93 fields | Experimental; override gate failed | Varied highway cruise/follow/pass/merge |
 | [Highway Stage 1 v03](highway-stage1-v03/README.md) | Acceleration-weighted BC + MAPPO / 93 fields | Experimental; override gate failed | Varied highway cruise/follow/pass/merge |
+| [Highway population v01](highway-population-v01/README.md) | Warm-started MAPPO, masked population critic / 93 fields | Experimental; regressed, 15/16 validation cases failed | Varying AV count, finite traffic cohort and received peers |
 
 Each folder includes `policy.pt`, a short `README.md`, exact
 `training-config.json`, `contract.json`, `evaluation.json` and a

@@ -110,7 +110,7 @@ class HighwayStage1Env(I110MergeEnv):
             local += merge_features(merge_target_context(self.graph, state, self.states), ceiling)
             slots = []
             if self.communication == 'local':
-                for _, message in sorted(self.inbox[agent].items()):
+                for _, message in self._selected_messages(agent):
                     age = self.time - message['time']
                     if age > .5 + 1e-8:
                         continue
@@ -123,6 +123,11 @@ class HighwayStage1Env(I110MergeEnv):
                 raise ValueError('Invalid Stage 1 graph observation')
             observations[agent] = vector
         return observations
+
+    def _selected_messages(self, agent):
+        # Preserve historical sender ordering. Population environments override
+        # selection to cap six messages before assembling the fixed actor ABI.
+        return sorted(self.inbox[agent].items())
 
     def state(self):
         return np.concatenate([np.r_[self.obs[a] if a in self.agents else np.zeros(OBSERVATION_SIZE),
@@ -208,12 +213,12 @@ class HighwayStage1Env(I110MergeEnv):
             state, old = self.states.get(agent), before[agent]
             same_edge = bool(state and self.graph.lanes[state['lane_id']]['edge'] == self.graph.lanes[old['lane_id']]['edge'])
             changed = bool(same_edge and self.graph.identity(state['lane_id']) != self.graph.identity(old['lane_id']))
-            merged = bool(self.task == 'merge' and agent in ('agent_2', 'agent_3') and state and
+            merged = bool(self.task == 'merge' and agent in self._merge_agents() and state and
                           agent not in self.merged and self.graph.identity(state['lane_id']).get('kind') == 'through')
             passed = bool(self.task == 'passing' and agent not in self.passed and state and 'slow_leader' in self.states and
                           state['y'] < self.states['slow_leader']['y'] - 10)
             events[agent] = dict(changed=changed, merged=merged, passed=passed, same_edge=same_edge)
-        team_merges = sum(event['merged'] for event in events.values()) / len(AGENTS)
+        team_merges = sum(event['merged'] for event in events.values()) / max(1, len(self._controlled_agents()))
         rewards, terminated, truncated, infos = {}, {}, {}, {}
         for agent in agents:
             state, old, event, diagnostic = self.states.get(agent), before[agent], events[agent], diagnostics[agent]

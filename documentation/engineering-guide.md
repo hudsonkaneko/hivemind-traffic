@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v04-plan/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v04-plan/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-population-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-population-v01/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4644,3 +4644,29 @@ Evaluate the existing twelve validation cases at the shared start, 50k charged-b
 The runner would own metrics, fixed evaluations and bounded checkpoint recovery; the chat waits without monitoring while learning runs. A successful screen leads to a separately reviewed repeated-seed proposal. Held-out evaluation, sensor uncertainty and physical camera/LiDAR transfer remain later gates. This milestone adds a plan only: no learner changes, new simulation, runnable v04 configuration or training launch.
 
 Detailed plan and research links: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v04-plan/documentation/highway-stage1-v04-training-plan.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v04-plan/documentation/highway-stage1-v04-training-plan.md>)
+
+<a id="docs-h-7yp1uo1xkbqu"></a>
+
+#### November 4, 2026 — Variable-population MAPPO pilot: completed, not accepted
+
+Purpose: prepare one shared driving policy for different autonomous-vehicle percentages. The separate v04 correction-memory comparison remains planned; it was not combined with this experiment.
+
+Implementation: reset-based allocation of 0–8 controlled cars within fixed cohorts of 8, 16 or 24 total vehicles. The actor retains 93 structured SUMO/map/message inputs and acceleration plus lane-change intent. It receives at most six nearest fresh messages; absent peers are masked. A new masked 752-field centralized critic is used only in training. Live slider handoff, camera/LiDAR input and physical steering remain unimplemented in this pilot.
+
+Reviewed configuration: warm-start the v03 phase-0 actor and exploration scale, initialize a new critic, then use 4,096 critic-only decisions followed by MAPPO. Train counts 1/2/4/6/8, vary no-message/normal/30%-loss channels, and validate unseen counts 3/5/7 plus 1/24 and 8/8 endpoints. CPU, one worker/thread, 100,000 decision or 1,800-second cap including fixed initial/final validation. Safety bounds and the 60 mph ceiling remain unchanged.
+
+Preparation: 157 targeted tests and a 27.453-second no-learning preflight passed, including Parallel API/seed checks, deterministic replay, finite rollouts and actor export. Retained failures exposed native spawn spacing, edge-seam placement, generic reset-option compatibility and an exception-reporting bug; these were corrected before learning. The final initial fixture uses 60 m nominal mainline row spacing, 11–13 m/s mainline speeds and 7–9 m/s ramp speeds. No vehicles were discarded or safety guards relaxed.
+
+Completed run train-20261104T225405Z-302c4943 used source commit `07482466f4d85805d931e4f9c639acb9600aafa0`. It consumed 99,999 decisions: 4,096 critic-only and 95,903 PPO, with 41 rollout updates, 76 critic optimizer steps and 1,392 PPO optimizer steps in 474.296 charged seconds. No runtime failure, resume, source drift or budget extension occurred. The chat and subagents did no work or metric inspection while training ran.
+
+Matched validation regressed: pooled interventions increased from 11,926/57,783 (20.6393%) to 18,266/57,619 (31.7013%); worst-case rate increased from 44.875% to 75.125%. Thirteen of sixteen cases worsened, three improved; both endpoints fail fifteen cases. Final results retain four of four controlled merge targets and fourteen passes, with zero collisions, teleports and overspeed under SUMO protections. All sixteen initial and final accounting windows were complete. Unseen counts 3/5/7 also regressed; this does not establish slider robustness.
+
+Metric discrepancy: native SUMO logs contain four controlled-car emergency lane-end stops during training and one during initial validation, although the sampled emergency-braking counters are zero. Final validation has no native emergency warning. Preserve both sources of evidence and resolve the missed events before more learning; do not claim the whole run was emergency-free.
+
+Decision: do not promote this actor or replace an accepted checkpoint. Frozen experimental policy SHA-256: 8d2e8793072e8a575acba03391da6783705b87521e0848ba14401345d4616e59. Exact configuration, compact results, source hashes and actor are published; full journals and resume checkpoints remain in the local outputs/highway-population/v01 run folder. No held-out, 3D or sensor evaluation ran. Next: diagnose the acceleration and lane-end discrepancies from saved evidence, then prepare a matched scripted baseline and a targeted revision before another training proposal.
+
+Plan, configuration and results: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-population-v01/documentation/highway-population-training-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-population-v01/documentation/highway-population-training-v01.md>)
+
+Frozen actor and parameters: [`https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-population-v01/policies/versions/highway-population-v01`](<https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-population-v01/policies/versions/highway-population-v01>)
+
+Draft review: [`https://github.com/hudsonkaneko/hivemind-traffic/pull/39`](<https://github.com/hudsonkaneko/hivemind-traffic/pull/39>)
