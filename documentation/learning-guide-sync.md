@@ -523,3 +523,14 @@ history. Regenerated and checked the complete mirror from
 `outputs/doc-sync/highway-stage1-training-v03/verified-source.json`. Native
 pagination was not inspected. No held-out acceptance or physical transfer
 was claimed, and no further learning attempt was launched.
+
+
+## November 4: Stage 1 v04 improved training plan
+
+Appended the proposed diagnosis, matched correction-memory experiment, budget,
+selection and screening/acceptance distinction to tab 41. Updated the start-tab
+mirror link to `codex/highway-stage1-v04-plan`. Revision-guarded native editing
+and full readback preserved all 42 tabs, 40 unaffected bodies and prior history;
+the exact append and scoped link change were verified. Regeneration/check passed
+from `outputs/doc-sync/highway-stage1-v04-plan/verified-source.json`. Native
+pagination was not inspected. No implementation or training outcome was claimed.

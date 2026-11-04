@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v04-plan/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v04-plan/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4626,3 +4626,21 @@ The frozen experimental actor is now in policies/versions/highway-stage1-v03 wit
 Training evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/highway-stage1-training-v03.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/highway-stage1-training-v03.md>)
 
 Frozen policy: [`https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-v03/policies/versions/highway-stage1-v03`](<https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-v03/policies/versions/highway-stage1-v03>)
+
+<a id="docs-h-uw8r9ac3hy3p"></a>
+
+#### November 4, 2026 — Stage 1 v04 improved training plan
+
+A new plan targets the remaining following/passing acceleration errors while preserving cruise and merge behavior. V03 remains unaccepted. The next work starts with saved-journal diagnosis of requested, filtered and realized acceleration, lane changes, gaps and persistent mismatch. Analytical limits, rejected lane changes and unexplained native differences remain separate diagnostic categories without changing the existing combined override criterion.
+
+The proposed matched A/B screen starts both arms from the same verified v03 phase-0 full model, selected-00036-d97376b9/best.pt, including critic and exploration state. An explicit warm-start importer is needed; this is a new experiment, not resume of an exhausted run. Optimizers/RNG/new budget counters reset identically, while imitation decay retains its historical 99,998-decision offset. No new BC stage is proposed.
+
+A uses current-rollout imitation. B blends equal current and retained-example acceleration losses under the same total coefficient; lane imitation stays unchanged. B's proposed 20k-example memory starts empty, with equal task quotas and error/uniform sampling. Only new training transitions are admitted after each PPO update. Historical samples never enter PPO ratios, advantages, critic targets or normalization, and validation/test data is excluded.
+
+Proposed budget: 100k new training decisions or 30 minutes per arm, two sequential CPU runs, totaling at most 200k decisions/60 minutes. Validation and recovery time count against each arm's cap; a separate no-learning preparation cap is 15 minutes. Cruise/follow/pass/merge each receive a 25k interleaved quota across existing training roads. Actor/critic inputs remain 93/376; rewards, 60 mph ceiling and existing following/stopping protections stay fixed. Final runnable configs and hashes must be presented after preparation and before launch.
+
+Evaluate the existing twelve validation cases at the shared start, 50k charged-budget boundary and quota exhaustion, preserving actual versus charged counts. The proposed new ranking prioritizes worst-case corrections after safety/task gates, then pooled rate and failing count. The screen requires at least 20% lower worst-case overrides than matched A without regression from frozen phase 0, no pooled/failure-count regression, and declared speed/cohort safeguards. Exact baseline values bind to its saved report. Full acceptance still requires no more than 5% overrides in every case plus existing driving gates; screening success alone is not acceptance.
+
+The runner would own metrics, fixed evaluations and bounded checkpoint recovery; the chat waits without monitoring while learning runs. A successful screen leads to a separately reviewed repeated-seed proposal. Held-out evaluation, sensor uncertainty and physical camera/LiDAR transfer remain later gates. This milestone adds a plan only: no learner changes, new simulation, runnable v04 configuration or training launch.
+
+Detailed plan and research links: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v04-plan/documentation/highway-stage1-v04-training-plan.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v04-plan/documentation/highway-stage1-v04-training-plan.md>)
