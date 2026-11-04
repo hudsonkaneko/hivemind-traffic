@@ -34,6 +34,7 @@ SOURCES = ('experiments/run_highway_stage1.py', 'environments/highway_stage1_env
            'environments/i110_merge_env.py', 'traffic/highway_merge_context.py',
            'traffic/highway_stage1_teacher.py', 'traffic/i110_policy_interface.py',
            'traffic/trip_accounting.py', 'policies/mappo.py', 'environments/sumo_mappo_env.py',
+           'traffic/highway_selection.py',
            'traffic/sumo_backend.py', 'experiments/run_i110_merge.py', 'experiments/sumo_mappo_support.py',
            'scripts/build_highway_curriculum_v2.py', 'scripts/build_i110_sumo.py')
 
@@ -45,6 +46,11 @@ def digest(path):
 def load_config(path):
     from environments.highway_stage1_env import REWARD_VERSION
     cfg = json.loads(Path(path).read_text())
+    version = cfg.get('experiment_version', 'v02')
+    if version not in ('v02', 'v03'):
+        raise ValueError('Unsupported Stage 1 experiment version')
+    if version == 'v03' and cfg.get('ranking_version') != 5:
+        raise ValueError('Stage 1 v03 requires ranking version 5')
     if cfg['observation_schema'] != SCHEMA or cfg['initial_checkpoint'] is not None:
         raise ValueError('Stage 1 requires a fresh explicitly versioned actor')
     expected = dict(observation_size=93, state_size=376, num_agents=4,
@@ -58,8 +64,17 @@ def load_config(path):
     train, bc = cfg['training'], cfg['behavior_cloning']
     if not 4 <= train['max_agent_transitions'] <= 500000 or not 1 <= train['max_wall_seconds'] <= 7200:
         raise ValueError('Attempt exceeds proposed transition/wall budget')
-    if not 4 <= bc['max_agent_transitions'] <= 50000 or not 1 <= bc['epochs'] <= 4:
+    if not 4 <= bc['max_agent_transitions'] <= 50000 or not 1 <= bc['epochs'] <= (12 if version == 'v03' else 4):
         raise ValueError('Demonstration/BC allocation exceeds proposed bounds')
+    weight = bc.get('acceleration_loss_weight', 1.)
+    floor = train.get('imitation_floor', 0.)
+    initial = cfg['optimizer']['imitation_coef']
+    if not math.isfinite(weight) or not 1. <= weight <= (4. if version == 'v03' else 1.):
+        raise ValueError('Invalid BC acceleration loss weight')
+    if (not all(math.isfinite(x) for x in (floor, initial, train['imitation_decay_transitions']))
+            or not 0 <= floor <= initial or train['imitation_decay_transitions'] <= 0
+            or (version == 'v02' and floor != 0)):
+        raise ValueError('Invalid imitation retention schedule')
     if bc['max_agent_transitions'] + sum(p['agent_transitions'] for p in cfg['phases']) != train['max_agent_transitions']:
         raise ValueError('Demo and phase allocations must equal the total budget')
     if any(p['agent_transitions'] < 4 or not p['task_cycle'] or
@@ -254,8 +269,27 @@ def quality(reports, cfg):
 
 def selection_rank(reports, cfg):
     """Prefer full nominal acceptance; retain competence before low overrides."""
+    if cfg.get('experiment_version') == 'v03':
+        from traffic.highway_selection import selection_rank as intervention_rank
+        return intervention_rank(reports, cfg)
     previous = rank(reports)
     return (previous[0], int(quality(reports, cfg)['passed']), *previous[1:])
+
+
+def ranking_version(cfg):
+    return 5 if cfg.get('experiment_version') == 'v03' else RANKING_VERSION
+
+
+def imitation_weight(cfg, ppo_transitions):
+    """Keep the original zero-floor schedule for v02 and explicit retention for v03."""
+    floor = cfg['training'].get('imitation_floor', 0.)
+    initial = cfg['optimizer']['imitation_coef']
+    fraction = max(0., 1. - ppo_transitions / cfg['training']['imitation_decay_transitions'])
+    return floor + (initial - floor) * fraction
+
+
+def bc_objective(losses, cfg):
+    return cfg['behavior_cloning'].get('acceleration_loss_weight', 1.) * losses[1] + losses[2]
 
 
 def evaluate(cfg, run, model, seeds, *, split='validation', deadline=None, prefix='validation'):
@@ -317,10 +351,16 @@ def geometry_check(cfg):
 
 
 def preparation_digest(cfg):
-    return config_digest({k: cfg[k] for k in ('observation_schema', 'model', 'environment',
+    payload = {k: cfg[k] for k in ('observation_schema', 'model', 'environment',
         'reward_version', 'reward_weights', 'geometry', 'curriculum', 'phases', 'preflight')} | {
             'targets': cfg['evaluation']['provisional_targets'],
-            'preflight_seeds': cfg['evaluation']['preflight_seeds']})
+            'preflight_seeds': cfg['evaluation']['preflight_seeds']}
+    if cfg.get('experiment_version') == 'v03':
+        payload['revision'] = dict(experiment_version='v03', ranking_version=ranking_version(cfg),
+            behavior_cloning=cfg['behavior_cloning'], imitation_floor=cfg['training']['imitation_floor'],
+            imitation_decay_transitions=cfg['training']['imitation_decay_transitions'],
+            imitation_coef=cfg['optimizer']['imitation_coef'])
+    return config_digest(payload)
 
 
 def readiness_check(cfg):
@@ -466,7 +506,7 @@ def train(cfg, run, fingerprint, hashes, started, resume=None):
         payload = dict(schema=SCHEMA, config_sha256=fingerprint, config=cfg, source_hashes=hashes,
             model=model.state_dict(), optimizer=trainer.optimizer.state_dict(), state=deepcopy(state),
             selection_status='validation_selected' if Path(name).name == 'best.pt' else 'resume_only',
-            ranking_version=RANKING_VERSION, saved_at_unix=time.time(), torch_rng=torch.get_rng_state(),
+            ranking_version=ranking_version(cfg), saved_at_unix=time.time(), torch_rng=torch.get_rng_state(),
             numpy_rng=np.random.get_state(), python_rng=random.getstate(),
             demonstrations_file=demo_file,
             demonstrations_sha256=digest(run / demo_file) if demo_file is not None else None)
@@ -485,7 +525,7 @@ def train(cfg, run, fingerprint, hashes, started, resume=None):
                 checkpoint(generation + '/best.pt'); export_actor(model, folder / 'policy.pt')
                 atomic_json(folder / 'validation.json', reports)
                 atomic_json(folder / 'policy-contract.json', dict(**contract(cfg), config_sha256=fingerprint,
-                    validation_rank=score, ranking_version=RANKING_VERSION,
+                    validation_rank=score, ranking_version=ranking_version(cfg),
                     quality_accepted=quality(reports, cfg)['passed'], validation_report=label + '.json',
                     policy_sha256=digest(folder / 'policy.pt'), checkpoint_sha256=digest(folder / 'best.pt'),
                     validation_sha256=digest(folder / 'validation.json')))
@@ -497,7 +537,7 @@ def train(cfg, run, fingerprint, hashes, started, resume=None):
     def update_pending():
         pending = state['pending']
         if not pending or pending['kind'] != 'ppo_update': return
-        trainer.imitation_coef = cfg['optimizer']['imitation_coef'] * max(0., 1 - state['ppo_actual'] / cfg['training']['imitation_decay_transitions'])
+        trainer.imitation_coef = imitation_weight(cfg, state['ppo_actual'])
         stats = trainer.update(pending['batch'], deadline=deadline)
         state['optimizer_steps'] += stats['optimizer_steps']; state['updates'] += 1
         atomic_json(run / f'train-{state["updates"]:05d}.json', dict(episode=pending['report'], optimization=stats,
@@ -548,16 +588,19 @@ def train(cfg, run, fingerprint, hashes, started, resume=None):
                 check_deadline(deadline)
                 index = order[state['bc_cursor']:state['bc_cursor'] + bc['minibatch_size']]
                 losses = trainer._imitation_loss(demo_data['observations'][index], demo_data['actions'][index])
-                if not all(torch.isfinite(v) for v in losses): raise ValueError('Nonfinite BC loss')
-                bc_optimizer.zero_grad(set_to_none=True); losses[0].backward()
+                loss = bc_objective(losses, cfg)
+                if not all(torch.isfinite(v) for v in (*losses, loss)): raise ValueError('Nonfinite BC loss')
+                bc_optimizer.zero_grad(set_to_none=True); loss.backward()
                 torch.nn.utils.clip_grad_norm_(model.actor.parameters(), cfg['optimizer']['max_grad_norm'], error_if_nonfinite=True)
                 bc_optimizer.step()
                 state['bc_cursor'] += len(index); state['bc_optimizer_steps'] += 1
                 state['bc_optimizer'] = bc_optimizer.state_dict()
                 with (run / 'bc-metrics.jsonl').open('a', encoding='utf-8') as stream:
                     stream.write(json.dumps(dict(epoch=state['bc_epoch'], cursor=state['bc_cursor'],
-                        optimizer_steps=state['bc_optimizer_steps'], loss=float(losses[0].detach()),
-                        acceleration_loss=float(losses[1].detach()), lane_loss=float(losses[2].detach()))) + '\n')
+                        optimizer_steps=state['bc_optimizer_steps'], loss=float(loss.detach()),
+                        acceleration_loss=float(losses[1].detach()), lane_loss=float(losses[2].detach()),
+                        acceleration_loss_weight=bc.get('acceleration_loss_weight', 1.),
+                        acceleration_rmse_m_s2=3.25 * float(losses[1].detach().sqrt()))) + '\n')
                 checkpoint()
             state['bc_epoch'] += 1; state['bc_cursor'] = 0; state['bc_order'] = None
             checkpoint()
@@ -654,7 +697,7 @@ def main(argv=None):
     torch.set_num_threads(1); torch.manual_seed(cfg['training']['seed'])
     np.random.seed(cfg['training']['seed']); random.seed(cfg['training']['seed'])
     torch.use_deterministic_algorithms(True)
-    run = ROOT / 'outputs/highway-stage1/v02' / (args.mode + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8])
+    run = ROOT / 'outputs/highway-stage1' / cfg.get('experiment_version', 'v02') / (args.mode + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8])
     run.mkdir(parents=True); atomic_json(run / 'config.json', cfg); atomic_json(run / 'contract.json', contract(cfg))
     hashes = source_hashes(); started = time.monotonic()
     import traci

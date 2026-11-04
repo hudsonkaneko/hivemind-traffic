@@ -1,0 +1,24 @@
+{
+  "source_path": "outputs/highway-stage1/v03/fit-audit-20261103T205754Z/summary.json",
+  "source_sha256": "68f5d38aefa1c6ec6d704c02623fd98a2923b3f332751bc468802e347ab8f3f5",
+  "scope": "Frozen after-BC actor fit to retained TRAINING demonstrations; not validation or realized-control accuracy",
+  "learning": false,
+  "optimizer_steps": 0,
+  "simulator_run": false,
+  "samples": 49998,
+  "acceleration_rmse_m_s2": 0.20133760571479797,
+  "acceleration_bias_m_s2": -0.013823731802403927,
+  "acceleration_mae_m_s2": 0.09556929767131805,
+  "acceleration_error_p50_m_s2": 0.04395923390984535,
+  "acceleration_error_p95_m_s2": 0.37252017855644226,
+  "fraction_label_error_above_0p05": 0.4717188775539398,
+  "lane_agreement": 0.9988599419593811,
+  "source_actor": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\selected-00000-0b2380e0\\policy.pt",
+  "source_demonstrations": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\demonstrations-6200015.pt",
+  "sha256": {
+    "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\selected-00000-0b2380e0\\policy.pt": "a2904553de846e262df29378bee5768323317dbb580c0b7911d34d7f1bb6cc5f",
+    "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\demonstrations-6200015.pt": "ad24347df7dd6e5ae8ab4e64c6bb887366522c4a3d10f8e4397718ffc414fada"
+  },
+  "torch": "2.14.0+cpu",
+  "wall_seconds": 0.14000000013038516
+}
