@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v06**, updated **November 4, 2026, America/Los_Angeles**.
-Status: **Stage 1 remains unaccepted; v04 correction-memory comparison planned, not implemented**.
+Revision **v07**, updated **November 4, 2026, America/Los_Angeles**.
+Status: **Stage 1 remains unaccepted; variable-population pilot in preparation**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,7 +14,7 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** implement the [v04 correction-memory training plan](highway-stage1-v04-training-plan.md), beginning with saved-journal diagnosis. The proposed matched A/B pilot uses the same frozen phase-0 model, 100k new training decisions or 30 minutes per arm, with explicit leakage checks and regression guards. Present runnable configs after preparation; no new learning is authorized.
+**Next action:** prepare and run the user-authorized [variable-population pilot](highway-population-training-v01.md), after tests, bounded no-learning preflight and presentation of its resolved configuration. Train changing controlled-car counts independently of traffic density and communication availability. The separate [v04 correction-memory comparison](highway-stage1-v04-training-plan.md) remains planned and unimplemented; do not combine its learning change with this population experiment.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
@@ -354,3 +354,11 @@ After each meaningful implementation, evaluation, failed attempt or decision:
 - Proposed paired screen: 100k new PPO decisions or 30 minutes per arm; deterministic 20k task-balanced memory for B, no validation/test data or historical PPO replay. Predeclare worst-case-first selection and compare fixed endpoints with efficiency protections.
 - Screening success is distinct from the unchanged per-case 5% acceptance gate. A repeated-seed study and held-out evaluation require later scoped proposals; sensors remain a subsequent stage.
 - Research basis: dataset aggregation and on-policy PPO, linked in the plan. No runtime changes, new simulator runs or learning occurred. Next deliverable is implementation/preflight plus exact disabled configurations for review.
+
+
+### v07 — November 4, 2026: variable-population preparation
+
+- User authorized a separate bounded population-adaptation pilot; v04 correction memory is not included.
+- Implemented reset-based mixed cohorts, nearest-six messages, a masked eight-slot critic and an unchanged 93-field actor.
+- 157 targeted tests plus frozen no-learning API/seed/collector/export preflight pass; spawn and reset-option failures remain recorded.
+- [Resolved configuration and evidence](highway-population-training-v01.md). Next action: launch the authorized 100k/30-minute run, wait for exit, retain results and synchronize the guide. Live handoff, held-out acceptance and sensor transfer remain open.

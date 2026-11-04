@@ -873,3 +873,11 @@ change. Native guide and full 42-tab Markdown mirror synchronized and verified.
 - Saved a proposed matched A/B comparison of current-rollout imitation and retained training-only acceleration corrections, starting from the verified v03 phase-0 model.
 - Defined explicit warm-start provenance, buffer/PPO separation, fixed evaluation milestones, worst-case-first selection, efficiency protections and unchanged acceptance gates. Proposed screen: 100k decisions/30 minutes per arm; no automatic scale-up.
 - Updated the living roadmap and synchronized the engineering guide. This is planning only; no learner/config implementation, simulator run or training occurred. [Complete plan](highway-stage1-v04-training-plan.md).
+
+
+## November 4, 2026 — variable-population MAPPO preparation
+
+- Added reset-based 0–8 AV population fixtures, six-message selection and a masked population critic; old four-car behavior remains covered.
+- Added bounded 100k/30-minute runner with verified actor warm start, critic-only warmup, fixed validation, atomic recovery and retained coverage.
+- 157 targeted tests and final no-learning SUMO preflight pass. Failed spawn/API checks and repairs are retained.
+- [Plan and resolved configuration](highway-population-training-v01.md). User authorized this pilot; result and engineering-guide milestone sync follow process exit. No training result is claimed yet.
