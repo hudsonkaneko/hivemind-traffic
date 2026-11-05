@@ -544,3 +544,8 @@ Appended the actual population implementation, final reviewed configuration, fai
 ## November 4: baseline review and population v02 catch-up
 
 Appended the v02 failure result and restored-reference/public-AV comparison to tab 41. Revision-guarded native edits/readback preserved all 42 tabs, forty unaffected tab bodies and historical target content. Start link follows codex/policy-baseline-review. Full saved JSON exactly matches native readback; mirror regeneration/check passes (2,548 paragraphs, 14 tables, 182 code blocks). Source: outputs/doc-sync/policy-baseline-review/verified-source.json. Native pagination was not inspected. Earlier pending-sync notes remain historical.
+
+
+## November 4: frozen population control and loss diagnostics
+
+Appended no-learning acceleration measurements, objective-gradient findings, historical native-emergency reconciliation and proposed corrections to tab 41. The start-tab mirror link follows `codex/population-control-diagnostics`. Revision-guarded edits and full native readback preserved all 42 tabs, 40 unaffected tab bodies and the historical target-tab prefix. Corrected the event phase breakdown to 9 training / 1 initial validation / 2 final validation after independent review. Regenerated and checked the mirror from `outputs/doc-sync/population-control-diagnostics-v01/verified-source.json`. Native pagination was not inspected. [Results and measured plots](population-control-diagnostics-v01.md).

@@ -1,0 +1,2036 @@
+{
+  "passed": true,
+  "optimizer_updates": 0,
+  "learning": false,
+  "dataset_sha256": "cc87b5739a24af1310f43224492884099f54a6fc53e0619cacce0d8c19d0a60d",
+  "sampled_rows": 1536,
+  "actual_agent_transitions": 10400,
+  "sampling": "128 rows per case, twelve cases, equal case weights; PPO advantages normalized within each full rollout",
+  "aggregate_gradients": {
+    "samples": 1536,
+    "loss_values": {
+      "ppo": 0.012232759036123753,
+      "acceleration": 0.14918597042560577,
+      "lane": 0.024433769285678864,
+      "entropy": -1.226232647895813,
+      "value": 49.64961242675781
+    },
+    "likelihood": {
+      "approximate_kl": -1.8238400789627462e-09,
+      "max_abs_log_ratio": 2.384185791015625e-07
+    },
+    "per_weight": {
+      "1": {
+        "weighted_contribution_norms": {
+          "ppo": {
+            "actor": 1.7731971740722656,
+            "critic": 0.0
+          },
+          "acceleration": {
+            "actor": 0.04460806027054787,
+            "critic": 0.0
+          },
+          "lane": {
+            "actor": 0.0027753987815231085,
+            "critic": 0.0
+          },
+          "entropy": {
+            "actor": 0.0069698612205684185,
+            "critic": 0.0
+          },
+          "value": {
+            "actor": 0.0,
+            "critic": 42.59451675415039
+          }
+        },
+        "clipping": {
+          "global_norm": 42.63089370727539,
+          "actor_norm": 1.7608206272125244,
+          "critic_norm": 42.59451675415039,
+          "global_clip_factor": 0.011728583306384842,
+          "actor_norm_after_global_clip": 0.0206519314138629,
+          "actor_only_clip_factor": 0.2839583477808181,
+          "actor_norm_after_hypothetical_separate_clip": 0.4999997160416522,
+          "counterfactual_only": true,
+          "optimizer_updates": 0
+        },
+        "actor_cosines": {
+          "ppo_acceleration": -0.42011943459510803,
+          "ppo_lane": 0.030290229246020317,
+          "acceleration_lane": -0.0300203338265419
+        }
+      },
+      "50": {
+        "weighted_contribution_norms": {
+          "ppo": {
+            "actor": 1.7731971740722656,
+            "critic": 0.0
+          },
+          "acceleration": {
+            "actor": 2.230403184890747,
+            "critic": 0.0
+          },
+          "lane": {
+            "actor": 0.0027753987815231085,
+            "critic": 0.0
+          },
+          "entropy": {
+            "actor": 0.0069698612205684185,
+            "critic": 0.0
+          },
+          "value": {
+            "actor": 0.0,
+            "critic": 42.59451675415039
+          }
+        },
+        "clipping": {
+          "global_norm": 42.65078353881836,
+          "actor_norm": 2.190136194229126,
+          "critic_norm": 42.59451675415039,
+          "global_clip_factor": 0.01172311378105901,
+          "actor_norm_after_global_clip": 0.0256752158009636,
+          "actor_only_clip_factor": 0.22829620049258492,
+          "actor_norm_after_hypothetical_separate_clip": 0.49999977170379944,
+          "counterfactual_only": true,
+          "optimizer_updates": 0
+        },
+        "actor_cosines": {
+          "ppo_acceleration": -0.42011940479278564,
+          "ppo_lane": 0.030290229246020317,
+          "acceleration_lane": -0.030020328238606453
+        }
+      }
+    }
+  },
+  "per_case_gradients": [
+    {
+      "case_index": 0,
+      "task": "cruise",
+      "population": 1,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": 0.05657483637332916,
+          "acceleration": 0.03797750920057297,
+          "lane": 0.0,
+          "entropy": -1.1182881593704224,
+          "value": 56.01056671142578
+        },
+        "likelihood": {
+          "approximate_kl": -1.3969838619232178e-09,
+          "max_abs_log_ratio": 2.384185791015625e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 0.8485128879547119,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.017745153978466988,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007464990019798279,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 49.078643798828125
+              }
+            },
+            "clipping": {
+              "global_norm": 49.08600616455078,
+              "actor_norm": 0.8498722314834595,
+              "critic_norm": 49.078643798828125,
+              "global_clip_factor": 0.010186202318796321,
+              "actor_norm_after_global_clip": 0.00865697049501742,
+              "actor_only_clip_factor": 0.588323036280654,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999941167696366,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.27635470032691956,
+              "ppo_lane": null,
+              "acceleration_lane": null
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 0.8485128879547119,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.8872578144073486,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007464990019798279,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 49.078643798828125
+              }
+            },
+            "clipping": {
+              "global_norm": 49.098045349121094,
+              "actor_norm": 1.380150318145752,
+              "critic_norm": 49.078643798828125,
+              "global_clip_factor": 0.010183704590701103,
+              "actor_norm_after_global_clip": 0.014055043130758482,
+              "actor_only_clip_factor": 0.3622791163738157,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999996377208836,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.27635470032691956,
+              "ppo_lane": null,
+              "acceleration_lane": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_index": 1,
+      "task": "cruise",
+      "population": 4,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": 0.21252913773059845,
+          "acceleration": 0.3317997455596924,
+          "lane": 0.013950997963547707,
+          "entropy": -1.1713824272155762,
+          "value": 57.47216033935547
+        },
+        "likelihood": {
+          "approximate_kl": -2.7939677238464355e-09,
+          "max_abs_log_ratio": 1.1920928955078125e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 6.493575572967529,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.08003897964954376,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.005792943760752678,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007590699475258589,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 51.70337677001953
+              }
+            },
+            "clipping": {
+              "global_norm": 52.10116195678711,
+              "actor_norm": 6.4259233474731445,
+              "critic_norm": 51.70337677001953,
+              "global_clip_factor": 0.009596714768434282,
+              "actor_norm_after_global_clip": 0.061667753489522185,
+              "actor_only_clip_factor": 0.07780981738395569,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999992219018263,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": -0.8873862028121948,
+              "ppo_lane": -0.006914512254297733,
+              "acceleration_lane": -0.02227432280778885
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 6.493575572967529,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 4.001949310302734,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.005792943760752678,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007590699475258589,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 51.70337677001953
+              }
+            },
+            "clipping": {
+              "global_norm": 51.820194244384766,
+              "actor_norm": 3.477597713470459,
+              "critic_norm": 51.70337677001953,
+              "global_clip_factor": 0.009648747899192449,
+              "actor_norm_after_global_clip": 0.03355446363208456,
+              "actor_only_clip_factor": 0.14377737088044484,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999985622262916,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": -0.8873860836029053,
+              "ppo_lane": -0.006914512254297733,
+              "acceleration_lane": -0.0222743209451437
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_index": 2,
+      "task": "cruise",
+      "population": 8,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": -0.011115103960037231,
+          "acceleration": 0.03797226399183273,
+          "lane": 0.013080543838441372,
+          "entropy": -1.080471396446228,
+          "value": 58.18730926513672
+        },
+        "likelihood": {
+          "approximate_kl": -1.862645149230957e-09,
+          "max_abs_log_ratio": 1.1920928955078125e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 5.735408782958984,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.035752687603235245,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0075880479998886585,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007388079073280096,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 55.254398345947266
+              }
+            },
+            "clipping": {
+              "global_norm": 55.55360412597656,
+              "actor_norm": 5.75796365737915,
+              "critic_norm": 55.254398345947266,
+              "global_clip_factor": 0.009000315980685163,
+              "actor_norm_after_global_clip": 0.05182349232171396,
+              "actor_only_clip_factor": 0.08683623984374797,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999999131637602,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.7614309787750244,
+              "ppo_lane": 0.007939847186207771,
+              "acceleration_lane": 0.03161139413714409
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 5.735408782958984,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 1.7876343727111816,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0075880479998886585,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007388079073280096,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 55.254398345947266
+              }
+            },
+            "clipping": {
+              "global_norm": 55.719608306884766,
+              "actor_norm": 7.185124397277832,
+              "critic_norm": 55.254398345947266,
+              "global_clip_factor": 0.00897350154137243,
+              "actor_norm_after_global_clip": 0.06447572485392528,
+              "actor_only_clip_factor": 0.06958820790927751,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999999304117921,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.7614309191703796,
+              "ppo_lane": 0.007939847186207771,
+              "acceleration_lane": 0.031611401587724686
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_index": 3,
+      "task": "following",
+      "population": 1,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": -0.0396999716758728,
+          "acceleration": 0.06297364830970764,
+          "lane": 0.0,
+          "entropy": -1.1181375980377197,
+          "value": 72.703369140625
+        },
+        "likelihood": {
+          "approximate_kl": -6.984919309616089e-10,
+          "max_abs_log_ratio": 1.1920928955078125e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 4.49366569519043,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.06815589964389801,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.008886666037142277,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 64.2347412109375
+              }
+            },
+            "clipping": {
+              "global_norm": 64.3880615234375,
+              "actor_norm": 4.440782070159912,
+              "critic_norm": 64.2347412109375,
+              "global_clip_factor": 0.00776541458780497,
+              "actor_norm_after_global_clip": 0.03448451386888254,
+              "actor_only_clip_factor": 0.11259275494895882,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999988740724505,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": -0.8927432894706726,
+              "ppo_lane": null,
+              "acceleration_lane": null
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 4.49366569519043,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 3.40779447555542,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.008886666037142277,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 64.2347412109375
+              }
+            },
+            "clipping": {
+              "global_norm": 64.26956939697266,
+              "actor_norm": 2.1153743267059326,
+              "critic_norm": 64.2347412109375,
+              "global_clip_factor": 0.007779731479635842,
+              "actor_norm_after_global_clip": 0.01645704424068762,
+              "actor_only_clip_factor": 0.2363646742436961,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999997636353257,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": -0.8927434682846069,
+              "ppo_lane": null,
+              "acceleration_lane": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_index": 4,
+      "task": "following",
+      "population": 4,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": -0.15707910060882568,
+          "acceleration": 0.19561907649040222,
+          "lane": 0.004132265690714121,
+          "entropy": -0.9866418242454529,
+          "value": 49.913917541503906
+        },
+        "likelihood": {
+          "approximate_kl": -2.7939677238464355e-09,
+          "max_abs_log_ratio": 2.384185791015625e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 7.6239190101623535,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.06768928468227386,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0026248733047395945,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.006223833654075861,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 48.73497772216797
+              }
+            },
+            "clipping": {
+              "global_norm": 49.33320617675781,
+              "actor_norm": 7.65950345993042,
+              "critic_norm": 48.73497772216797,
+              "global_clip_factor": 0.01013516105305157,
+              "actor_norm_after_global_clip": 0.07763030115280053,
+              "actor_only_clip_factor": 0.06527837441908638,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999999347216255,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.5286972522735596,
+              "ppo_lane": -0.001061576884239912,
+              "acceleration_lane": 0.04060245677828789
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 7.6239190101623535,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 3.3844640254974365,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0026248733047395945,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.006223833654075861,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 48.73497772216797
+              }
+            },
+            "clipping": {
+              "global_norm": 49.718406677246094,
+              "actor_norm": 9.839883804321289,
+              "critic_norm": 48.73497772216797,
+              "global_clip_factor": 0.01005663743790467,
+              "actor_norm_after_global_clip": 0.0989561438511693,
+              "actor_only_clip_factor": 0.050813602998728176,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999994918639706,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.5286971926689148,
+              "ppo_lane": -0.001061576884239912,
+              "acceleration_lane": 0.040602441877126694
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_index": 5,
+      "task": "following",
+      "population": 8,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": -0.02750883251428604,
+          "acceleration": 0.18090133368968964,
+          "lane": 0.0037777568213641644,
+          "entropy": -1.1703317165374756,
+          "value": 59.695247650146484
+        },
+        "likelihood": {
+          "approximate_kl": -2.3283064365386963e-09,
+          "max_abs_log_ratio": 2.384185791015625e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 4.369751930236816,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.040906015783548355,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0022215843200683594,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007783426437526941,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 52.748619079589844
+              }
+            },
+            "clipping": {
+              "global_norm": 52.93185043334961,
+              "actor_norm": 4.400521755218506,
+              "critic_norm": 52.748619079589844,
+              "global_clip_factor": 0.009446108278105231,
+              "actor_norm_after_global_clip": 0.04156780497995169,
+              "actor_only_clip_factor": 0.11362286433062035,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999988637713566,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.8999637365341187,
+              "ppo_lane": 0.11672751605510712,
+              "acceleration_lane": 0.03207311034202576
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 4.369751930236816,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 2.0453009605407715,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0022215843200683594,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007783426437526941,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 52.748619079589844
+              }
+            },
+            "clipping": {
+              "global_norm": 53.11967086791992,
+              "actor_norm": 6.267622470855713,
+              "critic_norm": 52.748619079589844,
+              "global_clip_factor": 0.009412708746455199,
+              "actor_norm_after_global_clip": 0.058995304850902715,
+              "actor_only_clip_factor": 0.07977505386610843,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999999202249461,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.8999636769294739,
+              "ppo_lane": 0.11672751605510712,
+              "acceleration_lane": 0.032073114067316055
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_index": 6,
+      "task": "passing",
+      "population": 1,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": 0.0027008429169654846,
+          "acceleration": 0.06548887491226196,
+          "lane": 0.0,
+          "entropy": -1.0039756298065186,
+          "value": 47.49764633178711
+        },
+        "likelihood": {
+          "approximate_kl": -2.7939677238464355e-09,
+          "max_abs_log_ratio": 1.1920928955078125e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 5.607211112976074,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.07740198075771332,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.00795129407197237,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 51.8714714050293
+              }
+            },
+            "clipping": {
+              "global_norm": 52.16630554199219,
+              "actor_norm": 5.538402080535889,
+              "critic_norm": 51.8714714050293,
+              "global_clip_factor": 0.00958473070347651,
+              "actor_norm_after_global_clip": 0.05308409246951051,
+              "actor_only_clip_factor": 0.09027873066104475,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999990972126934,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": -0.9900423884391785,
+              "ppo_lane": null,
+              "acceleration_lane": null
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 5.607211112976074,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 3.8700993061065674,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.00795129407197237,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 51.8714714050293
+              }
+            },
+            "clipping": {
+              "global_norm": 51.904972076416016,
+              "actor_norm": 1.8645188808441162,
+              "critic_norm": 51.8714714050293,
+              "global_clip_factor": 0.009632988331655339,
+              "actor_norm_after_global_clip": 0.017960888623322444,
+              "actor_only_clip_factor": 0.2681655503580027,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999997318344497,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": -0.9900423884391785,
+              "ppo_lane": null,
+              "acceleration_lane": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_index": 7,
+      "task": "passing",
+      "population": 4,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": 0.09465661644935608,
+          "acceleration": 0.09708737581968307,
+          "lane": 0.005536364857107401,
+          "entropy": -1.13779616355896,
+          "value": 54.49753189086914
+        },
+        "likelihood": {
+          "approximate_kl": -2.7939677238464355e-09,
+          "max_abs_log_ratio": 2.384185791015625e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 3.1440696716308594,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.03476857393980026,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0017653102986514568,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007181545253843069,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 49.19546890258789
+              }
+            },
+            "clipping": {
+              "global_norm": 49.295013427734375,
+              "actor_norm": 3.1311652660369873,
+              "critic_norm": 49.19546890258789,
+              "global_clip_factor": 0.01014301356444456,
+              "actor_norm_after_global_clip": 0.03175945176593082,
+              "actor_only_clip_factor": 0.15968490891824574,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999984031509104,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": -0.3325880169868469,
+              "ppo_lane": -0.03392384201288223,
+              "acceleration_lane": -0.043450649827718735
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 3.1440696716308594,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 1.7384285926818848,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0017653102986514568,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007181545253843069,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 49.19546890258789
+              }
+            },
+            "clipping": {
+              "global_norm": 49.289310455322266,
+              "actor_norm": 3.040053129196167,
+              "critic_norm": 49.19546890258789,
+              "global_clip_factor": 0.01014418715208102,
+              "actor_norm_after_global_clip": 0.030838867894835458,
+              "actor_only_clip_factor": 0.16447075570072398,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999983552924426,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": -0.33258798718452454,
+              "ppo_lane": -0.03392384201288223,
+              "acceleration_lane": -0.04345066845417023
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_index": 8,
+      "task": "passing",
+      "population": 8,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": -0.07980475574731827,
+          "acceleration": 0.24409744143486023,
+          "lane": 0.22797612845897675,
+          "entropy": -0.9768478870391846,
+          "value": 40.84468078613281
+        },
+        "likelihood": {
+          "approximate_kl": -2.7939677238464355e-09,
+          "max_abs_log_ratio": 1.1920928955078125e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 10.464000701904297,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.08757501095533371,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.05328970402479172,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.006048682611435652,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 42.05612564086914
+              }
+            },
+            "clipping": {
+              "global_norm": 43.3269157409668,
+              "actor_norm": 10.41657543182373,
+              "critic_norm": 42.05612564086914,
+              "global_clip_factor": 0.011540170351591997,
+              "actor_norm_after_global_clip": 0.12020905496345383,
+              "actor_only_clip_factor": 0.04800041580575819,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999999519995842,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": -0.6403621435165405,
+              "ppo_lane": 0.05044066160917282,
+              "acceleration_lane": -0.010826390236616135
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 10.464000701904297,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 4.378750801086426,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.05328970402479172,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.006048682611435652,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 42.05612564086914
+              }
+            },
+            "clipping": {
+              "global_norm": 42.881683349609375,
+              "actor_norm": 8.373826026916504,
+              "critic_norm": 42.05612564086914,
+              "global_clip_factor": 0.011659989750485506,
+              "actor_norm_after_global_clip": 0.0976387256461952,
+              "actor_only_clip_factor": 0.05970985528991935,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999999402901448,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": -0.6403621435165405,
+              "ppo_lane": 0.05044066160917282,
+              "acceleration_lane": -0.010826390236616135
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_index": 9,
+      "task": "merge",
+      "population": 1,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": 0.0896855890750885,
+          "acceleration": 0.17688146233558655,
+          "lane": 0.0,
+          "entropy": -2.044994592666626,
+          "value": 13.97183895111084
+        },
+        "likelihood": {
+          "approximate_kl": 2.3283064365386963e-10,
+          "max_abs_log_ratio": 2.384185791015625e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 3.979294538497925,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.06015909090638161,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.012178243137896061,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 20.799039840698242
+              }
+            },
+            "clipping": {
+              "global_norm": 21.189409255981445,
+              "actor_norm": 4.048591613769531,
+              "critic_norm": 20.799039840698242,
+              "global_clip_factor": 0.023596692591237062,
+              "actor_norm_after_global_clip": 0.09553337173758,
+              "actor_only_clip_factor": 0.1234997066139643,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999987650029337,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.9696536660194397,
+              "ppo_lane": null,
+              "acceleration_lane": null
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 3.979294538497925,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 3.0079545974731445,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.012178243137896061,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 20.799039840698242
+              }
+            },
+            "clipping": {
+              "global_norm": 21.928367614746094,
+              "actor_norm": 6.946472644805908,
+              "critic_norm": 20.799039840698242,
+              "global_clip_factor": 0.022801513819125,
+              "actor_norm_after_global_clip": 0.1583900920047157,
+              "actor_only_clip_factor": 0.07197896739648114,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999999280210326,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.9696536064147949,
+              "ppo_lane": null,
+              "acceleration_lane": null
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_index": 10,
+      "task": "merge",
+      "population": 4,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": -0.03004026599228382,
+          "acceleration": 0.13303180038928986,
+          "lane": 0.02113296464085579,
+          "entropy": -1.6196465492248535,
+          "value": 40.118228912353516
+        },
+        "likelihood": {
+          "approximate_kl": -2.3283064365386963e-10,
+          "max_abs_log_ratio": 2.384185791015625e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 2.680943250656128,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.06323301047086716,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.008709295652806759,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.008191629312932491,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 36.42500686645508
+              }
+            },
+            "clipping": {
+              "global_norm": 36.523860931396484,
+              "actor_norm": 2.685471296310425,
+              "critic_norm": 36.42500686645508,
+              "global_clip_factor": 0.013689680487215734,
+              "actor_norm_after_global_clip": 0.036763244004078766,
+              "actor_only_clip_factor": 0.18618698866748723,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999998138130113,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.05422519892454147,
+              "ppo_lane": -0.007528479676693678,
+              "acceleration_lane": 0.061530787497758865
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 2.680943250656128,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 3.1616504192352295,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.008709295652806759,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.008191629312932491,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 36.42500686645508
+              }
+            },
+            "clipping": {
+              "global_norm": 36.67216873168945,
+              "actor_norm": 4.250566005706787,
+              "critic_norm": 36.42500686645508,
+              "global_clip_factor": 0.013634317349047825,
+              "actor_norm_after_global_clip": 0.05795356583488097,
+              "actor_only_clip_factor": 0.11763136525755337,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999988236863474,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.054225191473960876,
+              "ppo_lane": -0.007528479676693678,
+              "acceleration_lane": 0.061530761420726776
+            }
+          }
+        }
+      }
+    },
+    {
+      "case_index": 11,
+      "task": "merge",
+      "population": 8,
+      "gradient": {
+        "samples": 128,
+        "loss_values": {
+          "ppo": 0.035894136875867844,
+          "acceleration": 0.22640112042427063,
+          "lane": 0.003618213115260005,
+          "entropy": -1.2862786054611206,
+          "value": 44.88285446166992
+        },
+        "likelihood": {
+          "approximate_kl": -1.6298145055770874e-09,
+          "max_abs_log_ratio": 1.1920928955078125e-07
+        },
+        "per_weight": {
+          "1": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 2.8232436180114746,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 0.06754139065742493,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0021234878804534674,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007241659797728062,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 43.27085876464844
+              }
+            },
+            "clipping": {
+              "global_norm": 43.36647033691406,
+              "actor_norm": 2.8781282901763916,
+              "critic_norm": 43.27085876464844,
+              "global_clip_factor": 0.011529644552250992,
+              "actor_norm_after_global_clip": 0.033183796161511694,
+              "actor_only_clip_factor": 0.17372395385662348,
+              "actor_norm_after_hypothetical_separate_clip": 0.4999998262760461,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.7813262939453125,
+              "ppo_lane": -0.008428145200014114,
+              "acceleration_lane": -0.017089571803808212
+            }
+          },
+          "50": {
+            "weighted_contribution_norms": {
+              "ppo": {
+                "actor": 2.8232436180114746,
+                "critic": 0.0
+              },
+              "acceleration": {
+                "actor": 3.3770694732666016,
+                "critic": 0.0
+              },
+              "lane": {
+                "actor": 0.0021234878804534674,
+                "critic": 0.0
+              },
+              "entropy": {
+                "actor": 0.007241659797728062,
+                "critic": 0.0
+              },
+              "value": {
+                "actor": 0.0,
+                "critic": 43.27085876464844
+              }
+            },
+            "clipping": {
+              "global_norm": 43.66508102416992,
+              "actor_norm": 5.854232311248779,
+              "critic_norm": 43.27085876464844,
+              "global_clip_factor": 0.01145079722335653,
+              "actor_norm_after_global_clip": 0.0670356270945316,
+              "actor_only_clip_factor": 0.08540828037025124,
+              "actor_norm_after_hypothetical_separate_clip": 0.49999991459171966,
+              "counterfactual_only": true,
+              "optimizer_updates": 0
+            },
+            "actor_cosines": {
+              "ppo_acceleration": 0.7813263535499573,
+              "ppo_lane": -0.008428145200014114,
+              "acceleration_lane": -0.017089566215872765
+            }
+          }
+        }
+      }
+    }
+  ],
+  "fixed_observation_fits": {
+    "parent_actor_fresh_population_critic": {
+      "samples": 1536,
+      "teacher_acceleration_rmse_m_s2": 1.25529944896698,
+      "teacher_acceleration_mae_m_s2": 0.8801777362823486,
+      "teacher_acceleration_bias_m_s2": -0.2628813087940216,
+      "lane_agreement": 0.9973958134651184,
+      "feasible_target_mae_m_s2": 0.7773902416229248,
+      "teacher_vs_feasible_target_mae_m_s2": 0.30020883679389954,
+      "critic_explained_variance_against_parent_gae_targets": 0.015581965446472168,
+      "critic_mse_against_parent_gae_targets": 99.29922485351562,
+      "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+    },
+    "population_v01": {
+      "samples": 1536,
+      "teacher_acceleration_rmse_m_s2": 1.2562798261642456,
+      "teacher_acceleration_mae_m_s2": 0.8373775482177734,
+      "teacher_acceleration_bias_m_s2": -0.14338023960590363,
+      "lane_agreement": 0.9947916865348816,
+      "feasible_target_mae_m_s2": 0.698489248752594,
+      "teacher_vs_feasible_target_mae_m_s2": 0.30020883679389954,
+      "critic_explained_variance_against_parent_gae_targets": 0.3225875496864319,
+      "critic_mse_against_parent_gae_targets": 685.1856079101562,
+      "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+    },
+    "population_v02": {
+      "samples": 1536,
+      "teacher_acceleration_rmse_m_s2": 1.1773979663848877,
+      "teacher_acceleration_mae_m_s2": 0.8184242844581604,
+      "teacher_acceleration_bias_m_s2": -0.23674257099628448,
+      "lane_agreement": 0.998046875,
+      "feasible_target_mae_m_s2": 0.7378995418548584,
+      "teacher_vs_feasible_target_mae_m_s2": 0.30020883679389954,
+      "critic_explained_variance_against_parent_gae_targets": 0.1718272566795349,
+      "critic_mse_against_parent_gae_targets": 580.842041015625,
+      "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+    }
+  },
+  "per_case_fits": {
+    "parent_actor_fresh_population_critic": [
+      {
+        "case_index": 0,
+        "task": "cruise",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.633354127407074,
+          "teacher_acceleration_mae_m_s2": 0.563596248626709,
+          "teacher_acceleration_bias_m_s2": -0.19788146018981934,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.5613946318626404,
+          "teacher_vs_feasible_target_mae_m_s2": 0.0515262670814991,
+          "critic_explained_variance_against_parent_gae_targets": -0.0017677545547485352,
+          "critic_mse_against_parent_gae_targets": 112.02113342285156,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 1,
+        "task": "cruise",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.872066855430603,
+          "teacher_acceleration_mae_m_s2": 1.187534213066101,
+          "teacher_acceleration_bias_m_s2": 0.02367892861366272,
+          "lane_agreement": 0.9921875,
+          "feasible_target_mae_m_s2": 0.777746319770813,
+          "teacher_vs_feasible_target_mae_m_s2": 0.7685625553131104,
+          "critic_explained_variance_against_parent_gae_targets": 0.013153374195098877,
+          "critic_mse_against_parent_gae_targets": 114.94432067871094,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 2,
+        "task": "cruise",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.6333103775978088,
+          "teacher_acceleration_mae_m_s2": 0.47389906644821167,
+          "teacher_acceleration_bias_m_s2": -0.28167903423309326,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.4854980707168579,
+          "teacher_vs_feasible_target_mae_m_s2": 0.0462522879242897,
+          "critic_explained_variance_against_parent_gae_targets": 0.0025684237480163574,
+          "critic_mse_against_parent_gae_targets": 116.37461853027344,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 3,
+        "task": "following",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.8155729174613953,
+          "teacher_acceleration_mae_m_s2": 0.7237984538078308,
+          "teacher_acceleration_bias_m_s2": -0.6558360457420349,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.7389294505119324,
+          "teacher_vs_feasible_target_mae_m_s2": 0.03188008442521095,
+          "critic_explained_variance_against_parent_gae_targets": 0.001841723918914795,
+          "critic_mse_against_parent_gae_targets": 145.40673828125,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 4,
+        "task": "following",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.4374374151229858,
+          "teacher_acceleration_mae_m_s2": 1.0653883218765259,
+          "teacher_acceleration_bias_m_s2": -0.5148987174034119,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.9409451484680176,
+          "teacher_vs_feasible_target_mae_m_s2": 0.3829137980937958,
+          "critic_explained_variance_against_parent_gae_targets": -0.027525663375854492,
+          "critic_mse_against_parent_gae_targets": 99.82783508300781,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 5,
+        "task": "following",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.3823060989379883,
+          "teacher_acceleration_mae_m_s2": 0.9607605934143066,
+          "teacher_acceleration_bias_m_s2": -0.35086071491241455,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.8530672788619995,
+          "teacher_vs_feasible_target_mae_m_s2": 0.398633748292923,
+          "critic_explained_variance_against_parent_gae_targets": -0.07704424858093262,
+          "critic_mse_against_parent_gae_targets": 119.39049530029297,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 6,
+        "task": "passing",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.8317008018493652,
+          "teacher_acceleration_mae_m_s2": 0.7057689428329468,
+          "teacher_acceleration_bias_m_s2": -0.6455610394477844,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.7057719826698303,
+          "teacher_vs_feasible_target_mae_m_s2": 3.1039235182106495e-06,
+          "critic_explained_variance_against_parent_gae_targets": -0.0021905899047851562,
+          "critic_mse_against_parent_gae_targets": 94.99529266357422,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 7,
+        "task": "passing",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.0126625299453735,
+          "teacher_acceleration_mae_m_s2": 0.7283086180686951,
+          "teacher_acceleration_bias_m_s2": -0.2805488109588623,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.7322033643722534,
+          "teacher_vs_feasible_target_mae_m_s2": 0.3298932909965515,
+          "critic_explained_variance_against_parent_gae_targets": -0.07954704761505127,
+          "critic_mse_against_parent_gae_targets": 108.99506378173828,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 8,
+        "task": "passing",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.6057020425796509,
+          "teacher_acceleration_mae_m_s2": 1.2427462339401245,
+          "teacher_acceleration_bias_m_s2": -0.34486478567123413,
+          "lane_agreement": 0.9921875,
+          "feasible_target_mae_m_s2": 1.0634819269180298,
+          "teacher_vs_feasible_target_mae_m_s2": 0.5855341553688049,
+          "critic_explained_variance_against_parent_gae_targets": -0.04034221172332764,
+          "critic_mse_against_parent_gae_targets": 81.68936157226562,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 9,
+        "task": "merge",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.3668615818023682,
+          "teacher_acceleration_mae_m_s2": 1.0304229259490967,
+          "teacher_acceleration_bias_m_s2": 0.8720142841339111,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.8386110067367554,
+          "teacher_vs_feasible_target_mae_m_s2": 0.421715646982193,
+          "critic_explained_variance_against_parent_gae_targets": 0.06877219676971436,
+          "critic_mse_against_parent_gae_targets": 27.94367790222168,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 10,
+        "task": "merge",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.185389518737793,
+          "teacher_acceleration_mae_m_s2": 0.8751342296600342,
+          "teacher_acceleration_bias_m_s2": -0.7697259187698364,
+          "lane_agreement": 0.984375,
+          "feasible_target_mae_m_s2": 0.8831914663314819,
+          "teacher_vs_feasible_target_mae_m_s2": 0.0546276792883873,
+          "critic_explained_variance_against_parent_gae_targets": 0.03332018852233887,
+          "critic_mse_against_parent_gae_targets": 80.23645782470703,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 11,
+        "task": "merge",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.546402931213379,
+          "teacher_acceleration_mae_m_s2": 1.0047757625579834,
+          "teacher_acceleration_bias_m_s2": -0.008412271738052368,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.7478428483009338,
+          "teacher_vs_feasible_target_mae_m_s2": 0.5309641361236572,
+          "critic_explained_variance_against_parent_gae_targets": -0.06883037090301514,
+          "critic_mse_against_parent_gae_targets": 89.76570892333984,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      }
+    ],
+    "population_v01": [
+      {
+        "case_index": 0,
+        "task": "cruise",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.6129239201545715,
+          "teacher_acceleration_mae_m_s2": 0.5405338406562805,
+          "teacher_acceleration_bias_m_s2": -0.13544297218322754,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.5290515422821045,
+          "teacher_vs_feasible_target_mae_m_s2": 0.0515262670814991,
+          "critic_explained_variance_against_parent_gae_targets": 0.017860233783721924,
+          "critic_mse_against_parent_gae_targets": 635.2786254882812,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 1,
+        "task": "cruise",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.9561550617218018,
+          "teacher_acceleration_mae_m_s2": 1.1831592321395874,
+          "teacher_acceleration_bias_m_s2": 0.10733073949813843,
+          "lane_agreement": 0.9921875,
+          "feasible_target_mae_m_s2": 0.6952965259552002,
+          "teacher_vs_feasible_target_mae_m_s2": 0.7685625553131104,
+          "critic_explained_variance_against_parent_gae_targets": -0.05904805660247803,
+          "critic_mse_against_parent_gae_targets": 644.602294921875,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 2,
+        "task": "cruise",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.5506386160850525,
+          "teacher_acceleration_mae_m_s2": 0.42890429496765137,
+          "teacher_acceleration_bias_m_s2": -0.1503654569387436,
+          "lane_agreement": 0.9765625,
+          "feasible_target_mae_m_s2": 0.4308638572692871,
+          "teacher_vs_feasible_target_mae_m_s2": 0.0462522879242897,
+          "critic_explained_variance_against_parent_gae_targets": -0.009020328521728516,
+          "critic_mse_against_parent_gae_targets": 642.410888671875,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 3,
+        "task": "following",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.7410165071487427,
+          "teacher_acceleration_mae_m_s2": 0.6523518562316895,
+          "teacher_acceleration_bias_m_s2": -0.5791007876396179,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.6654782891273499,
+          "teacher_vs_feasible_target_mae_m_s2": 0.03188008442521095,
+          "critic_explained_variance_against_parent_gae_targets": 0.015433192253112793,
+          "critic_mse_against_parent_gae_targets": 596.0813598632812,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 4,
+        "task": "following",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.4054275751113892,
+          "teacher_acceleration_mae_m_s2": 0.967274010181427,
+          "teacher_acceleration_bias_m_s2": -0.3083282709121704,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.7780664563179016,
+          "teacher_vs_feasible_target_mae_m_s2": 0.3829137980937958,
+          "critic_explained_variance_against_parent_gae_targets": 0.19042468070983887,
+          "critic_mse_against_parent_gae_targets": 660.5697021484375,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 5,
+        "task": "following",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.3488609790802002,
+          "teacher_acceleration_mae_m_s2": 0.9173509478569031,
+          "teacher_acceleration_bias_m_s2": -0.2827913165092468,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.7831277251243591,
+          "teacher_vs_feasible_target_mae_m_s2": 0.398633748292923,
+          "critic_explained_variance_against_parent_gae_targets": 0.05452758073806763,
+          "critic_mse_against_parent_gae_targets": 650.3411865234375,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 6,
+        "task": "passing",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.7231257557868958,
+          "teacher_acceleration_mae_m_s2": 0.6109257340431213,
+          "teacher_acceleration_bias_m_s2": -0.5249909162521362,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.6109287142753601,
+          "teacher_vs_feasible_target_mae_m_s2": 3.1039235182106495e-06,
+          "critic_explained_variance_against_parent_gae_targets": 0.010610997676849365,
+          "critic_mse_against_parent_gae_targets": 699.2791137695312,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 7,
+        "task": "passing",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.9994381666183472,
+          "teacher_acceleration_mae_m_s2": 0.704183042049408,
+          "teacher_acceleration_bias_m_s2": -0.21546760201454163,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.6788955926895142,
+          "teacher_vs_feasible_target_mae_m_s2": 0.3298932909965515,
+          "critic_explained_variance_against_parent_gae_targets": 0.09932893514633179,
+          "critic_mse_against_parent_gae_targets": 674.6549682617188,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 8,
+        "task": "passing",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.6435394287109375,
+          "teacher_acceleration_mae_m_s2": 1.2053859233856201,
+          "teacher_acceleration_bias_m_s2": -0.11566519737243652,
+          "lane_agreement": 0.9921875,
+          "feasible_target_mae_m_s2": 0.9263256788253784,
+          "teacher_vs_feasible_target_mae_m_s2": 0.5855341553688049,
+          "critic_explained_variance_against_parent_gae_targets": 0.23918169736862183,
+          "critic_mse_against_parent_gae_targets": 743.0355224609375,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 9,
+        "task": "merge",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.4826500415802002,
+          "teacher_acceleration_mae_m_s2": 1.1023223400115967,
+          "teacher_acceleration_bias_m_s2": 0.9793368577957153,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.8738982677459717,
+          "teacher_vs_feasible_target_mae_m_s2": 0.421715646982193,
+          "critic_explained_variance_against_parent_gae_targets": 0.3667863607406616,
+          "critic_mse_against_parent_gae_targets": 875.5435791015625,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 10,
+        "task": "merge",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.0347979068756104,
+          "teacher_acceleration_mae_m_s2": 0.7534865140914917,
+          "teacher_acceleration_bias_m_s2": -0.628231406211853,
+          "lane_agreement": 0.9765625,
+          "feasible_target_mae_m_s2": 0.7503128051757812,
+          "teacher_vs_feasible_target_mae_m_s2": 0.0546276792883873,
+          "critic_explained_variance_against_parent_gae_targets": 0.5240983963012695,
+          "critic_mse_against_parent_gae_targets": 711.8040771484375,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 11,
+        "task": "merge",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.611714243888855,
+          "teacher_acceleration_mae_m_s2": 0.9826520681381226,
+          "teacher_acceleration_bias_m_s2": 0.13315333425998688,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.6596252918243408,
+          "teacher_vs_feasible_target_mae_m_s2": 0.5309641361236572,
+          "critic_explained_variance_against_parent_gae_targets": 0.1988595724105835,
+          "critic_mse_against_parent_gae_targets": 688.6262817382812,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      }
+    ],
+    "population_v02": [
+      {
+        "case_index": 0,
+        "task": "cruise",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.6648579239845276,
+          "teacher_acceleration_mae_m_s2": 0.5736963152885437,
+          "teacher_acceleration_bias_m_s2": -0.3275611400604248,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.5764994621276855,
+          "teacher_vs_feasible_target_mae_m_s2": 0.0515262670814991,
+          "critic_explained_variance_against_parent_gae_targets": 0.0054454803466796875,
+          "critic_mse_against_parent_gae_targets": 519.7679443359375,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 1,
+        "task": "cruise",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.8003871440887451,
+          "teacher_acceleration_mae_m_s2": 1.1441365480422974,
+          "teacher_acceleration_bias_m_s2": 0.0378170907497406,
+          "lane_agreement": 0.9921875,
+          "feasible_target_mae_m_s2": 0.7768279314041138,
+          "teacher_vs_feasible_target_mae_m_s2": 0.7685625553131104,
+          "critic_explained_variance_against_parent_gae_targets": 0.0046656131744384766,
+          "critic_mse_against_parent_gae_targets": 534.9391479492188,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 2,
+        "task": "cruise",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.5063986778259277,
+          "teacher_acceleration_mae_m_s2": 0.39388298988342285,
+          "teacher_acceleration_bias_m_s2": -0.15400566160678864,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.3956247568130493,
+          "teacher_vs_feasible_target_mae_m_s2": 0.0462522879242897,
+          "critic_explained_variance_against_parent_gae_targets": 0.0035746097564697266,
+          "critic_mse_against_parent_gae_targets": 541.52099609375,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 3,
+        "task": "following",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.7687087655067444,
+          "teacher_acceleration_mae_m_s2": 0.6716612577438354,
+          "teacher_acceleration_bias_m_s2": -0.5969188213348389,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.6846250891685486,
+          "teacher_vs_feasible_target_mae_m_s2": 0.03188008442521095,
+          "critic_explained_variance_against_parent_gae_targets": 0.0037305355072021484,
+          "critic_mse_against_parent_gae_targets": 475.2883605957031,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 4,
+        "task": "following",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.354820966720581,
+          "teacher_acceleration_mae_m_s2": 0.9753193855285645,
+          "teacher_acceleration_bias_m_s2": -0.40330249071121216,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.8490619659423828,
+          "teacher_vs_feasible_target_mae_m_s2": 0.3829137980937958,
+          "critic_explained_variance_against_parent_gae_targets": 0.0708361268043518,
+          "critic_mse_against_parent_gae_targets": 551.3494873046875,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 5,
+        "task": "following",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.2764546871185303,
+          "teacher_acceleration_mae_m_s2": 0.8958814144134521,
+          "teacher_acceleration_bias_m_s2": -0.34481358528137207,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.8424807786941528,
+          "teacher_vs_feasible_target_mae_m_s2": 0.398633748292923,
+          "critic_explained_variance_against_parent_gae_targets": 0.014817357063293457,
+          "critic_mse_against_parent_gae_targets": 527.407470703125,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 6,
+        "task": "passing",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.7280434370040894,
+          "teacher_acceleration_mae_m_s2": 0.6118676662445068,
+          "teacher_acceleration_bias_m_s2": -0.5279877185821533,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.6118707060813904,
+          "teacher_vs_feasible_target_mae_m_s2": 3.1039235182106495e-06,
+          "critic_explained_variance_against_parent_gae_targets": 0.0016432404518127441,
+          "critic_mse_against_parent_gae_targets": 566.7933349609375,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 7,
+        "task": "passing",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 0.9652025699615479,
+          "teacher_acceleration_mae_m_s2": 0.6980562210083008,
+          "teacher_acceleration_bias_m_s2": -0.27144119143486023,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.7235820293426514,
+          "teacher_vs_feasible_target_mae_m_s2": 0.3298932909965515,
+          "critic_explained_variance_against_parent_gae_targets": 0.02128612995147705,
+          "critic_mse_against_parent_gae_targets": 551.7174072265625,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 8,
+        "task": "passing",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.5060447454452515,
+          "teacher_acceleration_mae_m_s2": 1.1367757320404053,
+          "teacher_acceleration_bias_m_s2": -0.2539259195327759,
+          "lane_agreement": 0.9921875,
+          "feasible_target_mae_m_s2": 0.9838278293609619,
+          "teacher_vs_feasible_target_mae_m_s2": 0.5855341553688049,
+          "critic_explained_variance_against_parent_gae_targets": 0.055846452713012695,
+          "critic_mse_against_parent_gae_targets": 657.978271484375,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 9,
+        "task": "merge",
+        "population": 1,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.2451961040496826,
+          "teacher_acceleration_mae_m_s2": 0.9495967626571655,
+          "teacher_acceleration_bias_m_s2": 0.7071532011032104,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.861845076084137,
+          "teacher_vs_feasible_target_mae_m_s2": 0.421715646982193,
+          "critic_explained_variance_against_parent_gae_targets": 0.18555551767349243,
+          "critic_mse_against_parent_gae_targets": 805.9578247070312,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 10,
+        "task": "merge",
+        "population": 4,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.0991734266281128,
+          "teacher_acceleration_mae_m_s2": 0.852299690246582,
+          "teacher_acceleration_bias_m_s2": -0.7598628401756287,
+          "lane_agreement": 0.9921875,
+          "feasible_target_mae_m_s2": 0.8667892813682556,
+          "teacher_vs_feasible_target_mae_m_s2": 0.0546276792883873,
+          "critic_explained_variance_against_parent_gae_targets": 0.3435502052307129,
+          "critic_mse_against_parent_gae_targets": 638.3143310546875,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      },
+      {
+        "case_index": 11,
+        "task": "merge",
+        "population": 8,
+        "fit": {
+          "samples": 128,
+          "teacher_acceleration_rmse_m_s2": 1.466629981994629,
+          "teacher_acceleration_mae_m_s2": 0.9179176092147827,
+          "teacher_acceleration_bias_m_s2": 0.05393841862678528,
+          "lane_agreement": 1.0,
+          "feasible_target_mae_m_s2": 0.6817587018013,
+          "teacher_vs_feasible_target_mae_m_s2": 0.5309641361236572,
+          "critic_explained_variance_against_parent_gae_targets": 0.15658318996429443,
+          "critic_mse_against_parent_gae_targets": 599.0696411132812,
+          "critic_target_description": "Fixed parent-policy GAE targets bootstrapped with fresh population critic; diagnostic, not true value or on-policy targets for later actors"
+        }
+      }
+    ]
+  },
+  "limitations": [
+    "No optimizer step or hypothetical Adam update was applied.",
+    "Gradient comparison is at the frozen parent before an update, not proof of historical cause.",
+    "Counterfactual separate clipping scales derivatives only; Adam moments can change resulting steps.",
+    "Fresh critic represents population initialization, not the original trained four-car critic.",
+    "Later actor fit uses parent-visited states; critic targets use parent fresh-critic GAE.",
+    "No full-horizon acceptance, held-out data or physical/sensor validation."
+  ],
+  "checkpoint_hashes_before": {
+    "parent": "b77f55ae7262178ce0fa15729fe844e18693cd168905eea8b1bbd579c6913ab1",
+    "population_v01": "bec8fd1cd21cde64244aeae18379157c12398b9f355e8cc3e48356e393de6551",
+    "population_v02": "cad1f670ba895efb5029e2690d32944313a741dfc1c8536894d5294209578636"
+  },
+  "checkpoint_hashes_after": {
+    "parent": "b77f55ae7262178ce0fa15729fe844e18693cd168905eea8b1bbd579c6913ab1",
+    "population_v01": "bec8fd1cd21cde64244aeae18379157c12398b9f355e8cc3e48356e393de6551",
+    "population_v02": "cad1f670ba895efb5029e2690d32944313a741dfc1c8536894d5294209578636"
+  },
+  "model_hashes_before": {
+    "parent_actor_fresh_population_critic": "b86523c6a616c8f40a63b897d0ffa1c10af2e05e5f62f12b8d6fa18205f355ed",
+    "population_v01": "8151d726b6596ac8ed028507de9c8667c24bf857835fbefa0f50579bcfba4d66",
+    "population_v02": "44458d9c58d3368d857b67d6227361ea8087e170f45f02998456bebf63cbce0d"
+  },
+  "model_hashes_after": {
+    "parent_actor_fresh_population_critic": "b86523c6a616c8f40a63b897d0ffa1c10af2e05e5f62f12b8d6fa18205f355ed",
+    "population_v01": "8151d726b6596ac8ed028507de9c8667c24bf857835fbefa0f50579bcfba4d66",
+    "population_v02": "44458d9c58d3368d857b67d6227361ea8087e170f45f02998456bebf63cbce0d"
+  },
+  "source_hashes": {
+    "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+    "environments/highway_stage1_env.py": "c43df31cb5988ebb2faa086323bed24592d7e0c2128208784b91872b8e164f5a",
+    "environments/i110_merge_env.py": "ec343afd7b35920f4fd6056dcd7b4fe7ee2460a31d95f599e24942290336db76",
+    "traffic/highway_merge_context.py": "bbdc04d1cd42418453f8e0f5473729b6290c4b3da68ad92396b2847ced480a4e",
+    "traffic/highway_stage1_teacher.py": "750bbc930c294b0403dfb6841cf123798410e8095397140f90e4ec3ae087c139",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+    "policies/mappo.py": "c71e4e682b8991c6945692852a2adcd2e3c66f78773337b312b34706657b6607",
+    "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+    "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+    "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+    "scripts/build_highway_curriculum_v2.py": "97d80ac2bcd0657eec37a9a863533ad2e51c5c0cdf9fa80c00b1873f71fe0477",
+    "scripts/build_i110_sumo.py": "26ab7e55962f4d6e0422f8d0ef944baf337600af32645fb1d6364f0979c37f70",
+    "experiments/run_highway_population.py": "e777348293259340603e92165d105a00dbb446d09078c0193ef36a9918c241ca",
+    "environments/highway_population_env.py": "437f06a80bb8d07d5bababde7669cc07790f18c60cb7ac5474bf1c5c06e95415",
+    "experiments/diagnose_population_losses.py": "92bb2a65cdf4dbe4e12e93df3b6f095be9ba7ae88450c70d21b64bc204739f04"
+  },
+  "sources_changed": [],
+  "wall_seconds": 31.342999999999847,
+  "evidence": {
+    "run": "outputs/population-diagnostics/v01/loss-20261105T051756Z-0530a0b0",
+    "raw_summary_sha256": "73b88b526603c9c8c46d61af53a3caccd52a15f457a565253c18dd31f63c72ee",
+    "dataset": "outputs/population-diagnostics/v01/loss-20261105T051756Z-0530a0b0/fixed-diagnostic-observations.pt",
+    "protocol_sha256": "209e5b19b24e41920a3c04666356a0acb3a5dbb47ae454a1fd84490709e19bc9",
+    "test_command": ".venv-traffic/Scripts/python.exe -m pytest tests/test_population_loss_diagnostics.py -q",
+    "tests_passed": 4,
+    "fresh_critic_scope": "Pre-warmup initialization. Does not reconstruct historical post-4096-decision warmup gradients or prove the previous training regression cause."
+  }
+}

@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/policy-baseline-review/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/policy-baseline-review/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-diagnostics/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-diagnostics/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4688,3 +4688,19 @@ Priority: calibrate requested/filtered/realized control and warning accounting; 
 Full comparison, source links and retained evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/policy-baseline-review/documentation/policy-baseline-av-comparison.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/policy-baseline-review/documentation/policy-baseline-av-comparison.md>)
 
 Frozen reference: policies/versions/highway-stage1-v03-phase0; actor SHA-256 8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8.
+
+<a id="docs-h-fij173u2z05p"></a>
+
+#### November 4, 2026 — Frozen acceleration and loss diagnostics (no training)
+
+Used the preserved Stage 1 v03 phase-0 actor for steps 1 and 2 of the AV comparison. Two implementation agents and an independent reviewer investigated control and optimization. All policy weights and production training/environment code remain unchanged.
+
+Fourteen bounded training-only SUMO probes completed in 53.77 seconds (7,200 active-agent decisions). Synchronized speed derivatives match reported acceleration within 2.57e-13 m/s². Three matched 0.1/0.5-second command-duration pairs were identical over 1,200 paired decisions. No tested timing, units or command-duration bug was found; native following limits constrain over-requested acceleration. With unchanged guards, parent/teacher override rates were cruise 56.5/0%, following 18.5/0%, passing 10/0.667% and merge 26/2.167%. The merge remained slow (official speed/limit 0.67585/0.67659), so lower interventions are not acceptance. No collisions, teleports or native emergency warnings occurred in these short probes.
+
+Historical warning reconciliation found twelve controlled-car lane-end emergency stops in population v02 (nine training, one initial validation, two final validation), although sampled acceleration-below--4.55 counters were zero. Native event logs and sampled acceleration describe different behavior; both must be retained. The diagnostic parser now handles emergency braking and lane-end emergency stops. Prior evidence is preserved.
+
+Twelve no-update frozen-parent rollouts collected 10,400 transitions and a sealed, equally sampled 1,536-row training-only diagnostic dataset in 31.343 seconds. At acceleration imitation weights 1/50, weighted acceleration gradient norms were 0.0446/2.2304 versus PPO actor 1.7732. PPO/acceleration gradient cosine was -0.420. A fresh population critic gradient norm of 42.5945 dominated shared clipping, which retained about 1.17% of joint gradient magnitude. This is BEFORE critic warm-up, not historical post-warm-up proof or an Adam step prediction. Teacher and reward acceleration targets differed by 0.3002 m/s² MAE. Same-observation teacher-fit RMSE was parent 1.2553, population v01 1.2563 and v02 1.1774 m/s²; improved label fit does not establish improved driving.
+
+Next proposal: define a consistent buffered longitudinal target with explicit merge exceptions; add separate actor/critic norms, clipping and post-warm-up value diagnostics; compare separate clipping as one controlled change. Preserve current safety and efficiency gates and count native emergency events. No optimizer updates, new training, checkpoint promotion or physical/sensor validation occurred. Raw traces and sealed observations remain local under outputs; compact metrics, source hashes and measured plots are retained on GitHub.
+
+Report, reproduction commands, plots and limitations: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-diagnostics/documentation/population-control-diagnostics-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-diagnostics/documentation/population-control-diagnostics-v01.md>)
