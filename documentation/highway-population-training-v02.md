@@ -11,3 +11,10 @@ Budget: 100,000 active-agent decisions including 4,096 critic warmup; CPU one th
 57 targeted tests passed. No-learning preflight preflight-20261105T044931Z-106cb333 passed in 29.625 seconds. Final endpoint compared with same frozen parent and v01 final; preserve speed/pass/merge/cohort results and original 5% per-case override gate. No held-out evaluation or live slider handoff. Native emergency warnings must be inspected separately from sampled counters.
 
 Training results pending. Google guide synchronization pending.
+
+
+## Completed result
+
+Run `train-20261105T045039Z-a6db8f1b`: 99,998 decisions, 514.516 seconds, no runtime error/source drift. Final pooled overrides 29.9716% versus previous v01 31.7013% and matched parent 20.6393%. Worst 86.75% versus v01 75.125%; twelve of sixteen cases fail versus fifteen previously. All four controlled merges and thirteen passes, zero final validation collisions/teleports/overspeed under protections. Twelve native emergency-warning lines across run logs are retained individually; no emergency-free claim. Stronger acceleration supervision is insufficient and this actor is rejected for promotion. No held-out test or automatic extra attempt.
+
+[Metrics](evidence/highway-population-v02/results.json), [comparison](evidence/highway-population-v02/comparison.json), [experimental actor](../policies/versions/highway-population-v02/README.md). Raw journals/checkpoints remain local in `outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b`. Google guide sync pending.

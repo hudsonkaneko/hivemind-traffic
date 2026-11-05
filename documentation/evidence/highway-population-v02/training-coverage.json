@@ -1,0 +1,166 @@
+{
+  "passing|2|8|none|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 1600
+  },
+  "passing|2|16|none|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 1594
+  },
+  "cruise|6|24|none|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 900
+  },
+  "cruise|1|16|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 2
+  },
+  "cruise|2|24|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 505
+  },
+  "following|1|16|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 800
+  },
+  "cruise|2|24|none|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 1532
+  },
+  "cruise|2|8|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 1600
+  },
+  "passing|8|24|none|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 6400
+  },
+  "following|4|24|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 1199
+  },
+  "following|4|16|none|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 3200
+  },
+  "merge|8|24|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 6170
+  },
+  "merge|1|24|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 800
+  },
+  "following|6|8|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 4800
+  },
+  "passing|6|24|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 1863
+  },
+  "passing|2|8|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 1600
+  },
+  "passing|4|16|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 3150
+  },
+  "passing|2|8|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 1600
+  },
+  "passing|6|24|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 4800
+  },
+  "cruise|8|8|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 2546
+  },
+  "following|4|8|none|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 3200
+  },
+  "cruise|6|8|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 4790
+  },
+  "merge|8|16|none|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 6400
+  },
+  "following|1|8|none|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 800
+  },
+  "passing|1|24|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 286
+  },
+  "merge|1|16|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 800
+  },
+  "merge|2|24|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 1600
+  },
+  "merge|6|16|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 4800
+  },
+  "following|2|8|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 1600
+  },
+  "following|2|16|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 566
+  },
+  "cruise|4|24|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 2972
+  },
+  "passing|6|8|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 4776
+  },
+  "following|1|8|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 800
+  },
+  "merge|6|8|none|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 4793
+  },
+  "cruise|8|16|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 2149
+  },
+  "following|2|24|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 1584
+  },
+  "following|1|8|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 761
+  },
+  "cruise|6|24|local|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 4800
+  },
+  "cruise|4|16|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 3200
+  },
+  "following|2|16|none|0.0": {
+    "episodes": 1,
+    "actual_agent_transitions": 578
+  },
+  "passing|6|16|local|0.3": {
+    "episodes": 1,
+    "actual_agent_transitions": 2082
+  }
+}
