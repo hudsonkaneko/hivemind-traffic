@@ -579,3 +579,8 @@ historical content of the milestone tab. Regenerated and checked the mirror
 against `outputs/doc-sync/population-near-limit-v04/verified-source.json`. Native
 pagination was not inspected. No experiment training or policy promotion.
 [Final configuration and evidence](population-near-limit-v04.md).
+
+
+## November 5: I-110 frozen-policy merge visual test
+
+Appended the merge-specific policy selection, fixed-seed results, failed intervention gate, completed video/screenshot verification and physical-validation limits to tab 41. The start-tab mirror link follows `codex/i110-merge-visual-v01`. Revision-guarded editing and full native readback preserved all 42 tabs, forty unaffected tab bodies and the milestone tab's historical content. Regenerated and checked the mirror from `outputs/doc-sync/i110-merge-visual-v01/verified-source.json` (2,589 paragraphs, 14 tables, 182 code blocks). Native pagination was not inspected. [Results and actual screenshots](i110-merge-visual-v01.md). No training or policy promotion.

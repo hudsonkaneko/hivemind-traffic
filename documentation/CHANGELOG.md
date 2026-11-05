@@ -933,3 +933,11 @@ Pinned exact Stage 1 v03 phase-0 actor as the lowest-intervention population-tes
 - Retained raw requests, conditional loss/exposure metrics, gradient components and repeatable boundary diagnostics. Frozen audit records previous-request sensitivity and both low/high-speed errors.
 - Three sub-agents contributed implementation and review. 171 tests and the 27.657-second zero-update SUMO preflight passed; one teacher-fixture background emergency remains disclosed. No experiment training or new Isaac run.
 - [Final configuration and evidence](population-near-limit-v04.md); living roadmap v12 updated. Guide synchronization is recorded in the sync ledger. The actor remains unchanged and unaccepted.
+
+
+## November 5, 2026 — I-110 frozen-policy merge visual test
+
+- Added a bounded deterministic recorder and layered 3D replay renderer for final Stage 1 v03, selected by matched merge-specific results; original v2 observation/control semantics retained.
+- Seed 6400019 completed both ramp merges (3.0/9.7 seconds) with no collisions, teleports, overspeed or native emergency warnings. Full-run interventions 131/1240 (10.56%) still fail the 5% target; no acceptance or training claim.
+- Saved an 11-second/110-frame MP4 and actual event screenshots; video decode, zero pose error and unchanged authored layers verified. Six CPU/OpenUSD tests pass. Fixed/preserved the first preview's premature Isaac shutdown failure.
+- [Results, provenance, screenshots and replay commands](i110-merge-visual-v01.md); living sensor roadmap and 42-tab Google/Markdown engineering guide updated. Video and bulk trajectories remain local outputs.
