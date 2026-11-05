@@ -900,3 +900,12 @@ change. Native guide and full 42-tab Markdown mirror synchronized and verified.
 ## November 4: restored analysis baseline and AV research comparison
 
 Pinned exact Stage 1 v03 phase-0 actor as the lowest-intervention population-tested reference; no acceptance or runtime rollback. Added reproducible offline comparisons, public AV-policy differences and ranked improvements. Preserved all later candidates. No simulator/training ran. Verified 42-tab Google guide sync includes pending v02 outcome; generated mirror checked. See [review](policy-baseline-av-comparison.md).
+
+
+## November 4, 2026: frozen population control and loss diagnostics
+
+- Added bounded no-learning acceleration and gradient diagnostics using the preserved phase-0 actor, with independent review and 28 passing focused checks.
+- Measured 7,200 acceleration decisions: synchronized measurements agree within 2.57e-13 m/s² and matched 0.1/0.5-second command durations are identical. Native following saturation, near-limit/merge response gaps and differing teacher/reward targets remain actionable.
+- Sealed 1,536 balanced loss rows from twelve training-only rollouts. Measured opposing PPO/imitation gradients and fresh-critic coupling through global clipping; these do not reconstruct historical post-warm-up updates.
+- Reconciled twelve earlier controlled-car lane-end emergency stops missed by sampled acceleration counters (9 training, 1 initial validation, 2 final validation). Corrected diagnostic parser; preserved original logs and summaries.
+- Retained metrics, hashes, plots and offline reproduction tools; all weights and production runtime code unchanged. Living roadmap v09 and verified 42-tab engineering guide updated. No training or policy promotion. [Results](population-control-diagnostics-v01.md).

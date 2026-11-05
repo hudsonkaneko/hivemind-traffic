@@ -1,0 +1,1369 @@
+{
+  "schema": "population_acceleration_evidence_v01",
+  "raw_run": "outputs/highway-population-diagnostics/v01/acceleration-20261105T051936Z-5526457f",
+  "raw_summary_sha256": "075695514448afad196dbed404ad107e592c36046e149b0b4466b4bbfa6ee7a9",
+  "raw_executed_source_sha256": "c00c26ba062bc0005cf57ea477e5019f66c9efd00b577a1e2c83a175be71bae8",
+  "corrected_parser_source_sha256": "0abf85176b8e2f53857c6c7600fb8e2e7778c2771fdf9a0eb2035660c30f5664",
+  "source_commit": "6bbe5269ec94b08f57e40b724e142c7e1c4232c2",
+  "git_status_observed_after_run": [
+    " M documentation/CHANGELOG.md",
+    " M documentation/hybrid-roadmap.md",
+    " M documentation/learning-guide-sync.md",
+    " M documentation/sensor-driven-training-roadmap.md",
+    " M usd/vehicle_sensor_rig.py",
+    "?? configs/perception/dataset_smoke_v01.json",
+    "?? configs/perception/segmentation_pilot_v01.json",
+    "?? documentation/body-camera-v01.md",
+    "?? documentation/evidence/body-camera-v01/",
+    "?? documentation/evidence/perception-preparation-v01/",
+    "?? documentation/evidence/population-diagnostics-v01/",
+    "?? documentation/evidence/roof-lidar-v01/",
+    "?? documentation/evidence/seven-camera-v01/",
+    "?? documentation/perception-preparation-v01.md",
+    "?? documentation/population-control-diagnostics-v01.md",
+    "?? documentation/roof-lidar-v01.md",
+    "?? documentation/seven-camera-v01.md",
+    "?? environments/endurance_loop_hazard_contract.py",
+    "?? environments/endurance_loop_hazard_lab.py",
+    "?? environments/physical_pair_loop_contract.py",
+    "?? environments/physical_pair_loop_lab.py",
+    "?? experiments/diagnose_population_acceleration.py",
+    "?? experiments/diagnose_population_losses.py",
+    "?? experiments/prepare_perception_dataset.py",
+    "?? experiments/verify_body_cameras.py",
+    "?? experiments/verify_near_field_sensors.py",
+    "?? experiments/verify_roof_lidar.py",
+    "?? experiments/verify_seven_cameras.py",
+    "?? scripts/capture_perception_scene.py",
+    "?? scripts/probe_body_cameras.py",
+    "?? scripts/probe_near_field_sensors.py",
+    "?? scripts/probe_physical_rl_fleet.py",
+    "?? scripts/probe_roof_lidar.py",
+    "?? scripts/probe_seven_cameras.py",
+    "?? scripts/run_physical_pair_loop.py",
+    "?? tests/test_body_camera_rig.py",
+    "?? tests/test_full_perimeter_lidar_rig.py",
+    "?? tests/test_near_field_lidar.py",
+    "?? tests/test_near_field_sensor_rig.py",
+    "?? tests/test_perception_capture_config.py",
+    "?? tests/test_perception_dataset.py",
+    "?? tests/test_perimeter_lidar_rig.py",
+    "?? tests/test_physical_pair_loop.py",
+    "?? tests/test_physical_rl_fleet.py",
+    "?? tests/test_population_acceleration_diagnostics.py",
+    "?? tests/test_population_loss_diagnostics.py",
+    "?? tests/test_roof_lidar_rig.py",
+    "?? tests/test_seven_camera_rig.py",
+    "?? traffic/endurance_road_hazards.py",
+    "?? traffic/perception_dataset.py",
+    "?? ucode.elf",
+    "?? usd/body_camera_rig.py",
+    "?? usd/full_perimeter_lidar_rig.py",
+    "?? usd/near_field_sensor_rig.py",
+    "?? usd/perimeter_lidar_rig.py",
+    "?? usd/roof_lidar_rig.py",
+    "?? usd/seven_camera_rig.py"
+  ],
+  "git_status_limitation": "Start-of-run dirty status was not captured. This is a post-run snapshot; exact source hashes in raw summary remain authoritative. Later runner revision captures start state.",
+  "full_resolved_config_path": "outputs/highway-population-diagnostics/v01/acceleration-20261105T051936Z-5526457f/resolved-config.json",
+  "full_resolved_config_sha256": "b55928a3f39b695657606b23da6af6c0cfcb25eae2f41f0a4e7c43f5f90ea42e",
+  "actor": {
+    "path": "policies/versions/highway-stage1-v03-phase0/policy.pt",
+    "sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8"
+  },
+  "actor_sha256_after": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8",
+  "frozen_inputs_unchanged": true,
+  "source_sha256_before": {
+    "experiments/diagnose_population_acceleration.py": "c00c26ba062bc0005cf57ea477e5019f66c9efd00b577a1e2c83a175be71bae8",
+    "environments/highway_population_env.py": "437f06a80bb8d07d5bababde7669cc07790f18c60cb7ac5474bf1c5c06e95415",
+    "environments/highway_stage1_env.py": "c43df31cb5988ebb2faa086323bed24592d7e0c2128208784b91872b8e164f5a",
+    "environments/i110_merge_env.py": "ec343afd7b35920f4fd6056dcd7b4fe7ee2460a31d95f599e24942290336db76",
+    "traffic/highway_stage1_teacher.py": "750bbc930c294b0403dfb6841cf123798410e8095397140f90e4ec3ae087c139"
+  },
+  "source_sha256_after": {
+    "experiments/diagnose_population_acceleration.py": "c00c26ba062bc0005cf57ea477e5019f66c9efd00b577a1e2c83a175be71bae8",
+    "environments/highway_population_env.py": "437f06a80bb8d07d5bababde7669cc07790f18c60cb7ac5474bf1c5c06e95415",
+    "environments/highway_stage1_env.py": "c43df31cb5988ebb2faa086323bed24592d7e0c2128208784b91872b8e164f5a",
+    "environments/i110_merge_env.py": "ec343afd7b35920f4fd6056dcd7b4fe7ee2460a31d95f599e24942290336db76",
+    "traffic/highway_stage1_teacher.py": "750bbc930c294b0403dfb6841cf123798410e8095397140f90e4ec3ae087c139"
+  },
+  "runtime": {
+    "python": "3.11.9",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.6"
+  },
+  "sumo_version": [
+    22,
+    "SUMO 1.27.1"
+  ],
+  "wall_seconds": 53.76600000000053,
+  "timing_scope": "One bounded diagnostic wall time, not a throughput benchmark",
+  "decisions": 7200,
+  "diagnostic_speed_ratio_definition": "CSV and measurements.speed_ratio use post-step speed / PRE-step limit to align with command context. Use environment_outcomes.mean_fraction_of_speed_limit for performance; it uses the post-step limit. Merge seams change limits.",
+  "maximum_derivative_error_m_s2": 2.566835632933362e-13,
+  "duration_comparisons": {
+    "train-3-lane-cruise": {
+      "equal_sample_count": true,
+      "samples": 400,
+      "max_absolute_difference": {
+        "time_before_s": 0.0,
+        "time_after_s": 0.0,
+        "speed_before_m_s": 0.0,
+        "speed_after_m_s": 0.0,
+        "requested_acceleration_m_s2": 0.0,
+        "filtered_acceleration_m_s2": 0.0,
+        "realized_acceleration_m_s2": 0.0
+      }
+    },
+    "train-2-lane-following": {
+      "equal_sample_count": true,
+      "samples": 400,
+      "max_absolute_difference": {
+        "time_before_s": 0.0,
+        "time_after_s": 0.0,
+        "speed_before_m_s": 0.0,
+        "speed_after_m_s": 0.0,
+        "requested_acceleration_m_s2": 0.0,
+        "filtered_acceleration_m_s2": 0.0,
+        "realized_acceleration_m_s2": 0.0
+      }
+    },
+    "train-3-lane-merge": {
+      "equal_sample_count": true,
+      "samples": 400,
+      "max_absolute_difference": {
+        "time_before_s": 0.0,
+        "time_after_s": 0.0,
+        "speed_before_m_s": 0.0,
+        "speed_after_m_s": 0.0,
+        "requested_acceleration_m_s2": 0.0,
+        "filtered_acceleration_m_s2": 0.0,
+        "realized_acceleration_m_s2": 0.0
+      }
+    }
+  },
+  "episodes": [
+    {
+      "spec": {
+        "id": "train-2-lane-cruise-frozen_parent",
+        "case_id": "train-2-lane-cruise",
+        "controller": "frozen_parent",
+        "seed": 6520000,
+        "total_vehicles": 24,
+        "horizon": 600,
+        "command_duration_s": 0.1
+      },
+      "measurements": {
+        "agent_steps": 600,
+        "paired_speed_samples": 600,
+        "override_rate": 0.565,
+        "native_mismatch_rate": 0.565,
+        "policy_filter_rate": 0.0,
+        "requested_mean_m_s2": 0.28462137242158253,
+        "filtered_mean_m_s2": 0.28462137242158253,
+        "realized_mean_m_s2": 0.15068027400568895,
+        "speed_ratio": 0.8936723793418117,
+        "request_realized_mae_m_s2": 0.13394109841589638,
+        "derivative_max_error_m_s2": 6.8833827526759706e-15,
+        "native_mismatch_below_filtered": 339,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 339,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 5,
+        "ending_lane_samples": 0,
+        "near_limit_samples": 0,
+        "no_observed_front_samples": 0,
+        "observed_front_samples": 600,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.8936723793418114
+      },
+      "raw_csv_sha256": "f2de62ddc25b4efece31b3320e5d201d531c1d31792da19c3a5e68d8c8e108ec",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-2-lane-cruise-teacher",
+        "case_id": "train-2-lane-cruise",
+        "controller": "teacher",
+        "seed": 6520000,
+        "total_vehicles": 24,
+        "horizon": 600,
+        "command_duration_s": 0.1
+      },
+      "measurements": {
+        "agent_steps": 600,
+        "paired_speed_samples": 600,
+        "override_rate": 0.0,
+        "native_mismatch_rate": 0.0,
+        "policy_filter_rate": 0.0,
+        "requested_mean_m_s2": 0.14854292365411917,
+        "filtered_mean_m_s2": 0.14854292365411917,
+        "realized_mean_m_s2": 0.14854290401068818,
+        "speed_ratio": 0.8933976577380605,
+        "request_realized_mae_m_s2": 1.964343715243899e-08,
+        "derivative_max_error_m_s2": 5.10702591327572e-15,
+        "native_mismatch_below_filtered": 0,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 0,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 5,
+        "ending_lane_samples": 0,
+        "near_limit_samples": 0,
+        "no_observed_front_samples": 0,
+        "observed_front_samples": 600,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.8933976577380598
+      },
+      "raw_csv_sha256": "890f644b1059feddbf1a5cc60fc5a9976b821a8ff23e6ab02c7608ef7bf07259",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-2-lane-following-frozen_parent",
+        "case_id": "train-2-lane-following",
+        "controller": "frozen_parent",
+        "seed": 6520001,
+        "total_vehicles": 24,
+        "horizon": 600,
+        "command_duration_s": 0.1
+      },
+      "measurements": {
+        "agent_steps": 600,
+        "paired_speed_samples": 600,
+        "override_rate": 0.185,
+        "native_mismatch_rate": 0.185,
+        "policy_filter_rate": 0.0,
+        "requested_mean_m_s2": 0.16921470219890278,
+        "filtered_mean_m_s2": 0.16921470219890278,
+        "realized_mean_m_s2": 0.14467602406533164,
+        "speed_ratio": 0.9059459798122301,
+        "request_realized_mae_m_s2": 0.024538678133577813,
+        "derivative_max_error_m_s2": 6.827871601444713e-15,
+        "native_mismatch_below_filtered": 111,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 111,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 5,
+        "ending_lane_samples": 0,
+        "near_limit_samples": 0,
+        "no_observed_front_samples": 0,
+        "observed_front_samples": 600,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.9059459798122301
+      },
+      "raw_csv_sha256": "5507543a4751d701fec063bc137ce18b1beee014f91d6b8df7b3ed4cf28b7b70",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-2-lane-following-teacher",
+        "case_id": "train-2-lane-following",
+        "controller": "teacher",
+        "seed": 6520001,
+        "total_vehicles": 24,
+        "horizon": 600,
+        "command_duration_s": 0.1
+      },
+      "measurements": {
+        "agent_steps": 600,
+        "paired_speed_samples": 600,
+        "override_rate": 0.0,
+        "native_mismatch_rate": 0.0,
+        "policy_filter_rate": 0.0,
+        "requested_mean_m_s2": 0.13914181674520174,
+        "filtered_mean_m_s2": 0.13914181674520174,
+        "realized_mean_m_s2": 0.13914178871799232,
+        "speed_ratio": 0.9091150277589422,
+        "request_realized_mae_m_s2": 2.8027214167281045e-08,
+        "derivative_max_error_m_s2": 4.773959005888173e-15,
+        "native_mismatch_below_filtered": 0,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 0,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 5,
+        "ending_lane_samples": 0,
+        "near_limit_samples": 0,
+        "no_observed_front_samples": 0,
+        "observed_front_samples": 600,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.9091150277589425
+      },
+      "raw_csv_sha256": "1246c004bafadcf3486fbc3e0d95c59d33e289a55775a47eb43f608a1b44af47",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-3-lane-passing-frozen_parent",
+        "case_id": "train-3-lane-passing",
+        "controller": "frozen_parent",
+        "seed": 6520002,
+        "total_vehicles": 16,
+        "horizon": 600,
+        "command_duration_s": 0.1
+      },
+      "measurements": {
+        "agent_steps": 600,
+        "paired_speed_samples": 600,
+        "override_rate": 0.1,
+        "native_mismatch_rate": 0.09166666666666666,
+        "policy_filter_rate": 0.008333333333333333,
+        "requested_mean_m_s2": 0.26980347737049065,
+        "filtered_mean_m_s2": 0.2666121110916538,
+        "realized_mean_m_s2": 0.24959964231499385,
+        "speed_ratio": 0.9043389050345532,
+        "request_realized_mae_m_s2": 0.020203835055504254,
+        "derivative_max_error_m_s2": 2.3314683517128287e-14,
+        "native_mismatch_below_filtered": 55,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 2,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 5,
+        "ending_lane_samples": 0,
+        "near_limit_samples": 181,
+        "no_observed_front_samples": 71,
+        "observed_front_samples": 529,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 1,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 2,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.9043389050345534
+      },
+      "raw_csv_sha256": "11541f2014a6b9374119202d60d74ea74ff15ced8b0271f3f18fd6c5f94e547a",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-3-lane-passing-teacher",
+        "case_id": "train-3-lane-passing",
+        "controller": "teacher",
+        "seed": 6520002,
+        "total_vehicles": 16,
+        "horizon": 600,
+        "command_duration_s": 0.1
+      },
+      "measurements": {
+        "agent_steps": 600,
+        "paired_speed_samples": 600,
+        "override_rate": 0.006666666666666667,
+        "native_mismatch_rate": 0.006666666666666667,
+        "policy_filter_rate": 0.0,
+        "requested_mean_m_s2": 0.24441473955909412,
+        "filtered_mean_m_s2": 0.24441473955909412,
+        "realized_mean_m_s2": 0.2431440827603444,
+        "speed_ratio": 0.9187698747644311,
+        "request_realized_mae_m_s2": 0.0012706567987546494,
+        "derivative_max_error_m_s2": 1.2212453270876722e-14,
+        "native_mismatch_below_filtered": 4,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 4,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 5,
+        "ending_lane_samples": 0,
+        "near_limit_samples": 113,
+        "no_observed_front_samples": 4,
+        "observed_front_samples": 596,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 1,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.9187698747644314
+      },
+      "raw_csv_sha256": "0b33ca31dd9dae56e41fb31a3f7706982b68447b9f508f5c5814f076429c1fd2",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-3-lane-merge-frozen_parent",
+        "case_id": "train-3-lane-merge",
+        "controller": "frozen_parent",
+        "seed": 6520003,
+        "total_vehicles": 16,
+        "horizon": 600,
+        "command_duration_s": 0.1
+      },
+      "measurements": {
+        "agent_steps": 600,
+        "paired_speed_samples": 600,
+        "override_rate": 0.26,
+        "native_mismatch_rate": 0.19833333333333333,
+        "policy_filter_rate": 0.06166666666666667,
+        "requested_mean_m_s2": 0.32303511563533294,
+        "filtered_mean_m_s2": 0.2968834323184951,
+        "realized_mean_m_s2": 0.01649507274344463,
+        "speed_ratio": 0.6764022246776937,
+        "request_realized_mae_m_s2": 0.3449817019041884,
+        "derivative_max_error_m_s2": 2.566835632933362e-13,
+        "native_mismatch_below_filtered": 113,
+        "native_mismatch_above_filtered": 6,
+        "mismatch_equal_native_counterfactual": 93,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 5,
+        "ending_lane_samples": 557,
+        "near_limit_samples": 11,
+        "no_observed_front_samples": 326,
+        "observed_front_samples": 274,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 1,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 1,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.6758502193620167
+      },
+      "raw_csv_sha256": "c1f1d0478e4f4260e8663e77817f70c11df653a2393d628e67f5bcfa03bd54cb",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-3-lane-merge-teacher",
+        "case_id": "train-3-lane-merge",
+        "controller": "teacher",
+        "seed": 6520003,
+        "total_vehicles": 16,
+        "horizon": 600,
+        "command_duration_s": 0.1
+      },
+      "measurements": {
+        "agent_steps": 600,
+        "paired_speed_samples": 600,
+        "override_rate": 0.021666666666666667,
+        "native_mismatch_rate": 0.021666666666666667,
+        "policy_filter_rate": 0.0,
+        "requested_mean_m_s2": 0.15469236493761854,
+        "filtered_mean_m_s2": 0.15469236493761854,
+        "realized_mean_m_s2": 0.02421935918544624,
+        "speed_ratio": 0.6771309203411287,
+        "request_realized_mae_m_s2": 0.13047337090765743,
+        "derivative_max_error_m_s2": 2.566835632933362e-13,
+        "native_mismatch_below_filtered": 13,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 13,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 5,
+        "ending_lane_samples": 557,
+        "near_limit_samples": 0,
+        "no_observed_front_samples": 285,
+        "observed_front_samples": 315,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 1,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 1,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.6765885676497546
+      },
+      "raw_csv_sha256": "622f4fa88648f5f30239060483f8e072320bb2517bb1b36897c8d539b080f672",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-3-lane-cruise-constant-duration-0.1",
+        "case_id": "train-3-lane-cruise",
+        "controller": "constant_2_m_s2",
+        "seed": 6520010,
+        "total_vehicles": 8,
+        "horizon": 400,
+        "command_duration_s": 0.1
+      },
+      "measurements": {
+        "agent_steps": 400,
+        "paired_speed_samples": 400,
+        "override_rate": 0.8225,
+        "native_mismatch_rate": 0.0,
+        "policy_filter_rate": 0.8225,
+        "requested_mean_m_s2": 2.0,
+        "filtered_mean_m_s2": 0.3584053473305807,
+        "realized_mean_m_s2": 0.35840534733057944,
+        "speed_ratio": 0.9527711422055511,
+        "request_realized_mae_m_s2": 1.6415946526694205,
+        "derivative_max_error_m_s2": 1.0658141036401503e-14,
+        "native_mismatch_below_filtered": 0,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 0,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 3,
+        "ending_lane_samples": 0,
+        "near_limit_samples": 330,
+        "no_observed_front_samples": 400,
+        "observed_front_samples": 0,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.9527711422055511
+      },
+      "raw_csv_sha256": "f6b25d1112c3033c81648e1bda69fedb245e64eeed3621939ec738e7931d6bbd",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-3-lane-cruise-constant-duration-0.5",
+        "case_id": "train-3-lane-cruise",
+        "controller": "constant_2_m_s2",
+        "seed": 6520010,
+        "total_vehicles": 8,
+        "horizon": 400,
+        "command_duration_s": 0.5
+      },
+      "measurements": {
+        "agent_steps": 400,
+        "paired_speed_samples": 400,
+        "override_rate": 0.8225,
+        "native_mismatch_rate": 0.0,
+        "policy_filter_rate": 0.8225,
+        "requested_mean_m_s2": 2.0,
+        "filtered_mean_m_s2": 0.3584053473305807,
+        "realized_mean_m_s2": 0.35840534733057944,
+        "speed_ratio": 0.9527711422055511,
+        "request_realized_mae_m_s2": 1.6415946526694205,
+        "derivative_max_error_m_s2": 1.0658141036401503e-14,
+        "native_mismatch_below_filtered": 0,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 0,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 3,
+        "ending_lane_samples": 0,
+        "near_limit_samples": 330,
+        "no_observed_front_samples": 400,
+        "observed_front_samples": 0,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.9527711422055511
+      },
+      "raw_csv_sha256": "f72f207758af96c424374b64cdad36c8e1fa7878ed2f73f40ca746090b30753b",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-2-lane-following-constant-duration-0.1",
+        "case_id": "train-2-lane-following",
+        "controller": "constant_2_m_s2",
+        "seed": 6520011,
+        "total_vehicles": 24,
+        "horizon": 400,
+        "command_duration_s": 0.1
+      },
+      "measurements": {
+        "agent_steps": 400,
+        "paired_speed_samples": 400,
+        "override_rate": 1.0,
+        "native_mismatch_rate": 1.0,
+        "policy_filter_rate": 0.0,
+        "requested_mean_m_s2": 2.0,
+        "filtered_mean_m_s2": 2.0,
+        "realized_mean_m_s2": 0.21560109738527042,
+        "speed_ratio": 0.8918920947574398,
+        "request_realized_mae_m_s2": 1.7843989026147296,
+        "derivative_max_error_m_s2": 6.494804694057166e-15,
+        "native_mismatch_below_filtered": 400,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 338,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 3,
+        "ending_lane_samples": 0,
+        "near_limit_samples": 0,
+        "no_observed_front_samples": 0,
+        "observed_front_samples": 400,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.8918920947574397
+      },
+      "raw_csv_sha256": "24e4096889e7784eec5d9cde6fdc99280648dc6487ad6bb98944bc55dc4412e1",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-2-lane-following-constant-duration-0.5",
+        "case_id": "train-2-lane-following",
+        "controller": "constant_2_m_s2",
+        "seed": 6520011,
+        "total_vehicles": 24,
+        "horizon": 400,
+        "command_duration_s": 0.5
+      },
+      "measurements": {
+        "agent_steps": 400,
+        "paired_speed_samples": 400,
+        "override_rate": 1.0,
+        "native_mismatch_rate": 1.0,
+        "policy_filter_rate": 0.0,
+        "requested_mean_m_s2": 2.0,
+        "filtered_mean_m_s2": 2.0,
+        "realized_mean_m_s2": 0.21560109738527042,
+        "speed_ratio": 0.8918920947574398,
+        "request_realized_mae_m_s2": 1.7843989026147296,
+        "derivative_max_error_m_s2": 6.494804694057166e-15,
+        "native_mismatch_below_filtered": 400,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 338,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 3,
+        "ending_lane_samples": 0,
+        "near_limit_samples": 0,
+        "no_observed_front_samples": 0,
+        "observed_front_samples": 400,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.8918920947574397
+      },
+      "raw_csv_sha256": "e89e8ec57c5afe84dd5f733a7deb97f7dab65e8d5e88b071ad2a432ad61e8d2e",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-3-lane-merge-constant-duration-0.1",
+        "case_id": "train-3-lane-merge",
+        "controller": "constant_2_m_s2",
+        "seed": 6520012,
+        "total_vehicles": 16,
+        "horizon": 400,
+        "command_duration_s": 0.1
+      },
+      "measurements": {
+        "agent_steps": 400,
+        "paired_speed_samples": 400,
+        "override_rate": 0.6975,
+        "native_mismatch_rate": 0.0325,
+        "policy_filter_rate": 0.665,
+        "requested_mean_m_s2": 2.0,
+        "filtered_mean_m_s2": 0.3306553524595737,
+        "realized_mean_m_s2": 0.12284153648556213,
+        "speed_ratio": 0.8693237948425215,
+        "request_realized_mae_m_s2": 1.8771584635144378,
+        "derivative_max_error_m_s2": 2.5579538487363607e-13,
+        "native_mismatch_below_filtered": 13,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 13,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 3,
+        "ending_lane_samples": 400,
+        "near_limit_samples": 238,
+        "no_observed_front_samples": 400,
+        "observed_front_samples": 0,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.8685067390431336
+      },
+      "raw_csv_sha256": "af1b849b497d52e1c08e8c014c28ebdfc674fdffc2bd4a0e0d2d39e5343a9c53",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "spec": {
+        "id": "train-3-lane-merge-constant-duration-0.5",
+        "case_id": "train-3-lane-merge",
+        "controller": "constant_2_m_s2",
+        "seed": 6520012,
+        "total_vehicles": 16,
+        "horizon": 400,
+        "command_duration_s": 0.5
+      },
+      "measurements": {
+        "agent_steps": 400,
+        "paired_speed_samples": 400,
+        "override_rate": 0.6975,
+        "native_mismatch_rate": 0.0325,
+        "policy_filter_rate": 0.665,
+        "requested_mean_m_s2": 2.0,
+        "filtered_mean_m_s2": 0.3306553524595737,
+        "realized_mean_m_s2": 0.12284153648556213,
+        "speed_ratio": 0.8693237948425215,
+        "request_realized_mae_m_s2": 1.8771584635144378,
+        "derivative_max_error_m_s2": 2.5579538487363607e-13,
+        "native_mismatch_below_filtered": 13,
+        "native_mismatch_above_filtered": 0,
+        "mismatch_equal_native_counterfactual": 13,
+        "speed_mode_values": [
+          31
+        ],
+        "lane_change_mode_values": [
+          512
+        ],
+        "road_seam_samples": 3,
+        "ending_lane_samples": 400,
+        "near_limit_samples": 238,
+        "no_observed_front_samples": 400,
+        "observed_front_samples": 0,
+        "sampled_emergency_steps": 0
+      },
+      "native_warnings": {
+        "warning_lines": 0,
+        "unique_vehicle_time_events": 0,
+        "events": []
+      },
+      "environment_outcomes": {
+        "successful_merges": 0,
+        "passes": 0,
+        "collisions": 0,
+        "teleports": 0,
+        "lane_changes": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "mean_fraction_of_speed_limit": 0.8685067390431336
+      },
+      "raw_csv_sha256": "890b1242bbaaab16bec2d9f59bd88afa32e55e7a4ec645ede7538285a6dda773",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "predictor_residual_definition": "Realized acceleration minus min(filtered request, existing pure ACC response estimate); no fitted parameters",
+  "residual_strata_note": "Ordinary excludes the other three categories. Near-limit, road-seam, and ending-lane categories may overlap. Ending-lane flag follows route-topology merge_distance, not literal nearest edge endpoint.",
+  "predictor_residuals": {
+    "train-2-lane-cruise-frozen_parent": {
+      "ordinary": {
+        "samples": 595,
+        "signed_residual_mean_m_s2": -5.726278461674836e-16,
+        "mean_absolute_residual_m_s2": 8.30131948242465e-15,
+        "maximum_absolute_residual_m_s2": 1.8318679906315083e-14,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 5,
+        "signed_residual_mean_m_s2": 6.50868248186498e-15,
+        "mean_absolute_residual_m_s2": 7.92976795338518e-15,
+        "maximum_absolute_residual_m_s2": 1.4210854715202004e-14,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      }
+    },
+    "train-2-lane-cruise-teacher": {
+      "ordinary": {
+        "samples": 595,
+        "signed_residual_mean_m_s2": 3.687992954910289e-16,
+        "mean_absolute_residual_m_s2": 8.13933421128974e-15,
+        "maximum_absolute_residual_m_s2": 1.865174681370263e-14,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 5,
+        "signed_residual_mean_m_s2": 5.928590951498336e-15,
+        "mean_absolute_residual_m_s2": 8.282263763703667e-15,
+        "maximum_absolute_residual_m_s2": 1.4210854715202004e-14,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      }
+    },
+    "train-2-lane-following-constant-duration-0.1": {
+      "ordinary": {
+        "samples": 397,
+        "signed_residual_mean_m_s2": 4.721943519092133e-16,
+        "mean_absolute_residual_m_s2": 8.630096357665575e-15,
+        "maximum_absolute_residual_m_s2": 1.8207657603852567e-14,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 3,
+        "signed_residual_mean_m_s2": -4.625929269271485e-15,
+        "mean_absolute_residual_m_s2": 8.104628079763643e-15,
+        "maximum_absolute_residual_m_s2": 1.1657341758564144e-14,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      }
+    },
+    "train-2-lane-following-constant-duration-0.5": {
+      "ordinary": {
+        "samples": 397,
+        "signed_residual_mean_m_s2": 4.721943519092133e-16,
+        "mean_absolute_residual_m_s2": 8.630096357665575e-15,
+        "maximum_absolute_residual_m_s2": 1.8207657603852567e-14,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 3,
+        "signed_residual_mean_m_s2": -4.625929269271485e-15,
+        "mean_absolute_residual_m_s2": 8.104628079763643e-15,
+        "maximum_absolute_residual_m_s2": 1.1657341758564144e-14,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      }
+    },
+    "train-2-lane-following-frozen_parent": {
+      "ordinary": {
+        "samples": 595,
+        "signed_residual_mean_m_s2": 9.06837630198027e-17,
+        "mean_absolute_residual_m_s2": 8.483969829185986e-15,
+        "maximum_absolute_residual_m_s2": 1.8318679906315083e-14,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 5,
+        "signed_residual_mean_m_s2": 4.973799150320701e-15,
+        "mean_absolute_residual_m_s2": 7.815970093361103e-15,
+        "maximum_absolute_residual_m_s2": 1.4210854715202004e-14,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      }
+    },
+    "train-2-lane-following-teacher": {
+      "ordinary": {
+        "samples": 595,
+        "signed_residual_mean_m_s2": 6.352528214010665e-16,
+        "mean_absolute_residual_m_s2": 8.345611783344045e-15,
+        "maximum_absolute_residual_m_s2": 1.965094753586527e-14,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 5,
+        "signed_residual_mean_m_s2": -9.769962616701378e-16,
+        "mean_absolute_residual_m_s2": 8.615330671091214e-15,
+        "maximum_absolute_residual_m_s2": 1.4210854715202004e-14,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      }
+    },
+    "train-3-lane-cruise-constant-duration-0.1": {
+      "ordinary": {
+        "samples": 70,
+        "signed_residual_mean_m_s2": -7.105427357601002e-15,
+        "mean_absolute_residual_m_s2": 7.105427357601002e-15,
+        "maximum_absolute_residual_m_s2": 7.105427357601002e-15,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 330,
+        "signed_residual_mean_m_s2": -2.153159805333637e-17,
+        "mean_absolute_residual_m_s2": 2.153159805333637e-17,
+        "maximum_absolute_residual_m_s2": 7.105427357601002e-15,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 3,
+        "signed_residual_mean_m_s2": 0.0,
+        "mean_absolute_residual_m_s2": 0.0,
+        "maximum_absolute_residual_m_s2": 0.0,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      }
+    },
+    "train-3-lane-cruise-constant-duration-0.5": {
+      "ordinary": {
+        "samples": 70,
+        "signed_residual_mean_m_s2": -7.105427357601002e-15,
+        "mean_absolute_residual_m_s2": 7.105427357601002e-15,
+        "maximum_absolute_residual_m_s2": 7.105427357601002e-15,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 330,
+        "signed_residual_mean_m_s2": -2.153159805333637e-17,
+        "mean_absolute_residual_m_s2": 2.153159805333637e-17,
+        "maximum_absolute_residual_m_s2": 7.105427357601002e-15,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 3,
+        "signed_residual_mean_m_s2": 0.0,
+        "mean_absolute_residual_m_s2": 0.0,
+        "maximum_absolute_residual_m_s2": 0.0,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      }
+    },
+    "train-3-lane-merge-constant-duration-0.1": {
+      "ordinary": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 238,
+        "signed_residual_mean_m_s2": 0.0,
+        "mean_absolute_residual_m_s2": 5.970947359328573e-17,
+        "maximum_absolute_residual_m_s2": 7.105427357601002e-15,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 3,
+        "signed_residual_mean_m_s2": -1.7763568394002505e-15,
+        "mean_absolute_residual_m_s2": 2.960594732333751e-15,
+        "maximum_absolute_residual_m_s2": 7.105427357601002e-15,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 400,
+        "signed_residual_mean_m_s2": -0.20781381597401044,
+        "mean_absolute_residual_m_s2": 0.20781381597401044,
+        "maximum_absolute_residual_m_s2": 6.500000000000002,
+        "residual_beyond_point05": 13
+      }
+    },
+    "train-3-lane-merge-constant-duration-0.5": {
+      "ordinary": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 238,
+        "signed_residual_mean_m_s2": 0.0,
+        "mean_absolute_residual_m_s2": 5.970947359328573e-17,
+        "maximum_absolute_residual_m_s2": 7.105427357601002e-15,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 3,
+        "signed_residual_mean_m_s2": -1.7763568394002505e-15,
+        "mean_absolute_residual_m_s2": 2.960594732333751e-15,
+        "maximum_absolute_residual_m_s2": 7.105427357601002e-15,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 400,
+        "signed_residual_mean_m_s2": -0.20781381597401044,
+        "mean_absolute_residual_m_s2": 0.20781381597401044,
+        "maximum_absolute_residual_m_s2": 6.500000000000002,
+        "residual_beyond_point05": 13
+      }
+    },
+    "train-3-lane-merge-frozen_parent": {
+      "ordinary": {
+        "samples": 41,
+        "signed_residual_mean_m_s2": -2.9244899185248027e-16,
+        "mean_absolute_residual_m_s2": 1.429750626834348e-15,
+        "maximum_absolute_residual_m_s2": 5.329070518200751e-15,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 11,
+        "signed_residual_mean_m_s2": 2.5837917664003644e-15,
+        "mean_absolute_residual_m_s2": 9.043271182401275e-15,
+        "maximum_absolute_residual_m_s2": 1.4210854715202004e-14,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 5,
+        "signed_residual_mean_m_s2": 2.6645352591003757e-15,
+        "mean_absolute_residual_m_s2": 4.7961634663806766e-15,
+        "maximum_absolute_residual_m_s2": 1.4210854715202004e-14,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 557,
+        "signed_residual_mean_m_s2": -0.12506699301073945,
+        "mean_absolute_residual_m_s2": 0.16754037220135476,
+        "maximum_absolute_residual_m_s2": 6.24094480276108,
+        "residual_beyond_point05": 47
+      }
+    },
+    "train-3-lane-merge-teacher": {
+      "ordinary": {
+        "samples": 41,
+        "signed_residual_mean_m_s2": -7.040438692744895e-16,
+        "mean_absolute_residual_m_s2": 1.6788738421160903e-15,
+        "maximum_absolute_residual_m_s2": 7.105427357601002e-15,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 5,
+        "signed_residual_mean_m_s2": 3.552713678800501e-16,
+        "mean_absolute_residual_m_s2": 2.4868995751603505e-15,
+        "maximum_absolute_residual_m_s2": 7.105427357601002e-15,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 557,
+        "signed_residual_mean_m_s2": -0.14054542194090347,
+        "mean_absolute_residual_m_s2": 0.14054581552856557,
+        "maximum_absolute_residual_m_s2": 6.499989926815035,
+        "residual_beyond_point05": 13
+      }
+    },
+    "train-3-lane-passing-frozen_parent": {
+      "ordinary": {
+        "samples": 414,
+        "signed_residual_mean_m_s2": 2.2928518986823883e-16,
+        "mean_absolute_residual_m_s2": 8.282424665591294e-15,
+        "maximum_absolute_residual_m_s2": 1.8096635301390052e-14,
+        "residual_beyond_point05": 0
+      },
+      "near_limit": {
+        "samples": 181,
+        "signed_residual_mean_m_s2": -0.042448370909341684,
+        "mean_absolute_residual_m_s2": 0.042448370909348325,
+        "maximum_absolute_residual_m_s2": 0.495826373978133,
+        "residual_beyond_point05": 31
+      },
+      "road_seam": {
+        "samples": 5,
+        "signed_residual_mean_m_s2": -1.4210854715202005e-15,
+        "mean_absolute_residual_m_s2": 7.105427357601002e-15,
+        "maximum_absolute_residual_m_s2": 1.4210854715202004e-14,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      }
+    },
+    "train-3-lane-passing-teacher": {
+      "ordinary": {
+        "samples": 483,
+        "signed_residual_mean_m_s2": -0.0015784331853419269,
+        "mean_absolute_residual_m_s2": 0.0015784331853502598,
+        "maximum_absolute_residual_m_s2": 0.2073837278706705,
+        "residual_beyond_point05": 4
+      },
+      "near_limit": {
+        "samples": 113,
+        "signed_residual_mean_m_s2": -1.2777389765708107e-15,
+        "mean_absolute_residual_m_s2": 8.028484465242891e-15,
+        "maximum_absolute_residual_m_s2": 1.7041923427996153e-14,
+        "residual_beyond_point05": 0
+      },
+      "road_seam": {
+        "samples": 5,
+        "signed_residual_mean_m_s2": 5.118128143521972e-15,
+        "mean_absolute_residual_m_s2": 6.361577931102147e-15,
+        "maximum_absolute_residual_m_s2": 1.4210854715202004e-14,
+        "residual_beyond_point05": 0
+      },
+      "ending_lane": {
+        "samples": 0,
+        "signed_residual_mean_m_s2": null,
+        "mean_absolute_residual_m_s2": null,
+        "maximum_absolute_residual_m_s2": null,
+        "residual_beyond_point05": 0
+      }
+    }
+  },
+  "primary_sources": [
+    "https://sumo.dlr.de/docs/TraCI/Vehicle_Value_Retrieval.html",
+    "https://sumo.dlr.de/docs/TraCI/Change_Vehicle_State.html",
+    "https://raw.githubusercontent.com/eclipse-sumo/sumo/v1_27_1/src/libsumo/Vehicle.cpp",
+    "https://raw.githubusercontent.com/eclipse-sumo/sumo/v1_27_1/src/microsim/cfmodels/MSCFModel_ACC.cpp"
+  ],
+  "api_limitations": [
+    "getSpeedWithoutTraCI is SUMO stored native counterfactual speed, not an independent rollout or causal limiter label",
+    "getFollowSpeed deliberately not called: pinned ACC followSpeed ignores CalcReason and its _v may update native mode state",
+    "Duration probes change only timeline duration; identical seed/reset and refreshed guarded commands every 0.1 s",
+    "Frozen parent and teacher can choose different lanes; only paired constant-command duration probes isolate duration"
+  ],
+  "native_warning_parser_correction": "Initial raw summary searched emergency braking only. This corrected offline evidence searches emergency stop as well. All new diagnostic episodes still have zero of either kind.",
+  "historical_warning_evidence": "acceleration-historical-emergencies.json"
+}

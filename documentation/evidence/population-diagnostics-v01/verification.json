@@ -1,0 +1,24 @@
+{
+  "command": [
+    "C:\\Users\\hudso\\Documents\\highwaysim\\.venv-traffic\\Scripts\\python.exe",
+    "-m",
+    "pytest",
+    "tests/test_population_loss_diagnostics.py",
+    "tests/test_population_acceleration_diagnostics.py",
+    "tests/test_highway_stage1_teacher.py",
+    "-q"
+  ],
+  "returncode": 0,
+  "stdout": "............................                                             [100%]\n28 passed in 2.67s\n",
+  "stderr": "",
+  "scope": "Diagnostic and unchanged teacher unit tests; no simulation or training launch",
+  "independent_review": "Loss reconstruction, all 7,200 finite acceleration rows, duration pairs, 12 historical warning events and 36 journal samples checked; no blocking issues. Corrected phase breakdown: 9 training / 1 initial validation / 2 final validation.",
+  "guide_sync": "Full 42-tab native readback verified; 40 unaffected tabs and historical target prefix preserved; mirror regeneration/check passed; native pagination not inspected.",
+  "source_sha256": {
+    "experiments/diagnose_population_losses.py": "92bb2a65cdf4dbe4e12e93df3b6f095be9ba7ae88450c70d21b64bc204739f04",
+    "experiments/diagnose_population_acceleration.py": "0abf85176b8e2f53857c6c7600fb8e2e7778c2771fdf9a0eb2035660c30f5664",
+    "tests/test_population_loss_diagnostics.py": "cca577716ec3f4c6e82b037248734a7a3cf36affaef045721148d049951a59c6",
+    "tests/test_population_acceleration_diagnostics.py": "34e72365d67bbd8d39982a1aaea637d7b211f7330cb4e21918cdb700ed0dbbb9"
+  },
+  "offline_reproduction": "Versioned acceleration derivation matches measurements, residuals, warning evidence and figure; only the post-run Git status snapshot changes."
+}

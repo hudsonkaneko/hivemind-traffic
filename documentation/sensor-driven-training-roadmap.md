@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v08**, updated **November 4, 2026, America/Los_Angeles**.
-Status: **Stage 1 remains unaccepted; phase-0 reference restored for control diagnosis**.
+Revision **v09**, updated **November 4, 2026, America/Los_Angeles**.
+Status: **Stage 1 remains unaccepted; frozen control/loss diagnostics completed without training**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,7 +14,7 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** follow the [restored baseline and AV comparison](policy-baseline-av-comparison.md): calibrate requested/filtered/realized acceleration and native warning accounting, then diagnose objective balance on identical training states. Preserve the phase-0 parent as the lowest-intervention population-tested reference; v02 has fewer failing cases but worse worst-case behavior. Consider a bounded hybrid-controller experiment only after those diagnostics. No new training is authorized by this analysis.
+**Next action:** use the [frozen acceleration/loss results](population-control-diagnostics-v01.md) to define a consistent buffered longitudinal target and add separate actor/critic diagnostics after critic warm-up. Propose a controlled clipping comparison before retraining. The tested command duration and measurement timing are correct; native following saturation, differing teacher/reward targets and objective coupling remain the relevant issues. Preserve the phase-0 parent as the lowest-intervention population-tested reference. No new training is authorized by this milestone.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
@@ -385,3 +385,7 @@ Matched scripted baseline measured 1.51% pooled overrides; prepare acceleration-
 ### v08 — November 4: checkpoint review and published AV comparison
 
 Verified and preserved the exact Stage 1 v03 phase-0 actor as a reference, not accepted deployment. Same-population overrides 20.64% pooled/44.875% worst outperform both retrains, while v02 passes more individual cases. Offline journals reveal over-requesting without extra progress and sparse-case underexposure. [Comparison](policy-baseline-av-comparison.md) distinguishes PDM/PlanT planning, Wayformer forecasting, SMART sim agents, GPUDrive infrastructure and TransFuser perception. Prioritize control calibration/objective diagnosis before controller, history or attention ablations. No simulator or training ran. Google guide and Markdown mirror synchronized with verified full readback.
+
+### v09 — November 4: frozen acceleration and objective diagnosis
+
+Completed steps 1 and 2 of the comparison using the frozen phase-0 actor, two implementation agents and independent review. Fourteen training-only acceleration probes (7,200 decisions) found synchronized acceleration accurate to 2.57e-13 m/s² and identical 0.1/0.5-second duration traces. Native following limits constrain over-requesting; the scripted teacher reduces interventions without resolving every efficiency limitation. Twelve no-update rollouts yielded 1,536 balanced loss-diagnostic rows: PPO/imitation gradient cosine -0.420, teacher/reward target difference 0.3002 m/s², and fresh-critic gradients that dominate global clipping before warm-up. These are measured mechanisms and hypotheses, not historical post-warm-up proof or accepted driving. All weights and runtime policy/environment code remain unchanged. [Results, plots, native-warning reconciliation and retained artifacts](population-control-diagnostics-v01.md). Next: consistent target design and post-warm-up objective telemetry, then an explicitly reviewed bounded training configuration. No further learning is authorized.
