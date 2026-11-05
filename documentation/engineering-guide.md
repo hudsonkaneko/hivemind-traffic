@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-population-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-population-v01/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/policy-baseline-review/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/policy-baseline-review/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4670,3 +4670,21 @@ Plan, configuration and results: [`https://github.com/hudsonkaneko/hivemind-traf
 Frozen actor and parameters: [`https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-population-v01/policies/versions/highway-population-v01`](<https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-population-v01/policies/versions/highway-population-v01>)
 
 Draft review: [`https://github.com/hudsonkaneko/hivemind-traffic/pull/39`](<https://github.com/hudsonkaneko/hivemind-traffic/pull/39>)
+
+<a id="docs-h-tp9755cm62yv"></a>
+
+#### November 4, 2026: restored population analysis baseline and AV research comparison
+
+Population v02 completed 99,998 decisions in 514.516 seconds. Its 50x acceleration imitation correction did not solve control: 29.97% pooled and 86.75% worst-case overrides, twelve of sixteen cases failing. Four controlled merges and thirteen passes were retained. Native warning logs remain separate from sampled safety counters. The experimental actor is preserved and not promoted.
+
+The user requested a return to the best checkpoint for analysis. Stage 1 v03 phase 0 is now the frozen reference for reducing interventions: on the same sixteen population cases it had 20.64% pooled / 44.875% worst overrides, versus v01 31.70% / 75.125% and v02 29.97% / 86.75%. It is not best on every measure: v02 passes more cases. The older accepted 81-field v04r2 applies only to its separate straight three-lane fixture. All newer checkpoints are preserved; this review ran no simulation or training.
+
+The sparse one-AV/24-car case reveals over-requested acceleration: parent/v02 mean requests 0.1774/0.4313 m/s2, but realized acceleration stays near 0.140 m/s2. Native causes remain unlogged. The pilot covered only 41 of 174 population/channel/task combinations, with 5,049 one-AV decisions versus 38,404 six-AV decisions. These findings justify actuator calibration, objective/gradient diagnosis and balanced sampling before another training run.
+
+Public comparisons: PDM evaluates short-horizon trajectory proposals; PlanT plans from object-level tokens; Wayformer forecasts from history and interactions; SMART generates multi-agent motion; GPUDrive supplies broad data-driven RL scenarios; TransFuser fuses camera and LiDAR for imitation driving. These are different tasks and benchmarks, not direct score comparisons or Waymo's private production policy.
+
+Priority: calibrate requested/filtered/realized control and warning accounting; diagnose PPO/imitation/critic balance on identical training states; test bounded learned corrections around a competent controller; balance AV-count/task/channel exposure; then test temporal history and neighbor attention separately. Preserve per-case safety, speed, passing and merge criteria. Keep sensors and physical transfer as later gates. No new training is authorized by this review.
+
+Full comparison, source links and retained evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/policy-baseline-review/documentation/policy-baseline-av-comparison.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/policy-baseline-review/documentation/policy-baseline-av-comparison.md>)
+
+Frozen reference: policies/versions/highway-stage1-v03-phase0; actor SHA-256 8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8.

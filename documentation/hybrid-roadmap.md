@@ -549,3 +549,8 @@ The [population pilot](highway-population-training-v01.md) completed 99,999 deci
 ### November 4: population v02 retraining completed
 
 [Population v02](highway-population-training-v02.md): 99,998 decisions in 514.516 seconds. Pooled overrides 29.97%, worst 86.75%; twelve failing cases. Rejected for promotion. Metrics, native warnings and experimental weights retained. Next: diagnose acceleration errors before another revision. Google guide sync pending.
+
+
+## November 4: population analysis checkpoint
+
+The [AV comparison](policy-baseline-av-comparison.md) restores the phase-0 reference and prioritizes action-interface calibration and objective diagnostics before more learning. Population v02 remains rejected. Follow the living sensor-driven roadmap; no new learning or physical-transfer capability.

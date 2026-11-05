@@ -895,3 +895,8 @@ change. Native guide and full 42-tab Markdown mirror synchronized and verified.
 ### November 4: population v02 retraining completed
 
 [Population v02](highway-population-training-v02.md): 99,998 decisions in 514.516 seconds. Pooled overrides 29.97%, worst 86.75%; twelve failing cases. Rejected for promotion. Metrics, native warnings and experimental weights retained. Next: diagnose acceleration errors before another revision. Google guide sync pending.
+
+
+## November 4: restored analysis baseline and AV research comparison
+
+Pinned exact Stage 1 v03 phase-0 actor as the lowest-intervention population-tested reference; no acceptance or runtime rollback. Added reproducible offline comparisons, public AV-policy differences and ranked improvements. Preserved all later candidates. No simulator/training ran. Verified 42-tab Google guide sync includes pending v02 outcome; generated mirror checked. See [review](policy-baseline-av-comparison.md).
