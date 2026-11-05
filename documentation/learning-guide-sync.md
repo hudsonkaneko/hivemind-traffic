@@ -554,3 +554,15 @@ Appended no-learning acceleration measurements, objective-gradient findings, his
 ## November 4: population v03 control correction and final configuration
 
 Appended actual near-limit/merge corrections, versioned observation semantics, shared targets, separate diagnostics, bounded results and the disabled final configuration to tab 41. Revision-guarded full native readback preserved all 42 tabs, 40 unaffected tab bodies and historical target content. Start-tab mirror link follows `codex/population-control-v03`. Saved source `outputs/doc-sync/population-control-v03/verified-source.json` exactly matches native readback; regeneration/check passed (2,565 paragraphs, 14 tables, 182 code blocks). Native pagination was not inspected. [Results and configuration](population-control-v03.md).
+
+## November 5: frozen MAPPO physical adapter calibration
+
+Appended the actual adapter, failed full-range brake fit, corrected calibration,
+scripted physical passes and frozen-actor intervention failures to tab 41.
+Changed the start-tab mirror link to `codex/mappo-physical-adapter-v01`.
+Revision-guarded editing and full native readback preserved all 42 tabs, the
+40 unaffected bodies and all prior content in the milestone tab. Regenerated
+and checked the complete Markdown mirror against
+`outputs/doc-sync/mappo-physical-adapter-v01/verified-source.json`.
+Native pagination was not inspected. No policy training or promotion occurred.
+[Results and actual screenshots](mappo-physical-adapter-v01.md).

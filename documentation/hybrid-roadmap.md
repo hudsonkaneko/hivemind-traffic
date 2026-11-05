@@ -564,3 +564,7 @@ The [AV comparison](policy-baseline-av-comparison.md) restores the phase-0 refer
 ## November 4: population v03 control setup ready for configuration review
 
 [Population v03](population-control-v03.md) implements near-limit/first-entry corrections, a shared teacher/reward target, separate actor/critic diagnostics and native emergency accounting. Bounded teacher passing/merge checks reach zero overrides, while the unchanged actor remains unaccepted at 11.17% merge overrides. 150 tests and a zero-update final preflight passed; the 100k-decision/30-minute configuration is prepared with training disabled. Review the configuration before a new launch. No held-out qualification, arbitrary fleet-size guarantee or sensor/physical transfer follows from these development checks.
+
+## November 5, 2026: physical policy execution calibrated
+
+The [frozen MAPPO adapter](mappo-physical-adapter-v01.md) now translates acceleration/lane intent into physical wheel controls. Ordinary actuator calibration and scripted 6/12/18 m/s lane changes/stopping pass. The unchanged actor cruises and passes a scripted car but fails intervention gates (82.11%/27.76%, speed-ceiling corrections). Preserve both attempts and the frozen weights; no training or policy promotion occurred. The living sensor roadmap records the remaining near-limit, curved-road, reactive-traffic and sensor-transfer gates. Physical truth-based execution is demonstrated only in this bounded straight-road surrogate fixture.
