@@ -8,10 +8,10 @@ Frozen inference weights and short, evidence-backed model records.
 | [Highway Stage 1 v02](highway-stage1-v02/README.md) | BC + MAPPO / 93 fields | Experimental; override gate failed | Varied highway cruise/follow/pass/merge |
 | [Highway Stage 1 v03](highway-stage1-v03/README.md) | Acceleration-weighted BC + MAPPO / 93 fields | Experimental; override gate failed | Varied highway cruise/follow/pass/merge |
 | [Highway population v01](highway-population-v01/README.md) | Warm-started MAPPO, masked population critic / 93 fields | Experimental; regressed, 15/16 validation cases failed | Varying AV count, finite traffic cohort and received peers |
+| [Highway population v02](highway-population-v02/README.md) | Acceleration-weighted population MAPPO / 93 fields | Experimental; correction insufficient, 12/16 cases failed | Same variable-population fixture |
+| [Stage 1 v03 phase 0](highway-stage1-v03-phase0/README.md) | Shared MAPPO / 93 fields | Restored analysis reference; not accepted | Lowest pooled/worst interventions among population-tested learned candidates |
 
-Each folder includes `policy.pt`, a short `README.md`, exact
-`training-config.json`, `contract.json`, `evaluation.json` and a
-`manifest.json` with hashes/source provenance. These are frozen actor exports;
+Folders include frozen `policy.pt`, a short `README.md`, exact training settings and linked contract/evidence/checksums. Legacy packages use `contract.json`, `evaluation.json` and `manifest.json`; population v02 uses `policy-contract.json` and its linked evidence record. These are frozen actor exports;
 full resume checkpoints and bulk training logs remain under local `outputs/`.
 
 The latest version is not automatically the accepted version. Acceptance labels

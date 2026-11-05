@@ -539,3 +539,8 @@ pagination was not inspected. No implementation or training outcome was claimed.
 ## November 4: variable-population MAPPO pilot
 
 Appended the actual population implementation, final reviewed configuration, failed preparation checks, completed training, regressed matched results and native emergency-counter discrepancy to tab 41. Updated the start-tab GitHub link to codex/highway-population-v01. Revision-guarded native editing/readback preserved all 42 tabs, historical target content and the 40 unaffected tabs. The mirror regenerated and checked from `outputs/doc-sync/highway-population-v01/verified-source.json` (2,533 paragraphs, 14 tables, 182 code blocks). Native pagination was not inspected. No held-out, sensor, physical or live-handoff capability is implied.
+
+
+## November 4: baseline review and population v02 catch-up
+
+Appended the v02 failure result and restored-reference/public-AV comparison to tab 41. Revision-guarded native edits/readback preserved all 42 tabs, forty unaffected tab bodies and historical target content. Start link follows codex/policy-baseline-review. Full saved JSON exactly matches native readback; mirror regeneration/check passes (2,548 paragraphs, 14 tables, 182 code blocks). Source: outputs/doc-sync/policy-baseline-review/verified-source.json. Native pagination was not inspected. Earlier pending-sync notes remain historical.
