@@ -568,3 +568,8 @@ The [AV comparison](policy-baseline-av-comparison.md) restores the phase-0 refer
 ## November 5, 2026: physical policy execution calibrated
 
 The [frozen MAPPO adapter](mappo-physical-adapter-v01.md) now translates acceleration/lane intent into physical wheel controls. Ordinary actuator calibration and scripted 6/12/18 m/s lane changes/stopping pass. The unchanged actor cruises and passes a scripted car but fails intervention gates (82.11%/27.76%, speed-ceiling corrections). Preserve both attempts and the frozen weights; no training or policy promotion occurred. The living sensor roadmap records the remaining near-limit, curved-road, reactive-traffic and sensor-transfer gates. Physical truth-based execution is demonstrated only in this bounded straight-road surrogate fixture.
+
+
+## November 5, 2026: near-limit learning correction ready for review
+
+[Population v04](population-near-limit-v04.md) adds a localized raw-acceleration objective, four episode speed ceilings and eight lower-limit validation cases. Frozen diagnosis confirms meaningful at-limit acceleration errors and previous-request sensitivity. 171 tests and a zero-update SUMO preflight pass, with the teacher-fixture background emergency retained. Review the disabled 100k-decision/30-minute configuration before learning. Stage 1 and physical transfer remain unaccepted; no policy weights changed or training launched.

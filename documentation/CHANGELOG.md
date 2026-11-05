@@ -924,3 +924,12 @@ Pinned exact Stage 1 v03 phase-0 actor as the lowest-intervention population-tes
 - Preserved the failed full-range brake fit, corrected the ordinary braking domain, and obtained 0.02131 m/s² validation / 0.01634 fresh-confirmation response RMSE. Scripted 6/12/18 m/s acceleration, lane changes and stopping pass.
 - Unchanged best actor cruises and passes, but remains unaccepted: 82.11% cruise and 27.76% passing speed-ceiling interventions. Zero nominal contacts/overlaps/overspeed/fallbacks; zero optimizer steps.
 - 209 CPU tests and six fresh-process USD reopen checks pass. [Results, exact scope, screenshots and both attempts](mappo-physical-adapter-v01.md). Living roadmap updated; guide synchronization recorded in the sync ledger.
+
+
+## November 5, 2026: population v04 near-limit correction prepared
+
+- Added opt-in raw deterministic acceleration supervision in physical units near the local speed limit, using the existing shared v3 teacher target. Kept all guards, inference behavior and historical defaults.
+- Added shuffled 12/18/22.352/26.8224 m/s episode ceilings, native lane/connector readback, coherent departure/slow-leader speeds and eight additional matched validation cases.
+- Retained raw requests, conditional loss/exposure metrics, gradient components and repeatable boundary diagnostics. Frozen audit records previous-request sensitivity and both low/high-speed errors.
+- Three sub-agents contributed implementation and review. 171 tests and the 27.657-second zero-update SUMO preflight passed; one teacher-fixture background emergency remains disclosed. No experiment training or new Isaac run.
+- [Final configuration and evidence](population-near-limit-v04.md); living roadmap v12 updated. Guide synchronization is recorded in the sync ledger. The actor remains unchanged and unaccepted.
