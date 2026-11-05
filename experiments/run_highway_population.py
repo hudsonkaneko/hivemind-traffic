@@ -24,6 +24,7 @@ import torch
 from experiments.sumo_mappo_support import config_digest
 from experiments.run_highway_stage1 import primary_accounting, check_deadline, SOURCES as OLD_SOURCES
 from experiments.run_i110_merge import PilotBudgetExhausted
+from experiments import near_limit_support
 from policies.mappo import MappoActorCritic, MappoTrainer, compute_gae, export_actor
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -32,7 +33,8 @@ SCHEMA = 'highway_population_v1'
 AGENTS = tuple(f'agent_{i}' for i in range(8))
 SOURCES = tuple(dict.fromkeys((*OLD_SOURCES, 'experiments/run_highway_population.py',
     'environments/highway_population_env.py', 'traffic/sumo_warnings.py',
-    'policies/mappo_diagnostics.py')))
+    'policies/mappo_diagnostics.py', 'experiments/near_limit_support.py',
+    'experiments/diagnose_near_limit.py', 'traffic/mappo_physical_policy.py')))
 
 
 def digest(path):
@@ -103,8 +105,9 @@ def validate_config(cfg):
             dict(communication='local', packet_loss=0.), dict(communication='local', packet_loss=.3)]:
         raise ValueError('Unexpected communication domain')
     seeds = [r['seed'] for r in cfg['validation_cases']]
-    if len(seeds) != 16 or len(set(seeds)) != 16:
-        raise ValueError('Expected sixteen fixed validation cases')
+    count = 24 if near_limit_support.enabled(cfg) else 16
+    if len(seeds) != count or len(set(seeds)) != count:
+        raise ValueError(f'Expected {count} fixed validation cases')
     if any(t['seed_start'] <= seed <= t['seed_end'] for seed in seeds):
         raise ValueError('Training/validation seed leakage')
     if set(t['tasks']) != {'cruise', 'following', 'passing', 'merge'}:
@@ -124,14 +127,18 @@ def validate_config(cfg):
     if version not in ('v2', 'v3'):
         raise ValueError('Unknown control target version')
     if version == 'v3':
-        if (cfg.get('revision') != 'population-v03-aligned-control'
+        revision_ok = cfg.get('revision') == 'population-v03-aligned-control' or near_limit_support.enabled(cfg)
+        expected_output = 'outputs/highway-population/v04' if near_limit_support.enabled(cfg) else 'outputs/highway-population/v03'
+        if (not revision_ok
                 or cfg.get('reward_version') != 'highway_stage1_shared_longitudinal_target_v3'
                 or cfg['optimizer'].get('gradient_diagnostics') is not True
-                or cfg.get('output_directory') != 'outputs/highway-population/v03'
+                or cfg.get('output_directory') != expected_output
                 or cfg['contract'].get('observation_semantics') != 'highway_graph_entry_and_lane_merge_v3'):
             raise ValueError('V3 requires versioned observations/target, objective diagnostics and isolated outputs')
     elif 'output_directory' in cfg and cfg['output_directory'] != 'outputs/highway-population/v01':
         raise ValueError('Legacy configuration output root must remain unchanged')
+    if near_limit_support.enabled(cfg):
+        near_limit_support.validate_revision(cfg)
 
 
 def load_config(path):
@@ -176,7 +183,10 @@ def training_case(cfg, episode_index):
     seed = cfg['training']['seed_start'] + episode_index
     if seed > cfg['training']['seed_end']:
         raise ValueError('Training seed allocation exhausted')
-    return dict(case=case, controlled_count=n, total_vehicles=total, **channel, seed=seed)
+    row = dict(case=case, controlled_count=n, total_vehicles=total, **channel, seed=seed)
+    if near_limit_support.enabled(cfg):
+        row['speed_limit_m_s'] = near_limit_support.speed_for_episode(cfg, episode_index)
+    return row
 
 
 def env_for(cfg, output, row, *, horizon=None):
@@ -190,8 +200,10 @@ def env_for(cfg, output, row, *, horizon=None):
         horizon=horizon or cfg['environment']['horizon'], communication=row['communication'],
         packet_loss=row['packet_loss'], through_lanes=case['through_lanes'], task=case['task'],
         density=case['density'], reward_weights=cfg['reward_weights'],
-        control_target_version=cfg['environment'].get('control_target_version', 'v2'))
+        control_target_version=cfg['environment'].get('control_target_version', 'v2'),
+        **(dict(speed_limit_m_s=row['speed_limit_m_s']) if 'speed_limit_m_s' in row else {}))
     env.case_id = case['id']
+    env.near_limit_metrics_enabled = near_limit_support.enabled(cfg)
     return env
 
 
@@ -199,6 +211,8 @@ def episode(env, row, *, model=None, kind='learned', collect=False, limit=None, 
     from traffic.highway_stage1_teacher import teacher_actions
     samples, transitions, reward_sum = [], 0, 0.
     report = None
+    near_limit_metrics = (near_limit_support.RawNearLimitMetrics()
+        if kind != 'native' and getattr(env, 'near_limit_metrics_enabled', False) else None)
     rng = np.random.default_rng(row['seed'] + 70000000)
     try:
         check_deadline(deadline)
@@ -230,6 +244,9 @@ def episode(env, row, *, model=None, kind='learned', collect=False, limit=None, 
                           for a in env.agents}
             else:
                 raise ValueError('Unknown controller')
+            if near_limit_metrics is not None:
+                for agent in env.agents:
+                    near_limit_metrics.add(obs[agent], chosen[agent], labels[agent])
             next_obs, rewards, term, trunc, _ = env.step(chosen)
             if not all(math.isfinite(float(v)) for v in rewards.values()):
                 raise ValueError('Nonfinite reward')
@@ -254,6 +271,9 @@ def episode(env, row, *, model=None, kind='learned', collect=False, limit=None, 
             population_setting={k: row[k] for k in ('controlled_count', 'total_vehicles', 'communication', 'packet_loss')},
             control_target_version=getattr(env, 'control_target_version', 'v2'),
             native_warning_accounting_required=getattr(env, 'control_target_version', 'v2') == 'v3')
+        if near_limit_metrics is not None:
+            report['raw_near_limit'] = near_limit_metrics.report()
+            report['requested_episode_speed_ceiling_m_s'] = row.get('speed_limit_m_s')
         batch = None
         if samples:
             batch = {k: torch.stack([r[k] for r in samples]) for k in samples[0]}
@@ -344,6 +364,10 @@ def evaluate(cfg, run, model, *, label, deadline, kind='learned', rows=None):
         reports.append(report)
         atomic_json(run / label / f'{index:02d}.json', report)
     value = dict(summary=summarize(reports), reports=reports)
+    if near_limit_support.enabled(cfg) and kind == 'learned':
+        from experiments.diagnose_near_limit import boundary_report
+        boundary, _ = boundary_report(model.actor)
+        value['raw_action_boundary_diagnostic'] = boundary
     atomic_json(run / f'{label}.json', value)
     return value
 
@@ -505,6 +529,8 @@ def train(cfg, run, started, hashes, resume=None):
             state['critic_actual' if critic_only else 'ppo_actual'] += actual
             key = '|'.join(map(str, (row['case']['task'], row['controlled_count'], row['total_vehicles'],
                                      row['communication'], row['packet_loss'])))
+            if 'speed_limit_m_s' in row:
+                key += '|speed_ceiling=' + str(row['speed_limit_m_s'])
             coverage = state['coverage'].setdefault(key, dict(episodes=0, actual_agent_transitions=0))
             coverage['episodes'] += 1; coverage['actual_agent_transitions'] += actual
             if batch is None:
@@ -551,6 +577,11 @@ def train(cfg, run, started, hashes, resume=None):
         initial_passes=a['passes'], final_passes=b['passes'],
         initial_merges=a['successful_merges'], final_merges=b['successful_merges'])
         for a, b in zip(initial['reports'], final['reports'])]
+    if near_limit_support.enabled(cfg):
+        for comparison, before, after in zip(comparisons, initial['reports'], final['reports']):
+            comparison.update(initial_raw_near_limit=before['raw_near_limit'],
+                              final_raw_near_limit=after['raw_near_limit'],
+                              requested_episode_speed_ceiling_m_s=after['requested_episode_speed_ceiling_m_s'])
     atomic_json(run / 'comparison.json', dict(initial=initial['summary'], final=final['summary'], cases=comparisons,
         protocol='Fixed final endpoint compared with identical frozen-start cases; no checkpoint cherry-picking'))
     atomic_json(run / 'training-coverage.json', state['coverage'])
@@ -561,7 +592,9 @@ def train(cfg, run, started, hashes, resume=None):
         tested_population_counts=[1, 3, 5, 7, 8], no_live_handoff=True, held_out_test_run=False,
         control_target_version=cfg['environment'].get('control_target_version', 'v2'),
         observation_semantics=cfg.get('contract', {}).get('observation_semantics', 'legacy_v2'),
-        warm_start_semantic_transfer=cfg['environment'].get('control_target_version', 'v2') == 'v3'))
+        warm_start_semantic_transfer=cfg['environment'].get('control_target_version', 'v2') == 'v3',
+        objective_version=cfg.get('objective_version', 'legacy'),
+        speed_curriculum=cfg.get('speed_curriculum')))
     return dict(passed=True, completed=True, stop_reason=stop_reason,
         optimizer_steps=state['optimizer_steps'], critic_optimizer_steps=state['critic_optimizer_steps'],
         counters={k: state[k] for k in ('spent', 'actual', 'critic_actual', 'ppo_actual', 'updates', 'optimizer_steps', 'critic_optimizer_steps', 'elapsed_seconds')},
@@ -583,6 +616,9 @@ def preflight(cfg, run, started):
                                 model=model, kind=kind, deadline=deadline)
             reports.append(report)
     row = training_case(cfg, 0); row.update(seed=6501100, controlled_count=8, total_vehicles=24)
+    if near_limit_support.enabled(cfg):
+        row.update(case=next(c for c in cfg['training_cases'] if c['task'] == 'cruise' and c['through_lanes'] == 3),
+                   speed_limit_m_s=12., seed=6601100)
     one, batch = episode(env_for(cfg, run / 'collector', row, horizon=30), row,
                          model=model, collect=True, limit=128, deadline=deadline)
     if batch is None or not all(torch.isfinite(v).all() for v in batch.values()):
@@ -625,10 +661,16 @@ def preflight(cfg, run, started):
     if any(not torch.equal(frozen_parameters[name], value) for name, value in model.state_dict().items()):
         raise ValueError('No-learning preflight changed model parameters')
     atomic_json(run / 'reports.json', reports)
+    boundary = None
+    if near_limit_support.enabled(cfg):
+        from experiments.diagnose_near_limit import boundary_report
+        boundary, _ = boundary_report(model.actor)
+        atomic_json(run / 'raw-action-boundary.json', boundary)
     return dict(passed=True, optimizer_steps=0, learning=False, reports=reports, zero_av_native=native,
         api_passed=True, seed_test_passed=True, teacher_repeat_exact=True, collector_finite=True,
         actor_export_passed=True, nominal_driving_acceptance=False,
         frozen_parameters_unchanged=True, gradient_diagnostics=diagnostics,
+        raw_action_boundary_diagnostic=boundary,
         scope='100-step plumbing checks only; full 800-step initial/final validation runs in the approved training budget')
 
 
