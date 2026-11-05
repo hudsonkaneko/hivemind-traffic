@@ -13,6 +13,8 @@ from environments.i110_merge_env import MergeLaneGraph
 
 
 CAP = 26.8224
+CONTROL_OBSERVATION_VERSION = 'highway_graph_entry_and_lane_merge_v3'
+ENTRY_VISIBILITY_M = 4.5
 MERGE_FEATURES = (
     'merge_context_known', 'merge_target_lane_index_over_7',
     'merge_target_lane_delta', 'distance_to_target_lane_start_over_240',
@@ -30,6 +32,17 @@ class Stage1LaneGraph(MergeLaneGraph):
             lane.attrib['id']: min(CAP, float(lane.get('speed', str(CAP))))
             for lane in ET.parse(path).findall('./edge/lane')
         }
+        self.yield_entries = {}
+        lane_elements = {lane.get('id'): lane for lane in ET.parse(path).findall('./edge/lane')}
+        edge_elements = {edge.get('id'): edge for edge in ET.parse(path).findall('edge')}
+        for connection in ET.parse(path).findall('connection'):
+            source = f"{connection.get('from')}_{connection.get('fromLane')}"
+            target = f"{connection.get('to')}_{connection.get('toLane')}"
+            if connection.get('state') == 'm' and not self.lanes[source]['internal']:
+                self.yield_entries[source] = dict(target=target, via=connection.get('via'),
+                    visibility_m=float(connection.get('visibility', connection.get('visibilityDistance', ENTRY_VISIBILITY_M))),
+                    stop_offset_m=max([.1, *(float(child.get('value',0.)) for parent in
+                        (lane_elements[source], edge_elements[self.lanes[source]['edge']]) for child in parent.findall('stopOffset'))]))
 
 
 def _signed_progress(graph, anchor, other, route, limit):
@@ -119,3 +132,53 @@ def merge_features(context, acceleration_ceiling):
     if len(vector) != 12 or not all(math.isfinite(v) for v in vector):
         raise ValueError('Invalid current-state merge context')
     return vector
+
+
+def merge_target_context_v3(graph, ego, states):
+    """Versioned first-entry context, then physical auxiliary lane change.
+
+    Before a minor-priority entry, the target is its actual shared successor;
+    distance is to the physical stop line, rather than a later parallel lane.
+    This semantic change retains width93 but requires a v3 actor contract.
+    Cross-edge projection never grants a lateral lane-change command.
+    """
+    if any(abs(entry['visibility_m'] - ENTRY_VISIBILITY_M) > 1e-8 for entry in graph.yield_entries.values()):
+        raise ValueError('Control v3 currently supports declared 4.5 m minor-link visibility only')
+    if any(entry['stop_offset_m'] > .1+1e-8 for entry in graph.yield_entries.values()):
+        raise ValueError('Control v3 currently supports default 0.1 m minor-link stop offset only')
+    reachable = graph.distances(ego['lane_id'], ego['lane_position'], ego['route'])
+    entries = [(distance + graph.lanes[lid]['length'], lid, graph.yield_entries[lid])
+               for lid, distance in reachable.items() if lid in graph.yield_entries]
+    if not entries:
+        old = merge_target_context(graph, ego, states)
+        # On a ramp internal link, the yield boundary is already behind us and
+        # no parallel lane change is legal. Resume target context on the lane.
+        if graph.lanes[ego['lane_id']]['internal'] and old['lane_delta'] == 0:
+            old = dict(old, known=False, front=None, rear=None)
+        return old
+    distance, source, entry = min(entries, key=lambda item: item[0])
+    anchor = entry['target']
+    anchor_distance = reachable.get(anchor)
+    if anchor_distance is None:
+        return merge_target_context(graph, ego, states)
+    ego_progress = -anchor_distance
+    front, rear = [], []
+    for vid, other in sorted(states.items()):
+        if vid == ego['id']:
+            continue
+        progress = _signed_progress(graph, anchor, other, ego['route'], max(400., abs(ego_progress)+130.))
+        if progress is None:
+            continue
+        delta = progress - ego_progress
+        gap = max(0., delta-other['length']) if delta >= 0 else max(0., -delta-ego['length'])
+        if gap <= 120.:
+            (front if delta >= 0 else rear).append((gap, vid, other['speed']-ego['speed']))
+    def nearest(items):
+        if not items:
+            return None
+        gap, vid, relative = min(items)
+        return dict(id=vid, bumper_gap_m=gap, relative_speed_m_s=relative)
+    return dict(known=True, target_lane=anchor, target_index=graph.lanes[anchor]['index'],
+        lane_delta=0, distance_to_start_m=max(0., distance), front=nearest(front), rear=nearest(rear),
+        target_speed_limit=graph.speed_limits.get(anchor, CAP), projection='shared_entry_stopline',
+        source_lane=source, minor_link_visibility_m=entry['visibility_m'])

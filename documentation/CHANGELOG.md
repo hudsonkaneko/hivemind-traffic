@@ -909,3 +909,11 @@ Pinned exact Stage 1 v03 phase-0 actor as the lowest-intervention population-tes
 - Sealed 1,536 balanced loss rows from twelve training-only rollouts. Measured opposing PPO/imitation gradients and fresh-critic coupling through global clipping; these do not reconstruct historical post-warm-up updates.
 - Reconciled twelve earlier controlled-car lane-end emergency stops missed by sampled acceleration counters (9 training, 1 initial validation, 2 final validation). Corrected diagnostic parser; preserved original logs and summaries.
 - Retained metrics, hashes, plots and offline reproduction tools; all weights and production runtime code unchanged. Living roadmap v09 and verified 42-tab engineering guide updated. No training or policy promotion. [Results](population-control-diagnostics-v01.md).
+
+
+## November 4, 2026: population v03 control correction and diagnostics prepared
+
+- Added opt-in near-limit taper, first minor-entry conflict observations and source-backed stop-line approach calibration. V3 teacher/reward share one current-observation target; v2 controls remain available and changed merge semantics are versioned.
+- Matched teacher passing/merge fixtures now have zero overrides with tasks retained and similar speeds. The frozen actor improves from 26% to 11.17% merge overrides but remains unaccepted. Retained both development attempts: 32,400 decisions, no recorded safety events, exact repeat traces and explicit provenance limits.
+- Added separate actor/critic gradient, clipping and fixed-return value diagnostics without changing optimizer behavior. V3 evaluation requires complete native emergency-event accounting; legacy thresholds remain unchanged.
+- 150 CPU tests and the 32.719-second zero-update final preflight passed. Prepared the disabled 100k-decision/30-minute configuration, retained metrics/plots and updated living roadmap v10. Google guide and 42-tab Markdown mirror synchronized and verified. No experiment training or policy promotion. [Configuration and results](population-control-v03.md).

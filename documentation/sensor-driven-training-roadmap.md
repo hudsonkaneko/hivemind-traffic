@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v09**, updated **November 4, 2026, America/Los_Angeles**.
-Status: **Stage 1 remains unaccepted; frozen control/loss diagnostics completed without training**.
+Revision **v10**, updated **November 4, 2026, America/Los_Angeles**.
+Status: **Stage 1 remains unaccepted; population v03 control corrections and diagnostics prepared, training disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,11 +14,11 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** use the [frozen acceleration/loss results](population-control-diagnostics-v01.md) to define a consistent buffered longitudinal target and add separate actor/critic diagnostics after critic warm-up. Propose a controlled clipping comparison before retraining. The tested command duration and measurement timing are correct; native following saturation, differing teacher/reward targets and objective coupling remain the relevant issues. Preserve the phase-0 parent as the lowest-intervention population-tested reference. No new training is authorized by this milestone.
+**Next action:** review the [final population v03 configuration](population-control-v03.md#proposed-pilot-configuration) before authorizing any training. Its near-limit/first-entry/stop-line corrections, shared teacher/reward target, native-event accounting and separate actor/critic diagnostics passed bounded checks. The teacher reaches zero overrides in the tested passing/merge fixtures, while the unchanged actor still has 11.17% merge overrides. Keep the phase-0 reference frozen; a future pilot must report post-warm-up diagnostics and matched per-case results before any promotion. No new training is authorized by this milestone.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
-| 1. Learn driving with structured observations | Population v02 completed; 4/4 merge targets and 13 passes, 12/16 cases fail; phase-0 analysis reference restored | Per-task driving gates with low intervention and a frozen held-out evaluation |
+| 1. Learn driving with structured observations | Population v03 setup verified, training disabled; frozen actor still fails its merge override gate; prior v02 remains rejected | Per-task driving gates with low intervention, complete native safety accounting and a frozen held-out evaluation |
 | 2. Learn with imperfect observations | Planned; existing message delay is only part of the problem | Paired clean/noisy results, leakage audit and reliable stale/missing-data behavior |
 | 3. Replace ideal fields with sensor estimates | Frozen segmentation/fusion previews and dataset/trainer preparation exist; policy integration open | Perception/tracking accuracy and latency, then physical closed-loop validation |
 
@@ -389,3 +389,7 @@ Verified and preserved the exact Stage 1 v03 phase-0 actor as a reference, not a
 ### v09 — November 4: frozen acceleration and objective diagnosis
 
 Completed steps 1 and 2 of the comparison using the frozen phase-0 actor, two implementation agents and independent review. Fourteen training-only acceleration probes (7,200 decisions) found synchronized acceleration accurate to 2.57e-13 m/s² and identical 0.1/0.5-second duration traces. Native following limits constrain over-requesting; the scripted teacher reduces interventions without resolving every efficiency limitation. Twelve no-update rollouts yielded 1,536 balanced loss-diagnostic rows: PPO/imitation gradient cosine -0.420, teacher/reward target difference 0.3002 m/s², and fresh-critic gradients that dominate global clipping before warm-up. These are measured mechanisms and hypotheses, not historical post-warm-up proof or accepted driving. All weights and runtime policy/environment code remain unchanged. [Results, plots, native-warning reconciliation and retained artifacts](population-control-diagnostics-v01.md). Next: consistent target design and post-warm-up objective telemetry, then an explicitly reviewed bounded training configuration. No further learning is authorized.
+
+### v10 — November 4: population v03 control correction prepared
+
+Implemented opt-in near-limit taper, first minor-entry conflict observations, source-backed stop-line approach calibration and a shared observation-only teacher/reward acceleration target. Explicitly versioned changed 93-field merge semantics; v2 controls remain available. Added separate actual actor/critic gradient and fixed-return value diagnostics without changing optimization, plus complete native-event accounting/gating for v3. Across 32,400 bounded train-fixture decisions, the teacher reached zero overrides in tested passing/merge cases with tasks retained and similar speeds; the frozen actor's merge overrides improved 26%→11.17% but remain unacceptable. Retained both development attempts, including the initial missing stop-offset correction and provenance limits. 150 CPU tests and a 32.719-second zero-update final preflight passed; all existing weights remain unchanged. [Final configuration, results and measured plots](population-control-v03.md). Next: user review of the disabled 100k-decision/30-minute configuration before a new launch. No training, held-out acceptance or physical/sensor transfer occurred.

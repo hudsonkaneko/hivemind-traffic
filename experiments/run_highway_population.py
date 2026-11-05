@@ -31,7 +31,8 @@ DEFAULT = ROOT / 'experiments/configs/highway_population_v1.json'
 SCHEMA = 'highway_population_v1'
 AGENTS = tuple(f'agent_{i}' for i in range(8))
 SOURCES = tuple(dict.fromkeys((*OLD_SOURCES, 'experiments/run_highway_population.py',
-    'environments/highway_population_env.py')))
+    'environments/highway_population_env.py', 'traffic/sumo_warnings.py',
+    'policies/mappo_diagnostics.py')))
 
 
 def digest(path):
@@ -119,6 +120,18 @@ def validate_config(cfg):
         raise ValueError('Training can only select the training partition')
     if cfg['preflight']['learning'] is not False or not 1 <= cfg['preflight']['max_wall_seconds'] <= 900:
         raise ValueError('Invalid no-learning preflight')
+    version = cfg['environment'].get('control_target_version', 'v2')
+    if version not in ('v2', 'v3'):
+        raise ValueError('Unknown control target version')
+    if version == 'v3':
+        if (cfg.get('revision') != 'population-v03-aligned-control'
+                or cfg.get('reward_version') != 'highway_stage1_shared_longitudinal_target_v3'
+                or cfg['optimizer'].get('gradient_diagnostics') is not True
+                or cfg.get('output_directory') != 'outputs/highway-population/v03'
+                or cfg['contract'].get('observation_semantics') != 'highway_graph_entry_and_lane_merge_v3'):
+            raise ValueError('V3 requires versioned observations/target, objective diagnostics and isolated outputs')
+    elif 'output_directory' in cfg and cfg['output_directory'] != 'outputs/highway-population/v01':
+        raise ValueError('Legacy configuration output root must remain unchanged')
 
 
 def load_config(path):
@@ -144,7 +157,9 @@ def warm_start(model, cfg):
     with torch.no_grad():
         model.log_std.copy_(saved['model']['log_std'])
     return dict(**spec, imported='actor and exploration log_std only; fresh masked critic/optimizers',
-                parent_config_sha256=saved['config_sha256'])
+                parent_config_sha256=saved['config_sha256'],
+                observation_semantics=cfg.get('contract', {}).get('observation_semantics', 'legacy_v2'),
+                semantic_transfer=cfg['environment'].get('control_target_version', 'v2') == 'v3')
 
 
 def training_case(cfg, episode_index):
@@ -174,7 +189,8 @@ def env_for(cfg, output, row, *, horizon=None):
         total_vehicles=row['total_vehicles'], max_agents=8,
         horizon=horizon or cfg['environment']['horizon'], communication=row['communication'],
         packet_loss=row['packet_loss'], through_lanes=case['through_lanes'], task=case['task'],
-        density=case['density'], reward_weights=cfg['reward_weights'])
+        density=case['density'], reward_weights=cfg['reward_weights'],
+        control_target_version=cfg['environment'].get('control_target_version', 'v2'))
     env.case_id = case['id']
     return env
 
@@ -182,6 +198,7 @@ def env_for(cfg, output, row, *, horizon=None):
 def episode(env, row, *, model=None, kind='learned', collect=False, limit=None, deadline=None):
     from traffic.highway_stage1_teacher import teacher_actions
     samples, transitions, reward_sum = [], 0, 0.
+    report = None
     rng = np.random.default_rng(row['seed'] + 70000000)
     try:
         check_deadline(deadline)
@@ -195,7 +212,8 @@ def episode(env, row, *, model=None, kind='learned', collect=False, limit=None, 
             indices = torch.arange(8)
             local = torch.tensor(np.stack([obs.get(a, np.zeros(93, np.float32)) for a in AGENTS]))
             state = torch.as_tensor(env.state()).repeat(8, 1)
-            labels = teacher_actions({a: obs[a] for a in env.agents})
+            labels = teacher_actions({a: obs[a] for a in env.agents},
+                version=getattr(env, 'control_target_version', 'v2'))
             if kind == 'learned':
                 with torch.no_grad():
                     actions, logp, _, latent = model.act(local, deterministic=not collect)
@@ -233,7 +251,9 @@ def episode(env, row, *, model=None, kind='learned', collect=False, limit=None, 
         report.update(seed=row['seed'], controller=kind, case_id=env.case_id, reward=reward_sum,
             agent_transitions=transitions, partial_control_horizon=bool(env.agents),
             episode_directory=str(env.directory.relative_to(ROOT)),
-            population_setting={k: row[k] for k in ('controlled_count', 'total_vehicles', 'communication', 'packet_loss')})
+            population_setting={k: row[k] for k in ('controlled_count', 'total_vehicles', 'communication', 'packet_loss')},
+            control_target_version=getattr(env, 'control_target_version', 'v2'),
+            native_warning_accounting_required=getattr(env, 'control_target_version', 'v2') == 'v3')
         batch = None
         if samples:
             batch = {k: torch.stack([r[k] for r in samples]) for k in samples[0]}
@@ -259,6 +279,16 @@ def episode(env, row, *, model=None, kind='learned', collect=False, limit=None, 
         raise
     finally:
         env.close()
+        if hasattr(env, 'directory'):
+            from traffic.sumo_warnings import native_emergency_report
+            native_events = native_emergency_report(env.directory / 'sumo-errors.log')
+            if report is not None:
+                report['native_emergencies'] = native_events
+            interrupted_path = env.directory / 'interrupted-accounting.json'
+            if interrupted_path.exists():
+                interrupted = json.loads(interrupted_path.read_text(encoding='utf-8'))
+                interrupted['native_emergencies'] = native_events
+                atomic_json(interrupted_path, interrupted)
 
 
 def summarize(reports):
@@ -272,6 +302,13 @@ def summarize(reports):
             raise ValueError('Missing/nonfinite evaluation metric')
         if any(r[k] for k in ('collisions', 'teleports', 'overspeed_steps')):
             causes.append('safety_event')
+        native = r.get('native_emergencies', {})
+        if r.get('native_warning_accounting_required'):
+            count = native.get('unique_events')
+            if not native.get('available') or type(count) is not int or count < 0:
+                causes.append('native_accounting_unavailable')
+            elif count:
+                causes.append('native_emergency')
         if not r.get('accounting_comparison_valid', False) or r.get('partial_control_horizon'):
             causes.append('incomplete_accounting')
         if r['intervention_fraction'] > .05:
@@ -292,6 +329,9 @@ def summarize(reports):
             failures.append(dict(case_id=r['case_id'], seed=r['seed'], population=r['population_setting'], causes=causes))
     return dict(cases=len(reports), pooled_override_fraction=sum(r['overrides'] for r in reports) / max(1, steps),
         worst_override_fraction=max((r['intervention_fraction'] for r in reports), default=0.),
+        native_emergency_events=sum(r.get('native_emergencies', {}).get('unique_events') or 0 for r in reports),
+        native_accounting_complete=all(r.get('native_emergencies', {}).get('available', False) for r in reports),
+        native_event_gate_applied=any(r.get('native_warning_accounting_required', False) for r in reports),
         failures=failures, nominal_gates_passed=bool(reports) and not failures,
         held_out_test_run=False, acceptance_status='experimental; held-out qualification not run')
 
@@ -314,6 +354,11 @@ def critic_update(model, trainer, batch, deadline):
     indices = batch['agent_indices'].reshape(-1)[active]
     returns = batch['returns'].reshape(-1)[active].detach()
     count, losses = 0, []
+    diagnostic = getattr(trainer, 'gradient_diagnostics', False)
+    diagnostic_steps = []
+    if diagnostic:
+        from policies.mappo_diagnostics import critic_fit_metrics, current_gradient_norms
+        fit_before = critic_fit_metrics(model, states, indices, returns)
     frozen = actor_digest(model)
     exhausted = False
     for _ in range(trainer.epochs):
@@ -328,7 +373,13 @@ def critic_update(model, trainer, batch, deadline):
                 raise ValueError('Nonfinite critic warmup')
             trainer.optimizer.zero_grad(set_to_none=True)
             loss.backward()
+            if diagnostic:
+                before_clip = current_gradient_norms(model)
             torch.nn.utils.clip_grad_norm_(model.critic.parameters(), trainer.max_grad_norm, error_if_nonfinite=True)
+            if diagnostic:
+                after_clip = current_gradient_norms(model)
+                diagnostic_steps.append(dict(before=before_clip, after=after_clip,
+                    critic_clip_factor=min(1., trainer.max_grad_norm / (before_clip['critic'] + 1e-6))))
             trainer.optimizer.step()
             count += 1
             losses.append(float(loss.detach()))
@@ -336,8 +387,21 @@ def critic_update(model, trainer, batch, deadline):
             break
     if actor_digest(model) != frozen:
         raise ValueError('Critic warmup changed the actor or exploration')
-    return dict(optimizer_steps=count, value_loss=sum(losses) / max(1, len(losses)), actor_frozen=True,
+    result = dict(optimizer_steps=count, value_loss=sum(losses) / max(1, len(losses)), actor_frozen=True,
                 actor_sha256=frozen, budget_exhausted=exhausted)
+    if diagnostic:
+        result['gradient_diagnostics'] = dict(phase='critic_warmup',
+            clipping='critic only; actor has no gradient',
+            loss_definition='0.5 * mean squared value error; PPO value_coef is not applied during warmup',
+            actual_step_count=count,
+            critic_fit_before=fit_before,
+            critic_fit_after=critic_fit_metrics(model, states, indices, returns),
+            actual_gradient_means={stage: {group: sum(s[stage][group] for s in diagnostic_steps) / count
+                if count else None for group in ('actor', 'critic', 'joint')} for stage in ('before', 'after')},
+            mean_critic_clip_factor=sum(s['critic_clip_factor'] for s in diagnostic_steps) / count if count else None,
+            clipped_step_fraction=sum(s['critic_clip_factor'] < 1 for s in diagnostic_steps) / count if count else None,
+            target_description='Frozen on-policy rollout GAE returns; identical targets before/after this warmup update')
+    return result
 
 
 def readiness_check(cfg):
@@ -494,7 +558,10 @@ def train(cfg, run, started, hashes, resume=None):
         model='shared hybrid MAPPO actor; acceleration and masked lane intent', source_hashes=hashes,
         config_sha256=fingerprint, parent=parent, policy_sha256=digest(run / 'policy.pt'),
         checkpoint_sha256=digest(run / 'last.pt'), validation=final['summary'], accepted=False,
-        tested_population_counts=[1, 3, 5, 7, 8], no_live_handoff=True, held_out_test_run=False))
+        tested_population_counts=[1, 3, 5, 7, 8], no_live_handoff=True, held_out_test_run=False,
+        control_target_version=cfg['environment'].get('control_target_version', 'v2'),
+        observation_semantics=cfg.get('contract', {}).get('observation_semantics', 'legacy_v2'),
+        warm_start_semantic_transfer=cfg['environment'].get('control_target_version', 'v2') == 'v3'))
     return dict(passed=True, completed=True, stop_reason=stop_reason,
         optimizer_steps=state['optimizer_steps'], critic_optimizer_steps=state['critic_optimizer_steps'],
         counters={k: state[k] for k in ('spent', 'actual', 'critic_actual', 'ppo_actual', 'updates', 'optimizer_steps', 'critic_optimizer_steps', 'elapsed_seconds')},
@@ -506,6 +573,7 @@ def train(cfg, run, started, hashes, resume=None):
 def preflight(cfg, run, started):
     deadline = started + cfg['preflight']['max_wall_seconds']
     model = model_for(cfg); warm_start(model, cfg)
+    frozen_parameters = {name: value.detach().clone() for name, value in model.state_dict().items()}
     reports = []
     for index, n in enumerate((1, 2, 4, 6, 8)):
         row = training_case(cfg, index)
@@ -519,6 +587,13 @@ def preflight(cfg, run, started):
                          model=model, collect=True, limit=128, deadline=deadline)
     if batch is None or not all(torch.isfinite(v).all() for v in batch.values()):
         raise ValueError('Nonfinite collector')
+    diagnostics = None
+    if cfg['optimizer'].get('gradient_diagnostics'):
+        trainer = MappoTrainer(model, **cfg['optimizer'])
+        diagnostics = trainer.diagnose_batch(batch, phase='frozen_preflight_before_critic_warmup')
+        atomic_json(run / 'frozen-gradient-diagnostics.json', diagnostics)
+        if trainer.optimizer.state:
+            raise ValueError('No-learning preflight initialized optimizer update state')
     replay, _ = episode(env_for(cfg, run / 'repeat-a', row, horizon=100), row, kind='teacher', deadline=deadline)
     repeat, _ = episode(env_for(cfg, run / 'repeat-b', row, horizon=100), row, kind='teacher', deadline=deadline)
     comparable = lambda r: {k: v for k, v in r.items() if k != 'episode_directory'}
@@ -537,13 +612,23 @@ def preflight(cfg, run, started):
     row = dict(row, controlled_count=0, communication='none')
     native, _ = episode(env_for(cfg, run / 'native-zero', row, horizon=100), row, kind='native', deadline=deadline)
     export_actor(model, run / 'frozen-parent-contract.pt')
+    atomic_json(run / 'frozen-parent-contract.json', dict(
+        observation_size=93, observation_semantics=cfg.get('contract', {}).get('observation_semantics', 'legacy_v2'),
+        control_target_version=cfg['environment'].get('control_target_version', 'v2'),
+        semantic_transfer=cfg['environment'].get('control_target_version', 'v2') == 'v3',
+        purpose='Frozen initialization export equivalence only; not accepted driving or deployment',
+        source_actor_sha256=cfg['initial_checkpoint']['actor_sha256'],
+        export_sha256=digest(run / 'frozen-parent-contract.pt')))
     probe = torch.jit.load(str(run / 'frozen-parent-contract.pt'))
     if not torch.equal(probe(batch['local_obs'][0]), model.actor(batch['local_obs'][0])):
         raise ValueError('Actor export mismatch')
+    if any(not torch.equal(frozen_parameters[name], value) for name, value in model.state_dict().items()):
+        raise ValueError('No-learning preflight changed model parameters')
     atomic_json(run / 'reports.json', reports)
     return dict(passed=True, optimizer_steps=0, learning=False, reports=reports, zero_av_native=native,
         api_passed=True, seed_test_passed=True, teacher_repeat_exact=True, collector_finite=True,
         actor_export_passed=True, nominal_driving_acceptance=False,
+        frozen_parameters_unchanged=True, gradient_diagnostics=diagnostics,
         scope='100-step plumbing checks only; full 800-step initial/final validation runs in the approved training budget')
 
 
@@ -572,7 +657,7 @@ def main(argv=None):
     torch.set_num_threads(1); torch.manual_seed(cfg['training']['seed'])
     np.random.seed(cfg['training']['seed']); random.seed(cfg['training']['seed'])
     torch.use_deterministic_algorithms(True)
-    run = ROOT / 'outputs/highway-population/v01' / (args.mode + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8])
+    run = ROOT / cfg.get('output_directory', 'outputs/highway-population/v01') / (args.mode + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8])
     run.mkdir(parents=True)
     atomic_json(run / 'config.json', cfg)
     hashes = sources(); started = time.monotonic()
