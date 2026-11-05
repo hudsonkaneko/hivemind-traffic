@@ -375,3 +375,8 @@ After each meaningful implementation, evaluation, failed attempt or decision:
 ### November 4: population v02 authorized correction
 
 Matched scripted baseline measured 1.51% pooled overrides; prepare acceleration-only supervision weight 50 with unchanged guards and bounded matched retraining. See [v02](highway-population-training-v02.md). Results pending.
+
+
+### November 4: population v02 retraining completed
+
+[Population v02](highway-population-training-v02.md): 99,998 decisions in 514.516 seconds. Pooled overrides 29.97%, worst 86.75%; twelve failing cases. Rejected for promotion. Metrics, native warnings and experimental weights retained. Next: diagnose acceleration errors before another revision. Google guide sync pending.
