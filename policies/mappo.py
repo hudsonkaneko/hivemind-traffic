@@ -355,12 +355,14 @@ class MappoTrainer:
         target_kl: float = 0.02,
         imitation_coef: float = 0.0,
         imitation_lane_change_weight: float = 10.0,
+        imitation_acceleration_weight: float = 1.0,
     ):
         if any(not math.isfinite(v) or v <= 0 for v in (actor_lr, critic_lr, clip, value_clip, max_grad_norm, target_kl)):
             raise ValueError("Optimizer rates, clipping bounds and KL limit must be positive")
         if epochs <= 0 or minibatch_size <= 0 or entropy_coef < 0 or value_coef < 0:
             raise ValueError("Invalid PPO update parameters")
-        if (not math.isfinite(imitation_coef) or imitation_coef < 0
+        if (not math.isfinite(imitation_acceleration_weight) or imitation_acceleration_weight < 1
+                or not math.isfinite(imitation_coef) or imitation_coef < 0
                 or not math.isfinite(imitation_lane_change_weight) or imitation_lane_change_weight < 1):
             raise ValueError('Invalid imitation loss settings')
         if imitation_coef and not model.hybrid_actions:
@@ -376,6 +378,7 @@ class MappoTrainer:
         self.target_kl = target_kl
         self.imitation_coef = imitation_coef
         self.imitation_lane_change_weight = imitation_lane_change_weight
+        self.imitation_acceleration_weight = imitation_acceleration_weight
         self.optimizer = torch.optim.Adam([
             {"params": list(model.actor.parameters()) + [model.log_std], "lr": actor_lr},
             {"params": model.critic.parameters(), "lr": critic_lr},
@@ -410,7 +413,7 @@ class MappoTrainer:
         weights = torch.where(delta == 0, torch.ones_like(delta),
                               torch.full_like(delta, self.imitation_lane_change_weight))
         lane_loss = (F.cross_entropy(logits, labels, reduction='none') * weights).mean()
-        return acceleration_loss + lane_loss, acceleration_loss, lane_loss
+        return self.imitation_acceleration_weight * acceleration_loss + lane_loss, acceleration_loss, lane_loss
 
     def behavior_clone(self, observations: torch.Tensor, teacher_actions: torch.Tensor, *,
                        epochs: int, minibatch_size: int = 512, learning_rate: float = 3e-4,

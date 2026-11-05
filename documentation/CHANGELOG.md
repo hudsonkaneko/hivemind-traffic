@@ -890,3 +890,8 @@ change. Native guide and full 42-tab Markdown mirror synchronized and verified.
 - Native logs reveal four training and one initial-validation emergency lane-end stops missed by sampled counters; final validation has none. Added independent hashed audit, exact per-case results and coverage.
 - Published the frozen experimental actor and exact configuration without replacing older policies. [Result and next action](highway-population-training-v01.md).
 - Google guide updated with revision guard and verified native readback; all 42 tabs/history preserved, 40 unaffected tabs unchanged. Generated Markdown and manifest passed synchronization checks.
+
+
+### November 4: population v02 retraining completed
+
+[Population v02](highway-population-training-v02.md): 99,998 decisions in 514.516 seconds. Pooled overrides 29.97%, worst 86.75%; twelve failing cases. Rejected for promotion. Metrics, native warnings and experimental weights retained. Next: diagnose acceleration errors before another revision. Google guide sync pending.

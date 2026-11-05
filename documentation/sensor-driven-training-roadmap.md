@@ -45,7 +45,7 @@ The failed pilot and diagnostic candidate remain under
 the linked evidence note. Accepted v04r2 remains separate and unchanged. Bulk
 weights, captures and logs are local artifacts, not automatically backed up by Git.
 
-## Stage 1 — driving competence before sensor uncertainty
+## Stage 1 â€” driving competence before sensor uncertainty
 
 1. **Make intervention causes measurable.** Preserve requested, filtered and
    realized acceleration; separate speed ceiling, following, lane-gap and emergency
@@ -106,7 +106,7 @@ reviewed budget before making repeatability claims. These are research acceptanc
 criteria, not proof of road safety. Closer cooperative following is a later,
 separately evaluated change, conditioned on braking, delay and fallback evidence.
 
-## Stage 2 — robustness to realistic imperfect observations
+## Stage 2 â€” robustness to realistic imperfect observations
 
 1. **Define a deployable observation contract.** Every object estimate and message
    needs frame/time, age, validity and uncertainty; specify units, frames, range,
@@ -143,7 +143,7 @@ stale-data handling and controlled fallback, not forced to maintain cruise speed
 or a low override rate. Measure availability and safe progress separately.
 Numeric corruption ranges and allowable degradation remain open until calibrated.
 
-## Stage 3 — perception, tracking and physical closed-loop transfer
+## Stage 3 â€” perception, tracking and physical closed-loop transfer
 
 1. **Finish the compact semantic model first.** Reuse the prepared SegFormer B0
    and six-class [disabled configuration](../configs/perception/segmentation_training_v02.json).
@@ -268,7 +268,7 @@ After each meaningful implementation, evaluation, failed attempt or decision:
 
 ## Progress history
 
-### v01 — November 2, 2026: research-backed plan and persistent memory
+### v01 â€” November 2, 2026: research-backed plan and persistent memory
 
 - Audited highway pilot and perception preparation with sub-agents; recorded the
   actual failed driving gates and untrained six-class model status above.
@@ -280,7 +280,7 @@ After each meaningful implementation, evaluation, failed attempt or decision:
   followed by a concrete configuration review. Guide sync evidence is recorded in
   the [sync ledger](learning-guide-sync.md).
 
-### v02 — November 2, 2026: Stage 1 implemented and prepared
+### v02 â€” November 2, 2026: Stage 1 implemented and prepared
 
 - Added intervention diagnostics, a versioned 93-field merge contract, feasible
   observation-only teacher, BC/MAPPO runner, mixed curriculum and bounded recovery.
@@ -298,14 +298,14 @@ After each meaningful implementation, evaluation, failed attempt or decision:
   learned driving before Stage 2. Agent waits while future training runs; the
   runner retains metrics and signals completion/failure.
 
-### v03 — November 3, 2026: authorized Stage 1 learning completed
+### v03 â€” November 3, 2026: authorized Stage 1 learning completed
 
 - User approved the presented configuration. Ran one bounded CPU attempt with
   no progress inspection or analysis until process exit. Runtime sources unchanged.
 - 499,992 transitions (49,998 demonstrations + 449,994 PPO), 162 updates, 59m24s.
   Completed normally at the transition cap; no mechanical recovery needed.
 - Selected final actor: 6/6 validation merges, 12 passes, cruise speed
-  96.59–97.42% of limit, zero collisions/teleports/overspeed under protections.
+  96.59â€“97.42% of limit, zero collisions/teleports/overspeed under protections.
   Overrides 6,965/38,380 (18.15%); worst case 53.56%; eight of twelve cases fail.
 - Phase 2 had lower pooled overrides (12.47%) than the selected final actor, but
   also failed acceptance. Preserved phase results, hashes, sources and checkpoints.
@@ -318,18 +318,18 @@ After each meaningful implementation, evaluation, failed attempt or decision:
   change notes, exact configs/contracts, measured results and checksums. Newer
   publication does not imply acceptance or compatible observations.
 
-### v04 — November 3, 2026: diagnosis and v03 preparation
+### v04 â€” November 3, 2026: diagnosis and v03 preparation
 
 - Offline audit: 94.90% of final native-change decisions realize the logged
-  feasible acceleration target within 0.05 m/s². Native internal causes remain
+  feasible acceleration target within 0.05 m/sÂ². Native internal causes remain
   unlogged; merge discrepancies are less well explained.
-- Frozen after-BC actor: training-label acceleration RMSE 0.2013 m/s² versus
+- Frozen after-BC actor: training-label acceleration RMSE 0.2013 m/sÂ² versus
   99.886% lane-label agreement. No fitting occurred during this audit.
 - Teacher on the same twelve validation cases: 1.168% pooled overrides, worst
   4.156%, all gates passed; two-lane following/passing is materially slower.
   No validation trajectories enter learning and no held-out traffic ran.
-- Implemented ranking v5 and disabled v03 proposal: 12 BC epochs, 4× BC
-  acceleration loss, imitation 0.05→0.01 over 400k PPO decisions. Fixed 500k/two-hour
+- Implemented ranking v5 and disabled v03 proposal: 12 BC epochs, 4Ã— BC
+  acceleration loss, imitation 0.05â†’0.01 over 400k PPO decisions. Fixed 500k/two-hour
   attempt budget, observations, rewards and safety protections remain unchanged.
 - 98 tests and frozen full 30-case no-learning preflight pass. Original selected
   actors/catalog remain intact; phase 2 is favored only in the recorded reranking.
@@ -337,7 +337,7 @@ After each meaningful implementation, evaluation, failed attempt or decision:
   gate is configuration approval before the second bounded learning attempt.
 
 
-### v05 — November 3, 2026: v03 learning and checkpoint recovery
+### v05 â€” November 3, 2026: v03 learning and checkpoint recovery
 
 - User approved the reviewed configuration. Only the authorization flag changed in a retained launch copy; the tracked proposal remains disabled for future launches.
 - One Windows checkpoint replacement failed; the valid closed checkpoint resumed with identical sources/configuration and retained consumed budget. No runtime change or repeated failure occurred.
@@ -347,7 +347,7 @@ After each meaningful implementation, evaluation, failed attempt or decision:
 - Stage 1 is still open. Diagnose the remaining per-case failures and present a revised setup before another learning attempt; existing safety/acceptance criteria stay fixed.
 
 
-### v06 — November 4, 2026: improved training plan
+### v06 â€” November 4, 2026: improved training plan
 
 - Saved the [v04 training plan](highway-stage1-v04-training-plan.md): diagnose following/passing errors, then compare current-only imitation with retained acceleration corrections from training states.
 - Proposed shared warm start from verified v03 phase 0; explicit import is required because ordinary resume cannot reuse selected checkpoints for a new experiment. Keep observations, reward, safety guards and lane imitation unchanged.
@@ -356,7 +356,7 @@ After each meaningful implementation, evaluation, failed attempt or decision:
 - Research basis: dataset aggregation and on-policy PPO, linked in the plan. No runtime changes, new simulator runs or learning occurred. Next deliverable is implementation/preflight plus exact disabled configurations for review.
 
 
-### v07 — November 4, 2026: variable-population preparation
+### v07 â€” November 4, 2026: variable-population preparation
 
 - User authorized a separate bounded population-adaptation pilot; v04 correction memory is not included.
 - Implemented reset-based mixed cohorts, nearest-six messages, a masked eight-slot critic and an unchanged 93-field actor.
@@ -364,9 +364,19 @@ After each meaningful implementation, evaluation, failed attempt or decision:
 - [Resolved configuration and evidence](highway-population-training-v01.md). Next action: launch the authorized 100k/30-minute run, wait for exit, retain results and synchronize the guide. Live handoff, held-out acceptance and sensor transfer remain open.
 
 
-### v07 result — November 4, 2026: population pilot completed, not accepted
+### v07 result â€” November 4, 2026: population pilot completed, not accepted
 
 - Ran the approved configuration once: 99,999 decisions, 474.296 charged seconds, no runtime failure/source drift or monitoring during learning.
 - Matched validation regressed from 20.6393% pooled/44.875% worst interventions to 31.7013%/75.125%; both endpoints fail 15/16 cases. Final 4/4 merge targets and 14 passes do not outweigh this regression.
 - All initial/final ledgers are complete; final collision/teleport/overspeed counts are zero under protections. Four training and one initial-validation native emergency lane-end warnings were missed by sampled counters; none appear in final validation.
 - [Result, raw-evidence locations and next action](highway-population-training-v01.md). Preserve the final experimental actor without promoting it. No new run, live handoff, held-out or sensor/physical evaluation follows automatically.
+
+
+### November 4: population v02 authorized correction
+
+Matched scripted baseline measured 1.51% pooled overrides; prepare acceleration-only supervision weight 50 with unchanged guards and bounded matched retraining. See [v02](highway-population-training-v02.md). Results pending.
+
+
+### November 4: population v02 retraining completed
+
+[Population v02](highway-population-training-v02.md): 99,998 decisions in 514.516 seconds. Pooled overrides 29.97%, worst 86.75%; twelve failing cases. Rejected for promotion. Metrics, native warnings and experimental weights retained. Next: diagnose acceleration errors before another revision. Google guide sync pending.

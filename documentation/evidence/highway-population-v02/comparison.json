@@ -1,0 +1,666 @@
+{
+  "initial": {
+    "cases": 16,
+    "pooled_override_fraction": 0.2063928837201253,
+    "worst_override_fraction": 0.44875,
+    "failures": [
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510000,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides",
+          "cruise_speed"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510001,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510002,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510003,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-following",
+        "seed": 6510005,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-passing",
+        "seed": 6510006,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-merge",
+        "seed": 6510007,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-cruise",
+        "seed": 6510008,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-following",
+        "seed": 6510009,
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-passing",
+        "seed": 6510010,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-merge",
+        "seed": 6510011,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510012,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510013,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510014,
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510015,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      }
+    ],
+    "nominal_gates_passed": false,
+    "held_out_test_run": false,
+    "acceptance_status": "experimental; held-out qualification not run"
+  },
+  "final": {
+    "cases": 16,
+    "pooled_override_fraction": 0.29971610580252045,
+    "worst_override_fraction": 0.8675,
+    "failures": [
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510000,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides",
+          "cruise_speed"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510001,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510002,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510003,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-following",
+        "seed": 6510005,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-passing",
+        "seed": 6510006,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-merge",
+        "seed": 6510007,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-cruise",
+        "seed": 6510008,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-following",
+        "seed": 6510009,
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510012,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510013,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510014,
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      }
+    ],
+    "nominal_gates_passed": false,
+    "held_out_test_run": false,
+    "acceptance_status": "experimental; held-out qualification not run"
+  },
+  "cases": [
+    {
+      "case_id": "validation-2-lane-cruise",
+      "seed": 6510000,
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.32625,
+      "final_overrides": 0.8675,
+      "override_delta": 0.54125,
+      "speed_ratio_delta": 0.0008336760015941191,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-following",
+      "seed": 6510001,
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.3933333333333333,
+      "final_overrides": 0.6145833333333334,
+      "override_delta": 0.22125000000000006,
+      "speed_ratio_delta": -0.0042269088699220525,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-passing",
+      "seed": 6510002,
+      "population": {
+        "controlled_count": 5,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.2274520856820744,
+      "final_overrides": 0.5656479909451047,
+      "override_delta": 0.3381959052630302,
+      "speed_ratio_delta": 0.00631148774409418,
+      "initial_passes": 5,
+      "final_passes": 5,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-merge",
+      "seed": 6510003,
+      "population": {
+        "controlled_count": 7,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.18535714285714286,
+      "final_overrides": 0.10142857142857142,
+      "override_delta": -0.08392857142857144,
+      "speed_ratio_delta": -0.007410890215591492,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 1,
+      "final_merges": 1
+    },
+    {
+      "case_id": "validation-4-lane-cruise",
+      "seed": 6510004,
+      "population": {
+        "controlled_count": 8,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.01453125,
+      "final_overrides": 0.0103125,
+      "override_delta": -0.00421875,
+      "speed_ratio_delta": 0.0037578535880323782,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-4-lane-following",
+      "seed": 6510005,
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.44875,
+      "final_overrides": 0.10375,
+      "override_delta": -0.345,
+      "speed_ratio_delta": 0.00023092394818646778,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-4-lane-passing",
+      "seed": 6510006,
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.06958333333333333,
+      "final_overrides": 0.175,
+      "override_delta": 0.10541666666666666,
+      "speed_ratio_delta": 0.09192889847586583,
+      "initial_passes": 3,
+      "final_passes": 3,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-4-lane-merge",
+      "seed": 6510007,
+      "population": {
+        "controlled_count": 5,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.232,
+      "final_overrides": 0.56425,
+      "override_delta": 0.33225000000000005,
+      "speed_ratio_delta": -0.015741588119504657,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 1,
+      "final_merges": 1
+    },
+    {
+      "case_id": "validation-5-lane-cruise",
+      "seed": 6510008,
+      "population": {
+        "controlled_count": 7,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "initial_overrides": 0.05035714285714286,
+      "final_overrides": 0.15535714285714286,
+      "override_delta": 0.10500000000000001,
+      "speed_ratio_delta": 0.004988912106319798,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-5-lane-following",
+      "seed": 6510009,
+      "population": {
+        "controlled_count": 8,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "initial_overrides": 0.1696875,
+      "final_overrides": 0.41015625,
+      "override_delta": 0.24046875,
+      "speed_ratio_delta": 0.009329759238348334,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-5-lane-passing",
+      "seed": 6510010,
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "initial_overrides": 0.2425,
+      "final_overrides": 0.005,
+      "override_delta": -0.2375,
+      "speed_ratio_delta": 0.000995179605688179,
+      "initial_passes": 1,
+      "final_passes": 1,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-5-lane-merge",
+      "seed": 6510011,
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "initial_overrides": 0.0925,
+      "final_overrides": 0.008333333333333333,
+      "override_delta": -0.08416666666666667,
+      "speed_ratio_delta": 0.005702545486274024,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 1,
+      "final_merges": 1
+    },
+    {
+      "case_id": "validation-2-lane-cruise",
+      "seed": 6510012,
+      "population": {
+        "controlled_count": 5,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.316,
+      "final_overrides": 0.2815,
+      "override_delta": -0.03450000000000003,
+      "speed_ratio_delta": 0.0046137616761632305,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-following",
+      "seed": 6510013,
+      "population": {
+        "controlled_count": 7,
+        "total_vehicles": 16,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.29771407837445574,
+      "final_overrides": 0.3593608135100781,
+      "override_delta": 0.061646735135622355,
+      "speed_ratio_delta": 0.012680854104983763,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-passing",
+      "seed": 6510014,
+      "population": {
+        "controlled_count": 8,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.387025665249567,
+      "final_overrides": 0.4905511811023622,
+      "override_delta": 0.10352551585279518,
+      "speed_ratio_delta": 0.004605602414019971,
+      "initial_passes": 4,
+      "final_passes": 4,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-merge",
+      "seed": 6510015,
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.23575129533678757,
+      "final_overrides": 0.01673101673101673,
+      "override_delta": -0.21902027860577084,
+      "speed_ratio_delta": -0.005209396758276141,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 1,
+      "final_merges": 1
+    }
+  ],
+  "protocol": "Fixed final endpoint compared with identical frozen-start cases; no checkpoint cherry-picking"
+}
