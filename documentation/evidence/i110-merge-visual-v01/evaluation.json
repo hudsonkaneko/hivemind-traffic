@@ -1,0 +1,295 @@
+{
+  "collisions": 0,
+  "teleports": 0,
+  "overrides": 131,
+  "agent_steps": 1240,
+  "lane_changes": 4,
+  "successful_merges": 2,
+  "delivered_messages": 3546,
+  "dropped_messages": 0,
+  "delivered_bytes": 659641,
+  "overspeed_steps": 0,
+  "peak_abs_jerk": 60.244393199682285,
+  "reward_terms": {
+    "progress": 923.6225620630885,
+    "merge": 10.0,
+    "passing": 0.0,
+    "arrival": 8.0,
+    "collision": 0.0,
+    "intervention": -26.19999999999994,
+    "jerk": -6.057172140131321,
+    "lane_change": -0.4,
+    "feasible_acceleration": -49.91211700054187,
+    "unsafe_request": 0.0,
+    "cooperation": 0.19999999999999998
+  },
+  "passes": 0,
+  "speed_ratio_sum": 956.8393687935289,
+  "speed_samples": 1236,
+  "override_causes": {
+    "native_realization_unattributed": 131
+  },
+  "policy_filter_changes": 0,
+  "native_realization_changes": 131,
+  "emergency_braking_observed": 0,
+  "acceleration_error_sum": 898.4181060097545,
+  "abs_acceleration_sum": 974.929044169724,
+  "abs_jerk_sum": 605.7172140131303,
+  "minimum_ttc_s": 5.74596582406878,
+  "minimum_headway_s": 1.84363476468781,
+  "schema": "highway_stage1_graph_messages_v2",
+  "steps": 338,
+  "simulation_time": 80.1,
+  "task": "merge",
+  "density": "medium",
+  "through_lanes": 4,
+  "mean_fraction_of_speed_limit": 0.7741418841371593,
+  "intervention_fraction": 0.10564516129032259,
+  "requested_trips": 44,
+  "completed_trips": 36,
+  "accounting": {
+    "time": 80.1,
+    "totals": {
+      "scheduled": 0,
+      "waiting": 0,
+      "active": 8,
+      "teleporting": 0,
+      "completed": 36,
+      "removed": 0,
+      "requested": 44,
+      "initial": 0,
+      "unfinished": 8,
+      "boundary_time_s": 1666.2999999999995,
+      "external_wait_s": 2.1999999999999993,
+      "teleported": 0
+    },
+    "groups": {
+      "role:controlled": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 0,
+        "teleporting": 0,
+        "completed": 4,
+        "removed": 0,
+        "requested": 4,
+        "initial": 0,
+        "unfinished": 0,
+        "boundary_time_s": 124.4,
+        "external_wait_s": 0.0,
+        "teleported": 0
+      },
+      "role:human_proxy": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 8,
+        "teleporting": 0,
+        "completed": 32,
+        "removed": 0,
+        "requested": 40,
+        "initial": 0,
+        "unfinished": 8,
+        "boundary_time_s": 1541.8999999999996,
+        "external_wait_s": 2.1999999999999993,
+        "teleported": 0
+      },
+      "origin:main": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 0,
+        "teleporting": 0,
+        "completed": 34,
+        "removed": 0,
+        "requested": 34,
+        "initial": 0,
+        "unfinished": 0,
+        "boundary_time_s": 1112.1,
+        "external_wait_s": 2.1999999999999993,
+        "teleported": 0
+      },
+      "origin:ramp": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 8,
+        "teleporting": 0,
+        "completed": 2,
+        "removed": 0,
+        "requested": 10,
+        "initial": 0,
+        "unfinished": 8,
+        "boundary_time_s": 554.2,
+        "external_wait_s": 0.0,
+        "teleported": 0
+      }
+    },
+    "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+    "initial_cohort": "Time before observation boundary is excluded",
+    "comparison_valid": true
+  },
+  "control_mode": "policy",
+  "control_target_version": "v2",
+  "control_observation_version": "highway_stage1_graph_messages_v2",
+  "reward_version": "highway_stage1_feasible_acceleration_v2",
+  "reward_weights": {
+    "progress": 1.0,
+    "merge": 5.0,
+    "passing": 2.0,
+    "arrival": 2.0,
+    "collision": 20.0,
+    "intervention": 0.2,
+    "jerk": 0.01,
+    "lane_change": 0.1,
+    "feasible_acceleration": 0.25,
+    "unsafe_request": 0.5,
+    "cooperation": 0.1
+  },
+  "mean_abs_acceleration": 0.7862331001368742,
+  "mean_abs_jerk": 0.4884816242041373,
+  "mean_feasible_acceleration_error": 0.7245307306530279,
+  "override_cause_fractions": {
+    "native_realization_unattributed": 0.10564516129032259
+  },
+  "override_metric": "Same v1 policy-mode union: lane rejected, |filtered-requested|>1e-4, or measured |realized-filtered|>0.05; denominator active-agent steps",
+  "native_attribution": "SUMO realization differences are measured but their underlying native cause is not inferred",
+  "observation_source": "exact current SUMO state/map and delivered messages; no perception input",
+  "control_end_time": 33.9,
+  "primary_horizon_time": 80.1,
+  "primary_horizon_complete": true,
+  "accounting_comparison_valid": true,
+  "post_control_native_steps": 462,
+  "control_end_accounting": {
+    "time": 33.9,
+    "totals": {
+      "scheduled": 8,
+      "waiting": 0,
+      "active": 31,
+      "teleporting": 0,
+      "completed": 5,
+      "removed": 0,
+      "requested": 36,
+      "initial": 0,
+      "unfinished": 31,
+      "boundary_time_s": 653.0999999999999,
+      "external_wait_s": 2.1999999999999993,
+      "teleported": 0
+    },
+    "groups": {
+      "role:controlled": {
+        "scheduled": 0,
+        "waiting": 0,
+        "active": 0,
+        "teleporting": 0,
+        "completed": 4,
+        "removed": 0,
+        "requested": 4,
+        "initial": 0,
+        "unfinished": 0,
+        "boundary_time_s": 124.4,
+        "external_wait_s": 0.0,
+        "teleported": 0
+      },
+      "role:human_proxy": {
+        "scheduled": 8,
+        "waiting": 0,
+        "active": 31,
+        "teleporting": 0,
+        "completed": 1,
+        "removed": 0,
+        "requested": 32,
+        "initial": 0,
+        "unfinished": 31,
+        "boundary_time_s": 528.6999999999999,
+        "external_wait_s": 2.1999999999999993,
+        "teleported": 0
+      },
+      "origin:main": {
+        "scheduled": 7,
+        "waiting": 0,
+        "active": 24,
+        "teleporting": 0,
+        "completed": 3,
+        "removed": 0,
+        "requested": 27,
+        "initial": 0,
+        "unfinished": 24,
+        "boundary_time_s": 467.9,
+        "external_wait_s": 2.1999999999999993,
+        "teleported": 0
+      },
+      "origin:ramp": {
+        "scheduled": 1,
+        "waiting": 0,
+        "active": 7,
+        "teleporting": 0,
+        "completed": 2,
+        "removed": 0,
+        "requested": 9,
+        "initial": 0,
+        "unfinished": 7,
+        "boundary_time_s": 185.20000000000002,
+        "external_wait_s": 0.0,
+        "teleported": 0
+      }
+    },
+    "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+    "initial_cohort": "Time before observation boundary is excluded",
+    "comparison_valid": true
+  },
+  "post_control_events": {
+    "collisions": 0,
+    "teleports": 0
+  },
+  "native_emergencies": {
+    "available": true,
+    "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+    "warning_lines": 0,
+    "unique_events": 0,
+    "controlled_events": 0,
+    "background_events": 0,
+    "unclassified_events": 0,
+    "events": []
+  },
+  "merge_targets": [
+    "agent_2",
+    "agent_3"
+  ],
+  "merge_events": [
+    {
+      "agent": "agent_2",
+      "time": 3.0,
+      "lane_id": "sb2_1",
+      "x": -8.50426585780829,
+      "y": -282.02418752684457
+    },
+    {
+      "agent": "agent_3",
+      "time": 9.7,
+      "lane_id": "sb2_1",
+      "x": -8.322134578654518,
+      "y": -291.2913607863771
+    }
+  ],
+  "policy_sha256": "a6d59d3acf58fcca9d7fc33406cb61ca3863d1a3dffad6dd316b195a66c7166f",
+  "seed": 6400019,
+  "optimizer_steps": 0,
+  "training": false,
+  "episode_directory": "outputs\\i110-merge-visual\\v01\\20261105T232020Z-0089b54e\\simulation\\episode-6400019-6a8371bb",
+  "wall_seconds": 6.5939999999973224,
+  "full_report_is_separate_from_video_crop": true,
+  "_evidence_copy": {
+    "kind": "compact derived copy",
+    "source": "outputs/i110-merge-visual/v01/20261105T232020Z-0089b54e/evaluation.json",
+    "source_sha256": "047bed10b51cf1e036d132db546c13744ec50b21265a31bc9e31e4a9b4d86ef3",
+    "omitted_fields": {
+      "accounting.trips": {
+        "rows": 44,
+        "reason": "Full per-trip ledger retained in source output; aggregate totals/groups preserved here."
+      },
+      "control_end_accounting.trips": {
+        "rows": 44,
+        "reason": "Full per-trip ledger retained in source output; aggregate totals/groups preserved here."
+      }
+    },
+    "values_modified": false
+  }
+}

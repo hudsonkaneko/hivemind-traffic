@@ -573,3 +573,8 @@ The [frozen MAPPO adapter](mappo-physical-adapter-v01.md) now translates acceler
 ## November 5, 2026: near-limit learning correction ready for review
 
 [Population v04](population-near-limit-v04.md) adds a localized raw-acceleration objective, four episode speed ceilings and eight lower-limit validation cases. Frozen diagnosis confirms meaningful at-limit acceleration errors and previous-request sensitivity. 171 tests and a zero-update SUMO preflight pass, with the teacher-fixture background emergency retained. Review the disabled 100k-decision/30-minute configuration before learning. Stage 1 and physical transfer remain unaccepted; no policy weights changed or training launched.
+
+
+## November 5, 2026 — I-110 merge visualization checkpoint
+
+[Final Stage 1 v03 replay](i110-merge-visual-v01.md) completes two ramp merges in a predeclared I-110 test and provides an 11-second merge-focused 3D video with actual screenshots. Final v03 was selected for merge-specific performance; the phase-0 population reference remains separate. Full-run interventions are still 10.56%, above the 5% target, despite no recorded collisions, teleports, overspeed or native emergency warnings. SUMO owns motion on provisional reconstructed road geometry; this is not physical or sensor-driven validation. No learning or checkpoint changes. The [living sensor plan v13](sensor-driven-training-roadmap.md) preserves review of the disabled population v04 setup as the next training action.

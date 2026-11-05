@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-near-limit-v04/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-near-limit-v04/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-visual-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-visual-v01/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4764,3 +4764,19 @@ Evaluation retains all sixteen original cases and adds eight 12/18 m/s cruise/pa
 Reviewed disabled config canonical SHA-256: a34f3aa17ce055037aad1510b8171b977a6c310e675fd2ea60e9d2ecadca8f3f. Preflight: outputs/highway-population/v04/preflight-20261105T214741Z-d8274460. Evidence and final configuration: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-near-limit-v04/documentation/population-near-limit-v04.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-near-limit-v04/documentation/population-near-limit-v04.md>)
 
 Next: review this configuration before authorizing a bounded pilot. Once authorized, let the runner retain metrics without assistant monitoring while it learns; inspect completion or failure, retain budgets on valid resumes, and evaluate the candidate before repeating physical tests. No new policy is promoted by this preparation.
+
+<a id="docs-h-hth5phntz2da"></a>
+
+#### November 5, 2026: I-110 frozen-policy merge visual test
+
+Selected the final Highway Stage 1 v03 actor specifically for merging: all three compatible retained actors completed 6/6 matched validation merges, while final v03 had the lowest pooled merge interventions (318/9580, 3.3194%). This does not supersede the phase-0 overall population reference or promote an accepted policy. Policy SHA-256: a6d59d3acf58fcca9d7fc33406cb61ca3863d1a3dffad6dd316b195a66c7166f.
+
+Ran one predeclared I-110 test, seed 6400019, four controlled cars, medium native background traffic and the original v2 93-field observation/two-action contract. Ramp cars merged at simulation times 3.0 and 9.7 seconds. Full 80-second accounting recorded zero collisions, teleports, overspeed steps and native emergency warnings, with all four controlled trips completed. Interventions were 131/1240 decisions (10.56%), all measured native realization differences, so the 5% intervention target still fails; the underlying native cause is not inferred.
+
+Produced an 11-second, 1280x720, 10 fps Isaac-rendered replay focused on the merge. Orange ramp cars and cyan mainline controlled cars use exact recorded SUMO poses. All 110 video frames decoded; maximum replay position error was zero and authored layers stayed unchanged. Six CPU/OpenUSD checks passed. Preserved the initial preview export failure, then moved video/report persistence before Isaac shutdown and removed the viewport grid.
+
+This reconstructs the provisional I-110 SUMO lane geometry with illustrative markings and lightweight car meshes. SUMO remains the motion owner: this is not a physical closed-loop merge, sensor inference, realistic vehicle-dynamics validation or held-out qualification. No training or checkpoint changes occurred. Full metrics, source hashes, screenshots and reproducible commands are retained; bulk trajectories and video remain local.
+
+Evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-visual-v01/documentation/i110-merge-visual-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-visual-v01/documentation/i110-merge-visual-v01.md>)
+
+The next training action remains review of the disabled population v04 near-limit configuration before a separately authorized pilot.
