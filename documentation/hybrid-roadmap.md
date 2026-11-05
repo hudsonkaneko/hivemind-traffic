@@ -559,3 +559,8 @@ The [AV comparison](policy-baseline-av-comparison.md) restores the phase-0 refer
 ## November 4: frozen control and loss diagnosis completed
 
 [Steps 1 and 2](population-control-diagnostics-v01.md) now have training-only acceleration calibration, identical-observation loss gradients, retained metrics/plots and independent review. No timing/duration bug was found; ordinary native following saturation, near-limit/merge response gaps, target disagreement and shared clipping need deliberate correction. Twelve historical native lane-end emergencies were missed by sampled counters. Keep the phase-0 parent frozen and Stage 1 unaccepted. Next: target consistency and post-warm-up actor/critic telemetry, followed by a reviewed configuration before any new training. The Google guide and Markdown mirror are synchronized.
+
+
+## November 4: population v03 control setup ready for configuration review
+
+[Population v03](population-control-v03.md) implements near-limit/first-entry corrections, a shared teacher/reward target, separate actor/critic diagnostics and native emergency accounting. Bounded teacher passing/merge checks reach zero overrides, while the unchanged actor remains unaccepted at 11.17% merge overrides. 150 tests and a zero-update final preflight passed; the 100k-decision/30-minute configuration is prepared with training disabled. Review the configuration before a new launch. No held-out qualification, arbitrary fleet-size guarantee or sensor/physical transfer follows from these development checks.

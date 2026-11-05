@@ -16,14 +16,16 @@ from environments.i110_merge_env import (
     I110MergeEnv, AGENTS, LOCAL_FEATURES as V1_LOCAL_FEATURES, MESSAGE_FEATURES,
 )
 from environments.sumo_mappo_env import action_to_acceleration
-from traffic.highway_merge_context import Stage1LaneGraph, merge_target_context, merge_features, MERGE_FEATURES, CAP
-from traffic.highway_stage1_teacher import acc_response_ceiling
+from traffic.highway_merge_context import (Stage1LaneGraph, merge_target_context, merge_target_context_v3,
+    merge_features, MERGE_FEATURES, CAP, CONTROL_OBSERVATION_VERSION)
+from traffic.highway_stage1_teacher import acc_response_ceiling, longitudinal_target_v3
 
 SCHEMA = 'highway_stage1_graph_messages_v2'
 LOCAL_FEATURES = (*V1_LOCAL_FEATURES, *MERGE_FEATURES)
 OBSERVATION_SIZE = 93
 STATE_SIZE = 376
 REWARD_VERSION = 'highway_stage1_feasible_acceleration_v2'
+REWARD_V3_VERSION = 'highway_stage1_shared_longitudinal_target_v3'
 DEFAULT_REWARD_WEIGHTS = dict(progress=1., merge=5., passing=2., arrival=2.,
     collision=20., intervention=.2, jerk=.01, lane_change=.1,
     feasible_acceleration=.25, unsafe_request=.5, cooperation=.1)
@@ -66,11 +68,15 @@ def feasible_acceleration_target(state, front, merge_distance):
 
 
 class HighwayStage1Env(I110MergeEnv):
+    control_target_version = 'v2'
     metadata = {'name': SCHEMA, 'render_modes': [], 'is_parallelizable': True}
     observation_size = OBSERVATION_SIZE
     state_size = STATE_SIZE
 
-    def __init__(self, network, run_directory, *, reward_weights=None, **kwargs):
+    def __init__(self, network, run_directory, *, reward_weights=None, control_target_version='v2', **kwargs):
+        if control_target_version not in ('v2', 'v3'):
+            raise ValueError('Unknown control target version')
+        self.control_target_version = control_target_version
         super().__init__(network, run_directory, **kwargs)
         self.graph = Stage1LaneGraph(self.network, self.graph.through_lanes)
         self.state_space = gym.spaces.Box(-1., 1., (STATE_SIZE,), np.float32)
@@ -107,7 +113,8 @@ class HighwayStage1Env(I110MergeEnv):
                 min(1., distance / 240.) if distance is not None else 1.,
                 float(distance is not None), max(0., 1 - (self.time - self.last_change[agent]) / 5),
                 *self._mask(agent, context)]
-            local += merge_features(merge_target_context(self.graph, state, self.states), ceiling)
+            context_fn = merge_target_context_v3 if self.control_target_version == 'v3' else merge_target_context
+            local += merge_features(context_fn(self.graph, state, self.states), ceiling)
             slots = []
             if self.communication == 'local':
                 for _, message in self._selected_messages(agent):
@@ -135,7 +142,7 @@ class HighwayStage1Env(I110MergeEnv):
 
     def scripted_actions(self):
         from traffic.highway_stage1_teacher import teacher_actions
-        return teacher_actions(self.obs)
+        return teacher_actions(self.obs, version=self.control_target_version)
 
     def _lane_rejection_causes(self, agent, context, delta):
         if not delta:
@@ -187,7 +194,8 @@ class HighwayStage1Env(I110MergeEnv):
             if abs(applied[agent] - requested[agent]) > 1e-4:
                 causes += violations
             diagnostics[agent] = dict(bounds=bounds, ceiling=ceiling, causes=causes,
-                violations=violations, target=feasible_acceleration_target(state, context['neighbors']['own']['front'], distance))
+                violations=violations, target=(longitudinal_target_v3(self.obs[agent]) if self.control_target_version == 'v3'
+                    else feasible_acceleration_target(state, context['neighbors']['own']['front'], distance)))
             if self.control_mode == 'policy':
                 self.conn.vehicle.setAcceleration(agent, applied[agent], .1)
             self.previous[agent] = (requested[agent], delta)
@@ -294,7 +302,8 @@ class HighwayStage1Env(I110MergeEnv):
                 acceleration_bounds=diagnostic['bounds'], feasible_acceleration_ceiling=diagnostic['ceiling'],
                 feasible_acceleration_target=diagnostic['target'],
                 bound_source='current SUMO state/map analytical guards',
-                feasible_target_source='current-input taper and pure SUMO ACC response prediction; not native API or future state',
+                feasible_target_source=('shared v3 observation-only teacher/reward target' if self.control_target_version == 'v3'
+                    else 'current-input taper and pure SUMO ACC response prediction; not native API or future state'),
                 native_cause='unattributed' if native_changed and self.control_mode == 'policy' else None,
                 merge_completed=event['merged'], route_completed=completed)
         self.obs = self._observations()
@@ -307,7 +316,10 @@ class HighwayStage1Env(I110MergeEnv):
     def report(self):
         report = super().report()
         count = max(1, self.stats['agent_steps'])
-        report.update(schema=SCHEMA, control_mode=self.control_mode, reward_version=REWARD_VERSION, reward_weights=self.reward_weights,
+        report.update(schema=SCHEMA, control_mode=self.control_mode,
+            control_target_version=self.control_target_version,
+            control_observation_version=CONTROL_OBSERVATION_VERSION if self.control_target_version == 'v3' else SCHEMA,
+            reward_version=REWARD_V3_VERSION if self.control_target_version == 'v3' else REWARD_VERSION, reward_weights=self.reward_weights,
             mean_abs_acceleration=self.stats['abs_acceleration_sum'] / count,
             mean_abs_jerk=self.stats['abs_jerk_sum'] / count,
             mean_feasible_acceleration_error=self.stats['acceleration_error_sum'] / count,

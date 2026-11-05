@@ -1,0 +1,60 @@
+{
+  "phase": "frozen_preflight_before_critic_warmup",
+  "optimizer_steps": 0,
+  "active_samples": 128,
+  "component_samples": 128,
+  "component_sampling": "First active rows, without shuffling; diagnostic only",
+  "representative_minibatch": {
+    "components": {
+      "ppo": {
+        "weighted_loss": 1.6763806343078613e-08,
+        "actor": 5.538447856903076,
+        "critic": 0.0,
+        "joint": 5.538448333740234
+      },
+      "value": {
+        "weighted_loss": 3.118210792541504,
+        "actor": 0.0,
+        "critic": 14.741381645202637,
+        "joint": 14.741382598876953
+      },
+      "entropy": {
+        "weighted_loss": 0.0011476828949525952,
+        "actor": 0.007308672182261944,
+        "critic": 0.0,
+        "joint": 0.007308672182261944
+      },
+      "acceleration": {
+        "weighted_loss": 0.0028868347872048616,
+        "actor": 0.06550952047109604,
+        "critic": 0.0,
+        "joint": 0.06550952047109604
+      },
+      "lane": {
+        "weighted_loss": 0.0022203908301889896,
+        "actor": 0.011764321476221085,
+        "critic": 0.0,
+        "joint": 0.011764321476221085
+      }
+    },
+    "actor_cosines": {
+      "ppo__value": null,
+      "ppo__entropy": -0.9828316392595637,
+      "ppo__acceleration": 0.9436460793699492,
+      "ppo__lane": 0.07383676157656727,
+      "value__entropy": null,
+      "value__acceleration": null,
+      "value__lane": null,
+      "entropy__acceleration": -0.9566381215216057,
+      "entropy__lane": -0.06963456899369792,
+      "acceleration__lane": 0.06796927167527549
+    },
+    "scope": "Weighted derivatives on this batch only; not optimizer parameter steps"
+  },
+  "critic": {
+    "samples": 128,
+    "mse": 12.47284287552105,
+    "explained_variance": -0.007534466140874274,
+    "target_variance": 2.0362412849610214
+  }
+}

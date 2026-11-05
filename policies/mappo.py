@@ -24,6 +24,10 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 
+from policies.mappo_diagnostics import (
+    critic_fit_metrics, current_gradient_norms, weighted_gradient_report,
+)
+
 
 def _mlp(input_size: int, hidden_sizes: Sequence[int], output_size: int, gain: float):
     if input_size <= 0 or output_size <= 0 or any(size <= 0 for size in hidden_sizes):
@@ -356,6 +360,7 @@ class MappoTrainer:
         imitation_coef: float = 0.0,
         imitation_lane_change_weight: float = 10.0,
         imitation_acceleration_weight: float = 1.0,
+        gradient_diagnostics: bool = False,
     ):
         if any(not math.isfinite(v) or v <= 0 for v in (actor_lr, critic_lr, clip, value_clip, max_grad_norm, target_kl)):
             raise ValueError("Optimizer rates, clipping bounds and KL limit must be positive")
@@ -367,6 +372,8 @@ class MappoTrainer:
             raise ValueError('Invalid imitation loss settings')
         if imitation_coef and not model.hybrid_actions:
             raise ValueError('Imitation assistance requires the hybrid driving actor')
+        if type(gradient_diagnostics) is not bool:
+            raise ValueError('gradient_diagnostics must be a boolean')
         self.model = model
         self.clip = clip
         self.value_clip = value_clip
@@ -379,6 +386,7 @@ class MappoTrainer:
         self.imitation_coef = imitation_coef
         self.imitation_lane_change_weight = imitation_lane_change_weight
         self.imitation_acceleration_weight = imitation_acceleration_weight
+        self.gradient_diagnostics = gradient_diagnostics
         self.optimizer = torch.optim.Adam([
             {"params": list(model.actor.parameters()) + [model.log_std], "lr": actor_lr},
             {"params": model.critic.parameters(), "lr": critic_lr},
@@ -467,7 +475,8 @@ class MappoTrainer:
                     imitation_loss=float(means[0]), imitation_acceleration_loss=float(means[1]),
                     imitation_lane_loss=float(means[2]), initial_log_std=initial_log_std, seed=seed)
 
-    def update(self, batch: Mapping[str, torch.Tensor], *, deadline: float | None = None) -> dict:
+    def _prepare_batch(self, batch: Mapping[str, torch.Tensor]):
+        """Remove padding and normalize the active rollout once, before sampling."""
         widths = {
             "local_obs": self.model.observation_size,
             "global_states": self.model.state_size,
@@ -495,13 +504,77 @@ class MappoTrainer:
                 raise ValueError(f"Active batch field {name} is not finite")
         advantages = data["advantages"]
         data["advantages"] = (advantages - advantages.mean()) / (advantages.std(unbiased=False) + 1e-8)
+        return data, samples
+
+    def _loss_terms(self, part, ratio, entropy):
+        """Build the ordinary objective and its exactly weighted diagnostic parts."""
+        actor_loss = -torch.minimum(
+            ratio * part["advantages"],
+            ratio.clamp(1.0 - self.clip, 1.0 + self.clip) * part["advantages"],
+        ).mean()
+        values = self.model.values(part["global_states"], part["agent_indices"])
+        clipped_values = part["old_values"] + (values - part["old_values"]).clamp(-self.value_clip, self.value_clip)
+        value_loss = 0.5 * torch.maximum(
+            (values - part["returns"]).square(),
+            (clipped_values - part["returns"]).square(),
+        ).mean()
+        entropy_mean = entropy.mean()
+        # Keep the legacy arithmetic order, independently of diagnostics.
+        loss = actor_loss + self.value_coef * value_loss - self.entropy_coef * entropy_mean
+        weighted = dict(ppo=actor_loss, value=self.value_coef * value_loss,
+                        entropy=-self.entropy_coef * entropy_mean)
+        imitation_stats = {}
+        if self.imitation_coef:
+            imitation_loss, acceleration_imitation, lane_imitation = self._imitation_loss(
+                part['local_obs'], part['teacher_actions'])
+            loss = loss + self.imitation_coef * imitation_loss
+            weighted.update(acceleration=self.imitation_coef * self.imitation_acceleration_weight * acceleration_imitation,
+                            lane=self.imitation_coef * lane_imitation)
+            imitation_stats = dict(imitation_loss=float(imitation_loss.detach()),
+                imitation_acceleration_loss=float(acceleration_imitation.detach()),
+                imitation_lane_loss=float(lane_imitation.detach()))
+        if not torch.isfinite(loss):
+            raise ValueError('Nonfinite MAPPO loss')
+        return loss, weighted, dict(actor_loss=float(actor_loss.detach()), value_loss=float(value_loss.detach()),
+                                   entropy=float(entropy_mean.detach()), **imitation_stats)
+
+    def diagnose_batch(self, batch: Mapping[str, torch.Tensor], *, phase: str = 'preflight') -> dict:
+        """No-update preflight: first active minibatch, no sampling or optimizer call.
+
+        Existing gradients, weights and RNG state are preserved. This is a
+        derivative diagnostic; it does not claim old stored rollouts are newly
+        on-policy. The caller owns policy/return provenance and phase labeling.
+        """
+        data, samples = self._prepare_batch(batch)
+        count = min(samples, self.minibatch_size)
+        part = {name: value[:count] for name, value in data.items()}
+        log_probs, entropy = self.model.evaluate_actions(part['local_obs'], part['actions'], part['pre_tanh_actions'])
+        log_ratio = log_probs - part['old_log_probs']
+        ratio = log_ratio.exp()
+        _, weighted, _ = self._loss_terms(part, ratio, entropy)
+        return dict(phase=phase, optimizer_steps=0, active_samples=samples,
+            component_samples=count, component_sampling='First active rows, without shuffling; diagnostic only',
+            representative_minibatch=weighted_gradient_report(self.model, weighted),
+            critic=critic_fit_metrics(self.model, data['global_states'], data['agent_indices'], data['returns']))
+
+    def update(self, batch: Mapping[str, torch.Tensor], *, deadline: float | None = None,
+               phase: str = 'ppo') -> dict:
+        data, samples = self._prepare_batch(batch)
+        diagnostics = None
+        if self.gradient_diagnostics:
+            diagnostics = dict(phase=phase, clipping_mode='global', representative_minibatch=None,
+                component_sampling='First accepted minibatch of this update only; not an average across optimizer steps',
+                actual_steps=[], critic_before=critic_fit_metrics(
+                    self.model, data['global_states'], data['agent_indices'], data['returns']),
+                critic_targets='Identical detached active rollout returns before/after update; no target recomputation',
+                limitations='Gradient clipping measures derivatives, not Adam parameter steps')
         stats: list[dict] = []
         early_stopped = False
         last_kl = 0.0
         completed_epochs = 0
         budget_exhausted = False
         for _epoch in range(self.epochs):
-            permutation = torch.randperm(samples, device=active.device)
+            permutation = torch.randperm(samples, device=data['advantages'].device)
             for start in range(0, samples, self.minibatch_size):
                 if deadline is not None and time.monotonic() >= deadline:
                     budget_exhausted = True
@@ -518,45 +591,37 @@ class MappoTrainer:
                 if last_kl > self.target_kl:
                     early_stopped = True
                     break
-                actor_loss = -torch.minimum(
-                    ratio * part["advantages"],
-                    ratio.clamp(1.0 - self.clip, 1.0 + self.clip) * part["advantages"],
-                ).mean()
-                values = self.model.values(part["global_states"], part["agent_indices"])
-                clipped_values = part["old_values"] + (values - part["old_values"]).clamp(-self.value_clip, self.value_clip)
-                value_loss = 0.5 * torch.maximum(
-                    (values - part["returns"]).square(),
-                    (clipped_values - part["returns"]).square(),
-                ).mean()
-                entropy_mean = entropy.mean()
-                loss = actor_loss + self.value_coef * value_loss - self.entropy_coef * entropy_mean
-                imitation_stats = {}
-                if self.imitation_coef:
-                    imitation_loss, acceleration_imitation, lane_imitation = self._imitation_loss(
-                        part['local_obs'], part['teacher_actions'])
-                    loss = loss + self.imitation_coef * imitation_loss
-                    imitation_stats = dict(imitation_loss=float(imitation_loss.detach()),
-                        imitation_acceleration_loss=float(acceleration_imitation.detach()),
-                        imitation_lane_loss=float(lane_imitation.detach()))
-                if not torch.isfinite(loss):
-                    raise ValueError("Nonfinite MAPPO loss")
+                loss, weighted, losses = self._loss_terms(part, ratio, entropy)
+                if diagnostics is not None and diagnostics['representative_minibatch'] is None:
+                    diagnostics['representative_minibatch'] = dict(epoch=_epoch, minibatch=start // self.minibatch_size,
+                        samples=len(indices), **weighted_gradient_report(self.model, weighted))
                 self.optimizer.zero_grad(set_to_none=True)
                 loss.backward()
+                before_clip = current_gradient_norms(self.model) if diagnostics is not None else None
                 grad_norm = nn.utils.clip_grad_norm_(self.model.parameters(), self.max_grad_norm, error_if_nonfinite=True)
+                if diagnostics is not None:
+                    diagnostics['actual_steps'].append(dict(epoch=_epoch, minibatch=start // self.minibatch_size,
+                        samples=len(indices), before_clip=before_clip, after_clip=current_gradient_norms(self.model),
+                        global_clip_factor=min(1., self.max_grad_norm / (float(grad_norm) + 1e-6)),
+                        ppo_clip_fraction=float(((ratio - 1.).abs() > self.clip).float().mean().detach())))
                 self.optimizer.step()
                 stats.append({
-                    "actor_loss": float(actor_loss.detach()),
-                    "value_loss": float(value_loss.detach()),
-                    "entropy": float(entropy_mean.detach()),
+                    **losses,
                     "approx_kl": last_kl,
                     "clip_fraction": float(((ratio - 1.0).abs() > self.clip).float().mean().detach()),
                     "grad_norm_before_clip": float(grad_norm),
-                    **imitation_stats,
                 })
             if early_stopped or budget_exhausted:
                 break
             completed_epochs += 1
         result = {name: sum(item[name] for item in stats) / len(stats) for name in stats[0]} if stats else {}
+        if diagnostics is not None:
+            steps = diagnostics['actual_steps']
+            diagnostics.update(optimizer_steps=len(steps),
+                gradient_clip_fraction=sum(step['global_clip_factor'] < 1. for step in steps) / len(steps) if steps else None,
+                aggregation='Clip fraction is an unweighted fraction of performed optimizer steps; each step retains sample count and measured norms',
+                critic_after=critic_fit_metrics(self.model, data['global_states'], data['agent_indices'], data['returns']))
+            result['gradient_diagnostics'] = diagnostics
         return dict(result, optimizer_steps=len(stats), completed_epochs=completed_epochs,
                     early_stopped=early_stopped, last_kl=last_kl, active_samples=samples,
                     budget_exhausted=budget_exhausted)

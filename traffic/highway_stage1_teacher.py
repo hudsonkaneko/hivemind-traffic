@@ -14,6 +14,7 @@ import numpy as np
 
 
 TEACHER_VERSION = "highway_stage1_observation_teacher_v2"
+TEACHER_V3_VERSION = "highway_stage1_observation_teacher_v3"
 OBSERVATION_SIZE = 93
 SPEED_CAP = 26.8224
 ACCELERATION_MIN = -4.5
@@ -23,6 +24,7 @@ HEADWAY = 1.5
 DT = 0.1
 FOLLOW_BUFFER = 3.0
 SPEED_BUFFER = 0.10
+MINOR_STOP_OFFSET_M = 0.1  # SUMO1.27.1 POSITION_EPS minimum stop-line offset
 
 
 def required_gap(follower_speed: float, leader_speed: float) -> float:
@@ -84,7 +86,7 @@ def acc_response_ceiling(speed: float, limit: float, neighbor) -> float:
     return float(np.clip(response, ACCELERATION_MIN, ACCELERATION_MAX))
 
 
-def teacher_action(observation) -> np.ndarray:
+def _teacher_action_v2(observation) -> np.ndarray:
     """Return normalized acceleration and right/stay/left from declared inputs.
 
     Indices 0:33 preserve the previous graph-local layout. The new merge fields
@@ -162,6 +164,63 @@ def teacher_action(observation) -> np.ndarray:
     return np.array([normalized, lane_delta], dtype=np.float32)
 
 
-def teacher_actions(observations: Mapping[str, np.ndarray]) -> dict[str, np.ndarray]:
+def discrete_stop_speed(distance: float, deceleration: float = 4.5) -> float:
+    """Current-distance Euler stopping-speed estimate, dt/headway0.1 s.
+
+    Port of the algebra in SUMO1.27.1 MSCFModel::maximumSafeStopSpeedEuler;
+    no native API, vehicle state mutation, future trajectory, or fitted labels.
+    The1mm distance subtraction is native NUMERICAL_EPS, not fitted to data.
+    """
+    gap = max(0., float(distance)-1e-3)
+    b, s, t = deceleration*DT, DT, DT
+    n = math.floor(.5-(t-.5*math.sqrt(s*s+4*(s*(2*gap/b-t)+t*t)))/s)
+    h = .5*n*(n-1)*b*s+n*b*t
+    return n*b+(gap-h)/(n*s+t)
+
+
+def longitudinal_target_v3(observation) -> float:
+    """Single actor-visible acceleration target shared by teacher and reward.
+
+    Inputs use the opt-in v3 entry/auxiliary context, not historical v2 context.
+    A zero projected lateral delta with known context describes a minor entry;
+    internal-ramp context is unknown until an actual adjacent lane is available.
+    """
+    obs = np.asarray(observation, dtype=np.float64)
+    baseline = _teacher_action_v2(obs)  # also validates the existing93-field box
+    acceleration = ACCELERATION_MIN+(float(baseline[0])+1)*3.25
+    speed = float(obs[0])*SPEED_CAP
+    limit = min(SPEED_CAP, float(obs[4])*SPEED_CAP)
+    # Missing a <=120m neighbor does not imply no native ACC leader (250m range).
+    acceleration = min(acceleration, .4*(limit-SPEED_BUFFER-speed))
+    if obs[28] > .5 and obs[33] > .5 and abs(obs[35]) < .5:
+        distance = max(0., float(obs[36])*240.)
+        front = _neighbor(obs, 37, speed)
+        rear = _neighbor(obs, 40, speed)
+        # All following/entry gaps keep the existing1.5s/stopping-distance floor.
+        front_safe = front is None or front[0] >= required_gap(speed, front[1])
+        rear_safe = rear is None or rear[0] >= required_gap(rear[1], speed)
+        if distance > 4.5 or not (front_safe and rear_safe):
+            acceleration = min(acceleration, (discrete_stop_speed(distance-MINOR_STOP_OFFSET_M)-speed)/DT)
+    # Taper before a disappearing lane instead of demanding full speed until
+    # the analytical hard bound engages. This is a target, not a looser guard.
+    if obs[28] > .5:
+        end_distance = max(0., float(obs[27])*240.)
+        end_target = math.sqrt(2*2.*max(0., end_distance-MIN_GAP))
+        acceleration = min(acceleration, .8*(end_target-speed))
+    ceiling = float(obs[43])*4.5
+    return float(np.clip(min(acceleration, ceiling-1e-5), ACCELERATION_MIN, ACCELERATION_MAX))
+
+
+def teacher_action(observation, *, version='v2') -> np.ndarray:
+    if version == 'v2':
+        return _teacher_action_v2(observation)
+    if version != 'v3':
+        raise ValueError('Unknown teacher target version')
+    action = _teacher_action_v2(observation)
+    action[0] = (longitudinal_target_v3(observation)-ACCELERATION_MIN)/3.25-1.
+    return action
+
+
+def teacher_actions(observations: Mapping[str, np.ndarray], *, version='v2') -> dict[str, np.ndarray]:
     """Compute simultaneous actions without mutating observations or ID state."""
-    return {agent: teacher_action(observation) for agent, observation in observations.items()}
+    return {agent: teacher_action(observation, version=version) for agent, observation in observations.items()}
