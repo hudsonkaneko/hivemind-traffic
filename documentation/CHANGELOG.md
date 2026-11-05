@@ -917,3 +917,10 @@ Pinned exact Stage 1 v03 phase-0 actor as the lowest-intervention population-tes
 - Matched teacher passing/merge fixtures now have zero overrides with tasks retained and similar speeds. The frozen actor improves from 26% to 11.17% merge overrides but remains unaccepted. Retained both development attempts: 32,400 decisions, no recorded safety events, exact repeat traces and explicit provenance limits.
 - Added separate actor/critic gradient, clipping and fixed-return value diagnostics without changing optimizer behavior. V3 evaluation requires complete native emergency-event accounting; legacy thresholds remain unchanged.
 - 150 CPU tests and the 32.719-second zero-update final preflight passed. Prepared the disabled 100k-decision/30-minute configuration, retained metrics/plots and updated living roadmap v10. Google guide and 42-tab Markdown mirror synchronized and verified. No experiment training or policy promotion. [Configuration and results](population-control-v03.md).
+
+## November 5, 2026: frozen MAPPO physical adapter and calibration
+
+- Added explicit 10 Hz MAPPO → 60 Hz acceleration/lane adapter → 120 Hz PhysX control, with exact 93-field input parity, smooth lane changes, calibrated pedal mapping and stale-command fallback.
+- Preserved the failed full-range brake fit, corrected the ordinary braking domain, and obtained 0.02131 m/s² validation / 0.01634 fresh-confirmation response RMSE. Scripted 6/12/18 m/s acceleration, lane changes and stopping pass.
+- Unchanged best actor cruises and passes, but remains unaccepted: 82.11% cruise and 27.76% passing speed-ceiling interventions. Zero nominal contacts/overlaps/overspeed/fallbacks; zero optimizer steps.
+- 209 CPU tests and six fresh-process USD reopen checks pass. [Results, exact scope, screenshots and both attempts](mappo-physical-adapter-v01.md). Living roadmap updated; guide synchronization recorded in the sync ledger.

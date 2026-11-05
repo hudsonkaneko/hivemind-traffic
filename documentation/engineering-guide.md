@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-v03/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-v03/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-physical-adapter-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-physical-adapter-v01/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4726,3 +4726,21 @@ Final proposed configuration: headless CPU MAPPO, one worker/thread; frozen Stag
 Configuration SHA-256: a0e05bb0e9c3ae303385e4101b0f1fa0ead07c8a5f6352b59f3e49f4970fe543. Future authorized artifacts save under outputs/highway-population/v03/train-&lt;unique-id&gt;, including policy.pt, last.pt, per-update diagnostics and validation. No assistant monitoring is needed while that bounded job runs. The config is ready for review; training has not started.
 
 Report, final configuration, source-backed control explanation and actual plots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-v03/documentation/population-control-v03.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-v03/documentation/population-control-v03.md>)
+
+<a id="docs-h-3r7iqlm1xqzw"></a>
+
+#### November 5, 2026: Frozen MAPPO physical adapter and calibration
+
+Used the Robot Modeling and RL skill with sub-agents to implement a 10 Hz frozen MAPPO acceleration/lane-intent bridge, a 60 Hz physical controller and the existing 120 Hz PhysX Factory surrogate. The exact original 93-field v2 actor contract is preserved. State comes from privileged physical odometry, known map and scripted traffic truth; cameras/LiDAR do not feed this actor. No optimizer steps or new training ran.
+
+The first native attempt preserved a failed calibration: full-brake tire saturation distorted the ordinary linear response fit, producing 0.66694 m/s² validation RMSE against a 0.5 limit. Corrected fitting/inversion uses ordinary brake fractions up to 0.5, with full-brake saturation retained separately. Revised validation RMSE is 0.02131 m/s² versus 1.03254 for provisional gains on those measurements; a new unused 0.4-brake confirmation phase gives 0.01634. This compares response predictions, not separate before/after driving runs.
+
+Scripted physical acceleration, left lane change, return and stopping pass at 6, 12 and 18 m/s (13.4, 26.8 and 40.3 mph). Acceleration RMSE: 0.01170, 0.01486 and 0.02708 m/s²; worst settled lane-center error 0.06473 m. These are bounded straight-road surrogate results, not real-car dynamics or curved/merge qualification.
+
+The unchanged actor reaches its cruise target and passes one 8 m/s scripted car with a learned left-lane request. It remains unaccepted: cruise overrides 312/380 (82.11%), passing overrides 161/580 (27.76%), all speed-ceiling corrections. Cruise median correction is about 0.944 m/s², so this is a substantial raw-policy near-limit error. The final passing clearance of 382.10 m is measured after the full 60-second fixture, not close-following evidence.
+
+The second native run completes 269 simulation seconds with zero rigid contacts, analytic traffic overlaps, overspeed ticks at the 0.3 m/s tolerance, or adapter/driver fallbacks. All six composed scenes reopen from another working directory without dependency/relationship/composition errors. 209 targeted CPU tests pass. Two attempts consume 189.88 process-wall seconds; exact source snapshots, traces, screenshots and rejected results are retained. The passing actor file remains SHA-256 8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8.
+
+Code, final configuration, actual screenshots and compact evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-physical-adapter-v01/documentation/mappo-physical-adapter-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-physical-adapter-v01/documentation/mappo-physical-adapter-v01.md>)
+
+Next: retain the frozen baseline, review the disabled population v03 configuration before any learning, address raw near-limit acceleration and repeat matched physical tests. Sensor estimates, native fault injection, curves, merges, reactive/cooperative physical traffic and 60 mph remain unqualified. No policy promotion, hardware or asset/BOM changes.
