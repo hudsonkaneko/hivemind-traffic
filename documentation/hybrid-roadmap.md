@@ -588,3 +588,10 @@ The [frozen MAPPO adapter](mappo-physical-adapter-v01.md) now translates acceler
 ## November 5, 2026 — v05 learned candidate remains unaccepted
 
 The [v05 pilot](highway-environment-v05-results.md) completed 249,999 active-agent decisions within the original budget, retaining both failures and consumed time. Stable merging improves 2/9→8/9 but intervention dependence worsens 13.37%→19.83%; I-110 remains unmerged. The separately versioned 99-field actor is rejected, not a replacement for accepted historical fixtures. [Living roadmap v15](sensor-driven-training-roadmap.md) now calls for a train-only native-response/entry diagnostic before another reviewed training configuration. No held-out or physical/sensor acceptance is claimed.
+
+
+## November 6, 2026 checkpoint: I-110 entry blockage corrected
+
+The [matched frozen-policy diagnostic](i110-merge-blocking-v01.md) isolates an overbroad junction conflict matrix: the ramp yielded to four non-crossing through lanes. A versioned lane-specific rebuild retains the actual auxiliary-lane yield and unchanged geometry/demand/guards. The same v05 actor now completes a stable merge, with zero focal stopped samples and all eight controlled routes finished. Fleet interventions improve 30.53% to 8.52% but still fail 5%; the original rejected 24-case results remain intact.
+
+The SimReady main-car visual rerun is complete, with full 80-second metrics and actual screenshots retained. No training or physical/sensor qualification occurred. [Living roadmap v16](sensor-driven-training-roadmap.md) prioritizes remaining acceleration-realization differences on training fixtures before a separately reviewed configuration. Google guide and Markdown mirror are synchronized from verified full readback.

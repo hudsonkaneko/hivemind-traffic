@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-environment-v05/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-environment-v05/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-blocking-fix/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-blocking-fix/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4810,3 +4810,23 @@ Versioned policy: [`https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/
 Draft review: [`https://github.com/hudsonkaneko/hivemind-traffic/pull/47`](<https://github.com/hudsonkaneko/hivemind-traffic/pull/47>)
 
 Frozen visual confirmation uses the existing Americano v14 SimReady vehicle as the focal car and lightweight background proxies. Two predeclared cases are shown: the I-110 failure, and an easier synthetic successful merge. Full 80-second SUMO recordings and metrics are retained separately from short videos. The prepared asset keeps its sensor hierarchy, with physics disabled only in the replay layer; this is kinematic presentation, not active camera/LiDAR inference or physical driving validation. Both 251-frame videos decode correctly with exact recorded positions and unchanged authored/source assets. Exported-versus-batched floating summaries can differ at sub-micro precision; reported gate outcomes are unchanged, and the overly strict initial equality audit is preserved.
+
+<a id="docs-h-4td9bukk3m95"></a>
+
+#### I-110 merge blockage correction — November 6, 2026
+
+The blockage was caused by the compiled road network. At the ramp junction, SUMO declared conflicts against all five mainline lanes although only the auxiliary lane shares the ramp’s destination. Native link-plan logs show the waiting car’s predicted crossing window overlapping cars in unrelated parallel lanes. The policy was requesting positive acceleration; this was not evidence that it had learned to park.
+
+The new versioned network enables lane-specific conflict generation and checks that the genuine auxiliary-lane conflict and ramp yield remain. All node, edge and connection source XML is unchanged; compiled lane geometry is unchanged. Only the n2 junction conflict matrices differ. Historical v01 networks, policy weights, demand, seed, safety modes, rewards and observation/action contract remain preserved.
+
+Matched frozen-policy evidence uses validation row 19, seed 6900019, the final v05 actor and the complete 80-second horizon. The ordinary recorder independently confirms the result without the diagnostic follow-speed query: focal stopped samples fall from 752 to zero; native ramp entry starts at 4.2 seconds and reaches the auxiliary lane at 4.4; the requested lateral maneuver completes at 10.1; the eight-second stable-merge window passes at 18.1. All eight controlled trips finish. Total completed trips rise from 30/55 to 32/55, with ongoing inflow still active at the cutoff.
+
+Fleet acceleration-realization interventions fall from 1007/3298 (30.53%) to 244/2864 (8.52%). This still fails the unchanged 5% gate. The focal car has 11/370 interventions (2.97%); agent\_7 accounts for 198 of the remaining 244 fleet differences. These differences are not automatically emergency events or failed merges. Both ordinary recordings report zero collisions, teleports, overspeed samples and native emergency warnings. The original rejected 24-case evaluation is unchanged; this single environment correction does not accept the policy.
+
+Acceleration-command durations of 0.1, 1 and 5 seconds, plus a separate native-longitudinal diagnostic, did not remove the original blockage. All attempts are retained. Source review found that SUMO ACC’s getFollowSpeed diagnostic can mutate internal state; earlier probe evidence carries that caveat. Future probes omit the query, and the ordinary recorder confirms the same corrected metrics independently. Recording now distinguishes native junction entry, auxiliary occupancy, commanded lateral completion and stable through-lane occupancy.
+
+The visual rerun uses the Americano v14 SimReady main car and lightweight backgrounds. Its 251 frames cover 0.1–25.1 simulation seconds, decode successfully, match recorded poses exactly and preserve authored layers and source assets. Before/after screenshots, source hashes, full metrics and failed probes are retained. This is kinematic replay of SUMO motion, not physical or camera/LiDAR policy validation. No training or optimizer updates were performed.
+
+Technical note, screenshots and reproduction commands: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-blocking-fix/documentation/i110-merge-blocking-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-blocking-fix/documentation/i110-merge-blocking-v01.md>)
+
+Next action: diagnose the remaining requested-versus-realized acceleration mismatch on training fixtures, then present a separately reviewed training configuration. Do not train on these validation trajectories or promote the frozen candidate.
