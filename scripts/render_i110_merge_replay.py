@@ -11,6 +11,7 @@ import hashlib
 import importlib.metadata
 import json
 import math
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -19,10 +20,121 @@ import time
 import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_SIMREADY_MAIN = ROOT/'vehicles/sim_ready/americano-i7-ev/v14/assets/vehicle.usda'
 
 
 def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def prepared_main_spec(path):
+    """Resolve the prepared metre/Z-up/+X-forward chassis package contract.
+
+    This is intentionally not an arbitrary USD normalizer. The model metadata
+    describes the same ground-relative chassis frame used by the v02 replay.
+    """
+    entry = Path(path).resolve()
+    if entry.is_dir():
+        entry = entry/'assets/vehicle.usda'
+    package = entry.parent.parent
+    model_path = package/'model.json'
+    if not entry.is_file() or not model_path.is_file():
+        raise ValueError('SimReady main car requires a prepared assets/vehicle.usda and package model.json')
+    model = json.loads(model_path.read_text(encoding='utf-8'))
+    for name in ('body_collision_dimensions_m', 'body_collision_center_m', 'chassis_origin_in_v05_m'):
+        values = model.get(name)
+        if (not isinstance(values, list) or len(values) != 3 or
+                any(isinstance(v, bool) or not isinstance(v, (int, float)) or not math.isfinite(v) for v in values)):
+            raise ValueError('Invalid prepared coordinate metadata: '+name)
+    dimensions = model['body_collision_dimensions_m']
+    if any(value <= 0 for value in dimensions):
+        raise ValueError('Prepared body dimensions must be positive')
+    front = model['body_collision_center_m'][0]+dimensions[0]/2.
+    origin = model['chassis_origin_in_v05_m']
+    centers = model.get('wheel_centers_m', {})
+    if (front <= 0 or abs(origin[0]+front) > 1e-4 or abs(origin[1]) > 1e-6 or origin[2] <= 0 or
+            any(not isinstance(centers.get(name), list) or len(centers[name]) != 3 or
+                any(isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value)
+                    for value in centers[name]) for name in ('FL', 'FR', 'RL', 'RR'))):
+        raise ValueError('Unsupported prepared front-bumper/chassis coordinate contract')
+    if not all(centers[name][0] > 0 for name in ('FL', 'FR')) or not all(centers[name][0] < 0 for name in ('RL', 'RR')):
+        raise ValueError('Prepared car must use +X forward with named front/rear wheels')
+    return dict(source_entry=str(entry), source_package=str(package), model_path=str(model_path),
+        version=model.get('version', 'unspecified'), front_bumper_to_chassis_m=front,
+        source_chassis_height_m=origin[2], body_dimensions_m=dimensions,
+        texture_status=model.get('texture_status', 'unspecified'), license=model.get('license', 'unspecified'),
+        local_only=True, scale_applied=[1., 1., 1.], forward_axis='+X', up_axis='Z', meters_per_unit=1.,
+        pose_reference='SUMO front bumper on road; prepared chassis offset along local -X',
+        sensor_capture=False, physics_control=False)
+
+
+def author_prepared_main(output, source):
+    """Reference immutable prepared assets and disable dynamics in a replay layer."""
+    from pxr import Gf, Sdf, Usd, UsdGeom, UsdPhysics, UsdUtils
+
+    spec = prepared_main_spec(source)
+    package, entry = Path(spec['source_package']), Path(spec['source_entry'])
+    original = Usd.Stage.Open(str(entry))
+    if (not original or original.GetCompositionErrors() or str(original.GetDefaultPrim().GetPath()) != '/Vehicle'
+            or UsdGeom.GetStageUpAxis(original) != 'Z' or UsdGeom.GetStageMetersPerUnit(original) != 1.):
+        raise ValueError('Prepared asset must compose a metre-scale Z-up /Vehicle entry')
+    chassis = original.GetPrimAtPath('/Vehicle/Chassis')
+    if not chassis:
+        raise ValueError('Prepared asset is missing /Vehicle/Chassis')
+    root_transform = UsdGeom.Xformable(original.GetDefaultPrim()).GetLocalTransformation()
+    if root_transform != Gf.Matrix4d(1.):
+        raise ValueError('Prepared /Vehicle root must not introduce an extra transform or scale')
+    expected = Gf.Matrix4d().SetTranslate(Gf.Vec3d(0., 0., spec['source_chassis_height_m']))
+    actual = UsdGeom.Xformable(chassis).GetLocalTransformation()
+    if any(abs(actual[i][j]-expected[i][j]) > 1e-6 for i in range(4) for j in range(4)):
+        raise ValueError('Prepared chassis axes/scale differ from the declared replay frame')
+    layers, assets, missing = UsdUtils.ComputeAllDependencies(Sdf.AssetPath(str(entry)))
+    if missing:
+        raise ValueError('Prepared asset has unresolved dependencies: '+repr(list(missing)))
+    dependencies = {Path(layer.realPath).resolve() for layer in layers if layer.realPath}
+    dependencies.update(Path(asset).resolve() for asset in assets)
+    dependencies.add(Path(spec['model_path']))
+    if any(not path.is_relative_to(package) for path in dependencies):
+        raise ValueError('Prepared dependency escapes its declared package')
+    hashes = {path.relative_to(package).as_posix(): sha256(path) for path in sorted(dependencies)}
+    layer = Usd.Stage.CreateNew(str(output/'prepared-main.usda'))
+    model = UsdGeom.Xform.Define(layer, '/Vehicle')
+    layer.SetDefaultPrim(model.GetPrim())
+    Usd.ModelAPI(model.GetPrim()).SetKind('component')
+    UsdGeom.SetStageMetersPerUnit(layer, 1.)
+    UsdGeom.SetStageUpAxis(layer, 'Z')
+    layer.SetTimeCodesPerSecond(10.)
+    relative = Path(os.path.relpath(entry, output)).as_posix()
+    model.GetPrim().GetReferences().AddReference(relative, '/Vehicle')
+    # Source Chassis already supplies its one-metre ground-relative height.
+    # No SUMO length/width scaling or second vertical offset is applied.
+    model.AddTranslateOp(opSuffix='frontBumper').Set(Gf.Vec3d(-spec['front_bumper_to_chassis_m'], 0., 0.))
+    disabled = []
+    for prim in layer.Traverse():
+        attrs = []
+        if prim.HasAPI(UsdPhysics.RigidBodyAPI):
+            attrs.append(UsdPhysics.RigidBodyAPI(prim).CreateRigidBodyEnabledAttr(False))
+        if prim.HasAPI(UsdPhysics.CollisionAPI):
+            attrs.append(UsdPhysics.CollisionAPI(prim).CreateCollisionEnabledAttr(False))
+        if prim.IsA(UsdPhysics.Joint):
+            attrs.append(UsdPhysics.Joint(prim).CreateJointEnabledAttr(False))
+        vehicle_enabled = prim.GetAttribute('physxVehicle:vehicleEnabled')
+        if vehicle_enabled:
+            vehicle_enabled.Set(False)
+            attrs.append(vehicle_enabled)
+        disabled.extend(str(attr.GetPath()) for attr in attrs)
+    if any(prim.IsA(UsdPhysics.Scene) for prim in layer.Traverse()):
+        raise ValueError('Prepared entry unexpectedly includes a physics scene')
+    spec.update(reference=relative, source_sha256=hashes, disabled_physics_attributes=disabled,
+                camera_prims=[str(prim.GetPath()) for prim in layer.Traverse() if prim.IsA(UsdGeom.Camera)],
+                sensor_mount_prims=[str(prim.GetPath()) for prim in layer.Traverse()
+                                    if prim.GetName().startswith('Lidar') and prim.IsA(UsdGeom.Xform)])
+    layer.GetRootLayer().Save()
+    if layer.GetCompositionErrors() or any(sha256(package/name) != digest for name, digest in hashes.items()):
+        raise RuntimeError('Prepared replay composition or source immutability check failed')
+    spec['source_unchanged'] = True
+    (output/'prepared-main-manifest.json').write_text(json.dumps(spec, indent=2), encoding='utf-8')
+    return spec
 
 
 def vehicle_path(identity):
@@ -111,7 +223,7 @@ def road_quads(lane, offset, width, dashed=False):
     return result
 
 
-def author_scene(output, frames, lanes, focal, controlled, highlighted=None):
+def author_scene(output, frames, lanes, focal, controlled, highlighted=None, *, simready_main=None):
     from pxr import Usd, UsdGeom, UsdLux, Gf
 
     def stage(name, root='/World', kind='assembly'):
@@ -143,6 +255,10 @@ def author_scene(output, frames, lanes, focal, controlled, highlighted=None):
         item.CreateDoubleSidedAttr(True)
         item.CreateDisplayColorAttr([Gf.Vec3f(*color)])
 
+    if simready_main is not None:
+        if not any(vehicle['id'] == focal for frame in frames for vehicle in frame['vehicles']):
+            raise ValueError('Prepared focal vehicle absent from selected frames')
+        author_prepared_main(output, simready_main)
     asset = stage('vehicle.usda', '/Vehicle', 'component')
     cube(asset, '/Vehicle/Body', (-2.3, 0., .62), (4.6, 1.8, .9), (.1, .64, .8))
     cube(asset, '/Vehicle/Cabin', (-2.5, 0., 1.23), (2.45, 1.52, .55), (.14, .19, .23))
@@ -185,10 +301,14 @@ def author_scene(output, frames, lanes, focal, controlled, highlighted=None):
         root.GetPrim().SetCustomDataByKey('motion_authority', 'recorded_SUMO')
         position, heading, visibility = root.AddTranslateOp(), root.AddRotateZOp(), root.CreateVisibilityAttr()
         model = UsdGeom.Xform.Define(motion, path+'/Model')
-        model.GetPrim().GetReferences().AddReference('./vehicle.usda')
-        model.AddScaleOp().Set(Gf.Vec3f(vehicle.get('length', 4.6)/4.6, vehicle.get('width', 1.8)/1.8, 1.))
-        color = (1., .36, .035) if identity in (highlighted or {focal}) else ((.02, .68, .86) if identity in controlled else (.46, .5, .53))
-        UsdGeom.Gprim(motion.OverridePrim(path+'/Model/Body')).CreateDisplayColorAttr([Gf.Vec3f(*color)])
+        prepared = simready_main is not None and identity == focal
+        model.GetPrim().GetReferences().AddReference('./prepared-main.usda' if prepared else './vehicle.usda')
+        if prepared:
+            root.GetPrim().SetCustomDataByKey('presentation_asset', 'prepared_main_unscaled')
+        else:
+            model.AddScaleOp().Set(Gf.Vec3f(vehicle.get('length', 4.6)/4.6, vehicle.get('width', 1.8)/1.8, 1.))
+            color = (1., .36, .035) if identity in (highlighted or {focal}) else ((.02, .68, .86) if identity in controlled else (.46, .5, .53))
+            UsdGeom.Gprim(motion.OverridePrim(path+'/Model/Body')).CreateDisplayColorAttr([Gf.Vec3f(*color)])
         for frame in frames:
             vehicle = next((v for v in frame['vehicles'] if v['id'] == identity), None)
             tc = round((frame['time']-frames[0]['time'])*10., 8)
@@ -224,6 +344,8 @@ def main():
     parser.add_argument('--start-time', type=float)
     parser.add_argument('--end-time', type=float)
     parser.add_argument('--focal-agent', default='agent_2')
+    parser.add_argument('--simready-main', type=Path, nargs='?', const=DEFAULT_SIMREADY_MAIN,
+                        help='Prepared asset entry or package for the focal car; bare option selects local Americano v14')
     parser.add_argument('--highlight-agents', nargs='+', default=['agent_2', 'agent_3'])
     parser.add_argument('--camera-mode', choices=['merge-fixed', 'follow'], default='merge-fixed')
     parser.add_argument('--merge-center', type=float, nargs=2, default=[-10., -280.], metavar=('X', 'Y'))
@@ -252,7 +374,7 @@ def main():
     lanes = read_lanes(output/'network.net.xml')
     controlled = set(data.get('controlled_ids', ['agent_0', 'agent_1', 'agent_2', 'agent_3']))
     report = dict(passed=False, training=False, motion_owner='SUMO recorded frozen-policy inference',
-                  limitation='Kinematic visualization, not PhysX control validation. Road reconstructed from provisional I110 SUMO polylines; markings illustrative.',
+                  limitation='Kinematic visualization, not PhysX control validation or sensor capture. Road reconstructed from recorded SUMO network polylines; markings illustrative.',
                   source_recording=str(recording), source_recording_sha256=sha256(recording/'recording.json'),
                   renderer_source_sha256=sha256(__file__), runtime_python=sys.executable,
                   runtime_python_version=sys.version, runtime_python_sha256=sha256(sys.executable),
@@ -261,6 +383,9 @@ def main():
                   merge_center=args.merge_center, frames=len(frames), start_time=frames[0]['time'],
                   end_time=frames[-1]['time'], fps=args.fps, playback_speed=args.playback_speed,
                   source_pose_interpolation=False, colors={'ramp_controlled':'orange', 'mainline_controlled':'cyan', 'native':'gray'})
+    if args.simready_main is not None:
+        report['prepared_main'] = prepared_main_spec(args.simready_main)
+        report['colors']['prepared_focal'] = 'original prepared materials; no tint or rescaling'
     report['merge_events'] = data.get('merge_events', [])
     report['expected_video_duration_s'] = len(frames)/(args.fps*args.playback_speed)
     report['source_timestamp_span_s'] = frames[-1]['time']-frames[0]['time']
@@ -283,8 +408,12 @@ def main():
             report['runtime_package_versions'] = versions
             version_files = [parent/'VERSION' for parent in Path(sys.executable).parents if (parent/'VERSION').is_file()]
             report['runtime_version_files'] = {str(path):path.read_text(encoding='utf-8').strip() for path in version_files}
-        identities = author_scene(output, frames, lanes, args.focal_agent, controlled, set(args.highlight_agents))
+        identities = author_scene(output, frames, lanes, args.focal_agent, controlled, set(args.highlight_agents),
+                                  simready_main=args.simready_main)
         names = ['world.usda', 'environment.usda', 'motion.usda', 'vehicle.usda', 'render.usda']
+        if args.simready_main is not None:
+            names += ['prepared-main.usda', 'prepared-main-manifest.json']
+            report['prepared_main'] = json.loads((output/'prepared-main-manifest.json').read_text(encoding='utf-8'))
         hashes = {name: sha256(output/name) for name in names}
         report.update(static_layer_sha256=hashes, vehicle_count=len(identities), source_prim_map={v:vehicle_path(v) for v in identities})
         if args.author_only:
@@ -349,6 +478,12 @@ def main():
             timings.append(time.perf_counter()-started)
         for _ in range(5): app.update()
         changed = [name for name, digest in hashes.items() if sha256(output/name) != digest]
+        if args.simready_main is not None:
+            spec = report['prepared_main']
+            source_changes = [name for name, digest in spec['source_sha256'].items()
+                              if sha256(Path(spec['source_package'])/name) != digest]
+            report['prepared_main']['source_unchanged'] = not source_changes
+            changed.extend('prepared source: '+name for name in source_changes)
         if changed or maximum_pose_error > 1e-6:
             raise RuntimeError(f'Replay verification failed: changed={changed}, pose_error={maximum_pose_error}')
         video = output/'i110-merge.mp4'
@@ -380,6 +515,12 @@ def main():
     finally:
         # Isaac fastShutdown may terminate Python inside close(). Persist evidence
         # and finish CPU encoding first; nothing required may follow this call.
+        spec = report.get('prepared_main', {})
+        if 'source_sha256' in spec:
+            spec['source_unchanged'] = all((Path(spec['source_package'])/name).is_file() and
+                sha256(Path(spec['source_package'])/name) == digest for name, digest in spec['source_sha256'].items())
+            if not spec['source_unchanged']:
+                report['passed'] = False
         (output/'render-report.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
         if app is not None: app.close()
 

@@ -1,0 +1,79 @@
+{
+  "schema": "highway_environment_v05_pretraining_evidence_v1",
+  "date_local": "2026-11-05",
+  "timezone": "America/Los_Angeles",
+  "training_started": false,
+  "training_results": "pending",
+  "files": [
+    {
+      "file": "network-bank.json",
+      "form": "unaltered copy",
+      "source": {
+        "path": "outputs/highway-environment/v05/network-bank/bank.json",
+        "sha256": "90aef59a53cf33c7a6ee96007c401881af741c9d18bfd7879e848839f3a1236d",
+        "bytes": 5063
+      }
+    },
+    {
+      "file": "environment-final-summary.json",
+      "form": "unaltered copy",
+      "source": {
+        "path": "outputs/highway-environment/v05/environment-smoke/20261106T021058Z-final-repeat/summary.json",
+        "sha256": "eaff73156f0aae67f2da9a446cdcb111bf93c78f6d1405941b6f78aa0366b9a6",
+        "bytes": 1661
+      }
+    },
+    {
+      "file": "static-demand-summary.json",
+      "form": "derived compact extraction",
+      "source": {
+        "path": "outputs/highway-environment/v05/demand-static-be7db167/summary.json",
+        "sha256": "a1253f94077548a0bc2d64e6b1d2d3f411cd507e0446a6972dc9a73de990d6a5",
+        "bytes": 1177460
+      }
+    },
+    {
+      "file": "occupancy-correction.json",
+      "form": "derived selected metrics; raw full reports and trajectories retained locally"
+    },
+    {
+      "file": "preflight-final.json",
+      "form": "derived compact extraction",
+      "source": {
+        "path": "outputs/highway-environment/v05/preflight-20261106T021925Z-df9e42a7/summary.json",
+        "sha256": "3d04874225c6ca711a35caa9bba80c1ee6765dde418db4d961ce504c2855132a",
+        "bytes": 1340029
+      }
+    },
+    {
+      "file": "preflight-initial-history.json",
+      "form": "derived historical extraction",
+      "source": {
+        "path": "outputs/highway-environment/v05/preflight-20261106T020603Z-9a26d223/summary.json",
+        "sha256": "991e28e807d83e54a39bf9564656eaf605429bebf88bc4f069f70c86e6bca236",
+        "bytes": 1160209
+      }
+    },
+    {
+      "file": "targeted-tests.txt",
+      "form": "unaltered log copy",
+      "source": {
+        "path": "logs/highway-environment-v05-tests-final.log",
+        "sha256": "6e15c7ae27c9374970f3c90b6721b266056e190edaee6f06b50c7193f8cc2d32",
+        "bytes": 1718
+      }
+    },
+    {
+      "file": "preflight-final-before-whitespace.json",
+      "form": "derived historical extraction",
+      "source": {
+        "path": "outputs/highway-environment/v05/preflight-20261106T021619Z-2b8832a1/summary.json",
+        "sha256": "8d58042f5b7cf9829cbdfbfec012355dc99acdc831c6eb537f0dbcc0383a9ee3",
+        "bytes": 1340030
+      }
+    }
+  ],
+  "raw_artifact_root": "outputs/highway-environment/v05/",
+  "exclusions": "No trajectories, datasets, checkpoints, installed runtimes or local configuration copied",
+  "scope": "Static authored demand, native environment preparation and no-learning preflight; learned acceptance remains open"
+}

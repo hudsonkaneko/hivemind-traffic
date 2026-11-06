@@ -941,3 +941,8 @@ Pinned exact Stage 1 v03 phase-0 actor as the lowest-intervention population-tes
 - Seed 6400019 completed both ramp merges (3.0/9.7 seconds) with no collisions, teleports, overspeed or native emergency warnings. Full-run interventions 131/1240 (10.56%) still fail the 5% target; no acceptance or training claim.
 - Saved an 11-second/110-frame MP4 and actual event screenshots; video decode, zero pose error and unchanged authored layers verified. Six CPU/OpenUSD tests pass. Fixed/preserved the first preview's premature Isaac shutdown failure.
 - [Results, provenance, screenshots and replay commands](i110-merge-visual-v01.md); living sensor roadmap and 42-tab Google/Markdown engineering guide updated. Video and bulk trajectories remain local outputs.
+
+
+## November 5, 2026 — continuous-maneuver highway environment v05
+
+Implemented the user-authorized environment revision: native three-second lane changes, measured moving-neighbor corridor context, 99 actor inputs, 24 controlled slots, eight-second stable-merge/full-route metrics, varied ramp/demand generation and a resumable competence curriculum. Preserved the failed 14/81 post-merge teacher corrections and paired 0/81 fix without weakening the 5% gate. 256 targeted tests and a 64.750-second zero-update final preflight pass; I-110 teacher still fails the overall intervention gate at 75/1404 (5.34%), so readiness is not driving acceptance. Prepared frozen recording and the existing SimReady car as the focal replay asset. The bounded 250k-decision/3,600-second pilot is authorized and queued; training results are pending. [Configuration and evidence](highway-environment-v05.md). Guide synchronization is pending the completed milestone.

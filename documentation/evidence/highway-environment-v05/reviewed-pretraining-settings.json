@@ -1,0 +1,197 @@
+{
+  "source": {
+    "path": "experiments/configs/highway_environment_v05.json",
+    "sha256": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f",
+    "bytes": 56995
+  },
+  "stage": "Before training; training results pending",
+  "settings": {
+    "schema": "highway_environment_v05",
+    "model": {
+      "observation_size": 99,
+      "state_size": 2400,
+      "num_agents": 24,
+      "driving_local_size": 51,
+      "driving_message_size": 8,
+      "driving_mask_start": 30,
+      "population_critic": true
+    },
+    "environment": {
+      "horizon": 800,
+      "control_target_version": "v3",
+      "lane_change_duration": 3.0,
+      "stabilization_seconds": 8.0,
+      "native_warmup_seconds": 0.0,
+      "traffic_mode": "sustained"
+    },
+    "population": {
+      "total_vehicles": [
+        8,
+        16,
+        24
+      ],
+      "channels": [
+        {
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        {
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        {
+          "communication": "local",
+          "packet_loss": 0.3
+        }
+      ],
+      "assignment": "Seeded initial cohort; no live controller handoff; six nearest fresh messages",
+      "scope": "1..24 AV fixed initial cohort;100% cases initial-only; later native inflow in mixed cases; actual fraction logged",
+      "training_fractions": [
+        0.125,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ]
+    },
+    "training": {
+      "algorithm": "MAPPO",
+      "device": "cpu",
+      "num_workers": 1,
+      "torch_threads": 1,
+      "seed": 9507,
+      "seed_start": 6800000,
+      "seed_end": 6800999,
+      "max_agent_transitions": 250000,
+      "max_wall_seconds": 3600,
+      "final_evaluation_reserve_seconds": 600,
+      "critic_warmup_transitions": 4096,
+      "tasks": [
+        "cruise",
+        "following",
+        "passing",
+        "merge"
+      ],
+      "counting": "Critic/PPO active decisions and interrupted reservations share250k; initial/final evaluations share3600s",
+      "schedule": "Resumable competence grades; retained all-task mixture; max20% fresh failed-training retries"
+    },
+    "optimizer": {
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "clip": 0.2,
+      "value_clip": 0.2,
+      "entropy_coef": 0.001,
+      "value_coef": 0.5,
+      "max_grad_norm": 0.5,
+      "epochs": 4,
+      "minibatch_size": 256,
+      "target_kl": 0.02,
+      "imitation_coef": 0.04,
+      "imitation_lane_change_weight": 10.0,
+      "gradient_diagnostics": true,
+      "imitation_acceleration_weight": 1.0,
+      "near_limit_coef": 0.1,
+      "near_limit_band_m_s": 1.0
+    },
+    "initial_checkpoint": {
+      "path": "outputs/highway-stage1/v03/train-20261103T230506Z-04ba1761/selected-00036-d97376b9/best.pt",
+      "sha256": "b77f55ae7262178ce0fa15729fe844e18693cd168905eea8b1bbd579c6913ab1",
+      "actor_sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8"
+    },
+    "reward_version": "highway_environment_v05_stable_merge",
+    "reward_weights": {
+      "progress": 1.0,
+      "merge": 5.0,
+      "passing": 2.0,
+      "arrival": 2.0,
+      "collision": 20.0,
+      "intervention": 0.2,
+      "jerk": 0.01,
+      "lane_change": 0.1,
+      "feasible_acceleration": 0.25,
+      "unsafe_request": 0.5,
+      "cooperation": 0.1
+    },
+    "reward_extensions": {
+      "stable_merge_bonus": 2.0,
+      "unnecessary_reversal_penalty": 0.5,
+      "note": "One-shot stable bonus; evidence-backed unnecessary reversal only; legacy entryevent remains distinct"
+    },
+    "curriculum": {
+      "recent_reports": 32,
+      "minimum_reports_per_task": 2,
+      "grade_success_fraction": 0.9,
+      "maximum_intervention_fraction": 0.05,
+      "cruise_speed_ratio_min": 0.9,
+      "following_speed_ratio_min": 0.25,
+      "stable_merge_fraction_min": 0.9,
+      "failed_training_resample_fraction": 0.2,
+      "failed_case_capacity": 128,
+      "task_weights": [
+        {
+          "cruise": 4,
+          "following": 4,
+          "passing": 1,
+          "merge": 1
+        },
+        {
+          "cruise": 3,
+          "following": 3,
+          "passing": 3,
+          "merge": 2
+        },
+        {
+          "cruise": 2,
+          "following": 2,
+          "passing": 3,
+          "merge": 5
+        }
+      ]
+    },
+    "contract": {
+      "actor_observation_size": 99,
+      "critic_state_size": 2400,
+      "max_agents": 24,
+      "message_slots": 6,
+      "message_range_m": 150,
+      "message_delay_s": 0.1,
+      "message_expiry_s": 0.5,
+      "speed_ceiling_m_s": 26.8224,
+      "following_headway_s": 1.5,
+      "actions": "acceleration [-4.5,2] m/s2 and masked lane delta -1/0/+1",
+      "sensing": "exact SUMO/map local fields plus actually delivered V2V; not camera/LiDAR",
+      "motion": "Native SUMO3-second lane changes; observable committed target; no pose interpolation; no learned steering",
+      "observation_semantics": "highway_environment_v05_actor_99",
+      "warm_start_compatibility": "Explicit insertion of six zero-weight motion inputs before messages; fresh24-slot critic; v3semantic transfer",
+      "minor_entry_calibration": {
+        "sumo_version": "1.27.1",
+        "visibility_m": 4.5,
+        "minimum_stop_offset_m": 0.1,
+        "numerical_distance_margin_m": 0.001,
+        "supported_scope": "Generated priority-entry roads; other visibility or larger stop offsets rejected by v3 map checks"
+      },
+      "objective": "Existing v3 teacher/reward target; extra0.1*conditional mean squared raw deterministic acceleration error in(m/s\u00b2)^2 for speed>=allowed_limit-1m/s. No inference clipping/remapping.",
+      "neighboring_lane_context": "Measured lateral position/velocity projects an entering vehicle into the affected lane corridor; source occupancy persists until clear. Actor, teacher, reward target and guard share this observed context; no future intentions.",
+      "post_merge": "8s complete window after lateralcompletion;1.5s headway,3s TTC,<=5% interventions,>=25% allowed-distance progress",
+      "motion_fields": [
+        "native_lateral_position_over_lane_width",
+        "native_lateral_speed_over_3",
+        "committed_lane_direction",
+        "maneuver_in_progress",
+        "maneuver_remaining_distance_fraction",
+        "time_since_completion_over_5"
+      ]
+    },
+    "network_bank": {
+      "path": "outputs/highway-environment/v05/network-bank/bank.json",
+      "sha256": "90aef59a53cf33c7a6ee96007c401881af741c9d18bfd7879e848839f3a1236d",
+      "scope": "New120/240m upstream train ramps,180m validation ramps; existing2..5lane andI110bankretained"
+    }
+  },
+  "training_case_count": 36,
+  "validation_case_count": 24,
+  "validation_seed_range": [
+    6900000,
+    6900023
+  ]
+}

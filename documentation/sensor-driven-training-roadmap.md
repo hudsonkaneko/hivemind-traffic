@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v13**, updated **November 5, 2026, America/Los_Angeles**.
-Status: **Stage 1 remains unaccepted; population v04 near-limit correction prepared and preflight-verified, training disabled**.
+Revision **v14**, updated **November 5, 2026, America/Los_Angeles**.
+Status: **Stage 1 remains unaccepted; continuous-maneuver environment v05 implemented, source-matched readiness passed; user-authorized bounded pilot queued**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,11 +14,11 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** review the [final population v04 configuration](population-near-limit-v04.md#final-configuration-for-review) before authorizing learning. The frozen phase-0 actor still needs speed-ceiling corrections on 82.11% of physical cruise decisions and 27.76% of passing decisions. V04 adds a localized raw-acceleration loss and explicit 12/18 m/s training coverage, retaining shared v3 targets and all guards. 171 tests, 296 derivative directions and a 27.657-second zero-update SUMO preflight pass. One background emergency in the teacher I-110 fixture remains recorded; setup readiness is not driving acceptance. After any authorized pilot, compare all 24 matched cases and raw-action diagnostics before repeating physical validation.
+**Next action:** with the source-matched [environment v05 readiness checks](highway-environment-v05.md) passed and resolved configuration presented, run the user-authorized pilot capped at 250,000 active-agent transitions and 3,600 seconds including evaluation. The revised environment adds native continuous lane changes, measured neighboring-lane occupancy, an eight-second stable-merge gate, varied traffic/ramp demand, 24 controlled slots and competence-based task mixtures. Compare all 24 fixed initial/final validation cases; retain failures and unchanged acceptance rules. No held-out qualification or sensor-driven/physical capability is implied.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
-| 1. Learn driving with structured observations | Population v04 near-limit setup verified, training disabled; frozen actor still fails intervention gates; prior v02 remains rejected | Per-task driving gates with low intervention, complete native safety accounting and a frozen held-out evaluation |
+| 1. Learn driving with structured observations | Environment v05 implemented; user-authorized bounded pilot pending final readiness. Prior actors remain unaccepted | Per-task driving gates with low intervention, complete native safety accounting and a frozen held-out evaluation |
 | 2. Learn with imperfect observations | Planned; existing message delay is only part of the problem | Paired clean/noisy results, leakage audit and reliable stale/missing-data behavior |
 | 3. Replace ideal fields with sensor estimates | Frozen segmentation/fusion previews and dataset/trainer preparation exist; policy integration open | Perception/tracking accuracy and latency, then physical closed-loop validation |
 
@@ -415,3 +415,10 @@ Three sub-agents implemented/reviewed the localized SI acceleration objective, s
 Selected final Stage 1 v03 by its lowest intervention rate across the three retained matched merge cases (6/6 completed, 3.3194% pooled). This merge-specific choice does not replace the phase-0 overall population reference. One predeclared I-110 test, seed 6400019 with original v2 semantics, completed both merges at 3.0/9.7 seconds and all four controlled trips. Full 80-second accounting records no collisions, teleports, overspeed steps or native emergency warnings. However, 131/1240 active-agent decisions (10.56%) had native realization interventions, above the unchanged 5% target.
 
 [The visual test](i110-merge-visual-v01.md) retains an 11-second Isaac-rendered replay, four screenshots, the complete metrics and provenance. All 110 frames decoded, recorded positions matched exactly and authored USD layers remained unchanged; six geometry/composition tests passed. The failed initial preview export is preserved. This is reconstructed provisional SUMO road geometry and recorded kinematic motion, not a physical merge or sensor-driven validation. No training, actor edits or acceptance promotion occurred. The next action remains review of population v04's disabled final configuration before separately authorized learning. Google guide and generated Markdown mirror were synchronized with verified full native readback.
+
+
+### v14 — November 5: continuous-maneuver environment v05
+
+User authorized implementation and training. Three agents implemented native three-second lane changes, 99 actor fields/24 critic slots, varied demand and ramp lengths, stable-merge/full-route metrics, and a resumable competence curriculum. A teacher fixture exposed 14/81 post-merge acceleration corrections because neighboring lateral motion was missing from lane context. Projecting measured motion into the affected corridor reduced that same fixture to 0/81 without weakening the gate; both attempts are preserved. The 1.5-second headway, 3-second TTC, speed limits and guards remain.
+
+256 targeted CPU tests pass. Final source-matched SUMO preflight passed in 64.750 seconds with zero optimizer steps and unchanged sources/weights; no training has started at this documentation checkpoint. I-110 teacher completes a stable merge but retains 75/1404 (5.34%) interventions, above the unchanged 5% gate. Prepared a frozen recorder and SimReady main-car replay option, keeping background proxies lightweight. See [configuration, evidence and limits](highway-environment-v05.md). Google engineering-guide synchronization is pending the completed milestone, not claimed current.
