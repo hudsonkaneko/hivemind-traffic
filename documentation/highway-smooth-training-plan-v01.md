@@ -134,10 +134,12 @@ choices are proposals to test, not validated capabilities:
 1. Use the existing 99 fields: measured speed/acceleration, legal limit, current
    own/projected-front and rear gaps, route/entry distance, masks and delivered
    messages. Keep the current 4.5 m minor-entry visibility and 0.1 m stop offset.
-2. Separate the **mandatory feasible acceleration ceiling** (existing hard
-   analytical guard plus the pinned current-state native ACC/minor-entry
-   response equations) from a **soft desired speed**. A conservative desired
-   speed is not automatically evidence that every greater request is unsafe.
+2. Separate the unchanged **hard safety guard**, an **observation-based native
+   response estimate**, and a **soft desired speed**. For reference labels use
+   `a_ceiling=min(a_hard,a_native_estimate)`. Ordinary ACC response is not proof
+   that a greater request is unsafe. The native estimate can miss ACC mode
+   history, farther leaders or junction interactions outside the 99 fields;
+   it is not an exact feasibility guarantee. SUMO retains final authority.
 3. For a known minor entry at distance `d`, look ahead in the existing stop
    envelope using `d_look=max(d-2.0*v,d_floor)`. Set `d_floor=4.5 m` only when
    current projected front/rear gaps meet the unchanged safety requirements;
@@ -149,9 +151,14 @@ choices are proposals to test, not validated capabilities:
    reference. Use `a_des=clip(0.4*(v_soft-v),-4.5,2)`.
 5. Recover smoothly from **measured** acceleration:
    `a_ramp=clip(a_des,a_measured-2.0*dt,a_measured+2.0*dt)`, then
-   `a_ref=clip(min(a_ramp,a_mandatory),-4.5,2)`. The nominal 2 m/s³ reference
+   `a_ref=clip(min(a_ramp,a_ceiling),-4.5,2)`. The nominal 2 m/s³ reference
    slew is soft. A stricter mandatory braking ceiling overrides it immediately.
    Log that event; never suppress its jerk or safety accounting.
+
+The 4.5 m preview floor can hold an entry-speed reference near 6 m/s well before
+the join. That could cause unnecessary slowdown or still encounter an abrupt
+native response. The drawdown, travel-time and peak-jerk gates below must reject
+such behavior. A 2 m/s� reference slew does not guarantee native realized jerk.
 
 The new reference changes reward/teacher labels, not the deployed actor's ABI
 or its action application. The old-objective arm retains the old v3 labels;

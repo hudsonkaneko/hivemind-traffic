@@ -115,11 +115,16 @@
     "soft_speed": "min(existing legal-speed-buffer, current following/target-lane reference, ending-lane taper, active preview-entry speed)",
     "desired_acceleration": "clip(0.4*(soft_speed-current_speed),-4.5,2.0)",
     "ramped_acceleration": "clip(desired_acceleration,measured_acceleration-2.0*0.1,measured_acceleration+2.0*0.1)",
-    "mandatory_ceiling": "Separately evaluated unchanged hard guard plus pinned current-state native ACC/minor-entry feasibility equations; never smooth this ceiling",
-    "reference_acceleration": "clip(min(ramped_acceleration,mandatory_ceiling),-4.5,2.0)",
+    "reference_acceleration": "clip(min(ramped_acceleration,reference_ceiling),-4.5,2.0)",
     "braking_priority": "Mandatory braking overrides the nominal reference slew immediately; retain all jerk/safety measurements",
     "deployed_policy_effect": "Supervisory/reward reference only, no added inference limiter or forced maneuver",
-    "validation_status": "Proposed numerical design, not validated"
+    "validation_status": "Proposed numerical design, not validated",
+    "reference_ceiling": "min(unchanged hard safety guard, observation-based native ACC/minor-entry response estimate); estimates are not exact feasibility or unsafe-request classifications",
+    "limitations": [
+      "SUMO remains authoritative: 99 fields do not expose all native ACC mode history, farther leaders or junction interactions.",
+      "The 4.5 m preview floor can hold an approximately 6 m/s entry target too early; reject unnecessary slowdown through predeclared drawdown/travel gates.",
+      "Nominal reference slew does not guarantee native realized jerk; preserve and test all actual measurements."
+    ]
   },
   "optimizer_common": {
     "actor_lr": 0.0001,
@@ -164,15 +169,43 @@
     "seed_end": 7000999,
     "schedule_seed": 9507,
     "construction": "One predeclared deterministic train-only stratified sequence shared by both arms; persist exact rows and index before collection",
-    "task_ppo_decision_shares": {"cruise": 0.2, "following": 0.3, "passing": 0.2, "merge": 0.3},
-    "difficulty_ppo_decision_shares": {"0": 0.4, "1": 0.3, "2": 0.3},
+    "task_ppo_decision_shares": {
+      "cruise": 0.2,
+      "following": 0.3,
+      "passing": 0.2,
+      "merge": 0.3
+    },
+    "difficulty_ppo_decision_shares": {
+      "0": 0.4,
+      "1": 0.3,
+      "2": 0.3
+    },
     "dense_following_minimum_ppo_share": 0.2,
     "dense_following_definition": "Difficulty 2, total 24; counted within following and difficulty-2 shares",
     "mastery_grade": "Measured separately; exposure difficulty does not assert a mastery gate passed",
-    "total_populations": [8, 16, 24],
-    "controlled_fractions": [0.125, 0.25, 0.5, 0.75, 1.0],
-    "speed_ceilings_m_s": [12.0, 18.0, 22.352, 26.8224],
-    "channels": ["none", "local", "local_30_percent_loss"],
+    "total_populations": [
+      8,
+      16,
+      24
+    ],
+    "controlled_fractions": [
+      0.125,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "speed_ceilings_m_s": [
+      12.0,
+      18.0,
+      22.352,
+      26.8224
+    ],
+    "channels": [
+      "none",
+      "local",
+      "local_30_percent_loss"
+    ],
     "full_av_rule": "Initial traffic only, excluding following/passing scripted-leader tasks",
     "other_traffic_mode": "sustained",
     "failed_case_resampling_fraction": 0.0,
@@ -224,9 +257,24 @@
     "cruise_speed_ratio_min": 0.9,
     "passes_per_passing_case_min": 1,
     "stable_merge_fraction_per_merge_case_min": 0.9,
-    "stable_window": {"seconds": 8.0, "headway_s_min": 1.5, "ttc_s_min": 3.0, "intervention_fraction_max": 0.05, "progress_ratio_min": 0.25},
+    "stable_window": {
+      "seconds": 8.0,
+      "headway_s_min": 1.5,
+      "ttc_s_min": 3.0,
+      "intervention_fraction_max": 0.05,
+      "progress_ratio_min": 0.25
+    },
     "all_warnings_and_stops": "Audit every native warning line and all-car consecutive speed<0.1 m/s stops lasting at least 2 seconds",
-    "smoothness_metrics": ["requested_filtered_realized_jerk_mean_rms_p95_peak", "acceleration_total_variation", "reference_error", "feasible_next_speed_error", "speed_utilization", "route_progress_completion", "stopped_time", "merge_phase_maximum_speed_drawdown"],
+    "smoothness_metrics": [
+      "requested_filtered_realized_jerk_mean_rms_p95_peak",
+      "acceleration_total_variation",
+      "reference_error",
+      "feasible_next_speed_error",
+      "speed_utilization",
+      "route_progress_completion",
+      "stopped_time",
+      "merge_phase_maximum_speed_drawdown"
+    ],
     "speed_tracking_reference": "clip(speed_before+0.1*resolved_acceleration_reference,0,legal_limit); diagnostic only",
     "merge_slowdown_definition": "Maximum speed peak-to-later-trough loss in fixed first-junction-entry-minus-5s through settled-through-completion-plus-8s window; report ratio to preceding peak, timestamps, phase, limits and coverage",
     "incomplete_merge_windows": "Pending/incomplete, never zero slowdown or successful merge inferred from truncation",
