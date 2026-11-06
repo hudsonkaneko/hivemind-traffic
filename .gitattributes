@@ -57,3 +57,7 @@ documentation/engineering-guide.sync.json text eol=lf
 # Frozen preparation evidence includes literal logs/patches; preserve bytes and hashes.
 documentation/evidence/highway-smooth-preparation-v01/** -text -whitespace
 documentation/evidence/highway-training-rethink-v01/** -text -whitespace
+documentation/evidence/highway-flow-preparation-v01/** -text -whitespace
+# Flow preparation manifests identify exact checked-out runtime bytes.
+*highway_flow*.py text eol=lf
+configs/training/highway-flow-v01.json text eol=crlf

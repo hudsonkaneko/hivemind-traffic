@@ -1,0 +1,2984 @@
+{
+  "schema": "highway_flow_compatible_cached_evidence_v1",
+  "training": false,
+  "optimizer_steps": 0,
+  "evidence_class": "Compatible cached evidence from two bank-builder versions; NOT exact single-version native capture",
+  "selection_rule": "Fixed first18 rows \u00d73 controllers frommatrix02; last9 \u00d73 frommatrix03; only declared final I110/frozen aggregate-deadline failure may use exact-input repair; no outcome-dependent selection",
+  "expected_recordings": 81,
+  "reused_recordings": 54,
+  "new_recordings": 27,
+  "new_from_matrix03": 26,
+  "deadline_repair_recordings": 1,
+  "allocation_complete": true,
+  "source_compatibility": {
+    "identical_runtime_sources": {
+      "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+      "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+      "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+      "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+      "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+      "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+      "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+      "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+      "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+      "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+      "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+      "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+      "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+      "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+      "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+      "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+      "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+      "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+      "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+      "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+      "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+      "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+      "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+      "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+      "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+      "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+      "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+      "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+      "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+      "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+      "experiments/run_highway_flow.py": "06dfbb9d3c1e5002ff9c8845c599a93476717345a367ef9d413e90de4b3d5c94",
+      "policies/highway_flow.py": "c30bb7ea38df192a70427a0da6f31e62665beb8570cec2e1c3eb6c3da91e0083",
+      "traffic/highway_flow_contract.py": "8b99bf044533f603d5b18f93a32caad7828819d95da105ad587fc2ef49065965",
+      "traffic/highway_flow_schedule.py": "b5c5b04f804a88345650f848fb8e5ead009b7803a36bba2bb383dfe4934ec6bf",
+      "traffic/highway_flow_context.py": "a0bf261cc6b632e1382843f328c749e0b52506544d11ce6161186132b1e7f339",
+      "traffic/highway_flow_reference.py": "2b47951afd23806f435dd88febb0173364f8f120c4b191fd500f289ea1668319",
+      "environments/highway_flow_env.py": "6ee87ded7e1aae9097a2e93e041f0bec87827509d55f4e0679f94b64ff4f5cbb",
+      "traffic/highway_smooth_contract.py": "bbe158f7ba3928a948aa2822a16978d92fbacd0399ae7bc340dc40c434e45b77",
+      "traffic/highway_smooth_schedule.py": "6e6cd00cb79e1807f6acf7097e4b640803382c9a78186707279864c986d382ae",
+      "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98",
+      "scripts/prepare_highway_flow.py": "b5cea1f16ef585418dc84ec0d72a3f6ec4e1dcb93ea373312f413e98714e932c",
+      "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+      "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+      "scripts/check_highway_flow_gradients.py": "70c948b8f4603652b1f7754b34169d1fbe48791baee98604bd63f80e3bc02731"
+    },
+    "declared_only_allowed_difference": "scripts/build_highway_flow_bank.py",
+    "explicit_exception": true,
+    "builder_sha256": {
+      "cached": "971d7681a27658be4101814920aa60788050fac6756c21606ced4bc7000f86ec",
+      "fresh": "639b16b06cb45987978cc3a3ee5df471740282b7b3895755ec882a1e007e00bc"
+    },
+    "changed_sources": [
+      "scripts/build_highway_flow_bank.py"
+    ]
+  },
+  "controller_table": [
+    {
+      "controller": "native",
+      "recordings": 27,
+      "passed": 13,
+      "integrity_failed": 0,
+      "worst_intervention_fraction": 0.0,
+      "uncensored_worst_controlled_peak_jerk_m_s3": 65.00000000000136
+    },
+    {
+      "controller": "reference",
+      "recordings": 27,
+      "passed": 17,
+      "integrity_failed": 0,
+      "worst_intervention_fraction": 0.0017211703958691911,
+      "uncensored_worst_controlled_peak_jerk_m_s3": 44.99999828636625
+    },
+    {
+      "controller": "v05_final",
+      "recordings": 27,
+      "passed": 3,
+      "integrity_failed": 3,
+      "worst_intervention_fraction": 0.7132564841498559,
+      "uncensored_worst_controlled_peak_jerk_m_s3": 59.95525598525999
+    }
+  ],
+  "paired_reference_fleet_gates": [
+    {
+      "row_id": "empty-ramp-6810101",
+      "seed": 6810101,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "empty-ramp-6810102",
+      "seed": 6810102,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "empty-ramp-6810103",
+      "seed": 6810103,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "target-leader-6810101",
+      "seed": 6810101,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": false,
+      "passed": false
+    },
+    {
+      "row_id": "target-leader-6810102",
+      "seed": 6810102,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": false,
+      "passed": false
+    },
+    {
+      "row_id": "target-leader-6810103",
+      "seed": 6810103,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": false,
+      "passed": false
+    },
+    {
+      "row_id": "rear-6810101",
+      "seed": 6810101,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "rear-6810102",
+      "seed": 6810102,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "rear-6810103",
+      "seed": 6810103,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "cutin-6810101",
+      "seed": 6810101,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "cutin-6810102",
+      "seed": 6810102,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "cutin-6810103",
+      "seed": 6810103,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "farther-slow-leader-6810101",
+      "seed": 6810101,
+      "comparison_complete": false,
+      "no_completed_trip_deficit": false,
+      "mean_boundary_regression_at_most_two_percent": false,
+      "passed": false
+    },
+    {
+      "row_id": "farther-slow-leader-6810102",
+      "seed": 6810102,
+      "comparison_complete": false,
+      "no_completed_trip_deficit": false,
+      "mean_boundary_regression_at_most_two_percent": false,
+      "passed": false
+    },
+    {
+      "row_id": "farther-slow-leader-6810103",
+      "seed": 6810103,
+      "comparison_complete": false,
+      "no_completed_trip_deficit": false,
+      "mean_boundary_regression_at_most_two_percent": false,
+      "passed": false
+    },
+    {
+      "row_id": "ending-lane-temptation-6810101",
+      "seed": 6810101,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "ending-lane-temptation-6810102",
+      "seed": 6810102,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "ending-lane-temptation-6810103",
+      "seed": 6810103,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "dense-blocked-6810101",
+      "seed": 6810101,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "dense-blocked-6810102",
+      "seed": 6810102,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "dense-blocked-6810103",
+      "seed": 6810103,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "legacy-cruise",
+      "seed": 6800020,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "legacy-following",
+      "seed": 6800021,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "legacy-passing",
+      "seed": 6800022,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "legacy-merge",
+      "seed": 6800023,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "legacy-dense-following",
+      "seed": 6800024,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    },
+    {
+      "row_id": "legacy-i110-merge",
+      "seed": 6800019,
+      "comparison_complete": true,
+      "no_completed_trip_deficit": true,
+      "mean_boundary_regression_at_most_two_percent": true,
+      "passed": true
+    }
+  ],
+  "reference_candidate_qualified": false,
+  "preparation_costs": {
+    "all_attempts": [
+      {
+        "output": "outputs/highway-flow/v01/bank",
+        "status": "complete",
+        "charged_wall_seconds": 1.0518364,
+        "reserved_wall_seconds": 1.0518364
+      },
+      {
+        "output": "outputs/highway-flow/v01/smoke-01",
+        "status": "failed",
+        "charged_wall_seconds": 1.264999999984866,
+        "reserved_wall_seconds": 90.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/smoke-02",
+        "status": "failed",
+        "charged_wall_seconds": 5.125,
+        "reserved_wall_seconds": 90.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/bank-v02",
+        "status": "complete",
+        "charged_wall_seconds": 0.7619418,
+        "reserved_wall_seconds": 0.7619418
+      },
+      {
+        "output": "outputs/highway-flow/v01/smoke-03",
+        "status": "complete",
+        "charged_wall_seconds": 6.76600000000326,
+        "reserved_wall_seconds": 90.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/matrix-01",
+        "status": "failed",
+        "charged_wall_seconds": 47.312000000005355,
+        "reserved_wall_seconds": 650.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/bank-v03",
+        "status": "complete",
+        "charged_wall_seconds": 1.7493798,
+        "reserved_wall_seconds": 1.7493798
+      },
+      {
+        "output": "outputs/highway-flow/v01/matrix-02",
+        "status": "failed",
+        "charged_wall_seconds": 153.98499999998603,
+        "reserved_wall_seconds": 650.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/bank-v04",
+        "status": "complete",
+        "charged_wall_seconds": 0.8813929,
+        "reserved_wall_seconds": 0.8813929
+      },
+      {
+        "output": "outputs/highway-flow/v01/smoke-04",
+        "status": "complete",
+        "charged_wall_seconds": 18.312000000005355,
+        "reserved_wall_seconds": 60.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/matrix-03",
+        "status": "failed",
+        "charged_wall_seconds": 500.43799999999464,
+        "reserved_wall_seconds": 500.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/matrix-04-repair",
+        "status": "complete",
+        "charged_wall_seconds": 18.312000000005355,
+        "reserved_wall_seconds": 50.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/renders-01/agent_0-left",
+        "status": "complete",
+        "charged_wall_seconds": 39.85899999999674,
+        "reserved_wall_seconds": 180.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/renders-01/agent_0-right",
+        "status": "complete",
+        "charged_wall_seconds": 38.905999999988126,
+        "reserved_wall_seconds": 180.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/renders-01/agent_4-left",
+        "status": "complete",
+        "charged_wall_seconds": 38.610000000015134,
+        "reserved_wall_seconds": 180.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/renders-01/agent_4-right",
+        "status": "complete",
+        "charged_wall_seconds": 38.687999999994645,
+        "reserved_wall_seconds": 180.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/gradient-01",
+        "status": "complete",
+        "charged_wall_seconds": 19.421999999991385,
+        "reserved_wall_seconds": 90.0
+      },
+      {
+        "output": "outputs/highway-flow/v01/native-api-01",
+        "status": "complete",
+        "charged_wall_seconds": 4.812999999994645,
+        "reserved_wall_seconds": 60
+      },
+      {
+        "output": "outputs/highway-flow/v01/visual-comparison-01",
+        "status": "complete",
+        "charged_wall_seconds": 41.928441500005356,
+        "reserved_wall_seconds": 41.928441500005356
+      }
+    ],
+    "total_charged_wall_seconds": 978.1859923999708,
+    "approved_wall_seconds": 1800.0,
+    "within_approved_budget": true,
+    "historical_failures": [
+      {
+        "cost": {
+          "output": "outputs/highway-flow/v01/smoke-01",
+          "status": "failed",
+          "charged_wall_seconds": 1.264999999984866,
+          "reserved_wall_seconds": 90.0
+        },
+        "failure_files": [
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/failure.json",
+            "sha256": "5d0075581f3cb450c5fa7cda5749c23d25dbef94911ca2cba507f7fee25724e4",
+            "bytes": 1885
+          }
+        ],
+        "failed_recording_files": [
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/evaluation.json",
+            "sha256": "aece5657112233092842c773cc59511a019412dd726cc6dbce0f28b876c5b84d",
+            "bytes": 272892
+          },
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/failure.json",
+            "sha256": "5d0075581f3cb450c5fa7cda5749c23d25dbef94911ca2cba507f7fee25724e4",
+            "bytes": 1885
+          },
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/manifest.json",
+            "sha256": "a4cca5055bdbb25bc08cb919ff1e6427e6fa6310e337a9698df70be9facc0142",
+            "bytes": 10028
+          },
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/network.net.xml",
+            "sha256": "8058e774b31e0879ba81ec0e940ec4c5cbd4e042a5a9483aab08f9945a8b5e82",
+            "bytes": 9725
+          },
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/recording-check.json",
+            "sha256": "ae8b6e79f7750efa184b3e1b0ecbf7f488215598bb477a066593dfaff466f6d8",
+            "bytes": 2323
+          },
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/recording.json",
+            "sha256": "ad8303411794fb8555ab2e215996ce1c141995164b109de429339bc62d1d03e4",
+            "bytes": 488967
+          },
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/simulation/episode-6810101-ebca72ea/actions.jsonl.gz",
+            "sha256": "4c96eeeca7005af2e7ff115f1ff6c46c08622d054bbab64333f851f255927bde",
+            "bytes": 14126
+          },
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/simulation/episode-6810101-ebca72ea/lanechanges.xml",
+            "sha256": "6b3fea628c4a51147ffef15a7b24943b515e74700c540e3704cc479d1bdb15b0",
+            "bytes": 1803
+          },
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/simulation/episode-6810101-ebca72ea/network.net.xml",
+            "sha256": "8058e774b31e0879ba81ec0e940ec4c5cbd4e042a5a9483aab08f9945a8b5e82",
+            "bytes": 9725
+          },
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/simulation/episode-6810101-ebca72ea/routes.rou.xml",
+            "sha256": "b418fe713634e7e22c130b44744a3faf7186aba3d130e0da33bfe32e559d6c20",
+            "bytes": 3444
+          },
+          {
+            "path": "outputs/highway-flow/v01/smoke-01/empty-ramp-6810101-s6810101/native/simulation/episode-6810101-ebca72ea/sumo-errors.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        ],
+        "summary_file": {
+          "path": "outputs/highway-flow/v01/smoke-01/summary.json",
+          "sha256": "5a32b9ec0f33583970739ba6c98368db7511b9fadffcdbf8dc907223ae036cd0",
+          "bytes": 2805
+        }
+      },
+      {
+        "cost": {
+          "output": "outputs/highway-flow/v01/smoke-02",
+          "status": "failed",
+          "charged_wall_seconds": 5.125,
+          "reserved_wall_seconds": 90.0
+        },
+        "failure_files": [],
+        "failed_recording_files": [],
+        "summary_file": {
+          "path": "outputs/highway-flow/v01/smoke-02/summary.json",
+          "sha256": "98737882568a736777876f292b7e3eb036bc1ee6d03b6c9c0e33eeebeacd2e17",
+          "bytes": 1506
+        }
+      },
+      {
+        "cost": {
+          "output": "outputs/highway-flow/v01/matrix-01",
+          "status": "failed",
+          "charged_wall_seconds": 47.312000000005355,
+          "reserved_wall_seconds": 650.0
+        },
+        "failure_files": [
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/failure.json",
+            "sha256": "59f37c03245936cf521a576be0df509005987ea325c5cbb09294a511127a4cae",
+            "bytes": 1677
+          }
+        ],
+        "failed_recording_files": [
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/evaluation.json",
+            "sha256": "19ed19932c7eb8359663fe923d6e78ce896c6dc7bd32cb10c085871e289e0b24",
+            "bytes": 795
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/failure.json",
+            "sha256": "59f37c03245936cf521a576be0df509005987ea325c5cbb09294a511127a4cae",
+            "bytes": 1677
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/manifest.json",
+            "sha256": "24bcc93e1adb99ea696e455ec1d54c4196e2f17fe9d201e5d669e2d99a254cca",
+            "bytes": 10468
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/network.net.xml",
+            "sha256": "66df44ad45b14d2126a103959417ae2f6d4f7274c203386badcfb4380708e27e",
+            "bytes": 10276
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/recording-check.json",
+            "sha256": "9ca689b4cd9bc8da5e33e9628fe98414b8ef6af7bc9e5825dd14297cef1a24cf",
+            "bytes": 2104
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/recording.json",
+            "sha256": "cbbc9ca0bc534e29833d2eb81aa9fdc71e61dc6fdf5ab97922f4c5a077c0b9d2",
+            "bytes": 11980
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/simulation/episode-6810101-bea7a6fd/actions.jsonl.gz",
+            "sha256": "2fae4bf9fee8c93432d343ebcc4135c4b8cca8b252749800185999fa94fff034",
+            "bytes": 39
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/simulation/episode-6810101-bea7a6fd/lanechanges.xml",
+            "sha256": "a3b629eea3f156f641f7b86d6e10d45f9a7377f5d4d9f9a76d60e5b071f0d371",
+            "bytes": 2121
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/simulation/episode-6810101-bea7a6fd/network.net.xml",
+            "sha256": "66df44ad45b14d2126a103959417ae2f6d4f7274c203386badcfb4380708e27e",
+            "bytes": 10276
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/simulation/episode-6810101-bea7a6fd/routes.rou.xml",
+            "sha256": "2e1c6510ed5de9333d4276cd8cf71de114209bf1a4cf84082339ca520ba0f94c",
+            "bytes": 3448
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-01/rear-6810101-s6810101/native/simulation/episode-6810101-bea7a6fd/sumo-errors.log",
+            "sha256": "3f73d3df51afd492c8077465a5db3e34a219693f8feaba93ab4449cf2dea98d7",
+            "bytes": 113
+          }
+        ],
+        "summary_file": {
+          "path": "outputs/highway-flow/v01/matrix-01/summary.json",
+          "sha256": "aee4176774bdab8084af5b770f885b64404f35ca34364e7f18c95c3b35eb2753",
+          "bytes": 12072
+        }
+      },
+      {
+        "cost": {
+          "output": "outputs/highway-flow/v01/matrix-02",
+          "status": "failed",
+          "charged_wall_seconds": 153.98499999998603,
+          "reserved_wall_seconds": 650.0
+        },
+        "failure_files": [
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/failure.json",
+            "sha256": "59f37c03245936cf521a576be0df509005987ea325c5cbb09294a511127a4cae",
+            "bytes": 1677
+          }
+        ],
+        "failed_recording_files": [
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/evaluation.json",
+            "sha256": "ba1a9018b1df0905ce7654481d1effc1607cdc669868c9608bd209cb952825b6",
+            "bytes": 789
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/failure.json",
+            "sha256": "59f37c03245936cf521a576be0df509005987ea325c5cbb09294a511127a4cae",
+            "bytes": 1677
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/manifest.json",
+            "sha256": "f71433922ba36d2866e1a56760bf602fc9d6c49e9dd293a89b35cee4a96940ce",
+            "bytes": 13315
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/network.net.xml",
+            "sha256": "66df44ad45b14d2126a103959417ae2f6d4f7274c203386badcfb4380708e27e",
+            "bytes": 10276
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/recording-check.json",
+            "sha256": "aba249ade391dbdc00735bdaa9b1efb57fb793e15c049b503ed0b2d58c582081",
+            "bytes": 2107
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/recording.json",
+            "sha256": "c9fa96e0cb6849eed140d501a8138badd2b68f9ce7db298aeaa7b7dd97cd053d",
+            "bytes": 14863
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/simulation/episode-6810101-7c83236f/actions.jsonl.gz",
+            "sha256": "376986717da0ed81d33b748dda51ebf1909566213b5c3d7804055cb04ab64b7c",
+            "bytes": 39
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/simulation/episode-6810101-7c83236f/lanechanges.xml",
+            "sha256": "c4d9568b69d931acad5bacbf388d9b447112bb8a78e59d3f970379d6e49d7531",
+            "bytes": 2519
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/simulation/episode-6810101-7c83236f/network.net.xml",
+            "sha256": "66df44ad45b14d2126a103959417ae2f6d4f7274c203386badcfb4380708e27e",
+            "bytes": 10276
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/simulation/episode-6810101-7c83236f/routes.rou.xml",
+            "sha256": "2add9cc71699149828e10aa1ebd6aed633053d1028d2cd091866cc8a851ae15a",
+            "bytes": 3521
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native/simulation/episode-6810101-7c83236f/sumo-errors.log",
+            "sha256": "fcf07e4d0ae2cd8b6d44001373de20b6da3e64771e98ef649cc8fc8c4be75aff",
+            "bytes": 148
+          }
+        ],
+        "summary_file": {
+          "path": "outputs/highway-flow/v01/matrix-02/summary.json",
+          "sha256": "ca5ee6b7e59b4053d6ca51a6f344115fafe1a8f0c20a7007646fcd06909c0199",
+          "bytes": 31078
+        }
+      },
+      {
+        "cost": {
+          "output": "outputs/highway-flow/v01/matrix-03",
+          "status": "failed",
+          "charged_wall_seconds": 500.43799999999464,
+          "reserved_wall_seconds": 500.0
+        },
+        "failure_files": [
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/failure.json",
+            "sha256": "6d4278343291cf2b08494b777428bd17ff6e7defda59a04b9610620c68d610c4",
+            "bytes": 741
+          }
+        ],
+        "failed_recording_files": [
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/evaluation.json",
+            "sha256": "9b2ad94f72093e55acf7af34aad07b53f389fb036c47ab0cbeea7d9cd23dddc1",
+            "bytes": 832843
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/failure.json",
+            "sha256": "6d4278343291cf2b08494b777428bd17ff6e7defda59a04b9610620c68d610c4",
+            "bytes": 741
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/manifest.json",
+            "sha256": "f6b52ced3f442e76db28bea427305f71b4d38c74dc191a47f97396946bedd2f5",
+            "bytes": 6658
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/network.net.xml",
+            "sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+            "bytes": 45894
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/recording-check.json",
+            "sha256": "c0983585d81beaf4a12cfbd72aec3b5811b1e88873d547e55521e58061dec509",
+            "bytes": 1200
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/recording.json",
+            "sha256": "6f355b788706b6a91e303be4004843500f5a80b3a9d299e34254392f211c2b57",
+            "bytes": 7484427
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/simulation/episode-6800019-27a7d2d8/actions.jsonl.gz",
+            "sha256": "1408258357d1db849e93113f04626297c438fa5edb0f338e51e6f4e8027e7f01",
+            "bytes": 1222765
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/simulation/episode-6800019-27a7d2d8/lanechanges.xml",
+            "sha256": "213cab855346eca143a7d7d8629211cb37f5c65de54263454d442d6936464c41",
+            "bytes": 3888
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/simulation/episode-6800019-27a7d2d8/network.net.xml",
+            "sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+            "bytes": 45894
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/simulation/episode-6800019-27a7d2d8/routes.rou.xml",
+            "sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+            "bytes": 18567
+          },
+          {
+            "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final/simulation/episode-6800019-27a7d2d8/sumo-errors.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        ],
+        "summary_file": {
+          "path": "outputs/highway-flow/v01/matrix-03/summary.json",
+          "sha256": "60698525ed15d5578d6e835ea09d78640a08b8bbda3cb6ae7866a698645c202a",
+          "bytes": 15213
+        }
+      }
+    ],
+    "all_prior_costs_retained": true
+  },
+  "superseded_failed_dense_result": {
+    "row_id": "dense-blocked-6810101",
+    "controller": "native",
+    "error": "Traceback (most recent call last):\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\scripts\\prepare_highway_flow.py\", line 228, in record\n    report,focal,controlled=collect(env,row,kind,model,deadline,buffers)\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\scripts\\prepare_highway_flow.py\", line 146, in collect\n    observations, _ = env.reset(seed=row['seed'])\n                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\environments\\highway_flow_env.py\", line 59, in reset\n    result = super().reset(seed=seed, options=options)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\environments\\highway_environment_v05.py\", line 192, in reset\n    super().reset(seed=seed, options=options)\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\environments\\highway_population_env.py\", line 183, in reset\n    result = super().reset(seed=seed, options=options)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\environments\\highway_stage1_env.py\", line 96, in reset\n    result = super().reset(seed=seed, options=options)\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\environments\\i110_merge_env.py\", line 180, in reset\n    else: raise RuntimeError('Controlled spawn timeout; no vehicle discarded')\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: Controlled spawn timeout; no vehicle discarded\n",
+    "source_changed": [],
+    "path": "outputs/highway-flow/v01/matrix-02/dense-blocked-6810101-s6810101/native",
+    "recording_sha256": "c9fa96e0cb6849eed140d501a8138badd2b68f9ce7db298aeaa7b7dd97cd053d",
+    "evaluation_sha256": "ba1a9018b1df0905ce7654481d1effc1607cdc669868c9608bd209cb952825b6",
+    "wall_seconds": 1.0,
+    "intervention_fraction": null,
+    "frames": 0
+  },
+  "superseded_deadline_result": {
+    "row_id": "legacy-i110-merge",
+    "controller": "v05_final",
+    "error": "Traceback (most recent call last):\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\scripts\\prepare_highway_flow.py\", line 228, in record\n    report,focal,controlled=collect(env,row,kind,model,deadline,buffers)\n                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\scripts\\prepare_highway_flow.py\", line 159, in collect\n    historical.check_deadline(deadline)\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\experiments\\run_highway_stage1.py\", line 147, in check_deadline\n    raise PilotBudgetExhausted('Aggregate wall-time budget exhausted')\nexperiments.run_i110_merge.PilotBudgetExhausted: Aggregate wall-time budget exhausted\n",
+    "source_changed": [],
+    "path": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/v05_final",
+    "recording_sha256": "6f355b788706b6a91e303be4004843500f5a80b3a9d299e34254392f211c2b57",
+    "evaluation_sha256": "9b2ad94f72093e55acf7af34aad07b53f389fb036c47ab0cbeea7d9cd23dddc1",
+    "wall_seconds": 10.01600000000326,
+    "intervention_fraction": 0.16680743243243243,
+    "frames": 297
+  },
+  "training_authorization": false,
+  "readiness_written": false,
+  "raw_combined_sha256": "a6c04ddb69d2be51862278e9ecbb2a05254f0ae17d16af60996884599b9fd9b9",
+  "records": [
+    {
+      "case": "empty-ramp-6810101",
+      "seed": 6810101,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 591,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 14.7375,
+      "minimum_controlled_speed": 16.0,
+      "maximum_controlled_jerk": 19.99999999999993,
+      "source": "outputs/highway-flow/v01/matrix-02/empty-ramp-6810101-s6810101/native"
+    },
+    {
+      "case": "empty-ramp-6810101",
+      "seed": 6810101,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 596,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 14.8,
+      "minimum_controlled_speed": 16.0,
+      "maximum_controlled_jerk": 2.000000849366401,
+      "source": "outputs/highway-flow/v01/matrix-02/empty-ramp-6810101-s6810101/reference"
+    },
+    {
+      "case": "empty-ramp-6810101",
+      "seed": 6810101,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 47,
+        "agent_steps": 593,
+        "fraction": 0.07925801011804384
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 14.7625,
+      "minimum_controlled_speed": 16.0,
+      "maximum_controlled_jerk": 15.389321446418336,
+      "source": "outputs/highway-flow/v01/matrix-02/empty-ramp-6810101-s6810101/v05_final"
+    },
+    {
+      "case": "empty-ramp-6810102",
+      "seed": 6810102,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 591,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 14.7375,
+      "minimum_controlled_speed": 16.0,
+      "maximum_controlled_jerk": 19.99999999999993,
+      "source": "outputs/highway-flow/v01/matrix-02/empty-ramp-6810102-s6810102/native"
+    },
+    {
+      "case": "empty-ramp-6810102",
+      "seed": 6810102,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 596,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 14.8,
+      "minimum_controlled_speed": 16.0,
+      "maximum_controlled_jerk": 2.000000849366401,
+      "source": "outputs/highway-flow/v01/matrix-02/empty-ramp-6810102-s6810102/reference"
+    },
+    {
+      "case": "empty-ramp-6810102",
+      "seed": 6810102,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 49,
+        "agent_steps": 594,
+        "fraction": 0.08249158249158249
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 14.775,
+      "minimum_controlled_speed": 16.0,
+      "maximum_controlled_jerk": 15.394666045904515,
+      "source": "outputs/highway-flow/v01/matrix-02/empty-ramp-6810102-s6810102/v05_final"
+    },
+    {
+      "case": "empty-ramp-6810103",
+      "seed": 6810103,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 591,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 14.7375,
+      "minimum_controlled_speed": 16.0,
+      "maximum_controlled_jerk": 19.99999999999993,
+      "source": "outputs/highway-flow/v01/matrix-02/empty-ramp-6810103-s6810103/native"
+    },
+    {
+      "case": "empty-ramp-6810103",
+      "seed": 6810103,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 596,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 14.8,
+      "minimum_controlled_speed": 16.0,
+      "maximum_controlled_jerk": 2.000000849366401,
+      "source": "outputs/highway-flow/v01/matrix-02/empty-ramp-6810103-s6810103/reference"
+    },
+    {
+      "case": "empty-ramp-6810103",
+      "seed": 6810103,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 47,
+        "agent_steps": 594,
+        "fraction": 0.07912457912457913
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 14.775,
+      "minimum_controlled_speed": 16.0,
+      "maximum_controlled_jerk": 15.393641293048788,
+      "source": "outputs/highway-flow/v01/matrix-02/empty-ramp-6810103-s6810103/v05_final"
+    },
+    {
+      "case": "target-leader-6810101",
+      "seed": 6810101,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 676,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 24.0375,
+      "minimum_controlled_speed": 12.939825484560915,
+      "maximum_controlled_jerk": 20.47464484097432,
+      "source": "outputs/highway-flow/v01/matrix-02/target-leader-6810101-s6810101/native"
+    },
+    {
+      "case": "target-leader-6810101",
+      "seed": 6810101,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 708,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 24.4375,
+      "minimum_controlled_speed": 12.673215905495772,
+      "maximum_controlled_jerk": 2.000000849366401,
+      "source": "outputs/highway-flow/v01/matrix-02/target-leader-6810101-s6810101/reference"
+    },
+    {
+      "case": "target-leader-6810101",
+      "seed": 6810101,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 191,
+        "agent_steps": 649,
+        "fraction": 0.2942989214175655
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 23.700000000000003,
+      "minimum_controlled_speed": 13.969742267353514,
+      "maximum_controlled_jerk": 14.940260797738958,
+      "source": "outputs/highway-flow/v01/matrix-02/target-leader-6810101-s6810101/v05_final"
+    },
+    {
+      "case": "target-leader-6810102",
+      "seed": 6810102,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 676,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 24.05,
+      "minimum_controlled_speed": 12.939825484560913,
+      "maximum_controlled_jerk": 20.47464484097432,
+      "source": "outputs/highway-flow/v01/matrix-02/target-leader-6810102-s6810102/native"
+    },
+    {
+      "case": "target-leader-6810102",
+      "seed": 6810102,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 708,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 24.450000000000003,
+      "minimum_controlled_speed": 12.67321590549577,
+      "maximum_controlled_jerk": 2.000000849366401,
+      "source": "outputs/highway-flow/v01/matrix-02/target-leader-6810102-s6810102/reference"
+    },
+    {
+      "case": "target-leader-6810102",
+      "seed": 6810102,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 191,
+        "agent_steps": 649,
+        "fraction": 0.2942989214175655
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 23.7125,
+      "minimum_controlled_speed": 13.968552023507288,
+      "maximum_controlled_jerk": 14.94621366262443,
+      "source": "outputs/highway-flow/v01/matrix-02/target-leader-6810102-s6810102/v05_final"
+    },
+    {
+      "case": "target-leader-6810103",
+      "seed": 6810103,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 676,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 24.05,
+      "minimum_controlled_speed": 12.939825484560915,
+      "maximum_controlled_jerk": 20.47464484097432,
+      "source": "outputs/highway-flow/v01/matrix-02/target-leader-6810103-s6810103/native"
+    },
+    {
+      "case": "target-leader-6810103",
+      "seed": 6810103,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 708,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 24.450000000000003,
+      "minimum_controlled_speed": 12.67321590549577,
+      "maximum_controlled_jerk": 2.000000849366401,
+      "source": "outputs/highway-flow/v01/matrix-02/target-leader-6810103-s6810103/reference"
+    },
+    {
+      "case": "target-leader-6810103",
+      "seed": 6810103,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 191,
+        "agent_steps": 649,
+        "fraction": 0.2942989214175655
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 23.7125,
+      "minimum_controlled_speed": 13.969704107890351,
+      "maximum_controlled_jerk": 14.945068806409623,
+      "source": "outputs/highway-flow/v01/matrix-02/target-leader-6810103-s6810103/v05_final"
+    },
+    {
+      "case": "rear-6810101",
+      "seed": 6810101,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 529,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 19.75,
+      "minimum_controlled_speed": 14.0,
+      "maximum_controlled_jerk": 19.99999999999993,
+      "source": "outputs/highway-flow/v01/matrix-02/rear-6810101-s6810101/native"
+    },
+    {
+      "case": "rear-6810101",
+      "seed": 6810101,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 535,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 19.875,
+      "minimum_controlled_speed": 14.0,
+      "maximum_controlled_jerk": 2.0000008493662236,
+      "source": "outputs/highway-flow/v01/matrix-02/rear-6810101-s6810101/reference"
+    },
+    {
+      "case": "rear-6810101",
+      "seed": 6810101,
+      "controller": "v05_final",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 533,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 19.837500000000002,
+      "minimum_controlled_speed": 14.0,
+      "maximum_controlled_jerk": 4.824781715869975,
+      "source": "outputs/highway-flow/v01/matrix-02/rear-6810101-s6810101/v05_final"
+    },
+    {
+      "case": "rear-6810102",
+      "seed": 6810102,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 529,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 19.75,
+      "minimum_controlled_speed": 14.0,
+      "maximum_controlled_jerk": 19.99999999999993,
+      "source": "outputs/highway-flow/v01/matrix-02/rear-6810102-s6810102/native"
+    },
+    {
+      "case": "rear-6810102",
+      "seed": 6810102,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 536,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 19.887500000000003,
+      "minimum_controlled_speed": 14.0,
+      "maximum_controlled_jerk": 2.0000008493662236,
+      "source": "outputs/highway-flow/v01/matrix-02/rear-6810102-s6810102/reference"
+    },
+    {
+      "case": "rear-6810102",
+      "seed": 6810102,
+      "controller": "v05_final",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 533,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 19.837500000000002,
+      "minimum_controlled_speed": 14.0,
+      "maximum_controlled_jerk": 4.825574010610545,
+      "source": "outputs/highway-flow/v01/matrix-02/rear-6810102-s6810102/v05_final"
+    },
+    {
+      "case": "rear-6810103",
+      "seed": 6810103,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 529,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 19.75,
+      "minimum_controlled_speed": 14.0,
+      "maximum_controlled_jerk": 19.99999999999993,
+      "source": "outputs/highway-flow/v01/matrix-02/rear-6810103-s6810103/native"
+    },
+    {
+      "case": "rear-6810103",
+      "seed": 6810103,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 536,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 19.887500000000003,
+      "minimum_controlled_speed": 14.0,
+      "maximum_controlled_jerk": 2.0000008493662236,
+      "source": "outputs/highway-flow/v01/matrix-02/rear-6810103-s6810103/reference"
+    },
+    {
+      "case": "rear-6810103",
+      "seed": 6810103,
+      "controller": "v05_final",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 533,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 19.837500000000002,
+      "minimum_controlled_speed": 14.0,
+      "maximum_controlled_jerk": 4.825424849986959,
+      "source": "outputs/highway-flow/v01/matrix-02/rear-6810103-s6810103/v05_final"
+    },
+    {
+      "case": "cutin-6810101",
+      "seed": 6810101,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 530,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 21.5375,
+      "minimum_controlled_speed": 12.5786307629195,
+      "maximum_controlled_jerk": 53.141966607594426,
+      "source": "outputs/highway-flow/v01/matrix-02/cutin-6810101-s6810101/native"
+    },
+    {
+      "case": "cutin-6810101",
+      "seed": 6810101,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 540,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 21.6625,
+      "minimum_controlled_speed": 12.223823605664078,
+      "maximum_controlled_jerk": 44.73406426608548,
+      "source": "outputs/highway-flow/v01/matrix-02/cutin-6810101-s6810101/reference"
+    },
+    {
+      "case": "cutin-6810101",
+      "seed": 6810101,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 33,
+        "agent_steps": 532,
+        "fraction": 0.06203007518796992
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 21.5625,
+      "minimum_controlled_speed": 13.05518172769477,
+      "maximum_controlled_jerk": 36.44039252257336,
+      "source": "outputs/highway-flow/v01/matrix-02/cutin-6810101-s6810101/v05_final"
+    },
+    {
+      "case": "cutin-6810102",
+      "seed": 6810102,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 531,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 21.55,
+      "minimum_controlled_speed": 12.578630762919502,
+      "maximum_controlled_jerk": 53.141966607594426,
+      "source": "outputs/highway-flow/v01/matrix-02/cutin-6810102-s6810102/native"
+    },
+    {
+      "case": "cutin-6810102",
+      "seed": 6810102,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 540,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 21.6625,
+      "minimum_controlled_speed": 12.223823605664078,
+      "maximum_controlled_jerk": 44.73406426608548,
+      "source": "outputs/highway-flow/v01/matrix-02/cutin-6810102-s6810102/reference"
+    },
+    {
+      "case": "cutin-6810102",
+      "seed": 6810102,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 33,
+        "agent_steps": 532,
+        "fraction": 0.06203007518796992
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 21.5625,
+      "minimum_controlled_speed": 13.055181727694771,
+      "maximum_controlled_jerk": 36.44039252257336,
+      "source": "outputs/highway-flow/v01/matrix-02/cutin-6810102-s6810102/v05_final"
+    },
+    {
+      "case": "cutin-6810103",
+      "seed": 6810103,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 531,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 21.55,
+      "minimum_controlled_speed": 12.578630762919502,
+      "maximum_controlled_jerk": 53.141966607594426,
+      "source": "outputs/highway-flow/v01/matrix-02/cutin-6810103-s6810103/native"
+    },
+    {
+      "case": "cutin-6810103",
+      "seed": 6810103,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 540,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 21.6625,
+      "minimum_controlled_speed": 12.223823605664078,
+      "maximum_controlled_jerk": 44.73406426608548,
+      "source": "outputs/highway-flow/v01/matrix-02/cutin-6810103-s6810103/reference"
+    },
+    {
+      "case": "cutin-6810103",
+      "seed": 6810103,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 33,
+        "agent_steps": 532,
+        "fraction": 0.06203007518796992
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 21.5625,
+      "minimum_controlled_speed": 13.05518172769477,
+      "maximum_controlled_jerk": 36.44039252257336,
+      "source": "outputs/highway-flow/v01/matrix-02/cutin-6810103-s6810103/v05_final"
+    },
+    {
+      "case": "farther-slow-leader-6810101",
+      "seed": 6810101,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 572,
+        "fraction": 0.0
+      },
+      "completed_trips": 7,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 28.5375,
+      "minimum_controlled_speed": 11.239193629753071,
+      "maximum_controlled_jerk": 29.53022900896123,
+      "source": "outputs/highway-flow/v01/matrix-02/farther-slow-leader-6810101-s6810101/native"
+    },
+    {
+      "case": "farther-slow-leader-6810101",
+      "seed": 6810101,
+      "controller": "reference",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 1,
+        "agent_steps": 581,
+        "fraction": 0.0017211703958691911
+      },
+      "completed_trips": 7,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 28.65,
+      "minimum_controlled_speed": 11.201832458852309,
+      "maximum_controlled_jerk": 28.482283381339002,
+      "source": "outputs/highway-flow/v01/matrix-02/farther-slow-leader-6810101-s6810101/reference"
+    },
+    {
+      "case": "farther-slow-leader-6810101",
+      "seed": 6810101,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [
+        "counterfactual_event_not_completed"
+      ],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 170,
+        "agent_steps": 586,
+        "fraction": 0.2901023890784983
+      },
+      "completed_trips": 7,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 28.7125,
+      "minimum_controlled_speed": 11.318877598581686,
+      "maximum_controlled_jerk": 25.454004909515504,
+      "source": "outputs/highway-flow/v01/matrix-02/farther-slow-leader-6810101-s6810101/v05_final"
+    },
+    {
+      "case": "farther-slow-leader-6810102",
+      "seed": 6810102,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 572,
+        "fraction": 0.0
+      },
+      "completed_trips": 7,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 28.549999999999997,
+      "minimum_controlled_speed": 11.239193629753068,
+      "maximum_controlled_jerk": 29.53022900896123,
+      "source": "outputs/highway-flow/v01/matrix-02/farther-slow-leader-6810102-s6810102/native"
+    },
+    {
+      "case": "farther-slow-leader-6810102",
+      "seed": 6810102,
+      "controller": "reference",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 1,
+        "agent_steps": 582,
+        "fraction": 0.001718213058419244
+      },
+      "completed_trips": 7,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 28.674999999999997,
+      "minimum_controlled_speed": 11.201832458852309,
+      "maximum_controlled_jerk": 28.482283381339002,
+      "source": "outputs/highway-flow/v01/matrix-02/farther-slow-leader-6810102-s6810102/reference"
+    },
+    {
+      "case": "farther-slow-leader-6810102",
+      "seed": 6810102,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [
+        "counterfactual_event_not_completed"
+      ],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 170,
+        "agent_steps": 586,
+        "fraction": 0.2901023890784983
+      },
+      "completed_trips": 7,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 28.725,
+      "minimum_controlled_speed": 11.318877598581684,
+      "maximum_controlled_jerk": 25.454004909515504,
+      "source": "outputs/highway-flow/v01/matrix-02/farther-slow-leader-6810102-s6810102/v05_final"
+    },
+    {
+      "case": "farther-slow-leader-6810103",
+      "seed": 6810103,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 572,
+        "fraction": 0.0
+      },
+      "completed_trips": 7,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 28.5375,
+      "minimum_controlled_speed": 11.239193629753071,
+      "maximum_controlled_jerk": 29.53022900896123,
+      "source": "outputs/highway-flow/v01/matrix-02/farther-slow-leader-6810103-s6810103/native"
+    },
+    {
+      "case": "farther-slow-leader-6810103",
+      "seed": 6810103,
+      "controller": "reference",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 1,
+        "agent_steps": 582,
+        "fraction": 0.001718213058419244
+      },
+      "completed_trips": 7,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 28.6625,
+      "minimum_controlled_speed": 11.201832458852309,
+      "maximum_controlled_jerk": 28.482283381339002,
+      "source": "outputs/highway-flow/v01/matrix-02/farther-slow-leader-6810103-s6810103/reference"
+    },
+    {
+      "case": "farther-slow-leader-6810103",
+      "seed": 6810103,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [
+        "counterfactual_event_not_completed"
+      ],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 170,
+        "agent_steps": 586,
+        "fraction": 0.2901023890784983
+      },
+      "completed_trips": 7,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 28.7125,
+      "minimum_controlled_speed": 11.318877598581686,
+      "maximum_controlled_jerk": 25.454004909515504,
+      "source": "outputs/highway-flow/v01/matrix-02/farther-slow-leader-6810103-s6810103/v05_final"
+    },
+    {
+      "case": "ending-lane-temptation-6810101",
+      "seed": 6810101,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 558,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 30.362500000000004,
+      "minimum_controlled_speed": 13.849112885969715,
+      "maximum_controlled_jerk": 20.42755016585769,
+      "source": "outputs/highway-flow/v01/matrix-02/ending-lane-temptation-6810101-s6810101/native"
+    },
+    {
+      "case": "ending-lane-temptation-6810101",
+      "seed": 6810101,
+      "controller": "reference",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 583,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 30.675000000000004,
+      "minimum_controlled_speed": 13.559531769574216,
+      "maximum_controlled_jerk": 2.0000008493662236,
+      "source": "outputs/highway-flow/v01/matrix-02/ending-lane-temptation-6810101-s6810101/reference"
+    },
+    {
+      "case": "ending-lane-temptation-6810101",
+      "seed": 6810101,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 164,
+        "agent_steps": 583,
+        "fraction": 0.28130360205831906
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 30.675000000000004,
+      "minimum_controlled_speed": 11.601166268163693,
+      "maximum_controlled_jerk": 26.268555405869876,
+      "source": "outputs/highway-flow/v01/matrix-02/ending-lane-temptation-6810101-s6810101/v05_final"
+    },
+    {
+      "case": "ending-lane-temptation-6810102",
+      "seed": 6810102,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 558,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 30.375,
+      "minimum_controlled_speed": 13.849112885969715,
+      "maximum_controlled_jerk": 20.42755016585769,
+      "source": "outputs/highway-flow/v01/matrix-02/ending-lane-temptation-6810102-s6810102/native"
+    },
+    {
+      "case": "ending-lane-temptation-6810102",
+      "seed": 6810102,
+      "controller": "reference",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 584,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 30.700000000000003,
+      "minimum_controlled_speed": 13.559531769574216,
+      "maximum_controlled_jerk": 2.0000008493662236,
+      "source": "outputs/highway-flow/v01/matrix-02/ending-lane-temptation-6810102-s6810102/reference"
+    },
+    {
+      "case": "ending-lane-temptation-6810102",
+      "seed": 6810102,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 164,
+        "agent_steps": 583,
+        "fraction": 0.28130360205831906
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 30.6875,
+      "minimum_controlled_speed": 11.613488138457763,
+      "maximum_controlled_jerk": 26.2624861391334,
+      "source": "outputs/highway-flow/v01/matrix-02/ending-lane-temptation-6810102-s6810102/v05_final"
+    },
+    {
+      "case": "ending-lane-temptation-6810103",
+      "seed": 6810103,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 558,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 30.375,
+      "minimum_controlled_speed": 13.849112885969715,
+      "maximum_controlled_jerk": 20.42755016585769,
+      "source": "outputs/highway-flow/v01/matrix-02/ending-lane-temptation-6810103-s6810103/native"
+    },
+    {
+      "case": "ending-lane-temptation-6810103",
+      "seed": 6810103,
+      "controller": "reference",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 583,
+        "fraction": 0.0
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 30.6875,
+      "minimum_controlled_speed": 13.559531769574216,
+      "maximum_controlled_jerk": 2.0000008493662236,
+      "source": "outputs/highway-flow/v01/matrix-02/ending-lane-temptation-6810103-s6810103/reference"
+    },
+    {
+      "case": "ending-lane-temptation-6810103",
+      "seed": 6810103,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 164,
+        "agent_steps": 583,
+        "fraction": 0.28130360205831906
+      },
+      "completed_trips": 8,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 30.6875,
+      "minimum_controlled_speed": 11.611141000243544,
+      "maximum_controlled_jerk": 26.264827533780988,
+      "source": "outputs/highway-flow/v01/matrix-02/ending-lane-temptation-6810103-s6810103/v05_final"
+    },
+    {
+      "case": "dense-blocked-6810101",
+      "seed": 6810101,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 661,
+        "fraction": 0.0
+      },
+      "completed_trips": 6,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 64.64999999999999,
+      "minimum_controlled_speed": 8.206913986718197,
+      "maximum_controlled_jerk": 49.439016393442614,
+      "source": "outputs/highway-flow/v01/matrix-03/dense-blocked-6810101-s6810101/native"
+    },
+    {
+      "case": "dense-blocked-6810101",
+      "seed": 6810101,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 730,
+        "fraction": 0.0
+      },
+      "completed_trips": 6,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 65.85,
+      "minimum_controlled_speed": 8.113000083744454,
+      "maximum_controlled_jerk": 2.0000008493662236,
+      "source": "outputs/highway-flow/v01/matrix-03/dense-blocked-6810101-s6810101/reference"
+    },
+    {
+      "case": "dense-blocked-6810101",
+      "seed": 6810101,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 493,
+        "agent_steps": 694,
+        "fraction": 0.7103746397694525
+      },
+      "completed_trips": 6,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 65.0625,
+      "minimum_controlled_speed": 8.193455863289065,
+      "maximum_controlled_jerk": 4.350559189915693,
+      "source": "outputs/highway-flow/v01/matrix-03/dense-blocked-6810101-s6810101/v05_final"
+    },
+    {
+      "case": "dense-blocked-6810102",
+      "seed": 6810102,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 661,
+        "fraction": 0.0
+      },
+      "completed_trips": 6,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 64.675,
+      "minimum_controlled_speed": 8.206913986718195,
+      "maximum_controlled_jerk": 49.439016393442614,
+      "source": "outputs/highway-flow/v01/matrix-03/dense-blocked-6810102-s6810102/native"
+    },
+    {
+      "case": "dense-blocked-6810102",
+      "seed": 6810102,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 731,
+        "fraction": 0.0
+      },
+      "completed_trips": 6,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 65.88749999999999,
+      "minimum_controlled_speed": 8.112445421546624,
+      "maximum_controlled_jerk": 2.000000849366046,
+      "source": "outputs/highway-flow/v01/matrix-03/dense-blocked-6810102-s6810102/reference"
+    },
+    {
+      "case": "dense-blocked-6810102",
+      "seed": 6810102,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 494,
+        "agent_steps": 694,
+        "fraction": 0.7118155619596542
+      },
+      "completed_trips": 6,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 65.075,
+      "minimum_controlled_speed": 8.193755732430164,
+      "maximum_controlled_jerk": 4.2985123023390415,
+      "source": "outputs/highway-flow/v01/matrix-03/dense-blocked-6810102-s6810102/v05_final"
+    },
+    {
+      "case": "dense-blocked-6810103",
+      "seed": 6810103,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 661,
+        "fraction": 0.0
+      },
+      "completed_trips": 6,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 64.6625,
+      "minimum_controlled_speed": 8.206913986718195,
+      "maximum_controlled_jerk": 49.439016393442614,
+      "source": "outputs/highway-flow/v01/matrix-03/dense-blocked-6810103-s6810103/native"
+    },
+    {
+      "case": "dense-blocked-6810103",
+      "seed": 6810103,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 731,
+        "fraction": 0.0
+      },
+      "completed_trips": 6,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 65.88749999999999,
+      "minimum_controlled_speed": 8.112445421546626,
+      "maximum_controlled_jerk": 2.000000849366046,
+      "source": "outputs/highway-flow/v01/matrix-03/dense-blocked-6810103-s6810103/reference"
+    },
+    {
+      "case": "dense-blocked-6810103",
+      "seed": 6810103,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 495,
+        "agent_steps": 694,
+        "fraction": 0.7132564841498559
+      },
+      "completed_trips": 6,
+      "requested_trips": 8,
+      "mean_boundary_time_s": 65.08749999999999,
+      "minimum_controlled_speed": 8.192901644839614,
+      "maximum_controlled_jerk": 4.295163936913049,
+      "source": "outputs/highway-flow/v01/matrix-03/dense-blocked-6810103-s6810103/v05_final"
+    },
+    {
+      "case": "legacy-cruise",
+      "seed": 6800020,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": false,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 6400,
+        "fraction": 0.0
+      },
+      "completed_trips": 0,
+      "requested_trips": 36,
+      "mean_boundary_time_s": 57.76205555555555,
+      "minimum_controlled_speed": 10.603138401057894,
+      "maximum_controlled_jerk": 64.99999999999986,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-cruise-s6800020/native"
+    },
+    {
+      "case": "legacy-cruise",
+      "seed": 6800020,
+      "controller": "reference",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 1,
+        "agent_steps": 6400,
+        "fraction": 0.00015625
+      },
+      "completed_trips": 0,
+      "requested_trips": 36,
+      "mean_boundary_time_s": 57.76205555555555,
+      "minimum_controlled_speed": 14.4433106242997,
+      "maximum_controlled_jerk": 21.95873312479435,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-cruise-s6800020/reference"
+    },
+    {
+      "case": "legacy-cruise",
+      "seed": 6800020,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 422,
+        "agent_steps": 6400,
+        "fraction": 0.0659375
+      },
+      "completed_trips": 0,
+      "requested_trips": 36,
+      "mean_boundary_time_s": 57.76205555555555,
+      "minimum_controlled_speed": 14.4433106242997,
+      "maximum_controlled_jerk": 45.01079984009273,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-cruise-s6800020/v05_final"
+    },
+    {
+      "case": "legacy-following",
+      "seed": 6800021,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 6400,
+        "fraction": 0.0
+      },
+      "completed_trips": 0,
+      "requested_trips": 35,
+      "mean_boundary_time_s": 58.43822857142857,
+      "minimum_controlled_speed": 13.501353609043424,
+      "maximum_controlled_jerk": 55.481260828977064,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-following-s6800021/native"
+    },
+    {
+      "case": "legacy-following",
+      "seed": 6800021,
+      "controller": "reference",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 8,
+        "agent_steps": 6400,
+        "fraction": 0.00125
+      },
+      "completed_trips": 0,
+      "requested_trips": 35,
+      "mean_boundary_time_s": 58.43822857142857,
+      "minimum_controlled_speed": 7.018470034761589,
+      "maximum_controlled_jerk": 44.99999828636625,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-following-s6800021/reference"
+    },
+    {
+      "case": "legacy-following",
+      "seed": 6800021,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 1284,
+        "agent_steps": 6400,
+        "fraction": 0.200625
+      },
+      "completed_trips": 0,
+      "requested_trips": 35,
+      "mean_boundary_time_s": 58.43822857142857,
+      "minimum_controlled_speed": 0.0,
+      "maximum_controlled_jerk": 49.51370239257802,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-following-s6800021/v05_final"
+    },
+    {
+      "case": "legacy-passing",
+      "seed": 6800022,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": false,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 6400,
+        "fraction": 0.0
+      },
+      "completed_trips": 0,
+      "requested_trips": 35,
+      "mean_boundary_time_s": 58.70017142857141,
+      "minimum_controlled_speed": 7.719948699487717,
+      "maximum_controlled_jerk": 64.99999999999986,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-passing-s6800022/native"
+    },
+    {
+      "case": "legacy-passing",
+      "seed": 6800022,
+      "controller": "reference",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 9,
+        "agent_steps": 6400,
+        "fraction": 0.00140625
+      },
+      "completed_trips": 0,
+      "requested_trips": 35,
+      "mean_boundary_time_s": 58.70017142857141,
+      "minimum_controlled_speed": 10.89032211526993,
+      "maximum_controlled_jerk": 10.926505403858044,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-passing-s6800022/reference"
+    },
+    {
+      "case": "legacy-passing",
+      "seed": 6800022,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 1757,
+        "agent_steps": 6400,
+        "fraction": 0.27453125
+      },
+      "completed_trips": 0,
+      "requested_trips": 35,
+      "mean_boundary_time_s": 58.70017142857141,
+      "minimum_controlled_speed": 9.739486131700675,
+      "maximum_controlled_jerk": 48.324674774476506,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-passing-s6800022/v05_final"
+    },
+    {
+      "case": "legacy-merge",
+      "seed": 6800023,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 6400,
+        "fraction": 0.0
+      },
+      "completed_trips": 0,
+      "requested_trips": 36,
+      "mean_boundary_time_s": 57.558388888888885,
+      "minimum_controlled_speed": 6.493478265856342,
+      "maximum_controlled_jerk": 64.99999999999959,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-merge-s6800023/native"
+    },
+    {
+      "case": "legacy-merge",
+      "seed": 6800023,
+      "controller": "reference",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 1,
+        "agent_steps": 6400,
+        "fraction": 0.00015625
+      },
+      "completed_trips": 0,
+      "requested_trips": 36,
+      "mean_boundary_time_s": 57.558388888888885,
+      "minimum_controlled_speed": 6.055226321481039,
+      "maximum_controlled_jerk": 22.41179410146117,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-merge-s6800023/reference"
+    },
+    {
+      "case": "legacy-merge",
+      "seed": 6800023,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 1625,
+        "agent_steps": 6400,
+        "fraction": 0.25390625
+      },
+      "completed_trips": 0,
+      "requested_trips": 36,
+      "mean_boundary_time_s": 57.558388888888885,
+      "minimum_controlled_speed": 0.0,
+      "maximum_controlled_jerk": 58.57373664940919,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-merge-s6800023/v05_final"
+    },
+    {
+      "case": "legacy-dense-following",
+      "seed": 6800024,
+      "controller": "native",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 6400,
+        "fraction": 0.0
+      },
+      "completed_trips": 0,
+      "requested_trips": 63,
+      "mean_boundary_time_s": 54.66604761904761,
+      "minimum_controlled_speed": 12.074797174482013,
+      "maximum_controlled_jerk": 64.99999999999986,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-dense-following-s6800024/native"
+    },
+    {
+      "case": "legacy-dense-following",
+      "seed": 6800024,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 4,
+        "agent_steps": 6400,
+        "fraction": 0.000625
+      },
+      "completed_trips": 0,
+      "requested_trips": 63,
+      "mean_boundary_time_s": 54.66604761904761,
+      "minimum_controlled_speed": 12.727598667326038,
+      "maximum_controlled_jerk": 3.690363839448807,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-dense-following-s6800024/reference"
+    },
+    {
+      "case": "legacy-dense-following",
+      "seed": 6800024,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 3505,
+        "agent_steps": 6400,
+        "fraction": 0.54765625
+      },
+      "completed_trips": 0,
+      "requested_trips": 63,
+      "mean_boundary_time_s": 54.66604761904761,
+      "minimum_controlled_speed": 0.0,
+      "maximum_controlled_jerk": 51.11393243074422,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-dense-following-s6800024/v05_final"
+    },
+    {
+      "case": "legacy-i110-merge",
+      "seed": 6800019,
+      "controller": "native",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 3078,
+        "fraction": 0.0
+      },
+      "completed_trips": 32,
+      "requested_trips": 55,
+      "mean_boundary_time_s": 34.04470909090909,
+      "minimum_controlled_speed": 6.442434209243916,
+      "maximum_controlled_jerk": 65.00000000000136,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/native"
+    },
+    {
+      "case": "legacy-i110-merge",
+      "seed": 6800019,
+      "controller": "reference",
+      "passed": true,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": true
+      },
+      "raw_interventions": {
+        "overrides": 0,
+        "agent_steps": 3169,
+        "fraction": 0.0
+      },
+      "completed_trips": 33,
+      "requested_trips": 55,
+      "mean_boundary_time_s": 34.11016363636364,
+      "minimum_controlled_speed": 3.4209029511646585,
+      "maximum_controlled_jerk": 2.000000849366401,
+      "source": "outputs/highway-flow/v01/matrix-03/legacy-i110-merge-s6800019/reference"
+    },
+    {
+      "case": "legacy-i110-merge",
+      "seed": 6800019,
+      "controller": "v05_final",
+      "passed": false,
+      "full_horizon": true,
+      "integrity_failures": [],
+      "safety": {
+        "collisions": true,
+        "teleports": true,
+        "overspeed_steps": true,
+        "emergency_braking_observed": true,
+        "native_warning_accounting": true,
+        "raw_intervention_fraction_at_most_5_percent": false
+      },
+      "raw_interventions": {
+        "overrides": 557,
+        "agent_steps": 3183,
+        "fraction": 0.17499214577442665
+      },
+      "completed_trips": 33,
+      "requested_trips": 55,
+      "mean_boundary_time_s": 34.2138,
+      "minimum_controlled_speed": 0.0,
+      "maximum_controlled_jerk": 59.95525598525999,
+      "source": "outputs/highway-flow/v01/matrix-04-repair/legacy-i110-merge-s6800019/v05_final"
+    }
+  ]
+}
