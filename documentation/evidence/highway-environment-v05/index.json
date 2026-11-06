@@ -3,7 +3,7 @@
   "date_local": "2026-11-05",
   "timezone": "America/Los_Angeles",
   "training_started": false,
-  "training_results": "pending",
+  "training_results": "See documentation/highway-environment-v05-results.md for completed run and acceptance failure",
   "files": [
     {
       "file": "network-bank.json",
@@ -75,5 +75,6 @@
   ],
   "raw_artifact_root": "outputs/highway-environment/v05/",
   "exclusions": "No trajectories, datasets, checkpoints, installed runtimes or local configuration copied",
-  "scope": "Static authored demand, native environment preparation and no-learning preflight; learned acceptance remains open"
+  "scope": "Static authored demand, native environment preparation and no-learning preflight; learned acceptance remains open",
+  "historical_snapshot": true
 }

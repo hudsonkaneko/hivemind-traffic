@@ -1,7 +1,6 @@
 # Highway environment v05 preparation and bounded pilot
 
-November 5, 2026, America/Los_Angeles. **Environment preparation and final
-no-learning preflight verified; authorized launch stopped during initial validation before learning, and a corrected resume is being prepared.** The inherited phase-0 actor remains unaccepted. V05
+November 5, 2026, America/Los_Angeles. **Implementation and bounded training completed; the resulting candidate is rejected.** See the [matched results and plots](highway-environment-v05-results.md): stable merges improve 2/9 to 8/9, but pooled interventions worsen 13.37% to 19.83%, and I-110 remains unmerged. The preparation and recovery sections below preserve their original milestones. The inherited phase-0 actor remains unaccepted. V05
 changes native lane motion, observed neighboring-lane occupancy, population
 coverage and merge scoring before learning. It is a new environment treatment,
 so its results must not be presented as a matched improvement over the old
@@ -210,7 +209,7 @@ it is superseded by the final source/config-matched run. The subsequent
 is also retained: a whitespace-only source correction required a fresh matching
 proof before launch.
 
-## Resolved pilot and pending results
+## Resolved pilot and preparation-time status
 
 The [pretraining settings snapshot](evidence/highway-environment-v05/reviewed-pretraining-settings.json)
 specifies one CPU worker/thread, MAPPO seed **9507**, training scenario seeds
@@ -229,7 +228,7 @@ remains 0.1 over the 1 m/s near-limit band. Gradient diagnostics remain enabled.
 Initial and final deterministic evaluations use the same 24 rows; there is no
 validation-driven checkpoint cherry-picking or held-out promotion.
 
-**Training results: pending.** No updated actor, learning improvement, 24-case
+**At preparation time, training results were pending.** Completed results are now in the [results note](highway-environment-v05-results.md). No updated actor, learning improvement, 24-case
 acceptance result or rendered v05 policy behavior is claimed by this preparation
 record. The frozen recorder is implemented to retain actual SUMO XYZ/heading
 through the full 80-second accounting horizon and to suggest a maximum-300-frame
@@ -273,3 +272,22 @@ All 24 requested initial vehicles eventually inserted, but SUMO ACC delayed a cl
 
 
 Fresh source-matched preflight passed in 65.453 seconds. [Second migration](evidence/highway-environment-v05/checkpoint-migration-02.json) verifies all starting state and 512.048 charged seconds remain unchanged; only demand source/readiness change. The same 250k/3,600-second total limits apply to the resumed launch.
+
+
+## Frozen visual confirmation with the prepared main car
+
+The existing unscaled Americano v14 SimReady car is the focal `agent_0`; background cars stay lightweight. Seven camera definitions and five LiDAR mounts remain in the referenced asset, with physics disabled only in the replay layer. These are recorded SUMO poses, not physical policy transfer or active sensor inference.
+
+The fixed I-110 validation row 19 still fails to merge (30.53% interventions). Its no-merge clip is labeled honestly. The easier synthetic row 3 completes a 3.1-second maneuver and eight-second stable window (1.5% interventions). All 80 seconds of both recordings and their metrics remain separate from the short videos; selecting these two visual examples does not replace the full 24-case evaluation.
+
+![I-110 main car remains at the entry](evidence/highway-environment-v05/visuals/i110-failure-after.png)
+
+![Prepared main car completing the easier synthetic merge](evidence/highway-environment-v05/visuals/synthetic-success-merge.png)
+
+[Visual audit](evidence/highway-environment-v05/visuals/visual-validation.json): both videos have 251 decoded frames at 1280×720, exact recorded positions and unchanged source/static assets. Fresh composition audits find no missing dependencies or active replay physics. The first overly strict raw-report equality audit remains preserved as a verification-criterion error: synthetic exported-versus-batched floating summaries differ by at most 6.7801e-7, while gate outcomes and intervention counts match. No policy, threshold or recorded pose changed to pass the corrected audit.
+
+Local videos (not committed bulk media):
+- `outputs/highway-environment/v05/visuals/i110-failure/render-01/i110-merge.mp4`
+- `outputs/highway-environment/v05/visuals/synthetic-success/render-01/i110-merge.mp4`
+
+The Google engineering guide and generated Markdown mirror have been synchronized using a revision-guarded edit and verified full readback. All 42 tabs remain, with 40 unrelated tab bodies unchanged; native pagination was not inspected.

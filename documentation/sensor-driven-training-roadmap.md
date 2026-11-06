@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v14**, updated **November 5, 2026, America/Los_Angeles**.
-Status: **Stage 1 remains unaccepted; continuous-maneuver environment v05 implemented, first launch stopped before learning; repaired departures/maneuver lifecycle, preparing budget-preserving resume**.
+Revision **v15**, updated **November 5, 2026, America/Los_Angeles**.
+Status: **Environment v05 pilot completed; candidate rejected, stable merging improves but interventions regress**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,11 +14,11 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** with the source-matched [environment v05 readiness checks](highway-environment-v05.md) passed and resolved configuration presented, run the user-authorized pilot capped at 250,000 active-agent transitions and 3,600 seconds including evaluation. The revised environment adds native continuous lane changes, measured neighboring-lane occupancy, an eight-second stable-merge gate, varied traffic/ramp demand, 24 controlled slots and competence-based task mixtures. Compare all 24 fixed initial/final validation cases; retain failures and unchanged acceptance rules. No held-out qualification or sensor-driven/physical capability is implied.
+**Next action:** use the [v05 saved-results audit](highway-environment-v05-results.md) to diagnose the train-only I-110 entry/native-response mismatch and rising following interventions before preparing another configuration. The pilot completed 249,999 active-agent decisions under its original budget. Stable merges improve 2/9 to 8/9, while pooled interventions worsen 13.37% to 19.83%; 19/24 validation cases fail. Do not promote the candidate or train on validation trajectories. Propose a bounded, measured correction after the diagnostic; no new launch is authorized by this roadmap.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
-| 1. Learn driving with structured observations | Environment v05 implemented; user-authorized bounded pilot pending final readiness. Prior actors remain unaccepted | Per-task driving gates with low intervention, complete native safety accounting and a frozen held-out evaluation |
+| 1. Learn driving with structured observations | Environment v05 pilot complete and rejected; 8/9 stable merges but 19.83% interventions and 19/24 failed cases | Per-task driving gates with low intervention, complete native safety accounting and a frozen held-out evaluation |
 | 2. Learn with imperfect observations | Planned; existing message delay is only part of the problem | Paired clean/noisy results, leakage audit and reliable stale/missing-data behavior |
 | 3. Replace ideal fields with sensor estimates | Frozen segmentation/fusion previews and dataset/trainer preparation exist; policy integration open | Perception/tracking accuracy and latency, then physical closed-loop validation |
 
@@ -427,4 +427,13 @@ User authorized implementation and training. Three agents implemented native thr
 V14 launch recovery: the first attempt failed during initial validation with zero optimized/collected training steps. Departure timestamp precision and native interrupted-maneuver lifecycle/runway checks are corrected; the exact frozen failing cases complete full horizons with no native warnings, while their policy intervention failures remain. 265 targeted tests pass. A reviewed strict migration preserves all starting state and 125.344 seconds charged; fresh preflight is required before resuming. [Preserved failure and repair](highway-environment-v05.md#first-launch-preserved-pre-learning-failure).
 
 
-V14 second recovery: native ACC insertion feasibility required more initial clearance than collision safety alone. All132 reset cases pass after the demand-only correction; counts/speeds/guards remain fixed, initial spatial density changes explicitly. 269 tests pass. Both failed launches occurred before learning;512.048 seconds remain charged. Fresh readiness and a second strict zero-update migration precede resume.
+V14 second recovery: native ACC insertion feasibility required more initial clearance than collision safety alone. All 132 reset cases pass after the demand-only correction; counts/speeds/guards remain fixed, initial spatial density changes explicitly. 269 tests pass. Both failed launches occurred before learning; 512.048 seconds remain charged. Fresh readiness and a second strict zero-update migration precede resume.
+
+
+### v15 — November 5: v05 training completed, candidate rejected
+
+Completed `train-20261106T024828Z-90b25880` from source `02948d7` after two preserved pre-learning failures and explicit zero-update checkpoint migrations. The run used 249,999 active-agent decisions (4,096 critic warmup and 245,903 PPO), 50 update batches, 2,025 joint PPO optimizer steps and 68 critic-only steps. Its 2,455.032 total charged seconds include 512.048 from failures. The chat waited for process exit without progress monitoring or parallel thinking during training.
+
+Matched 24-case validation: stable merges improved 2/9 to 8/9; passes increased 55 to 59; pooled interventions worsened 13.3749% to 19.8287%; worst-case interventions changed 73.125% to 69.3339%; failing cases decreased 23 to 19. All horizons completed, with no recorded collisions, teleports, overspeed or emergency events under protections. I-110 remains 0/1 merged; the ramp actor stalls before entry in both initial and final evaluation. The curriculum remains at grade 0. No held-out test or physical/sensor transfer ran. The latest actor is a separately labeled rejected candidate, not an accepted replacement.
+
+[Results, plots and next diagnostic](highway-environment-v05-results.md); [frozen policy and exact contract](../policies/versions/highway-environment-v05/README.md). Preserve the existing references and diagnose training scenarios before another reviewed configuration. Two SimReady replay examples retain the I-110 failure and easier synthetic success, with 502 decoded frames, exact recorded poses and unchanged source assets. Both guide copies are synchronized from verified full readback; all 42 tabs are preserved.

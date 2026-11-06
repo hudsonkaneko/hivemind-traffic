@@ -1,0 +1,30 @@
+{
+  "scope": "Frozen SimReady kinematic SUMO replay, no new training, sensing or physics validation",
+  "artifacts": [
+    {
+      "file": "i110-failure-before.png",
+      "source": "outputs/highway-environment/v05/visuals/i110-failure/render-01/before.png",
+      "sha256": "edfbc8adffc0e5cde0a1f6d7ddf33665e045eef4a7566d3cd88b82be6387dca6"
+    },
+    {
+      "file": "i110-failure-after.png",
+      "source": "outputs/highway-environment/v05/visuals/i110-failure/render-01/after.png",
+      "sha256": "5b56de5392f02b04d4533f1f85181f88083bfde79cb4cbc31036acbf9578f3d6"
+    },
+    {
+      "file": "synthetic-success-before.png",
+      "source": "outputs/highway-environment/v05/visuals/synthetic-success/render-01/before.png",
+      "sha256": "f5174ee8f610bcee0a0b909d3ece66c42635a420c670525de271ca254a73a11e"
+    },
+    {
+      "file": "synthetic-success-merge.png",
+      "source": "outputs/highway-environment/v05/visuals/synthetic-success/render-01/merge.png",
+      "sha256": "733d0a62c7601356c236110bd9d219fb1fb6e057ac06b0e7f549d4b812efd3f5"
+    },
+    {
+      "file": "synthetic-success-after.png",
+      "source": "outputs/highway-environment/v05/visuals/synthetic-success/render-01/after.png",
+      "sha256": "bba7b18ae7246c0453965985063227ef019ca99687376989d6fea34fbe97b5f7"
+    }
+  ]
+}

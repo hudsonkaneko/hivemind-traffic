@@ -1,0 +1,1252 @@
+{
+  "source": {
+    "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/curriculum.json",
+    "bytes": 54604,
+    "sha256": "fe6c62cc3bda88e6d73a7e46fa0b50fcd78654d6bd9c0996e0e3b7c07c238630"
+  },
+  "final_grade": 0,
+  "grade_history": [],
+  "rollouts_issued": 51,
+  "ordinary_draws": 41,
+  "retry_draws": 10,
+  "complete_reports_observed": 46,
+  "complete_report_agent_decisions": 240879,
+  "by_task": {
+    "cruise": {
+      "episodes": 21,
+      "decisions": 109909
+    },
+    "following": {
+      "episodes": 19,
+      "decisions": 102623
+    },
+    "passing": {
+      "episodes": 6,
+      "decisions": 9467
+    },
+    "merge": {
+      "episodes": 4,
+      "decisions": 28000
+    }
+  },
+  "recent_passes": {
+    "cruise": {
+      "reports": 13,
+      "passed": 0
+    },
+    "following": {
+      "reports": 13,
+      "passed": 4
+    },
+    "passing": {
+      "reports": 4,
+      "passed": 1
+    },
+    "merge": {
+      "reports": 2,
+      "passed": 0
+    }
+  },
+  "updates": [
+    {
+      "index": 1,
+      "critic_only": true,
+      "optimizer_steps": 64,
+      "report": {
+        "case_id": "train-3-lane-cruise",
+        "seed": 6800000,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "initial",
+        "agent_transitions": 4080,
+        "partial_control_horizon": true,
+        "primary_horizon_complete": false,
+        "accounting_comparison_valid": false,
+        "intervention_fraction": 0.13088235294117648,
+        "mean_fraction_of_speed_limit": 0.8531094606839824
+      },
+      "population": {
+        "controlled_count": 24,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 2,
+      "critic_only": true,
+      "optimizer_steps": 4,
+      "report": {
+        "case_id": "train-3-lane-following",
+        "seed": 6800001,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 16,
+        "partial_control_horizon": true,
+        "primary_horizon_complete": false,
+        "accounting_comparison_valid": false,
+        "intervention_fraction": 0.0625,
+        "mean_fraction_of_speed_limit": 0.8488583707643067
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 16,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 3,
+      "critic_only": false,
+      "optimizer_steps": 5,
+      "report": {
+        "case_id": "train-4-lane-passing",
+        "seed": 6800002,
+        "task": "passing",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.1325,
+        "mean_fraction_of_speed_limit": 0.9610250023320935
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 4,
+      "critic_only": false,
+      "optimizer_steps": 65,
+      "report": {
+        "case_id": "train-5-lane-cruise",
+        "seed": 6800003,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 9600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.24145833333333333,
+        "mean_fraction_of_speed_limit": 0.9585563409665606
+      },
+      "population": {
+        "controlled_count": 12,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 5,
+      "critic_only": false,
+      "optimizer_steps": 28,
+      "report": {
+        "case_id": "train-4-lane-passing",
+        "seed": 6800002,
+        "task": "passing",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.158125,
+        "mean_fraction_of_speed_limit": 0.9844694211502498
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 6,
+      "critic_only": false,
+      "optimizer_steps": 9,
+      "report": {
+        "case_id": "train-2-lane-ramp120-following",
+        "seed": 6800004,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 9600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.5613541666666667,
+        "mean_fraction_of_speed_limit": 0.9360923784182353
+      },
+      "population": {
+        "controlled_count": 12,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 7,
+      "critic_only": false,
+      "optimizer_steps": 28,
+      "report": {
+        "case_id": "train-3-lane-merge",
+        "seed": 6800005,
+        "task": "merge",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.444375,
+        "mean_fraction_of_speed_limit": 0.9674625556085144
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 8,
+      "critic_only": false,
+      "optimizer_steps": 100,
+      "report": {
+        "case_id": "train-4-lane-cruise",
+        "seed": 6800006,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "initial",
+        "agent_transitions": 6400,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.0821875,
+        "mean_fraction_of_speed_limit": 0.9393701041481135
+      },
+      "population": {
+        "controlled_count": 8,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 9,
+      "critic_only": false,
+      "optimizer_steps": 36,
+      "report": {
+        "case_id": "train-2-lane-cruise",
+        "seed": 6800007,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 2148,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.44972067039106145,
+        "mean_fraction_of_speed_limit": 0.7072948816885078
+      },
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 10,
+      "critic_only": false,
+      "optimizer_steps": 32,
+      "report": {
+        "case_id": "train-2-lane-cruise",
+        "seed": 6800007,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1918,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.454118873826903,
+        "mean_fraction_of_speed_limit": 0.9406750218842213
+      },
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 11,
+      "critic_only": false,
+      "optimizer_steps": 121,
+      "report": {
+        "case_id": "train-4-lane-ramp120-following",
+        "seed": 6800008,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 9600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.11885416666666666,
+        "mean_fraction_of_speed_limit": 0.9126534766553728
+      },
+      "population": {
+        "controlled_count": 12,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 12,
+      "critic_only": false,
+      "optimizer_steps": 8,
+      "report": {
+        "case_id": "i110-following",
+        "seed": 6800009,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 401,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.03740648379052369,
+        "mean_fraction_of_speed_limit": 0.9433034396787642
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 13,
+      "critic_only": false,
+      "optimizer_steps": 58,
+      "report": {
+        "case_id": "train-3-lane-ramp240-cruise",
+        "seed": 6800010,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 4800,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.2602083333333333,
+        "mean_fraction_of_speed_limit": 0.9647916672693094
+      },
+      "population": {
+        "controlled_count": 6,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 14,
+      "critic_only": false,
+      "optimizer_steps": 7,
+      "report": {
+        "case_id": "train-5-lane-ramp240-merge",
+        "seed": 6800011,
+        "task": "merge",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 2400,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.39208333333333334,
+        "mean_fraction_of_speed_limit": 0.9789278232429416
+      },
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 15,
+      "critic_only": false,
+      "optimizer_steps": 9,
+      "report": {
+        "case_id": "train-2-lane-cruise",
+        "seed": 6800007,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1956,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.3445807770961145,
+        "mean_fraction_of_speed_limit": 0.9221135420797175
+      },
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 16,
+      "critic_only": false,
+      "optimizer_steps": 16,
+      "report": {
+        "case_id": "train-3-lane-ramp240-following",
+        "seed": 6800012,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 14167,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.060139761417378416,
+        "mean_fraction_of_speed_limit": 0.8437052495510163
+      },
+      "population": {
+        "controlled_count": 18,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 17,
+      "critic_only": false,
+      "optimizer_steps": 7,
+      "report": {
+        "case_id": "train-5-lane-ramp240-cruise",
+        "seed": 6800013,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.236875,
+        "mean_fraction_of_speed_limit": 0.9552434421141014
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 18,
+      "critic_only": false,
+      "optimizer_steps": 13,
+      "report": {
+        "case_id": "train-5-lane-following",
+        "seed": 6800014,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 3200,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.0128125,
+        "mean_fraction_of_speed_limit": 0.895072652794196
+      },
+      "population": {
+        "controlled_count": 4,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 19,
+      "critic_only": false,
+      "optimizer_steps": 16,
+      "report": {
+        "case_id": "train-5-lane-ramp240-following",
+        "seed": 6800015,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 800,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.04625,
+        "mean_fraction_of_speed_limit": 0.9718388532421386
+      },
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 20,
+      "critic_only": false,
+      "optimizer_steps": 141,
+      "report": {
+        "case_id": "train-5-lane-cruise",
+        "seed": 6800003,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 9600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.10697916666666667,
+        "mean_fraction_of_speed_limit": 0.9578806351563496
+      },
+      "population": {
+        "controlled_count": 12,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 21,
+      "critic_only": false,
+      "optimizer_steps": 28,
+      "report": {
+        "case_id": "i110-cruise",
+        "seed": 6800016,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1743,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.21055651176133103,
+        "mean_fraction_of_speed_limit": 0.9442462083187549
+      },
+      "population": {
+        "controlled_count": 6,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 22,
+      "critic_only": false,
+      "optimizer_steps": 20,
+      "report": {
+        "case_id": "train-2-lane-ramp120-cruise",
+        "seed": 6800017,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.37125,
+        "mean_fraction_of_speed_limit": 0.9148274630859204
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 16,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 23,
+      "critic_only": false,
+      "optimizer_steps": 76,
+      "report": {
+        "case_id": "train-4-lane-following",
+        "seed": 6800018,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 4797,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.050448196789660206,
+        "mean_fraction_of_speed_limit": 0.8891562544871087
+      },
+      "population": {
+        "controlled_count": 6,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 24,
+      "critic_only": false,
+      "optimizer_steps": 16,
+      "report": {
+        "case_id": "train-3-lane-passing",
+        "seed": 6800019,
+        "task": "passing",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 800,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.42125,
+        "mean_fraction_of_speed_limit": 0.4385264062984402
+      },
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 25,
+      "critic_only": false,
+      "optimizer_steps": 28,
+      "report": {
+        "case_id": "train-4-lane-passing",
+        "seed": 6800002,
+        "task": "passing",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.0275,
+        "mean_fraction_of_speed_limit": 0.9821881804904321
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 26,
+      "critic_only": false,
+      "optimizer_steps": 148,
+      "report": {
+        "case_id": "train-2-lane-following",
+        "seed": 6800020,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 9257,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.27330668683158693,
+        "mean_fraction_of_speed_limit": 0.8057661456180958
+      },
+      "population": {
+        "controlled_count": 12,
+        "total_vehicles": 16,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 27,
+      "critic_only": false,
+      "optimizer_steps": 28,
+      "report": {
+        "case_id": "train-2-lane-ramp120-following",
+        "seed": 6800021,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.154375,
+        "mean_fraction_of_speed_limit": 0.8902887000619607
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 28,
+      "critic_only": false,
+      "optimizer_steps": 4,
+      "report": {
+        "case_id": "train-4-lane-ramp120-merge",
+        "seed": 6800022,
+        "task": "merge",
+        "difficulty": 0,
+        "traffic_mode": "initial",
+        "agent_transitions": 19200,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.27875,
+        "mean_fraction_of_speed_limit": 0.9639690354289159
+      },
+      "population": {
+        "controlled_count": 24,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 29,
+      "critic_only": false,
+      "optimizer_steps": 28,
+      "report": {
+        "case_id": "train-4-lane-ramp120-passing",
+        "seed": 6800023,
+        "task": "passing",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.093125,
+        "mean_fraction_of_speed_limit": 0.9523860962680633
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 30,
+      "critic_only": false,
+      "optimizer_steps": 98,
+      "report": {
+        "case_id": "train-2-lane-ramp120-following",
+        "seed": 6800004,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 9600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.3233333333333333,
+        "mean_fraction_of_speed_limit": 0.9360819839836667
+      },
+      "population": {
+        "controlled_count": 12,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 31,
+      "critic_only": false,
+      "optimizer_steps": 12,
+      "report": {
+        "case_id": "train-4-lane-ramp120-cruise",
+        "seed": 6800024,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 9600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.035104166666666665,
+        "mean_fraction_of_speed_limit": 0.8835024607650018
+      },
+      "population": {
+        "controlled_count": 12,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 32,
+      "critic_only": false,
+      "optimizer_steps": 76,
+      "report": {
+        "case_id": "train-3-lane-ramp240-following",
+        "seed": 6800025,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 4800,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.2275,
+        "mean_fraction_of_speed_limit": 0.9575743470363822
+      },
+      "population": {
+        "controlled_count": 6,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 33,
+      "critic_only": false,
+      "optimizer_steps": 16,
+      "report": {
+        "case_id": "i110-cruise",
+        "seed": 6800026,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 907,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.1113561190738699,
+        "mean_fraction_of_speed_limit": 0.7921237434343203
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 34,
+      "critic_only": false,
+      "optimizer_steps": 20,
+      "report": {
+        "case_id": "i110-following",
+        "seed": 6800027,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1104,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.01177536231884058,
+        "mean_fraction_of_speed_limit": 0.8910067827647422
+      },
+      "population": {
+        "controlled_count": 4,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 35,
+      "critic_only": false,
+      "optimizer_steps": 56,
+      "report": {
+        "case_id": "train-3-lane-ramp240-following",
+        "seed": 6800025,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 4800,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.258125,
+        "mean_fraction_of_speed_limit": 0.9189021719118485
+      },
+      "population": {
+        "controlled_count": 6,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 36,
+      "critic_only": false,
+      "optimizer_steps": 31,
+      "report": {
+        "case_id": "train-3-lane-ramp240-cruise",
+        "seed": 6800028,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 8146,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.02442916768966364,
+        "mean_fraction_of_speed_limit": 0.8892074038156172
+      },
+      "population": {
+        "controlled_count": 12,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 37,
+      "critic_only": false,
+      "optimizer_steps": 78,
+      "report": {
+        "case_id": "train-3-lane-cruise",
+        "seed": 6800029,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "initial",
+        "agent_transitions": 12680,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.1384858044164038,
+        "mean_fraction_of_speed_limit": 0.9416617837856888
+      },
+      "population": {
+        "controlled_count": 16,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 38,
+      "critic_only": false,
+      "optimizer_steps": 12,
+      "report": {
+        "case_id": "train-5-lane-ramp240-cruise",
+        "seed": 6800030,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "initial",
+        "agent_transitions": 19200,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.23942708333333335,
+        "mean_fraction_of_speed_limit": 0.9753193617050926
+      },
+      "population": {
+        "controlled_count": 24,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 39,
+      "critic_only": false,
+      "optimizer_steps": 76,
+      "report": {
+        "case_id": "train-4-lane-merge",
+        "seed": 6800031,
+        "task": "merge",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 4800,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.075,
+        "mean_fraction_of_speed_limit": 0.9270135082965157
+      },
+      "population": {
+        "controlled_count": 6,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 40,
+      "critic_only": false,
+      "optimizer_steps": 32,
+      "report": {
+        "case_id": "train-2-lane-cruise",
+        "seed": 6800007,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1929,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.2042509072058061,
+        "mean_fraction_of_speed_limit": 0.9349497694331667
+      },
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 41,
+      "critic_only": false,
+      "optimizer_steps": 28,
+      "report": {
+        "case_id": "train-2-lane-ramp120-cruise",
+        "seed": 6800032,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.19875,
+        "mean_fraction_of_speed_limit": 0.8416592458109036
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 42,
+      "critic_only": false,
+      "optimizer_steps": 152,
+      "report": {
+        "case_id": "train-4-lane-ramp120-cruise",
+        "seed": 6800033,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 9600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.13833333333333334,
+        "mean_fraction_of_speed_limit": 0.9426577784308662
+      },
+      "population": {
+        "controlled_count": 12,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 43,
+      "critic_only": false,
+      "optimizer_steps": 28,
+      "report": {
+        "case_id": "train-4-lane-ramp120-following",
+        "seed": 6800034,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 4800,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.0325,
+        "mean_fraction_of_speed_limit": 0.7590780803453443
+      },
+      "population": {
+        "controlled_count": 6,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 44,
+      "critic_only": false,
+      "optimizer_steps": 28,
+      "report": {
+        "case_id": "train-5-lane-following",
+        "seed": 6800035,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 1600,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.34125,
+        "mean_fraction_of_speed_limit": 0.7116923704869278
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 16,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 45,
+      "critic_only": false,
+      "optimizer_steps": 81,
+      "report": {
+        "case_id": "train-3-lane-ramp240-following",
+        "seed": 6800012,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 14379,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.10035468391404131,
+        "mean_fraction_of_speed_limit": 0.7600638597876008
+      },
+      "population": {
+        "controlled_count": 18,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 46,
+      "critic_only": false,
+      "optimizer_steps": 6,
+      "report": {
+        "case_id": "train-2-lane-cruise",
+        "seed": 6800036,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 800,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.14625,
+        "mean_fraction_of_speed_limit": 0.982408335718077
+      },
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 47,
+      "critic_only": false,
+      "optimizer_steps": 52,
+      "report": {
+        "case_id": "train-3-lane-following",
+        "seed": 6800037,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 3080,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.17207792207792208,
+        "mean_fraction_of_speed_limit": 0.7745853390617807
+      },
+      "population": {
+        "controlled_count": 4,
+        "total_vehicles": 16,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 48,
+      "critic_only": false,
+      "optimizer_steps": 36,
+      "report": {
+        "case_id": "train-2-lane-ramp120-passing",
+        "seed": 6800038,
+        "task": "passing",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 2267,
+        "partial_control_horizon": false,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "intervention_fraction": 0.19276576973974416,
+        "mean_fraction_of_speed_limit": 0.907602813442702
+      },
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.3
+      }
+    },
+    {
+      "index": 49,
+      "critic_only": false,
+      "optimizer_steps": 29,
+      "report": {
+        "case_id": "train-2-lane-following",
+        "seed": 6800039,
+        "task": "following",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 5022,
+        "partial_control_horizon": true,
+        "primary_horizon_complete": false,
+        "accounting_comparison_valid": false,
+        "intervention_fraction": 0.10792512943050578,
+        "mean_fraction_of_speed_limit": 0.8792491682338367
+      },
+      "population": {
+        "controlled_count": 18,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.0
+      }
+    },
+    {
+      "index": 50,
+      "critic_only": false,
+      "optimizer_steps": 3,
+      "report": {
+        "case_id": "train-5-lane-ramp240-cruise",
+        "seed": 6800013,
+        "task": "cruise",
+        "difficulty": 0,
+        "traffic_mode": "sustained",
+        "agent_transitions": 2,
+        "partial_control_horizon": true,
+        "primary_horizon_complete": false,
+        "accounting_comparison_valid": false,
+        "intervention_fraction": 0.0,
+        "mean_fraction_of_speed_limit": 0.8112286229653558
+      },
+      "population": {
+        "controlled_count": 2,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      }
+    }
+  ]
+}

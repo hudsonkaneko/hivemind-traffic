@@ -956,3 +956,8 @@ The first authorized launch stopped during initial validation, before any traini
 ## November 5, 2026 — v05 native insertion repair
 
 The second launch stopped before learning: native ACC delayed an initial closing follower, allowing later inflow to mix with the fixed cohort. Preserved both failed checkpoints and 512.048 cumulative seconds. Added source-backed ACC insertion clearance before AV assignment; counts/speeds/guards remain fixed, while initial positions and density change where needed. All 132 native reset cases pass with all initial vehicles departing at zero and present at 0.1 seconds, no collisions/teleports/warnings. 269 tests pass. [Failure, density comparison and recovery](highway-environment-v05.md#second-launch-native-insertion-feasibility).
+
+
+## November 5, 2026 — v05 pilot completed and rejected
+
+Completed 249,999 active-agent decisions,50 update batches and 2,455.032 cumulative seconds including both failures, without progress monitoring during training. Stable merges improve2/9→8/9 and passes 55→59, but pooled interventions regress 13.37%→19.83%; 19/24 cases fail and I-110 stays 0/1 merged. No recorded collisions/teleports/overspeed/emergency events under protections; no held-out promotion or physical/sensor qualification. Published the small frozen 99-input candidate with exact config, contract, checksums and per-seed evaluation; older policies stay intact. [Results and measured plots](highway-environment-v05-results.md); [policy](../policies/versions/highway-environment-v05/README.md).

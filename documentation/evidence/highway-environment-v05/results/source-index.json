@@ -1,0 +1,56 @@
+{
+  "run": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880",
+  "sources": [
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/summary.json",
+      "bytes": 16043,
+      "sha256": "7e449479c46848d7a9c1cf273f7870fa939640d546c57b913be1926f25bd3af8"
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation.json",
+      "bytes": 5211877,
+      "sha256": "d51747a1bacd11b956d6814b0d843fe9af951e7b8528dd4c00921e7cfdc06770"
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation.json",
+      "bytes": 5202522,
+      "sha256": "6de0e8b0d4f7846b904372f9890e43dd5b33ae45514abd0c0aa312930359d0b5"
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/comparison.json",
+      "bytes": 59056,
+      "sha256": "8cfff0d8a76016fa82433bc42cbd95008acc8884552f66296a731dcecf1467c3"
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/curriculum.json",
+      "bytes": 54604,
+      "sha256": "fe6c62cc3bda88e6d73a7e46fa0b50fcd78654d6bd9c0996e0e3b7c07c238630"
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/training-coverage.json",
+      "bytes": 4490,
+      "sha256": "f41b2f3c8e289e4096510accf46aeb58a716754c9f5304e4203812648651efa3"
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/provenance.json",
+      "bytes": 7764,
+      "sha256": "03b0f176dba193969b5f1e38738a14725489c10e0c07adba08cc8454657c9a71"
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/policy-contract.json",
+      "bytes": 8754,
+      "sha256": "c05fe8317aaee5d8b703c3150eff390f73e927421910b5859aa300d0af466a0d"
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/config.json",
+      "bytes": 57191,
+      "sha256": "17a28932f90c0ae64d875beab733c4d275de506487f7cad7b1a11909423121f9"
+    }
+  ],
+  "artifact_policy": "Compact numerical extracts and actual-data plots only; no raw trajectories or weights",
+  "plot_builder": {
+    "path": "documentation/evidence/highway-environment-v05/results/build_evidence.py",
+    "bytes": 15539,
+    "sha256": "578075e0e772f64ba046f0ca9b73c9bf6591a3f0d6f33280dbaf1af70d0677ea"
+  }
+}

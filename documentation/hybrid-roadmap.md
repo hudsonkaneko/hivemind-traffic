@@ -583,3 +583,8 @@ The [frozen MAPPO adapter](mappo-physical-adapter-v01.md) now translates acceler
 ## November 5, 2026 — environment v05 milestone
 
 [Continuous-maneuver environment v05](highway-environment-v05.md) implements the next structured-driving step: continuous native lane changes, observed overlapping traffic, stable-merge/full-route metrics, independent AV participation and traffic density, varied ramp geometry and competence-based task mixtures. 256 targeted checks and final source-matched SUMO readiness pass. The I-110 scripted baseline retains its 5.34% intervention failure; no driving acceptance or physical/sensor transfer is implied. The user-authorized 250k-decision/one-hour pilot is queued after saving this checkpoint. Track results and next actions in the [living sensor-driven roadmap](sensor-driven-training-roadmap.md).
+
+
+## November 5, 2026 — v05 learned candidate remains unaccepted
+
+The [v05 pilot](highway-environment-v05-results.md) completed 249,999 active-agent decisions within the original budget, retaining both failures and consumed time. Stable merging improves 2/9→8/9 but intervention dependence worsens 13.37%→19.83%; I-110 remains unmerged. The separately versioned 99-field actor is rejected, not a replacement for accepted historical fixtures. [Living roadmap v15](sensor-driven-training-roadmap.md) now calls for a train-only native-response/entry diagnostic before another reviewed training configuration. No held-out or physical/sensor acceptance is claimed.
