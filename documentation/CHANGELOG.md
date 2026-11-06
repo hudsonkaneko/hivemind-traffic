@@ -961,3 +961,12 @@ The second launch stopped before learning: native ACC delayed an initial closing
 ## November 5, 2026 — v05 pilot completed and rejected
 
 Completed 249,999 active-agent decisions,50 update batches and 2,455.032 cumulative seconds including both failures, without progress monitoring during training. Stable merges improve2/9→8/9 and passes 55→59, but pooled interventions regress 13.37%→19.83%; 19/24 cases fail and I-110 stays 0/1 merged. No recorded collisions/teleports/overspeed/emergency events under protections; no held-out promotion or physical/sensor qualification. Published the small frozen 99-input candidate with exact config, contract, checksums and per-seed evaluation; older policies stay intact. [Results and measured plots](highway-environment-v05-results.md); [policy](../policies/versions/highway-environment-v05/README.md).
+
+
+## November 6, 2026 — I-110 merge blockage correction v01
+
+- Fixed false ramp-junction conflicts with four parallel through lanes; the genuine auxiliary-lane conflict and yield remain. New versioned output preserves the original network, geometry, demand, policy and safety settings.
+- Frozen seed 6900019 replay: focal stopped samples 752 to 0; stable merges 0/1 to 1/1; all eight controlled trips complete; fleet interventions 30.53% to 8.52%, still failing the unchanged 5% target. Zero recorded collisions, teleports, overspeed or native emergency warnings.
+- Added native junction-entry/progress diagnostics, honest maneuver labels, readiness provenance and regression tests. Retained failed duration/native-control probes and the potentially stateful diagnostic-getter caveat; ordinary recording independently confirms the result.
+- Verified a 251-frame SimReady v14 main-car replay with lightweight backgrounds, exact poses, unchanged source assets and screenshots. No training or policy promotion.
+- [Results, evidence and reproduction](i110-merge-blocking-v01.md). Both engineering-guide copies synchronized from a full revision-guarded native readback; all 42 tabs preserved.

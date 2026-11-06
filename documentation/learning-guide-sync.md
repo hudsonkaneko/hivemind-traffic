@@ -589,3 +589,10 @@ Appended the merge-specific policy selection, fixed-seed results, failed interve
 ## November 5: environment v05 training and SimReady replay
 
 Appended implementation, all preserved failures, budget-preserving recoveries, actual training results, rejected-policy artifacts and both SimReady visual cases to tab 41. The start-tab mirror link now follows `codex/highway-environment-v05`. A revision-guarded edit and full native readback verified all 42 tabs, the exact historical target prefix and 40 unchanged unrelated tab bodies. The generated mirror and its check pass from `outputs/doc-sync/highway-environment-v05/verified-source.json` (2,603 paragraphs, 14 tables, 182 code blocks). Native pagination was not inspected. [Measured results](highway-environment-v05-results.md) explicitly retain the intervention regression and I-110 failure; neither copy claims an accepted policy.
+
+
+## November 6, 2026: I-110 merge blockage correction
+
+Appended the network-conflict diagnosis, matched frozen-policy results, failed probes and getter caveat, SimReady replay, remaining intervention failure and no-training next step to tab 41. The start-tab Markdown link now targets `codex/i110-merge-blocking-fix`.
+
+A revision-guarded native write and complete readback preserved all 42 tabs, the 40 unrelated tab bodies and the historical target prefix. Regeneration/check passed from `outputs/doc-sync/i110-merge-blocking-v01/verified-source.json`: 2,612 paragraphs, 14 tables and 182 code blocks. Native page layout was not inspected. Both copies contain the same verified source; source assets, raw captures and videos remain local.

@@ -1,0 +1,18 @@
+........................................................................ [ 34%]
+........................................................................ [ 68%]
+........................................................s.....sssss      [100%]
+============================== warnings summary ===============================
+tests/test_highway_v05_training.py::test_actor_migration_preserves_old_features_and_zeros_only_new_columns
+  C:\Users\hudso\Documents\highwaysim\.venv-traffic\Lib\site-packages\torch\jit\_script.py:1491: FutureWarning: `torch.jit.script` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+tests/test_highway_v05_training.py::test_actor_migration_preserves_old_features_and_zeros_only_new_columns
+  C:\Users\hudso\Documents\highwaysim\.venv-traffic\Lib\site-packages\torch\jit\_freeze.py:106: FutureWarning: `torch.jit.freeze` is deprecated. Please use `torch.compile` instead.
+    warnings.warn(
+
+tests/test_highway_v05_training.py::test_actor_migration_preserves_old_features_and_zeros_only_new_columns
+  C:\Users\hudso\Documents\highwaysim\.venv-traffic\Lib\site-packages\torch\jit\_serialization.py:176: FutureWarning: `torch.jit.load` is deprecated. Please switch to `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+205 passed, 6 skipped, 3 warnings in 6.36s

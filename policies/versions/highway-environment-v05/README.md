@@ -63,3 +63,13 @@ record. Both pre-learning failures remain in the charged budget and recovery
 history. Previous versioned weights remain unchanged, including the separate
 accepted MAPPO v04r2 actor. Retain v05 as a reproducible research endpoint, not
 as a replacement for an accepted controller.
+
+## November 6: environment-only I-110 correction
+
+The frozen actor is unchanged. A [matched diagnostic](../../../documentation/i110-merge-blocking-v01.md)
+found that the original I-110 junction incorrectly yielded to four parallel
+through lanes. Correcting only its conflict matrix changes this case from a
+blocked ramp to a completed stable merge and eight completed controlled trips.
+Fleet interventions fall from 30.53% to 8.52%; the unchanged 5% gate still fails.
+This is a separate environment treatment with zero optimizer steps, not a new
+checkpoint or a replacement for the historical 24-case evaluation above.
