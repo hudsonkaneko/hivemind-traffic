@@ -1000,3 +1000,8 @@ Three read-only audits inspected the native control/learning chain, reward scale
 ## November 6, 2026 — Highway flow preparation v01
 
 Implemented the separate 117-field environment/reference, versioned counterfactual bank, qualified-label MAPPO adapters, paired imitation-only configuration and strict budget/resume/readiness gates with three subagents. Preserved all historical runtime sources and weights. The 81-recording allocation uses verified compatible cached evidence plus fresh runs and an explicit deadline repair; failures and 978.186 seconds of preparation cost remain retained. Reference passes 17/27 combined cases: all raw safety/5% checks pass, but four nominal jerk gates and six task gates fail. I-110 main-car flow regresses while the ending-lane detour is removed. Initializer selection/readiness remain null and training disabled. Four verified 60-second SimReady replays, raw metrics, compact evidence, candidate-only frozen gradients and the prepared configuration are linked in [the technical note](highway-flow-preparation-v01.md).
+
+
+## November 6, 2026 — bounded I-110 approach ablations
+
+Two short candidates failed: arrival 49.3 -> 63.2 s, stopped exposure 0 -> 12.3 s; zero overrides in all runs. Restored reference code/tests, retained failed source snapshots/metrics and measured speed plot. No training/config changes. [Evidence](highway-flow-preparation-v01.md#focused-approach-ablation--november-6-2026). Incremental guide sync pending.

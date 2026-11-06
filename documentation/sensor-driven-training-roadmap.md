@@ -1,6 +1,6 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v20**, updated **November 6, 2026, America/Los_Angeles**.
+Revision **v21**, updated **November 6, 2026, America/Los_Angeles**.
 Status: **Flow preparation implemented and tested; reference qualification failed; training remains disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
@@ -14,7 +14,7 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** resolve the failed reference prerequisites recorded in [flow preparation v01](highway-flow-preparation-v01.md): native cut-in comfort, main-car gap/approach flow and full-route qualification. The new 117-input setup and paired imitation-strength runner are implemented. The 81-recording diagnostic bank is complete with explicit cached-evidence compatibility, preserved failures and three frozen event-coverage failures. Reference overrides are low but four nominal comfort gates and six task gates fail; I-110 main-car flow regresses while agent_4 avoids its ending-lane detour. Four 60-second SimReady replays and all-car metrics are saved. Initializer selection remains unresolved; no optimizer updates or training occurred. Requalify the reference before spending on the fixed 48-case initializer comparison and presenting a launch-ready configuration.
+**Next action:** first inspect one failed gap window and implement longitudinal slot alignment; two focused approach-braking ablations were rejected and baseline restored (see v21 below). Then resolve the failed reference prerequisites recorded in [flow preparation v01](highway-flow-preparation-v01.md): native cut-in comfort, main-car gap/approach flow and full-route qualification. The new 117-input setup and paired imitation-strength runner are implemented. The 81-recording diagnostic bank is complete with explicit cached-evidence compatibility, preserved failures and three frozen event-coverage failures. Reference overrides are low but four nominal comfort gates and six task gates fail; I-110 main-car flow regresses while agent_4 avoids its ending-lane detour. Four 60-second SimReady replays and all-car metrics are saved. Initializer selection remains unresolved; no optimizer updates or training occurred. Requalify the reference before spending on the fixed 48-case initializer comparison and presenting a launch-ready configuration.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
@@ -480,3 +480,8 @@ Three subagents implemented the 117-field current-state/map ABI, explicit topolo
 The reference passes 17/27 combined cases. All 27 retain raw safety/5% override checks, but four nominal measured-jerk peaks are 21.959/45.000/10.927/22.412 m/s³ and six counterfactual task gates fail. I-110 main-car minimum 3.421 m/s and 17.9 seconds below half the local limit remain unacceptable flow limitations despite its passing stress-case row. Agent_4 minimum improves from v4's 1.456 to 14.323 m/s after removal of the ending-lane detour. Four actual 60-second SimReady replays, full-route plots and compact metrics are retained in [the technical note](highway-flow-preparation-v01.md). This is kinematic replay, not sensor or physical qualification.
 
 The final prepared configuration remains disabled, selected initializer/readiness null. Two proposed 30k-decision arms compare acceleration imitation 1 versus 5 only, keeping legacy rewards under the new reference; the 5,400-second shared ceiling includes 1,800 seconds of preparation and a 900-second final evaluation reserve. An independent warmup cursor preserves the first 18 single-AV PPO foundation cases, followed by varied participation. Candidate-only frozen gradients used matched 308-sample batches, the first 256 diagnostic rows and zero optimizer steps; this is not final initializer selection. Preparation cost of 978.186 seconds is retained. Reference qualification, persistent pre-maneuver gap identity, future internal-limit preview and the fixed 48-case initializer comparison remain open. No training or policy promotion.
+
+
+### v21 — November 6: bounded approach ablations rejected
+
+Two same-seed 80-second I-110 checks (39.282 seconds combined wall time) removed premature adjacent-lane braking and then recomputed future entry response. Both worsened main-car arrival from 49.3 to 63.2 s and introduced 12.3 s stopped exposure despite zero safety overrides. Original source/test files were restored exactly; 27 tests plus 3 subtests pass. [Failure evidence and speed plot](highway-flow-preparation-v01.md#focused-approach-ablation--november-6-2026) are retained with source hashes. Next action is a focused gap-window/longitudinal slot-alignment correction, not stronger imitation of the current reference. No training, weights, config or 3D render changes. Guide sync for this incremental note is pending.

@@ -621,3 +621,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ## November 6 checkpoint: flow preparation tested, training not ready
 
 [Flow preparation v01](highway-flow-preparation-v01.md) implements the new local/map contract, route-aware reference and one-factor paired MAPPO setup. The full diagnostic allocation retains failed attempts, compatibility checks, all-car outcomes and four SimReady replays. Low overrides do not qualify the reference: nominal comfort/task gates and the main-car flow limitation remain unresolved. The [living sensor roadmap](sensor-driven-training-roadmap.md) is v20; no training or policy promotion occurred. Requalify the target before initializer selection and final launch approval.
+
+
+### Flow approach follow-up — November 6, 2026
+
+[Two focused approach ablations](highway-flow-preparation-v01.md#focused-approach-ablation--november-6-2026) were rejected and baseline restored. Main-car slot alignment remains the next prerequisite; training remains disabled. Metrics and failed source snapshots are preserved.

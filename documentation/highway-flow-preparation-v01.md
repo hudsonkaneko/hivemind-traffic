@@ -197,3 +197,23 @@ identity remains unimplemented. Requalify the reference with all-car progress an
 comfort retained, then run the fixed initializer comparison and final-bound
 gradient check. Present that genuinely launch-ready configuration for approval;
 do not train the actor to imitate this unqualified reference more strongly.
+
+
+## Focused approach ablation — November 6, 2026
+
+Two same-seed I-110 checks tested removing premature adjacent-lane braking, then predicting the following response at future entry. Both were rejected and the original reference/test files restored exactly. A focused subagent reviewed the constraints. Each check used 80 simulated seconds; wall times were 19.125 and 20.157 seconds. No training or new 3D renders ran.
+
+| Main car metric | Baseline | Both rejected candidates |
+| --- | ---: | ---: |
+| Arrival time | 49.3 s | 63.2 s |
+| Minimum speed | 3.421 m/s | 0 m/s |
+| Time below half local limit | 17.9 s | 25.9 s |
+| Stopped exposure | 0 s | 12.3 s |
+| Peak measured jerk | 2.000 m/s³ | 4.000 m/s³ |
+| Safety overrides | 0% | 0% |
+
+All runs completed one stable merge with zero collisions/teleports and 33/55 trips completed within the common horizon. Agent_4 was unchanged. Removing the early braking improved the approach briefly but left no certified complete maneuver, then the ending-lane stopping profile became binding. Recomputing future following response alone did not change that trajectory; clipped ACC estimates also cannot prove a farther leader is absent. Neither patch is retained.
+
+Next: inspect a single failed gap window and prepare longitudinal slot alignment before changing reward weights. Preserve occupied-lane constraints, native safety and full-maneuver gap checks. Training configuration stays disabled and initializer/readiness null. The restored reference passes 27 tests plus 3 subtests. [Compact results](evidence/highway-flow-preparation-v01/approach-ablation/results.json) retain source identities and paths to both failed recordings. Google guide/mirror unchanged; this incremental evidence note is pending guide sync.
+
+![Measured main-car speed from saved SUMO traces](evidence/highway-flow-preparation-v01/approach-ablation/speed-comparison.png)
