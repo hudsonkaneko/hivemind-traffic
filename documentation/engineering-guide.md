@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-training-rethink-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-training-rethink-v01/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-flow-preparation-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-flow-preparation-v01/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4888,3 +4888,25 @@ Proposed first study: 63 zero-learning diagnostic episodes within 1,800 s, then 
 Plan, actual saved-sample figure, audits and precise proposed gates: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-training-rethink-v01/documentation/highway-training-rethink-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-training-rethink-v01/documentation/highway-training-rethink-v01.md>)
 
 Living sensor-driven roadmap is v19. Immediate next action is review of Steps 1–2, not training. Structured driving competence still precedes imperfect-observation and camera/LiDAR policy integration.
+
+<a id="docs-h-x977i69sztu6"></a>
+
+#### November 6, 2026 — Highway flow preparation: tested, training blocked
+
+Implemented the separate 117-field observation contract, route continuation and entry visibility, per-corridor response estimates, route-useful gap reference, matched MAPPO runner, immutable foundation schedule and budget/resume guards. Three subagents divided the implementation and independent checks. Existing runtime files and policy weights remain unchanged; no optimizer updates or new learned weights were produced.
+
+The diagnostic allocation contains 81 full 80-second recordings: 54 compatible cached records with verified control sources, map, demand and effective inputs; 26 fresh records; and one explicit full rerun after a batch deadline. JSON/source-change failures and both invalid spawn attempts remain preserved and charged. Three frozen-policy trials did not complete the prescribed external event and remain failed coverage. This is not a claim of 81 clean episodes or a held-out policy acceptance.
+
+The new reference passes 17 of 27 combined cases. All 27 pass the original raw safety and 5% intervention checks, with a worst override rate of 0.172%. Six counterfactual task gates fail and four nominal legacy comfort peaks remain 21.959, 45.000, 10.927 and 22.412 m/s³ against the unchanged 5 m/s³ limit. Unfinished routes remain censored in full-cohort accounting; an 80-second complete horizon does not prove a completed route.
+
+The corrected exclusive added-lane fixture stays at or above 16 m/s with no overrides or low-speed exposure and approximately 2 m/s³ peak jerk. A false yield classification and a synthetic connector kink were corrected without disabling safety or changing imported I-110. On I-110, however, the main reference car reaches 3.421 m/s and spends 17.9 seconds below half its local speed limit. Its 30-second distance is 248.454 m, below the previous reference's 352.482 m. Another highway car avoids the ending-lane detour and its minimum improves from 1.456 to 14.323 m/s. A small fleet-time gain does not erase the main-car regression.
+
+The prepared configuration compares acceleration imitation multipliers 1 and 5 with overall coefficient 0.04, keeping legacy reward weights under the same new reference. Shared MAPPO actor: 117 observations, acceleration and masked lane intent; centralized critic: 24 slots, 2832 fields. Actor/critic learning rates 0.0001/0.0003, four epochs, clipping 0.2, gamma 0.99, GAE 0.95. Two 30k-decision arms include up to 2048 critic-warmup decisions each; shared ceiling 5400 seconds includes 1800 preparation and 900 reserved for final evaluations. The first 18 PPO foundation cases use one AV each, then participation varies. Warmup cannot skip this coverage block.
+
+training\_authorized remains false; readiness and selected initializer remain null. The fixed 48-case initializer comparison is deferred because reference qualification failed. An explicitly named diagnostic candidate produced matched 308-sample frozen batches (512 ceiling); the first 256 rows supplied gradient diagnostics. Parameters, optimizer state and RNG were unchanged. This is not final initializer selection or training. Current bounded preparation cost is 978.186 seconds.
+
+Verification: 144 focused tests plus 22 subtests passed with local artifacts; portable mode passed 141 tests plus 22 subtests with three explicit artifact skips. Native parallel API and seed checks and 11 actual USD/renderer tests passed. Four new 60-second SimReady v14 replays show both the main car and the previously affected highway car, with matching time/speed overlays, zero pose error and unchanged source assets/layers. These are kinematic SUMO replays, not physical control or sensor inference qualification.
+
+Results, screenshots and prepared configuration: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-flow-preparation-v01/documentation/highway-flow-preparation-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-flow-preparation-v01/documentation/highway-flow-preparation-v01.md>)
+
+Local four-view replay: outputs/highway-flow/v01/visual-comparison-01/i110-flow-comparison.mp4. Living roadmap is v20. Next work is reference qualification, cut-in anticipation, main-car gap commitment and upcoming internal speed-limit preview, followed by initializer selection and a launch-ready configuration for explicit approval. No training has started.

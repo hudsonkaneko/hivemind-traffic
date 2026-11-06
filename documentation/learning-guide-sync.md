@@ -617,3 +617,10 @@ Revision-guarded native editing and a full readback preserved all 42 tabs, all 4
 Appended the read-only replay/control/reward/weight audit, measured regressions, new proposed sequence/budgets and no-training status to tab `t.k82ts3ro3qz9`. Updated only the start-tab mirror URL to `codex/highway-training-rethink-v01`.
 
 The fresh pre-edit full read matched the previous verified source. Revision-guarded scoped editing and full readback preserved all 42 tabs, the 40 unaffected tab bodies and exact historical target-tab elements. Target addition and start-tab replacement matched exactly. The regenerated mirror passed check from `outputs/doc-sync/highway-training-rethink-v01/verified-source.json`: 2,640 paragraphs, 14 tables, 182 code blocks. Native pagination was not inspected. [New plan and actual saved-sample plot](highway-training-rethink-v01.md).
+
+
+## November 6, 2026 — Highway flow preparation v01
+
+Appended implementation, all preserved failures, the 81-recording evidence allocation, failed reference qualification, unresolved initializer, prepared disabled configuration and actual four-view SimReady replay to tab `t.k82ts3ro3qz9`. Updated only the start-tab mirror URL to `codex/highway-flow-preparation-v01`.
+
+Revision-guarded native editing and full readback preserved all 42 tabs, all 40 unaffected tab bodies and the historical target elements. The intended addition and start-tab URL replacement match exactly. The generated mirror passed its check from `outputs/doc-sync/highway-flow-preparation-v01/verified-source.json`: 2,650 paragraphs, 14 tables and 182 code blocks. Native pagination was not inspected. Both copies explicitly say training is disabled and the reference is not qualified. [Results and screenshots](highway-flow-preparation-v01.md).
