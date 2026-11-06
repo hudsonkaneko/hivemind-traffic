@@ -1,0 +1,95 @@
+{
+  "schema": "highway_smooth_control_evidence_v1",
+  "copies": {
+    "saved-control-analysis-02.json": {
+      "source": "outputs\\highway-smooth-control\\v01\\saved-control-analysis-02.json",
+      "sha256": "614d4bc3edf822f9aad35874b51ceb3a135b821bde8493354e6573831ca3e3ca"
+    },
+    "focal-saved-audit.json": {
+      "source": "outputs\\i110-smooth-control\\v01\\focal-saved-audit.json",
+      "sha256": "fd04de1b4331b65f97f2c4872355ffd46dbfddbd93d13552fa61072dc73af36a"
+    },
+    "focal-speed-acceleration-jerk.png": {
+      "source": "outputs\\i110-smooth-control\\v01\\focal-speed-acceleration-jerk.png",
+      "sha256": "b9d1dbcdc0f5cd757be85c2e67e3ddc73c5acdeba7e71d30a4c35df0b39a3704"
+    },
+    "focal-merge-approach-detail.png": {
+      "source": "outputs\\i110-smooth-control\\v01\\focal-merge-approach-detail.png",
+      "sha256": "5b55106a79d982819f6e07b4c6158f82ad1613ed08c839304b9d5205046b35a8"
+    },
+    "recording-check.json": {
+      "source": "outputs\\highway-smooth-control\\v01\\replay-current-01\\recording-check.json",
+      "sha256": "4185ddc704c8f0ca4ed8e47fc5b55574ef512b1872dfddfa46cf453935e253d3"
+    },
+    "reference-check-summary.json": {
+      "source": "outputs\\highway-smooth-control\\v01\\reference-check-01\\summary.json",
+      "sha256": "b2b7a5a5ace5aea7ae150eeac7c9c62ced4f369189384b04ba2df90462bd130d"
+    },
+    "teacher-reference-manifest.json": {
+      "source": "outputs\\highway-smooth-control\\v01\\reference-check-01\\teacher\\manifest.json",
+      "sha256": "64cd87a4f62ca51e3f254cbbd22dd87583b24b7bac8d7fadaf494705284fb452"
+    },
+    "learned-reference-manifest.json": {
+      "source": "outputs\\highway-smooth-control\\v01\\reference-check-01\\learned\\manifest.json",
+      "sha256": "2bc395dbec69884888147e8514f7e16c7cdc179810e35b42b0b55a3253a59cd9"
+    },
+    "render-report.json": {
+      "source": "outputs\\highway-smooth-control\\v01\\render-current-01\\render-report.json",
+      "sha256": "7f1afd509084e93573cf6faf0f1e29b851c97bcbe56cb748bee91b1bca8c327e"
+    },
+    "approach-3p5s.png": {
+      "source": "outputs\\highway-smooth-control\\v01\\render-current-01\\frames\\00034.png",
+      "sha256": "e99f3ed7349abc4871f3e42ae909a7329587bcf7fcb42fed4379c6a39e857f8b"
+    },
+    "merge-10p1s.png": {
+      "source": "outputs\\highway-smooth-control\\v01\\render-current-01\\merge.png",
+      "sha256": "80fe8bd5c440148f5cf4774e0b8d4be768c9ce659ba55ba1e0890c1bfe1d5fe7"
+    },
+    "after-25p1s.png": {
+      "source": "outputs\\highway-smooth-control\\v01\\render-current-01\\after.png",
+      "sha256": "89f2ba0c4bd8662c679d5666eee2121a24cc72a41e73406d37622e0e58165e77"
+    }
+  },
+  "raw_inputs": {
+    "outputs\\i110-merge-blocking\\v01\\replay-corrected-01\\recording.json": "d2e4323afe3c3ce9765abff68e6115a55783b6ca8e21ead68ea6971eb4f1a81d",
+    "outputs\\i110-merge-blocking\\v01\\replay-corrected-01\\evaluation.json": "0f76b725ad7a604675ec5935e91c996656bcce37fb464c62b11e001221a6e858",
+    "outputs\\highway-smooth-control\\v01\\replay-current-01\\recording.json": "50a328dd67080bb023e4aae390d7351bc88acff7169252d7a6866efd291dbbd2",
+    "outputs\\highway-smooth-control\\v01\\replay-current-01\\evaluation.json": "4dd6450026eaebcea8a6de46fabd8f3cf9e438749ce6417d6d0cf26c8b869967",
+    "outputs\\highway-smooth-control\\v01\\replay-current-01\\manifest.json": "9a10c5a9d0634204bfe7bc5c4335407f818b4d74d646d2fec27cf1353385c547",
+    "outputs\\highway-smooth-control\\v01\\replay-current-01\\policy.pt": "fd639c39f0c514256a458b2b85d35baba242125f44dcc3d9542d767eb2dd46ec",
+    "outputs\\highway-smooth-control\\v01\\replay-current-01\\network.net.xml": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+    "outputs\\i110-smooth-control\\v01\\focal-saved-trace.csv": "9a5aebda88fce27856a4be240f82140dbbeaebb8ddea59c62c4b0fbc11262c2f",
+    "outputs\\i110-smooth-control\\v01\\focal-speed-acceleration-jerk.svg": "53faf074a4d952f42f8bda76696c2c77c9d3a5c659561fdd024d450d466cc27b",
+    "outputs\\i110-smooth-control\\v01\\focal-merge-approach-detail.svg": "c7dfae00e1b598f5d86a57cd2e26c0aeda1ffcde53c34dec3d977aa26427c8a0",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\learned\\evaluation.json": "1c717d451fb96490f87a58fb146bd396f181e0ac5c47102a5b81ad1338c6e79c",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\learned\\recording.json": "e8ee523bf1d9b4f556f7563ca3931c9e9b42075fbbb0eef7f9418421037544b8",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\learned\\config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\learned\\native-command.json": "664bf562894d0a5d48c7162268e597a87b3f5e42f8cc8bb0a5ee1c99d3cf602a",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\learned\\recording-check.json": "ef8af341d388583f81f624dc8ef42890c662e6c7cc04a2c0e73dcbe518d5cc31",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\learned\\control-residuals.json": "8a8b7c8c1ec6149676bde65603ff1c35d9fcfc7700976ecc50b62597c816e221",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\teacher\\evaluation.json": "8649db50ca217eac0ff8aa0a83af8b81df14bc20f2217d5c50c175b816354b1a",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\teacher\\recording.json": "7b8952618b7e52cb4fe595ff665a66ac9add71fd076e0cdfc9fd001285ffb5f1",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\teacher\\config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\teacher\\native-command.json": "cc19f14ae6b28dd03a53de4eecf2391d596afdeeea319a8d03f496ccd6c205cb",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\teacher\\recording-check.json": "a59ae2c1e690048c5839503993d95ea49dee22466af7199d5f1ad2ec5e11e52d",
+    "outputs\\highway-smooth-control\\v01\\reference-check-01\\teacher\\control-residuals.json": "fdab416975bd4c0ba9692ef6237f88d6da8b124ccff5b52ee449bcbda10cfbf4",
+    "scripts\\check_highway_smooth_reference.py": "d976386b42a8824b6ebf8f38222d0fafa2c115262f93dd78b7da7effeb497fa5",
+    "outputs\\highway-smooth-control\\v01\\render-current-01\\render-request.json": "d560dba5f35db8d4276afbe34511c5f358a8dd9d022fe014df0f42fb9d704fa7",
+    "outputs\\highway-smooth-control\\v01\\render-current-01\\i110-merge.mp4": "401cd9f7084faab73026a28f587c6331a7d4304fdd1ce36602a1bcf7a39632f3"
+  },
+  "derived_comparison_sha256": "8a6f119054ea55ecf711bad5fc6cd1f518eef6c304cf422aa8ecf48b814e2fb9",
+  "reference_controller_metadata_check": {
+    "verified": true,
+    "teacher_controller": "teacher",
+    "teacher_policy_sha256": null,
+    "teacher_actor_invoked": false,
+    "teacher_metadata_files": [
+      "manifest.json",
+      "recording.json",
+      "evaluation.json"
+    ],
+    "learned_controller": "learned",
+    "training": false,
+    "optimizer_steps": 0
+  }
+}

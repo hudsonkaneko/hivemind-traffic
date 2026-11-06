@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-blocking-fix/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-blocking-fix/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4830,3 +4830,23 @@ The visual rerun uses the Americano v14 SimReady main car and lightweight backgr
 Technical note, screenshots and reproduction commands: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-blocking-fix/documentation/i110-merge-blocking-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-blocking-fix/documentation/i110-merge-blocking-v01.md>)
 
 Next action: diagnose the remaining requested-versus-realized acceleration mismatch on training fixtures, then present a separately reviewed training configuration. Do not train on these validation trajectories or promote the frozen candidate.
+
+<a id="docs-h-iw3e924i44ag"></a>
+
+#### Smooth highway control diagnosis and proposed reward plan — November 6, 2026
+
+The corrected I-110 policy still fails the 5% intervention gate at 244/2864 decisions (8.52%). Three agents audited native control, map/trajectory behavior and the objective. All 244 intervention samples match the existing target to measured SUMO acceleration within 0.0001 m/s²: 233 ordinary following responses and 11 minor-entry approach responses. The actor over-requests acceleration; the evidence does not justify changing native car-following, safety modes, visibility or intervention counting.
+
+The visible speed dip occurs before entry: 11.12 to 6.41 m/s, followed by 58.93 m/s³ peak longitudinal jerk. Speed rises during and after the lateral merge. The 4.5 m minor-entry visibility assumption is retained; increasing it without sightline evidence would change the scenario rather than correct a demonstrated defect. The intended improvement is earlier anticipation and smoother recovery while preserving necessary braking.
+
+A separate no-update comparison uses training-only seed 6800019, identical demand and complete 80-second accounting. The frozen actor records 557/3183 interventions (17.50%) and 59.96 m/s³ peak jerk. The existing scripted teacher records 0/3059 interventions but 65.00 m/s³ peak jerk, jumping from -4.5 to +2 m/s² at release. Both complete one stable merge and 33/55 trips with zero recorded collisions, teleports, overspeed and native emergency warnings. These are controller-reference results, not improved learned weights. Stronger imitation of the current teacher alone would reinforce abrupt recovery.
+
+The proposed preparation first creates a current-observation anticipatory soft reference and smooth recovery from measured acceleration, with mandatory braking taking priority. Candidate objective changes are reference-alignment weight 0.25 to 1.0, acceleration-imitation weight 1 to 5 only against a verified revised reference, measured-jerk weight 0.01 absolute cost to 0.03 uncapped Huber cost, and a new 0.01 reference-error slew term. Progress, collision/intervention accounting, lane-change constraints, headway, TTC and speed limits remain unchanged. This is a proposal, not implemented reward runtime or validated capability.
+
+The proposed comparison is two 50,000-active-decision arms, 100,000 total and 3,600 seconds total, using the same starting actor and matched training-only exposure. Include dense following and merging without claiming the old mastery gates were passed. Keep all 24 development validation cases, actual per-task metrics, complete traffic accounting and independent comfort/progress gates. A passing no-update reference/comfort preflight, a resolved configuration shown to the user and explicit training approval are required before learning. Once an approved run starts, wait for completion or failure without conversational monitoring; retain automated metrics and checkpoints. No training has started.
+
+A fresh ordinary validation recording exactly repeats all 801 native frames and the 8.52% result. The SimReady v14 main-car replay, with lightweight backgrounds, verifies 251 decoded frames, zero pose error, unchanged source assets and authored layers. Actual screenshots, speed/acceleration/jerk plots, raw evidence locations and failed-reference findings are retained. This remains kinematic SUMO replay, not physical or sensor-driven qualification.
+
+Diagnosis, metrics and screenshots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/highway-smooth-control-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/highway-smooth-control-v01.md>)
+
+Proposed weights, reference design and approval gates: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/highway-smooth-training-plan-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/highway-smooth-training-plan-v01.md>)

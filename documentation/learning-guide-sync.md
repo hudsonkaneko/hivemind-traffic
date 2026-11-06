@@ -596,3 +596,10 @@ Appended implementation, all preserved failures, budget-preserving recoveries, a
 Appended the network-conflict diagnosis, matched frozen-policy results, failed probes and getter caveat, SimReady replay, remaining intervention failure and no-training next step to tab 41. The start-tab Markdown link now targets `codex/i110-merge-blocking-fix`.
 
 A revision-guarded native write and complete readback preserved all 42 tabs, the 40 unrelated tab bodies and the historical target prefix. Regeneration/check passed from `outputs/doc-sync/i110-merge-blocking-v01/verified-source.json`: 2,612 paragraphs, 14 tables and 182 code blocks. Native page layout was not inspected. Both copies contain the same verified source; source assets, raw captures and videos remain local.
+
+
+## November 6, 2026: remaining overrides and smooth-reference proposal
+
+Appended the remaining intervention attribution, observed approach slowdown and jerk, train-only teacher comparison, fresh SimReady replay, disabled proposed weights/budget and approval gates to tab 41. The start-tab mirror link follows `codex/highway-smooth-control-v01`.
+
+Revision-guarded native editing and full readback preserved all 42 tabs, the historical target prefix and 40 unaffected tab bodies. Regeneration and check passed from `outputs/doc-sync/highway-smooth-control-v01/verified-source.json`: 2,621 paragraphs, 14 tables and 182 code blocks. Native page layout was not inspected. Both copies clearly retain the 8.52% failure and no-training status. [Evidence](highway-smooth-control-v01.md); [proposal](highway-smooth-training-plan-v01.md).

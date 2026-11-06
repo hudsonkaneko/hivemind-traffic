@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "frames": 801,
+  "full_primary_horizon_retained": true,
+  "recording_sha256": "50a328dd67080bb023e4aae390d7351bc88acff7169252d7a6866efd291dbbd2",
+  "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+  "policy_unchanged": true,
+  "frozen_inputs_unchanged": true,
+  "sources_changed": [],
+  "source_unchanged": true,
+  "monotonic_time": true,
+  "training": false,
+  "optimizer_steps": 0,
+  "held_out_test_run": false,
+  "driving_acceptance": "See full evaluation.json; successful recording does not imply accepted driving"
+}
