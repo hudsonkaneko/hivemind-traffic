@@ -56,3 +56,4 @@ documentation/engineering-guide.md text eol=lf
 documentation/engineering-guide.sync.json text eol=lf
 # Frozen preparation evidence includes literal logs/patches; preserve bytes and hashes.
 documentation/evidence/highway-smooth-preparation-v01/** -text -whitespace
+documentation/evidence/highway-training-rethink-v01/** -text -whitespace

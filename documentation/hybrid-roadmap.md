@@ -609,3 +609,10 @@ A fresh SimReady main-car replay and full metrics are saved. [Living roadmap v17
 The [implementation and six-fixture results](highway-smooth-preparation-v01.md) complete preparation code and native/visual testing. The retained scripted reference meets every original safety/task/5% intervention check, including a continuous I-110 merge, but four strict comfort gates remain failed. The frozen learned actor is unchanged. No optimizer steps, held-out promotion or training launch occurred.
 
 The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18. Next: diagnose the remaining native-response peaks and establish a reference that meets comfort and progress gates before reviewing/authorizing the disabled matched 100k-decision MAPPO pilot. Metrics, failed revisions and two SimReady replays are retained; selected screenshots and compact evidence are in Git. The Google engineering guide and Markdown mirror were updated together.
+
+
+## November 6, 2026 — Audit replaces the next training recommendation
+
+[Highway training rethink v01](highway-training-rethink-v01.md) explains why fewer overrides and an earlier focal merge did not improve the scripted traffic: early low-speed travel, an unnecessary ending-lane pass, and delayed braking after leader/occupancy changes. Seven actor/checkpoint identities are intact; narrow curriculum exposure and misaligned references matter more than a blanket weight-corruption theory.
+
+[Living roadmap v19](sensor-driven-training-roadmap.md) now prioritizes a reviewed zero-learning roadway/reference diagnostic before a new training contract. Preserve all historical failed results and the disabled smooth bundle. The new proposal separates longitudinal learning, route/merge behavior and communication/population robustness, with every car's progress and full-cohort delay checked. Only documentation and saved-file analysis were produced; no new simulation or training.

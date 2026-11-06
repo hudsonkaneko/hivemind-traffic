@@ -610,3 +610,10 @@ Revision-guarded native editing and full readback preserved all 42 tabs, the his
 Appended implemented reference/reward/trainer behavior, 44 preserved full native runs, retained v4 results, rejected v5, four comfort failures, disabled final configuration, test outcomes and SimReady replay limitations to tab `t.k82ts3ro3qz9`. Updated only the start-tab mirror URL to branch `codex/highway-smooth-preparation-v01`.
 
 Revision-guarded native editing and a full readback preserved all 42 tabs, all 40 unaffected tab bodies and the exact historical target-tab elements. The intended target addition and start-tab URL replacement matched exactly. Regenerated and checked the mirror from `outputs/doc-sync/highway-smooth-preparation-v01/verified-source.json`: 2,630 paragraphs, 14 tables and 182 code blocks. Native page layout was not inspected. Raw source reads remain local. [Results and screenshots](highway-smooth-preparation-v01.md).
+
+
+## November 6, 2026 — Highway training rethink v01
+
+Appended the read-only replay/control/reward/weight audit, measured regressions, new proposed sequence/budgets and no-training status to tab `t.k82ts3ro3qz9`. Updated only the start-tab mirror URL to `codex/highway-training-rethink-v01`.
+
+The fresh pre-edit full read matched the previous verified source. Revision-guarded scoped editing and full readback preserved all 42 tabs, the 40 unaffected tab bodies and exact historical target-tab elements. Target addition and start-tab replacement matched exactly. The regenerated mirror passed check from `outputs/doc-sync/highway-training-rethink-v01/verified-source.json`: 2,640 paragraphs, 14 tables, 182 code blocks. Native pagination was not inspected. [New plan and actual saved-sample plot](highway-training-rethink-v01.md).
