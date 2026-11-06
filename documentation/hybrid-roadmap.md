@@ -595,3 +595,10 @@ The [v05 pilot](highway-environment-v05-results.md) completed 249,999 active-age
 The [matched frozen-policy diagnostic](i110-merge-blocking-v01.md) isolates an overbroad junction conflict matrix: the ramp yielded to four non-crossing through lanes. A versioned lane-specific rebuild retains the actual auxiliary-lane yield and unchanged geometry/demand/guards. The same v05 actor now completes a stable merge, with zero focal stopped samples and all eight controlled routes finished. Fleet interventions improve 30.53% to 8.52% but still fail 5%; the original rejected 24-case results remain intact.
 
 The SimReady main-car visual rerun is complete, with full 80-second metrics and actual screenshots retained. No training or physical/sensor qualification occurred. [Living roadmap v16](sensor-driven-training-roadmap.md) prioritizes remaining acceleration-realization differences on training fixtures before a separately reviewed configuration. Google guide and Markdown mirror are synchronized from verified full readback.
+
+
+## November 6, 2026 checkpoint: control mismatch and smoothness proposal
+
+The [completed control audit](highway-smooth-control-v01.md) attributes the corrected-I-110 case's remaining 244 interventions to ordinary following and entry responses. Current MAPPO remains at 8.52%, above the unchanged 5% gate. A separate training-only reference comparison shows zero interventions from the existing teacher but a 65 m/s³ peak jerk; neither that teacher nor the frozen actor demonstrates the desired smooth motion.
+
+A fresh SimReady main-car replay and full metrics are saved. [Living roadmap v17](sensor-driven-training-roadmap.md) now prioritizes the [disabled smooth-reference and reward proposal](highway-smooth-training-plan-v01.md): prepare and test anticipatory entry and recovery, then present the resolved configuration before explicit training approval. The proposed matched pilot is bounded at 100k total decisions/one hour. No learning, policy acceptance, native safety changes or physical/sensor qualification occurred.

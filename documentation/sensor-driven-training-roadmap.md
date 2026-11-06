@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v16**, updated **November 6, 2026, America/Los_Angeles**.
-Status: **I-110 junction blockage corrected and frozen SimReady replay verified; v05 remains unaccepted**.
+Revision **v17**, updated **November 6, 2026, America/Los_Angeles**.
+Status: **Remaining control errors and abrupt merge recovery diagnosed; smooth-reference/reward plan awaits approval**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,7 +14,7 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** diagnose the remaining acceleration-realization differences on training fixtures before proposing another training configuration. The [I-110 blockage correction](i110-merge-blocking-v01.md) removes false conflicts with four parallel lanes while preserving the genuine auxiliary-lane yield. With the same frozen v05 actor, seed and demand, the focal car now completes its merge and route; fleet interventions fall from 30.53% to 8.52%, still above 5%. `agent_7` accounts for 198 of the remaining 244 differences. Preserve the original rejected 24-case results and do not use these validation trajectories as demonstrations. The SimReady visual rerun is complete; no training, new policy acceptance, physical or sensor-driven validation was performed or authorized by this roadmap.
+**Next action:** review the [smooth-reference and reward proposal](highway-smooth-training-plan-v01.md) before implementation or learning. The [completed diagnosis](highway-smooth-control-v01.md) explains all 244 remaining corrected-I-110 interventions as 233 ordinary following responses and 11 minor-entry approach responses; the existing target matches native realization at those steps. The frozen actor still fails at 8.52%. A separate training-seed teacher check reaches zero interventions but worsens peak jerk to 65 m/s³, so stronger imitation of that reference alone would reinforce abrupt braking/recovery. Prepare an anticipatory reference and measured-acceleration recovery first, then verify comfort, safety and progress before presenting a resolved training configuration. The proposed matched 100k-decision/one-hour pilot is disabled and unapproved. Full metrics, actual plots and a fresh SimReady replay are retained; no policy weights, native safety rules or reward runtime have changed.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
@@ -446,3 +446,12 @@ Three sub-agents separated native junction behavior, network geometry and record
 An independent ordinary recorder, without the diagnostic follow-speed getter, confirms the same frozen actor and seed now enter the auxiliary lane at 4.4 s, complete the lateral merge at 10.1 s and pass the eight-second stable window at 18.1 s. Focal stopped samples fall from 752/800 to zero. All eight controlled trips finish; fleet interventions fall from 1,007/3,298 (30.53%) to 244/2,864 (8.52%), still above the unchanged 5% gate. Full 80-second evidence, background trip accounting, unsuccessful probes and the potentially stateful getter caveat are preserved. The getter was removed from future probes.
 
 The [technical note](i110-merge-blocking-v01.md) retains native diagnostics, exact hashes, before/after screenshots and a 251-frame SimReady v14 main-car replay with lightweight background cars. The video decodes, poses match exactly and authored/source assets remain unchanged. Reporting now distinguishes native junction entry, auxiliary occupancy, actual commanded lateral completion and stable through-lane occupancy. No training or policy promotion occurred; sensor/physical transfer remains unqualified. Diagnose the remaining requested-versus-realized acceleration mismatch on training fixtures before reviewing any new launch configuration.
+
+
+### v17 — November 6: remaining overrides and merge comfort diagnosis
+
+Three agents independently audited native equations, map/trajectory behavior and the training objective. All 244 corrected-I-110 intervention samples match the current target within 0.0001 m/s²: 233 following responses and 11 approach-braking responses. The actor requests too much acceleration; no evidence justifies changing native car-following, safety modes or the 5% definition. Its severe 11.12 to 6.41 m/s slowdown occurs before entry, followed by 58.93 m/s³ jerk; speed rises through and after the lateral merge.
+
+A fixed training-only seed 6800019 pair retains identical demand and full 80-second accounting. Frozen actor: 557/3183 interventions (17.50%), peak jerk 59.96 m/s³. Existing scripted teacher: 0/3059 interventions, peak jerk 65.00 m/s³. Both complete one stable merge and 33/55 trips with zero recorded safety events. The teacher's abrupt -4.5 to +2 m/s² release makes it unsuitable as an unquestioned stronger imitation reference. These teacher results are not learned-policy improvement or acceptance.
+
+[The diagnostic note](highway-smooth-control-v01.md) retains native/source hashes, all failures, scientific plots and an exactly repeated 801-frame validation trajectory, plus a 251-frame SimReady main-car visual with zero pose error and unchanged sources. [The proposed plan](highway-smooth-training-plan-v01.md) first separates a smooth anticipatory desired reference from mandatory constraints, then proposes stronger alignment, uncapped Huber jerk and reference-error slew rewards. It preserves progress, necessary braking and every safety gate. Its two 50k-decision arms and one-hour total ceiling remain unapproved; reference/comfort preflight and a resolved configuration precede explicit training authorization. No learning occurred, and the current frozen policy remains at 8.52% in the corrected I-110 case.

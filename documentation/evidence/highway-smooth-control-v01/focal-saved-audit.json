@@ -1,0 +1,774 @@
+{
+  "schema": "saved_i110_focal_longitudinal_audit_v1",
+  "training": false,
+  "simulator_runs": 0,
+  "source_recording": "outputs\\i110-merge-blocking\\v01\\replay-corrected-01\\recording.json",
+  "source_recording_sha256": "d2e4323afe3c3ce9765abff68e6115a55783b6ca8e21ead68ea6971eb4f1a81d",
+  "action_journal_sha256": "b733fc3f71434abd1ca71eda6e2f70d4cf59f79b5d0c3b6f2e529c84c6755574",
+  "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+  "source_policy_sha256": "fd639c39f0c514256a458b2b85d35baba242125f44dcc3d9542d767eb2dd46ec",
+  "seed": 6900019,
+  "stages": [
+    {
+      "name": "approach_acceleration",
+      "start_s": 0.1,
+      "end_s": 2.4,
+      "samples": 24,
+      "start_speed_m_s": 7.416161599614827,
+      "end_speed_m_s": 11.117663681366654,
+      "min_speed_m_s": 7.416161599614827,
+      "max_speed_m_s": 11.117663681366654,
+      "min_acceleration_m_s2": 0.0,
+      "max_acceleration_m_s2": 1.6659553647041392,
+      "peak_abs_jerk_m_s3": 10.258249938488007
+    },
+    {
+      "name": "native_yield_braking",
+      "start_s": 2.5,
+      "end_s": 3.5,
+      "samples": 11,
+      "start_speed_m_s": 10.90801450886995,
+      "end_speed_m_s": 6.4080145088699805,
+      "min_speed_m_s": 6.4080145088699805,
+      "max_speed_m_s": 10.90801450886995,
+      "min_acceleration_m_s2": -4.500000000000002,
+      "max_acceleration_m_s2": -2.096491724967038,
+      "peak_abs_jerk_m_s3": 37.03663469075238
+    },
+    {
+      "name": "release_and_junction_entry",
+      "start_s": 3.6,
+      "end_s": 4.4,
+      "samples": 9,
+      "start_speed_m_s": 6.547271305110787,
+      "end_speed_m_s": 7.898146699157094,
+      "min_speed_m_s": 6.547271305110787,
+      "max_speed_m_s": 7.898146699157094,
+      "min_acceleration_m_s2": 1.3925679624080622,
+      "max_acceleration_m_s2": 1.7156161665916425,
+      "peak_abs_jerk_m_s3": 58.92567962407957
+    },
+    {
+      "name": "auxiliary_before_lateral_start",
+      "start_s": 4.5,
+      "end_s": 5.7,
+      "samples": 13,
+      "start_speed_m_s": 8.033856223311757,
+      "end_speed_m_s": 9.465088115420674,
+      "min_speed_m_s": 8.033856223311757,
+      "max_speed_m_s": 9.465088115420674,
+      "min_acceleration_m_s2": 1.1712881773710215,
+      "max_acceleration_m_s2": 1.3570952415466309,
+      "peak_abs_jerk_m_s3": 2.79882475733757
+    },
+    {
+      "name": "lateral_maneuver",
+      "start_s": 5.8,
+      "end_s": 10.1,
+      "samples": 44,
+      "start_speed_m_s": 9.581785161581372,
+      "end_speed_m_s": 14.184045764592028,
+      "min_speed_m_s": 9.581785161581372,
+      "max_speed_m_s": 14.184045764592028,
+      "min_acceleration_m_s2": 0.6707000881433522,
+      "max_acceleration_m_s2": 1.2830267250537908,
+      "peak_abs_jerk_m_s3": 1.7633749544620159
+    },
+    {
+      "name": "post_merge_acceleration",
+      "start_s": 10.2,
+      "end_s": 14.0,
+      "samples": 39,
+      "start_speed_m_s": 14.247678163435793,
+      "end_speed_m_s": 16.152539938476423,
+      "min_speed_m_s": 14.247678163435793,
+      "max_speed_m_s": 16.152539938476423,
+      "min_acceleration_m_s2": 0.4034850299358439,
+      "max_acceleration_m_s2": 0.6363239884376526,
+      "peak_abs_jerk_m_s3": 0.3437609970569966
+    },
+    {
+      "name": "post_merge_following",
+      "start_s": 14.1,
+      "end_s": 37.1,
+      "samples": 231,
+      "start_speed_m_s": 16.19230807104383,
+      "end_speed_m_s": 17.874945518907655,
+      "min_speed_m_s": 16.19230807104383,
+      "max_speed_m_s": 17.9075050143269,
+      "min_acceleration_m_s2": -0.03125106543301115,
+      "max_acceleration_m_s2": 0.4428752511739731,
+      "peak_abs_jerk_m_s3": 0.7913077622653475
+    }
+  ],
+  "events": [
+    {
+      "time_s": 4.2,
+      "changes": {
+        "lane": [
+          "mlk_on_0",
+          ":n2_5_0"
+        ],
+        "allowed_speed_m_s": [
+          13.41,
+          18.0
+        ],
+        "merge_context_known": [
+          true,
+          false
+        ],
+        "merge_target_lane": [
+          "sb2_0",
+          "sb2_1"
+        ]
+      },
+      "speed_m_s": 7.569143475380276,
+      "requested_acceleration_m_s2": 1.6530545204877853,
+      "teacher_target_m_s2": 1.999989926815033
+    },
+    {
+      "time_s": 4.4,
+      "changes": {
+        "lane": [
+          ":n2_5_0",
+          "sb2_0"
+        ],
+        "merge_context_known": [
+          false,
+          true
+        ],
+        "merge_delta": [
+          0,
+          1
+        ]
+      },
+      "speed_m_s": 7.898146699157094,
+      "requested_acceleration_m_s2": 1.3570952415466309,
+      "teacher_target_m_s2": 1.999989926815033
+    },
+    {
+      "time_s": 7.1,
+      "changes": {
+        "own_front_id": [
+          null,
+          "main_8"
+        ]
+      },
+      "speed_m_s": 11.195342565861084,
+      "requested_acceleration_m_s2": 1.2830267250537872,
+      "teacher_target_m_s2": 1.999989926815033
+    },
+    {
+      "time_s": 8.6,
+      "changes": {
+        "lane": [
+          "sb2_0",
+          "sb2_1"
+        ],
+        "merge_context_known": [
+          true,
+          false
+        ],
+        "merge_target_lane": [
+          "sb2_1",
+          null
+        ],
+        "merge_delta": [
+          1,
+          0
+        ]
+      },
+      "speed_m_s": 13.027110615160801,
+      "requested_acceleration_m_s2": 0.951911062002182,
+      "teacher_target_m_s2": 1.9491556771850584
+    },
+    {
+      "time_s": 16.2,
+      "changes": {
+        "near_limit_training_band": [
+          false,
+          true
+        ]
+      },
+      "speed_m_s": 17.020049466725922,
+      "requested_acceleration_m_s2": 0.41123712062835693,
+      "teacher_target_m_s2": 0.35198026000976484
+    },
+    {
+      "time_s": 16.7,
+      "changes": {
+        "lane": [
+          "sb2_1",
+          "sb2_2"
+        ]
+      },
+      "speed_m_s": 17.220590521928408,
+      "requested_acceleration_m_s2": 0.3118373528122902,
+      "teacher_target_m_s2": 0.2717638191223145
+    },
+    {
+      "time_s": 17.0,
+      "changes": {
+        "lane": [
+          "sb2_2",
+          ":n3_1_2"
+        ]
+      },
+      "speed_m_s": 17.30654099636946,
+      "requested_acceleration_m_s2": 0.2604003772139549,
+      "teacher_target_m_s2": 0.23738388275146463
+    },
+    {
+      "time_s": 17.1,
+      "changes": {
+        "lane": [
+          ":n3_1_2",
+          "sb3_2"
+        ]
+      },
+      "speed_m_s": 17.332581034090854,
+      "requested_acceleration_m_s2": 0.2561712861061096,
+      "teacher_target_m_s2": 0.22696777435302665
+    },
+    {
+      "time_s": 18.1,
+      "changes": {
+        "own_front_id": [
+          "main_8",
+          "agent_2"
+        ]
+      },
+      "speed_m_s": 17.5765079183248,
+      "requested_acceleration_m_s2": 0.3031541705131531,
+      "teacher_target_m_s2": 0.12939669509887608
+    },
+    {
+      "time_s": 27.9,
+      "changes": {
+        "lane": [
+          "sb3_2",
+          ":n4_0_1"
+        ]
+      },
+      "speed_m_s": 17.904450030413003,
+      "requested_acceleration_m_s2": -0.02062182128429413,
+      "teacher_target_m_s2": -0.003559783101081848
+    },
+    {
+      "time_s": 28.0,
+      "changes": {
+        "lane": [
+          ":n4_0_1",
+          "sb4_1"
+        ]
+      },
+      "speed_m_s": 17.902387848284572,
+      "requested_acceleration_m_s2": 0.002213314175605774,
+      "teacher_target_m_s2": -0.0019099116325378418
+    },
+    {
+      "time_s": 33.3,
+      "changes": {
+        "own_front_id": [
+          "agent_2",
+          null
+        ]
+      },
+      "speed_m_s": 17.903872502383333,
+      "requested_acceleration_m_s2": 0.014397896826267242,
+      "teacher_target_m_s2": -0.0030980631709098816
+    },
+    {
+      "time_s": 33.5,
+      "changes": {
+        "lane": [
+          "sb4_1",
+          ":n5_0_1"
+        ]
+      },
+      "speed_m_s": 17.903650393125158,
+      "requested_acceleration_m_s2": -0.026038192212581635,
+      "teacher_target_m_s2": -0.0029203295707702637
+    },
+    {
+      "time_s": 33.6,
+      "changes": {
+        "lane": [
+          ":n5_0_1",
+          "sb5_1"
+        ]
+      },
+      "speed_m_s": 17.9010465739039,
+      "requested_acceleration_m_s2": -0.0247097909450531,
+      "teacher_target_m_s2": -0.0008368268609046936
+    }
+  ],
+  "max_teacher_reconstruction_error": 0.0,
+  "interpretation": "Teacher reconstruction uses recorded current poses, map and exact stored focal masks; no native run or actor retraining. Near-limit is a training-loss sample selector, not an inference switch.",
+  "largest_measured_jerk_samples": [
+    {
+      "time_s": 3.6,
+      "lane": "mlk_on_0",
+      "speed_m_s": 6.547271305110787,
+      "speed_mph": 14.645828795972525,
+      "measured_acceleration_m_s2": 1.3925679624080622,
+      "allowed_speed_m_s": 13.41,
+      "ramp_remaining_m": 3.6924931819068547,
+      "requested_next_acceleration_m_s2": 1.661237820982933,
+      "realized_next_acceleration_m_s2": 1.6612378209829348,
+      "saved_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "offline_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": null,
+      "own_front_gap_m": null,
+      "own_front_relative_speed_m_s": null,
+      "merge_context_known": true,
+      "merge_target_lane": "sb2_0",
+      "merge_delta": 0,
+      "merge_distance_to_start_m": 3.6924931819068547,
+      "merge_front": null,
+      "merge_rear": {
+        "id": "ramp_1",
+        "bumper_gap_m": 23.411554919097977,
+        "relative_speed_m_s": 3.288814897389189
+      },
+      "merge_end_distance_m": 373.8424931819069,
+      "near_limit_training_band": false,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": false,
+      "maneuver_in_progress": false,
+      "lateral_speed": 0.0,
+      "measured_jerk_m_s3": 58.92567962407957
+    },
+    {
+      "time_s": 2.5,
+      "lane": "mlk_on_0",
+      "speed_m_s": 10.90801450886995,
+      "speed_mph": 24.40053352855375,
+      "measured_acceleration_m_s2": -2.096491724967038,
+      "allowed_speed_m_s": 13.41,
+      "ramp_remaining_m": 12.780234821287877,
+      "requested_next_acceleration_m_s2": 1.4284033179283142,
+      "realized_next_acceleration_m_s2": -4.499999999999993,
+      "saved_teacher_next_acceleration_m_s2": -4.499995716651277,
+      "offline_teacher_next_acceleration_m_s2": -4.499995716651277,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": null,
+      "own_front_gap_m": null,
+      "own_front_relative_speed_m_s": null,
+      "merge_context_known": true,
+      "merge_target_lane": "sb2_0",
+      "merge_delta": 0,
+      "merge_distance_to_start_m": 12.780234821287877,
+      "merge_front": null,
+      "merge_rear": {
+        "id": "ramp_1",
+        "bumper_gap_m": 25.20826933275698,
+        "relative_speed_m_s": -1.1507386893880884
+      },
+      "merge_end_distance_m": 382.93023482128785,
+      "near_limit_training_band": false,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": true,
+      "maneuver_in_progress": false,
+      "lateral_speed": 0.0,
+      "measured_jerk_m_s3": -37.03663469075238
+    },
+    {
+      "time_s": 2.6,
+      "lane": "mlk_on_0",
+      "speed_m_s": 10.458014508869951,
+      "speed_mph": 23.393912197153753,
+      "measured_acceleration_m_s2": -4.499999999999993,
+      "allowed_speed_m_s": 13.41,
+      "ramp_remaining_m": 11.734433370400893,
+      "requested_next_acceleration_m_s2": 1.2263046205043793,
+      "realized_next_acceleration_m_s2": -4.499999999999975,
+      "saved_teacher_next_acceleration_m_s2": -4.499998787755555,
+      "offline_teacher_next_acceleration_m_s2": -4.499998787755555,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": null,
+      "own_front_gap_m": null,
+      "own_front_relative_speed_m_s": null,
+      "merge_context_known": true,
+      "merge_target_lane": "sb2_0",
+      "merge_delta": 0,
+      "merge_distance_to_start_m": 11.734433370400893,
+      "merge_front": null,
+      "merge_rear": {
+        "id": "ramp_1",
+        "bumper_gap_m": 25.273205167212108,
+        "relative_speed_m_s": -0.6493583445514517
+      },
+      "merge_end_distance_m": 381.88443337040087,
+      "near_limit_training_band": false,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": true,
+      "maneuver_in_progress": false,
+      "lateral_speed": 0.0,
+      "measured_jerk_m_s3": -24.03508275032955
+    },
+    {
+      "time_s": 0.2,
+      "lane": "mlk_on_0",
+      "speed_m_s": 7.518744098999707,
+      "speed_mph": 16.818951545313286,
+      "measured_acceleration_m_s2": 1.0258249938488007,
+      "allowed_speed_m_s": 13.41,
+      "ramp_remaining_m": 34.55679401006881,
+      "requested_next_acceleration_m_s2": 1.5023705214262009,
+      "realized_next_acceleration_m_s2": 1.5023705214261973,
+      "saved_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "offline_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": null,
+      "own_front_gap_m": null,
+      "own_front_relative_speed_m_s": null,
+      "merge_context_known": true,
+      "merge_target_lane": "sb2_0",
+      "merge_delta": 0,
+      "merge_distance_to_start_m": 34.55679401006881,
+      "merge_front": null,
+      "merge_rear": {
+        "id": "ramp_1",
+        "bumper_gap_m": 23.672857746076158,
+        "relative_speed_m_s": 0.02398372175122976
+      },
+      "merge_end_distance_m": 404.70679401006885,
+      "near_limit_training_band": false,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": false,
+      "maneuver_in_progress": false,
+      "lateral_speed": 0.0,
+      "measured_jerk_m_s3": 10.258249938488007
+    },
+    {
+      "time_s": 0.3,
+      "lane": "mlk_on_0",
+      "speed_m_s": 7.668981151142327,
+      "speed_mph": 17.15502225965421,
+      "measured_acceleration_m_s2": 1.5023705214261973,
+      "allowed_speed_m_s": 13.41,
+      "ramp_remaining_m": 33.789895894954554,
+      "requested_next_acceleration_m_s2": 1.6371402442455292,
+      "realized_next_acceleration_m_s2": 1.6371402442455274,
+      "saved_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "offline_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": null,
+      "own_front_gap_m": null,
+      "own_front_relative_speed_m_s": null,
+      "merge_context_known": true,
+      "merge_target_lane": "sb2_0",
+      "merge_delta": 0,
+      "merge_distance_to_start_m": 33.789895894954554,
+      "merge_front": null,
+      "merge_rear": {
+        "id": "ramp_1",
+        "bumper_gap_m": 23.673207763031893,
+        "relative_speed_m_s": -0.0035001695572196567
+      },
+      "merge_end_distance_m": 403.9398958949546,
+      "near_limit_training_band": false,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": false,
+      "maneuver_in_progress": false,
+      "lateral_speed": 0.0,
+      "measured_jerk_m_s3": 4.7654552757739665
+    },
+    {
+      "time_s": 4.5,
+      "lane": "sb2_0",
+      "speed_m_s": 8.033856223311757,
+      "speed_mph": 17.971224550636126,
+      "measured_acceleration_m_s2": 1.3570952415466309,
+      "allowed_speed_m_s": 18.0,
+      "ramp_remaining_m": null,
+      "requested_next_acceleration_m_s2": 1.2572792768478394,
+      "realized_next_acceleration_m_s2": 1.2572792768478358,
+      "saved_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "offline_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": null,
+      "own_front_gap_m": null,
+      "own_front_relative_speed_m_s": null,
+      "merge_context_known": true,
+      "merge_target_lane": "sb2_1",
+      "merge_delta": 1,
+      "merge_distance_to_start_m": -0.9590173179163182,
+      "merge_front": {
+        "id": "main_8",
+        "bumper_gap_m": 7.824904860896026,
+        "relative_speed_m_s": 7.972221748983715
+      },
+      "merge_rear": {
+        "id": "main_4",
+        "bumper_gap_m": 50.646397462529336,
+        "relative_speed_m_s": 7.131518690723976
+      },
+      "merge_end_distance_m": 367.1909826820837,
+      "near_limit_training_band": false,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": false,
+      "maneuver_in_progress": false,
+      "lateral_speed": 0.0,
+      "measured_jerk_m_s3": -2.79882475733757
+    },
+    {
+      "time_s": 3.7,
+      "lane": "mlk_on_0",
+      "speed_m_s": 6.71339508720908,
+      "speed_mph": 15.017437113112498,
+      "measured_acceleration_m_s2": 1.6612378209829348,
+      "allowed_speed_m_s": 13.41,
+      "ramp_remaining_m": 3.0211536731859496,
+      "requested_next_acceleration_m_s2": 1.709952712059021,
+      "realized_next_acceleration_m_s2": 1.7099527120590174,
+      "saved_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "offline_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": null,
+      "own_front_gap_m": null,
+      "own_front_relative_speed_m_s": null,
+      "merge_context_known": true,
+      "merge_target_lane": "sb2_0",
+      "merge_delta": 0,
+      "merge_distance_to_start_m": 3.0211536731859496,
+      "merge_front": null,
+      "merge_rear": {
+        "id": "ramp_1",
+        "bumper_gap_m": 23.103784188994393,
+        "relative_speed_m_s": 3.0777073010357023
+      },
+      "merge_end_distance_m": 373.1711536731859,
+      "near_limit_training_band": false,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": false,
+      "maneuver_in_progress": false,
+      "lateral_speed": 0.0,
+      "measured_jerk_m_s3": 2.6866985857487258
+    },
+    {
+      "time_s": 8.7,
+      "lane": "sb2_1",
+      "speed_m_s": 13.12230172136102,
+      "speed_mph": 29.353752955086538,
+      "measured_acceleration_m_s2": 0.951911062002182,
+      "allowed_speed_m_s": 18.0,
+      "ramp_remaining_m": null,
+      "requested_next_acceleration_m_s2": 0.8721325993537903,
+      "realized_next_acceleration_m_s2": 0.8721325993537832,
+      "saved_teacher_next_acceleration_m_s2": 1.9110794548034662,
+      "offline_teacher_next_acceleration_m_s2": 1.9110794548034662,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": "main_8",
+      "own_front_gap_m": 32.10510939122218,
+      "own_front_relative_speed_m_s": 3.258146445483206,
+      "merge_context_known": false,
+      "merge_target_lane": null,
+      "merge_delta": 0,
+      "merge_distance_to_start_m": 0.0,
+      "merge_front": null,
+      "merge_rear": null,
+      "merge_end_distance_m": null,
+      "near_limit_training_band": false,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": false,
+      "maneuver_in_progress": true,
+      "lateral_speed": 1.2333333333333334,
+      "measured_jerk_m_s3": -1.7633749544620159
+    },
+    {
+      "time_s": 0.4,
+      "lane": "mlk_on_0",
+      "speed_m_s": 7.832695175566879,
+      "speed_mph": 17.521240102398867,
+      "measured_acceleration_m_s2": 1.6371402442455274,
+      "allowed_speed_m_s": 13.41,
+      "ramp_remaining_m": 33.00662637739788,
+      "requested_next_acceleration_m_s2": 1.6614696979522705,
+      "realized_next_acceleration_m_s2": 1.661469697952267,
+      "saved_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "offline_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": null,
+      "own_front_gap_m": null,
+      "own_front_relative_speed_m_s": null,
+      "merge_context_known": true,
+      "merge_target_lane": "sb2_0",
+      "merge_delta": 0,
+      "merge_distance_to_start_m": 33.00662637739788,
+      "merge_front": null,
+      "merge_rear": {
+        "id": "ramp_1",
+        "bumper_gap_m": 23.677965664975385,
+        "relative_speed_m_s": -0.047579019434960124
+      },
+      "merge_end_distance_m": 403.15662637739786,
+      "near_limit_training_band": false,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": false,
+      "maneuver_in_progress": false,
+      "lateral_speed": 0.0,
+      "measured_jerk_m_s3": 1.3476972281933008
+    },
+    {
+      "time_s": 4.6,
+      "lane": "sb2_0",
+      "speed_m_s": 8.15958415099654,
+      "speed_mph": 18.252469914992172,
+      "measured_acceleration_m_s2": 1.2572792768478358,
+      "allowed_speed_m_s": 18.0,
+      "ramp_remaining_m": null,
+      "requested_next_acceleration_m_s2": 1.2176579535007477,
+      "realized_next_acceleration_m_s2": 1.2176579535007548,
+      "saved_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "offline_teacher_next_acceleration_m_s2": 1.999989926815033,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": null,
+      "own_front_gap_m": null,
+      "own_front_relative_speed_m_s": null,
+      "merge_context_known": true,
+      "merge_target_lane": "sb2_1",
+      "merge_delta": 1,
+      "merge_distance_to_start_m": -1.7749757330159723,
+      "merge_front": {
+        "id": "main_8",
+        "bumper_gap_m": 8.615429103340293,
+        "relative_speed_m_s": 7.905242424442683
+      },
+      "merge_rear": {
+        "id": "main_4",
+        "bumper_gap_m": 49.943851373797905,
+        "relative_speed_m_s": 7.0254608873142566
+      },
+      "merge_end_distance_m": 366.37502426698404,
+      "near_limit_training_band": false,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": false,
+      "maneuver_in_progress": false,
+      "lateral_speed": 0.0,
+      "measured_jerk_m_s3": -0.9981596469879506
+    },
+    {
+      "time_s": 8.8,
+      "lane": "sb2_1",
+      "speed_m_s": 13.209514981296397,
+      "speed_mph": 29.548843461379615,
+      "measured_acceleration_m_s2": 0.8721325993537832,
+      "allowed_speed_m_s": 18.0,
+      "ramp_remaining_m": null,
+      "requested_next_acceleration_m_s2": 0.8330953270196915,
+      "realized_next_acceleration_m_s2": 0.833095327019695,
+      "saved_teacher_next_acceleration_m_s2": 1.8761939969635009,
+      "offline_teacher_next_acceleration_m_s2": 1.8761939969635009,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": "main_8",
+      "own_front_gap_m": 32.42670897355685,
+      "own_front_relative_speed_m_s": 3.2159958233467094,
+      "merge_context_known": false,
+      "merge_target_lane": null,
+      "merge_delta": 0,
+      "merge_distance_to_start_m": 0.0,
+      "merge_front": null,
+      "merge_rear": null,
+      "merge_end_distance_m": null,
+      "near_limit_training_band": false,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": false,
+      "maneuver_in_progress": true,
+      "lateral_speed": 1.2333333333333334,
+      "measured_jerk_m_s3": -0.7977846264839883
+    },
+    {
+      "time_s": 16.8,
+      "lane": "sb2_2",
+      "speed_m_s": 17.251774257209636,
+      "speed_mph": 38.59111993734358,
+      "measured_acceleration_m_s2": 0.3118373528122831,
+      "allowed_speed_m_s": 18.0,
+      "ramp_remaining_m": null,
+      "requested_next_acceleration_m_s2": 0.2805408388376236,
+      "realized_next_acceleration_m_s2": 0.2805408388376307,
+      "saved_teacher_next_acceleration_m_s2": 0.2592904525756836,
+      "offline_teacher_next_acceleration_m_s2": 0.2592904525756836,
+      "teacher_reconstruction_error": 0.0,
+      "own_front_id": "main_8",
+      "own_front_gap_m": 44.219000292132506,
+      "own_front_relative_speed_m_s": 0.15105677565476938,
+      "merge_context_known": false,
+      "merge_target_lane": null,
+      "merge_delta": 0,
+      "merge_distance_to_start_m": 0.0,
+      "merge_front": null,
+      "merge_rear": null,
+      "merge_end_distance_m": null,
+      "near_limit_training_band": true,
+      "mask": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "lane_request": 0,
+      "override_next": false,
+      "maneuver_in_progress": true,
+      "lateral_speed": 1.2333333333333334,
+      "measured_jerk_m_s3": -0.7913077622653475
+    }
+  ]
+}

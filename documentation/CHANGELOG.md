@@ -970,3 +970,12 @@ Completed 249,999 active-agent decisions,50 update batches and 2,455.032 cumulat
 - Added native junction-entry/progress diagnostics, honest maneuver labels, readiness provenance and regression tests. Retained failed duration/native-control probes and the potentially stateful diagnostic-getter caveat; ordinary recording independently confirms the result.
 - Verified a 251-frame SimReady v14 main-car replay with lightweight backgrounds, exact poses, unchanged source assets and screenshots. No training or policy promotion.
 - [Results, evidence and reproduction](i110-merge-blocking-v01.md). Both engineering-guide copies synchronized from a full revision-guarded native readback; all 42 tabs preserved.
+
+
+## November 6, 2026 — remaining overrides and smooth-control proposal v01
+
+- Audited all 244 remaining corrected-I-110 interventions: 233 native following responses and 11 minor-entry braking responses. Frozen MAPPO still fails the unchanged 5% limit at 8.52%; no safety setting, threshold or learned weight changed.
+- Added saved-record diagnostics and a bounded zero-update train-only actor/teacher comparison, with five regression tests. The existing teacher reaches 0% interventions on that separate case but peaks at 65 m/s³ jerk, so stronger imitation requires a smoother verified reference first.
+- Preserved raw metrics, hashes, objective/gradient evidence, scientific plots and a fresh 251-frame SimReady visual. The ordinary 801-frame replay exactly repeats the prior corrected trajectory.
+- Published a disabled reference/reward proposal: anticipate entry, recover from measured acceleration smoothly, strengthen alignment/imitation after preflight, and use uncapped Huber jerk plus reference-error slew penalties. Proposed paired pilot is 100k decisions/one hour total, pending preparation and training approval.
+- [Diagnostic and visual evidence](highway-smooth-control-v01.md); [proposed weights and gates](highway-smooth-training-plan-v01.md). Living roadmap v17 and both engineering-guide copies updated. No training or policy promotion.
