@@ -1,4 +1,4 @@
-"""Render a bounded frozen-policy SUMO merge recording; no physics or training.
+"""Render a bounded, explicitly identified SUMO recording; no physics or training.
 
 Run with the configured Isaac Python. The input is recording.json plus the
 exact network.net.xml; every vehicle pose comes from that recording. Road
@@ -373,7 +373,10 @@ def main():
     shutil.copy2(recording/'network.net.xml', output/'network.net.xml')
     lanes = read_lanes(output/'network.net.xml')
     controlled = set(data.get('controlled_ids', ['agent_0', 'agent_1', 'agent_2', 'agent_3']))
-    report = dict(passed=False, training=False, motion_owner='SUMO recorded frozen-policy inference',
+    report = dict(passed=False, training=False, motion_owner='SUMO recorded motion',
+                  controller=data.get('controller', 'frozen_learned'),
+                  recorded_policy_mode=data.get('policy_mode', 'frozen learned inference'),
+                  learned_policy_sha256=data.get('policy_sha256'),
                   limitation='Kinematic visualization, not PhysX control validation or sensor capture. Road reconstructed from recorded SUMO network polylines; markings illustrative.',
                   source_recording=str(recording), source_recording_sha256=sha256(recording/'recording.json'),
                   renderer_source_sha256=sha256(__file__), runtime_python=sys.executable,

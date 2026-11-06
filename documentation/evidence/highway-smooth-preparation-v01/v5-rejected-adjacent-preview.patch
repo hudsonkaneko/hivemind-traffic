@@ -1,0 +1,139 @@
+--- a/traffic/highway_smooth_reference.py
++++ b/traffic/highway_smooth_reference.py
+@@ -1,7 +1,7 @@
+ """Observation-only comfort reference for the unchanged v05 actor interface.
+ 
+ This implements the two-second entry preview and 2 m/s^3 recovery reference,
+-with version-4 separation of ordinary-response smoothing from hard constraints. It changes
++with version-5 soft adjacent-car risk preview and separate hard constraints. It changes
+ labels/rewards only unless explicitly selected as a
+ scripted diagnostic controller. It is not a native actuator filter, a complete
+ SUMO feasibility model, or evidence that the native preflight gates pass.
+@@ -21,7 +21,7 @@
+ from traffic import highway_stage1_teacher as legacy
+ 
+ 
+-REFERENCE_VERSION = 'highway_smooth_reference_v4'
++REFERENCE_VERSION = 'highway_smooth_reference_v5'
+ REFERENCE_STATUS = 'implemented_requires_native_preflight'
+ OBSERVATION_SIZE = 99
+ DT = .1
+@@ -41,6 +41,9 @@
+     'v4 treats ordinary ACC response as a soft target before slew; unchanged hard and minor-entry stop bounds retain immediate priority afterward.',
+     'Raw ordinary estimates and targets exceeding them remain reported; SUMO interventions are not hidden or reclassified.',
+     'Matrix01 also recorded mandatory following-bound braking and native braking beyond the estimate; this ordinary-response revision does not establish that those comfort failures are resolved.',
++    'v5 adds a soft 2 s constant-relative-speed preview for closing adjacent front cars inside the current required-gap plus 2 s ego-travel neighborhood; it does not infer lane-change intent.',
++    'Adjacent preview reuses the .35 following gain and 3 m buffer, requires lane-existence and neighbor-presence flags, and remains before the existing soft slew.',
++    'Potential cut-in caution may delay passing or reduce useful speed; unchanged native safety, comfort, passing, trip and progress gates must judge the complete matrix.',
+     'The stopping profile joins constant 2 m/s^2 braking to 2 m/s^3 recovery; a discrete soft recovery floor avoids a terminal acceleration jump.',
+     'Preview 2 s, speed-error gain .4/s, slew 2 m/s^3, visibility 4.5 m and all hard/native guards remain unchanged.',
+     'Physical velocity floor prevents negative next-speed labels, including at standstill.',
+@@ -118,6 +121,30 @@
+ 
+     components = dict(legal_buffer=buffered_limit,
+         own_following=legacy._following_target(speed, buffered_limit, own_front))
++    adjacent_preview = {}
++    for side,start,exists_index in (('left',12,24),('right',18,25)):
++        adjacent = legacy._neighbor(obs,start,speed) if obs[exists_index] > .5 else None
++        item = dict(active=False, lane_exists=bool(obs[exists_index] > .5),
++            neighbor_present=bool(obs[start+2] > .5), gap_m=None,
++            neighbor_speed_m_s=None, closing_speed_m_s=None,
++            required_gap_with_buffer_m=None, risk_radius_m=None,
++            projected_gap_m=None, speed_target_m_s=None,
++            lookahead_s=ENTRY_PREVIEW_TIME_S,
++            assumption='Potential cut-in only; constant relative speed is a soft preview, not observed intent')
++        if adjacent is not None:
++            gap,adjacent_speed = adjacent
++            closing = speed-adjacent_speed
++            required = legacy.required_gap(speed,adjacent_speed)+legacy.FOLLOW_BUFFER
++            radius = required+speed*ENTRY_PREVIEW_TIME_S
++            projected = max(0.,gap-closing*ENTRY_PREVIEW_TIME_S)
++            item.update(gap_m=gap,neighbor_speed_m_s=adjacent_speed,
++                closing_speed_m_s=closing,required_gap_with_buffer_m=required,
++                risk_radius_m=radius,projected_gap_m=projected)
++            if closing > 0. and gap < radius:
++                target = min(buffered_limit,max(0.,adjacent_speed+.35*(projected-required)))
++                components['adjacent_'+side+'_preview'] = target
++                item.update(active=True,speed_target_m_s=target)
++        adjacent_preview[side] = item
+     native_components = dict(
+         # A missing <=120 m observation does not prove that SUMO sees no leader
+         # in its longer interaction range. This estimate remains deliberately
+@@ -238,6 +265,7 @@
+         desired_acceleration_components_m_s2=acceleration_components,
+         soft_speed_components_m_s=components, native_response_components_m_s2=native_components,
+         entry=entry, ending_lane=ending, merge_slot_alignment=slot,
++        adjacent_risk_preview=adjacent_preview,
+         nominal_reference_jerk_m_s3=REFERENCE_JERK_M_S3,
+         reference_slew_m_s3=(reference-measured)/DT,
+         braking_override_soft_slew=reference < slew_low-1e-9,
+--- a/tests/test_highway_smooth_reference.py
++++ b/tests/test_highway_smooth_reference.py
+@@ -281,6 +281,67 @@
+         self.assertEqual(details['acceleration_m_s2'],-3.)
+         self.assertTrue(details['braking_override_soft_slew'])
+ 
++    def test_adjacent_closing_car_preview_is_soft_and_auditable(self):
++        obs = observation(speed=17.9)
++        obs[25] = 1.
++        neighbor(obs,18,44.1271,14.416)
++        details = reference_details(obs)
++        item = details['adjacent_risk_preview']['right']
++        required = legacy.required_gap(17.9,14.416)+3.
++        self.assertTrue(item['active'])
++        self.assertAlmostEqual(item['required_gap_with_buffer_m'],required)
++        self.assertAlmostEqual(item['risk_radius_m'],required+2.*17.9)
++        self.assertAlmostEqual(item['projected_gap_m'],44.1271-2.*(17.9-14.416))
++        self.assertAlmostEqual(item['speed_target_m_s'],
++            14.416+.35*(item['projected_gap_m']-required))
++        self.assertAlmostEqual(details['acceleration_m_s2'],-.2)
++        self.assertGreater(details['reference_ceiling_m_s2'],0.)
++        self.assertFalse(details['braking_override_soft_slew'])
++
++    def test_nonclosing_or_far_adjacent_car_does_not_change_reference(self):
++        baseline = reference_details(observation(speed=17.9))['acceleration_m_s2']
++        for gap,other_speed in ((40.,17.9),(40.,19.),(120.,14.)):
++            with self.subTest(gap=gap,other_speed=other_speed):
++                obs = observation(speed=17.9)
++                obs[24] = 1.
++                neighbor(obs,12,gap,other_speed)
++                details = reference_details(obs)
++                self.assertFalse(details['adjacent_risk_preview']['left']['active'])
++                self.assertEqual(details['acceleration_m_s2'],baseline)
++
++    def test_absent_lane_or_neighbor_ignores_stale_adjacent_values(self):
++        baseline = reference_details(observation(speed=17.9))['acceleration_m_s2']
++        for lane_exists,present in ((0.,1.),(1.,0.),(0.,0.)):
++            with self.subTest(lane_exists=lane_exists,present=present):
++                obs = observation(speed=17.9)
++                obs[25] = lane_exists
++                neighbor(obs,18,1.,0.)
++                obs[20] = present
++                details = reference_details(obs)
++                self.assertFalse(details['adjacent_risk_preview']['right']['active'])
++                self.assertEqual(details['acceleration_m_s2'],baseline)
++
++    def test_adjacent_preview_clips_speed_and_never_changes_lane_label_or_guard(self):
++        obs = observation(speed=12.,hard_ceiling=-3.)
++        obs[24] = 1.
++        neighbor(obs,12,2.,0.)
++        details = reference_details(obs)
++        self.assertEqual(details['adjacent_risk_preview']['left']['speed_target_m_s'],0.)
++        self.assertEqual(details['acceleration_m_s2'],-3.)
++        self.assertTrue(details['braking_override_soft_slew'])
++        old = legacy.teacher_action(np.concatenate((obs[:45],obs[51:])),version='v3')
++        self.assertEqual(teacher_action(obs)[1],old[1])
++
++    def test_adjacent_preview_uses_only_the_flagged_side(self):
++        obs = observation(speed=17.9)
++        obs[24],obs[25] = 1.,0.
++        neighbor(obs,12,40.,15.)
++        neighbor(obs,18,1.,0.)
++        details = reference_details(obs)
++        self.assertTrue(details['adjacent_risk_preview']['left']['active'])
++        self.assertFalse(details['adjacent_risk_preview']['right']['active'])
++        self.assertGreater(details['desired_speed_m_s'],0.)
++
+     def test_lane_actions_match_unchanged_legacy_v3_and_inputs_are_immutable(self):
+         passing = observation(speed=12.)
+         neighbor(passing,6,30.,10.)

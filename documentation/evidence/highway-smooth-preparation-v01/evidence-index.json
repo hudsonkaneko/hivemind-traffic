@@ -1,0 +1,1402 @@
+{
+  "schema": "highway_smooth_preparation_evidence_index_v01",
+  "training": false,
+  "optimizer_steps": 0,
+  "readiness": false,
+  "active_reference": {
+    "path": "traffic/highway_smooth_reference.py",
+    "sha256": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+    "status": "restored fourth reference; four comfort failures prevent readiness"
+  },
+  "frozen_actor": {
+    "path": "policies/versions/highway-environment-v05/policy.pt",
+    "sha256": "fd639c39f0c514256a458b2b85d35baba242125f44dcc3d9542d767eb2dd46ec",
+    "status": "unchanged rejected v05 checkpoint, no new learned weights"
+  },
+  "current_implementation_sha256": {
+    "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+    "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98",
+    "scripts/summarize_highway_smooth_preflight.py": "eccbf46f1cc5d2cd3aaf06d65369ba7334a505fdb43b0d8fc440e1e74280a88c"
+  },
+  "unchanged_historical_source_sha256": {
+    "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+    "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374"
+  },
+  "raw_run_count": 44,
+  "studies": [
+    {
+      "path": "outputs/highway-smooth-control/v02/entry-probe-01",
+      "study_sha256": "366f35cfff3d8c7e1691a9a1ba1fa72b2b8ddb27e7e621365a17fd472aec371a",
+      "summary_sha256": "a1d60deaab4fd3d3195c9ab19b76392f2fe39b72a71fb721bcc6006acaa2ea5b",
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "5d6817c1503007671f2c64e18a1c078be0b69e6ecedd97283544976f354a9d65",
+        "traffic/highway_smooth_metrics.py": "1fb8313b6aaa6efc7570c32837c0216b02f2cd1d5dbe0f568c1fc10acb17fbbc"
+      },
+      "controllers": [
+        "smooth",
+        "teacher"
+      ],
+      "fixtures": [
+        "i110-merge"
+      ],
+      "runs": [
+        {
+          "path": "outputs/highway-smooth-control/v02/entry-probe-01/i110-merge/smooth",
+          "controller": "smooth",
+          "seed": 6800019,
+          "source_reference_sha256": "5d6817c1503007671f2c64e18a1c078be0b69e6ecedd97283544976f354a9d65",
+          "input_sha256": {
+            "manifest.json": "a850fadb82b705f30816ca8705bf599f2d04325ebe064576a7155db4589c4e4c",
+            "evaluation.json": "39491e372b24f1fd704779eccff513664881a868d8d83db1ef41b475522769bc",
+            "recording-check.json": "0da34b4e3f531c6922e0d24b502f4547d870c63e17ddda9fe475ff65e3b8c169",
+            "recording.json": "1b814c0643f4b909dacd963f6845c310abd9f16122b7bc2d508a23d97719c064",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/entry-probe-01/i110-merge/teacher",
+          "controller": "teacher",
+          "seed": 6800019,
+          "source_reference_sha256": "5d6817c1503007671f2c64e18a1c078be0b69e6ecedd97283544976f354a9d65",
+          "input_sha256": {
+            "manifest.json": "3218fff02d210318be72293c9a7c3ddcad93332821a038914acccea186c19c18",
+            "evaluation.json": "f079fcf82ef8606210d01f1ad9d8492ccb0b908aea7bd4f1f53bba578a690e8b",
+            "recording-check.json": "1e8286ba611992f7bdab53ddaf010275c46dac5b21f7bd985302cdc89151544a",
+            "recording.json": "be59a14f97dc19f1f1277942286447186b0bd2e16b69bb60279e4e53509806dd",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        }
+      ]
+    },
+    {
+      "path": "outputs/highway-smooth-control/v02/entry-probe-02",
+      "study_sha256": "add05b8ecafa99a720ec6a9d648c306ae6dad8f43fbe7654f2d1d0dcb6ecd927",
+      "summary_sha256": "6b62d6162a2bfed6d76ecfe02d7ecedc6a1d38374396b849a0ca54998bd8f4e4",
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "f33df82b9f47dbf95a8d9d98c68bc42f36195734bab69d708873b66710807e18",
+        "traffic/highway_smooth_metrics.py": "1fb8313b6aaa6efc7570c32837c0216b02f2cd1d5dbe0f568c1fc10acb17fbbc"
+      },
+      "controllers": [
+        "smooth",
+        "teacher"
+      ],
+      "fixtures": [
+        "i110-merge"
+      ],
+      "runs": [
+        {
+          "path": "outputs/highway-smooth-control/v02/entry-probe-02/i110-merge/smooth",
+          "controller": "smooth",
+          "seed": 6800019,
+          "source_reference_sha256": "f33df82b9f47dbf95a8d9d98c68bc42f36195734bab69d708873b66710807e18",
+          "input_sha256": {
+            "manifest.json": "b612d2d4a7772c3c0dc08ec1602eab76fb2ce6f4789a7c4d9755fc33104c8fa3",
+            "evaluation.json": "639a808cb7a924d3f5595faa72991e17ed308766eaaf089a0c23a64ebc3bfb3e",
+            "recording-check.json": "0b8bdc2863a09606f73660e18fda249769d0174f5d4fe0049fa53c0ba93dd6ea",
+            "recording.json": "1af9ba9d78bda7748e4568eecc5f215e28841107ee16a16c977676fae5a51c55",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/entry-probe-02/i110-merge/teacher",
+          "controller": "teacher",
+          "seed": 6800019,
+          "source_reference_sha256": "f33df82b9f47dbf95a8d9d98c68bc42f36195734bab69d708873b66710807e18",
+          "input_sha256": {
+            "manifest.json": "fd8672efae95483483abae76bf3d67fbe1a09b64e0b4dbd4cd46182c41b64599",
+            "evaluation.json": "60084c4e540dfd5571c3aff8e5f2011f1e3f3c4377a6d554492cfa96a597e008",
+            "recording-check.json": "f38de6f81fc0b40058afe28fe9340a8882674ee1a571907479de9551181506d8",
+            "recording.json": "adf860d087f4fd684b5d2a94d711f09cc7b03157bd8d0518bfa9f7ec6e73a81e",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        }
+      ]
+    },
+    {
+      "path": "outputs/highway-smooth-control/v02/entry-probe-03",
+      "study_sha256": "93b293ef1b172dca8376cdfb8ad53b2b05f759dddc62503380710c61615e6caf",
+      "summary_sha256": "1b046e0974f33ba5387b3b9f0deda52ca10f100b4710338acf30941dee5245f0",
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+        "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98"
+      },
+      "controllers": [
+        "smooth",
+        "teacher",
+        "frozen-v05",
+        "frozen-smooth"
+      ],
+      "fixtures": [
+        "i110-merge"
+      ],
+      "runs": [
+        {
+          "path": "outputs/highway-smooth-control/v02/entry-probe-03/i110-merge/frozen-smooth",
+          "controller": "frozen-smooth",
+          "seed": 6800019,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "392dbd912feb6082c34a938f45e4f430160d215d6d50a001c1c5ca455de7fbc5",
+            "evaluation.json": "70fe342f535eb133f448b0689b572e196e673f5e0b213cb41abba40a9aaa4cd8",
+            "recording-check.json": "5c246863ed09a16cbaef2511756cacf557f44d4c22f52212d79e83dfa2b4c2cf",
+            "recording.json": "c429d6365652b7a2eba306d47e856a7e2f6f3510aa2d704741b37c0d91126c65",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/entry-probe-03/i110-merge/frozen-v05",
+          "controller": "frozen-v05",
+          "seed": 6800019,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "9c816c124bc0435a6ad793270840fece0e7d5a45726f0a9c3e2020148485e782",
+            "evaluation.json": "2b878b576cfb86cf6bb2b6ac9ece25c3f7e1727b84ef84b2d53eba9bc2659bf9",
+            "recording-check.json": "a87eeb3f12d63759afb185e762a176b5a1bb0ac81125e1cc9d99a51866e77f30",
+            "recording.json": "74671d53df5f4029e7d05cdd995db397e1005a6ed8bf96de48a92b590c1d6b41",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/entry-probe-03/i110-merge/smooth",
+          "controller": "smooth",
+          "seed": 6800019,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "be8e3228898591f2a76449c38e58c6785dddcea52bd00c908afc85e118f9ff1f",
+            "evaluation.json": "5db7cf97715e2d830849845ee38e4247c0e51dc9fb23e0f1888e5513fe085adc",
+            "recording-check.json": "87dd25a64b5fb7e2e662bab3d9d65c151fb569d4f77702962555ba610301d523",
+            "recording.json": "598a066bca9f4097858e1e2812e337046fa3ff4eebb2ccdb00826cfc82e3f7eb",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/entry-probe-03/i110-merge/teacher",
+          "controller": "teacher",
+          "seed": 6800019,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "2c7ecdc3f3637242c7944e51c8f599ba6db7d66d57e7921acbb93529fbd2528d",
+            "evaluation.json": "6202b59d25d5c3ae3322b9c5d433be9cc823013794cf4f63f61af011ced7e1f0",
+            "recording-check.json": "2a7a9c193ec4e25ffb3312dba6ee7974cf1517c5ea0450252b60e60c37670f42",
+            "recording.json": "f8a944566b938ec67e9b6de9a7a383b78bd5df75c10df49902b29ca4997bed40",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        }
+      ]
+    },
+    {
+      "path": "outputs/highway-smooth-control/v02/matrix-01",
+      "study_sha256": "b816274f8e63363e41d619f72528d3d929757488d699bc71a72bd0f28581852c",
+      "summary_sha256": "f9f8e113d27169b1662497f774b391066b8306dd4b74aa7eb3373517682491eb",
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+        "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98"
+      },
+      "controllers": [
+        "native",
+        "teacher",
+        "smooth",
+        "frozen-v05"
+      ],
+      "fixtures": [
+        "i110-merge",
+        "cruise",
+        "following",
+        "passing",
+        "merge",
+        "dense-following"
+      ],
+      "runs": [
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/cruise/frozen-v05",
+          "controller": "frozen-v05",
+          "seed": 6800020,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "6ebc0fccddcb33fe86927b8e6a2436b254bfb6d35bcc2e8fb7ed6e305aacef43",
+            "evaluation.json": "79f353694b61e08ace38e29851b53be327aeaeca9f357d4caaca1857db0c6c76",
+            "recording-check.json": "21fecac13fe9053a401975db738062f6707373491301f93a9f977925b2833413",
+            "recording.json": "b604027dcc104231ebdecd11bcbbc5da2ce0b45f38a7bdcaf4c0a734e8378aef",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "79c9dd77f9cc5b210dafed560f87efc043155526ca93fbc3727268192f3a88d9",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/cruise/native",
+          "controller": "native",
+          "seed": 6800020,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "b23abc8a54f0cef9bc5ce68c19522fc1609706b24ffcec0269b6968482be3f11",
+            "evaluation.json": "8f515fb5e49925a6db7d5666c6d09217efe1daad38e2cb1db4beaea435fcbe7d",
+            "recording-check.json": "c1161dc8d617c02a180b6bd8015889575b5617dc5680ba2d0eb7f5fd242a9c39",
+            "recording.json": "ba90fa4481d2ccb1b32c33514516739386e08afd674b14f495ca9092457ae30c",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "79c9dd77f9cc5b210dafed560f87efc043155526ca93fbc3727268192f3a88d9",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/cruise/smooth",
+          "controller": "smooth",
+          "seed": 6800020,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "f68765c72af01954242cd02e77f84cb838198be2524bd2e8863535cff1bb38a3",
+            "evaluation.json": "63b025a9dfe48e91d4a14bab2dc5154a8cb728779b34d697d47c45ebcec82bb4",
+            "recording-check.json": "d53662e063d7aaa25374aad3392c7433e07681a518caead52dfc83293e609da4",
+            "recording.json": "40b48b8bd0398f75448e938002d9a96393f06200e503e4a2f5f3594c0c86fb88",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "79c9dd77f9cc5b210dafed560f87efc043155526ca93fbc3727268192f3a88d9",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/cruise/teacher",
+          "controller": "teacher",
+          "seed": 6800020,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "caabd60cef6d264fa2eedaf54aa1167ea50492888351317d32ba115bbbf4d605",
+            "evaluation.json": "938f38ec582a3b221641b8562d6e7d4d1d6467101f6d86eb8b4eec9c0a1672e3",
+            "recording-check.json": "49ac09bff770d4f6db8394e35ae45d7a6270eedd0e90544bad5ac127d24f6452",
+            "recording.json": "9431a1a5dd03fa5cadd8c1584bf1973f5fe169a7a2a2aa77701b2dc461dc2875",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "79c9dd77f9cc5b210dafed560f87efc043155526ca93fbc3727268192f3a88d9",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/dense-following/frozen-v05",
+          "controller": "frozen-v05",
+          "seed": 6800024,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "30c14094beb491038fd68a327119523e3b2cbf8d3e48d2881fdd3d3a9a3ccaea",
+            "evaluation.json": "327e60c12f5354c560e720e560b992f81162dfc9f31a8d3f450ad9f6574096cb",
+            "recording-check.json": "43aed8098ff3495994391b29998f8a5992ac73e58f6dcd0e4ed02cc4185c4e35",
+            "recording.json": "91bd86c8d1b1fffd15742c86c6d50fcb8b9fdf9dd51a90b7b49c8564e48df77b",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "b61d6ee548957a9cfaed99271110e1752850effc779b3cdd400c714c6f77661a",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/dense-following/native",
+          "controller": "native",
+          "seed": 6800024,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "c81b0ce39406663653d478b21b227d19459baa74ae852ef309624b52063e555b",
+            "evaluation.json": "3fe84223012b220d2aae2ed24bf6d1de81af3d1143a7a8de09b873ab6e5a642d",
+            "recording-check.json": "65d3e2640088fc6c672be57c32bc4a2a29be594483a92e99e68cb1407248669e",
+            "recording.json": "0131ae58b71acc1119df844a4f8d0a3c02ffbba25ff8a0e6231bc6526efdb732",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "b61d6ee548957a9cfaed99271110e1752850effc779b3cdd400c714c6f77661a",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/dense-following/smooth",
+          "controller": "smooth",
+          "seed": 6800024,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "88a4351cada42dfd9a69d4d95b514bb8f566387500b645d9b9972440b094d059",
+            "evaluation.json": "0c0d64a19a85efab44931fc018542e2e30b1e2e6f03883de6b4b20d0c5ac98bb",
+            "recording-check.json": "6db428805181b4005ae7ce20d88c4adefc65eed762f29229c003c4b0fcb90c1e",
+            "recording.json": "8c4f45ba98de4580ed1e0c02aa4362d884679e6684120ca44bb428e4daa0d3c7",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "b61d6ee548957a9cfaed99271110e1752850effc779b3cdd400c714c6f77661a",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/dense-following/teacher",
+          "controller": "teacher",
+          "seed": 6800024,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "b4f9b91d48c514f63371fef63b44299bf06cc577874e1ae2665e5f36f4e1ad55",
+            "evaluation.json": "cd1f10f05e68e7453745f0b28d6dde28bd78d4a321e1e3f16d28f5152c65bd05",
+            "recording-check.json": "5c53d34eae7e150beed769df5e1a148af3ea68c8dab2ac320445ff098fe4c93b",
+            "recording.json": "c83e767ef14c3866203375cf5cc4d7292d28c9596b3a1cdc1456f05024f7f36e",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "b61d6ee548957a9cfaed99271110e1752850effc779b3cdd400c714c6f77661a",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/following/frozen-v05",
+          "controller": "frozen-v05",
+          "seed": 6800021,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "e8845f7894bb0713b57de53e54648bb0abfdcd62bee04cd01a5ff29dcf61cba4",
+            "evaluation.json": "e3887b5f4edeaaa99821cbf413986a7c6d7539bb50493a1dd28157c4f9f4f6bf",
+            "recording-check.json": "eff6e559d6e8caecf865cad0f789419ef24242ad78f4e5c6b81562e0a0b720ef",
+            "recording.json": "9664bc3f6f1bc9c868f6399a61dbdf7ac95f45b88c0b51a6bc4ec054097e7a13",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "4c985fb3cf3eaf88799568991e9980cdd71c884b2fa83d39363469424398347d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/following/native",
+          "controller": "native",
+          "seed": 6800021,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "8eb79930c0a7fa60fa644ec02f3682fa753ab7eb5f3d80787f89384129d425cb",
+            "evaluation.json": "e64b68a924832a5088926b111a1ae64f11cd11bfd9ae540c5381e384e60c3d51",
+            "recording-check.json": "20cf6919b3e3801152d2016fa424ba6d43cbc8053e62081e2b8a0eee9053bb57",
+            "recording.json": "d3e4218b17d0375576ad38f6155d0ddd8d16886bba3055ce905ee79ad28197e9",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "4c985fb3cf3eaf88799568991e9980cdd71c884b2fa83d39363469424398347d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/following/smooth",
+          "controller": "smooth",
+          "seed": 6800021,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "bc300364426c794eb05c682ce5931ccd30dbe65784801575a185b18805c13621",
+            "evaluation.json": "063d90b6b08964d13f6d68b0cec5dfba2e0c1de197261072f227a8ac2bc6003c",
+            "recording-check.json": "c1eef0a0296a7ed1299596062f10dd9ef8eaf67c9bb94f121709dbd44d97a6a0",
+            "recording.json": "55a9d17f134eb4e8961114dc14c9e0c729ca973509a9b0c9b22f2d528e8a6ef3",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "4c985fb3cf3eaf88799568991e9980cdd71c884b2fa83d39363469424398347d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/following/teacher",
+          "controller": "teacher",
+          "seed": 6800021,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "52d683176e4230dd35ba36b5b88b01aa7aee26fef9703e120a3783c61ec0f9e3",
+            "evaluation.json": "6445f3a21ee67670e0b10c48f818233b6b9f631fc7093b06c9e49852bff0541a",
+            "recording-check.json": "cd53555da72713118dff463a0a0d1a6daa02bfa40eff40b18dd3646bfb82ea9b",
+            "recording.json": "43aea26e869299bb382e556c3ad870c2f71ec64830bfc89b1dcfa088c009289e",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "4c985fb3cf3eaf88799568991e9980cdd71c884b2fa83d39363469424398347d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/i110-merge/frozen-v05",
+          "controller": "frozen-v05",
+          "seed": 6800019,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "9c816c124bc0435a6ad793270840fece0e7d5a45726f0a9c3e2020148485e782",
+            "evaluation.json": "036f93d02afbdb14844c2524ed34ae5713e53d33c8b3f6368793788b9797b40c",
+            "recording-check.json": "528f3c3a2fdf7aa8301e8fe529237dc5aeacc1e88993df2079e7bfc505c51fce",
+            "recording.json": "0e1319b766448b020873ab57feca46e6c4c1ffd9128795e22951a53daf47589a",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/i110-merge/native",
+          "controller": "native",
+          "seed": 6800019,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "6d54c845b54f03d93a6964d21857c1c5092bec705084c9e98d2cc21cb374c358",
+            "evaluation.json": "8aa666e6f3ea1d9e9f1d4a38ede9c8f14b5a59039455753c0c30daa014bba9cd",
+            "recording-check.json": "634199d503b3f52aa19e823b3e2d521acc6634573786e23c6c383b464a3a0fee",
+            "recording.json": "6d7af49f157aa2a9f8165528b073ace7c8df1a65532684109971d4cdf56d4c0d",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/i110-merge/smooth",
+          "controller": "smooth",
+          "seed": 6800019,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "be8e3228898591f2a76449c38e58c6785dddcea52bd00c908afc85e118f9ff1f",
+            "evaluation.json": "8f8fde5c6c8a087097da8dbd6a0606f892206de5ff2d010ec654083143722a8f",
+            "recording-check.json": "66675eeca31abab29ddabbfd273ff50878529d9a556a77229067f6a716cfddc2",
+            "recording.json": "b2c4dbeddbadf41ab7ea7c7e71617af76451dd0737759086a6c1fb295c07bff0",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/i110-merge/teacher",
+          "controller": "teacher",
+          "seed": 6800019,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "2c7ecdc3f3637242c7944e51c8f599ba6db7d66d57e7921acbb93529fbd2528d",
+            "evaluation.json": "e8da39751ce5f45fabd42279a631db5109ae09eaf50cade6c5f2f9292104e6dd",
+            "recording-check.json": "1ef82039c2412473907d48064cba430d2ac579162a1a237b1519a57030273217",
+            "recording.json": "6ef8545db27341eccc41047695b0963dc668e71fcb4cecae21d1dec778b48d65",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/merge/frozen-v05",
+          "controller": "frozen-v05",
+          "seed": 6800023,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "d41a88d3728705f5b5c983da90e3e74fcae60c54e7addcc252f04180c3d8b7ea",
+            "evaluation.json": "d84075ac74d8bebdde918defc2b48fccc3def1f6b5424a60d58b59e28151bbd6",
+            "recording-check.json": "43f3484e93cdc53652e14478bee9001192a451921b789b1b06d9cf19dae19f03",
+            "recording.json": "93ffee5216af6d20e7be4f315764d9de6c6b157fc444d6d18f3579d6fe202ec5",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "0f123189a9b07ebad1dffd4d8cc73d989d97a2661006c89cba31f9786b8010b7",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/merge/native",
+          "controller": "native",
+          "seed": 6800023,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "e582d9e770fb6f2a6f6c43f4491140e64809e236ebff300a8870a74cf059b0dc",
+            "evaluation.json": "c73de96696572adec1dc06afff9c04a3c847f7ed1b12654fd041af5d214d1614",
+            "recording-check.json": "7d660f86a54f8f77d7697662008a38d7ad95db687c7008147c980f642bfa48e2",
+            "recording.json": "82884faae7b3461adf68113d4b4c96fb2addfd7ccbd34a73ee4371ac833df2cc",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "0f123189a9b07ebad1dffd4d8cc73d989d97a2661006c89cba31f9786b8010b7",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/merge/smooth",
+          "controller": "smooth",
+          "seed": 6800023,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "f89d5a826e0148de19e94dc5932d43da06d099da091a1fe8b1cb2e5ce68c8259",
+            "evaluation.json": "7644248878e43c2e5a702642ddf9d2c6e1f3389ea1200d901301571d797c5409",
+            "recording-check.json": "e3edfa70dbfbfe43d686e9b5ee80de6fe3989db9d79f9a754dd7b23bd815cf20",
+            "recording.json": "ad8816fb761ca9cdf0727ed1b59497972b745d04578b07e8befe64236c148b03",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "0f123189a9b07ebad1dffd4d8cc73d989d97a2661006c89cba31f9786b8010b7",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/merge/teacher",
+          "controller": "teacher",
+          "seed": 6800023,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "86d226cba3c8062475a89ccddb12fc7c2b63a00b1021a12c132d972bd292fff2",
+            "evaluation.json": "ac6a193865010b71dba18ded8571924bf58b147413bb9671ea9e0cbc2be37682",
+            "recording-check.json": "cac09709b08dda4b3969d41e3d4e219f61651d0d2af8d589636b80fef381c7d2",
+            "recording.json": "b00b3b003f4ec4bed70bddbcae2ecd1ba21a57d01bd545c7970c91f9a4013417",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "0f123189a9b07ebad1dffd4d8cc73d989d97a2661006c89cba31f9786b8010b7",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/passing/frozen-v05",
+          "controller": "frozen-v05",
+          "seed": 6800022,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "221191e088a69324c00d7f7c890a89376841d43a9df2e27fbaa15904e07f60df",
+            "evaluation.json": "a516a5cd8f20988cd180f86ad7b23c599f658911321441808f833b9720386842",
+            "recording-check.json": "9d19a3267798a8d5e5082e94a827095912a1ad16b0933b5751b484be20e23cd8",
+            "recording.json": "acd5c718fc5f8ebe74301886e5c48601b193245a81d3e3822c281562dfb1a719",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "270ab4e6c900e4f4cdab0fec53f59436e53e4065f0d4d39af9fe58781b478f2d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/passing/native",
+          "controller": "native",
+          "seed": 6800022,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "d6c8808f57d4120213c77b35ededd7e7b171ad93d97eac6b664d123cb50f9b79",
+            "evaluation.json": "57d8aea2786c9d077dfa96dee65ad247e521b068bdc2e4f90d3fab38485877f3",
+            "recording-check.json": "153e7cdb9916eaec61f07a4233b004bbbd090756b8749716aea25be2e11b6ddf",
+            "recording.json": "123a7547107eed6e4289d1f7fa18601a51153ca9333e9a571089e19a2ec407ad",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "270ab4e6c900e4f4cdab0fec53f59436e53e4065f0d4d39af9fe58781b478f2d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/passing/smooth",
+          "controller": "smooth",
+          "seed": 6800022,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "449bcda368769fa32d81043ee93f13a992682fb2ee8116efdc72935edf068730",
+            "evaluation.json": "2487075ca7578ca41d56b594f7756b6dac11d29f65d8939b8f19743e4eb4dc00",
+            "recording-check.json": "67c9811ff225724124bb6985ca3a678a64a4906025c20f3fbba049a89e82516c",
+            "recording.json": "08f011bed13f4a6f1cdc5351497c9c1373aa2f9ef4270e8a0c3ba6336129609c",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "270ab4e6c900e4f4cdab0fec53f59436e53e4065f0d4d39af9fe58781b478f2d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-01/passing/teacher",
+          "controller": "teacher",
+          "seed": 6800022,
+          "source_reference_sha256": "09663d7e0d87a36e6aa7f966121ef99b986886696d1d30cc04832688a49b3ef2",
+          "input_sha256": {
+            "manifest.json": "2c1df4707620a3bee2c9bf91337d31e54b6110494ffec4ddee13aa8d646cdad1",
+            "evaluation.json": "fdd778a3144c87f60181d9ed5d8eae2f9f6d87edc1bc44811983c560e3752b73",
+            "recording-check.json": "c89d436b4e8808329e1c28baaad4ca2de9d8f5ec3c4dfd99b8778d416e55582d",
+            "recording.json": "7a12c6b508480acc0c64ccf78ac1813488556dcfd89eeb81ba45c9526ff4824f",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "270ab4e6c900e4f4cdab0fec53f59436e53e4065f0d4d39af9fe58781b478f2d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        }
+      ]
+    },
+    {
+      "path": "outputs/highway-smooth-control/v02/matrix-02",
+      "study_sha256": "ded2cae82f923fc77eeccf211ed6ca030ca7e3e1e25956f54b426521bfbeba38",
+      "summary_sha256": "6dde59250b77d3f1efb6d74cbef7587d2f87c35f16cb907509c817657b7d2e93",
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+        "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98"
+      },
+      "controllers": [
+        "smooth"
+      ],
+      "fixtures": [
+        "i110-merge",
+        "cruise",
+        "following",
+        "passing",
+        "merge",
+        "dense-following"
+      ],
+      "runs": [
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-02/cruise/smooth",
+          "controller": "smooth",
+          "seed": 6800020,
+          "source_reference_sha256": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+          "input_sha256": {
+            "manifest.json": "c021aa12cbdc47dea9bd1b4e6693d0434005f95d8f8f756ebe82e59c34b47fa0",
+            "evaluation.json": "170890cedec5bd3cac3b4c983cd0c6fc519b481acc56ea34657fe2568d3f908f",
+            "recording-check.json": "1f73d507a7b4af3c5107404189e3495bdf5a2651d70b1779eecff9d468fd51df",
+            "recording.json": "4ef669407272930e22169f5779c22bcab37374aaf03ca0cb7f6d224d77bd9633",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "79c9dd77f9cc5b210dafed560f87efc043155526ca93fbc3727268192f3a88d9",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-02/dense-following/smooth",
+          "controller": "smooth",
+          "seed": 6800024,
+          "source_reference_sha256": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+          "input_sha256": {
+            "manifest.json": "372aa256f9deebb38c817f78c2ffaf94c460eddffbb58f23395f16d264f1f59e",
+            "evaluation.json": "1c7ec245157520ca3c6a1921cddf4fcd3d6d7aab4e16c623741d43b169c85997",
+            "recording-check.json": "2a38dd07ec47d20cf0ad9bf6d92910eb99d9bd6f58b8a460818301141c0c42ce",
+            "recording.json": "52a5747f2169e2fcf6ca4903278895d80ad565f4dbcb803d5e378e57b74ecdbf",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "b61d6ee548957a9cfaed99271110e1752850effc779b3cdd400c714c6f77661a",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-02/following/smooth",
+          "controller": "smooth",
+          "seed": 6800021,
+          "source_reference_sha256": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+          "input_sha256": {
+            "manifest.json": "f5c0847e1e10a3d51e9a69b388634c729799c54608701e337cd2da468777b725",
+            "evaluation.json": "e62d4d24a960ab4555b38c14f7abe8dc5a7d185366d9b11597db6f267f62f035",
+            "recording-check.json": "73026a3b420a11ba2d7cf35577d6bbdf29f37cf28ac153fe61d573a7012bd280",
+            "recording.json": "3f5e244702990256ee86fef48c16d70910594f2141e420950f95e4ff0cc64d4b",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "4c985fb3cf3eaf88799568991e9980cdd71c884b2fa83d39363469424398347d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-02/i110-merge/smooth",
+          "controller": "smooth",
+          "seed": 6800019,
+          "source_reference_sha256": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+          "input_sha256": {
+            "manifest.json": "50c2fbc3fa91c0b854a014b2dee2ab99b57baf7b57f7921e5a02e40c27b2e900",
+            "evaluation.json": "048dbf2c3d2968fb678bbfc306955cb21baabe2e062ae18ad0760475ee3daac3",
+            "recording-check.json": "380300eaef8294e78d634ba70f361d6da9829bc1350bfad852da75823c6d3b21",
+            "recording.json": "9015202476e942f2eb03ce91b0a691886a842f957fc9ae9ddba9b868574be8dd",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-02/merge/smooth",
+          "controller": "smooth",
+          "seed": 6800023,
+          "source_reference_sha256": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+          "input_sha256": {
+            "manifest.json": "79b365886c6b483eb02092f609072e08861a5d5fe3cd22acef66163bec8294d4",
+            "evaluation.json": "ccd89aad5e8b2fe1e7614af7a90a25da0d060ade9dd0309498bf37a2885f440f",
+            "recording-check.json": "309086156e85f6da6a56c90a10cf10305028761f150eda3d8b192c6604c58ec6",
+            "recording.json": "43bd91c14bdaa96dc52b4f47bde54e870bbe20b6ad8bbf5a05a0dec35a7384a3",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "0f123189a9b07ebad1dffd4d8cc73d989d97a2661006c89cba31f9786b8010b7",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-02/passing/smooth",
+          "controller": "smooth",
+          "seed": 6800022,
+          "source_reference_sha256": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+          "input_sha256": {
+            "manifest.json": "be20a0eeecac88b01ac927cbf8b2e6a08d1205492912ec153f8538fa37f705ed",
+            "evaluation.json": "c1154fb5334be304345e2ab80da5d2e650a172de2229167d0db8ba94b0695afd",
+            "recording-check.json": "8d50ce6232a16a891a86d5b60a538cd2ae2f555ec67e3cda84ec91542ef3da78",
+            "recording.json": "c5a8fcafb0abd0422c66185230d813ca46a5af274ddcf105587d2d366e25db85",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "270ab4e6c900e4f4cdab0fec53f59436e53e4065f0d4d39af9fe58781b478f2d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        }
+      ]
+    },
+    {
+      "path": "outputs/highway-smooth-control/v02/matrix-03",
+      "study_sha256": "0da8514e5b1b0bd85aa07d304b82a54a5e9e194ee245d4bfa75919779204c358",
+      "summary_sha256": "934e364a3b209a598d0af4c35f286263ebf29f60f8d6708700d1d02221076550",
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "3de267351af2a152be8e4e45e1189318774980fcc7f959f4325e4e37416e8502",
+        "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98"
+      },
+      "controllers": [
+        "smooth"
+      ],
+      "fixtures": [
+        "i110-merge",
+        "cruise",
+        "following",
+        "passing",
+        "merge",
+        "dense-following"
+      ],
+      "runs": [
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-03/cruise/smooth",
+          "controller": "smooth",
+          "seed": 6800020,
+          "source_reference_sha256": "3de267351af2a152be8e4e45e1189318774980fcc7f959f4325e4e37416e8502",
+          "input_sha256": {
+            "manifest.json": "268f0b63700d283a47627eaaf78c8b03fb27c839f2ba47aefafa4e842ea2a0b4",
+            "evaluation.json": "cc930bbe38946dce0f6486ed70799b8e6bd93497d97785b8123e12851ca9bd16",
+            "recording-check.json": "42c8f9ad785ca0c52517623a1b501cbd4da20ca6ce3936b237cd65d5506159c8",
+            "recording.json": "a801c2e71b4ae5b534a3ddee2c6abc807b03d5835b3e9e07e981d1a6521f4392",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "79c9dd77f9cc5b210dafed560f87efc043155526ca93fbc3727268192f3a88d9",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-03/dense-following/smooth",
+          "controller": "smooth",
+          "seed": 6800024,
+          "source_reference_sha256": "3de267351af2a152be8e4e45e1189318774980fcc7f959f4325e4e37416e8502",
+          "input_sha256": {
+            "manifest.json": "850be3ba9051a80ec178dbd7d39d313f22e9a0f00b868b3be9ae8b0e54ee2382",
+            "evaluation.json": "1516be47e22f5d456f8d3e9bca3c0ae8e228b186e28e3c11c28738d8b2665508",
+            "recording-check.json": "8a21ba495d1053d64508e00c071af6b04d98c84207dc55bafaedf2a12ec462c7",
+            "recording.json": "c38092bb41aae9b0c15ccb7224e2e06417c67f4efc2a6b1b4b8b69f24f1bf114",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "b61d6ee548957a9cfaed99271110e1752850effc779b3cdd400c714c6f77661a",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-03/following/smooth",
+          "controller": "smooth",
+          "seed": 6800021,
+          "source_reference_sha256": "3de267351af2a152be8e4e45e1189318774980fcc7f959f4325e4e37416e8502",
+          "input_sha256": {
+            "manifest.json": "dd595942a40cd139bd76ba904888a3c6898a61ceb8641266a117a6a918876e61",
+            "evaluation.json": "4ff35214cc8194a4d90749fecd6d256a5dd1341d9de0639a9aea0c26641e37f0",
+            "recording-check.json": "c9368d2c89e653f4ee9039bb60bf757c3cae43571fd15b1f6de568fb6f87f1d5",
+            "recording.json": "6a7acf970a7234bec8df69bc047ae94692a30751caeb233674a70d9590ee41e5",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "4c985fb3cf3eaf88799568991e9980cdd71c884b2fa83d39363469424398347d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-03/i110-merge/smooth",
+          "controller": "smooth",
+          "seed": 6800019,
+          "source_reference_sha256": "3de267351af2a152be8e4e45e1189318774980fcc7f959f4325e4e37416e8502",
+          "input_sha256": {
+            "manifest.json": "12a6c4d168fa5d439a8c9b25e50eead8bbd5000b257bce7b61460049610ea90c",
+            "evaluation.json": "9d947e5eb172737573ee18018c185dee28ff01955eacf938a01dda375afcc48d",
+            "recording-check.json": "ee4c9359b68462aac95cae87f1e0abcb7681794758830836449aaa0c74243c42",
+            "recording.json": "9eaab205306ac7f17d2e566f36e3c92a874070791a729d899b54aa36eeb82c22",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+          "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-03/merge/smooth",
+          "controller": "smooth",
+          "seed": 6800023,
+          "source_reference_sha256": "3de267351af2a152be8e4e45e1189318774980fcc7f959f4325e4e37416e8502",
+          "input_sha256": {
+            "manifest.json": "7da6d74ecc18c695e12f64b30a4ec2bc34793d59bf757284333dcd54def2773d",
+            "evaluation.json": "0cf7344c61a696084527878365b4b6f1a4a3d8521f378fa05f860e4540d76d2a",
+            "recording-check.json": "654a5183f661db826da7706e517deac396f1c5da0b185e5ff05dc695b87338ee",
+            "recording.json": "76ce93c2800fe3352ccb1a384a5e1ae282f3643ad695640178f3ab9d852c7cc6",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "0f123189a9b07ebad1dffd4d8cc73d989d97a2661006c89cba31f9786b8010b7",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        },
+        {
+          "path": "outputs/highway-smooth-control/v02/matrix-03/passing/smooth",
+          "controller": "smooth",
+          "seed": 6800022,
+          "source_reference_sha256": "3de267351af2a152be8e4e45e1189318774980fcc7f959f4325e4e37416e8502",
+          "input_sha256": {
+            "manifest.json": "b203960de0b83393fdfaecec2d001e2f2462311c54da6f60bb24087f7affa4d5",
+            "evaluation.json": "d8342a46ea68550aeab1a0750ec08c12cbb50a313baf95817e356f2df439b16f",
+            "recording-check.json": "745654114fd1f7974e73d3af244c623ffad0360e05a3c8e906e6c002dfc6897c",
+            "recording.json": "029c9e6224aa811900c267fd48c07fe6a37ddbe5238516e3617d2f8422f29ed8",
+            "config.json": "c1687ab7121d0b3caefd6a8faba3fd62caf721ec4d9c0d61fff3736b2428ea7f"
+          },
+          "demand_sha256": "270ab4e6c900e4f4cdab0fec53f59436e53e4065f0d4d39af9fe58781b478f2d",
+          "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+          "full_horizon": true,
+          "training": false,
+          "optimizer_steps": 0
+        }
+      ]
+    }
+  ],
+  "compact_files": [
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/entry-probe-01-focal-provenance.json",
+      "sha256": "9e5ae0b2adff8e977d6f465e03a6b3f5849887e7dee97ca829be23318c13e1bb",
+      "bytes": 714
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/entry-probe-01-focal.png",
+      "sha256": "bfd82922e79865a4c5ced83c1a10e7d2c2a235d7bf8412532ca0fac12949be1d",
+      "bytes": 151277
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/entry-probe-01-gates.json",
+      "sha256": "d4a7f25a57394bce796bd386c4ea32ed23d3a182b51c3f66aca4739db780e5ec",
+      "bytes": 14410
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/entry-probe-02-actor-comparison.json",
+      "sha256": "b11ddd2700c282fbbfed64573be5a79d31bb4b207717e39aa0cad2d416357448",
+      "bytes": 1432
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/entry-probe-02-focal-provenance.json",
+      "sha256": "22c160124e79308728a3a209686162fb8af51f51066b5bc0c77e3db54f268066",
+      "bytes": 714
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/entry-probe-02-focal.png",
+      "sha256": "47345daa731231abc4dd8162c7ae644aec46c860fbda1dd0898cbc453840d8cf",
+      "bytes": 171046
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/entry-probe-02-gates.json",
+      "sha256": "bcc406852bcdc958dd97881d3dc75f51e61f1d779a770a36cd8e88d0f36ea949",
+      "bytes": 14513
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/entry-probe-02-revised-criteria.json",
+      "sha256": "2448881a57a427d8e44d421c51521b8d3c980947f0a4de1460ba6881fd65bc9e",
+      "bytes": 17400
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/entry-probe-03-focal-provenance.json",
+      "sha256": "800d14f0fb02a5436fdf9bc5429c7e995f485291c5342d46092a6ecad13f3589",
+      "bytes": 714
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/entry-probe-03-focal.png",
+      "sha256": "e4d06be6f9b4672b1ec401d9e995b8f9d9c9c262f858b7647dafea687b6ef1a7",
+      "bytes": 170376
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/entry-probe-03-gates.json",
+      "sha256": "4ec83bbedc1ac8e5e39e1698dcd3e45f45094cd100406d233454ae0bd679ff1a",
+      "bytes": 17853
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/final-following-native-peak-v4-provenance.json",
+      "sha256": "18aa632eb68d4c97b064b3de0e67a09aefb9f3e467d0ad40923b3228b5dc9c68",
+      "bytes": 702
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/final-following-native-peak-v4.png",
+      "sha256": "3176357b2e592ab066092f24486d57c5e10572bd50ec710f77056a30d8efb9be",
+      "bytes": 123100
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/final-gradient-manifest.json",
+      "sha256": "c991bd1b776dafa58108a54bf18c8519774c8302b6cd5715a703836f14523f6c",
+      "bytes": 5601
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/final-gradient-summary.json",
+      "sha256": "e623b5c3c79b4ce99890a5f812ecdbb2619ea9d2c3dd92fa07d79cbacf3ceec7",
+      "bytes": 10044
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/final-i110-v4-provenance.json",
+      "sha256": "669d1dd346f074937c7a8f58d916f3b701edddd1c100cd5ad536387562ab8db6",
+      "bytes": 704
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/final-i110-v4.png",
+      "sha256": "e4d06be6f9b4672b1ec401d9e995b8f9d9c9c262f858b7647dafea687b6ef1a7",
+      "bytes": 170376
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/final-readiness-failed.json",
+      "sha256": "5d1af298df14b28744796b2323e11c04a7f6620cc071fd9e5a42d19e516d6f14",
+      "bytes": 7755
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/final-render-tests.log",
+      "sha256": "7f050ea150f244a829d395c01a6d70ee40f7e4231bbf9e05095309a2a1723775",
+      "bytes": 101
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/final-tests-config-recheck.log",
+      "sha256": "7ff9aeea50c1e2de21a62f34db4cce98896bc807140a6c3f0bb835db8886d858",
+      "bytes": 100
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/final-tests-initial.log",
+      "sha256": "0d2e629f5ea544e2ca49907a7c54aaea6b230b900a86560e2eac327074e33b7f",
+      "bytes": 1867
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/frozen-objective-invariance.json",
+      "sha256": "2ff6a062bf2c42e178d4b9a4c30360cf2f1c5906656ea6b0ebad1264fd3648ff",
+      "bytes": 2464
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/legacy-invariance.json",
+      "sha256": "32a0c5980cd5291f727a0a3f0482c51d08de36e5ac732995b14b01546cf71808",
+      "bytes": 576
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/matrix-01-gates.json",
+      "sha256": "18b7f8a69646538afa32e88e4085865b083382f79a9377cba3fb2e4e97d9a2ea",
+      "bytes": 93699
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/matrix-01-peak-events.json",
+      "sha256": "f30ff4b82cfdefb7cf95f95b9df59291c2016d71fe3cf63f20d73747a11010a5",
+      "bytes": 4222
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/matrix-02-gates.json",
+      "sha256": "2981fb4dd8375c094755967c1703fb97b81e284a187d1bcc1b869db19bd1ab5a",
+      "bytes": 94106
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/matrix-02-monotone-bound-revision.json",
+      "sha256": "94d053e183130baaf14eff78eebdc5fd1263458eb25bf238e00eb4a2ed23edbe",
+      "bytes": 94505
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/matrix-02-peak-events.json",
+      "sha256": "677ff9a9de2c2e3d3b37416d7b50b38c12c9862dc30fd7d4bd05f602eafffb58",
+      "bytes": 4444
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/matrix-03-gates.json",
+      "sha256": "331ec6f3ff9cba7d955acc441c4f11d02cf2d792b0c902593f7e30414ee58c42",
+      "bytes": 94880
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/matrix-03-peak-events.json",
+      "sha256": "d9f91468dffe28b9215e37e9ea51b3eaed90944fedecde74cc70a19b9af052c6",
+      "bytes": 4430
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/preparation-cost-ledger.json",
+      "sha256": "6282d469570ea587a3b2b55fde4fa1c31eeb0c54b87c68a0b2d9b2b65c6e8dec",
+      "bytes": 36807
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/simready-frozen-30s.png",
+      "sha256": "4e51e62241c115428667a81390e5711c4b65078f1fdbd59e0423f15aa6047eca",
+      "bytes": 625846
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/simready-frozen-render-report.json",
+      "sha256": "682478f6ff43feab2bf0a34c7cac19f2434f02ac41020a5f219c073211fee020",
+      "bytes": 9649
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/simready-reference-merge-20s.png",
+      "sha256": "e6618f950f86af395a75be2bebfc7098ad839cd4f6b705e00b986d067170824f",
+      "bytes": 598833
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/simready-reference-render-report.json",
+      "sha256": "4e02fd37c017074e592089288b15a7439a684ba572e9b2090c89170edb60467b",
+      "bytes": 9546
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/v5-rejected-adjacent-preview.json",
+      "sha256": "28b11c72ea270bea9e0e6db1066cb6b2c6a16497f73818e09e1a8b7aa38ccfe7",
+      "bytes": 3598
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/v5-rejected-adjacent-preview.md",
+      "sha256": "8b3ea7f68ca5f284693ac995b1d4f48d532cafb99a8beb0fd8c5e06a857be8ca",
+      "bytes": 1795
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/v5-rejected-adjacent-preview.patch",
+      "sha256": "bbe9e6f7a7e8e6d6344c96daa8a7eea5cc1b49fcc0a7ca68f13b79ebdcb9ed9a",
+      "bytes": 8627
+    },
+    {
+      "path": "documentation/evidence/highway-smooth-preparation-v01/visual-comparison-manifest.json",
+      "sha256": "2816d378392f4ba360d6a8e3f6785a191e18043366419163c303ef738fb7fc84",
+      "bytes": 2261
+    }
+  ],
+  "scope": "Native preparation, offline audits/plots, final SimReady visual evidence, zero-update derivatives and test results. Raw outputs and local vehicle packages/videos are not claimed to be published on GitHub.",
+  "final_visuals": [
+    {
+      "path": "outputs/highway-smooth-control/v02/render-reference-v4",
+      "report_sha256": "4e02fd37c017074e592089288b15a7439a684ba572e9b2090c89170edb60467b",
+      "video_sha256": "5e8dd182cb9a8896f91936790c9260d3df23aa01648525362dabfcf61b9cc307",
+      "proof": true
+    },
+    {
+      "path": "outputs/highway-smooth-control/v02/render-frozen-v05",
+      "report_sha256": "682478f6ff43feab2bf0a34c7cac19f2434f02ac41020a5f219c073211fee020",
+      "video_sha256": "086657118aa7c4f69dab7d21ba05daf514900e25e86a36ce16f237415d667f9c",
+      "proof": true
+    }
+  ],
+  "comparison_video": {
+    "path": "outputs/highway-smooth-control/v02/visual-comparison-v01/i110-frozen-vs-reference.mp4",
+    "sha256": "92511b4c56f115bf7dc345b658f63a49f156196a6cbcbd12e16097d2a514965a",
+    "manifest_sha256": "2816d378392f4ba360d6a8e3f6785a191e18043366419163c303ef738fb7fc84"
+  },
+  "final_zero_update_gradient": {
+    "path": "outputs/highway-smooth-control/v02/gradients-02",
+    "files": {
+      "summary.json": "e623b5c3c79b4ce99890a5f812ecdbb2619ea9d2c3dd92fa07d79cbacf3ceec7",
+      "manifest.json": "c991bd1b776dafa58108a54bf18c8519774c8302b6cd5715a703836f14523f6c",
+      "config.json": "08f87a93d9948011f47a87e930231210c21503ada99dcc76261fe2588c6fecef",
+      "batches.pt": "b29267029d3ba91140d4b8147fc98414aa50cd89fa5dd45eefed74afc0793371",
+      "unchanged_objective_control.json": "d6bbbfa0322504b36d2e3d4e890edf2912d5299e1d5c877ae41faea32dafaec0",
+      "anticipatory_alignment_comfort_bundle.json": "0810ab769ae089d8a702afe31bd1d12eb6b6f318f0bcf9682e48f0559d53a1b2"
+    },
+    "batch_published": false,
+    "optimizer_steps": 0
+  },
+  "final_test_logs": {
+    "highway-smooth-preparation-final-tests.log": "0d2e629f5ea544e2ca49907a7c54aaea6b230b900a86560e2eac327074e33b7f",
+    "highway-smooth-preparation-config-recheck.log": "7ff9aeea50c1e2de21a62f34db4cce98896bc807140a6c3f0bb835db8886d858",
+    "highway-smooth-preparation-render-tests.log": "7f050ea150f244a829d395c01a6d70ee40f7e4231bbf9e05095309a2a1723775"
+  },
+  "technical_note": {
+    "path": "documentation/highway-smooth-preparation-v01.md",
+    "sha256": "eae175a78bc1815e48bc0d3fa08136d40e76438f7d82ff393ec9fb1ab32eb885"
+  },
+  "final_readiness": {
+    "path": "documentation/evidence/highway-smooth-preparation-v01/final-readiness-failed.json",
+    "sha256": "5d1af298df14b28744796b2323e11c04a7f6620cc071fd9e5a42d19e516d6f14",
+    "passed": false,
+    "checks": {
+      "contract": true,
+      "safety": true,
+      "comfort": false,
+      "reference": true,
+      "invariance": true,
+      "gradient": true,
+      "coverage": true
+    },
+    "preparation_sha256": "3f88dccca05981209fee6eeb294f74b06818ab11fc1ee730370381f75d3ee3f7",
+    "gradient_preparation_digest_matches": true
+  },
+  "preparation_cost_ledger": {
+    "path": "documentation/evidence/highway-smooth-preparation-v01/preparation-cost-ledger.json",
+    "sha256": "6282d469570ea587a3b2b55fde4fa1c31eeb0c54b87c68a0b2d9b2b65c6e8dec"
+  }
+}

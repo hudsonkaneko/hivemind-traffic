@@ -1,0 +1,80 @@
+{
+  "status": "rejected_v5_restored_v4_not_ready",
+  "training": false,
+  "optimizer_steps": 0,
+  "versions": {
+    "traffic/highway_smooth_reference.py": {
+      "restored_v4_sha256": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+      "rejected_v5_sha256": "3de267351af2a152be8e4e45e1189318774980fcc7f959f4325e4e37416e8502"
+    },
+    "tests/test_highway_smooth_reference.py": {
+      "restored_v4_sha256": "d589e704268ab478f65f56401d4531bb65edd7fdb14bd6ea5c784ee2d132fc67",
+      "rejected_v5_sha256": "060eeeee5f06f2295f65dd3a58390ef50c01ff3933024244a1d7564d12280f2d"
+    }
+  },
+  "patch_sha256": "bbe9e6f7a7e8e6d6344c96daa8a7eea5cc1b49fcc0a7ca68f13b79ebdcb9ed9a",
+  "native_matrix": "outputs/highway-smooth-control/v02/matrix-03",
+  "cases": [
+    {
+      "case": "cruise",
+      "path": "outputs/highway-smooth-control/v02/matrix-03/cruise/smooth/evaluation.json",
+      "sha256": "cc930bbe38946dce0f6486ed70799b8e6bd93497d97785b8123e12851ca9bd16",
+      "intervention_fraction": 0.00015625,
+      "mean_fraction_of_speed_limit": 0.9433064407325547,
+      "passes": 0,
+      "completed_trips": 0,
+      "controlled_peak_jerk_m_s3": 16.165610086740756
+    },
+    {
+      "case": "dense-following",
+      "path": "outputs/highway-smooth-control/v02/matrix-03/dense-following/smooth/evaluation.json",
+      "sha256": "1516be47e22f5d456f8d3e9bca3c0ae8e228b186e28e3c11c28738d8b2665508",
+      "intervention_fraction": 0.000625,
+      "mean_fraction_of_speed_limit": 0.868229258954893,
+      "passes": 0,
+      "completed_trips": 0,
+      "controlled_peak_jerk_m_s3": 3.6898366615869094
+    },
+    {
+      "case": "following",
+      "path": "outputs/highway-smooth-control/v02/matrix-03/following/smooth/evaluation.json",
+      "sha256": "4ff35214cc8194a4d90749fecd6d256a5dd1341d9de0639a9aea0c26641e37f0",
+      "intervention_fraction": 0.00203125,
+      "mean_fraction_of_speed_limit": 0.8624422027867878,
+      "passes": 0,
+      "completed_trips": 0,
+      "controlled_peak_jerk_m_s3": 25.393981598317517
+    },
+    {
+      "case": "i110-merge",
+      "path": "outputs/highway-smooth-control/v02/matrix-03/i110-merge/smooth/evaluation.json",
+      "sha256": "9d947e5eb172737573ee18018c185dee28ff01955eacf938a01dda375afcc48d",
+      "intervention_fraction": 0.0011210762331838565,
+      "mean_fraction_of_speed_limit": 0.8131861512662049,
+      "passes": 0,
+      "completed_trips": 33,
+      "controlled_peak_jerk_m_s3": 35.84224339658
+    },
+    {
+      "case": "merge",
+      "path": "outputs/highway-smooth-control/v02/matrix-03/merge/smooth/evaluation.json",
+      "sha256": "0cf7344c61a696084527878365b4b6f1a4a3d8521f378fa05f860e4540d76d2a",
+      "intervention_fraction": 0.00125,
+      "mean_fraction_of_speed_limit": 0.9063035316764428,
+      "passes": 0,
+      "completed_trips": 0,
+      "controlled_peak_jerk_m_s3": 6.571427328989543
+    },
+    {
+      "case": "passing",
+      "path": "outputs/highway-smooth-control/v02/matrix-03/passing/smooth/evaluation.json",
+      "sha256": "d8342a46ea68550aeab1a0750ec08c12cbb50a313baf95817e356f2df439b16f",
+      "intervention_fraction": 0.0046875,
+      "mean_fraction_of_speed_limit": 0.810299274896216,
+      "passes": 1,
+      "completed_trips": 0,
+      "controlled_peak_jerk_m_s3": 11.357042307698073
+    }
+  ],
+  "decision": "Reject adjacent caution: comfort still fails and useful progress regressed; all safety/comfort/progress gates and native overrides retained. Restore v4 exactly; v4 still fails four nominal comfort cases."
+}
