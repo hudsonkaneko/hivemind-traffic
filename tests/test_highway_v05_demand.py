@@ -6,7 +6,7 @@ import pytest
 
 from traffic.highway_merge_context import Stage1LaneGraph
 from traffic.highway_v05_demand import (
-    CAP, DIFFICULTIES, MAIN_ROUTE, PROFILES, demand_report, validate_initial_spawns, write_demand,
+    CAP, DIFFICULTIES, MAIN_ROUTE, PROFILES, _safe_gap, demand_report, validate_initial_spawns, write_demand,
 )
 
 
@@ -185,6 +185,39 @@ def test_declared_difficulty_increases_density_and_speed_spread(graph, tmp_path)
     assert reports[0] < reports[1] < reports[2]
     assert spans[0] > spans[1] > spans[2]
     assert DIFFICULTIES[0]['arrival_interval_s'] > DIFFICULTIES[2]['arrival_interval_s']
+
+
+def test_failed_following_insertion_gap_retains_speed_and_safety():
+    from traffic.highway_stage1_teacher import acc_response_ceiling
+    # Seed6900021 had collision-safe spacing but ACC's stationary insertion
+    # speed was below the explicitly requested20.2135m/s; native insertion queued.
+    rear_speed, front_speed = 20.21351833671351, 16.
+    old_bumper_gap = 307.44022254371237 - 235.40888435683965 - 4.8
+    assert acc_response_ceiling(rear_speed, 24.5872, (old_bumper_gap, front_speed)) < 0.
+    new_bumper_gap = _safe_gap(rear_speed, front_speed)
+    assert new_bumper_gap > old_bumper_gap
+    assert acc_response_ceiling(rear_speed, 24.5872, (new_bumper_gap, front_speed)) >= -1e-12
+    for rear, front in ((6., 3.), (12., 5.), (18., 16.), (24., 10.), (24., 24.)):
+        gap = _safe_gap(rear, front)
+        assert gap >= 2.5 + 2. * rear + max(0., rear ** 2 - front ** 2) / 9.
+        assert acc_response_ceiling(rear, CAP, (gap, front)) >= -1e-12
+
+
+@pytest.mark.parametrize('difficulty', [0, 1, 2])
+def test_all_initial_followers_have_nonnegative_acc_insertion_response(graph, tmp_path, difficulty):
+    from traffic.highway_stage1_teacher import acc_response_ceiling
+    rows = write_demand(tmp_path / 'routes.xml', 6900021, graph, 'following', 18, 24,
+                        speed_limit_m_s=CAP, difficulty=difficulty, traffic_mode='sustained')
+    initial = [row for row in rows if row['initial_cohort']]
+    assert len(initial) == 24 and sum(row['controlled'] for row in initial) == 18
+    for rear in initial:
+        distances = graph.distances(rear['lane_id'], rear['position'], MAIN_ROUTE)
+        fronts = [(distances[front['lane_id']] + front['position'] - 4.8, front)
+                  for front in initial if front is not rear and front['lane_id'] in distances
+                  and distances[front['lane_id']] + front['position'] > 0]
+        if fronts:
+            gap, front = min(fronts, key=lambda item: item[0])
+            assert acc_response_ceiling(rear['speed'], CAP, (gap, front['speed'])) >= -1e-12
 
 
 def test_short_ramp_reduces_ramp_count_without_losing_cohort(graph, tmp_path):

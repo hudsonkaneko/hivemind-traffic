@@ -425,3 +425,6 @@ User authorized implementation and training. Three agents implemented native thr
 
 
 V14 launch recovery: the first attempt failed during initial validation with zero optimized/collected training steps. Departure timestamp precision and native interrupted-maneuver lifecycle/runway checks are corrected; the exact frozen failing cases complete full horizons with no native warnings, while their policy intervention failures remain. 265 targeted tests pass. A reviewed strict migration preserves all starting state and 125.344 seconds charged; fresh preflight is required before resuming. [Preserved failure and repair](highway-environment-v05.md#first-launch-preserved-pre-learning-failure).
+
+
+V14 second recovery: native ACC insertion feasibility required more initial clearance than collision safety alone. All132 reset cases pass after the demand-only correction; counts/speeds/guards remain fixed, initial spatial density changes explicitly. 269 tests pass. Both failed launches occurred before learning;512.048 seconds remain charged. Fresh readiness and a second strict zero-update migration precede resume.

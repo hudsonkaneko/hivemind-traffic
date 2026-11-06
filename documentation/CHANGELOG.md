@@ -951,3 +951,8 @@ Implemented the user-authorized environment revision: native three-second lane c
 ## November 5, 2026 — v05 pre-learning failure repair
 
 The first authorized launch stopped during initial validation, before any training decisions or optimizer updates. Preserved the 125.344-second failed attempt and checkpoint. Corrected sustained-departure millisecond serialization, native interrupted-maneuver cleanup, and map-based lane-change runway masks. The exact failed departure/ending-lane cases now complete 80 seconds with frozen weights and no native warnings; their 34.62%/29.535% intervention failures remain. 265 tests pass. A guarded, reviewed zero-update migration preserves weights, optimizer, RNG and consumed budget; fresh readiness precedes resume. [Diagnosis and evidence](highway-environment-v05.md#first-launch-preserved-pre-learning-failure).
+
+
+## November 5, 2026 — v05 native insertion repair
+
+The second launch stopped before learning: native ACC delayed an initial closing follower, allowing later inflow to mix with the fixed cohort. Preserved both failed checkpoints and 512.048 cumulative seconds. Added source-backed ACC insertion clearance before AV assignment; counts/speeds/guards remain fixed, while initial positions and density change where needed. All 132 native reset cases pass with all initial vehicles departing at zero and present at 0.1 seconds, no collisions/teleports/warnings. 269 tests pass. [Failure, density comparison and recovery](highway-environment-v05.md#second-launch-native-insertion-feasibility).

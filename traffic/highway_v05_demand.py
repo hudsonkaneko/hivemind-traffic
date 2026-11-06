@@ -106,7 +106,15 @@ def _main_position(graph, path, distance):
 def _safe_gap(rear_speed, front_speed):
     # Use the most cautious native tau for every assignment, retaining the
     # existing 1.5 s AV guard. Additional closing-speed braking room is explicit.
-    return MIN_GAP + 2. * rear_speed + max(0., rear_speed ** 2 - front_speed ** 2) / 9.
+    safety = 2. * rear_speed + max(0., rear_speed ** 2 - front_speed ** 2) / 9.
+    # SUMO1.27.1 ACC insertionFollowSpeed iterates to a stationary speed. Its
+    # gap-closing response must not be negative at the requested departure
+    # speed: .8*(front-rear)+.04*(gap-1.5*rear-d0) >= 0. The free-speed branch
+    # applies above120m net gap; the independent braking floor still applies.
+    # Resolve this before assignment, so partial/full AV cohorts remain matched.
+    dynamic_margin = min(2., max(0., 75. / max(rear_speed, 1e-6) - 5.))
+    acc_insertion = min(120.001, 1.5 * rear_speed + dynamic_margin + 20. * max(0., rear_speed - front_speed))
+    return MIN_GAP + max(safety, acc_insertion)
 
 
 def validate_initial_spawns(graph, rows, *, ceiling=CAP):
@@ -290,6 +298,7 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
         assignment_rule='Independent seeded nested subset; one ramp agent first for merge; fixed throughout episode',
         physical_matching='Positions, speeds, native driver profiles and departure times unchanged across AV counts',
         spawn_validation='Static connected-lane clearance plus required native reset verification',
+        spawn_gap_rule='Maximum of cautious native headway/braking floor and stationary ACC insertion clearance, before AV assignment',
         sustained_arrival_interval_s=settings['arrival_interval_s'] if traffic_mode == 'sustained' else None)
     ET.ElementTree(root).write(path, encoding='utf-8', xml_declaration=True)
     return DemandManifest(rows, scenario)
