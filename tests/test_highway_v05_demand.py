@@ -102,6 +102,54 @@ def test_initial_demand_is_unchanged_by_later_arrivals(graph, tmp_path):
     assert initial == [row for row in sustained if row['initial_cohort']]
 
 
+def test_exact_failed_seed_departure_matches_native_milliseconds_and_strict_ledger(graph, tmp_path):
+    from traffic.trip_accounting import TripLedger, TripRequest, read_requests
+    # Failed validation seed6900011 authored this value. SUMO 1.27.1 converts
+    # it to8200ms, so the strict ledger correctly rejects the old precision.
+    raw_departure = 8.200348149208052
+    old = TripLedger([TripRequest('inflow_2', raw_departure)])
+    with pytest.raises(ValueError, match='Invalid/duplicate departure'):
+        old.observe(8.3, departed={'inflow_2': 8.2}, active=['inflow_2'])
+    path = tmp_path / 'routes.xml'
+    rows = write_demand(path, 6900011, graph, 'merge', 12, 24, speed_limit_m_s=22.352,
+                        difficulty=1, traffic_mode='sustained', stabilization_seconds=0., horizon_seconds=80.)
+    requests = read_requests(path)
+    row = next(row for row in rows if row['slot'] == 'inflow_2')
+    request = next(request for request in requests if request.vehicle_id == 'inflow_2')
+    assert row['depart'] == request.requested_at == 8.2
+    assert abs(row['depart'] - raw_departure) < .0005
+    ledger = TripLedger([request])
+    ledger.observe(8.3, departed={'inflow_2': 8.2}, active=['inflow_2'])
+    assert ledger.snapshot()['trips'][0]['state'] == 'active'
+    assert len(rows) == 52  # No arrival dropped to repair the failure.
+    assert all(request.requested_at == next(row['depart'] for row in rows if row['vehicle_id'] == request.vehicle_id)
+               for request in requests)
+    assert all(row['depart'] == round(row['depart'] * 1000.) / 1000. for row in rows)
+
+
+@pytest.mark.parametrize('difficulty', [0, 1, 2])
+def test_sustained_requests_survive_strict_native_time_accounting(graph, tmp_path, difficulty):
+    from traffic.trip_accounting import TripLedger, read_requests
+    for seed in (88, 6900008, 6900009, 6900010, 6900011):
+        path = tmp_path / f'{seed}.xml'
+        rows = write_demand(path, seed, graph, 'merge', 8, 24, difficulty=difficulty,
+                            traffic_mode='sustained', stabilization_seconds=.1234, horizon_seconds=80.)
+        ledger = TripLedger(read_requests(path))
+        # Native SUMO parses integer milliseconds then inserts at a 100ms step.
+        # Account every requested vehicle, with no dropped or ignored IDs.
+        events = {}
+        for row in rows:
+            native_ms = int(row['depart'] * 1000. + .5)
+            insertion_ms = ((native_ms + 99) // 100) * 100
+            events.setdefault(insertion_ms, []).append(row['vehicle_id'])
+        active = []
+        for stamp_ms, ids in sorted(events.items()):
+            active.extend(ids)
+            ledger.observe((stamp_ms + 100) / 1000., departed={vid: stamp_ms / 1000. for vid in ids}, active=active)
+        assert ledger.snapshot()['totals']['active'] == len(rows)
+        assert ledger.snapshot()['totals']['removed'] == 0
+
+
 @pytest.mark.parametrize('difficulty', [0, 1, 2])
 @pytest.mark.parametrize('ceiling', [6., 12., 18., CAP])
 def test_static_clearance_and_native_limits(graph, tmp_path, difficulty, ceiling):

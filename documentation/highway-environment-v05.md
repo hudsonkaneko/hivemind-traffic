@@ -1,8 +1,7 @@
 # Highway environment v05 preparation and bounded pilot
 
 November 5, 2026, America/Los_Angeles. **Environment preparation and final
-no-learning preflight verified; policy training has not started and training
-results are pending.** The inherited phase-0 actor remains unaccepted. V05
+no-learning preflight verified; authorized launch stopped during initial validation before learning, and a corrected resume is being prepared.** The inherited phase-0 actor remains unaccepted. V05
 changes native lane motion, observed neighboring-lane occupancy, population
 coverage and merge scoring before learning. It is a new environment treatment,
 so its results must not be presented as a matched improvement over the old
@@ -253,3 +252,14 @@ row, full report, sources, policy and network hashes remain with the recording.
 Shared roadmap, change-log and connected-guide updates are handled with the
 overall milestone. This technical note does not claim that the Google mirror
 has already synchronized.
+
+
+## First launch: preserved pre-learning failure
+
+Run `train-20261106T022222Z-0b8b611a` stopped during fixed validation row 11, before any collected training decisions or optimizer steps. Its 125.344 seconds remain charged to the 3,600-second budget. The original checkpoint and failed run remain untouched. [Recovery evidence](evidence/highway-environment-v05/training-recovery.json) preserves the traceback and subsequent frozen checks.
+
+The generator stored departure `8.200348149208052` while SUMO represented the same request at `8.2` seconds. Strict trip accounting correctly rejected an apparently early departure. The fix writes the same native millisecond time to both route XML and manifest, preserving the raw random schedule and all other vehicle fields. The original 504-case static sweep covered initial-only demand and could not expose this sustained-arrival precision mismatch. New regression tests exercise the strict ledger and sustained departures.
+
+The exact failed seed 6900011 then completed 80 seconds in 23.641 seconds with unchanged frozen weights, zero collisions/teleports/native warnings and correct requested/departed timestamps. Its 34.62% intervention rate remains a policy failure. A separate ending-lane warning in row 10 exposed interrupted-maneuver cleanup. The corrected environment records native interruptions once and releases the held target; it never counts them as completion or a controller-implemented safe abort. An actor-visible map/speed mask requires enough connected target corridor for the three-second maneuver, maximum permitted acceleration, one control tick and the existing standstill clearance. Connected same-identity lane seams remain eligible; insufficient runway and unsafe gaps retain both diagnostic causes.
+
+The same frozen row 10 then completed 80 seconds in 22.921 seconds with zero collisions, teleports or native warnings. Its 29.535% intervention rate remains a behavior failure. 265 targeted tests pass after both repairs. A strict, reviewed zero-update checkpoint migration retains all model/optimizer/RNG state, counters and the 125.344 seconds already charged; only the two corrected source hashes and fresh readiness proof may change. [Source-matched recovery preflight](evidence/highway-environment-v05/recovery-preflight.json) passed in 64.453 seconds with zero optimizer steps. [Checkpoint migration](evidence/highway-environment-v05/checkpoint-migration.json) verified unchanged state and retained elapsed budget. The corrected resume is authorized under the same limits.

@@ -287,6 +287,7 @@ class HighwayEnvironmentV05Env(HighwayPopulationEnv):
     def _update_maneuvers(self):
         self.completed_this_step = set()
         self.refused_this_step = {}
+        self.interrupted_this_step = {}
         for agent, maneuver in list(self.maneuvers.items()):
             state = self.states.get(agent)
             if state is None:
@@ -309,6 +310,16 @@ class HighwayEnvironmentV05Env(HighwayPopulationEnv):
                 self.motion_stats['completed'] += 1
                 self.motion_stats['completion_durations_s'].append(elapsed)
                 del self.maneuvers[agent]
+            elif (maneuver['moved'] and elapsed > DT + 1e-8
+                  and abs(state['lateral_position']) < .05 and abs(state['lateral_speed']) < .05):
+                # Native SUMO can abandon motion when a target lane disappears.
+                # Settling on a different corridor is an observed interruption,
+                # never completion or a controller-implemented safe abort.
+                self.interrupted_this_step[agent] = dict(maneuver,
+                    interrupted_at=self.time, reason='native_settled_without_target',
+                    settled_lane=state['lane_id'])
+                self.motion_stats['interrupted'] += 1
+                del self.maneuvers[agent]
             elif elapsed > self.lane_change_duration + 2 * DT and not maneuver['moved']:
                 # SUMO rejected a collision-unsafe request: do not invent motion
                 # completion or retain a pending command after its expiry.
@@ -316,15 +327,57 @@ class HighwayEnvironmentV05Env(HighwayPopulationEnv):
                 self.refused_this_step[agent] = dict(maneuver)
                 del self.maneuvers[agent]
 
+    def _lane_change_runway(self, agent, delta):
+        """Bound travel during the complete maneuver using current map/speed.
+
+        Connected lanes with the same semantic identity, including internal
+        connectors, form one corridor. A mere edge seam does not end it.
+        The bound includes the existing 2 m/s2 acceleration limit, one tick of
+        command latency, and the existing 2.5 m standstill clearance.
+        """
+        state = self.states[agent]
+        target, known = self.graph.adjacent(state['lane_id'], delta)
+        if not known or target is None:
+            return None
+        position = (state['lane_position'] / self.graph.lanes[state['lane_id']]['length']
+                    * self.graph.lanes[target]['length'])
+        target_identity = self.graph.identity(target)
+        distances = self.graph.distances(target, position, state['route'])
+        corridor = {lane: distance for lane, distance in distances.items()
+                    if self.graph.identity(lane) == target_identity}
+        ends = [distance + self.graph.lanes[lane]['length'] for lane, distance in corridor.items()
+                if not (self.graph.successors[lane] & set(corridor))]
+        available = max(0., min(ends)) if ends else math.inf
+        duration = self.lane_change_duration + DT
+        required = state['speed'] * duration + .5 * 2. * duration ** 2 + 2.5
+        return dict(available_m=available, required_m=required,
+                    permitted=available + 1e-8 >= required)
+
     def _mask(self, agent, context):
         if agent in self.maneuvers:
             return [0., 1., 0.]
-        return super()._mask(agent, context)
+        mask = super()._mask(agent, context)
+        for delta in (-1, 1):
+            if mask[delta + 1]:
+                runway = self._lane_change_runway(agent, delta)
+                if runway is not None and not runway['permitted']:
+                    mask[delta + 1] = 0.
+        return mask
 
     def _lane_rejection_causes(self, agent, context, delta):
         if delta and agent in self.maneuvers:
             return ['maneuver_in_progress']
-        return super()._lane_rejection_causes(agent, context, delta)
+        causes = super()._lane_rejection_causes(agent, context, delta)
+        if delta:
+            runway = self._lane_change_runway(agent, delta)
+            if runway is not None and not runway['permitted']:
+                # The parent names an otherwise-unattributed mask rejection
+                # lane_gap. Remove that fallback only when its own gap mask
+                # would allow this action; simultaneous failures retain both.
+                if super()._mask(agent, context)[delta + 1]:
+                    causes = [cause for cause in causes if cause != 'lane_gap']
+                causes.append('lane_change_runway')
+        return causes
 
     def _motion_features(self, agent):
         state, maneuver = self.states[agent], self.maneuvers.get(agent)
@@ -341,6 +394,7 @@ class HighwayEnvironmentV05Env(HighwayPopulationEnv):
             committed_target=dict(self.maneuvers[agent]) if agent in self.maneuvers else None,
             completed_this_step=agent in getattr(self, 'completed_this_step', ()),
             native_refusal=getattr(self, 'refused_this_step', {}).get(agent),
+            native_interruption=getattr(self, 'interrupted_this_step', {}).get(agent),
             native_lateral_position_m=state['lateral_position'] if state else None,
             native_lateral_speed_m_s=state['lateral_speed'] if state else None,
             safe_abort_implemented=False)
@@ -478,10 +532,13 @@ class HighwayEnvironmentV05Env(HighwayPopulationEnv):
             policy_filter_changed = abs(applied[agent] - requested[agent]) > 1e-4
             native_changed = state is not None and abs(realized - applied[agent]) > .05
             native_lane_refused = agent in getattr(self, 'refused_this_step', {})
-            override = self.control_mode == 'policy' and (rejected[agent] or policy_filter_changed or native_changed or native_lane_refused)
+            native_lane_interrupted = agent in getattr(self, 'interrupted_this_step', {})
+            override = self.control_mode == 'policy' and (rejected[agent] or policy_filter_changed or native_changed or native_lane_refused or native_lane_interrupted)
             causes = diagnostic['causes'] + (['native_realization_unattributed'] if native_changed else [])
             if native_lane_refused:
                 causes.append('native_lane_request_refused')
+            if native_lane_interrupted:
+                causes.append('native_lane_maneuver_interrupted')
             emergency = bool(state and realized < -4.5 - .05)
             if emergency:
                 causes.append('emergency_braking_observed')
@@ -630,6 +687,8 @@ class HighwayEnvironmentV05Env(HighwayPopulationEnv):
                 tick_s=DT, source='native SUMO lateral position/speed and world poses; no pose interpolation',
                 command='one absolute target lane request for duration+one tick, held until geometric completion',
                 completion='target lane identity, |native lateral offset|<0.05 m and |native lateral speed|<0.05 m/s',
+                interruption='Previously moving maneuver settles on a non-target corridor: record interruption and release intent, never completion or safe abort',
+                runway_mask='Connected target corridor must cover speed*T+0.5*2*T^2+2.5 metres, T=duration+0.1s; same-identity edge seams preserve continuity',
                 actor_motion_features=list(MOTION_FEATURES), safe_abort_implemented=False,
                 active_maneuvers={a: dict(m) for a, m in self.maneuvers.items()}),
             neighbor_context='V05 keeps field meanings/indices but enriches occupancy: measured displaced adjacent vehicles occupy both source/destination corridors until centered; graph distance and fractional parallel-lane projection, never Euclidean leader gaps or native intent queries',

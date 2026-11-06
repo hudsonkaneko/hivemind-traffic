@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
 Revision **v14**, updated **November 5, 2026, America/Los_Angeles**.
-Status: **Stage 1 remains unaccepted; continuous-maneuver environment v05 implemented, source-matched readiness passed; user-authorized bounded pilot queued**.
+Status: **Stage 1 remains unaccepted; continuous-maneuver environment v05 implemented, first launch stopped before learning; repaired departures/maneuver lifecycle, preparing budget-preserving resume**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -422,3 +422,6 @@ Selected final Stage 1 v03 by its lowest intervention rate across the three reta
 User authorized implementation and training. Three agents implemented native three-second lane changes, 99 actor fields/24 critic slots, varied demand and ramp lengths, stable-merge/full-route metrics, and a resumable competence curriculum. A teacher fixture exposed 14/81 post-merge acceleration corrections because neighboring lateral motion was missing from lane context. Projecting measured motion into the affected corridor reduced that same fixture to 0/81 without weakening the gate; both attempts are preserved. The 1.5-second headway, 3-second TTC, speed limits and guards remain.
 
 256 targeted CPU tests pass. Final source-matched SUMO preflight passed in 64.750 seconds with zero optimizer steps and unchanged sources/weights; no training has started at this documentation checkpoint. I-110 teacher completes a stable merge but retains 75/1404 (5.34%) interventions, above the unchanged 5% gate. Prepared a frozen recorder and SimReady main-car replay option, keeping background proxies lightweight. See [configuration, evidence and limits](highway-environment-v05.md). Google engineering-guide synchronization is pending the completed milestone, not claimed current.
+
+
+V14 launch recovery: the first attempt failed during initial validation with zero optimized/collected training steps. Departure timestamp precision and native interrupted-maneuver lifecycle/runway checks are corrected; the exact frozen failing cases complete full horizons with no native warnings, while their policy intervention failures remain. 265 targeted tests pass. A reviewed strict migration preserves all starting state and 125.344 seconds charged; fresh preflight is required before resuming. [Preserved failure and repair](highway-environment-v05.md#first-launch-preserved-pre-learning-failure).

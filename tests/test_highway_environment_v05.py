@@ -262,3 +262,69 @@ def test_projected_occupancy_uses_lane_lengths_and_route_seams_not_xy(graph):
     assert front['bumper_gap_m'] == pytest.approx(25.2)
     other.update(lateral_position=.12, lateral_speed=1.067)
     assert env._context('agent_0')['neighbors']['own']['front'] is None
+
+
+def test_native_interruption_releases_intent_once_without_completion(graph):
+    env = v05_bare(graph)
+    env.states['agent_0'] = native_vehicle('agent_0', lane='sb3_1', position=190.)
+    env._begin_maneuver('agent_0', -1)
+    env.time = .1
+    env.states['agent_0'].update(lateral_position=-.12, lateral_speed=-1.067)
+    env._update_maneuvers()
+    assert env.maneuvers['agent_0']['moved']
+    env.time = .8
+    env.states['agent_0'].update(lane_id='sb4_0', lane_position=1., lateral_position=0., lateral_speed=0.)
+    env._update_maneuvers()
+    assert not env.maneuvers and not env.completed_this_step
+    assert env.motion_stats['interrupted'] == 1 and env.motion_stats['completed'] == 0
+    assert env.interrupted_this_step['agent_0']['reason'] == 'native_settled_without_target'
+    assert env._mask('agent_0', env._context('agent_0'))[2] == 1.
+    assert env._maneuver_info('agent_0')['native_interruption'] is not None
+    env.time = .9
+    env._update_maneuvers()
+    assert env.motion_stats['interrupted'] == 1 and not env.interrupted_this_step
+
+
+def test_ending_target_lane_is_masked_before_command_with_explicit_cause(graph):
+    env = v05_bare(graph)
+    env.states['agent_0'] = native_vehicle('agent_0', lane='sb3_1', position=194., speed=10.4)
+    context = env._context('agent_0')
+    runway = env._lane_change_runway('agent_0', -1)
+    assert runway['available_m'] == pytest.approx(6.)
+    assert runway['required_m'] == pytest.approx(10.4 * 3.1 + 3.1 ** 2 + 2.5)
+    assert not runway['permitted'] and env._mask('agent_0', context)[0] == 0.
+    assert env._lane_rejection_causes('agent_0', context, -1) == ['lane_change_runway']
+    env.obs = env._observations()
+    assert env.obs['agent_0'][30] == 0.
+
+
+def test_connected_target_corridor_preserves_lane_change_permission_at_seam(graph):
+    env = v05_bare(graph)
+    env.states['agent_0'] = native_vehicle('agent_0', lane='sb3_1', position=199., speed=10.4)
+    # Adjacent through lane continues sb3_2 -> sb4_1, despite index shift.
+    runway = env._lane_change_runway('agent_0', 1)
+    assert runway['available_m'] == pytest.approx(201.) and runway['permitted']
+    assert env._mask('agent_0', env._context('agent_0'))[2] == 1.
+
+
+def test_simultaneous_unsafe_gap_and_short_runway_preserve_both_causes(graph):
+    env = v05_bare(graph)
+    env.states['agent_0'] = native_vehicle('agent_0', lane='sb3_1', position=194., speed=10.4)
+    env.states['fast_rear'] = native_vehicle('fast_rear', lane='sb3_0', position=185., speed=20.)
+    context = env._context('agent_0')
+    assert env._lane_rejection_causes('agent_0', context, -1) == ['lane_gap', 'lane_change_runway']
+
+
+def test_interrupted_raw_transition_is_a_counted_native_event(graph):
+    env = v05_bare(graph)
+    env._begin_maneuver('agent_0', 1)
+    env.maneuvers['agent_0']['moved'] = True
+    env.obs = env._observations()
+    def advance():
+        env.time = .8
+        env._update_maneuvers()
+    env._advance = advance
+    _, _, _, _, infos = env.step({'agent_0': np.array([0., 0.], np.float32)})
+    assert 'native_lane_maneuver_interrupted' in infos['agent_0']['override_causes']
+    assert infos['agent_0']['override'] and not infos['agent_0']['maneuver']['in_progress']
+    assert env.motion_stats['interrupted'] == 1

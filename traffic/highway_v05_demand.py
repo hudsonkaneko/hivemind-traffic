@@ -52,6 +52,17 @@ def _finite(name, value, minimum, maximum=math.inf):
     return float(value)
 
 
+def _departure_seconds(value):
+    """Canonical SUMO millisecond time, with its positive half-up rounding.
+
+    SUMOTime.h TIME2STEPS/string2time rounds numeric XML times to integer ms.
+    Keeping more precision in the manifest makes a native departure appear
+    earlier than its request at a step boundary. Do not round the cumulative
+    random arrival schedule itself: only serialize the existing native value.
+    """
+    return math.floor(value * 1000. + .5) / 1000.
+
+
 def _lane_limit(graph, lane_id, ceiling):
     try:
         source = _finite('source lane speed', graph.speed_limits[lane_id], .01)
@@ -177,7 +188,7 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
 
     def physical(slot, route, edge, lane, position, speed, lid, *, depart=0., initial=True):
         return dict(slot=slot, route=route, edge=edge, lane=lane, lane_id=lid,
-                    position=float(position), speed=float(speed), depart=float(depart),
+                    position=float(position), speed=float(speed), depart=_departure_seconds(float(depart)),
                     initial_cohort=initial, driver_profile=str(rng.choice(profile_names)))
 
     # Ramp capacity is resolved from this existing network, never by lengthening
@@ -273,6 +284,7 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
         speed_limit_m_s=speed_limit_m_s, resolved_speed_ceiling_m_s=ceiling,
         stabilization_seconds=stabilization_seconds, horizon_seconds=horizon_seconds,
         departure_warmup_seconds=stabilization_seconds,
+        departure_time_encoding='SUMO integer milliseconds; nearest millisecond with positive half-up rounding',
         through_lanes=len(paths), ramp_length_m=ramp_length,
         base_mainline_speed_fraction=base_ratio, driver_profiles=PROFILES,
         assignment_rule='Independent seeded nested subset; one ramp agent first for merge; fixed throughout episode',
