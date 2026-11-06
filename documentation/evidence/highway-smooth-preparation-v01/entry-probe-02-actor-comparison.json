@@ -1,0 +1,36 @@
+{
+  "training": false,
+  "optimizer_steps": 0,
+  "provisional_offline_comparison": true,
+  "older_recording": "outputs/highway-smooth-control/v01/reference-check-01/learned/recording.json",
+  "older_recording_sha256": "e8ee523bf1d9b4f556f7563ca3931c9e9b42075fbbb0eef7f9418421037544b8",
+  "current_recording": "outputs/highway-smooth-control/v02/entry-probe-02/i110-merge/smooth/recording.json",
+  "current_recording_sha256": "1af9ba9d78bda7748e4568eecc5f215e28841107ee16a16c977676fae5a51c55",
+  "matching_network_sha256": true,
+  "matching_policy_sha256": true,
+  "matching_demand_bytes": true,
+  "old_demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+  "new_demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+  "actor_observed_loss_m_s": 17.929373434312552,
+  "actor_peak_time_speed": [
+    14.3,
+    17.929373434312552
+  ],
+  "actor_trough_time_speed": [
+    30.1,
+    0.0
+  ],
+  "actor_requested_window": [
+    -0.7000000000000002,
+    43.9
+  ],
+  "actor_available_window": [
+    0.1,
+    43.9
+  ],
+  "actor_boundary_censored": true,
+  "candidate_observed_loss_m_s": 15.850850033327495,
+  "actor_focal_merge_time": 35.9,
+  "candidate_focal_merge_time": 55.6,
+  "interpretation": "Current numeric drawdown bound is not a no-stop criterion; qualitative progress defect retained. This is not a full preflight readiness proof."
+}

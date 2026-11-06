@@ -1,0 +1,226 @@
+{
+  "passed": true,
+  "training": false,
+  "motion_owner": "SUMO recorded motion",
+  "controller": "smooth",
+  "recorded_policy_mode": "smooth scripted baseline",
+  "learned_policy_sha256": null,
+  "limitation": "Kinematic visualization, not PhysX control validation or sensor capture. Road reconstructed from recorded SUMO network polylines; markings illustrative.",
+  "source_recording": "C:\\Users\\hudso\\Documents\\highwaysim\\outputs\\highway-smooth-control\\v02\\matrix-02\\i110-merge\\smooth",
+  "source_recording_sha256": "9015202476e942f2eb03ce91b0a691886a842f957fc9ae9ddba9b868574be8dd",
+  "renderer_source_sha256": "84e9793e94a49718f7de6aeed3f5e2f1c843ef7029852b00c128dab7bd7e630f",
+  "runtime_python": "C:\\isaacsim\\kit\\python\\kit.exe",
+  "runtime_python_version": "3.12.13 (tags/v3.12.13-dirty:3bb231a, Apr 22 2026, 07:13:40) [MSC v.1929 64 bit (AMD64)]",
+  "runtime_python_sha256": "97f5b57ad5a91f8ddfc359500dcf3d29d3fa4ffe77035593a7ec7fbc47d76e12",
+  "checkpoint_sha256": null,
+  "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+  "focal_agent": "agent_0",
+  "highlighted_agents": [
+    "agent_0"
+  ],
+  "camera_mode": "follow",
+  "merge_center": [
+    -10.0,
+    -280.0
+  ],
+  "frames": 300,
+  "start_time": 0.1,
+  "end_time": 30.0,
+  "fps": 10,
+  "playback_speed": 1.0,
+  "source_pose_interpolation": false,
+  "colors": {
+    "ramp_controlled": "orange",
+    "mainline_controlled": "cyan",
+    "native": "gray",
+    "prepared_focal": "original prepared materials; no tint or rescaling"
+  },
+  "prepared_main": {
+    "source_entry": "C:\\Users\\hudso\\Documents\\highwaysim\\vehicles\\sim_ready\\americano-i7-ev\\v14\\assets\\vehicle.usda",
+    "source_package": "C:\\Users\\hudso\\Documents\\highwaysim\\vehicles\\sim_ready\\americano-i7-ev\\v14",
+    "model_path": "C:\\Users\\hudso\\Documents\\highwaysim\\vehicles\\sim_ready\\americano-i7-ev\\v14\\model.json",
+    "version": "v14",
+    "front_bumper_to_chassis_m": 2.4084640938062964,
+    "source_chassis_height_m": 1.0,
+    "body_dimensions_m": [
+      4.999722723213964,
+      2.213704621248719,
+      1.6133768793930803
+    ],
+    "texture_status": "diagnostic materials; original textures unavailable",
+    "license": "Friend supplied; user authorizes local use only. Redistribution rights unverified.",
+    "local_only": true,
+    "scale_applied": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "forward_axis": "+X",
+    "up_axis": "Z",
+    "meters_per_unit": 1.0,
+    "pose_reference": "SUMO front bumper on road; prepared chassis offset along local -X",
+    "sensor_capture": false,
+    "physics_control": false,
+    "reference": "../../../../vehicles/sim_ready/americano-i7-ev/v14/assets/vehicle.usda",
+    "source_sha256": {
+      "assets/vehicle-geometry.usda": "3f29d13bfdf973341d21481e00ca7406fbdb7eeeb0bfcc5626558bf421a8321d",
+      "assets/vehicle-physics.usda": "567724ece7804213c30febdae2e8ac0635901d7129237cb9b3dff6bfa69c0594",
+      "assets/vehicle-sensors.usda": "3ea728bfb506d8c300bb7dedb196a3836a59cba86a3109ce3c99f7dee665e36c",
+      "assets/vehicle.usda": "eb239d3e5d16d43975b33ee4afef1720a73082a65db4f19bb9edab880281b3f6",
+      "assets/visuals.usdc": "bf84656461e0a0c79794c61ecfd8a24bd6e94e7a2ef5218fe1b2c48da818e400",
+      "model.json": "d06a98cdbceb5d3cde923eeeb6435a9e0590c50ce0a8f4ce8afdb49f1eb799a5"
+    },
+    "disabled_physics_attributes": [
+      "/Vehicle/Chassis.physics:rigidBodyEnabled",
+      "/Vehicle/Chassis.physxVehicle:vehicleEnabled",
+      "/Vehicle/Chassis/FrontLeftWheel/Collision.physics:collisionEnabled",
+      "/Vehicle/Chassis/FrontRightWheel/Collision.physics:collisionEnabled",
+      "/Vehicle/Chassis/RearLeftWheel/Collision.physics:collisionEnabled",
+      "/Vehicle/Chassis/RearRightWheel/Collision.physics:collisionEnabled",
+      "/Vehicle/Chassis/Colliders/Chassis.physics:collisionEnabled"
+    ],
+    "camera_prims": [
+      "/Vehicle/Chassis/Sensors/CameraFront",
+      "/Vehicle/Chassis/Sensors/CameraFrontTele",
+      "/Vehicle/Chassis/Sensors/CameraCrossLeft",
+      "/Vehicle/Chassis/Sensors/CameraCrossRight",
+      "/Vehicle/Chassis/Sensors/CameraRearLeft",
+      "/Vehicle/Chassis/Sensors/CameraRearRight",
+      "/Vehicle/Chassis/Sensors/CameraRearTele"
+    ],
+    "sensor_mount_prims": [
+      "/Vehicle/Chassis/Sensors/LidarRoof",
+      "/Vehicle/Chassis/Sensors/LidarLeftNear",
+      "/Vehicle/Chassis/Sensors/LidarRightNear",
+      "/Vehicle/Chassis/Sensors/LidarFrontNear",
+      "/Vehicle/Chassis/Sensors/LidarRearNear"
+    ],
+    "source_unchanged": true
+  },
+  "merge_events": [
+    {
+      "agent": "agent_0",
+      "time": 20.0,
+      "kind": "completed_lateral_merge",
+      "completion_kind": "policy_requested_lateral_maneuver",
+      "commanded_lateral_completion_observed": true,
+      "completed_maneuver": {
+        "source_lane": "sb2_0",
+        "target_lane": "sb2_1",
+        "source_identity": "{\"kind\": \"auxiliary\"}",
+        "target_identity": "{\"index_from_right\": 0, \"kind\": \"through\"}",
+        "target_index": 1,
+        "direction": 1,
+        "started_at": 15.0,
+        "moved": true,
+        "remaining_fraction": 0.0,
+        "reversal_reason": null,
+        "reason_evidence": false,
+        "completed_at": 20.0,
+        "duration_s": 5.0
+      },
+      "lane_id": "sb2_1",
+      "lane_identity": {
+        "kind": "through",
+        "index_from_right": 0
+      },
+      "x": -5.283770747467915,
+      "y": -421.2000880020294
+    }
+  ],
+  "expected_video_duration_s": 30.0,
+  "source_timestamp_span_s": 29.9,
+  "runtime_package_versions": {
+    "usd-core": "25.11",
+    "numpy": "2.3.1"
+  },
+  "runtime_version_files": {
+    "C:\\isaacsim\\VERSION": "6.0.1-rc.7+release.42383.32955d8d.gl"
+  },
+  "static_layer_sha256": {
+    "world.usda": "e85bad3d5c731894ca254ae3479f70143c87688ed133a160b6f3f459bae7bbae",
+    "environment.usda": "2289c681bdef26d1f5fdbd5bd9f2ef939e7e364ed784c7ff369a1b1dafcc1fb0",
+    "motion.usda": "d97a62a3b2f3167d130567f19126d9f1cd4e2d368d73eb30cb25cf216d6c3910",
+    "vehicle.usda": "cbd91745c0a1ef9082f9d993924c6f6a821e1a99936dd970f326e3c854733abc",
+    "render.usda": "6d237a16baa50896b79782469cd4563838cb70ce09f5d240202d34ddad1e77c1",
+    "prepared-main.usda": "271d9fd8f028224ba9987df1fc8532d5b306e76641777da840808e055ac8d4ba",
+    "prepared-main-manifest.json": "88c211e9330df3229f5ef828372689b79e5e486e64d77eef36c85b9680ac14a2"
+  },
+  "vehicle_count": 30,
+  "source_prim_map": {
+    "agent_0": "/World/Vehicles/vehicle_6167656e745f30",
+    "agent_1": "/World/Vehicles/vehicle_6167656e745f31",
+    "agent_2": "/World/Vehicles/vehicle_6167656e745f32",
+    "agent_3": "/World/Vehicles/vehicle_6167656e745f33",
+    "agent_4": "/World/Vehicles/vehicle_6167656e745f34",
+    "agent_5": "/World/Vehicles/vehicle_6167656e745f35",
+    "agent_6": "/World/Vehicles/vehicle_6167656e745f36",
+    "agent_7": "/World/Vehicles/vehicle_6167656e745f37",
+    "inflow_0": "/World/Vehicles/vehicle_696e666c6f775f30",
+    "inflow_1": "/World/Vehicles/vehicle_696e666c6f775f31",
+    "inflow_10": "/World/Vehicles/vehicle_696e666c6f775f3130",
+    "inflow_11": "/World/Vehicles/vehicle_696e666c6f775f3131",
+    "inflow_12": "/World/Vehicles/vehicle_696e666c6f775f3132",
+    "inflow_13": "/World/Vehicles/vehicle_696e666c6f775f3133",
+    "inflow_2": "/World/Vehicles/vehicle_696e666c6f775f32",
+    "inflow_3": "/World/Vehicles/vehicle_696e666c6f775f33",
+    "inflow_4": "/World/Vehicles/vehicle_696e666c6f775f34",
+    "inflow_5": "/World/Vehicles/vehicle_696e666c6f775f35",
+    "inflow_6": "/World/Vehicles/vehicle_696e666c6f775f36",
+    "inflow_7": "/World/Vehicles/vehicle_696e666c6f775f37",
+    "inflow_8": "/World/Vehicles/vehicle_696e666c6f775f38",
+    "inflow_9": "/World/Vehicles/vehicle_696e666c6f775f39",
+    "main_1": "/World/Vehicles/vehicle_6d61696e5f31",
+    "main_10": "/World/Vehicles/vehicle_6d61696e5f3130",
+    "main_11": "/World/Vehicles/vehicle_6d61696e5f3131",
+    "main_12": "/World/Vehicles/vehicle_6d61696e5f3132",
+    "main_13": "/World/Vehicles/vehicle_6d61696e5f3133",
+    "main_14": "/World/Vehicles/vehicle_6d61696e5f3134",
+    "main_2": "/World/Vehicles/vehicle_6d61696e5f32",
+    "main_9": "/World/Vehicles/vehicle_6d61696e5f39"
+  },
+  "composition_errors": [],
+  "composed_root_children": [
+    "/World/Environment",
+    "/World/Vehicles",
+    "/World/Cameras",
+    "/World/Lighting"
+  ],
+  "composed_sublayers": [
+    "./render.usda",
+    "./motion.usda",
+    "./environment.usda"
+  ],
+  "static_layers_unchanged": true,
+  "max_position_error_m": 0.0,
+  "capture_wall_s": 28.845689099893207,
+  "capture_mean_s": 0.09615229699964402,
+  "runtime": "Isaac Sim SimulationApp",
+  "runtime_namespace_exceptions": [
+    "/Render",
+    "/OmniverseKit_Persp"
+  ],
+  "video": "i110-merge.mp4",
+  "video_sha256": "5e8dd182cb9a8896f91936790c9260d3df23aa01648525362dabfcf61b9cc307",
+  "ffmpeg_sha256": "2ce797a0f88d7f067180338fb227f7b1928ea727bd9a4d7a1d022f7c52af71a3",
+  "video_decode_verified": true,
+  "decoded_frames": 300,
+  "screenshots": [
+    {
+      "file": "before.png",
+      "source_frame": 0,
+      "simulation_time": 0.1
+    },
+    {
+      "file": "merge.png",
+      "source_frame": 199,
+      "simulation_time": 20.0
+    },
+    {
+      "file": "after.png",
+      "source_frame": 299,
+      "simulation_time": 30.0
+    }
+  ],
+  "viewport_display_options": 0
+}

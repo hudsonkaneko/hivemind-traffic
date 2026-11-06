@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-preparation-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-preparation-v01/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4850,3 +4850,21 @@ A fresh ordinary validation recording exactly repeats all 801 native frames and 
 Diagnosis, metrics and screenshots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/highway-smooth-control-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/highway-smooth-control-v01.md>)
 
 Proposed weights, reference design and approval gates: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/highway-smooth-training-plan-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-control-v01/documentation/highway-smooth-training-plan-v01.md>)
+
+<a id="docs-h-4vvvc3s7r6"></a>
+
+#### November 6, 2026 — Smooth-control preparation v01: tested, training blocked
+
+Implemented the anticipatory acceleration reference, measured-jerk and command-residual rewards, paired MAPPO runner, immutable case schedule, full-horizon metrics and strict launch checks. Three subagents divided reference, environment/metrics and trainer-contract work. No optimizer steps or new policy weights were produced.
+
+The retained scripted reference v4 passes the original safety/task and 5% intervention checks in all six training-only fixtures: intervention rates range from 0% to 0.25%. On I-110 seed 6800019, its focal car merges at 20.0 s, stabilizes at 28.0 s and never stops; controlled peak measured jerk is 2.000001 m/s³. These are reference results, not learned MAPPO improvement. The frozen actor remains unchanged and has 17.50% interventions on this fixture.
+
+Readiness remains false: cruise, following, passing and generic merge exceed the unchanged 5 m/s³ comfort limit, with peaks 21.9587, 45.0000, 22.9691 and 10.7391 m/s³. Native realization can brake more strongly than the softer request; those events remain scored. A fifth reference was rejected for reduced passing and a 14 s stop by another controlled I-110 car; v4 was restored exactly. All 44 native full runs, failed revisions, raw commands, measured motion and source hashes remain local under outputs/highway-smooth-control/v02. No held-out promotion is claimed.
+
+Final disabled configuration: configs/training/highway-smooth-v01.json. Shared MAPPO actor: 99 observations, acceleration and lane intent, 24-slot centralized critic. Compare unchanged v05 objective against alignment 1.0, measured-jerk Huber 0.03, command/reference residual-slew Huber 0.01 and acceleration-imitation weight 5.0. Progress and safety terms stay unchanged. Actor/critic learning rates 0.0001/0.0003; four epochs; minibatch 256; gamma 0.99; GAE 0.95. Two matched arms of at most 50,000 active decisions each, including 2,048 critic warmup decisions; one shared 3,600 s experimental runtime ceiling includes preparation failures and reserves 900 s for final evaluations. Cruise/follow/pass/merge case shares 20/30/20/30%; actual decision exposure is reported separately. Existing fixed 24 validation rows are retained with the corrected I-110 network. training\_authorized is false and readiness is null. Failed comfort checks must be resolved before training approval and launch.
+
+Verification: 195 CPU checks plus eight subtests verified across the full run and a targeted correction (the initial metadata mismatch and its passing rerun are retained); 11 actual USD/renderer checks pass. A frozen-gradient check used identical real 512-decision batches in both arms; parameters and optimizer state were unchanged. Fresh 30-second, 300-frame SimReady v14 renders compare the unchanged frozen actor with scripted reference v4. Both preserve exact SUMO poses and source layers. These are kinematic replays, not physical control validation or sensor captures. Cameras and LiDAR mounts remain on the main vehicle; backgrounds are lightweight.
+
+Source, configuration, metrics, screenshots and failed-gate explanation: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-preparation-v01/documentation/highway-smooth-preparation-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-preparation-v01/documentation/highway-smooth-preparation-v01.md>)
+
+Local comparison: outputs/highway-smooth-control/v02/visual-comparison-v01/i110-frozen-vs-reference.mp4. Raw videos, recordings, batches and logs remain local; compact evidence and this guide mirror are committed to GitHub. Next work is to diagnose the remaining native-response peaks and preserve safety and progress while improving anticipation. No training starts from this milestone.

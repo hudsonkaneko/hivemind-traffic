@@ -602,3 +602,10 @@ The SimReady main-car visual rerun is complete, with full 80-second metrics and 
 The [completed control audit](highway-smooth-control-v01.md) attributes the corrected-I-110 case's remaining 244 interventions to ordinary following and entry responses. Current MAPPO remains at 8.52%, above the unchanged 5% gate. A separate training-only reference comparison shows zero interventions from the existing teacher but a 65 m/s³ peak jerk; neither that teacher nor the frozen actor demonstrates the desired smooth motion.
 
 A fresh SimReady main-car replay and full metrics are saved. [Living roadmap v17](sensor-driven-training-roadmap.md) now prioritizes the [disabled smooth-reference and reward proposal](highway-smooth-training-plan-v01.md): prepare and test anticipatory entry and recovery, then present the resolved configuration before explicit training approval. The proposed matched pilot is bounded at 100k total decisions/one hour. No learning, policy acceptance, native safety changes or physical/sensor qualification occurred.
+
+
+## November 6, 2026 — Smooth-control preparation v01
+
+The [implementation and six-fixture results](highway-smooth-preparation-v01.md) complete preparation code and native/visual testing. The retained scripted reference meets every original safety/task/5% intervention check, including a continuous I-110 merge, but four strict comfort gates remain failed. The frozen learned actor is unchanged. No optimizer steps, held-out promotion or training launch occurred.
+
+The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18. Next: diagnose the remaining native-response peaks and establish a reference that meets comfort and progress gates before reviewing/authorizing the disabled matched 100k-decision MAPPO pilot. Metrics, failed revisions and two SimReady replays are retained; selected screenshots and compact evidence are in Git. The Google engineering guide and Markdown mirror were updated together.

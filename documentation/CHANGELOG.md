@@ -979,3 +979,12 @@ Completed 249,999 active-agent decisions,50 update batches and 2,455.032 cumulat
 - Preserved raw metrics, hashes, objective/gradient evidence, scientific plots and a fresh 251-frame SimReady visual. The ordinary 801-frame replay exactly repeats the prior corrected trajectory.
 - Published a disabled reference/reward proposal: anticipate entry, recover from measured acceleration smoothly, strengthen alignment/imitation after preflight, and use uncapped Huber jerk plus reference-error slew penalties. Proposed paired pilot is 100k decisions/one hour total, pending preparation and training approval.
 - [Diagnostic and visual evidence](highway-smooth-control-v01.md); [proposed weights and gates](highway-smooth-training-plan-v01.md). Living roadmap v17 and both engineering-guide copies updated. No training or policy promotion.
+
+
+## November 6, 2026 — Smooth-control preparation v01, no training
+
+Implemented the observation-only v4 acceleration reference, measured-jerk/command-residual reward bundle, full-horizon per-car metrics and strict paired-MAPPO preparation/launch contracts. Three subagents contributed code, tests and review. Retained all 44 native full runs and the rejected v5 trial; unchanged v05 actor and safety guards remain intact.
+
+All six retained reference fixtures pass the original safety/task/5% override checks (0–0.25%). I-110 merges at 20.0 s, stabilizes at 28.0 s, with no focal stop and 2.000001 m/s³ controlled peak jerk. Four other nominal comfort gates fail, so readiness is false and training remains disabled. These are scripted-reference results, not learned-policy improvement.
+
+195 CPU checks and eight subtests verified across the full run plus one corrected metadata recheck; 11 actual USD/renderer checks pass. Frozen-gradient checks preserve parameters and optimizer state. Fresh 30-second SimReady main-car replays compare the frozen actor and reference with exact SUMO poses and lightweight backgrounds. [Implementation, config, screenshots, failures and metrics](highway-smooth-preparation-v01.md). Google guide and generated Markdown mirror synchronized from verified full native readback; raw videos/checkpoints remain local.

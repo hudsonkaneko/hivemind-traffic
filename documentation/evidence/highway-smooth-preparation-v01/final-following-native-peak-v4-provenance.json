@@ -1,0 +1,10 @@
+{
+  "recording": "outputs/highway-smooth-control/v02/matrix-02/following/smooth/recording.json",
+  "recording_sha256": "3f5e244702990256ee86fef48c16d70910594f2141e420950f95e4ff0cc64d4b",
+  "journal": "outputs/highway-smooth-control/v02/matrix-02/following/smooth/simulation/episode-6800021-a2e67eea/actions.jsonl.gz",
+  "journal_sha256": "c14ca0624a9916cf32324c67662b1e69c5e97b6a275712383411e2df70f601a1",
+  "vehicle_id": "agent_3",
+  "image_sha256": "3176357b2e592ab066092f24486d57c5e10572bd50ec710f77056a30d8efb9be",
+  "source_sha256": "fcf635ad394db11b925442da829e3ab4d9c6fa48c0c48da8fd84b5b7ec58426a",
+  "generated_from": "Actual native samples; no synthetic images or simulator rerun"
+}
