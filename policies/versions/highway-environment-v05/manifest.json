@@ -1,0 +1,41 @@
+{
+  "schema": "frozen_highway_environment_v05_candidate",
+  "run": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880",
+  "source_commit": "02948d76f16f4d2c56d839ad72c1266777b373c6",
+  "accepted": false,
+  "held_out_test_run": false,
+  "config_sha256": "a9db9895d18a9b3760977603a152cd5d4c52ad82d7e3a0dd8e4d9b9628855f78",
+  "artifacts": {
+    "policy.pt": {
+      "sha256": "fd639c39f0c514256a458b2b85d35baba242125f44dcc3d9542d767eb2dd46ec",
+      "bytes": 111606
+    },
+    "training-config.json": {
+      "sha256": "17a28932f90c0ae64d875beab733c4d275de506487f7cad7b1a11909423121f9",
+      "bytes": 57191
+    },
+    "policy-contract.json": {
+      "sha256": "c05fe8317aaee5d8b703c3150eff390f73e927421910b5859aa300d0af466a0d",
+      "bytes": 8754
+    },
+    "evaluation.json": {
+      "sha256": "3c6281e045d4f7192157f6d106c867cbca1be4a263defb6e5a2c0ffe45b28ae4",
+      "bytes": 45056
+    }
+  },
+  "loading_smoke": {
+    "passed": true,
+    "device": "cpu",
+    "input_shape": [
+      2,
+      99
+    ],
+    "output_shape": [
+      2,
+      2
+    ],
+    "finite": true,
+    "driving_acceptance": false
+  },
+  "resume_checkpoint": "Local outputs only; frozen actor does not include critic or optimizer"
+}

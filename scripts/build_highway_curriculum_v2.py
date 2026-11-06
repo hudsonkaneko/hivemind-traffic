@@ -28,11 +28,14 @@ def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
-def source_geometry(*, lanes, length, bend, speed_mph):
+def source_geometry(*, lanes, length, bend, speed_mph, ramp_upstream_distance=160.):
     if isinstance(lanes, bool) or lanes not in range(2, 7):
         raise ValueError('Supported through-lane counts: 2..6')
     if not all(math.isfinite(value) for value in (length, bend, speed_mph)) or length < 1000 or not 0 < speed_mph <= 60:
         raise ValueError('Invalid highway dimensions or speed ceiling')
+    if (isinstance(ramp_upstream_distance, bool) or not math.isfinite(ramp_upstream_distance)
+            or not 60. <= ramp_upstream_distance <= length / 5):
+        raise ValueError('Ramp upstream distance must be finite and between 60 m and the first mainline segment length')
     nodes, edges, connections = ET.Element('nodes'), ET.Element('edges'), ET.Element('connections')
     def position(distance):
         return bend * math.sin(distance / length * math.pi), -distance
@@ -60,8 +63,8 @@ def source_geometry(*, lanes, length, bend, speed_mph):
     tangent = (dx / magnitude, dy / magnitude)
     right = (tangent[1], -tangent[0])
     offset = (lanes + 1) * LANE_WIDTH + 45.
-    ramp_x = x - 160. * tangent[0] + offset * right[0]
-    ramp_y = y - 160. * tangent[1] + offset * right[1]
+    ramp_x = x - ramp_upstream_distance * tangent[0] + offset * right[0]
+    ramp_y = y - ramp_upstream_distance * tangent[1] + offset * right[1]
     ET.SubElement(nodes, 'node', id='ramp_start', x=str(ramp_x), y=str(ramp_y), type='priority')
     ET.SubElement(edges, 'edge', {
         'id': 'mlk_on', 'from': 'ramp_start', 'to': 'n1', 'numLanes': '1',
@@ -69,7 +72,7 @@ def source_geometry(*, lanes, length, bend, speed_mph):
     })
     ET.SubElement(connections, 'connection', {'from': 'mlk_on', 'to': 'sb2', 'fromLane': '0', 'toLane': '0'})
     placement = dict(road_tangent=list(tangent), right_normal=list(right),
-                     right_offset_m=offset, upstream_distance_m=160.,
+                     right_offset_m=offset, upstream_distance_m=float(ramp_upstream_distance),
                      mainline_lane_extent_m=(lanes + 1) * LANE_WIDTH,
                      ramp_start_xy=[ramp_x, ramp_y], junction_xy=[x, y])
     return nodes, edges, connections, placement
@@ -146,11 +149,12 @@ def validate_geometry(network_path, through_lanes):
                 scope='compiled geometry only; no traffic episode run')
 
 
-def build(output, *, lanes, length, bend, speed_mph):
+def build(output, *, lanes, length, bend, speed_mph, ramp_upstream_distance=160.):
     output = Path(output).resolve()
     if not output.is_relative_to(ROOT / 'outputs') or output.exists():
         raise ValueError('Use a fresh project output directory')
-    nodes, edges, connections, placement = source_geometry(lanes=lanes, length=length, bend=bend, speed_mph=speed_mph)
+    nodes, edges, connections, placement = source_geometry(lanes=lanes, length=length, bend=bend, speed_mph=speed_mph,
+                                                          ramp_upstream_distance=ramp_upstream_distance)
     output.mkdir(parents=True)
     for name, data in [('nodes.nod.xml', nodes), ('edges.edg.xml', edges), ('connections.con.xml', connections)]:
         write_xml(output / name, data)

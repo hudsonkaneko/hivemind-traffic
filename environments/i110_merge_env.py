@@ -137,6 +137,10 @@ class I110MergeEnv(ParallelEnv):
     def _spawn_ready(self):
         return set(self._controlled_agents()).issubset(self.states)
 
+    def _sumo_extra_args(self):
+        """Versioned environments may opt into additional native SUMO settings."""
+        return []
+
     def reset(self, seed=None, options=None):
         self.close()
         seed = 0 if seed is None else int(seed)
@@ -154,6 +158,7 @@ class I110MergeEnv(ParallelEnv):
             '--no-step-log', 'true', '--duration-log.disable', 'true', '--time-to-teleport', '-1',
             '--collision.action', 'warn', '--collision.check-junctions', 'true',
             '--error-log', str(self.directory/'sumo-errors.log')]
+        command.extend(self._sumo_extra_args())
         self.previous = {a:(0.,0) for a in controlled}
         self.last_change = {a:-5. for a in controlled}
         self.inbox = {a:{} for a in controlled}

@@ -1,0 +1,583 @@
+{
+  "scope": "Same scripted teacher fixture before/after measured lateral occupancy correction; no learning",
+  "physical_population_assignment_equal": true,
+  "corrected_repeat_trace_equal": true,
+  "corrected_trace_sources": [
+    {
+      "path": "outputs/highway-environment/v05/environment-smoke/20261106T020955Z-occupancy-fix/trace.json",
+      "sha256": "a5b4b98337a66478028efc9d6b6e33e3e4a4e9013f7321ec7311fd40848959a0",
+      "bytes": 11257195
+    },
+    {
+      "path": "outputs/highway-environment/v05/environment-smoke/20261106T021058Z-final-repeat/merge-repeat/trace.json",
+      "sha256": "a5b4b98337a66478028efc9d6b6e33e3e4a4e9013f7321ec7311fd40848959a0",
+      "bytes": 11257195
+    }
+  ],
+  "results": [
+    {
+      "label": "failed",
+      "source": {
+        "path": "outputs/highway-environment/v05/environment-smoke/20261106T020330Z/merge-repeat-a/report.json",
+        "sha256": "1b1148e0d9af66f9745ab667342e7eea3b443020a33df85ed7ab641e1b363bd4",
+        "bytes": 136129
+      },
+      "metrics": {
+        "steps": 800,
+        "task": "merge",
+        "controlled_count": 4,
+        "total_vehicles": 16,
+        "difficulty": 0,
+        "traffic_mode": "initial",
+        "agent_steps": 3200,
+        "overrides": 21,
+        "intervention_fraction": 0.0065625,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "stable_merge": {
+          "targets": 1,
+          "entered": 1,
+          "lateral_completed": 1,
+          "stable": 0,
+          "failed": 1,
+          "pending": 0,
+          "oscillation_events": 0,
+          "per_agent": {
+            "agent_0": {
+              "schema": "highway_post_merge_window_v05",
+              "vehicle_id": "agent_0",
+              "entry_event": true,
+              "entry_time_s": 11.9,
+              "lateral_merge_completed": true,
+              "lateral_merge_complete_time_s": 13.4,
+              "window_s": 8.0,
+              "window_complete": true,
+              "status": "failed",
+              "stable_merge_succeeded": false,
+              "failure_reasons": [
+                "intervention_fraction"
+              ],
+              "observation_coverage_gap": false,
+              "finished": true,
+              "finish_reason": "truncated",
+              "full_route": {
+                "samples": 800,
+                "decisions": 800,
+                "intervention_decisions": 21,
+                "policy_filter_changes": 0,
+                "native_realization_changes": 21,
+                "requested_acceleration_samples": 800,
+                "filtered_acceleration_samples": 800,
+                "realized_acceleration_samples": 800,
+                "requested_acceleration_sum": 96.9365158751607,
+                "filtered_acceleration_sum": 96.9365158751607,
+                "realized_acceleration_sum": 89.3914613503305,
+                "collisions": 0,
+                "emergency_steps": 0,
+                "overspeed_steps": 0,
+                "leader_samples": 653,
+                "missing_headway_samples": 0,
+                "minimum_headway_s": 1.7224643122771326,
+                "minimum_ttc_s": 58.164568592859226,
+                "observed_neighbor_braking_samples": 132,
+                "minimum_neighbor_acceleration_m_s2": -1.9444444444444464,
+                "elapsed_s": 79.89999999999999,
+                "progress_m": 1338.7295709283173,
+                "reference_progress_m": 1420.7580000000146,
+                "observed_reversals": 0,
+                "unnecessary_reversals": 0,
+                "justified_reversals": 0,
+                "unclassified_reversals": 0,
+                "intervention_fraction": 0.02625,
+                "progress_ratio": 0.9422643201222893,
+                "mean_requested_acceleration": 0.12117064484395086,
+                "mean_filtered_acceleration": 0.12117064484395086,
+                "mean_realized_acceleration": 0.11173932668791313
+              },
+              "post_window": {
+                "samples": 81,
+                "decisions": 81,
+                "intervention_decisions": 14,
+                "policy_filter_changes": 0,
+                "native_realization_changes": 14,
+                "requested_acceleration_samples": 81,
+                "filtered_acceleration_samples": 81,
+                "realized_acceleration_samples": 81,
+                "requested_acceleration_sum": 6.168835587799549,
+                "filtered_acceleration_sum": 6.168835587799549,
+                "realized_acceleration_sum": 4.923486061978828,
+                "collisions": 0,
+                "emergency_steps": 0,
+                "overspeed_steps": 0,
+                "leader_samples": 51,
+                "missing_headway_samples": 0,
+                "minimum_headway_s": 1.734645663603974,
+                "minimum_ttc_s": 885.0125392728988,
+                "observed_neighbor_braking_samples": 0,
+                "minimum_neighbor_acceleration_m_s2": -0.04407227886677134,
+                "elapsed_s": 7.999999999999998,
+                "progress_m": 138.3423225267217,
+                "reference_progress_m": 143.99999999999994,
+                "observed_reversals": 0,
+                "unnecessary_reversals": 0,
+                "justified_reversals": 0,
+                "unclassified_reversals": 0,
+                "intervention_fraction": 0.1728395061728395,
+                "progress_ratio": 0.9607105731022343,
+                "mean_requested_acceleration": 0.07615846404690801,
+                "mean_filtered_acceleration": 0.07615846404690801,
+                "mean_realized_acceleration": 0.060783778542948495
+              },
+              "lane_reversals": [],
+              "neighbor_braking_attribution": "observed contemporaneous braking; no causal attribution",
+              "gates": {
+                "min_headway_s": 1.5,
+                "min_ttc_s": 3.0,
+                "max_intervention_fraction": 0.05,
+                "min_progress_ratio": 0.25
+              }
+            }
+          }
+        },
+        "continuous_motion": {
+          "started": 2,
+          "completed": 2,
+          "native_refused": 0,
+          "interrupted": 0,
+          "active_samples": 62,
+          "nonzero_lateral_samples": 60,
+          "maximum_abs_lateral_speed_m_s": 1.0666666666666667,
+          "maximum_lateral_displacement_per_tick_m": 0.21359082054546757,
+          "completion_durations_s": [
+            3.0999999999999996,
+            3.1000000000000014
+          ],
+          "native_lanechange_duration_s": 3.0,
+          "tick_s": 0.1,
+          "source": "native SUMO lateral position/speed and world poses; no pose interpolation",
+          "command": "one absolute target lane request for duration+one tick, held until geometric completion",
+          "completion": "target lane identity, |native lateral offset|<0.05 m and |native lateral speed|<0.05 m/s",
+          "actor_motion_features": [
+            "native_lateral_position_over_lane_width",
+            "native_lateral_speed_over_3",
+            "committed_lane_direction",
+            "maneuver_in_progress",
+            "maneuver_remaining_distance_fraction",
+            "time_since_completion_over_5"
+          ],
+          "safe_abort_implemented": false,
+          "active_maneuvers": {}
+        },
+        "neighbor_context": null,
+        "stabilization": {
+          "post_merge_window_seconds": 8.0,
+          "native_warmup_requested_seconds": 0.0,
+          "native_warmup_actual_seconds": 0.0,
+          "start_time": 0.1,
+          "measurement_start_time": 0.1,
+          "initial_on_road": 16,
+          "measurement_on_road": 16,
+          "motion_owner": "native SUMO; policy begins immediately after initial spawn and any explicitly requested warmup"
+        }
+      },
+      "native_emergencies": [
+        {
+          "source": {
+            "path": "outputs/highway-environment/v05/environment-smoke/20261106T020330Z/merge-repeat-a/episode-51109-d2128233/sumo-errors.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "report": {
+            "available": true,
+            "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+            "warning_lines": 0,
+            "unique_events": 0,
+            "controlled_events": 0,
+            "background_events": 0,
+            "unclassified_events": 0,
+            "events": []
+          }
+        }
+      ]
+    },
+    {
+      "label": "corrected",
+      "source": {
+        "path": "outputs/highway-environment/v05/environment-smoke/20261106T020955Z-occupancy-fix/report.json",
+        "sha256": "4e217807dfa8ae8e7aee21990f8ae67d48698a0567c565f63155b53da1944051",
+        "bytes": 136768
+      },
+      "metrics": {
+        "steps": 800,
+        "task": "merge",
+        "controlled_count": 4,
+        "total_vehicles": 16,
+        "difficulty": 0,
+        "traffic_mode": "initial",
+        "agent_steps": 3200,
+        "overrides": 0,
+        "intervention_fraction": 0.0,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "stable_merge": {
+          "targets": 1,
+          "entered": 1,
+          "lateral_completed": 1,
+          "stable": 1,
+          "failed": 0,
+          "pending": 0,
+          "oscillation_events": 0,
+          "per_agent": {
+            "agent_0": {
+              "schema": "highway_post_merge_window_v05",
+              "vehicle_id": "agent_0",
+              "entry_event": true,
+              "entry_time_s": 11.9,
+              "lateral_merge_completed": true,
+              "lateral_merge_complete_time_s": 13.4,
+              "window_s": 8.0,
+              "window_complete": true,
+              "status": "succeeded",
+              "stable_merge_succeeded": true,
+              "failure_reasons": [],
+              "observation_coverage_gap": false,
+              "finished": true,
+              "finish_reason": "truncated",
+              "full_route": {
+                "samples": 800,
+                "decisions": 800,
+                "intervention_decisions": 0,
+                "policy_filter_changes": 0,
+                "native_realization_changes": 0,
+                "requested_acceleration_samples": 800,
+                "filtered_acceleration_samples": 800,
+                "realized_acceleration_samples": 800,
+                "requested_acceleration_sum": 89.391472235322,
+                "filtered_acceleration_sum": 89.391472235322,
+                "realized_acceleration_sum": 89.39146158178154,
+                "collisions": 0,
+                "emergency_steps": 0,
+                "overspeed_steps": 0,
+                "leader_samples": 697,
+                "missing_headway_samples": 0,
+                "missing_ttc_samples": 0,
+                "minimum_headway_s": 1.6658767410159867,
+                "minimum_ttc_s": 57.98498992684264,
+                "observed_neighbor_braking_samples": 137,
+                "minimum_neighbor_acceleration_m_s2": -1.9444444444444464,
+                "elapsed_s": 79.89999999999999,
+                "progress_m": 1336.8985068007628,
+                "reference_progress_m": 1420.7580000000146,
+                "observed_reversals": 0,
+                "unnecessary_reversals": 0,
+                "justified_reversals": 0,
+                "unclassified_reversals": 0,
+                "intervention_fraction": 0.0,
+                "progress_ratio": 0.940975526304092,
+                "mean_requested_acceleration": 0.1117393402941525,
+                "mean_filtered_acceleration": 0.1117393402941525,
+                "mean_realized_acceleration": 0.11173932697722692
+              },
+              "post_window": {
+                "samples": 81,
+                "decisions": 81,
+                "intervention_decisions": 0,
+                "policy_filter_changes": 0,
+                "native_realization_changes": 0,
+                "requested_acceleration_samples": 81,
+                "filtered_acceleration_samples": 81,
+                "realized_acceleration_samples": 81,
+                "requested_acceleration_sum": 5.771790057420731,
+                "filtered_acceleration_sum": 5.771790057420731,
+                "realized_acceleration_sum": 5.771790057420638,
+                "collisions": 0,
+                "emergency_steps": 0,
+                "overspeed_steps": 0,
+                "leader_samples": 80,
+                "missing_headway_samples": 0,
+                "missing_ttc_samples": 0,
+                "minimum_headway_s": 1.7567446037043686,
+                "minimum_ttc_s": null,
+                "observed_neighbor_braking_samples": 0,
+                "minimum_neighbor_acceleration_m_s2": -0.04407227886677134,
+                "elapsed_s": 7.999999999999998,
+                "progress_m": 138.04600481744072,
+                "reference_progress_m": 143.99999999999994,
+                "observed_reversals": 0,
+                "unnecessary_reversals": 0,
+                "justified_reversals": 0,
+                "unclassified_reversals": 0,
+                "intervention_fraction": 0.0,
+                "progress_ratio": 0.9586528112322276,
+                "mean_requested_acceleration": 0.07125666737556458,
+                "mean_filtered_acceleration": 0.07125666737556458,
+                "mean_realized_acceleration": 0.07125666737556344
+              },
+              "lane_reversals": [],
+              "neighbor_braking_attribution": "observed contemporaneous braking; no causal attribution",
+              "gates": {
+                "min_headway_s": 1.5,
+                "min_ttc_s": 3.0,
+                "max_intervention_fraction": 0.05,
+                "min_progress_ratio": 0.25
+              }
+            }
+          }
+        },
+        "continuous_motion": {
+          "started": 2,
+          "completed": 2,
+          "native_refused": 0,
+          "interrupted": 0,
+          "active_samples": 62,
+          "nonzero_lateral_samples": 60,
+          "maximum_abs_lateral_speed_m_s": 1.0666666666666667,
+          "maximum_lateral_displacement_per_tick_m": 0.2135906949483907,
+          "completion_durations_s": [
+            3.0999999999999996,
+            3.1000000000000014
+          ],
+          "native_lanechange_duration_s": 3.0,
+          "tick_s": 0.1,
+          "source": "native SUMO lateral position/speed and world poses; no pose interpolation",
+          "command": "one absolute target lane request for duration+one tick, held until geometric completion",
+          "completion": "target lane identity, |native lateral offset|<0.05 m and |native lateral speed|<0.05 m/s",
+          "actor_motion_features": [
+            "native_lateral_position_over_lane_width",
+            "native_lateral_speed_over_3",
+            "committed_lane_direction",
+            "maneuver_in_progress",
+            "maneuver_remaining_distance_fraction",
+            "time_since_completion_over_5"
+          ],
+          "safe_abort_implemented": false,
+          "active_maneuvers": {}
+        },
+        "neighbor_context": "V05 keeps field meanings/indices but enriches occupancy: measured displaced adjacent vehicles occupy both source/destination corridors until centered; graph distance and fractional parallel-lane projection, never Euclidean leader gaps or native intent queries",
+        "stabilization": {
+          "post_merge_window_seconds": 8.0,
+          "native_warmup_requested_seconds": 0.0,
+          "native_warmup_actual_seconds": 0.0,
+          "start_time": 0.1,
+          "measurement_start_time": 0.1,
+          "initial_on_road": 16,
+          "measurement_on_road": 16,
+          "motion_owner": "native SUMO; policy begins immediately after initial spawn and any explicitly requested warmup"
+        }
+      },
+      "native_emergencies": [
+        {
+          "source": {
+            "path": "outputs/highway-environment/v05/environment-smoke/20261106T020955Z-occupancy-fix/episode-51109-222bc1d4/sumo-errors.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "report": {
+            "available": true,
+            "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+            "warning_lines": 0,
+            "unique_events": 0,
+            "controlled_events": 0,
+            "background_events": 0,
+            "unclassified_events": 0,
+            "events": []
+          }
+        }
+      ]
+    },
+    {
+      "label": "corrected_repeat",
+      "source": {
+        "path": "outputs/highway-environment/v05/environment-smoke/20261106T021058Z-final-repeat/merge-repeat/report.json",
+        "sha256": "4e217807dfa8ae8e7aee21990f8ae67d48698a0567c565f63155b53da1944051",
+        "bytes": 136768
+      },
+      "metrics": {
+        "steps": 800,
+        "task": "merge",
+        "controlled_count": 4,
+        "total_vehicles": 16,
+        "difficulty": 0,
+        "traffic_mode": "initial",
+        "agent_steps": 3200,
+        "overrides": 0,
+        "intervention_fraction": 0.0,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "emergency_braking_observed": 0,
+        "stable_merge": {
+          "targets": 1,
+          "entered": 1,
+          "lateral_completed": 1,
+          "stable": 1,
+          "failed": 0,
+          "pending": 0,
+          "oscillation_events": 0,
+          "per_agent": {
+            "agent_0": {
+              "schema": "highway_post_merge_window_v05",
+              "vehicle_id": "agent_0",
+              "entry_event": true,
+              "entry_time_s": 11.9,
+              "lateral_merge_completed": true,
+              "lateral_merge_complete_time_s": 13.4,
+              "window_s": 8.0,
+              "window_complete": true,
+              "status": "succeeded",
+              "stable_merge_succeeded": true,
+              "failure_reasons": [],
+              "observation_coverage_gap": false,
+              "finished": true,
+              "finish_reason": "truncated",
+              "full_route": {
+                "samples": 800,
+                "decisions": 800,
+                "intervention_decisions": 0,
+                "policy_filter_changes": 0,
+                "native_realization_changes": 0,
+                "requested_acceleration_samples": 800,
+                "filtered_acceleration_samples": 800,
+                "realized_acceleration_samples": 800,
+                "requested_acceleration_sum": 89.391472235322,
+                "filtered_acceleration_sum": 89.391472235322,
+                "realized_acceleration_sum": 89.39146158178154,
+                "collisions": 0,
+                "emergency_steps": 0,
+                "overspeed_steps": 0,
+                "leader_samples": 697,
+                "missing_headway_samples": 0,
+                "missing_ttc_samples": 0,
+                "minimum_headway_s": 1.6658767410159867,
+                "minimum_ttc_s": 57.98498992684264,
+                "observed_neighbor_braking_samples": 137,
+                "minimum_neighbor_acceleration_m_s2": -1.9444444444444464,
+                "elapsed_s": 79.89999999999999,
+                "progress_m": 1336.8985068007628,
+                "reference_progress_m": 1420.7580000000146,
+                "observed_reversals": 0,
+                "unnecessary_reversals": 0,
+                "justified_reversals": 0,
+                "unclassified_reversals": 0,
+                "intervention_fraction": 0.0,
+                "progress_ratio": 0.940975526304092,
+                "mean_requested_acceleration": 0.1117393402941525,
+                "mean_filtered_acceleration": 0.1117393402941525,
+                "mean_realized_acceleration": 0.11173932697722692
+              },
+              "post_window": {
+                "samples": 81,
+                "decisions": 81,
+                "intervention_decisions": 0,
+                "policy_filter_changes": 0,
+                "native_realization_changes": 0,
+                "requested_acceleration_samples": 81,
+                "filtered_acceleration_samples": 81,
+                "realized_acceleration_samples": 81,
+                "requested_acceleration_sum": 5.771790057420731,
+                "filtered_acceleration_sum": 5.771790057420731,
+                "realized_acceleration_sum": 5.771790057420638,
+                "collisions": 0,
+                "emergency_steps": 0,
+                "overspeed_steps": 0,
+                "leader_samples": 80,
+                "missing_headway_samples": 0,
+                "missing_ttc_samples": 0,
+                "minimum_headway_s": 1.7567446037043686,
+                "minimum_ttc_s": null,
+                "observed_neighbor_braking_samples": 0,
+                "minimum_neighbor_acceleration_m_s2": -0.04407227886677134,
+                "elapsed_s": 7.999999999999998,
+                "progress_m": 138.04600481744072,
+                "reference_progress_m": 143.99999999999994,
+                "observed_reversals": 0,
+                "unnecessary_reversals": 0,
+                "justified_reversals": 0,
+                "unclassified_reversals": 0,
+                "intervention_fraction": 0.0,
+                "progress_ratio": 0.9586528112322276,
+                "mean_requested_acceleration": 0.07125666737556458,
+                "mean_filtered_acceleration": 0.07125666737556458,
+                "mean_realized_acceleration": 0.07125666737556344
+              },
+              "lane_reversals": [],
+              "neighbor_braking_attribution": "observed contemporaneous braking; no causal attribution",
+              "gates": {
+                "min_headway_s": 1.5,
+                "min_ttc_s": 3.0,
+                "max_intervention_fraction": 0.05,
+                "min_progress_ratio": 0.25
+              }
+            }
+          }
+        },
+        "continuous_motion": {
+          "started": 2,
+          "completed": 2,
+          "native_refused": 0,
+          "interrupted": 0,
+          "active_samples": 62,
+          "nonzero_lateral_samples": 60,
+          "maximum_abs_lateral_speed_m_s": 1.0666666666666667,
+          "maximum_lateral_displacement_per_tick_m": 0.2135906949483907,
+          "completion_durations_s": [
+            3.0999999999999996,
+            3.1000000000000014
+          ],
+          "native_lanechange_duration_s": 3.0,
+          "tick_s": 0.1,
+          "source": "native SUMO lateral position/speed and world poses; no pose interpolation",
+          "command": "one absolute target lane request for duration+one tick, held until geometric completion",
+          "completion": "target lane identity, |native lateral offset|<0.05 m and |native lateral speed|<0.05 m/s",
+          "actor_motion_features": [
+            "native_lateral_position_over_lane_width",
+            "native_lateral_speed_over_3",
+            "committed_lane_direction",
+            "maneuver_in_progress",
+            "maneuver_remaining_distance_fraction",
+            "time_since_completion_over_5"
+          ],
+          "safe_abort_implemented": false,
+          "active_maneuvers": {}
+        },
+        "neighbor_context": "V05 keeps field meanings/indices but enriches occupancy: measured displaced adjacent vehicles occupy both source/destination corridors until centered; graph distance and fractional parallel-lane projection, never Euclidean leader gaps or native intent queries",
+        "stabilization": {
+          "post_merge_window_seconds": 8.0,
+          "native_warmup_requested_seconds": 0.0,
+          "native_warmup_actual_seconds": 0.0,
+          "start_time": 0.1,
+          "measurement_start_time": 0.1,
+          "initial_on_road": 16,
+          "measurement_on_road": 16,
+          "motion_owner": "native SUMO; policy begins immediately after initial spawn and any explicitly requested warmup"
+        }
+      },
+      "native_emergencies": [
+        {
+          "source": {
+            "path": "outputs/highway-environment/v05/environment-smoke/20261106T021058Z-final-repeat/merge-repeat/episode-51109-f995675c/sumo-errors.log",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          "report": {
+            "available": true,
+            "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+            "warning_lines": 0,
+            "unique_events": 0,
+            "controlled_events": 0,
+            "background_events": 0,
+            "unclassified_events": 0,
+            "events": []
+          }
+        }
+      ]
+    }
+  ]
+}

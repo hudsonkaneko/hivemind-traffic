@@ -578,3 +578,13 @@ The [frozen MAPPO adapter](mappo-physical-adapter-v01.md) now translates acceler
 ## November 5, 2026 — I-110 merge visualization checkpoint
 
 [Final Stage 1 v03 replay](i110-merge-visual-v01.md) completes two ramp merges in a predeclared I-110 test and provides an 11-second merge-focused 3D video with actual screenshots. Final v03 was selected for merge-specific performance; the phase-0 population reference remains separate. Full-run interventions are still 10.56%, above the 5% target, despite no recorded collisions, teleports, overspeed or native emergency warnings. SUMO owns motion on provisional reconstructed road geometry; this is not physical or sensor-driven validation. No learning or checkpoint changes. The [living sensor plan v13](sensor-driven-training-roadmap.md) preserves review of the disabled population v04 setup as the next training action.
+
+
+## November 5, 2026 — environment v05 milestone
+
+[Continuous-maneuver environment v05](highway-environment-v05.md) implements the next structured-driving step: continuous native lane changes, observed overlapping traffic, stable-merge/full-route metrics, independent AV participation and traffic density, varied ramp geometry and competence-based task mixtures. 256 targeted checks and final source-matched SUMO readiness pass. The I-110 scripted baseline retains its 5.34% intervention failure; no driving acceptance or physical/sensor transfer is implied. The user-authorized 250k-decision/one-hour pilot is queued after saving this checkpoint. Track results and next actions in the [living sensor-driven roadmap](sensor-driven-training-roadmap.md).
+
+
+## November 5, 2026 — v05 learned candidate remains unaccepted
+
+The [v05 pilot](highway-environment-v05-results.md) completed 249,999 active-agent decisions within the original budget, retaining both failures and consumed time. Stable merging improves 2/9→8/9 but intervention dependence worsens 13.37%→19.83%; I-110 remains unmerged. The separately versioned 99-field actor is rejected, not a replacement for accepted historical fixtures. [Living roadmap v15](sensor-driven-training-roadmap.md) now calls for a train-only native-response/entry diagnostic before another reviewed training configuration. No held-out or physical/sensor acceptance is claimed.

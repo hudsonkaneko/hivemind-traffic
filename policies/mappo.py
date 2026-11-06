@@ -93,7 +93,7 @@ class LocalDrivingActor(nn.Module):
     def __init__(self, observation_size: int, hidden_sizes: Sequence[int], *,
                  local_size: int = 33, message_size: int = 8, mask_start: int = 30):
         super().__init__()
-        if (local_size not in (33, 45) or message_size != 8 or mask_start != 30
+        if (local_size not in (33, 45, 51) or message_size != 8 or mask_start != 30
                 or observation_size != local_size + 6 * message_size):
             raise ValueError('Driving actor requires an explicit supported local/message contract')
         self.observation_size = observation_size
@@ -379,8 +379,8 @@ class MappoTrainer:
         if (not math.isfinite(near_limit_coef) or near_limit_coef < 0
                 or not math.isfinite(near_limit_band_m_s) or not 0 < near_limit_band_m_s <= 5):
             raise ValueError('Invalid near-limit loss settings')
-        if near_limit_coef and (not model.hybrid_actions or model.observation_size != 93):
-            raise ValueError('Near-limit supervision requires the explicit 93-field highway actor')
+        if near_limit_coef and (not model.hybrid_actions or model.observation_size not in (93, 99)):
+            raise ValueError('Near-limit supervision requires a 93-field or 99-field highway actor')
         self.model = model
         self.clip = clip
         self.value_clip = value_clip
@@ -435,7 +435,7 @@ class MappoTrainer:
     def _near_limit_terms(self, observations: torch.Tensor, teacher_actions: torch.Tensor):
         """Opt-in conditional mean supervision of raw acceleration in SI units.
 
-        The original 93-field contract provides ego speed at index 0 and the
+        Both the original 93-field and extended 99-field contracts provide ego speed at index 0 and the
         local legal speed at index 4, both divided by 26.8224 m/s. Select rows
         within the configured band below the limit and all overspeed rows.
         Labels must be produced by the same observation-only teacher as the
@@ -448,10 +448,10 @@ class MappoTrainer:
         establish driving performance. Shared actor features may still couple
         longitudinal and lane behavior after a future update.
         """
-        if (not self.model.hybrid_actions or self.model.observation_size != 93
-                or observations.ndim != 2 or observations.shape[1] != 93
+        if (not self.model.hybrid_actions or self.model.observation_size not in (93, 99)
+                or observations.ndim != 2 or observations.shape[1] != self.model.observation_size
                 or teacher_actions.shape != (len(observations), 2) or not len(observations)):
-            raise ValueError('Near-limit supervision requires nonempty 93-field hybrid observations/actions')
+            raise ValueError('Near-limit supervision requires nonempty supported highway observations/actions')
         if not torch.isfinite(observations).all() or not torch.isfinite(teacher_actions).all():
             raise ValueError('Near-limit observations and targets must be finite')
         if ((observations[:, 0] < 0) | (observations[:, 0] > 1)

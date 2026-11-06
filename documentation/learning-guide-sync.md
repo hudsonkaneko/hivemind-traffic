@@ -584,3 +584,8 @@ pagination was not inspected. No experiment training or policy promotion.
 ## November 5: I-110 frozen-policy merge visual test
 
 Appended the merge-specific policy selection, fixed-seed results, failed intervention gate, completed video/screenshot verification and physical-validation limits to tab 41. The start-tab mirror link follows `codex/i110-merge-visual-v01`. Revision-guarded editing and full native readback preserved all 42 tabs, forty unaffected tab bodies and the milestone tab's historical content. Regenerated and checked the mirror from `outputs/doc-sync/i110-merge-visual-v01/verified-source.json` (2,589 paragraphs, 14 tables, 182 code blocks). Native pagination was not inspected. [Results and actual screenshots](i110-merge-visual-v01.md). No training or policy promotion.
+
+
+## November 5: environment v05 training and SimReady replay
+
+Appended implementation, all preserved failures, budget-preserving recoveries, actual training results, rejected-policy artifacts and both SimReady visual cases to tab 41. The start-tab mirror link now follows `codex/highway-environment-v05`. A revision-guarded edit and full native readback verified all 42 tabs, the exact historical target prefix and 40 unchanged unrelated tab bodies. The generated mirror and its check pass from `outputs/doc-sync/highway-environment-v05/verified-source.json` (2,603 paragraphs, 14 tables, 182 code blocks). Native pagination was not inspected. [Measured results](highway-environment-v05-results.md) explicitly retain the intervention regression and I-110 failure; neither copy claims an accepted policy.

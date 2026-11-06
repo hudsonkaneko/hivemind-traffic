@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-visual-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-visual-v01/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-environment-v05/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-environment-v05/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4780,3 +4780,33 @@ This reconstructs the provisional I-110 SUMO lane geometry with illustrative mar
 Evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-visual-v01/documentation/i110-merge-visual-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-visual-v01/documentation/i110-merge-visual-v01.md>)
 
 The next training action remains review of the disabled population v04 near-limit configuration before a separately authorized pilot.
+
+<a id="docs-h-2zvr87yv8ap5"></a>
+
+#### Environment v05 — continuous maneuvers and completed MAPPO pilot — November 5, 2026
+
+The user authorized implementation and training. Three sub-agents developed and reviewed the environment, demand generator, metrics/curriculum and replay support. SUMO now executes native three-second lane changes, with observed maneuver state and measured neighboring-vehicle occupancy across both affected lane corridors. Actor, teacher, reward target and guard use the same context. An eight-second post-completion window distinguishes stable merges from merely entering a lane; full-route metrics remain separate.
+
+The actor receives 99 structured inputs and outputs normalized acceleration plus masked lane intent. A separate centralized critic has 24 agent slots and 2,400 state fields. Cameras and LiDAR are not policy inputs in this experiment, and SUMO still owns lane centering and lateral motion. The six new actor fields describe lateral position, lateral speed, committed direction, maneuver progress, remaining lateral travel and time since completion. This is an explicitly migrated actor contract, not drop-in compatibility with 93-input exports.
+
+The setup covers cruising, following, passing and merging, 2–5-lane roads including provisional I-110, new 120/240 m upstream training ramp placements and 180 m validation placements, 8/16/24 initial vehicles and 12.5/25/50/75/100% requested AV participation. Sustained mixed cases add native arrivals and report the changing actual AV fraction. Full-AV cases use the initial cohort; live controller handoff is not implemented. The 60 mph ceiling, 1.5-second following protection and other guards remain. Competence grades retain earlier tasks, and failed training scenarios receive capped fresh-rollout retries; validation trajectories do not enter training.
+
+Readiness and failures are preserved. The moving-neighbor correction reduced 14/81 post-merge corrections to 0/81 in the same scripted fixture without weakening the 5% gate. Two authorized launches then failed during initial validation before any learning: a millisecond departure-time mismatch and insufficient native ACC insertion clearance. An ending-lane interruption also exposed a stale maneuver state. The repairs synchronize departure serialization, release interrupted intents, add a map-based maneuver runway mask and conservatively space initial traffic for ACC insertion. Counts, speeds and guards stay fixed; initial positions/density change where more room is required. All 132 native reset cases pass with the complete cohort present at the first 0.1-second step. The final code has 269 passing focused tests. Both failed checkpoints and 512.048 charged seconds remain preserved.
+
+Final run train-20261106T024828Z-90b25880 uses source commit `02948d76f16f4d2c56d839ad72c1266777b373c6`. The reviewed limit was 250,000 active-agent decisions or 3,600 aggregate seconds, including evaluation and failures, with 600 seconds reserved for final evaluation. It completed 249,999 decisions: 4,096 critic warmup and 245,903 PPO decisions, 50 update batches, 2,025 joint PPO optimizer steps and 68 critic-only steps. Total charged runtime was 2,455.032 seconds. The chat waited for process completion and performed no progress monitoring or parallel reasoning during training.
+
+Matched 24-case initial/final validation: stable merges improved from 2/9 to 8/9 and valid passes from 55 to 59, but pooled intervention dependence regressed from 13.3749% to 19.8287%. Worst-case interventions changed from 73.125% to 69.3339%; failed cases decreased from 23/24 to 19/24. All accounting horizons completed, with no recorded collisions, teleports, overspeed or emergency events under the protections. The I-110 ramp car completed no merge in either initial or final evaluation. These are mixed development results, not acceptance: the final candidate remains rejected, with no held-out test or physical/sensor qualification.
+
+The curriculum remained at grade 0. Saved-data inspection found no I-110 merge/passing training case in the collected sample; this is a coverage observation, not proof of the cause. The next scoped work is a train-only audit of entry masks, native response, feasible targets and rising following interventions, followed by a new reviewed correction configuration. Do not weaken gates, train on validation trajectories, replace an accepted historical policy or launch another run merely because this roadmap exists.
+
+The small frozen candidate is published separately with configuration, observation/action contract, per-seed evaluation and checksums. policy.pt SHA-256: fd639c39f0c514256a458b2b85d35baba242125f44dcc3d9542d767eb2dd46ec. Full resume checkpoints, logs, action journals and trajectories remain under local outputs/highway-environment/v05. The published actor loads on CPU with finite 99-input/two-output inference; a loading test is not driving acceptance.
+
+Implementation and retained recovery evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-environment-v05/documentation/highway-environment-v05.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-environment-v05/documentation/highway-environment-v05.md>)
+
+Matched results and measured plots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-environment-v05/documentation/highway-environment-v05-results.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-environment-v05/documentation/highway-environment-v05-results.md>)
+
+Versioned policy: [`https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-environment-v05/policies/versions/highway-environment-v05`](<https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-environment-v05/policies/versions/highway-environment-v05>)
+
+Draft review: [`https://github.com/hudsonkaneko/hivemind-traffic/pull/47`](<https://github.com/hudsonkaneko/hivemind-traffic/pull/47>)
+
+Frozen visual confirmation uses the existing Americano v14 SimReady vehicle as the focal car and lightweight background proxies. Two predeclared cases are shown: the I-110 failure, and an easier synthetic successful merge. Full 80-second SUMO recordings and metrics are retained separately from short videos. The prepared asset keeps its sensor hierarchy, with physics disabled only in the replay layer; this is kinematic presentation, not active camera/LiDAR inference or physical driving validation. Both 251-frame videos decode correctly with exact recorded positions and unchanged authored/source assets. Exported-versus-batched floating summaries can differ at sub-micro precision; reported gate outcomes are unchanged, and the overly strict initial equality audit is preserved.
