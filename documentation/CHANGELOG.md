@@ -1010,3 +1010,8 @@ Two short candidates failed: arrival 49.3 -> 63.2 s, stopped exposure 0 -> 12.3 
 ## November 6, 2026 — GPUDrive frozen I-110 transfer v01
 
 Added pinned CPU actor inference and a continuous-action bridge, with 13 passing tests. One native baseline and one pretrained test ran; pretrained transfer oversped and crossed the road boundary at 13.4 s. Saved raw observations/actions, source hashes, metrics, actual SimReady replay and screenshots. Existing policies unchanged; no training. [Evidence](gpudrive-i110-v01.md). Incremental Google guide sync pending.
+
+
+## November 6, 2026 — GPUDrive guarded I-110 v02
+
+Added a documented steering-to-lane adapter to reuse native SUMO/v05 safety and a60mph ceiling. Paired80-second tests: no collisions/overspeed; frozen actor fails to merge, stops71.9s and needs92.25% combined interventions.17focused tests pass. Saved metrics, native commands and SimReady replay. No training. [Evidence](gpudrive-i110-v02.md); guide sync pending.

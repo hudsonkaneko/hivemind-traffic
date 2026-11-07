@@ -1,6 +1,6 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v22**, updated **November 6, 2026, America/Los_Angeles**.
+Revision **v23**, updated **November 6, 2026, America/Los_Angeles**.
 Status: **Flow preparation implemented and tested; reference qualification failed; training remains disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
@@ -490,3 +490,8 @@ Two same-seed 80-second I-110 checks (39.282 seconds combined wall time) removed
 ### v22 — November 6: frozen GPUDrive transfer evaluated, rejected
 
 Implemented a checksum-pinned CPU inference port with exact upstream-logit parity and a continuous-control SUMO bridge. One native baseline reached the route goal; the frozen pretrained main car oversped (45.81 m/s peak) and crossed the mapped road boundary at 13.4 s. No stable merge or goal was completed. This is unshielded cross-simulator transfer, not a native GPUDrive or PhysX benchmark. [Metrics, adapter limits and actual SimReady replay](gpudrive-i110-v01.md) preserve all evidence. Thirteen tests and 134-frame replay decode/composition checks pass; 0 optimizer updates. Existing policies remain unchanged. Main-car slot alignment remains open; any further pretrained-policy test first needs a justified speed-limit/map-goal adapter. Incremental guide synchronization pending.
+
+
+### v23 — November 6: GPUDrive with native safety and 60 mph ceiling
+
+[The guarded v02 transfer](gpudrive-i110-v02.md) uses the existing v05/SUMO safety stack through an explicit steering-to-lane adapter. Two matched 80-second runs preserve identical demand; native baseline merges, GPUDrive does not. No collisions, teleports or overspeed were recorded. GPUDrive stops for 71.9 s and requires changes on 92.25% of actions including adapter saturation (existing-stack metric91.125%); it fails the5% gate. Weights unchanged; no training. Seventeen focused tests pass; actual SimReady replay and metrics retained. Next action remains policy/adapter competence, not removing guards or treating this as an accepted policy. Guide sync pending.
