@@ -626,3 +626,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ### Flow approach follow-up — November 6, 2026
 
 [Two focused approach ablations](highway-flow-preparation-v01.md#focused-approach-ablation--november-6-2026) were rejected and baseline restored. Main-car slot alignment remains the next prerequisite; training remains disabled. Metrics and failed source snapshots are preserved.
+
+
+### GPUDrive pretrained transfer — November 6, 2026
+
+[One frozen I-110 transfer test](gpudrive-i110-v01.md) failed road-boundary/speed criteria; retained as external-policy evidence, not an accepted replacement. CPU inference and a SimReady replay are verified. No training; map/goal transfer and speed enforcement remain unresolved.

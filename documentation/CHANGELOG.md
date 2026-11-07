@@ -1005,3 +1005,8 @@ Implemented the separate 117-field environment/reference, versioned counterfactu
 ## November 6, 2026 — bounded I-110 approach ablations
 
 Two short candidates failed: arrival 49.3 -> 63.2 s, stopped exposure 0 -> 12.3 s; zero overrides in all runs. Restored reference code/tests, retained failed source snapshots/metrics and measured speed plot. No training/config changes. [Evidence](highway-flow-preparation-v01.md#focused-approach-ablation--november-6-2026). Incremental guide sync pending.
+
+
+## November 6, 2026 — GPUDrive frozen I-110 transfer v01
+
+Added pinned CPU actor inference and a continuous-action bridge, with 13 passing tests. One native baseline and one pretrained test ran; pretrained transfer oversped and crossed the road boundary at 13.4 s. Saved raw observations/actions, source hashes, metrics, actual SimReady replay and screenshots. Existing policies unchanged; no training. [Evidence](gpudrive-i110-v01.md). Incremental Google guide sync pending.

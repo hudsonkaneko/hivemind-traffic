@@ -1,0 +1,262 @@
+{
+  "schema": "gpudrive_i110_evidence_v01",
+  "training": false,
+  "optimizer_updates": 0,
+  "accepted": false,
+  "seed_count": 1,
+  "scope": "Frozen external actor; GPUDrive classic bicycle ego, reactive SUMO background. Not a native GPUDrive or PhysX benchmark.",
+  "results": {
+    "native-01": {
+      "mode": "native",
+      "training": false,
+      "optimizer_updates": 0,
+      "seed": 6800019,
+      "requested_horizon_s": 80,
+      "policy_safety_override_fraction": null,
+      "safety_override_note": "No existing MAPPO safety shield is applied to externally owned continuous ego motion.",
+      "contacts": [],
+      "native_collision_events": [],
+      "teleports": [],
+      "completed_trips": 8,
+      "speed_limit_exceedance_steps": 0,
+      "reverse_speed_steps": 0,
+      "pose_readback_max_error_m": 0.0,
+      "merge_completed": true,
+      "terminal_reason": "native_arrival",
+      "merge_time_s": 15.2,
+      "simulated_duration_s": 37.2,
+      "wall_seconds": 2.75,
+      "goal_reached": true,
+      "minimum_speed_m_s": 6.442434209243916,
+      "mean_speed_m_s": 15.435722153905425,
+      "distance_m": 573.3476527223871,
+      "stopped_exposure_s": 0.0,
+      "peak_abs_jerk_m_s3": 65.00000000000136,
+      "actor_decisions": 0,
+      "sampling": "deterministic argmax",
+      "collision_geometry": "Full vehicle footprint; GPUDrive training used reduced collision boxes.",
+      "baseline_comparison": "Native traffic baseline; historical eight-controller runs are not paired comparisons.",
+      "maximum_speed_m_s": 18.0,
+      "maximum_speed_mph": 40.264848,
+      "directory": "outputs/gpudrive-i110/v01/native-01",
+      "recording_sha256": "756cc42688771843d5068a28cf40599ccdb7154be0a859fe4a8820ea43cf4dd9",
+      "evaluation_sha256": "700a3931446bdcce93da35d856c2fab9e968859df2640a47d536e3b9bb7ba42d"
+    },
+    "policy-01": {
+      "mode": "gpudrive",
+      "training": false,
+      "optimizer_updates": 0,
+      "seed": 6800019,
+      "requested_horizon_s": 80,
+      "policy_safety_override_fraction": null,
+      "safety_override_note": "No existing MAPPO safety shield is applied to externally owned continuous ego motion.",
+      "contacts": [],
+      "native_collision_events": [],
+      "teleports": [],
+      "completed_trips": 0,
+      "speed_limit_exceedance_steps": 82,
+      "reverse_speed_steps": 0,
+      "pose_readback_max_error_m": 5.684341886080802e-14,
+      "merge_completed": false,
+      "terminal_reason": "offroad",
+      "merge_time_s": null,
+      "simulated_duration_s": 13.4,
+      "wall_seconds": 1.437999999994645,
+      "goal_reached": false,
+      "minimum_speed_m_s": 6.212214045539054,
+      "mean_speed_m_s": 23.884890171464,
+      "distance_m": 317.3563068930637,
+      "stopped_exposure_s": 0.0,
+      "peak_abs_jerk_m_s3": 66.6700005531311,
+      "actor_decisions": 133,
+      "sampling": "deterministic argmax",
+      "collision_geometry": "Full vehicle footprint; GPUDrive training used reduced collision boxes.",
+      "baseline_comparison": "Native traffic baseline; historical eight-controller runs are not paired comparisons.",
+      "maximum_speed_m_s": 45.81231406213289,
+      "maximum_speed_mph": 102.47921456889131,
+      "directory": "outputs/gpudrive-i110/v01/policy-01",
+      "recording_sha256": "ed13562259c99ee601fe8060b0458b12da974068dae011f394aa35e9357d280b",
+      "evaluation_sha256": "88c69ad168ce0f8e96cf987ce77001c6be3d6e665c001d6b554f9fe24f84fab9"
+    }
+  },
+  "upstream": {
+    "huggingface_revision": "1532950cad84dafc6e9d976a2bcc524ee481a1a1",
+    "github_revision": "70e7fadd5d938caebceeb8d42f87ba5f081b6c7d",
+    "files": [
+      {
+        "path": "config.json",
+        "url": "https://huggingface.co/daphne-cornelisse/policy_S10_000_02_27/resolve/1532950cad84dafc6e9d976a2bcc524ee481a1a1/config.json",
+        "sha256": "e3f4cb2599f8b36aa8da4eb5c8fcb520a8e9b799ced35bfa6806fb80e0e98829",
+        "size": 726
+      },
+      {
+        "path": "model.safetensors",
+        "url": "https://huggingface.co/daphne-cornelisse/policy_S10_000_02_27/resolve/1532950cad84dafc6e9d976a2bcc524ee481a1a1/model.safetensors",
+        "sha256": "f3f26475def35f375c6c72d8f8f20b2b091f77175010345dc3fa968a860521b7",
+        "size": 206856
+      },
+      {
+        "path": "gpudrive/networks/late_fusion.py",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/gpudrive/networks/late_fusion.py",
+        "sha256": "966b28da3fe1c8659a8e2c00a1567233ff190b2dd4578d6fcb8734b80dc3af3e",
+        "size": 8317
+      },
+      {
+        "path": "gpudrive/env/env_torch.py",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/gpudrive/env/env_torch.py",
+        "sha256": "b857a01500716fb091610f5a526d882f592d88382d742d9bba33dfc1984758ed",
+        "size": 57176
+      },
+      {
+        "path": "gpudrive/env/config.py",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/gpudrive/env/config.py",
+        "sha256": "680778860dfd1038892c95d2b53a8267b311b75aff5e5943c42f4c712b508647",
+        "size": 7699
+      },
+      {
+        "path": "gpudrive/datatypes/observation.py",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/gpudrive/datatypes/observation.py",
+        "sha256": "5444e71a80a2668849e2b7015aedc6db4d3f955e838526865d711e7ace1b053e",
+        "size": 13559
+      },
+      {
+        "path": "examples/experimental/config/reliable_agents_params.yaml",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/examples/experimental/config/reliable_agents_params.yaml",
+        "sha256": "88d6d7ad197ab17949cb9110d1aab22ecddbded4f12600a19a4e908e998ceccd",
+        "size": 1230
+      },
+      {
+        "path": "LICENSE",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/LICENSE",
+        "sha256": "29e2b6d5b3e4c35a7376dc6a4f81c4ec963e20f6fdf8f72fbcb132122fe12836",
+        "size": 1142
+      },
+      {
+        "path": "gpudrive/env/constants.py",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/gpudrive/env/constants.py",
+        "sha256": "1536f9f0278899d342e300ee95d9470d6cbdbad34536d9844c0956a295d0a204",
+        "size": 652
+      },
+      {
+        "path": "gpudrive/datatypes/roadgraph.py",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/gpudrive/datatypes/roadgraph.py",
+        "sha256": "423a6d10f0ab0b043e7e2f6f8cd7ce4f1651838c35222b6148baddaa13d3ff0e",
+        "size": 15646
+      },
+      {
+        "path": "gpudrive/utils/geometry.py",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/gpudrive/utils/geometry.py",
+        "sha256": "465430d327b7e39b9ea1bfe0bf3f955f0046e172cf7a5ee58167f4c0b03d9144",
+        "size": 1335
+      },
+      {
+        "path": "src/consts.hpp",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/src/consts.hpp",
+        "sha256": "c89f34e84801169a3c4ca07df9502f9d528d827549eb2b9f229171b67b9e7cec",
+        "size": 2518
+      },
+      {
+        "path": "src/dynamics.hpp",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/src/dynamics.hpp",
+        "sha256": "76e87526cd3c666d32a55caac0f9419bd41346496657329943bcc8fa60a73aa6",
+        "size": 7887
+      },
+      {
+        "path": "src/sim.cpp",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/src/sim.cpp",
+        "sha256": "707a700e26cf2d500dd6320558e5e1d89752639971c5643039e804e51b24656e",
+        "size": 37048
+      },
+      {
+        "path": "src/types.hpp",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/src/types.hpp",
+        "sha256": "46e304030b056bf5f80a5147aeb88e9a0d61630b44a2087a22076fc70f042556",
+        "size": 15345
+      },
+      {
+        "path": "src/level_gen.cpp",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/src/level_gen.cpp",
+        "sha256": "c4b61866240fe3ce16b030a587b7a289f30d2913fe43f4ca8012d67762a80be2",
+        "size": 20868
+      },
+      {
+        "path": "src/MapReader.cpp",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/src/MapReader.cpp",
+        "sha256": "2a16c9e004e1b8f377fd1b761c701096c4f6e2a39d82826df07b1e10d556997f",
+        "size": 1861
+      },
+      {
+        "path": "gpudrive/utils/config.py",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/gpudrive/utils/config.py",
+        "sha256": "9ef714c6e2d0c24f20631ebd4b0ad7cfd7558e8c1bc6083535e45394948a6c47",
+        "size": 343
+      },
+      {
+        "path": "src/utils.hpp",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/src/utils.hpp",
+        "sha256": "5719ff9eb4ce52931edf31645cff15ae9e805f48d80ead05d898ed2b905f232a",
+        "size": 2367
+      },
+      {
+        "path": "examples/tutorials/04_use_pretrained_sim_agent.ipynb",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/examples/tutorials/04_use_pretrained_sim_agent.ipynb",
+        "sha256": "3573abfa28bfb3413c3219270bcfceb6baad2ffc61983569ab779bf619ccdc56",
+        "size": 245877
+      },
+      {
+        "path": "baselines/ppo/ppo_pufferlib.py",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/baselines/ppo/ppo_pufferlib.py",
+        "sha256": "ca73468637b6f33af61b5694a0b04574733f903400d403179f03d84639ada339",
+        "size": 11816
+      },
+      {
+        "path": "baselines/ppo/config/ppo_base_puffer.yaml",
+        "url": "https://raw.githubusercontent.com/Emerge-Lab/gpudrive/70e7fadd5d938caebceeb8d42f87ba5f081b6c7d/baselines/ppo/config/ppo_base_puffer.yaml",
+        "sha256": "9c8dfc82828ca9b7ad45209a0b69beb3daa54f29bb34afb999595d9b79063209",
+        "size": 3583
+      }
+    ],
+    "matching_revision_rationale": "2025-03-31 Fix policy loading bug, contemporaneous with released HF revision; architecture identical to current upstream, excludes later vehicle size observation rescaling.",
+    "current_revision_compared": "aa48a431ed127a37610cc2176db30ec73d0c55df"
+  },
+  "inference_validation": {
+    "python": "3.11.9",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.6",
+    "device": "cpu",
+    "torch_threads": 1,
+    "parameter_count": 51228,
+    "all_parameters_frozen": true,
+    "network_eval_mode": true,
+    "test_command": ".venv-traffic/Scripts/python.exe -m pytest -q tests/test_gpudrive_pretrained.py",
+    "test_result": "8 passed",
+    "reference_parity": "Exact numpy array equality against pinned original NeuralNet class logits for 8 observations; no runtime build",
+    "example_observation_sha256": "0ab766e8493936c4450418499631d0018bbdde065cb21db9167d82a19594281d",
+    "example_action": [
+      4.0,
+      -3.1419999599456787,
+      78
+    ],
+    "files": {
+      "traffic/gpudrive_pretrained.py": "f3daae0451c0075d8769e24a466af3e4ae03d6df0619e8ac622f86e83994f938",
+      "tests/test_gpudrive_pretrained.py": "89db0e0e8fc1c8be4c4dcfaf195d9a9f509646ef2e39c5e7d3d0b02440466ac6"
+    },
+    "limits": [
+      "Reference source commit is a contemporary compatible release, not a training git SHA embedded by the model author.",
+      "No native GPUDrive runtime executed. Cross-simulator transfer and geometric map reconstruction require separate evaluation."
+    ]
+  },
+  "replay": {
+    "passed": true,
+    "frames": 134,
+    "decoded_frames": 134,
+    "fps": 10,
+    "video_decode_verified": true,
+    "source_pose_interpolation": false,
+    "composition_errors": [],
+    "source_recording_sha256": "ed13562259c99ee601fe8060b0458b12da974068dae011f394aa35e9357d280b",
+    "path": "outputs/gpudrive-i110/v01/replay-01/i110-merge.mp4",
+    "sha256": "780fe4e98e30ee705bf375cf9671b87892fb653b820992a6da3a73998899fdad"
+  },
+  "guide_sync": "Incremental note not yet mirrored into Google guide; generated mirror unchanged."
+}
