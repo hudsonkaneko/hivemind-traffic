@@ -34,7 +34,9 @@ def states(conn):
         cx,cy,yaw=center_from_front(x,y,api.getAngle(identity),length)
         result.append(dict(id=identity,x=cx,y=cy,z=z,yaw=yaw,speed=api.getSpeed(identity),
             acceleration=api.getAcceleration(identity),length=length,width=api.getWidth(identity),
-            lane_id=api.getLaneID(identity),distance_m=api.getDistance(identity)))
+            lane_id=api.getLaneID(identity),distance_m=api.getDistance(identity),
+            lane_position=api.getLanePosition(identity),route=api.getRoute(identity),
+            allowed_speed=api.getAllowedSpeed(identity)))
     return result
 
 
@@ -61,6 +63,11 @@ def run(config, output, mode):
         if sha(path)!=digest: raise ValueError('Input checksum mismatch')
     shutil.copyfile(network,output/'network.net.xml');shutil.copyfile(routes,output/'routes.rou.xml')
     road=RoadMap(network,config['road_segment_length_m'])
+    guarded=config.get('continuous_safety',False) and mode=='gpudrive'
+    if guarded:
+        from traffic.gpudrive_continuous_safety import guarded_step, current_constraints, recover_lane_state
+        from traffic.highway_merge_context import Stage1LaneGraph
+        graph=Stage1LaneGraph(network)
     goal=tuple(road.lanes[config['goal_lane']]['points'][-1])
     policy=None
     if mode=='gpudrive':
@@ -81,6 +88,15 @@ def run(config, output, mode):
         terminal_reason='horizon',merge_time_s=None)
     ego=None;traveled=0.;merge_since=None
     source_names=['scripts/evaluate_gpudrive_i110.py','traffic/gpudrive_sumo_bridge.py','traffic/gpudrive_pretrained.py']
+    if guarded:
+        source_names+=['traffic/gpudrive_continuous_safety.py','traffic/highway_merge_context.py',
+                       'traffic/i110_policy_interface.py','environments/i110_merge_env.py',
+                       'environments/highway_stage1_env.py']
+        evaluation.update(policy_safety_override_fraction=0., safety_rejections=[],
+            geometric_lane_recovery_steps=0,
+            safety_override_note='Continuous steering preserved; shared longitudinal bounds, hard speed limits, '
+            'live minor-link yield checks and 20 ms footprint sampling. Unsafe proposals terminate this test. '
+            'Not the complete native SUMO/MAPPO safety stack; background prediction is constant velocity.')
     source_hashes={p:sha(ROOT/p) for p in source_names}
     try:
         traci.start(command,label=output.name)
@@ -98,14 +114,25 @@ def run(config, output, mode):
                 others.sort(key=lambda c:((c['x']-ego['x'])**2+(c['y']-ego['y'])**2,c['id']))
                 observation=encode_observation(ego,others,road.visible_roads(ego),goal)
                 accel,steering,index=policy.infer(observation)
-                next_ego=bicycle_step(ego,float(accel),float(steering))
+                audit=None
+                if guarded:
+                    next_ego,audit=guarded_step(ego,float(accel),float(steering),road,others,
+                        **current_constraints(conn,graph,ego,cars))
+                else:
+                    next_ego=bicycle_step(ego,float(accel),float(steering))
+                observations.append(observation)
+                actions.append(dict(time=conn.simulation.getTime(),index=int(index),acceleration=float(accel),
+                    steering_rad=float(steering),ego_before=deepcopy(ego),
+                    ego_after=deepcopy(next_ego) if not audit or audit['accepted'] else None,
+                    proposed_ego=deepcopy(next_ego),safety=audit))
+                if audit and not audit['accepted']:
+                    evaluation['safety_rejections'].append(dict(time=conn.simulation.getTime(),**audit))
+                    evaluation['terminal_reason']='unsafe_proposal_rejected'
+                    break
                 traveled+=math.hypot(next_ego['x']-ego['x'],next_ego['y']-ego['y'])
                 fx,fy,heading=front_from_center(next_ego)
                 conn.vehicle.setSpeed('agent_0',max(0.,next_ego['speed']))
                 conn.vehicle.moveToXY('agent_0','',-1,fx,fy,angle=heading,keepRoute=3,matchThreshold=100.)
-                observations.append(observation)
-                actions.append(dict(time=conn.simulation.getTime(),index=int(index),acceleration=float(accel),
-                    steering_rad=float(steering),ego_before=deepcopy(ego),ego_after=deepcopy(next_ego)))
                 ego=next_ego
             conn.simulationStep();stamp=conn.simulation.getTime();cars=states(conn)
             evaluation['completed_trips']+=len(conn.simulation.getArrivedIDList())
@@ -119,8 +146,18 @@ def run(config, output, mode):
                 err=math.hypot(actual['x']-ego['x'],actual['y']-ego['y'])
                 evaluation['pose_readback_max_error_m']=max(evaluation['pose_readback_max_error_m'],err)
                 if err>1e-3: raise RuntimeError('SUMO moved or snapped externally owned ego pose')
+                for key in ('lane_id','lane_position','route','allowed_speed'):
+                    ego[key]=actual[key]
+                if guarded and (ego['lane_id'] not in graph.lanes or ego['lane_position']<0):
+                    try:
+                        ego=recover_lane_state(ego,road,graph)
+                        evaluation['geometric_lane_recovery_steps']+=1
+                    except ValueError:
+                        evaluation['terminal_reason']='lane_association_unavailable'
+                        frames.append(frame(cars,stamp,ego,traveled,evaluation['merge_completed']))
+                        break
             else: ego=deepcopy(actual)
-            lane=actual['lane_id']; in_main=lane.startswith(('sb2_','sb3_','sb4_','sb5_')) and lane!='sb2_0'
+            lane=ego['lane_id']; in_main=lane.startswith(('sb2_','sb3_','sb4_','sb5_')) and lane!='sb2_0'
             if in_main and abs(ego['speed'])>1.:
                 merge_since=stamp if merge_since is None else merge_since
                 if stamp-merge_since>=3. and not evaluation['merge_completed']:
@@ -143,9 +180,15 @@ def run(config, output, mode):
         if conn: conn.close()
     trace=[v for f in frames for v in f['vehicles'] if v['id']=='agent_0']
     speeds=[v['speed'] for v in trace];accels=[v['acceleration'] for v in trace]
+    if guarded:
+        changed=sum(a['safety']['acceleration_changed'] or not a['safety']['accepted'] for a in actions)
+        evaluation.update(policy_safety_override_fraction=changed/max(1,len(actions)),
+            safety_changed_decisions=changed,accepted_decisions=sum(a['safety']['accepted'] for a in actions),
+            steering_reinterpretations=0)
     evaluation.update(simulated_duration_s=frames[-1]['time'] if frames else 0.,wall_seconds=time.monotonic()-started,
         goal_reached=evaluation['terminal_reason'] in ('goal_reached','native_arrival'),
         minimum_speed_m_s=min(speeds,default=None),mean_speed_m_s=float(np.mean(speeds)) if speeds else None,
+        maximum_speed_m_s=max(speeds,default=None),
         distance_m=trace[-1]['distance_m'] if trace else 0.,
         stopped_exposure_s=.1*sum(abs(s)<.1 for s in speeds[1:]),
         peak_abs_jerk_m_s3=max((abs(b-a)/.1 for a,b in zip(accels,accels[1:])),default=0.),
@@ -163,6 +206,9 @@ def run(config, output, mode):
     with gzip.open(output/'actions.jsonl.gz','wt',encoding='utf-8') as f:
         for action in actions:f.write(json.dumps(action)+'\n')
     if observations:np.savez_compressed(output/'observations.npz',observations=np.stack(observations))
+    for name in source_names:
+        snapshot=output/'source'/name;snapshot.parent.mkdir(parents=True,exist_ok=True)
+        shutil.copyfile(ROOT/name,snapshot)
     save(output/'manifest.json',dict(training=False,optimizer_steps=0,config=config,command=command,
         git_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),
         git_diff_sha256=hashlib.sha256(subprocess.check_output(['git','diff','HEAD'])).hexdigest(),

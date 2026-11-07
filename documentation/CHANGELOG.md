@@ -1015,3 +1015,8 @@ Added pinned CPU actor inference and a continuous-action bridge, with 13 passing
 ## November 6, 2026 — GPUDrive guarded I-110 v02
 
 Added a documented steering-to-lane adapter to reuse native SUMO/v05 safety and a60mph ceiling. Paired80-second tests: no collisions/overspeed; frozen actor fails to merge, stops71.9s and needs92.25% combined interventions.17focused tests pass. Saved metrics, native commands and SimReady replay. No training. [Evidence](gpudrive-i110-v02.md); guide sync pending.
+
+
+## 2026-11-06 — GPUDrive continuous steering repair (v03)
+
+Restored continuous steering instead of tactical lane conversion, with opt-in longitudinal/speed/footprint safeguards and exact action audit. 23 tests plus 4 subtests pass. A bounded CPU test and error-handling retry retain all metrics: 1.1 s simulated, 8.269 m, no stop/overspeed/contact, but unsupported upstream-mainline route association ends the test. Adapter fix verified; transfer remains unqualified. No training or new render. [Evidence and limitations](gpudrive-i110-v03.md). Google guide incremental sync pending.
