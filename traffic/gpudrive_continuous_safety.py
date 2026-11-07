@@ -13,6 +13,30 @@ CAP = 26.8224
 DT = .1
 
 
+def restore_destination_route(conn, ego, destination_edge):
+    """Repair moveToXY's truncated route without changing pose or destination.
+
+    keepRoute=2 lets SUMO associate an externally steered car with another road.
+    SUMO may then retain only that road as its route; findRoute restores a legal
+    edge sequence for this vehicle type. Internal links retain a valid existing
+    route, but a missing route there is not guessed.
+    """
+    route = tuple(ego['route']); edge = ego['edge_id']
+    if route and route[-1] == destination_edge and (edge in route or edge.startswith(':')):
+        return ego, None
+    if not edge or edge.startswith(':'):
+        raise ValueError('Cannot restore a destination route from an unmatched or internal edge')
+    replacement = tuple(conn.simulation.findRoute(edge, destination_edge,
+        vType=conn.vehicle.getTypeID(ego['id'])).edges)
+    if not replacement or replacement[0] != edge or replacement[-1] != destination_edge:
+        raise ValueError('No connected route from the current road to the fixed destination')
+    conn.vehicle.setRoute(ego['id'], replacement)
+    if tuple(conn.vehicle.getRoute(ego['id'])) != replacement:
+        raise ValueError('SUMO destination route readback mismatch')
+    return dict(ego, route=replacement), dict(source_edge=edge,
+        previous_route=list(route), restored_route=list(replacement), destination_edge=destination_edge)
+
+
 def recover_lane_state(ego, road, graph):
     """Project an unmatched external pose onto the route's map, without moving it.
 
