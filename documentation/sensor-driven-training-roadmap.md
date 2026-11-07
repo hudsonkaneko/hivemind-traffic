@@ -1,6 +1,6 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v24**, updated **November 6, 2026, America/Los_Angeles**.
+Revision **v25**, updated **November 6, 2026, America/Los_Angeles**.
 Status: **Flow preparation implemented and tested; reference qualification failed; training remains disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
@@ -500,3 +500,8 @@ Implemented a checksum-pinned CPU inference port with exact upstream-logit parit
 ### v24 — November 6: continuous GPUDrive steering repaired, route transfer still open
 
 [The bounded v03 diagnostic](gpudrive-i110-v03.md) restores continuous steering without changing weights, retains a hard 60 mph/lower current limit and explicit longitudinal/footprint checks. Twenty-three tests plus four subtests pass. All 10 applied steering values equal actor requests; the car travels 8.269 m without stopping or overspeed, then reaches an unsupported route association at 1.1 s when it enters upstream sb1 from the ramp. An initial graph exception and the explicit termination retry are retained (1.437 s combined SUMO-loop wall time). No merge, policy acceptance, training or new render. Native SUMO safety equivalence is not claimed for external motion. The next GPUDrive decision would be deliberate continuous route reassociation; avoid further tuning campaigns until that scope is justified. Existing SUMO-native training priorities remain unchanged. Incremental guide synchronization pending.
+
+
+### v25 — November 6: continuous route repair completes the short merge test
+
+[GPUDrive v04](gpudrive-i110-v04.md) allows SUMO to associate the actual external pose with another road, then restores a connected route to the unchanged destination. One repair at 1.1 s removes the v03 blocker. The same-seed test meets 3-second mainline occupancy at 8.3 s and reaches its goal at 28.5 s, taking 3.859 s in the SUMO loop. No stops, overspeed, contact or route errors; all 284 steering requests preserved. Thirty tests plus 14 subtests pass. However, 255/284 acceleration requests change (89.79%), jerk peaks at 60 m/s³ and three background emergency-braking warnings remain: this is not policy qualification or promotion. No training or rendering. Next GPUDrive work is acceleration-contract compatibility/smoothness before acceptance; SUMO-native priorities remain unchanged. Metrics, logs, source snapshots and motion recording retained. Guide incremental sync pending.

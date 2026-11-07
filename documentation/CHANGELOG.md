@@ -1020,3 +1020,8 @@ Added a documented steering-to-lane adapter to reuse native SUMO/v05 safety and 
 ## 2026-11-06 — GPUDrive continuous steering repair (v03)
 
 Restored continuous steering instead of tactical lane conversion, with opt-in longitudinal/speed/footprint safeguards and exact action audit. 23 tests plus 4 subtests pass. A bounded CPU test and error-handling retry retain all metrics: 1.1 s simulated, 8.269 m, no stop/overspeed/contact, but unsupported upstream-mainline route association ends the test. Adapter fix verified; transfer remains unqualified. No training or new render. [Evidence and limitations](gpudrive-i110-v03.md). Google guide incremental sync pending.
+
+
+## 2026-11-06 — GPUDrive destination-preserving route repair (v04)
+
+Fixed off-route continuous-pose association and rebuilt the edge route to the original goal; validated readback and rejected false truncated-route arrivals. One short CPU test completes the merge criterion at 8.3 s and goal at 28.5 s, with no stops/contact/overspeed. Thirty tests plus 14 subtests pass. Acceleration interventions remain 89.79%, so no policy acceptance. [Metrics and limits](gpudrive-i110-v04.md). No training or rendering; guide sync pending.

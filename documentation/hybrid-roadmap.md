@@ -641,3 +641,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ### 2026-11-06 — bounded continuous GPUDrive repair
 
 [GPUDrive v03](gpudrive-i110-v03.md) fixes the steering-to-lane reinterpretation and retains explicit limits; its 1.1-second diagnostic still ends at an unsupported route association, not a completed merge. 23 tests plus 4 subtests pass. Metrics and initial failure preserved; no training or rendering. SUMO-native MAPPO remains the primary path. See living sensor roadmap v24; guide sync pending.
+
+
+### 2026-11-06 — continuous route repair validated
+
+[GPUDrive v04](gpudrive-i110-v04.md) removes the route-mapping blocker while keeping the fixed destination, continuous steering and safety limits. The short CPU run merges and reaches the goal in 28.5 simulated seconds; acceleration interventions and jerk still fail qualification. Tests and full metrics retained. No training, rendering or policy promotion. See living roadmap v25; incremental guide sync pending.
