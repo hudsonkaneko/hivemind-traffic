@@ -1025,3 +1025,8 @@ Restored continuous steering instead of tactical lane conversion, with opt-in lo
 ## 2026-11-06 — GPUDrive destination-preserving route repair (v04)
 
 Fixed off-route continuous-pose association and rebuilt the edge route to the original goal; validated readback and rejected false truncated-route arrivals. One short CPU test completes the merge criterion at 8.3 s and goal at 28.5 s, with no stops/contact/overspeed. Thirty tests plus 14 subtests pass. Acceleration interventions remain 89.79%, so no policy acceptance. [Metrics and limits](gpudrive-i110-v04.md). No training or rendering; guide sync pending.
+
+
+## 2026-11-07 — GPUDrive crossing audit and comfort filter (v05)
+
+Implemented network-transition verification, separate range/comfort/guard accounting, anticipatory following and routine jerk limiting before unchanged safety controls. Forty tests plus 16 subtests pass. One short run reaches goal in 28.4 s; peak longitudinal jerk60→3 m/s³, no stop/contact/overspeed. Audit exposes an early unconnected ramp exit in both v04/v05; raw-command modification remains99.29%, so neither proper merging nor policy acceptance is established. [Evidence, settings and limits](gpudrive-i110-v05.md). No training/render; guide sync pending.

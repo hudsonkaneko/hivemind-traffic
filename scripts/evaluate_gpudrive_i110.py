@@ -65,6 +65,11 @@ def run(config, output, mode):
     road=RoadMap(network,config['road_segment_length_m'])
     guarded=config.get('continuous_safety',False) and mode=='gpudrive'
     repair_route=config.get('repair_destination_route',False) and mode=='gpudrive'
+    comfort=config.get('longitudinal_conditioning') if mode=='gpudrive' else None
+    if comfort and not guarded:
+        raise ValueError('Comfort conditioning requires the unchanged final safety guard')
+    if comfort:
+        from traffic.gpudrive_longitudinal import shape_acceleration, control_metrics
     if repair_route and not guarded:
         raise ValueError('Continuous route repair requires the explicit safety guards')
     if guarded:
@@ -102,6 +107,10 @@ def run(config, output, mode):
             safety_override_note='Continuous steering preserved; shared longitudinal bounds, hard speed limits, '
             'live minor-link yield checks and 20 ms footprint sampling. Unsafe proposals terminate this test. '
             'Not the complete native SUMO/MAPPO safety stack; background prediction is constant velocity.')
+    if comfort: source_names.append('traffic/gpudrive_longitudinal.py')
+    if config.get('audit_merge_topology'):
+        from traffic.gpudrive_merge_audit import audit_merge
+        source_names.append('traffic/gpudrive_merge_audit.py')
     source_hashes={p:sha(ROOT/p) for p in source_names}
     if repair_route:
         evaluation.update(destination_edge=destination_edge,route_repairs=[],route_repair_failures=[],
@@ -124,16 +133,26 @@ def run(config, output, mode):
                 observation=encode_observation(ego,others,road.visible_roads(ego),goal)
                 accel,steering,index=policy.infer(observation)
                 audit=None
+                longitudinal=None
                 if guarded:
-                    next_ego,audit=guarded_step(ego,float(accel),float(steering),road,others,
-                        **current_constraints(conn,graph,ego,cars))
+                    constraints=current_constraints(conn,graph,ego,cars)
+                    conditioned=float(accel)
+                    if comfort:
+                        conditioned,longitudinal=shape_acceleration(ego,float(accel),
+                            constraints['front'],constraints['allowed_speed'],comfort)
+                    next_ego,audit=guarded_step(ego,conditioned,float(steering),road,others,**constraints)
+                    if comfort:
+                        audit['conditioned_request_changed']=audit['acceleration_changed']
+                        audit['guard_input_acceleration']=conditioned
+                        audit['requested_acceleration']=float(accel)
+                        audit['acceleration_changed']=abs(audit['applied_acceleration']-float(accel))>1e-8
                 else:
                     next_ego=bicycle_step(ego,float(accel),float(steering))
                 observations.append(observation)
                 actions.append(dict(time=conn.simulation.getTime(),index=int(index),acceleration=float(accel),
                     steering_rad=float(steering),ego_before=deepcopy(ego),
                     ego_after=deepcopy(next_ego) if not audit or audit['accepted'] else None,
-                    proposed_ego=deepcopy(next_ego),safety=audit))
+                    proposed_ego=deepcopy(next_ego),safety=audit,longitudinal=longitudinal))
                 if audit and not audit['accepted']:
                     evaluation['safety_rejections'].append(dict(time=conn.simulation.getTime(),**audit))
                     evaluation['terminal_reason']='unsafe_proposal_rejected'
@@ -205,6 +224,14 @@ def run(config, output, mode):
         if conn: conn.close()
     trace=[v for f in frames for v in f['vehicles'] if v['id']=='agent_0']
     speeds=[v['speed'] for v in trace];accels=[v['acceleration'] for v in trace]
+    jerks=[abs(b-a)/.1 for a,b in zip(accels,accels[1:])]
+    evaluation.update(jerk_rms_m_s3=float(np.sqrt(np.mean(np.square(jerks)))) if jerks else 0.,
+        jerk_p95_m_s3=float(np.percentile(jerks,95)) if jerks else 0.,
+        background_emergency_braking_warnings=sum('performs emergency braking' in line and "Vehicle 'agent_0'" not in line
+            for line in (output/'sumo.log').read_text(encoding='utf-8',errors='replace').splitlines()) if (output/'sumo.log').exists() else 0)
+    if comfort: evaluation['longitudinal_conditioning']=control_metrics(actions)
+    if config.get('audit_merge_topology'):
+        evaluation['merge_topology_audit']=audit_merge(dict(frames=frames,controlled_agents=['agent_0']),network)
     if guarded:
         changed=sum(a['safety']['acceleration_changed'] or not a['safety']['accepted'] for a in actions)
         evaluation.update(policy_safety_override_fraction=changed/max(1,len(actions)),
