@@ -1,0 +1,175 @@
+{
+  "training": false,
+  "simulator_runs": 0,
+  "ego": "agent_0",
+  "peer": "main_8",
+  "selection": {
+    "time_s": 3.7,
+    "ego_lane": "sb2_0",
+    "peer_lane": "sb2_1",
+    "distance_m": 3.699971198937172,
+    "lane_station_offset_m": -0.07980198787311021,
+    "rule": "Nearest noncontrolled adjacent through-lane vehicle at first external highway entry; no performance-based selection"
+  },
+  "first_adjacent_window_s": [
+    3.7,
+    12.9
+  ],
+  "shared_recording_end_s": 35.7,
+  "profiles": {
+    "main_8": {
+      "vehicle": {
+        "id": "main_8",
+        "type": "native_balanced",
+        "route": "main",
+        "depart": "0.0",
+        "departEdge": "0",
+        "departLane": "1",
+        "departPos": "176.0214886926206",
+        "departSpeed": "12.233627930483312"
+      },
+      "driver_type": {
+        "id": "native_balanced",
+        "carFollowModel": "IDM",
+        "tau": "1.75",
+        "accel": "2.0",
+        "decel": "4.5",
+        "speedFactor": "0.97",
+        "length": "4.8",
+        "minGap": "2.5",
+        "emergencyDecel": "9",
+        "maxSpeed": "26.8224",
+        "speedDev": "0",
+        "sigma": "0"
+      }
+    },
+    "agent_0": {
+      "vehicle": {
+        "id": "agent_0",
+        "type": "controlled",
+        "route": "ramp",
+        "depart": "0.0",
+        "departEdge": "0",
+        "departLane": "0",
+        "departPos": "261.5813315800312",
+        "departSpeed": "7.416161599614827"
+      },
+      "driver_type": {
+        "id": "controlled",
+        "carFollowModel": "ACC",
+        "tau": "1.5",
+        "accel": "2",
+        "decel": "4.5",
+        "speedFactor": "1",
+        "length": "4.8",
+        "minGap": "2.5",
+        "emergencyDecel": "9",
+        "maxSpeed": "26.8224",
+        "speedDev": "0",
+        "sigma": "0"
+      }
+    }
+  },
+  "windows": {
+    "adjacent_lanes": {
+      "start_s": 3.7,
+      "end_s": 12.9,
+      "vehicles": {
+        "agent_0": {
+          "samples": 93,
+          "start_speed_mph": 30.33666817790623,
+          "end_speed_mph": 26.802474441635912,
+          "mean_speed_mph": 28.417553279826212,
+          "min_speed_mph": 20.75768349359222,
+          "max_speed_mph": 34.443347813859305,
+          "mean_abs_acceleration_m_s2": 1.163451830203834,
+          "mean_abs_jerk_m_s3": 1.1757115491442585,
+          "p95_abs_jerk_m_s3": 3.89974786430596,
+          "peak_abs_jerk_m_s3": 11.252152203300133,
+          "first_35_mph_s": null
+        },
+        "main_8": {
+          "samples": 93,
+          "start_speed_mph": 33.41815692677058,
+          "end_speed_mph": 37.07157031650225,
+          "mean_speed_mph": 35.93140363950081,
+          "min_speed_mph": 33.41815692677058,
+          "max_speed_mph": 37.07157031650225,
+          "mean_abs_acceleration_m_s2": 0.18049987184925897,
+          "mean_abs_jerk_m_s3": 0.04501345178688185,
+          "p95_abs_jerk_m_s3": 0.09741310463216012,
+          "peak_abs_jerk_m_s3": 0.11174397404278875,
+          "first_35_mph_s": 5.7
+        }
+      }
+    },
+    "first_25_seconds_after_start": {
+      "start_s": 3.7,
+      "end_s": 25.0,
+      "vehicles": {
+        "agent_0": {
+          "samples": 214,
+          "start_speed_mph": 30.33666817790623,
+          "end_speed_mph": 37.441639957087986,
+          "mean_speed_mph": 30.22028197627798,
+          "min_speed_mph": 20.75768349359222,
+          "max_speed_mph": 37.441639957087986,
+          "mean_abs_acceleration_m_s2": 0.8304857693030533,
+          "mean_abs_jerk_m_s3": 0.6781803584880339,
+          "p95_abs_jerk_m_s3": 2.73808507435024,
+          "peak_abs_jerk_m_s3": 11.252152203300133,
+          "first_35_mph_s": 23.9
+        },
+        "main_8": {
+          "samples": 214,
+          "start_speed_mph": 33.41815692677058,
+          "end_speed_mph": 37.69591100734457,
+          "mean_speed_mph": 36.77612015875286,
+          "min_speed_mph": 33.41815692677058,
+          "max_speed_mph": 37.69591100734457,
+          "mean_abs_acceleration_m_s2": 0.09148383507627376,
+          "mean_abs_jerk_m_s3": 0.022038400839823218,
+          "p95_abs_jerk_m_s3": 0.08644520249180934,
+          "peak_abs_jerk_m_s3": 0.11174397404278875,
+          "first_35_mph_s": 5.7
+        }
+      }
+    },
+    "shared_after_entry": {
+      "start_s": 3.7,
+      "end_s": 35.7,
+      "vehicles": {
+        "agent_0": {
+          "samples": 321,
+          "start_speed_mph": 30.33666817790623,
+          "end_speed_mph": 0.0,
+          "mean_speed_mph": 25.55092612815481,
+          "min_speed_mph": 0.0,
+          "max_speed_mph": 39.09389227512822,
+          "mean_abs_acceleration_m_s2": 1.1211075371344357,
+          "mean_abs_jerk_m_s3": 0.9268931503797454,
+          "p95_abs_jerk_m_s3": 3.427125628339243,
+          "peak_abs_jerk_m_s3": 27.858640316364017,
+          "first_35_mph_s": 23.9
+        },
+        "main_8": {
+          "samples": 321,
+          "start_speed_mph": 33.41815692677058,
+          "end_speed_mph": 38.95187071364681,
+          "mean_speed_mph": 37.2481752123703,
+          "min_speed_mph": 33.41815692677058,
+          "max_speed_mph": 38.95187071364681,
+          "mean_abs_acceleration_m_s2": 0.07848032080179479,
+          "mean_abs_jerk_m_s3": 0.02879478675557091,
+          "p95_abs_jerk_m_s3": 0.08520025944341689,
+          "peak_abs_jerk_m_s3": 2.2447710284328473,
+          "first_35_mph_s": 5.7
+        }
+      }
+    }
+  },
+  "input_sha256": "63f873a9294de23cc7cf7a2af383599bb423fbe6e19d3286a0d7463a85bdaea1",
+  "input_path": "outputs\\highway-flow-rl\\v02\\development-case-0\\evaluation\\case-00\\recording.json",
+  "routes_sha256": "cecf89137e50e697984757a8736a420e391a0c92608dac385aa26589a00debc5",
+  "interpretation": "Descriptive same-replay comparison, not a matched-condition or causal policy test. Ego merges; peer already cruises, has a different initial speed and speed factor, and later becomes its leader. Native motion may interact with policy traffic."
+}

@@ -1055,3 +1055,35 @@ Implemented separately versioned training without unqualified teacher rewards/lo
 ## 2026-11-08 - Proposed flow117 v02 plan
 
 - Saved the staged [ramp and policy improvement plan](highway-flow-rl-v02-plan.md), with frozen-policy network comparisons, route-aware lane-choice checks, cruise/comfort reward design and full-route acceptance. Defined bounded diagnostic and proposed training budgets with terminal-only review. Documentation only; no controller changes, simulator runs or training. Guide sync pending.
+
+
+## 2026-11-08 - Flow117 v02 preparation implemented
+
+- Added a versioned visibility candidate, cruise/detour rewards, full 117-field observation journals, a bounded runner with resume, and a training/preflight contract. Original controls and weights are preserved.
+- 158 tests and zero-update native preflight pass. The matched screen removes empty-approach braking while retaining conflict braking; five development evaluations still fail driving gates. Failed attempts and metrics are retained; preparation CPU cost is 115.734 seconds.
+- Full 54.6-second SimReady replay, configuration and evidence saved. Training is disabled for review; no new actor or promotion. [Details](highway-flow-rl-v02.md). Google guide synchronization pending.
+
+
+## November 8, 2026 - Offline adjacent traffic comparison
+
+Compared frozen MAPPO agent_0 with geometry-selected native IDM main_8 in the saved v02 replay. The native car accelerates more steadily; retained speed/acceleration plots, raw traces, hashes and explicit unequal-start/route limitations. Finite/cadence/kinematic checks passed. No simulator runs, training or parameter changes. See [analysis](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic). Google guide sync remains pending.
+
+
+## November 8, 2026 - Research-backed reward revision proposal
+
+Saved a [reward revision plan](highway-flow-rl-reward-revision-plan.md) and source-hashed offline audit. The v02 cruise addition pays zero during both focal speed dips; proposed changes prioritize target/eligibility design, normalized Huber comfort and optional-ending-lane cost. Two sub-agents supplied research and code review. Candidate weights and reserve reallocation require review; runtime configuration, weights and training remain unchanged. No simulator runs. Google guide synchronization pending.
+
+
+## November 8, 2026 - Repair clean-clone initialization test
+
+[CI diagnosis and repair](ci-clean-clone-checkpoint-fixture-fix.md): replace an ignored local checkpoint dependency with real deterministic test artifacts, retain production checks and add corruption/fresh-critic assertions. All 67 module tests pass locally and in a clean checkout. No training, policy, runtime or workflow changes. Remote full-suite verification remains separate.
+
+
+## November 8, 2026 - Remove branch prefixes without losing work
+
+[Branch naming cleanup](branch-naming-cleanup.md): renamed all 62 repository branches locally and on GitHub, preserving their commits. Recreated 48 affected PRs with original metadata and historical-discussion links; teammate fork PR #16 remains open. Active work is mappo-flow-rl-v02 / PR #108. Future names omit codex/ and push CI covers all branch names. The earlier checkpoint-fixture repair passed GitHub full CI (4,105 tests). No policy or training changes.
+
+
+## November 8, 2026 - Repair CI across historical open PRs
+
+[Open-PR audit](ci-open-pr-audit-2026-11-08.md): inspected all failure groups and backported the portable checkpoint fixture to ten historical branches; added the missing Pillow CI dependency to semantic-lidar-fusion. Local oldest-branch module: 67 passed. Semantic tests: seven passed; full collection: 3,169 tests. Exact repair commits and logs retained; per-head GitHub checks remain the remote acceptance evidence. No policy or training changes.

@@ -1,0 +1,93 @@
+{
+  "status": "planning_audit_only",
+  "simulation_runs": 0,
+  "training": false,
+  "agent": "agent_0",
+  "decisions": 545,
+  "source_commit": "381796d9ee2984b026ea06e082a677d180e58ae0",
+  "journal": "outputs/highway-flow-rl/v02/development-case-0/evaluation/case-00/episode-6900019-8e19cbbc/actions.jsonl.gz",
+  "journal_sha256": "418c6b57f3bbe1dcc005a2d99ac57e2152a2383e88b42c121a11c2316caf8544",
+  "reward_component_totals": {
+    "progress": 213.61827385763473,
+    "merge": 5.0,
+    "passing": 0.0,
+    "arrival": 2.0,
+    "collision": 0.0,
+    "intervention": -23.39999999999995,
+    "jerk": -12.22399440355767,
+    "lane_change": -0.30000000000000004,
+    "unsafe_request": -2.9166346746044636,
+    "cooperation": 0.0125,
+    "stable_merge": 2.0,
+    "lane_oscillation": 0.0,
+    "cruise_speed": 1.9351847322922047,
+    "route_detour": -0.5
+  },
+  "cruise_paid_rows": 69,
+  "windows": {
+    "first_dip": {
+      "journal_post_step_time_s": [
+        6.6,
+        10.2
+      ],
+      "rows": 37,
+      "cruise_paid_rows": 0,
+      "cruise_total": 0.0,
+      "exclusions": {
+        "not_through_lane": 37,
+        "route_obligation_or_unknown": 37,
+        "entry_context": 37,
+        "braking_or_response_bound": 34
+      }
+    },
+    "second_dip": {
+      "journal_post_step_time_s": [
+        17.4,
+        21.1
+      ],
+      "rows": 38,
+      "cruise_paid_rows": 0,
+      "cruise_total": 0.0,
+      "exclusions": {
+        "leader_not_safely_opening": 14,
+        "braking_or_response_bound": 34,
+        "lateral_maneuver": 15
+      }
+    },
+    "braking_only_exclusion": {
+      "journal_post_step_time_s": [
+        18.8,
+        19.6
+      ],
+      "rows": 9,
+      "cruise_paid_rows": 0,
+      "cruise_total": 0.0,
+      "exclusions": {
+        "braking_or_response_bound": 9
+      }
+    }
+  },
+  "candidate_jerk_penalty_magnitudes": [
+    {
+      "abs_jerk_m_s3": 1,
+      "old": 0.03,
+      "proposed": 0.01125
+    },
+    {
+      "abs_jerk_m_s3": 3,
+      "old": 0.09,
+      "proposed": 0.09
+    },
+    {
+      "abs_jerk_m_s3": 5,
+      "old": 0.15,
+      "proposed": 0.18
+    },
+    {
+      "abs_jerk_m_s3": 10,
+      "old": 0.3,
+      "proposed": 0.40499999999999997
+    }
+  ],
+  "interpretation": "Evaluation-time reward magnitudes are not training-gradient shares. Eligibility depends on state; proposed target helper still requires explicit implementation and counterexample tests. No policy improvement measured."
+}

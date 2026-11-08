@@ -34,6 +34,11 @@ elsewhere, but all prepared assets and project outputs belong under this root.
 
 ## Development continuity
 
+- User preference (2026-11-08): use descriptive branch names without a `codex/`
+  prefix. Rename branches while preserving their commits; this is not permission
+  to delete development work. Check open pull requests first: GitHub closes a
+  pull request when its head branch is renamed. Account for that migration effect
+  and preserve existing review history.
 - Follow `documentation/workflow.md`: feature branches, code/tests/documentation
   together, tested GitHub checkpoints, and pull-request review before merging.
 - The active plan is `documentation/hybrid-roadmap.md`. Older roadmap text is
