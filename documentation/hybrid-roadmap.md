@@ -676,3 +676,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ## November 8 - Next flow117 improvement plan
 
 [Flow117 v02 proposal](highway-flow-rl-v02-plan.md) separates native junction modeling from learned route/speed behavior. Keep collision/right-of-way protection, test counterexamples and whole-route performance, then present a resolved configuration before learning. Planning only; existing results and actors preserved.
+
+
+## November 8 - Flow117 v02 prepared for review
+
+[Implementation and configuration](highway-flow-rl-v02.md) separates native visibility behavior from learned speed/route choices. Zero-update runtime checks and 158 tests pass; the frozen policy remains unaccepted and its full-route replay exposes the ending-lane stop. New cruise and detour rewards are ready for a bounded 30,000-decision / 900-second pilot after configuration approval. No training or held-out evaluation occurred; metrics and failures are preserved.

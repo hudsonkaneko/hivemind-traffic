@@ -1055,3 +1055,10 @@ Implemented separately versioned training without unqualified teacher rewards/lo
 ## 2026-11-08 - Proposed flow117 v02 plan
 
 - Saved the staged [ramp and policy improvement plan](highway-flow-rl-v02-plan.md), with frozen-policy network comparisons, route-aware lane-choice checks, cruise/comfort reward design and full-route acceptance. Defined bounded diagnostic and proposed training budgets with terminal-only review. Documentation only; no controller changes, simulator runs or training. Guide sync pending.
+
+
+## 2026-11-08 - Flow117 v02 preparation implemented
+
+- Added a versioned visibility candidate, cruise/detour rewards, full 117-field observation journals, a bounded runner with resume, and a training/preflight contract. Original controls and weights are preserved.
+- 158 tests and zero-update native preflight pass. The matched screen removes empty-approach braking while retaining conflict braking; five development evaluations still fail driving gates. Failed attempts and metrics are retained; preparation CPU cost is 115.734 seconds.
+- Full 54.6-second SimReady replay, configuration and evidence saved. Training is disabled for review; no new actor or promotion. [Details](highway-flow-rl-v02.md). Google guide synchronization pending.

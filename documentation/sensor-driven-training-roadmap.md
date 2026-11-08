@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v31**, updated **November 8, 2026, America/Los_Angeles**.
-Status: **Teacher-free flow117 pilot trained in two bounded rounds; improved but not accepted. Original imitation study remains disabled**.
+Revision **v32**, updated **November 8, 2026, America/Los_Angeles**.
+Status: **Flow117 v02 preparation tested; resolved configuration ready for review, training disabled. Frozen-parent driving gates still fail.**
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,7 +14,7 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** follow the [proposed flow117 v02 plan](highway-flow-rl-v02-plan.md): isolate the native ramp-junction behavior with the frozen actor, address optional ending-lane detours, then test legal-speed/comfort reward changes independently. Preserve safety modes, full-route and per-car measurements, and held-out cases. Present the resolved config before any new learning launch. This milestone is planning only; no implementation, simulation or training occurred.
+**Next action:** review the [resolved flow117 v02 configuration and evidence](highway-flow-rl-v02.md). The visibility candidate eliminates empty-approach native braking while retaining occupied-approach braking, but the frozen actor still detours into an ending lane and stops. New cruise/detour rewards, unchanged masks, full observation journals and a bounded runner are implemented. 158 focused tests and zero-update native/export/gradient preflight pass. Five frozen development cases fail at least one driving-quality gate; no held-out evaluation or training ran. The full 54.6-second SimReady replay retains the failure. The initial pilot is 30,000 decisions / 900 seconds; training remains disabled until configuration approval.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -537,3 +537,8 @@ Analyzed all 399 measured focal steps from the saved video replay. Exact speed/a
 ### v31 - November 8: staged ramp and policy improvement plan
 
 Saved [flow117 v02 plan](highway-flow-rl-v02-plan.md). Separates frozen-actor network diagnosis, route-aware lane choices, cruise/comfort reward design, full-route validation and a future bounded training pilot. Requires conflicting-traffic counterexamples, preserves native safety modes and existing acceptance gates, and distinguishes the 60 mph ceiling from lower local/training limits. Proposed preparation and two conditional learning budgets are explicit; no automatic budget carryover or launch. Quiet terminal-only learning review remains the preference. Plan only; guide sync pending.
+
+
+### v32 - November 8: v02 implementation and bounded preparation
+
+Implemented the [v02 setup](highway-flow-rl-v02.md) with a versioned 100 m synthetic visibility candidate, bounded cruise reward and one-time optional-detour penalty. Original safety modes, masks and actor ABI remain unchanged. Four initial network allocations include a preserved logging failure; one charged recovery completes the occupied pair. Empty-approach native hard-brake ticks fall from 11 to 0; occupied braking remains, but full-route policy behavior regresses. 158 tests and zero-update native preflight pass. Five additional frozen development cases have zero collisions but fail quality gates. Preparation CPU cost is 115.734 seconds. Seven of eight additional allocations are used; the final slot is reserved for the authorization-refresh preflight. Full 54.6-second SimReady replay verified. Training is disabled for review of the 30,000-decision / 900-second pilot. No promotion or held-out evaluation. Guide synchronization pending.

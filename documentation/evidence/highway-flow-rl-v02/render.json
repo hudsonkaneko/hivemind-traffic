@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "frames": 273,
+  "fps": 5,
+  "expected_video_duration_s": 54.6,
+  "video_sha256": "9160f9703260fc35e215af796c5a2d61f5fb8b30b271a51e02c15b8b27de6285",
+  "video_decode_verified": true,
+  "max_position_error_m": 0.0,
+  "static_layers_unchanged": true,
+  "source_recording_sha256": "399200a9f82a36f49f4f3e0555d5c536b5ae14b21668a74cdec0f67ccbbdc365",
+  "network_sha256": "f8c72a4bdd9698493085b83d6c8ad42955960e8da2da2a1e987d4907035ffadb",
+  "limitation": "Kinematic visualization, not PhysX control validation or sensor capture. Road reconstructed from recorded SUMO network polylines; markings illustrative.",
+  "prepared_main_version": "v14",
+  "prepared_source_unchanged": true,
+  "training": false,
+  "video": "outputs/highway-flow-rl/v02/replay-01/i110-merge.mp4",
+  "screenshot_simulation_time_s": 32.1
+}
