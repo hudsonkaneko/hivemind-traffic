@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "version": "v03",
+  "run_name": "full-loop-hazard-rsl-v3",
+  "seed": 22002,
+  "rsl_rl_version": "5.0.0",
+  "observation_count": 42,
+  "action_mapping": "normalized_steering_signed_longitudinal",
+  "normalization": "fixed_physical_scales_embedded_in_export",
+  "behavior_cloning": {
+    "gradient_steps": 2000,
+    "batch_size": 1024,
+    "learning_rate": 0.001,
+    "steering_loss_weight": 8.0
+  },
+  "curriculum": [
+    {
+      "stage": "clear",
+      "max_updates": 48
+    },
+    {
+      "stage": "static",
+      "max_updates": 96
+    },
+    {
+      "stage": "crossing",
+      "max_updates": 320
+    }
+  ],
+  "probe_every_updates": 16,
+  "development_seeds": [
+    31001,
+    31002,
+    31003,
+    31004,
+    31005,
+    31006,
+    31007,
+    31008,
+    31009,
+    31010
+  ],
+  "promotion": {
+    "minimum_successes": 9,
+    "maximum_contacts": 0,
+    "maximum_lane_departures": 0
+  },
+  "maximum_ppo_transitions": 950272,
+  "runner": {
+    "num_steps_per_env": 2048,
+    "max_iterations": 464,
+    "save_interval": 8,
+    "logger": "tensorboard",
+    "check_for_nan": true,
+    "obs_groups": {
+      "actor": [
+        "policy"
+      ],
+      "critic": [
+        "policy"
+      ]
+    },
+    "actor": {
+      "class_name": "environments.loop_hazard_rsl:FixedRoadMLP",
+      "hidden_dims": [
+        128,
+        64
+      ],
+      "activation": "tanh",
+      "obs_normalization": true,
+      "distribution_cfg": {
+        "class_name": "GaussianDistribution",
+        "init_std": 0.06,
+        "std_type": "log"
+      }
+    },
+    "critic": {
+      "class_name": "environments.loop_hazard_rsl:FixedRoadMLP",
+      "hidden_dims": [
+        128,
+        64
+      ],
+      "activation": "tanh",
+      "obs_normalization": true,
+      "distribution_cfg": null
+    },
+    "algorithm": {
+      "class_name": "environments.lane_follow_rsl:TerminalObservationPPO",
+      "num_learning_epochs": 5,
+      "num_mini_batches": 16,
+      "learning_rate": 3e-05,
+      "schedule": "fixed",
+      "gamma": 0.999,
+      "lam": 0.95,
+      "entropy_coef": 0.0001,
+      "desired_kl": 0.01,
+      "max_grad_norm": 0.5,
+      "value_loss_coef": 0.5,
+      "use_clipped_value_loss": false,
+      "clip_param": 0.1,
+      "normalize_advantage_per_mini_batch": true,
+      "rnd_cfg": null,
+      "symmetry_cfg": null
+    }
+  },
+  "environment": "full",
+  "prior_ppo_transitions": 0,
+  "budget_prior_transitions": 98304,
+  "lifetime_ppo_limit": 1048576
+}

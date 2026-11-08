@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "milestone": "RSL road-hazard v01 interrupted training checkpoint",
+  "date": "2026-10-22",
+  "status": "interrupted_after_16_clear_stage_ppo_updates",
+  "training_completed": false,
+  "run": {
+    "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03",
+    "git_commit_at_launch": "89bd0c97547806eecbe8d9aa27237eb2361ba46f",
+    "source_files_captured": 42,
+    "sources_unchanged_during_run": true,
+    "runtime_versions": {
+      "python": "3.12.13",
+      "torch": "2.10.0+cu128",
+      "numpy": "2.3.1",
+      "isaacsim": "distribution metadata unavailable",
+      "isaaclab": "6.1.18",
+      "isaaclab-rl": "0.5.7",
+      "rsl-rl-lib": "5.0.0",
+      "tensordict": "0.10.0"
+    }
+  },
+  "budget": {
+    "maximum_ppo_transitions": 1048576,
+    "transitions_per_update": 2048,
+    "completed_ppo_updates": 16,
+    "completed_ppo_transitions": 32768,
+    "remaining_to_global_ceiling": 1015808,
+    "remaining_updates_to_global_ceiling": 496,
+    "interpretation": "Remaining counts are arithmetic against the approved global ceiling; they are not evidence of a completed continuation."
+  },
+  "optimization": {
+    "behavior_cloning_steps": 2000,
+    "ppo_steps": 1280,
+    "total_optimizer_steps": 3280,
+    "ppo_epochs_per_update": 5,
+    "minibatches_per_epoch": 16,
+    "counter_source": "optimizer-counts.json",
+    "retained_reporting_defect": "result.json optimizer_steps=0 is a stale default. Dedicated persisted counters,16 logged updates and5x16 minibatches establish the actual totals. The original result is unchanged."
+  },
+  "outcomes": {
+    "warm_start_development_probe": {
+      "stage": "clear",
+      "ppo_updates": 0,
+      "episodes": 10,
+      "successes": 10,
+      "contacts": 0,
+      "raw_rows": 13920,
+      "seeds": [
+        31001,
+        31002,
+        31003,
+        31004,
+        31005,
+        31006,
+        31007,
+        31008,
+        31009,
+        31010
+      ],
+      "interpretation": "Clear-road development probe of imitation initialization before PPO; no obstacle-handling or held-out generalization claim."
+    },
+    "training_exposure": {
+      "stage": "clear",
+      "completed_episodes": 23,
+      "successful_episodes": 23,
+      "completed_episode_transitions": 32412,
+      "partial_episode_transitions": 356,
+      "contacts_in_saved_assessments": 0,
+      "interpretation": "Training episodes, not held-out policy results. All23 retained complete assessments are evidence-valid; the356-transition partial is separately preserved."
+    },
+    "post_ppo_development_probe": {
+      "stage": "clear",
+      "ppo_updates": 16,
+      "episodes": 0,
+      "raw_bytes": 0,
+      "interpretation": "Reset failed before the first post-update16 probe step. No promotion gate or post-PPO policy evaluation completed."
+    },
+    "static_stage_trained": false,
+    "crossing_stage_trained": false,
+    "final_heldout_evaluation_complete": false
+  },
+  "failure": {
+    "exception": "RuntimeError",
+    "message": "RuntimeError: Inplace update to inference tensor outside InferenceMode is not allowed.You can make a clone to get a normal tensor before doing inplace update.See https://github.com/pytorch/rfcs/pull/17 for more details.",
+    "boundary": "RSL rollout allocated an inference tensor; later manual development reset reached self.actions.zero_() outside inference mode.",
+    "native_process_exit_code": 0,
+    "supervisor_passed": false,
+    "timeout": false,
+    "native_wall_seconds": 215.90599999995902,
+    "supervisor_wall_seconds": 222.28099999995902,
+    "contact_setting_restored": true,
+    "viewport_cleanup_passed": true,
+    "remaining_kit_process_count": 0,
+    "usd_reference_warning_count": 0,
+    "known_baseline_startup_error_count": 2,
+    "interpretation": "Process exit0 followed cleanup, while native completed=false and supervisor passed=false preserve the failed logical run. Baseline OmniPlaybackAPI errors and other warnings remain in the logs."
+  },
+  "retained_checkpoint": {
+    "checkpoint": {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/checkpoints/clear-0016.pt",
+      "sha256": "436fff03fec93a8cf02a3dba6d20a864f32a90b2684e5e9bc9e00416130cb1b2",
+      "bytes": 351477
+    },
+    "export": {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/policy-clear-0016.pt",
+      "sha256": "5634efa3a86238d7bc39fd5d5bf71789fd76ad0fddec5d9fd3187f068f68bfb9",
+      "bytes": 69449
+    },
+    "metadata": {
+      "iter": 15,
+      "ppo_updates": 16,
+      "stage": "clear"
+    },
+    "inspection": "ZIP CRC and scalar pickle opcodes only; no Torch deserialization or model execution."
+  },
+  "repair_validation": {
+    "scope": "New LoopHazardLabEnv.reset and step enforce torch.inference_mode for nonautograd physical tensor writes. Historical LaneFollowingLabEnv remains byte-identical.",
+    "adapter": {
+      "path": "environments/loop_hazard_lab.py",
+      "sha256": "06e070f42d818e7a1a1ac97116075024eda41ba74b8dfa86638f608e0fc27ec1",
+      "bytes": 6680
+    },
+    "frozen_base": {
+      "path": "environments/lane_following_lab.py",
+      "sha256": "a5d009b4ebff49c46d8d4ed21d6b7c370a1d3eed5ddd8c5bfd64af049fbe0fc4",
+      "bytes": 25076
+    },
+    "test": {
+      "path": "tests/test_loop_hazard_native_boundary.py",
+      "sha256": "83dfe13539d18b3b81bd187811b302aeca0e894833a6c73c141435c2bdd1462d",
+      "bytes": 4870
+    },
+    "project_python": {
+      "passed": 1,
+      "skipped": 1,
+      "skip_reason": "Optional Torch absent from project test environment."
+    },
+    "direct_runtime_python_cpu": {
+      "passed": 2,
+      "skipped": 0,
+      "seconds": 1.24,
+      "native_simulation_launched": false,
+      "optimizer_steps": 0,
+      "details": "Direct python.exe and CPU Torch with Isaac modules mocked. No python.bat, AppLauncher, SimulationApp, physics or renderer. Reproduces old in-place error and checks reset/step inside/outside inference mode, nonautograd physical tensors and context restoration after failure."
+    },
+    "continuation_native_validation": "Outside this interrupted-run evidence; any continuation belongs to a separate immutable package."
+  },
+  "independent_audit": {
+    "artifact": {
+      "path": "outputs/rsl_integration/review/v01-training-interruption-audit.json",
+      "sha256": "68b79ee65050ef78c660f6cf9642d7c4522191c574bb65750405f5e117a22837",
+      "bytes": 8239
+    },
+    "checks_passed": 23,
+    "recorded_output_hashes_verified": 81,
+    "captured_source_hashes_verified": 42,
+    "training_sample_rows": 5480,
+    "warm_probe_raw_rows": 13920,
+    "last_retained_training_sample_control_step": 32766,
+    "all_original_package_bytes_unchanged": true
+  },
+  "artifacts": [
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/manifest.json",
+      "sha256": "5112262ae97b144c14e49261d41cfedd60d4a6294e47f4303ee159fbabf67a4d",
+      "bytes": 5917
+    },
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/exit.json",
+      "sha256": "f66147b7e3a0a1a3f996f566b7e9516af55d854391e765298f9abd2ada12b498",
+      "bytes": 9884
+    },
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/result.json",
+      "sha256": "2ee9627a05207ece13097d536028de82dcf58276100a7a0a70b12275b5a2a305",
+      "bytes": 2602
+    },
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/optimizer-counts.json",
+      "sha256": "cec873e900cfd3ca2144990398a1ccecbc3f934315934ca513cd4a976234a934",
+      "bytes": 50
+    },
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/training-config.json",
+      "sha256": "660673741e8c89657b29c108220e61a642ae447dae11e1630d589c3d984d74ed",
+      "bytes": 2437
+    },
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/training-episodes.json",
+      "sha256": "83339c73401edfcd50cdfc323e7f83fd19954524435607594990dedb4701e0a1",
+      "bytes": 219206
+    },
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/partial-training-exposures.json",
+      "sha256": "b38611568db5e3593f7a744da8963be202defc82f24dc5749d93845ea34ff2f4",
+      "bytes": 2400
+    },
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/training-samples.jsonl",
+      "sha256": "a9fb9a473958bde5ff8df42d206a639f71ce88341da5f84937fb40a5178fb7d9",
+      "bytes": 21496513
+    },
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/warm-start.json",
+      "sha256": "4b262d4668ef2940745526e83e2f97f15a8470f20c2226c0bc10fe5e212ce290",
+      "bytes": 2262
+    },
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/development-probes.json",
+      "sha256": "8a96717b9f65ece4a3815ad90ab76de0646eb73572f02f4455f13d5a2bea1450",
+      "bytes": 26222
+    },
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/probe-warm-start-clear.jsonl",
+      "sha256": "2710a835b01f87f891e5fa53d229e02897bd63edd527e2492a1fbe4a14201301",
+      "bytes": 53596892
+    },
+    {
+      "path": "outputs/rsl_integration/v01-train-20261022T202419Z-7322db03/probe-clear-0016.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "logs/rsl_integration/v01-train-20261022T202419Z-7322db03/stdout.log",
+      "sha256": "40c05ad7002e7ca49ca66d6680e129400a8ba3b8d433c9639de71944d7742a9f",
+      "bytes": 21195
+    },
+    {
+      "path": "logs/rsl_integration/v01-train-20261022T202419Z-7322db03/stderr.log",
+      "sha256": "d8f9a35dde23891766e1c1fc770e5726a8a2d06a15572d0405bc3ea32091f2f3",
+      "bytes": 366
+    }
+  ],
+  "limitations": [
+    "Training summaries were computed at every60Hz boundary during execution; retained training samples are10Hz plus terminal/contact events. This audit cannot independently replay omitted training boundaries.",
+    "Warm probe raw boundary continuity, finite values, returns and terminal snapshots were rechecked; complete per-probe reset records are not separately retained in that JSONL.",
+    "Checkpoint ZIP CRC and scalar pickle opcodes were inspected without deserializing Torch models or executing pickle; tensor values and optimizer state were not loaded.",
+    "Finite printed losses do not prove all intermediate gradients or parameters finite.",
+    "Warm-start development success precedes PPO. Successful clear-road training episodes are neither held-out policy evaluation nor static/crossing qualification.",
+    "The top-level result optimizer_steps=0 is a stale default; the dedicated persisted optimizer counter and exact update arithmetic establish2000BC plus1280PPO steps.",
+    "Raw artifacts, source snapshots, logs and checkpoints remain local ignored files, not part of the public repository."
+  ],
+  "related_evidence": "documentation/evidence/rsl-road-hazard-v01-baseline-20261022.json"
+}

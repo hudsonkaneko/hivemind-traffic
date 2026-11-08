@@ -1,6 +1,6 @@
 # Active roadmap: physical research cars, economical background traffic
 
-Updated: October 19, 2026. Status: physical lane following, the bounded visible
+Updated: October 22, 2026. Status: physical lane following, the bounded visible
 LiDAR-braking subset and a separate one-car Isaac Lab lane task are verified
 within their stated fixtures. Broader lifecycle/endurance, shared-map and hybrid
 integration remain **in progress**. The first bounded Isaac Lab PPO pilot and its
@@ -10,6 +10,18 @@ held-out successes against the scripted controller's 15/15. See the
 This is the active development order, replacing the old immediate-next-step
 sections in the preserved [implementation roadmap](../experiments/ROADMAP.md)
 and [capacity study](scaling-foundations.md). Historical evidence is unchanged.
+
+October 22 RSL-RL increment: the user authorized full hazard training and
+integration, with subagents and versioned evidence. The isolated 42-feature
+clear/static/crossing curriculum passed its three 10-case development gates
+after 98,304 PPO transitions and an explicit imitation warm start. Its first
+full-scene transfer failed lane containment after 6.659 m; v03 therefore trains
+with actual background-car observations. A scripted 180 m continuous drive
+and separate two-physical-car actuation/reset/contact foundation passed native
+checks. Learned full-scene driving, learned interaction between cars and final
+held-out evaluation remain in progress. See
+[the versioned integration record](rsl-road-hazard-integration.md); these checks
+do not establish sensing, SUMO coupling or highway-speed autonomy.
 
 October 6 environment increment: the separate [four-leaf highway USD draft](highway-usd-v01.md)
 now has verified static geometry and a closed navigation graph, plus versioned
