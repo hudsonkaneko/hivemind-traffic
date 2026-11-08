@@ -671,3 +671,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ## November 8 - MAPPO velocity diagnosis
 
 [Offline speed and command analysis](highway-flow-rl-velocity-analysis.md) separates native entry braking from learned speed/route problems. Next: isolate minor-junction behavior, then ending-lane detours and cruise behavior, retaining full-route/per-car metrics. Saved CSV and charts; no new simulation, training or promotion.
+
+
+## November 8 - Next flow117 improvement plan
+
+[Flow117 v02 proposal](highway-flow-rl-v02-plan.md) separates native junction modeling from learned route/speed behavior. Keep collision/right-of-way protection, test counterexamples and whole-route performance, then present a resolved configuration before learning. Planning only; existing results and actors preserved.

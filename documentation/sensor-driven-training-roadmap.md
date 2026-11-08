@@ -1,6 +1,6 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v30**, updated **November 8, 2026, America/Los_Angeles**.
+Revision **v31**, updated **November 8, 2026, America/Los_Angeles**.
 Status: **Teacher-free flow117 pilot trained in two bounded rounds; improved but not accepted. Original imitation study remains disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
@@ -14,7 +14,7 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** isolate the native ramp-junction slowdown, then address learned speed dips and optional detours into ending lanes identified in the [offline velocity analysis](highway-flow-rl-velocity-analysis.md). The first sharp drop is native braking despite positive policy commands, strongly consistent with a 4.5 m minor-link visibility rule. Later dips, including a 39.9-to-27.8 mph drop after the video ends, are policy-requested. Score full-route and per-car smoothness; the 0.67% pooled I-110 override figure and successful initial merge do not establish driving quality. This episode uses a 40.3 mph cap, not a 60 mph target. Preserve both completed rounds and the accepted baseline. No new simulation, training or acceptance promotion is authorized by this diagnosis.
+**Next action:** follow the [proposed flow117 v02 plan](highway-flow-rl-v02-plan.md): isolate the native ramp-junction behavior with the frozen actor, address optional ending-lane detours, then test legal-speed/comfort reward changes independently. Preserve safety modes, full-route and per-car measurements, and held-out cases. Present the resolved config before any new learning launch. This milestone is planning only; no implementation, simulation or training occurred.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -532,3 +532,8 @@ Recorded and rendered the same frozen round-two I-110 merge development case. Al
 ### v30 - November 8: offline velocity and policy-command diagnosis
 
 Analyzed all 399 measured focal steps from the saved video replay. Exact speed/acceleration identity and command-stage decomposition pass; policy/realized correlation is 0.6745 overall and 1.0 without interventions. Initial 25.2-to-14.1 mph drop comes from SUMO while the actor requests acceleration; 4.5 m minor-junction visibility is strongly indicated. Later policy braking accompanies growing leader gaps and a detour into an ending lane, including a 39.9-to-27.8 mph drop outside the 25-second clip. Corrected plots use the actual 18 m/s episode cap. Saved CSV, plots, hashes and source diagnosis. No simulator, learning or parameter changes. [Analysis](highway-flow-rl-velocity-analysis.md). Guide sync pending.
+
+
+### v31 - November 8: staged ramp and policy improvement plan
+
+Saved [flow117 v02 plan](highway-flow-rl-v02-plan.md). Separates frozen-actor network diagnosis, route-aware lane choices, cruise/comfort reward design, full-route validation and a future bounded training pilot. Requires conflicting-traffic counterexamples, preserves native safety modes and existing acceptance gates, and distinguishes the 60 mph ceiling from lower local/training limits. Proposed preparation and two conditional learning budgets are explicit; no automatic budget carryover or launch. Quiet terminal-only learning review remains the preference. Plan only; guide sync pending.

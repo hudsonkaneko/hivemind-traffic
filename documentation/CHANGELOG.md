@@ -1050,3 +1050,8 @@ Implemented separately versioned training without unqualified teacher rewards/lo
 ## 2026-11-08 - Offline MAPPO slowdown diagnosis
 
 - Saved speed/velocity/command traces and graphs from the existing SimReady replay. Identified native junction braking despite positive policy acceleration, later policy-requested speed dips and an ending-lane detour. Verified exact speed-change decomposition across 399 steps; actual episode cap is 18 m/s. [Analysis](highway-flow-rl-velocity-analysis.md). No simulation/training or control changes. Guide sync pending.
+
+
+## 2026-11-08 - Proposed flow117 v02 plan
+
+- Saved the staged [ramp and policy improvement plan](highway-flow-rl-v02-plan.md), with frozen-policy network comparisons, route-aware lane-choice checks, cruise/comfort reward design and full-route acceptance. Defined bounded diagnostic and proposed training budgets with terminal-only review. Documentation only; no controller changes, simulator runs or training. Guide sync pending.
