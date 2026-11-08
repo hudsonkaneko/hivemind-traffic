@@ -29,10 +29,89 @@ from experiments import run_highway_environment_v05 as runner
 from traffic.sumo_warnings import native_emergency_report
 
 SCHEMA = 'highway_environment_v05_frozen_recording'
+EVENT_SCHEMA = 'observed_junction_entry_and_settled_merge_v2'
 
 
 def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def readiness_provenance(cfg):
+    """Never reuse stale training preflight as proof for a changed treatment."""
+    ready = cfg.get('readiness')
+    if ready is not None:
+        if not isinstance(ready, dict) or not ready:
+            raise ValueError('Readiness must be a valid proof object or explicit null')
+        runner.readiness_check(cfg)
+    return dict(status='verified' if ready is not None else 'not_provided',
+        proof=deepcopy(ready), training=False, optimizer_steps=0,
+        scope='Runner source/config preflight only; recorder source is separately snapshotted',
+        interpretation=('Provided preflight matches the current runner sources and configuration' if ready is not None else
+                        'Frozen inference diagnostic; no source/config preflight proof supplied'),
+        training_authorization_used=False)
+
+
+class JunctionEntryTracker:
+    """Observe ramp -> internal link -> mainline joins without changing scores.
+
+    A completed entry means the front bumper is observed on the connected
+    external successor. Auxiliary entry is not a completed through-lane merge.
+    No events are inferred for vehicles first observed downstream of the join.
+    """
+    def __init__(self, graph, controlled_ids):
+        self.graph, self.controlled = graph, set(controlled_ids)
+        self.joins = {}
+        for via, (source, target) in graph.bindings.items():
+            if (graph.identity(source).get('kind') == 'ramp'
+                    and graph.identity(target).get('kind') in ('auxiliary', 'through')):
+                self.joins.setdefault((source, target), set()).add(via)
+        self.previous, self.pending = {}, {}
+
+    def observe(self, states, time_s):
+        events = []
+        for vehicle, state in sorted(states.items()):
+            lane, previous = state['lane_id'], self.previous.get(vehicle)
+            for (source, target), vias in self.joins.items():
+                pending = self.pending.get(vehicle)
+                same_pending = pending is not None and pending['source_lane'] == source and pending['target_lane'] == target
+                if lane in vias and previous == source and not same_pending:
+                    event = dict(agent=vehicle, time=float(time_s), kind='native_ramp_junction_entry',
+                        phase='started', controlled=vehicle in self.controlled, source_lane=source,
+                        target_lane=target, target_lane_identity=deepcopy(self.graph.identity(target)),
+                        lane_id=lane, internal_link_observed=True, internal_entry_time_s=float(time_s))
+                    self.pending[vehicle] = event
+                    events.append(deepcopy(event))
+                elif lane == target and (previous == source or same_pending):
+                    events.append(dict(agent=vehicle, time=float(time_s), kind='native_ramp_junction_entry',
+                        phase='completed', controlled=vehicle in self.controlled, source_lane=source,
+                        target_lane=target, target_lane_identity=deepcopy(self.graph.identity(target)),
+                        lane_id=lane, internal_link_observed=bool(same_pending),
+                        internal_entry_time_s=pending['internal_entry_time_s'] if same_pending else None))
+                    self.pending.pop(vehicle, None)
+            pending = self.pending.get(vehicle)
+            if pending and lane not in self.joins[(pending['source_lane'], pending['target_lane'])]:
+                self.pending.pop(vehicle, None)
+        self.previous = {vehicle: state['lane_id'] for vehicle, state in states.items()}
+        self.pending = {vehicle: value for vehicle, value in self.pending.items() if vehicle in states}
+        return events
+
+
+def merge_completion_event(env, agent, info, junction_events):
+    """Describe the existing settled-through event using measured provenance."""
+    state = env.states.get(agent)
+    maneuver = getattr(env, 'completed_maneuvers', {}).get(agent)
+    lateral = bool(info.get('maneuver', {}).get('completed_this_step') and maneuver
+                   and math.isclose(maneuver['completed_at'], env.time, abs_tol=1e-8))
+    native_join = any(event['agent'] == agent and event['phase'] == 'completed'
+                      and event['target_lane_identity']['kind'] == 'through' for event in junction_events)
+    completion_kind = ('policy_requested_lateral_maneuver' if lateral else
+                       'native_route_join' if native_join else 'settled_through_lane_occupancy')
+    kind = 'completed_lateral_merge' if lateral else 'completed_through_lane_merge'
+    location = dict(lane_id=state['lane_id'], lane_identity=deepcopy(state['lane_identity']),
+                    x=state['x'], y=state['y']) if state else {}
+    return dict(agent=agent, time=float(env.time), kind=kind, completion_kind=completion_kind,
+        commanded_lateral_completion_observed=lateral,
+        completed_maneuver=deepcopy(maneuver) if lateral else None, **location)
 
 
 def frame(env):
@@ -49,6 +128,9 @@ def frame(env):
         if not all(math.isfinite(value) for value in values.values()):
             raise ValueError('Nonfinite native vehicle pose or motion measurement')
         vehicles.append(dict(id=identity, **values, lane_id=state['lane_id'],
+            lane_identity=deepcopy(state['lane_identity']), lane_position_m=float(state['lane_position']),
+            lane_remaining_m=max(0., env.graph.lanes[state['lane_id']]['length'] - state['lane_position']),
+            route=list(state['route']), distance_m=float(state['distance']),
             controlled=identity in controlled, merge_complete=identity in env.merged,
             stable_merge_status=env.merge_trackers[identity].status if identity in env.merge_trackers else None,
             maneuver_in_progress=identity in env.maneuvers))
@@ -85,18 +167,22 @@ def choose_clip(frames, merge_events):
     if not selected or end - start > 30. + 1e-8:
         raise ValueError('Suggested video crop must contain 1..300 frames within 30 seconds')
     return dict(clip_start_time=float(start), clip_end_time=float(end), clip_frame_count=len(selected),
-        clip_label='First observed completed lateral merge; stability is scored separately' if event else
-                   'No completed lateral merge observed; showing the first 25 seconds',
-        crop_rule='First completed lateral merge minus 5/plus 20 seconds; absent event: first 25 seconds; never reroll',
+        clip_label='First observed settled through-lane merge; stability is scored separately' if event else
+                   'No settled through-lane merge observed; showing the first 25 seconds',
+        crop_rule='First settled through-lane merge minus 5/plus 20 seconds; absent event: first 25 seconds; never reroll',
         crop_event=deepcopy(event))
 
 
-def collect_episode(env, row, actor, *, deadline, frames, merge_events, stable_events, entry_events):
+def collect_episode(env, row, actor, *, deadline, frames, merge_events, stable_events, entry_events,
+                    junction_entry_events=None):
     """Collect all native frames, including post-control primary accounting."""
     observations, _ = env.reset(seed=row['seed'])
     env.control_mode = 'policy'
     focal = next(iter(env.merge_agents), 'agent_0')
     controlled = list(env._controlled_agents())
+    junction_entry_events = junction_entry_events if junction_entry_events is not None else []
+    junctions = JunctionEntryTracker(env.graph, controlled)
+    junctions.observe(env.states, env.time)
     frames.append(frame(env))
     previous_status, entered = {}, set()
     transitions, reward_sum = 0, 0.
@@ -105,6 +191,8 @@ def collect_episode(env, row, actor, *, deadline, frames, merge_events, stable_e
         agents = list(env.agents)
         actions = frozen_actions(actor, observations, agents)
         observations, rewards, _, _, infos = env.step(actions)
+        new_junction_events = junctions.observe(env.states, env.time)
+        junction_entry_events.extend(new_junction_events)
         transitions += len(rewards)
         reward_sum += sum(float(value) for value in rewards.values())
         if not math.isfinite(reward_sum):
@@ -117,7 +205,7 @@ def collect_episode(env, row, actor, *, deadline, frames, merge_events, stable_e
             state = env.states.get(agent)
             location = dict(lane_id=state['lane_id'], x=state['x'], y=state['y']) if state else {}
             if info.get('merge_completed'):
-                merge_events.append(dict(agent=agent, time=float(env.time), kind='completed_lateral_merge', **location))
+                merge_events.append(merge_completion_event(env, agent, info, new_junction_events))
             status = info.get('stable_merge_status')
             if status in ('succeeded', 'failed') and previous_status.get(agent) != status:
                 stable_events.append(dict(agent=agent, time=float(env.time), status=status,
@@ -129,6 +217,7 @@ def collect_episode(env, row, actor, *, deadline, frames, merge_events, stable_e
     original_advance = env._advance
     def recorded_advance():
         original_advance()
+        junction_entry_events.extend(junctions.observe(env.states, env.time))
         frames.append(frame(env))
     env._advance = recorded_advance
     try:
@@ -141,6 +230,12 @@ def collect_episode(env, row, actor, *, deadline, frames, merge_events, stable_e
         difficulty=row.get('difficulty', 0), traffic_mode=row.get('traffic_mode', 'initial'),
         training=False, optimizer_steps=0, policy_mode='frozen TorchScript deterministic inference',
         sumo_runtime_version=env.conn.getVersion() if hasattr(env.conn, 'getVersion') else None,
+        junction_entry_accounting=dict(
+            started=sum(e['phase'] == 'started' for e in junction_entry_events),
+            completed=sum(e['phase'] == 'completed' for e in junction_entry_events),
+            controlled_completed=sum(e['phase'] == 'completed' and e['controlled'] for e in junction_entry_events),
+            definition='Observed ramp-to-connected-external-successor front-bumper entry; auxiliary/through identity retained',
+            historical_through_entry_and_stable_merge_metrics_unchanged=True),
         full_report_is_separate_from_video_crop=True)
     return report, focal, controlled
 
@@ -163,8 +258,7 @@ def record(args):
     if not 0 <= args.case_index < len(cfg['validation_cases']):
         raise ValueError('case-index must identify one fixed validation row')
     row = deepcopy(cfg['validation_cases'][args.case_index])
-    if cfg.get('readiness'):
-        runner.readiness_check(cfg)
+    readiness = readiness_provenance(cfg)
     network = (ROOT / row['case']['network']).resolve()
     if not network.is_relative_to(ROOT) or sha256(network) != row['case']['network_sha256']:
         raise ValueError('Selected frozen network checksum/path mismatch')
@@ -187,7 +281,9 @@ def record(args):
         checkpoint_sha256=args.expected_policy_sha256, config_path=str(config_path.relative_to(ROOT)),
         config_sha256=sha256(config_path), resolved_config_sha256=runner.config_digest(cfg),
         network=str(network.relative_to(ROOT)), network_sha256=row['case']['network_sha256'],
-        readiness='verified source/config preflight proof' if cfg.get('readiness') else 'not_provided; frozen inference only',
+        readiness='verified runner source/config preflight proof' if readiness['status'] == 'verified' else 'not_provided; frozen inference only',
+        readiness_provenance=readiness, event_schema=EVENT_SCHEMA,
+        event_semantics='entry_events retain historical through entry; junction_entry_events are separate native route joins; merge_events retain settled through-merge timing with explicit completion provenance',
         source_sha256=hashes, motion_owner='SUMO', position_reference='SUMO front-bumper center',
         heading_convention='SUMO degrees clockwise from north; renderer rotationZ=90-heading',
         source_timestep=.1, horizon_steps=cfg['environment']['horizon'], horizon_seconds=80.,
@@ -211,12 +307,13 @@ def record(args):
     if sha256(output / 'policy.pt') != args.expected_policy_sha256 or sha256(output / 'network.net.xml') != row['case']['network_sha256']:
         raise ValueError('Copied frozen inputs failed checksum verification')
     started = time.monotonic()
-    frames, merge_events, stable_events, entry_events = [], [], [], []
+    frames, merge_events, stable_events, entry_events, junction_entry_events = [], [], [], [], []
     report, error, focal, controlled = None, None, 'agent_0', []
     env = runner.env_for(cfg, output / 'simulation', row)
     try:
         report, focal, controlled = collect_episode(env, row, actor, deadline=started + args.max_wall_seconds,
-            frames=frames, merge_events=merge_events, stable_events=stable_events, entry_events=entry_events)
+            frames=frames, merge_events=merge_events, stable_events=stable_events, entry_events=entry_events,
+            junction_entry_events=junction_entry_events)
     except Exception as exc:
         error = dict(error=repr(exc), traceback=traceback.format_exc())
         try:
@@ -231,7 +328,8 @@ def record(args):
     report['native_emergencies'] = native_emergency_report(env.directory / 'sumo-errors.log')
     report.update(policy_sha256=args.expected_policy_sha256, seed=row['seed'], training=False, optimizer_steps=0,
         wall_seconds=time.monotonic() - started, episode_directory=str(env.directory.relative_to(ROOT)),
-        merge_events=merge_events, stable_events=stable_events, entry_events=entry_events)
+        merge_events=merge_events, stable_events=stable_events, entry_events=entry_events,
+        junction_entry_events=junction_entry_events, event_schema=EVENT_SCHEMA)
     unchanged = (sha256(policy_path) == args.expected_policy_sha256 and sha256(config_path) == manifest['config_sha256']
                  and sha256(network) == row['case']['network_sha256']
                  and sha256(output / 'policy.pt') == args.expected_policy_sha256
@@ -239,25 +337,28 @@ def record(args):
                  and sha256(output / 'network.net.xml') == row['case']['network_sha256'])
     changed_sources = [name for name, expected in hashes.items() if sha256(ROOT / name) != expected]
     recording = dict(manifest, frames=frames, merge_events=merge_events, stable_events=stable_events,
-        entry_events=entry_events, focal_vehicle=focal, controlled_ids=controlled,
+        entry_events=entry_events, junction_entry_events=junction_entry_events,
+        focal_vehicle=focal, controlled_ids=controlled,
         completed_recording=error is None, full_report_is_separate_from_video_crop=True,
         **(choose_clip(frames, merge_events) if frames else dict(clip_label='No frames recorded')))
     runner.atomic_json(output / 'recording.json', recording)
     runner.atomic_json(output / 'evaluation.json', report)
     complete = bool(report.get('primary_horizon_complete')) and bool(frames) and frames[-1]['time'] >= report.get('primary_horizon_time', math.inf) - 1e-8
-    check = dict(passed=error is None and complete and unchanged and not changed_sources,
+    monotonic_time = all(a['time'] < b['time'] for a, b in zip(frames, frames[1:]))
+    check = dict(passed=error is None and complete and unchanged and not changed_sources and monotonic_time,
         frames=len(frames), full_primary_horizon_retained=complete,
         recording_sha256=sha256(output / 'recording.json'), network_sha256=sha256(output / 'network.net.xml'),
         policy_unchanged=sha256(policy_path) == args.expected_policy_sha256, frozen_inputs_unchanged=unchanged,
         sources_changed=changed_sources, source_unchanged=not changed_sources,
-        monotonic_time=all(a['time'] < b['time'] for a, b in zip(frames, frames[1:])),
+        monotonic_time=monotonic_time,
         training=False, optimizer_steps=0, held_out_test_run=False,
         driving_acceptance='See full evaluation.json; successful recording does not imply accepted driving')
     runner.atomic_json(output / 'recording-check.json', check)
     if error:
         runner.atomic_json(output / 'failure.json', error)
     return dict(output=str(output), **check, focal_vehicle=focal, merge_events=merge_events,
-        stable_events=stable_events, clip_start_time=recording.get('clip_start_time'),
+        stable_events=stable_events, junction_entry_events=junction_entry_events,
+        clip_start_time=recording.get('clip_start_time'),
         clip_end_time=recording.get('clip_end_time'), clip_label=recording['clip_label'], error=error and error['error'])
 
 

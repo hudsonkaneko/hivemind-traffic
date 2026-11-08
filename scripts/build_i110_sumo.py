@@ -21,6 +21,7 @@ PROFILE = ROOT / 'scenarios/i110/sumo-road-profiles.json'
 STATIONS = (0., 55., 280., 455., 650., 750., 815.)
 COUNTS = (4, 5, 5, 5, 4, 4)
 CAP = 26.8224
+GEOMETRY_VERSION = 'i110_lane_foes_v2'
 
 
 def write_xml(path, root):
@@ -48,6 +49,64 @@ def main_shape(profile, start, end, lane, count):
     # SUMO lane zero is rightmost; positive profile normal points east/left.
     offset = width/2 - 1.6 - 3.7 * (count - lane - .5)
     return sample(profile, stations, offset)
+
+
+def validate_compiled_merge(network_path):
+    """Reject false mainline conflicts without removing the real lane-0 yield.
+
+    The I-110 entry shares the auxiliary successor with sb1_0. Other mainline
+    connectors must remain independent. A successful static check does not
+    establish traffic performance or make this provisional map site-accurate.
+    """
+    root = ET.parse(network_path).getroot()
+    lanes = {lane.get('id'): lane for lane in root.findall('./edge/lane')}
+    connections = root.findall('connection')
+    ramp = [c for c in connections if c.get('from') == 'mlk_on']
+    if len(ramp) != 1 or any(ramp[0].get(k) != v for k, v in
+                            dict(to='sb2', fromLane='0', toLane='0', state='m').items()):
+        raise ValueError('Expected one minor-priority ramp entry to sb2_0')
+    ramp = ramp[0]
+    main = [c for c in connections if c.get('from') == 'sb1' and c.get('to') == 'sb2']
+    if sorted((c.get('fromLane'), c.get('toLane')) for c in main) != [(str(i), str(i)) for i in range(5)]:
+        raise ValueError('Expected five unchanged mainline lane connections')
+    junctions = [j for j in root.findall('junction') if ramp.get('via') in j.get('intLanes', '').split()]
+    if len(junctions) != 1 or junctions[0].get('type') != 'priority':
+        raise ValueError('Ramp must have a unique priority junction')
+    junction = junctions[0]
+    internal = junction.get('intLanes').split()
+    requests = {int(q.get('index')): q for q in junction.findall('request')}
+    if set(requests) != set(range(len(internal))) or any(
+            len(q.get(key, '')) != len(internal) or set(q.get(key, '')) - {'0', '1'}
+            for q in requests.values() for key in ('response', 'foes')):
+        raise ValueError('Invalid compiled junction conflict matrix')
+    ramp_index = internal.index(ramp.get('via'))
+    main = sorted(main, key=lambda c: int(c.get('fromLane')))
+    indices = [internal.index(c.get('via')) for c in main]
+    request = requests[ramp_index]
+    bit = lambda q, key, index: q.get(key)[::-1][index] == '1'
+    actual_foe = bit(request, 'foes', indices[0]) and bit(requests[indices[0]], 'foes', ramp_index)
+    actual_yield = bit(request, 'response', indices[0]) and not bit(requests[indices[0]], 'response', ramp_index)
+    def shape(lane_id):
+        return [tuple(map(float, p.split(',')[:2])) for p in lanes[lane_id].get('shape').split()]
+    def orient(a, b, c):
+        return (b[0]-a[0])*(c[1]-a[1]) - (b[1]-a[1])*(c[0]-a[0])
+    ramp_shape = shape(ramp.get('via'))
+    crossings, false_foes = [], []
+    for connection, index in zip(main[1:], indices[1:]):
+        via = connection.get('via')
+        points = shape(via)
+        if any(orient(a,b,c)*orient(a,b,d) < -1e-8 and orient(c,d,a)*orient(c,d,b) < -1e-8
+               for a,b in zip(ramp_shape,ramp_shape[1:]) for c,d in zip(points,points[1:])):
+            crossings.append(via)
+        if any(bit(q, key, i) for q, i in ((request,index),(requests[index],ramp_index))
+               for key in ('foes','response')):
+            false_foes.append(via)
+    return dict(passed=actual_foe and actual_yield and not crossings and not false_foes,
+                geometry_version=GEOMETRY_VERSION, junction=junction.get('id'),
+                ramp_internal_lane=ramp.get('via'), through_lane_count=4,
+                connector_crossings=crossings, through_lane_foes=false_foes,
+                auxiliary_merge_foe_retained=actual_foe, auxiliary_merge_yield_retained=actual_yield,
+                scope='compiled geometry only; no traffic episode run')
 
 
 def build(output, profile_path=PROFILE, netconvert=None):
@@ -129,7 +188,8 @@ def build(output, profile_path=PROFILE, netconvert=None):
     binary = Path(netconvert) if netconvert else find_sumo_binary().with_name('netconvert.exe' if __import__('os').name == 'nt' else 'netconvert')
     command = [str(binary), '--node-files', str(output/'nodes.nod.xml'), '--edge-files', str(output/'edges.edg.xml'),
         '--connection-files', str(output/'connections.con.xml'), '--output-file', str(output/'network.net.xml'),
-        '--offset.disable-normalization', 'true', '--no-turnarounds', 'true', '--junctions.corner-detail', '0']
+        '--offset.disable-normalization', 'true', '--no-turnarounds', 'true', '--junctions.corner-detail', '0',
+        '--check-lane-foes.all', 'true']
     result = subprocess.run(command, capture_output=True, text=True, timeout=60)
     (output/'netconvert.log').write_text(result.stdout+result.stderr)
     result.check_returncode()
@@ -138,7 +198,15 @@ def build(output, profile_path=PROFILE, netconvert=None):
         points=np.array([[float(v) for v in xyz.split(',')] for xyz in lane.get('shape').split()])
         if np.any(np.diff(points[:,1])>.02):
             raise ValueError('Compiled southbound lane reverses northward: '+lane.get('id'))
-    manifest = dict(schema_version=1, status='provisional_engineering_network',
+    checks = validate_compiled_merge(output/'network.net.xml')
+    if not checks['passed']:
+        (output/'failed-geometry.json').write_text(json.dumps(checks, indent=2)+'\n')
+        raise ValueError('Compiled I-110 entry failed lane-conflict validation')
+    manifest = dict(schema_version=2, status='provisional_engineering_network',
+        geometry_version=GEOMETRY_VERSION, compiled_checks=checks,
+        builder_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        input_sha256={name: hashlib.sha256((output/name).read_bytes()).hexdigest()
+                      for name in ('nodes.nod.xml', 'edges.edg.xml', 'connections.con.xml')},
         source_profile_sha256=hashlib.sha256(Path(profile_path).read_bytes()).hexdigest(),
         source_geometry_sha256=data['source_geometry_sha256'], coordinates=data['coordinates'],
         sumo_to_usd='Identity local XYZ in metres; no normalization or rotation',

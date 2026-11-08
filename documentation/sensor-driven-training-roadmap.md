@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v15**, updated **November 5, 2026, America/Los_Angeles**.
-Status: **Environment v05 pilot completed; candidate rejected, stable merging improves but interventions regress**.
+Revision **v16**, updated **November 6, 2026, America/Los_Angeles**.
+Status: **I-110 junction blockage corrected and frozen SimReady replay verified; v05 remains unaccepted**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,7 +14,7 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** use the [v05 saved-results audit](highway-environment-v05-results.md) to diagnose the train-only I-110 entry/native-response mismatch and rising following interventions before preparing another configuration. The pilot completed 249,999 active-agent decisions under its original budget. Stable merges improve 2/9 to 8/9, while pooled interventions worsen 13.37% to 19.83%; 19/24 validation cases fail. Do not promote the candidate or train on validation trajectories. Propose a bounded, measured correction after the diagnostic; no new launch is authorized by this roadmap.
+**Next action:** diagnose the remaining acceleration-realization differences on training fixtures before proposing another training configuration. The [I-110 blockage correction](i110-merge-blocking-v01.md) removes false conflicts with four parallel lanes while preserving the genuine auxiliary-lane yield. With the same frozen v05 actor, seed and demand, the focal car now completes its merge and route; fleet interventions fall from 30.53% to 8.52%, still above 5%. `agent_7` accounts for 198 of the remaining 244 differences. Preserve the original rejected 24-case results and do not use these validation trajectories as demonstrations. The SimReady visual rerun is complete; no training, new policy acceptance, physical or sensor-driven validation was performed or authorized by this roadmap.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
@@ -437,3 +437,12 @@ Completed `train-20261106T024828Z-90b25880` from source `02948d7` after two pres
 Matched 24-case validation: stable merges improved 2/9 to 8/9; passes increased 55 to 59; pooled interventions worsened 13.3749% to 19.8287%; worst-case interventions changed 73.125% to 69.3339%; failing cases decreased 23 to 19. All horizons completed, with no recorded collisions, teleports, overspeed or emergency events under protections. I-110 remains 0/1 merged; the ramp actor stalls before entry in both initial and final evaluation. The curriculum remains at grade 0. No held-out test or physical/sensor transfer ran. The latest actor is a separately labeled rejected candidate, not an accepted replacement.
 
 [Results, plots and next diagnostic](highway-environment-v05-results.md); [frozen policy and exact contract](../policies/versions/highway-environment-v05/README.md). Preserve the existing references and diagnose training scenarios before another reviewed configuration. Two SimReady replay examples retain the I-110 failure and easier synthetic success, with 502 decoded frames, exact recorded poses and unchanged source assets. Both guide copies are synchronized from verified full readback; all 42 tabs are preserved.
+
+
+### v16 — November 6: I-110 junction blockage diagnosed and corrected
+
+Three sub-agents separated native junction behavior, network geometry and recording semantics. The original ramp request yielded to all five mainline lanes despite sharing only auxiliary lane 0. Native link plans show overlapping predicted passage windows for unrelated through-lane traffic. Acceleration-lifetime changes and a focal native-longitudinal handoff did not resolve the block. The new versioned network enables lane-specific conflicts and verifies that the true auxiliary conflict/yield remains; source geometry and demand are unchanged.
+
+An independent ordinary recorder, without the diagnostic follow-speed getter, confirms the same frozen actor and seed now enter the auxiliary lane at 4.4 s, complete the lateral merge at 10.1 s and pass the eight-second stable window at 18.1 s. Focal stopped samples fall from 752/800 to zero. All eight controlled trips finish; fleet interventions fall from 1,007/3,298 (30.53%) to 244/2,864 (8.52%), still above the unchanged 5% gate. Full 80-second evidence, background trip accounting, unsuccessful probes and the potentially stateful getter caveat are preserved. The getter was removed from future probes.
+
+The [technical note](i110-merge-blocking-v01.md) retains native diagnostics, exact hashes, before/after screenshots and a 251-frame SimReady v14 main-car replay with lightweight background cars. The video decodes, poses match exactly and authored/source assets remain unchanged. Reporting now distinguishes native junction entry, auxiliary occupancy, actual commanded lateral completion and stable through-lane occupancy. No training or policy promotion occurred; sensor/physical transfer remains unqualified. Diagnose the remaining requested-versus-realized acceleration mismatch on training fixtures before reviewing any new launch configuration.

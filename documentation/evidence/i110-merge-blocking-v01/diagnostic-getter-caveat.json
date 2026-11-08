@@ -1,0 +1,22 @@
+{
+  "schema": "i110_merge_blocking_diagnostic_limitation_v01",
+  "affected_runs": [
+    "acceleration-lifetime-01",
+    "native-handoff-01",
+    "network-ab-01",
+    "network-ab-02"
+  ],
+  "finding": "SUMO 1.27.1 getFollowSpeed calls ACC followSpeed with FUTURE; ACC ignores that reason and updates lastUpdateTime/control mode. Live probes with a leader may influence subsequent native behavior.",
+  "scope": "Original blocked focal has no leader, so no follow-speed query occurs. Corrected-network pairs are telemetry investigations; ordinary recorder without these queries supplies independent definitive replay confirmation.",
+  "source_urls": [
+    "https://raw.githubusercontent.com/eclipse-sumo/sumo/v1_27_1/src/libsumo/Vehicle.cpp",
+    "https://raw.githubusercontent.com/eclipse-sumo/sumo/v1_27_1/src/microsim/cfmodels/MSCFModel_ACC.cpp"
+  ],
+  "source_lines": {
+    "Vehicle.cpp": "858-866",
+    "MSCFModel_ACC.cpp": "110-123,224-245"
+  },
+  "action": "Removed getFollowSpeed from committed probe; added test forbidding it when a leader exists. Preserved original run snapshots. No additional simulation launched for this change.",
+  "training": false,
+  "optimizer_steps": 0
+}
