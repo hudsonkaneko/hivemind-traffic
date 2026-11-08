@@ -631,3 +631,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ### GPUDrive pretrained transfer — November 6, 2026
 
 [One frozen I-110 transfer test](gpudrive-i110-v01.md) failed road-boundary/speed criteria; retained as external-policy evidence, not an accepted replacement. CPU inference and a SimReady replay are verified. No training; map/goal transfer and speed enforcement remain unresolved.
+
+
+### GPUDrive native-safety follow-up — November 6, 2026
+
+[Guarded v02 evaluation](gpudrive-i110-v02.md) applies60mph/lower-road limits and the existing native safety stack. Zero recorded collisions/overspeed, but failed merge/progress and intervention checks. Existing accepted policies unchanged; no training.
