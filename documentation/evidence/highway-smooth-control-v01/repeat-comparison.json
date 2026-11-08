@@ -1,0 +1,340 @@
+{
+  "schema": "highway_smooth_control_same_controller_replay_v1",
+  "training": false,
+  "optimizer_steps": 0,
+  "prior": "outputs\\i110-merge-blocking\\v01\\replay-corrected-01",
+  "fresh": "outputs\\highway-smooth-control\\v01\\replay-current-01",
+  "prior_recording_sha256": "d2e4323afe3c3ce9765abff68e6115a55783b6ca8e21ead68ea6971eb4f1a81d",
+  "fresh_recording_sha256": "50a328dd67080bb023e4aae390d7351bc88acff7169252d7a6866efd291dbbd2",
+  "frames_exactly_equal": true,
+  "physical_frames_exactly_equal": true,
+  "physical_frames_canonical_sha256": "7e1d0c2a35c215105a7bb575dad4b579724ce3c0d2335ce9b36d6decdd99c274",
+  "frame_count": 801,
+  "start_time_s": 0.1,
+  "end_time_s": 80.1,
+  "evaluation_differences": {
+    "episode_directory": [
+      "outputs\\i110-merge-blocking\\v01\\replay-corrected-01\\simulation\\episode-6900019-64b7259a",
+      "outputs\\highway-smooth-control\\v01\\replay-current-01\\simulation\\episode-6900019-b2e5cda4"
+    ],
+    "wall_seconds": [
+      14.65700000000652,
+      17.546999999991385
+    ]
+  },
+  "source_hash_changes": [
+    "scripts/record_highway_environment_v05.py"
+  ],
+  "policy_sha256": "fd639c39f0c514256a458b2b85d35baba242125f44dcc3d9542d767eb2dd46ec",
+  "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+  "seed": 6900019,
+  "metrics": {
+    "overrides": 244,
+    "agent_steps": 2864,
+    "intervention_fraction": 0.08519553072625698,
+    "collisions": 0,
+    "teleports": 0,
+    "overspeed_steps": 0,
+    "emergency_braking_observed": 0,
+    "peak_abs_jerk": 58.92567962407957,
+    "completed_trips": 32,
+    "requested_trips": 55,
+    "steps": 410,
+    "post_control_native_steps": 390,
+    "primary_horizon_complete": true,
+    "accounting_comparison_valid": true,
+    "partial_control_horizon": false
+  },
+  "stable_merge": {
+    "targets": 1,
+    "entered": 1,
+    "lateral_completed": 1,
+    "stable": 1,
+    "failed": 0,
+    "pending": 0
+  },
+  "all_vehicle_stop_audit": {
+    "definition": "Observed native speed <0.1m/s; absent/predeparture vehicles are not counted as stopped",
+    "unique_vehicles": 55,
+    "total_stopped_samples": 0,
+    "vehicles_with_stopped_samples": [],
+    "per_vehicle": {
+      "agent_0": {
+        "samples": 371,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 6.4080145088699805
+      },
+      "agent_1": {
+        "samples": 360,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.696218274561042
+      },
+      "agent_2": {
+        "samples": 332,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 11.766859637993921
+      },
+      "agent_3": {
+        "samples": 311,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 11.717592146104664
+      },
+      "agent_4": {
+        "samples": 410,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.976542565408904
+      },
+      "agent_5": {
+        "samples": 386,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.53708670630037
+      },
+      "agent_6": {
+        "samples": 309,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.410138943702057
+      },
+      "agent_7": {
+        "samples": 385,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.377394645988486
+      },
+      "main_0": {
+        "samples": 459,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 9.532120545256374
+      },
+      "main_1": {
+        "samples": 445,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.356348274664066
+      },
+      "main_2": {
+        "samples": 427,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 14.790665140988658
+      },
+      "main_3": {
+        "samples": 457,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.295870415028824
+      },
+      "main_4": {
+        "samples": 421,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.192499757602421
+      },
+      "main_8": {
+        "samples": 347,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.233627930483312
+      },
+      "main_9": {
+        "samples": 361,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 11.948536706761294
+      },
+      "ramp_1": {
+        "samples": 452,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 2.9291071336460797
+      },
+      "inflow_0": {
+        "samples": 463,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.689383517176804
+      },
+      "inflow_1": {
+        "samples": 466,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.168816994857417
+      },
+      "inflow_2": {
+        "samples": 441,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 15.59453092674035
+      },
+      "inflow_3": {
+        "samples": 467,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.596053093338057
+      },
+      "inflow_4": {
+        "samples": 459,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.828188894598833
+      },
+      "inflow_5": {
+        "samples": 459,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.283696283014706
+      },
+      "inflow_6": {
+        "samples": 462,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 14.81283948614105
+      },
+      "inflow_7": {
+        "samples": 442,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.705704256364191
+      },
+      "inflow_8": {
+        "samples": 611,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 2.3182106838275933
+      },
+      "inflow_9": {
+        "samples": 440,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 15.844014913358826
+      },
+      "inflow_10": {
+        "samples": 459,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 14.980131681776086
+      },
+      "inflow_11": {
+        "samples": 461,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 14.425406628720829
+      },
+      "inflow_12": {
+        "samples": 457,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 15.616076737105523
+      },
+      "inflow_13": {
+        "samples": 445,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 14.65957746717991
+      },
+      "inflow_14": {
+        "samples": 450,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 14.560060671824003
+      },
+      "inflow_15": {
+        "samples": 455,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.690943147655501
+      },
+      "inflow_16": {
+        "samples": 451,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 14.562221479331047
+      },
+      "inflow_17": {
+        "samples": 432,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 2.825641242004421
+      },
+      "inflow_18": {
+        "samples": 410,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.293032339589537
+      },
+      "inflow_19": {
+        "samples": 390,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.676440233224
+      },
+      "inflow_20": {
+        "samples": 369,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.155961683670817
+      },
+      "inflow_21": {
+        "samples": 351,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 16.098443826459718
+      },
+      "inflow_22": {
+        "samples": 331,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.015680392576883
+      },
+      "inflow_23": {
+        "samples": 311,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 15.461985972958738
+      },
+      "inflow_24": {
+        "samples": 290,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 14.507144405932427
+      },
+      "inflow_25": {
+        "samples": 268,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 12.965149257354797
+      },
+      "inflow_26": {
+        "samples": 250,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 4.345228173597009
+      },
+      "inflow_27": {
+        "samples": 231,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 15.443793022405737
+      },
+      "inflow_28": {
+        "samples": 209,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.379278976829585
+      },
+      "inflow_29": {
+        "samples": 189,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 15.311391571561114
+      },
+      "inflow_30": {
+        "samples": 169,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.725268275617157
+      },
+      "inflow_31": {
+        "samples": 151,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 14.447593712228638
+      },
+      "inflow_32": {
+        "samples": 133,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.192496799311522
+      },
+      "inflow_33": {
+        "samples": 112,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 15.018082416130241
+      },
+      "inflow_34": {
+        "samples": 92,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.930030245059253
+      },
+      "inflow_35": {
+        "samples": 71,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 9.757840365773491
+      },
+      "inflow_36": {
+        "samples": 51,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 13.150612933511415
+      },
+      "inflow_37": {
+        "samples": 33,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 14.986460665541305
+      },
+      "inflow_38": {
+        "samples": 14,
+        "stopped_samples": 0,
+        "minimum_speed_m_s": 16.19010295825224
+      }
+    }
+  },
+  "interpretation": "Independent repeat with same controller and inputs reproduces motion and performance; not an improvement, learning result or held-out promotion."
+}

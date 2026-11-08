@@ -1,0 +1,97 @@
+{
+  "runs": [
+    {
+      "error": null,
+      "primary_horizon_complete": true,
+      "frame_count": 801,
+      "first_time_s": 0.1,
+      "last_time_s": 80.1,
+      "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+      "training": false,
+      "optimizer_steps": 0,
+      "absolute_realized_jerk": {
+        "samples": 3175,
+        "mean": 0.18607089656708017,
+        "median": 0.008574234999159103,
+        "p95": 0.4459088208657744,
+        "maximum": 59.95525598525999
+      },
+      "absolute_request_target_error": {
+        "samples": 3183,
+        "mean": 0.20146801667147562,
+        "median": 0.0669704669570933,
+        "p95": 0.744255300049543,
+        "maximum": 6.12399625244845
+      },
+      "controller": "learned",
+      "intervention_fraction": 0.17499214577442665,
+      "stable_merge": {
+        "targets": 1,
+        "entered": 1,
+        "lateral_completed": 1,
+        "stable": 1,
+        "failed": 0,
+        "pending": 0,
+        "oscillation_events": 0
+      },
+      "requested_trips": 55,
+      "completed_trips": 33,
+      "minimum_headway_s": 1.9842756857765351,
+      "minimum_ttc_s": 7.91097890737996,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "wall_seconds": 21.046999999991385
+    },
+    {
+      "error": null,
+      "primary_horizon_complete": true,
+      "frame_count": 801,
+      "first_time_s": 0.1,
+      "last_time_s": 80.1,
+      "demand_sha256": "e6999aec486c7210351269226acb1741fa32b5bb73059ada146a21b925cf76db",
+      "training": false,
+      "optimizer_steps": 0,
+      "absolute_realized_jerk": {
+        "samples": 3051,
+        "mean": 0.12808570798229044,
+        "median": 0.0032040476799721773,
+        "p95": 0.2885725349186963,
+        "maximum": 64.99989926815033
+      },
+      "absolute_request_target_error": {
+        "samples": 3059,
+        "mean": 1.6980080929940558e-08,
+        "median": 1.1582375235991149e-08,
+        "p95": 4.638910269250254e-08,
+        "maximum": 9.497165648353345e-08
+      },
+      "controller": "teacher",
+      "intervention_fraction": 0.0,
+      "stable_merge": {
+        "targets": 1,
+        "entered": 1,
+        "lateral_completed": 1,
+        "stable": 1,
+        "failed": 0,
+        "pending": 0,
+        "oscillation_events": 0
+      },
+      "requested_trips": 55,
+      "completed_trips": 33,
+      "minimum_headway_s": 1.8251170966055514,
+      "minimum_ttc_s": 29.9064632064247,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "wall_seconds": 20.546999999991385
+    }
+  ],
+  "wall_seconds": 43.46899999998277,
+  "training": false,
+  "optimizer_steps": 0,
+  "matched_demand": true,
+  "policy_unchanged": true,
+  "changed_sources": [],
+  "success_not_assumed": "This single reference check does not authorize training or establish held-out performance"
+}
