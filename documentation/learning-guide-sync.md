@@ -1,5 +1,15 @@
 # Engineering guide synchronization
 
+## October 26: Near-field sensing and dataset preparation
+
+Appended v12-v14 source evolution, measured sensor acceptance, the 60-frame
+sample limitations and proposed disabled segmentation configuration to tab 41.
+The start-tab mirror link follows `codex/perception-preparation`. Revision-guarded
+native editing/readback preserved all 42 tabs and the 40 unaffected tab bodies.
+The mirror was regenerated and checked against
+`outputs/doc-sync/perception-preparation-v01/verified-source.json`. Native
+pagination was not inspected. Actual screenshots remain in the repository note.
+
 ## October 26: Body-mounted cameras
 
 Appended the actual v11 body-mounted camera source, combined test, visual

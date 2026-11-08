@@ -1,0 +1,1886 @@
+{
+  "initial_main": "edb71259a29741f6ea12e33aedf946b58d876c58",
+  "mainline_merged_main": "a6a01108625ea60477a06679bbae6688960047c9",
+  "mainline_merge_order": [
+    {
+      "pr": 61,
+      "head": "07c2898a94ca67a69cb97239195471d47fa54ae4",
+      "merge_sha": "506a373159f29caecab50db724a444845d28f5f1",
+      "base": "main"
+    },
+    {
+      "pr": 62,
+      "head": "fb6be71741e886bbe1155cbc5c21631c5dd2bccc",
+      "merge_sha": "c357d936a58778defb966c084311cc093938ad1f",
+      "base": "main"
+    },
+    {
+      "pr": 63,
+      "head": "03e6c9d64e056ecf2e5641081dcb3580d2a7561e",
+      "merge_sha": "51e18183acf99d8a52a83a8448d0ee2307537a8a",
+      "base": "main"
+    },
+    {
+      "pr": 64,
+      "head": "1fb5d1d82e434798ec9996262bf4dd34279da73b",
+      "merge_sha": "af01369efa17a2849b589efa0615274f7bd2e99b",
+      "base": "main"
+    },
+    {
+      "pr": 65,
+      "head": "f40afe12657d391fb05c1a9a1369401986da252c",
+      "merge_sha": "a0d2aedf60d622f232496709dd421745b3384b29",
+      "base": "main"
+    },
+    {
+      "pr": 66,
+      "head": "f54941ef20893605e1b28775af2fcb5552d33c92",
+      "merge_sha": "828074b62df3b9f5ebcb5df640cc6265f3842a9d",
+      "base": "main"
+    },
+    {
+      "pr": 67,
+      "head": "ff5aebc72fba6525cf5dafc6e3da3d58abcc8a08",
+      "merge_sha": "eb8318c3d0a9e2c7cb025adfb3c20a7e185acedd",
+      "base": "main"
+    },
+    {
+      "pr": 68,
+      "head": "6b14eb0ccfea1c7970ce920ccc1a5422303a635b",
+      "merge_sha": "db247391e18330dc1603fa32192dc1d70d8d6ea4",
+      "base": "main"
+    },
+    {
+      "pr": 69,
+      "head": "0d502445395d767fa9aa43dfb2e9e308e0cab3ae",
+      "merge_sha": "16e98d69cda0d4c69f609ece8a7687302621f472",
+      "base": "main"
+    },
+    {
+      "pr": 70,
+      "head": "cc8eff33c9516a40af296c18efa308cae477f018",
+      "merge_sha": "edf666c0cad6f058581dbe9305bcaa2c56f85903",
+      "base": "main"
+    },
+    {
+      "pr": 72,
+      "head": "d12c168c72c3a7441fb274af3f483de1609dac19",
+      "merge_sha": "c63dcae050a4234960cd4418cf01d894d51a1eb0",
+      "base": "main"
+    },
+    {
+      "pr": 76,
+      "head": "d8f2dc8c7bfd1b19176aac145cb33bf987c80583",
+      "merge_sha": "ebc505488c519459f6ed20f88e42dddd9be64a97",
+      "base": "main"
+    },
+    {
+      "pr": 77,
+      "head": "dd9ccaf26e90a857641281511412719ea84c1783",
+      "merge_sha": "1878906138d1c64adddfe1f93fcb470b984ffebb",
+      "base": "main"
+    },
+    {
+      "pr": 78,
+      "head": "5f2f31a6b747dd35a070ece13d58459b4727d691",
+      "merge_sha": "1af64fe9f5aab6e4eab8c1a3d25e46e22616b3ee",
+      "base": "main"
+    },
+    {
+      "pr": 79,
+      "head": "473af314500b60ede6c885d36aef6baa55120edf",
+      "merge_sha": "bea5d1140eb3b57e4712eaea18d3df06bc4b783a",
+      "base": "main"
+    },
+    {
+      "pr": 80,
+      "head": "b7288c3b1de5888f7daba3fb993f72bc39d080bd",
+      "merge_sha": "dc860131f6c0b01b50fd63caff1904ec690b5342",
+      "base": "main"
+    },
+    {
+      "pr": 81,
+      "head": "5c40bcd199c04c41c3fb3b855c759490995d5d4f",
+      "merge_sha": "bef7cabdd070a6739b36823cfbbc76d4be3cf397",
+      "base": "main"
+    },
+    {
+      "pr": 82,
+      "head": "f03f4abc114bf9e078805cde8651e04fef53e82b",
+      "merge_sha": "30b6caf0598245fc7c87c3fdf802dc3864ff03d9",
+      "base": "main"
+    },
+    {
+      "pr": 83,
+      "head": "70f36ddb90522ca0831d2fdd1418586970c6dba4",
+      "merge_sha": "f720ceee60fd6d4641ef8f064d4b8cca77bf1cf9",
+      "base": "main"
+    },
+    {
+      "pr": 84,
+      "head": "c45d9b1fdbc53daa2b96b9761c805a7083fa2a8d",
+      "merge_sha": "435ac6ba5b954089ebe744ff1ea172152246b279",
+      "base": "main"
+    },
+    {
+      "pr": 85,
+      "head": "613edf3bafe4bc2cdc30c36d5d90bba93711641f",
+      "merge_sha": "ecf0b4529c0e22bd981e1b7c83a3feadb0f2f151",
+      "base": "main"
+    },
+    {
+      "pr": 86,
+      "head": "7786cc4e89eca84b82ff2a7ed2528b1934cadd81",
+      "merge_sha": "c573f0f9a6812611e5b55373b1e5dc942fcdfaaa",
+      "base": "main"
+    },
+    {
+      "pr": 87,
+      "head": "5813e9f3671a809174fd7bdeb41ab2eda65154c0",
+      "merge_sha": "ccbe309fdc650f2281d23602bd572a014ea9a88a",
+      "base": "main"
+    },
+    {
+      "pr": 88,
+      "head": "a309e5cb02add648a933f4a1fd94784b9ea96ee4",
+      "merge_sha": "161015630951f61a591a69f86cac48721cb074f6",
+      "base": "main"
+    },
+    {
+      "pr": 89,
+      "head": "6bbe5269ec94b08f57e40b724e142c7e1c4232c2",
+      "merge_sha": "27e7df9d9e0d41acb19870afa92be6b6a8e6bd29",
+      "base": "main"
+    },
+    {
+      "pr": 90,
+      "head": "2eb9ad01dc25070f81925185ad551f359a1ecbd1",
+      "merge_sha": "2d87186f9b6b152f785c09e8907828ae652e02b1",
+      "base": "main"
+    },
+    {
+      "pr": 91,
+      "head": "097748d5155f20810b18e9196e950c4d41087c7b",
+      "merge_sha": "31e4357081bfd0b0eae957e333acfaa96aa08ecd",
+      "base": "main"
+    },
+    {
+      "pr": 92,
+      "head": "ce074407138add3896f66fa4383924d8274ec2c4",
+      "merge_sha": "18d9d8a3559db5682a8674b5b43e7d64b1c9d902",
+      "base": "main"
+    },
+    {
+      "pr": 93,
+      "head": "4f976a1dd8b58ff8106ea3b1520469389eb32e46",
+      "merge_sha": "ee88ca3a40e01372538a8ad489925b9062f89338",
+      "base": "main"
+    },
+    {
+      "pr": 94,
+      "head": "0a1e2471661884586a3fd316448df6806b7a6791",
+      "merge_sha": "b4fb90a0b18e056100b1502a47c06bed30602e3a",
+      "base": "main"
+    },
+    {
+      "pr": 95,
+      "head": "c6c4f5db31183bbad641004e26b503dce0587dbe",
+      "merge_sha": "532fa237480cd2fce9cb93ccdfff45d3487fbcfb",
+      "base": "main"
+    },
+    {
+      "pr": 96,
+      "head": "5a424a5852e6f1b03ad0add4a8f38521854b23f9",
+      "merge_sha": "07a7d232144770fcbf8d435f56c6246be628aa6a",
+      "base": "main"
+    },
+    {
+      "pr": 97,
+      "head": "69fb36a510d03cce344221c520c3d569eaff4b41",
+      "merge_sha": "015cf2b71b1d724f9814fd70980823690eff4b4d",
+      "base": "main"
+    },
+    {
+      "pr": 98,
+      "head": "a81f0b2eef93915e850bffe42534abf0d9b714af",
+      "merge_sha": "123e40b5555c74048d7a8c518bf149fb1b2c432c",
+      "base": "main"
+    },
+    {
+      "pr": 99,
+      "head": "3f82d5c06adf308cca2c1a4914186e7036e6aecb",
+      "merge_sha": "02fdab9838e8d6ec103c3ee1207fd8471b61df49",
+      "base": "main"
+    },
+    {
+      "pr": 100,
+      "head": "e6504b60798e463c3eaddf4990102771a393a1af",
+      "merge_sha": "b37cbdb2ba17109bee1d0b8f39626bc9bd8887c8",
+      "base": "main"
+    },
+    {
+      "pr": 101,
+      "head": "2a3a86aa44a2ab193ddb492f33e860d892c43a52",
+      "merge_sha": "21aae168cbc7b408426fd4be809c725123bb84b0",
+      "base": "main"
+    },
+    {
+      "pr": 102,
+      "head": "e2e296477f103bed43edcece36cc3904113caecd",
+      "merge_sha": "98392450c063eac7e0b07d3f1b7db68f4ad1604c",
+      "base": "main"
+    },
+    {
+      "pr": 103,
+      "head": "9b99da4079591b77d8da1d9381e8ba2c635f058a",
+      "merge_sha": "8d047464e318a3f73a01e1252c0b1dc07e84c053",
+      "base": "main"
+    },
+    {
+      "pr": 104,
+      "head": "bc761c765db97df8adbe5c029a5f213d8123066e",
+      "merge_sha": "78ed86855d368e645bdb34ee6eeedc73dacd4152",
+      "base": "main"
+    },
+    {
+      "pr": 105,
+      "head": "1963e83d316633b101a71e4c17e541374aab2fef",
+      "merge_sha": "ef80a8b1ffb949acf715b8b5257ceb885d1ffe00",
+      "base": "main"
+    },
+    {
+      "pr": 106,
+      "head": "bbadbf0d91ce4b7e594316d4e3a2a2ab8caf103c",
+      "merge_sha": "a67139eaef5d913c002754f5776875cd5ce422f0",
+      "base": "main"
+    },
+    {
+      "pr": 107,
+      "head": "6692a76b26587c0dc1d285639de63b52a1e23f1e",
+      "merge_sha": "05c994e8a2078deed445de911c3b93b2278dc4bf",
+      "base": "main"
+    },
+    {
+      "pr": 108,
+      "head": "7367b802e0354c4ac7f70f8388c960f44d5d5767",
+      "merge_sha": "a6a01108625ea60477a06679bbae6688960047c9",
+      "base": "main"
+    }
+  ],
+  "sensor_dependency_order": [
+    71,
+    73,
+    74,
+    75
+  ],
+  "sensor_resolution_commits": [
+    {
+      "pr": 71,
+      "branch": "seven-camera-rig",
+      "old": "b61aef2984ab2a360652b412f3e5434c9c56381f",
+      "new": "c7439d77997088dfe9090e527c62783f446ce34d",
+      "integrated_parent": "a6a01108625ea60477a06679bbae6688960047c9",
+      "conflicts": [
+        "documentation/CHANGELOG.md",
+        "documentation/engineering-guide.md",
+        "documentation/engineering-guide.sync.json",
+        "documentation/hybrid-roadmap.md"
+      ],
+      "tree": "233db1c0c8e4f909762429d6f5ffb0d44d5ffc37"
+    },
+    {
+      "pr": 73,
+      "branch": "roof-lidar-rig",
+      "old": "2756e672a47c55c7f40b2026ceaf1a01d32f3fbc",
+      "new": "3b580ece5a59edef319c98afab05838a2224ad4a",
+      "integrated_parent": "c7439d77997088dfe9090e527c62783f446ce34d",
+      "conflicts": [
+        "documentation/CHANGELOG.md",
+        "documentation/engineering-guide.md",
+        "documentation/engineering-guide.sync.json"
+      ],
+      "tree": "47db123b67515888f2f811517a4f25f1e6eaf882"
+    },
+    {
+      "pr": 74,
+      "branch": "body-camera-rig",
+      "old": "f4f986359e531c6e9246ecdcccbd102601928e54",
+      "new": "f79210cbea1f8a4c491a0903dd096626d5422d35",
+      "integrated_parent": "3b580ece5a59edef319c98afab05838a2224ad4a",
+      "conflicts": [
+        "documentation/CHANGELOG.md",
+        "documentation/engineering-guide.md",
+        "documentation/engineering-guide.sync.json"
+      ],
+      "tree": "0111028d3fca022c539becc9c7c6736d80e8e355"
+    },
+    {
+      "pr": 75,
+      "branch": "perception-preparation",
+      "old": "a11fc8de963e8bd311557b7b8ad4336bc3a6c804",
+      "new": "0cef52b0257f4b66f25691873b533e4eb02db199",
+      "integrated_parent": "f79210cbea1f8a4c491a0903dd096626d5422d35",
+      "conflicts": [
+        "documentation/CHANGELOG.md",
+        "documentation/engineering-guide.md",
+        "documentation/engineering-guide.sync.json"
+      ],
+      "tree": "ee2b3fda6ea4a18232efb5d62a1e6e28a85fa5fd"
+    }
+  ],
+  "preservation": {
+    "all_48_original_heads_preserved": true,
+    "engineering_guide_hash_matches_manifest": true,
+    "guide_preserved_byte_for_byte_from_main": true,
+    "all_sensor_guide_content_retained_except_superseded_start_link": true,
+    "tested_tree": "0cef52b0257f4b66f25691873b533e4eb02db199"
+  },
+  "original_passing_heads": [
+    {
+      "pr": 108,
+      "head": "7367b802e0354c4ac7f70f8388c960f44d5d5767",
+      "base": "mappo-flow-rl-v01",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:34:15Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42530216829/job/128882536595",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:26:08Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:35:12Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42530211790/job/128882552834",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:26:12Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 107,
+      "head": "6692a76b26587c0dc1d285639de63b52a1e23f1e",
+      "base": "mappo-gpudrive-plan-v01",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:31:46Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42529919215/job/128881643174",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:22:36Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 106,
+      "head": "bbadbf0d91ce4b7e594316d4e3a2a2ab8caf103c",
+      "base": "gpudrive-smooth-v05",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:31:10Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42529917418/job/128881641579",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:22:36Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 105,
+      "head": "1963e83d316633b101a71e4c17e541374aab2fef",
+      "base": "gpudrive-route-v04",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:32:28Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42529916723/job/128881645112",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:23:31Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 104,
+      "head": "bc761c765db97df8adbe5c029a5f213d8123066e",
+      "base": "gpudrive-continuous-v03",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:29:54Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42529917520/job/128881613402",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:22:34Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 103,
+      "head": "9b99da4079591b77d8da1d9381e8ba2c635f058a",
+      "base": "gpudrive-i110-shielded-v02",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:31:29Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42529917229/job/128881631676",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:22:32Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 102,
+      "head": "e2e296477f103bed43edcece36cc3904113caecd",
+      "base": "gpudrive-i110-pretrained-v01",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:28:02Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42529918151/job/128881649155",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:22:45Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 101,
+      "head": "2a3a86aa44a2ab193ddb492f33e860d892c43a52",
+      "base": "highway-flow-preparation-v01",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:29:17Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42529917274/job/128881651159",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:23:49Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 100,
+      "head": "e6504b60798e463c3eaddf4990102771a393a1af",
+      "base": "highway-training-rethink-v01",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:31:10Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42529917284/job/128881635028",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:22:35Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 99,
+      "head": "3f82d5c06adf308cca2c1a4914186e7036e6aecb",
+      "base": "highway-smooth-preparation-v01",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:30:31Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42529916916/job/128881611668",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:22:35Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 98,
+      "head": "a81f0b2eef93915e850bffe42534abf0d9b714af",
+      "base": "highway-smooth-control-v01",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:30:54Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42529917018/job/128881612950",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:22:36Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 97,
+      "head": "69fb36a510d03cce344221c520c3d569eaff4b41",
+      "base": "i110-merge-blocking-fix",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-06T20:39:01Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42288995435/job/128137228099",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-06T20:31:08Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:23:46Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528985420/job/128878743676",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:16:35Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-06T20:37:32Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42288982947/job/128137182718",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-06T20:31:02Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 96,
+      "head": "5a424a5852e6f1b03ad0add4a8f38521854b23f9",
+      "base": "highway-environment-v05",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-06T20:11:02Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42284928425/job/128123169835",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-06T20:02:49Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:23:45Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528965563/job/128878682743",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:15:36Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-06T20:10:12Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42284892152/job/128123040547",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-06T20:02:33Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 95,
+      "head": "c6c4f5db31183bbad641004e26b503dce0587dbe",
+      "base": "i110-merge-visual-v01",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-06T03:41:21Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42157251466/job/127694224444",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-06T03:33:20Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:26:39Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528961807/job/128878671814",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:18:14Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-06T03:41:41Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42157246818/job/127694210540",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-06T03:33:18Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 94,
+      "head": "0a1e2471661884586a3fd316448df6806b7a6791",
+      "base": "population-near-limit-v04",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T23:37:43Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42129750448/job/127603066340",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T23:29:43Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:19:45Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528958722/job/128878661806",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:12:37Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T23:36:41Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42129715415/job/127602946527",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T23:29:27Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 93,
+      "head": "4f976a1dd8b58ff8106ea3b1520469389eb32e46",
+      "base": "mappo-physical-adapter-v01",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T22:00:13Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42116496268/job/127557412851",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T21:52:12Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:22:43Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528954705/job/128878649750",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:14:50Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T21:59:07Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42116457073/job/127557279776",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T21:51:57Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 92,
+      "head": "ce074407138add3896f66fa4383924d8274ec2c4",
+      "base": "population-control-v03",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T21:05:42Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42108121612/job/127528259032",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T20:57:19Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:28:03Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528950782/job/128878636622",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:19:40Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T21:05:27Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42108080608/job/127528117874",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T20:57:03Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 91,
+      "head": "097748d5155f20810b18e9196e950c4d41087c7b",
+      "base": "population-control-diagnostics",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T06:03:57Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41977118911/job/127078441289",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T05:56:17Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:25:07Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528947440/job/128878626331",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:17:01Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T06:03:57Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41977069013/job/127078279546",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T05:55:49Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 90,
+      "head": "2eb9ad01dc25070f81925185ad551f359a1ecbd1",
+      "base": "policy-baseline-review",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T05:36:38Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41974198769/job/127069162687",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T05:28:16Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:30:07Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528942192/job/128878609800",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:22:21Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T05:36:22Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41974175417/job/127069089559",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T05:28:02Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 89,
+      "head": "6bbe5269ec94b08f57e40b724e142c7e1c4232c2",
+      "base": "highway-population-v02",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T05:20:44Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41972579665/job/127063980672",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T05:12:58Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:24:39Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528939077/job/128878600810",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:16:40Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T05:22:40Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41972575486/job/127064324127",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T05:13:59Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 88,
+      "head": "a309e5cb02add648a933f4a1fd94784b9ea96ee4",
+      "base": "highway-population-v01",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T05:07:47Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41971232586/job/127059733077",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T05:00:19Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:25:22Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528934920/job/128878587684",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:17:21Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-05T05:08:13Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41971227999/job/127060113319",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-05T05:01:24Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 87,
+      "head": "5813e9f3671a809174fd7bdeb41ab2eda65154c0",
+      "base": "highway-stage1-v04-plan",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-04T23:16:48Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41931374428/job/126928824288",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-04T23:09:11Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:23:56Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528930969/job/128878576257",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:15:46Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-04T23:16:51Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41931365840/job/126928796290",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-04T23:09:10Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 86,
+      "head": "7786cc4e89eca84b82ff2a7ed2528b1934cadd81",
+      "base": "highway-stage1-v03",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-04T20:45:29Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41908333059/job/126848882645",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-04T20:37:19Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:23:28Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528924608/job/128878556786",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:17:17Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-04T20:45:24Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41908298465/job/126848759701",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-04T20:37:06Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 85,
+      "head": "613edf3bafe4bc2cdc30c36d5d90bba93711641f",
+      "base": "highway-stage1-preparation",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-04T00:13:38Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41744193038/job/126292960375",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-04T00:05:39Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:20:06Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528920983/job/128878545847",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:12:27Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-04T00:11:05Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41744185253/job/126292935235",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-04T00:05:39Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 84,
+      "head": "c45d9b1fdbc53daa2b96b9761c805a7083fa2a8d",
+      "base": "i110-merge-training",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-03T20:15:32Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41709828286/job/126174668285",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-03T20:08:46Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:21:58Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528903782/job/128878495882",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:15:27Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-03T20:16:53Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41709819393/job/126174637466",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-03T20:08:43Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 83,
+      "head": "70f36ddb90522ca0831d2fdd1418586970c6dba4",
+      "base": "segmentation-training-preparation",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-03T03:28:12Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41571543244/job/125705331996",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-03T03:19:49Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:22:05Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528899079/job/128878481104",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:15:27Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-03T03:25:01Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41571539210/job/125705319366",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-03T03:19:46Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 82,
+      "head": "f03f4abc114bf9e078805cde8651e04fef53e82b",
+      "base": "segmentation-refinement-preview",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-01T01:24:19Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41260408696/job/124712311002",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-01T01:16:40Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:22:19Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528893856/job/128878466683",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:15:16Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-01T01:23:32Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41260391627/job/124712259982",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-01T01:16:27Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 81,
+      "head": "5c40bcd199c04c41c3fb3b855c759490995d5d4f",
+      "base": "pretrained-segmentation-preview",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-31T21:26:25Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41242905977/job/124660293398",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-31T21:17:54Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:22:34Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528891177/job/128878457787",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:14:34Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-31T21:25:13Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41242888778/job/124660242462",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-31T21:17:31Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 80,
+      "head": "b7288c3b1de5888f7daba3fb993f72bc39d080bd",
+      "base": "semantic-lidar-fusion",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-31T02:21:42Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41159236855/job/124412840907",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-31T02:16:25Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:15:33Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528887765/job/128878448469",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:10:29Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-31T02:23:15Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/41159202703/job/124412736541",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-31T02:16:01Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 79,
+      "head": "473af314500b60ede6c885d36aef6baa55120edf",
+      "base": "mappo-v04-cooperative-passing",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:27:46Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42529917042/job/128881610402",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:22:31Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 78,
+      "head": "5f2f31a6b747dd35a070ece13d58459b4727d691",
+      "base": "mappo-v02-3d-replay",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-30T00:32:40Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40979529254/job/123815814260",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-30T00:24:55Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:18:17Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528879255/job/128878424400",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:10:23Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-30T00:32:10Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40979522783/job/123815793160",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-30T00:24:51Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 77,
+      "head": "dd9ccaf26e90a857641281511412719ea84c1783",
+      "base": "mappo-communication-waves",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-28T02:15:06Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40619061085/job/122588340093",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-28T02:07:25Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:18:12Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528875957/job/128878414878",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:10:21Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-28T02:15:07Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40619055662/job/122588323103",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-28T02:07:21Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 76,
+      "head": "d8f2dc8c7bfd1b19176aac145cb33bf987c80583",
+      "base": "mappo-override-retraining",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T23:15:59Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40417926125/job/121904783900",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T23:10:42Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:17:59Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528872408/job/128878404060",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:10:20Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T23:17:09Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40417891065/job/121904666537",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T23:10:25Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 75,
+      "head": "a11fc8de963e8bd311557b7b8ad4336bc3a6c804",
+      "base": "body-camera-rig",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T21:46:21Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40406079154/job/121864050264",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T21:38:42Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:17:18Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528867881/job/128878392040",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:10:16Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T21:46:14Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40406071567/job/121864024346",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T21:38:39Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 74,
+      "head": "f4f986359e531c6e9246ecdcccbd102601928e54",
+      "base": "roof-lidar-rig",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T19:43:45Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40388402036/job/121802646558",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T19:37:34Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:15:42Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528863673/job/128878378651",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:10:13Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T19:45:50Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40388395083/job/121802621581",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T19:37:31Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 73,
+      "head": "2756e672a47c55c7f40b2026ceaf1a01d32f3fbc",
+      "base": "seven-camera-rig",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T19:30:55Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40386446207/job/121795865332",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T19:24:27Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:15:25Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528860258/job/128878368946",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:10:11Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T19:31:53Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40386436835/job/121795832088",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T19:24:23Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 72,
+      "head": "d12c168c72c3a7441fb274af3f483de1609dac19",
+      "base": "sumo-native-capture",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T19:22:14Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40384969839/job/121790721543",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T19:14:40Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:16:38Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528840550/job/128878312474",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:58Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T19:21:09Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40384894565/job/121790467816",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T19:14:12Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 71,
+      "head": "b61aef2984ab2a360652b412f3e5434c9c56381f",
+      "base": "sumo-native-capture",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T19:17:18Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40384164680/job/121787893794",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T19:09:20Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:15:13Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528836440/job/128878300322",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:55Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T19:13:51Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40383988122/job/121787279016",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T19:08:09Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 70,
+      "head": "cc8eff33c9516a40af296c18efa308cae477f018",
+      "base": "sensor-perception-v01",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T07:56:36Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40288119506/job/121456524599",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T07:49:06Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:17:15Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528833252/job/128878289368",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:53Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T07:55:09Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40288072324/job/121456367756",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T07:48:38Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 69,
+      "head": "0d502445395d767fa9aa43dfb2e9e308e0cab3ae",
+      "base": "sumo-mappo-setup",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T06:38:30Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40280327534/job/121431982771",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T06:31:33Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:17:19Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528828667/job/128878275362",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:50Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T06:37:01Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40280322889/job/121431968576",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T06:31:30Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 68,
+      "head": "6b14eb0ccfea1c7970ce920ccc1a5422303a635b",
+      "base": "highway-60mph-ppo-traffic",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T04:33:11Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40269194937/job/121398127565",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T04:27:52Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:14:30Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528824979/job/128878265229",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:47Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-26T04:35:38Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40269190056/job/121398168763",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-26T04:28:02Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 67,
+      "head": "ff5aebc72fba6525cf5dafc6e3da3d58abcc8a08",
+      "base": "circles-control-smoke",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-25T21:34:17Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40235443115/job/121295892980",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-25T21:25:45Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:16:31Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528821375/job/128878253486",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:45Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-25T21:30:21Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/40235408037/job/121295786320",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-25T21:25:18Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 66,
+      "head": "f54941ef20893605e1b28775af2fcb5552d33c92",
+      "base": "github-engineering-guide",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-23T02:33:18Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39889415044/job/120205304514",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-23T02:24:44Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:16:53Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528817212/job/128878240078",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:41Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-23T02:31:57Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39889410000/job/120205287158",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-23T02:24:40Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 65,
+      "head": "f40afe12657d391fb05c1a9a1369401986da252c",
+      "base": "rsl-road-hazard-integration",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-22T22:19:24Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39863059587/job/120118333974",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-22T22:11:17Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:16:58Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528814532/job/128878231746",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:40Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-22T22:19:21Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39863052390/job/120118310778",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-22T22:11:14Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 64,
+      "head": "1fb5d1d82e434798ec9996262bf4dd34279da73b",
+      "base": "lane-training-console",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-22T21:18:24Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39855104240/job/120091165834",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-22T21:10:48Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:15:25Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528810582/job/128878219976",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:37Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-22T21:15:56Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39855101077/job/120091155354",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-22T21:10:46Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 63,
+      "head": "03e6c9d64e056ecf2e5641081dcb3580d2a7561e",
+      "base": "lab-lane-following",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-19T20:50:56Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39322157726/job/118298654248",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-19T20:46:49Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:14:05Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528806555/job/128878207811",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:34Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-19T20:53:04Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39322149378/job/118298631035",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-19T20:46:46Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 62,
+      "head": "fb6be71741e886bbe1155cbc5c21631c5dd2bccc",
+      "base": "showcase-validation",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-19T19:29:56Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39310480429/job/118258443085",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-19T19:22:49Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:14:48Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528802188/job/128878194305",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:32Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-19T19:27:38Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39310473218/job/118258416745",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-19T19:22:45Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    },
+    {
+      "pr": 61,
+      "head": "07c2898a94ca67a69cb97239195471d47fa54ae4",
+      "base": "main",
+      "checks": [
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-19T18:22:06Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39301247902/job/118226700956",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-19T18:17:24Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-11-08T22:12:34Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42528798718/job/128878183212",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-11-08T22:09:31Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        },
+        {
+          "__typename": "CheckRun",
+          "completedAt": "2026-10-19T18:21:28Z",
+          "conclusion": "SUCCESS",
+          "detailsUrl": "https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/39301239224/job/118226672438",
+          "name": "windows-cpu-sumo",
+          "startedAt": "2026-10-19T18:17:19Z",
+          "status": "COMPLETED",
+          "workflowName": "Clean clone"
+        }
+      ]
+    }
+  ]
+}

@@ -13,6 +13,15 @@ authority for historical measurements and failures.
   zero collisions, overspeed or overrides, with 1,445.453 m mean progress per car.
   Preserve the speed/progress tradeoff and different seed-set qualification in
   [the v02 training record](sumo-mappo-v2.md). Google guide sync remains pending.
+
+## October 26, 2026: Near-field sensing and perception preparation
+
+- Versioned local source v12-v14 preserves seven body cameras and adds four compact perimeter LiDARs. Independent writer registrations support five concurrent scanners.
+- Final bounded native test detects all 12 small near-field targets and six tall targets; 595 complete scans and 59 images per camera, stable mounts and zero contacts. Earlier coverage failures are preserved.
+- Prepared and validated 60 labeled frames in six isolated scenes (40/10/10 split), with hashed RGB/masks/raw scans, transforms and explicit evaluation-only truth. Pedestrian examples and full training diversity remain missing.
+- 141 focused CPU tests, 28 USD tests and four additional capture-config tests pass. Actual screenshots, source hashes and limits: [perception preparation v01](perception-preparation-v01.md).
+- Proposed segmentation config is disabled; no training or weights download. Google guide and generated Markdown synchronized through verified native readback.
+
 ## 2026-10-26 - Body-mounted seven-camera source v11
 
 - Removed camera roof stalks and seated compact housings against measured body
@@ -1115,3 +1124,8 @@ Saved a [reward revision plan](highway-flow-rl-reward-revision-plan.md) and sour
 ## November 8, 2026 - Repair CI across historical open PRs
 
 [Open-PR audit](ci-open-pr-audit-2026-11-08.md): inspected all failure groups and backported the portable checkpoint fixture to ten historical branches; added the missing Pillow CI dependency to semantic-lidar-fusion. Local oldest-branch module: 67 passed. Semantic tests: seven passed; full collection: 3,169 tests. Exact repair commits and logs retained; per-head GitHub checks remain the remote acceptance evidence. No policy or training changes.
+
+
+## November 8, 2026 - Integrate passing PRs in dependency order
+
+[Ordered integration](pr-integration-2026-11-08.md) records the 44-PR main chain and four sensor PRs, preservation of all original heads, documentation conflict resolutions, local validation and its corrected output-directory setup. Preserve the newer verified engineering-guide pair and all historical sensor evidence. GitHub checks on the revised heads and final main remain the remote acceptance record. No training or policy acceptance changes.

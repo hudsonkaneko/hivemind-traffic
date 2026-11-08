@@ -1,0 +1,287 @@
+"""Bounded roof LiDAR plus seven-camera capture/geometry test, not a policy or training run."""
+import argparse
+import json
+import math
+from pathlib import Path
+import sys
+import time
+import traceback
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output', type=Path, required=True)
+    output = parser.parse_args().output.resolve()
+    if Path.cwd().resolve() != ROOT or not output.is_relative_to(ROOT/'outputs') or not output.is_dir():
+        parser.error('Use supervisor from project root')
+    cfg = json.loads((output/'resolved-config.json').read_text())
+    if cfg['training'] or not 0 < cfg['duration_s'] <= 6 or (output/'probe-result.json').exists():
+        parser.error('Only fresh bounded validation is supported')
+    from usd.showcase_vehicle import package_hashes
+    from usd.seven_camera_rig import camera_specs
+    source = ROOT/cfg['source_vehicle']
+    hashes = package_hashes(source)
+    result = dict(passed=False, training=False)
+    started = time.perf_counter()
+    app = session = vehicle = view = monitor = lidar = None
+    cameras = {}
+    lidars = []
+    rows = []
+    try:
+        import numpy as np
+        from isaacsim import SimulationApp
+        app = SimulationApp(dict(headless=True, renderer='RealTimePathTracing', width=960,
+            height=540, enable_motion_bvh=True, disable_viewport_updates=False,
+            create_new_stage=False, limit_cpu_threads=8))
+        from pxr import Gf, Sdf, Usd, UsdGeom
+        from PIL import Image, ImageDraw
+        from traffic.physics_session import prepare_vehicle_runtime
+        from traffic.rendered_physics_session import RenderedPhysicsSession
+        from traffic.native_sensor_capture import NativeCamera
+        from traffic.driver_control import AppliedControl
+        from traffic.vehicle_contacts import VehicleContactMonitor
+        from traffic.lane_geometry import LaneRoute, RouteSegment
+        from traffic.bypass_validation import OrientedBox
+        from usd.showcase_vehicle import compose_prepared_vehicle
+        from usd.physical_scene import PATHS, author_scene_details, validate_scene
+        from visualization.physics_road_view import author_physics_road
+        result['runtime'] = prepare_vehicle_runtime()
+        session = RenderedPhysicsSession(120, 20, physics_scene_path=PATHS.physics)
+        stage = session.stage
+        scene = output/'scene'
+        vehicle = compose_prepared_vehicle(stage, scene, source, 120)
+        view = author_physics_road(stage, LaneRoute('camera_test',3.6,(RouteSegment(80.),)),
+            clean_layout=True, show_reference_centerline=False, asset_directory=scene/'assets')
+        author_scene_details(stage, scene, OrientedBox(45.,0.,0.,1.,3.))
+        UsdGeom.Imageable(stage.GetPrimAtPath('/World/Debug')).CreateVisibilityAttr().Set('invisible')
+        # Reusable calibration target geometry; instance placements are evaluation only.
+        target_asset = Usd.Stage.CreateNew(str(scene/'assets/calibration-target.usda'))
+        target_root = UsdGeom.Xform.Define(target_asset,'/CalibrationTarget')
+        target_asset.SetDefaultPrim(target_root.GetPrim())
+        UsdGeom.SetStageMetersPerUnit(target_asset,1.)
+        UsdGeom.SetStageUpAxis(target_asset,UsdGeom.Tokens.z)
+        cube = UsdGeom.Cube.Define(target_asset,'/CalibrationTarget/Panel')
+        cube.CreateSizeAttr().Set(1.)
+        cube.AddScaleOp().Set(Gf.Vec3d(1.6,1.6,3.))
+        target_asset.GetRootLayer().Save()
+        target_asset = cube = target_root = None
+        targets = {}
+        colors = [(1,.15,.1),(.1,1,.2),(.1,.3,1),(1,.8,.1),(.8,.1,1),(.1,1,1)]
+        with Usd.EditContext(stage, Sdf.Layer.FindOrOpen(str(scene/'layout.usda'))):
+            UsdGeom.Xform.Define(stage, '/World/Environment/CalibrationTargets')
+            for index, heading in enumerate((0,65,-65,135,-135,180)):
+                angle = math.radians(heading)
+                pos = (14*math.cos(angle),14*math.sin(angle),1.5)
+                targets[heading] = pos
+                path = '/World/Environment/CalibrationTargets/Target'+str(index)
+                prim = UsdGeom.Xform.Define(stage,path)
+                prim.GetPrim().GetReferences().AddReference('./assets/calibration-target.usda')
+                prim.AddTranslateOp().Set(Gf.Vec3d(*pos))
+                UsdGeom.Gprim(stage.GetPrimAtPath(path+'/Panel')).CreateDisplayColorAttr().Set([Gf.Vec3f(*colors[index])])
+        Sdf.Layer.FindOrOpen(str(scene/'layout.usda')).Save()
+        # Small side targets measure near-field blind spots without changing acceptance.
+        near_targets={}
+        with Usd.EditContext(stage,Sdf.Layer.FindOrOpen(str(scene/'layout.usda'))):
+            for side in (-1,1):
+                for distance in (2.,4.,6.):
+                    name=f"Near_{'Left' if side>0 else 'Right'}_{int(distance)}m"
+                    pos=(0.,side*distance,.15)
+                    near_targets[name]=pos
+                    cube=UsdGeom.Cube.Define(stage,'/World/Environment/CalibrationTargets/'+name)
+                    cube.CreateSizeAttr().Set(.3)
+                    cube.AddTranslateOp().Set(Gf.Vec3d(*pos))
+                    cube.CreateDisplayColorAttr().Set([Gf.Vec3f(.9,.3,.1)])
+        with Usd.EditContext(stage,Sdf.Layer.FindOrOpen(str(scene/'layout.usda'))):
+            for side in (-1,1):
+                for distance in (3.5,5.,7.):
+                    name=f"Near_{'Front' if side>0 else 'Rear'}_{distance}m"
+                    pos=(side*distance,0.,.15)
+                    near_targets[name]=pos
+                    cube=UsdGeom.Cube.Define(stage,'/World/Environment/CalibrationTargets/'+name.replace('.','_'))
+                    cube.CreateSizeAttr().Set(.3)
+                    cube.AddTranslateOp().Set(Gf.Vec3d(*pos))
+                    cube.CreateDisplayColorAttr().Set([Gf.Vec3f(.9,.3,.1)])
+        Sdf.Layer.FindOrOpen(str(scene/'layout.usda')).Save()
+        result['scene_structure'] = validate_scene(stage,require_sensor=False)
+        view.dynamic_layer.Export(str(scene/'debug.usda'))
+        stage.GetRootLayer().Export(str(scene/'world.usda'))
+        saved = Sdf.Layer.FindOrOpen(str(scene/'world.usda'))
+        saved.subLayerPaths = ['./debug.usda' if p == view.dynamic_layer.identifier else './'+Path(p).name for p in saved.subLayerPaths]
+        saved.Save()
+        reopened = Usd.Stage.Open(str(scene/'world.usda'))
+        result['composition_errors'] = [str(e) for e in reopened.GetCompositionErrors()]
+        result['hierarchy'] = [dict(path=str(p.GetPath()),type=p.GetTypeName(),references=p.HasAuthoredReferences(),payloads=p.HasAuthoredPayloads()) for p in reopened.Traverse()]
+        reopened = saved = None
+        from isaacsim.core.utils.viewports import set_camera_view
+        set_camera_view(eye=np.array([7.,-9.,7.]), target=np.array([0.,0.,1.]),
+                        camera_prim_path=PATHS.overview_camera)
+        from isaacsim.core.rendering_manager import ViewportManager
+        ready, frames = ViewportManager.wait_for_viewport(max_frames=120,sleep_time=.02)
+        if not ready: raise RuntimeError('Viewport not ready')
+        specs = vehicle.metadata['multi_camera_rig']['cameras']
+        local_before = {}
+        for spec in specs:
+            name = spec['name']; path = vehicle.path+'/Sensors/'+name
+            local_before[name] = UsdGeom.Xformable(stage.GetPrimAtPath(path)).GetLocalTransformation()
+            cameras[name] = NativeCamera(path,resolution=(640,360),episode_id=output.name,
+                sensor_id=name,frame_id=name+'_optical',calibration_id=vehicle.metadata['multi_camera_rig']['version']+'/'+name)
+            if not Gf.IsClose(local_before[name],UsdGeom.Xformable(stage.GetPrimAtPath(path)).GetLocalTransformation(),1e-6):
+                raise RuntimeError('RTX changed authored camera mount: '+name)
+        stage.GetPrimAtPath(PATHS.overview_camera).ApplyAPI('OmniSensorAPI')
+        cameras['overview'] = NativeCamera(PATHS.overview_camera,resolution=(960,540),episode_id=output.name)
+        xform = UsdGeom.Xformable(stage.GetPrimAtPath(PATHS.overview_camera))
+        xform.ClearXformOpOrder()
+        xform.AddTransformOp(opSuffix='evaluationView').Set(Gf.Matrix4d().SetLookAt(Gf.Vec3d(7,-9,7),Gf.Vec3d(0,0,1),Gf.Vec3d(0,0,1)).GetInverse())
+        xform = None
+        from omni.kit.viewport.utility import get_active_viewport
+        viewport = get_active_viewport()
+        if viewport:
+            viewport.updates_enabled=True
+            viewport.camera_path=PATHS.overview_camera
+        viewport=None
+        from traffic.physical_lidar import PhysicalLidar
+        from usd.vehicle_sensor_rig import sensor_paths
+        lidar=PhysicalLidar(vehicle.path,episode_id=output.name,vehicle_id='ego',
+            tick_source=lambda:session.physics_steps,
+            sensor_path=sensor_paths(vehicle.path,lidar_name='LidarRoof')['lidar'],mount_translation_m=(0,0,0),scan_profile=vehicle.metadata['roof_lidar']['runtime_profile'])
+        lidars.append(lidar)
+        for spec in vehicle.metadata.get('perimeter_lidars',[]):
+            lidars.append(PhysicalLidar(vehicle.path,episode_id=output.name,vehicle_id=spec['name'],
+                tick_source=lambda:session.physics_steps,sensor_path=vehicle.path+'/Sensors/'+spec['name']+'/Scan',
+                mount_translation_m=(0,0,0),scan_profile=spec['runtime_profile']))
+        lidar_hits={str(heading):0 for heading in targets}
+        near_hits={name:0 for name in near_targets}
+        lidar_stamps=set()
+        self_returns=0
+        monitor = VehicleContactMonitor(stage,vehicle.path)
+        vehicle.apply(AppliedControl(0.,0.,1.,'capture_warmup',None,True),700.,1500.)
+        session.start()
+        initial = vehicle.state()
+        contacts = []
+        counts = {s['name']:0 for s in specs}
+        captured = False
+        for tick in range(1,int(cfg['duration_s']*120)+1):
+            if time.perf_counter()-started > cfg['max_process_seconds']-20: raise TimeoutError('Capture deadline')
+            session.step()
+            now = session.time_s
+            truth = vehicle.state()
+            contacts.extend(monitor.sample(session.sim,tick))
+            if tick%6 == 0:
+                session.render()
+                for device in lidars:
+                    if device.errors: raise RuntimeError(str(device.errors))
+                    packet=device.latest
+                    if packet and packet['scan_complete']==1:
+                        stamp=(device.path,packet['timestamp_ns'])
+                        if stamp not in lidar_stamps:
+                            lidar_stamps.add(stamp)
+                            points=packet['xyz'][(packet['flags'] & 64)!=0]
+                            points=points[np.isfinite(points).all(axis=1)]
+                            for heading,pos in targets.items():
+                                delta=np.abs(points-np.asarray(pos))
+                                lidar_hits[str(heading)]+=int(np.sum((delta[:,0]<=.85)&(delta[:,1]<=.85)&(delta[:,2]<=1.55)))
+                            for name,pos in near_targets.items():
+                                delta=np.abs(points-np.asarray(pos))
+                                near_hits[name]+=int(np.sum(np.all(delta<=.18,axis=1)&(points[:,2]>.05)))
+                            relative=points-np.asarray(truth['position_m'])
+                            self_returns+=int(np.sum((np.abs(relative[:,0])<2.6)&(np.abs(relative[:,1])<1.15)&(relative[:,2]>.8)))
+            if tick%12: continue
+            row = dict(time_s=now,cameras={},speed_m_s=truth['speed_m_s'],upright_z=truth['upright_z'])
+            rgb_frames = {}
+            for spec in specs:
+                name=spec['name']
+                try:
+                    frame,depth = cameras[name].read(now)
+                except RuntimeError:
+                    if now < 2.: continue
+                    raise
+                rgb_frames[name]=frame.rgb
+                good=frame.rgb.shape==(360,640,3) and bool(np.isfinite(frame.rgb).all()) and float(frame.rgb.std())>2
+                counts[name]+=int(good)
+                mount=UsdGeom.Xformable(stage.GetPrimAtPath(vehicle.path+'/Sensors/'+name))
+                local_ok=Gf.IsClose(mount.GetLocalTransformation(),local_before[name],1e-6)
+                # Ground truth projection is used only to evaluate view direction/depth.
+                point=mount.ComputeLocalToWorldTransform(Usd.TimeCode.Default()).GetInverse().Transform(Gf.Vec3d(*targets[spec['heading_deg']]))
+                fx=640*spec['focal_length_mm']/36
+                u,v=320+fx*point[0]/(-point[2]),180-fx*point[1]/(-point[2])
+                in_view=point[2]<0 and 4<=u<636 and 4<=v<356
+                observed=float(np.median(depth[int(v)-3:int(v)+4,int(u)-3:int(u)+4])) if in_view else None
+                target_ok=bool(in_view and math.isfinite(observed) and abs(observed+point[2])<1.8)
+                row['cameras'][name]=dict(valid=good,mount_unchanged=local_ok,target_visible=target_ok,
+                    target_pixel=[u,v],depth_m=observed,expected_center_depth_m=-point[2])
+            rows.append(row)
+            if now>=2. and not captured and len(rgb_frames)==7:
+                sheet=Image.new('RGB',(1280,4*390),(24,26,30));draw=ImageDraw.Draw(sheet)
+                for i,spec in enumerate(specs):
+                    name=spec['name'];im=Image.fromarray(rgb_frames[name]);im.save(output/(name+'.png'))
+                    x=(i%2)*640;y=(i//2)*390
+                    sheet.paste(im,(x,y+30));draw.text((x+12,y+8),name+' | '+str(spec['horizontal_fov_deg'])+' deg',fill='white')
+                overview,_=cameras['overview'].read(now)
+                Image.fromarray(overview.rgb).save(output/'overview.png')
+                sheet.save(output/'seven-camera-contact-sheet.png')
+                points=np.concatenate([d.latest['xyz'][(d.latest['flags'] & 64)!=0] for d in lidars])
+                points=points[np.isfinite(points).all(axis=1)]
+                np.save(output/'lidar-world-points.npy',points)
+                plot=Image.new('RGB',(800,800),(20,24,30));pd=ImageDraw.Draw(plot)
+                for x,y,z in points:
+                    px,py=400-y*20,400-x*20
+                    if 0<=px<800 and 0<=py<800: pd.ellipse((px-1,py-1,px+1,py+1),fill=(80,230,170))
+                pd.rectangle((378,350,422,450),outline='white',width=2)
+                pd.text((12,12),'Actual RTX returns: top view, 20 pixels/metre; front is up',fill='white')
+                plot.save(output/'lidar-top-view.png')
+                captured=True
+            # Scripted low-speed motion proves chassis inheritance; no policy consumes these frames.
+            throttle=.16 if 2.<=now<4. and truth['speed_m_s']<1.5 else 0.
+            brake=1. if now<2. or now>=4. else 0.
+            vehicle.apply(AppliedControl(0.,throttle,brake,'bounded_capture_test',None,False),700.,1500.)
+        active=[r for r in rows if r['time_s']>=2.]
+        gates=dict(all_seven_capture=all(c>=30 for c in counts.values()),
+            stable_mounts=all(len(r['cameras'])==7 and all(c['mount_unchanged'] for c in r['cameras'].values()) for r in active),
+            targets_visible=all(any(r['cameras'].get(s['name'],{}).get('target_visible',False) for r in active) for s in specs),
+            moved=truth['position_m'][0]-initial['position_m'][0]>.2,
+            stable=all(r['upright_z']>.8 for r in rows),no_contacts=not contacts,
+            screenshots=captured,composition=not result['composition_errors'],
+            lidar_surround_targets=all(n>0 for n in lidar_hits.values()),
+            lidar_complete_scans=all(sum(1 for path,stamp in lidar_stamps if path==d.path)>=80 for d in lidars),
+            near_field_targets=all(n>0 for n in near_hits.values()))
+        result.update(lidar_target_hits=lidar_hits,near_field_target_hits=near_hits,
+            lidar_complete_scans=len(lidar_stamps),lidar_packets=sum(d.packet_count for d in lidars),
+            scans_by_sensor={d.path:sum(1 for path,stamp in lidar_stamps if path==d.path) for d in lidars},
+            lidar_self_region_returns=self_returns,lidar_metadata=[d.metadata for d in lidars])
+        if lidar.errors: raise RuntimeError(str(lidar.errors))
+        result.update(gates=gates,passed=all(gates.values()),valid_frames=counts,
+            progress_m=truth['position_m'][0]-initial['position_m'][0],clock=session.snapshot(),contacts=len(contacts),
+            camera_specs=specs,limitations=['Synthetic perspective cameras, no fisheye distortion or hardware noise',
+                'Caller simulation timestamps; hardware freshness not proven','No learned fusion, Cosmos or policy training; combined capture only',
+                'Angular coverage and six static targets do not establish obstacle-free visibility everywhere'])
+    except Exception as error:
+        result.update(error=repr(error),traceback=traceback.format_exc())
+        traceback.print_exc()
+    finally:
+        result.update(source_unchanged=package_hashes(source)==hashes,source_hashes=hashes,wall_seconds=time.perf_counter()-started)
+        result['passed']=bool(result.get('passed') and result['source_unchanged'])
+        (output/'camera-measurements.json').write_text(json.dumps(rows,indent=2))
+        for camera in cameras.values():
+            try: camera.close()
+            except Exception as error: result.setdefault('cleanup_errors',[]).append(repr(error))
+        cameras.clear()
+        for device in lidars:
+            try: device.close()
+            except Exception as error: result.setdefault('cleanup_errors',[]).append(repr(error))
+        lidars.clear()
+        device=None
+        lidar=None
+        camera=vehicle=view=monitor=stage=mount=prim=None
+        if session:
+            try: session.close()
+            except Exception as error: result.setdefault('cleanup_errors',[]).append(repr(error))
+        if result.get('cleanup_errors'): result['passed']=False
+        (output/'probe-result.json').write_text(json.dumps(result,indent=2))
+        if app: app.close()
+    return 0 if result['passed'] else 1
+
+
+if __name__=='__main__': raise SystemExit(main())

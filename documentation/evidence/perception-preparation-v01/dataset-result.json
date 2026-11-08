@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "training": false,
+  "dataset_validation": {
+    "frame_count": 60,
+    "scene_count": 6,
+    "split_frames": {
+      "train": 40,
+      "val": 10,
+      "test": 10
+    },
+    "class_pixel_counts": {
+      "background": 8227009,
+      "drivable": 5331380,
+      "lane": 231254,
+      "vehicle": 15798,
+      "pedestrian": 0,
+      "obstacle": 18559
+    },
+    "missing_requested_classes": [
+      "pedestrian"
+    ],
+    "structurally_valid": true,
+    "visual_label_review_required": true
+  },
+  "scene_runs": [
+    {
+      "scene_id": "train-clear-101",
+      "passed": true
+    },
+    {
+      "scene_id": "train-obstacle-102",
+      "passed": true
+    },
+    {
+      "scene_id": "train-follow-103",
+      "passed": true
+    },
+    {
+      "scene_id": "train-crossing-104",
+      "passed": true
+    },
+    {
+      "scene_id": "val-obstacle-201",
+      "passed": true
+    },
+    {
+      "scene_id": "test-obstacle-301",
+      "passed": true
+    }
+  ],
+  "source_changed_during_run": [],
+  "run_id": "20261026T213519Z-2a6badc2",
+  "source_hashes": {
+    "scripts/capture_perception_scene.py": "f182c643c8d852a10ebf35e8f83cabbe3d1120466a7b0f4a59f214280762082c",
+    "experiments/prepare_perception_dataset.py": "7801ffd3f95673faa63d891eb00be2ec9e9e1de39ffa0c9fb9d391c30c17a55a",
+    "traffic/perception_dataset.py": "7add5de4c16c3ae9aca615f97bce88f760e83ff91300c1a7c23978099c5551fe",
+    "traffic/native_sensor_capture.py": "a5d02e758c558a328074b984699867e487289e6f82c4c40616e74e408800a26b",
+    "traffic/physical_lidar.py": "ded857da402a56d1cc46f91fa12db1f919584c6c4fff9195e499dda9603d54bc",
+    "traffic/rendered_physics_session.py": "2780f1b55b833c2d37fceab2c66b62b2582d1bc96701bd0e523bd8f80652fce9",
+    "usd/showcase_vehicle.py": "f7a5d68176f7c28a42cab2ad8b1272811cda765d59af30812c335432fc046dac",
+    "usd/physical_scene.py": "2f7a0283cf2165538a6d0bf0336e042bf7c46c5110b63a3842fde7435d5e91f9",
+    "visualization/physics_road_view.py": "b1f2b0d473a7ae6c6d9a70262f1c2b6c0a0c9fa5528d4f8a7f8995d81bd6c219",
+    "configs/perception/dataset_smoke_v01.json": "61b57d5b230b5bbc9ce652b255692d5701ac575043488c1b933d5dd0662c8091"
+  },
+  "limitations": [
+    "Smoke data only: no pedestrian examples",
+    "WORLD NONCOMPENSATED LiDAR, no deskew or deployed fusion",
+    "No training started"
+  ]
+}

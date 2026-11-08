@@ -1,5 +1,14 @@
 # Active roadmap: physical research cars, economical background traffic
 
+October 26 perception preparation: source v14 retains seven body cameras and
+adds four compact perimeter LiDARs beside the roof scanner. All 12 measured
+small near-field targets pass with five concurrent scanners. A six-scene,
+60-frame labeled front-camera sample passes structure/hash/split checks, with
+camera transforms and separate raw LiDAR recorded. Pedestrian examples and full
+training diversity are still missing. No training started; the segmentation
+proposal, actual screenshots and remaining gates are in
+[perception preparation v01](perception-preparation-v01.md).
+
 Updated: October 25, 2026. Status: physical lane following, the bounded visible
 LiDAR-braking subset and a separate one-car Isaac Lab lane task are verified
 within their stated fixtures. Broader lifecycle/endurance, shared-map and hybrid
@@ -691,6 +700,9 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ## November 8 - Reward revision plan after native comparison
 
 [Proposed reward revision](highway-flow-rl-reward-revision-plan.md) replaces the ineffective-in-dip cruise addition with a context-valid speed objective, reshapes comfort and strengthens the optional-detour penalty. Saved-state audit and target qualification come before final configuration or training. Research informs the design; candidate weights are not validated. Existing safety gates, policy ABI and study budget are preserved. No new simulation or learning.
+
+## Historical sensor milestones integrated November 8
+
 October 26: [seven-camera v09 source](seven-camera-v01.md) passed bounded native
 capture, projected-target visibility, composition and moving-mount checks. This
 is a camera-rig milestone only; learned surround perception, Cosmos, sensor
