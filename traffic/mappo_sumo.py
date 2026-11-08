@@ -59,6 +59,9 @@ def write_episode(config: dict, seed: int, directory: Path) -> dict:
     for agent, lane, position in zip(AGENT_IDS, (0, 0, 1, 2), (220, 130, 175, 190)):
         vehicles.append(dict(id=agent, lane=lane, position=position + float(rng.uniform(-10, 10)),
                              speed=float(rng.uniform(speed_low, speed_high)), depart=0.0))
+    if config.get("driving"):
+        for vehicle,position in zip(vehicles,(220.,165.,110.,55.)):
+            vehicle.update(lane=0,position=position,speed=20.)
     if config.get("wave"):
         for vehicle, position in zip(vehicles, (230., 175., 120., 65.)):
             vehicle.update(lane=0, position=position, speed=20.)
@@ -73,6 +76,10 @@ def write_episode(config: dict, seed: int, directory: Path) -> dict:
             if vehicle["id"].startswith("background_initial_0_"):
                 index = int(vehicle["id"].rsplit("_", 1)[1])
                 vehicle.update(position=(15., 300., 440.)[index], speed=20.)
+    if config.get("driving"):
+        for vehicle in vehicles:
+            if vehicle["id"]=="background_initial_0_0":vehicle.update(position=15.,speed=17.)
+            if vehicle["id"]=="background_initial_0_1":vehicle.update(position=310.,speed=config["driving"]["slow_leader_speed_m_s"])
     # Ordinary vehicles keep entering. Departures may be delayed by SUMO's safe insertion.
     interval_low, interval_high = config["background_depart_interval_range_s"]
     for lane in range(3):
@@ -173,7 +180,7 @@ class MappoSumoBackend:
             self.close()
             raise
 
-    def step(self, accelerations: Mapping[str, float]):
+    def step(self, accelerations: Mapping[str, float], *, lane_changes=None, headways=None):
         if self.connection is None:
             raise RuntimeError("Backend requires reset()")
         active = set(self.active_vehicle_ids)
@@ -182,6 +189,20 @@ class MappoSumoBackend:
                 raise KeyError(f"Cannot control inactive or non-policy vehicle {vehicle}")
             if not math.isfinite(acceleration) or not -4.5 <= acceleration <= 2.0:
                 raise ValueError(f"Invalid physical acceleration {acceleration}")
+        lane_changes=lane_changes or {};headways=headways or {}
+        if (lane_changes or headways) and not self.config.get("driving"):
+            raise ValueError("Maneuvers require v04 driving")
+        for vehicle,delta in lane_changes.items():
+            if vehicle not in active or vehicle not in AGENT_IDS or delta not in (-1,0,1):
+                raise ValueError("Invalid lane change request")
+            if not 0<=self.connection.vehicle.getLaneIndex(vehicle)+delta<3:
+                raise ValueError("Lane request crosses road boundary")
+        for vehicle,headway in headways.items():
+            if vehicle not in active or vehicle not in AGENT_IDS or not math.isfinite(headway) or headway<.8:
+                raise ValueError("Invalid native headway")
+        for vehicle,headway in sorted(headways.items()):self.connection.vehicle.setTau(vehicle,float(headway))
+        for vehicle,delta in sorted(lane_changes.items()):
+            self.connection.vehicle.changeLane(vehicle,self.connection.vehicle.getLaneIndex(vehicle)+delta,self.config["dt"])
         wave = self.config.get("wave")
         if wave:
             elapsed = self.connection.simulation.getTime() - self._episode_start_time
@@ -205,6 +226,8 @@ class MappoSumoBackend:
             # Both policy and ordinary vehicles retain SUMO's safety checks, with fixed lanes.
             connection.vehicle.setSpeedMode(vehicle, 31)
             connection.vehicle.setLaneChangeMode(vehicle, 512)
+            if self.config.get("driving") and vehicle=="background_initial_0_1":
+                connection.vehicle.setMaxSpeed(vehicle,self.config["driving"]["slow_leader_speed_m_s"])
             connection.vehicle.subscribe(vehicle, [tc.VAR_SPEED, tc.VAR_ACCELERATION, tc.VAR_POSITION,
                 tc.VAR_LANE_INDEX, tc.VAR_LANEPOSITION, tc.VAR_DISTANCE, tc.VAR_LENGTH,
                 tc.VAR_ALLOWED_SPEED, tc.VAR_WAITING_TIME, tc.VAR_TIMELOSS])

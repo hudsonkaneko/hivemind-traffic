@@ -392,3 +392,15 @@ Completed the bounded recorded-motion gate for v02: four actors, 60 seconds, see
 ### 2026-10-27 checkpoint: prepared-car replay sensing
 
 The v14 main-car sensor replay gate passed for 60 seconds: seven cameras, five LiDARs, 120 saved capture sets. Data and performance are retained in [sensor evidence](mappo-v02-sensors.md). Measured LiDAR lag is 66.7 ms; moving-object deskew and physical closed-loop control remain open.
+
+### 2026-10-29 checkpoint: v04 passing/cooperative-following setup
+
+[MAPPO v04](sumo-mappo-v4.md) now supports acceleration plus masked lane requests, guarded short-headway eligibility and explicit passing metrics. Native no-learning setup gates pass; the pilot config is ready for review. Learned passing/cooperation, achieved short highway gaps, staged curriculum and physical policy transfer remain unverified. The stopping-distance floor dominates the 0.8-second target at highway speeds.
+
+## October 29: v04r1 SUMO passing refinement
+
+Imitation-assisted MAPPO now passes slower cars in all 50 fresh held-out episodes (82 passes), with 4.9583% aggregate safety interventions and zero collisions/overspeed/required-gap deficits. One episode exceeds the lane-change-frequency limit, so full v04 acceptance remains open and accepted v02 is preserved. Training used the declared one-million-transition budget without runtime errors or agent monitoring. Checkpoints, per-seed metrics and optimization curves are retained; see [v04r1 evidence](sumo-mappo-v4-refinement.md). Next behavior gate is unnecessary lane switching. No new 3D, physical-steering or causal communication benefit is established.
+
+## October 29: v04r2 passes declared SUMO checks
+
+The selected v04r2 neural actor passes all acceptance gates on 50 fresh scenarios: 74 passes, at least one per episode; 3.175% aggregate overrides; maximum two lane changes/car/minute; zero collisions, overspeed or required-gap deficits. Use the frozen policy/best checkpoint at update 175; the final checkpoint regressed. The declared one-million-transition run completed without runtime errors or monitoring, and all evidence is retained in [v04r2 results](sumo-mappo-v4-stability.md). Existing v02 integrations remain intact; physical steering, sensor inputs, 3D transfer and causal communication benefits remain separate gates.

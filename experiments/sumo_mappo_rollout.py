@@ -25,6 +25,7 @@ class EpisodeMetrics:
         self.minimum_ttc = None
         self.background_peak = 0
         self.wave = None
+        self.driving = None
 
     def add(self, packet):
         self.steps += 1
@@ -44,6 +45,50 @@ class EpisodeMetrics:
                     raise ValueError('Nonfinite wave metric: ' + key)
                 self.wave[key] += value
         for agent, info in packet['infos'].items():
+            driving = info.get('driving_metrics')
+            if driving is not None:
+                if self.driving is None:
+                    self.driving = dict(lane_change_requested=0,lane_change_applied=0,lane_change_rejected=0,
+                        pass_completed=0,cooperative_steps=0,fallback_following_steps=0,
+                        applied_cooperative_steps=0,applied_fallback_steps=0,cooperative_eligible_steps=0,
+                        headway_count=0,headway_sum_s=0.,minimum_headway_s=None,
+                        cooperative_headway_count=0,cooperative_headway_sum_s=0.,
+                        required_gap_deficit_steps=0,abs_jerk_sum_m_s3=0.,max_abs_jerk_m_s3=0.,
+                        measured_agent_steps=0,shield_reason_counts={},lane_changes_by_agent={},steps_by_agent={})
+                d = self.driving
+                for key in ('lane_change_requested','lane_change_applied','lane_change_rejected','pass_completed'):
+                    d[key] += int(driving[key])
+                cooperative = bool(driving['cooperative_headway_active'])
+                applied_cooperative = bool(driving['cooperative_headway_applied'])
+                native_headway = driving['applied_native_headway_s']
+                if not np.isfinite(native_headway) or native_headway <= 0:
+                    raise ValueError('Invalid applied native headway')
+                # Native commands belong to the pre-step control interval; fresh
+                # eligibility belongs to the resulting observation. Keep both.
+                d['cooperative_steps'] += int(applied_cooperative)
+                d['applied_cooperative_steps'] += int(applied_cooperative)
+                d['applied_fallback_steps'] += int(not applied_cooperative)
+                d['cooperative_eligible_steps'] += int(cooperative)
+                headway = driving.get('headway_s')
+                if headway is not None:
+                    if not np.isfinite(headway):raise ValueError('Nonfinite driving headway')
+                    d['headway_count'] += 1; d['headway_sum_s'] += headway
+                    d['minimum_headway_s'] = headway if d['minimum_headway_s'] is None else min(headway,d['minimum_headway_s'])
+                    if cooperative:
+                        d['cooperative_headway_count'] += 1;d['cooperative_headway_sum_s'] += headway
+                    if not applied_cooperative:d['fallback_following_steps'] += 1
+                gap=info.get('front_gap_m')
+                d['required_gap_deficit_steps'] += int(gap is not None and gap < driving['required_gap_m']-1e-6)
+                jerk=float(driving['abs_jerk_m_s3'])
+                if not np.isfinite(jerk):raise ValueError('Nonfinite driving jerk')
+                d['abs_jerk_sum_m_s3'] += jerk;d['max_abs_jerk_m_s3']=max(d['max_abs_jerk_m_s3'],jerk)
+                d['measured_agent_steps'] += 1
+                d['steps_by_agent'][agent]=d['steps_by_agent'].get(agent,0)+1
+                d['lane_changes_by_agent'][agent]=d['lane_changes_by_agent'].get(agent,0)+int(driving['lane_change_applied'])
+                for reason in info.get('safety_reasons',()):
+                    d['shield_reason_counts'][reason]=d['shield_reason_counts'].get(reason,0)+1
+                if info.get('sumo_safety_intervention'):
+                    d['shield_reason_counts']['sumo_override']=d['shield_reason_counts'].get('sumo_override',0)+1
             self.progress[agent] += info.get('progress_m', 0.)
             self.interventions += int(info.get('safety_intervention', False))
             speed = info.get('speed_m_s') or 0.
@@ -74,6 +119,15 @@ class EpisodeMetrics:
             result['wave'] = dict(self.wave,
                 downstream_speed_variance_m2_s2=max(0., self.wave['downstream_speed_squared_sum'] / count - mean**2) if count else None,
                 throughput_vehicles_per_hour=3600. * self.wave['throughput_count'] / self.wave['elapsed_s'] if self.wave['elapsed_s'] else None)
+        if self.driving is not None:
+            d=self.driving
+            result['driving']=dict(d,
+                mean_headway_s=d['headway_sum_s']/d['headway_count'] if d['headway_count'] else None,
+                mean_cooperative_headway_s=d['cooperative_headway_sum_s']/d['cooperative_headway_count'] if d['cooperative_headway_count'] else None,
+                cooperative_headway_measurement_scope='post-step eligible leader; applied command counts are separate',
+                mean_abs_jerk_m_s3=d['abs_jerk_sum_m_s3']/max(1,d['measured_agent_steps']),
+                maximum_lane_changes_per_vehicle_minute=max(
+                    d['lane_changes_by_agent'][a]*600/d['steps_by_agent'][a] for a in d['steps_by_agent']))
         return result
 
 
@@ -139,6 +193,8 @@ class RolloutCollector:
                 action, log_prob, _, latent = self.model.act(torch.from_numpy(local))
                 values = self.model.values(torch.from_numpy(states), identities)
             commands = {index: ('step', {}) for index in selected}
+            teacher = (self.pool.request({index: ('scripted_action', False) for index in selected})
+                       if self.config['training'].get('imitation', {}).get('enabled', False) else None)
             positions = {}
             for n, (index, agent) in enumerate(keys):
                 commands[index][1][agent] = action[n].numpy().copy()
@@ -152,12 +208,14 @@ class RolloutCollector:
                         torch.from_numpy(np.repeat(np.asarray(terminal)[None], 4, axis=0)), torch.arange(4))
                 row = dict(local_obs=np.zeros((4, local.shape[-1]), np.float32),
                            global_states=np.repeat(np.asarray(before['state'])[None], 4, axis=0),
-                           agent_indices=np.arange(4, dtype=np.int64), actions=np.zeros((4, 1), np.float32),
-                           pre_tanh_actions=np.zeros((4, 1), np.float32),
+                           agent_indices=np.arange(4, dtype=np.int64), actions=np.zeros((4, action.shape[-1]), np.float32),
+                           pre_tanh_actions=np.zeros((4, latent.shape[-1]), np.float32),
                            old_log_probs=np.zeros(4, np.float32), old_values=np.zeros(4, np.float32),
                            rewards=np.zeros(4, np.float32), next_values=next_values.numpy(),
                            terminated=np.ones(4, dtype=bool), truncated=np.zeros(4, dtype=bool),
                            active=np.zeros(4, dtype=bool))
+                if teacher is not None:
+                    row['teacher_actions'] = np.zeros((4, action.shape[-1]), np.float32)
                 for agent in before['agents']:
                     slot, n = AGENTS.index(agent), positions[index, agent]
                     row['local_obs'][slot] = local[n]
@@ -169,6 +227,8 @@ class RolloutCollector:
                     row['terminated'][slot] = packet['terminated'][agent]
                     row['truncated'][slot] = packet['truncated'][agent]
                     row['active'][slot] = True
+                    if teacher is not None:
+                        row['teacher_actions'][slot] = teacher[index]['actions'][agent]
                 rows[index].append(row)
                 count += len(before['agents'])
                 self.total_agent_transitions += len(before['agents'])
@@ -195,7 +255,7 @@ class RolloutCollector:
         return batch, summaries, count
 
 
-def aggregate(episodes, acceptance=None):
+def aggregate(episodes, acceptance=None, driving_targets=None, selection=None):
     if not episodes:
         raise ValueError('Cannot aggregate zero episodes')
     transitions = sum(row['agent_transitions'] for row in episodes)
@@ -221,9 +281,47 @@ def aggregate(episodes, acceptance=None):
             mean_downstream_speed_variance_m2_s2=float(np.mean([row['downstream_speed_variance_m2_s2'] for row in waves])) if valid else None,
             mean_throughput_vehicles_per_hour=float(np.mean([row['throughput_vehicles_per_hour'] for row in waves])) if valid else None,
             mean_traffic_progress_m=float(np.mean([row['traffic_progress_m'] for row in waves])))
+    if all('driving' in row for row in episodes):
+        driving=[row['driving'] for row in episodes]
+        counts={key:sum(row[key] for row in driving) for key in (
+            'lane_change_requested','lane_change_applied','lane_change_rejected','pass_completed',
+            'cooperative_steps','fallback_following_steps','applied_cooperative_steps','applied_fallback_steps',
+            'cooperative_eligible_steps','headway_count','headway_sum_s',
+            'cooperative_headway_count','cooperative_headway_sum_s','required_gap_deficit_steps',
+            'abs_jerk_sum_m_s3','measured_agent_steps')}
+        reason_counts={}
+        for row in driving:
+            for reason,count in row['shield_reason_counts'].items():
+                reason_counts[reason]=reason_counts.get(reason,0)+count
+        minimum=[r['minimum_headway_s'] for r in driving if r['minimum_headway_s'] is not None]
+        result['driving']=dict(counts,shield_reason_counts=reason_counts,
+            minimum_headway_s=min(minimum) if minimum else None,
+            mean_headway_s=counts['headway_sum_s']/counts['headway_count'] if counts['headway_count'] else None,
+            mean_cooperative_headway_s=counts['cooperative_headway_sum_s']/counts['cooperative_headway_count'] if counts['cooperative_headway_count'] else None,
+            cooperative_headway_measurement_scope='post-step eligible leader; applied command counts are separate',
+            mean_abs_jerk_m_s3=counts['abs_jerk_sum_m_s3']/max(1,counts['measured_agent_steps']),
+            max_abs_jerk_m_s3=max(r['max_abs_jerk_m_s3'] for r in driving),
+            minimum_passes_per_episode=min(r['pass_completed'] for r in driving),
+            maximum_lane_changes_per_vehicle_minute=max(r['maximum_lane_changes_per_vehicle_minute'] for r in driving))
+    if driving_targets is not None:
+        d=result.get('driving',{})
+        values=[d.get('minimum_passes_per_episode'),d.get('maximum_lane_changes_per_vehicle_minute')]
+        per_episode_values=[row.get('driving',{}).get(key) for row in episodes
+                            for key in ('pass_completed','maximum_lane_changes_per_vehicle_minute')]
+        result['driving_targets_met']=bool(all(v is not None and np.isfinite(v) for v in values+per_episode_values)
+            and values[0]>=driving_targets['minimum_passes_per_episode']
+            and values[1]<=driving_targets['maximum_lane_changes_per_vehicle_minute'])
+        result['basic_driving_accepted']=result.get('accepted',False)
+        result['accepted']=bool(result['basic_driving_accepted'] and result['driving_targets_met'])
     result['selection_score'] = [int(result.get('accepted', False)), -result['collision_vehicles'],
                                  -result['overspeed_steps'], result['nominal_episodes'],
                                  result['mean_team_reward'], -result['intervention_fraction']]
+    if selection == 'accepted_then_safety_then_driving_targets_then_fewer_interventions_then_reward':
+        if driving_targets is None:
+            raise ValueError('Driving selection requires declared driving targets')
+        result['selection_score'] = [int(result.get('accepted', False)), -result['collision_vehicles'],
+            -result['overspeed_steps'], result['nominal_episodes'], int(result['driving_targets_met']),
+            -result['intervention_fraction'], result['mean_team_reward']]
     return result
 
 

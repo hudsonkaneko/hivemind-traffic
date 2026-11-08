@@ -721,3 +721,27 @@ Validated a 60-second seed-410001 SUMO rollout and recorded 3D replay. Original 
 ## 2026-10-27 — Prepared sensor car in frozen v02 replay
 
 Completed the full 60-second recorded replay with v14 main car, seven cameras and five LiDARs; background traffic remains lightweight. Saved 840 RGB images and 600 complete scans with clocks, transforms, checksums and timing metrics. Zero replay root error, unchanged sources, fresh-process scene audit and 94 sensor tests pass. See [sensor evidence](mappo-v02-sensors.md). This is kinematic sensing, not physical policy control.
+
+## 2026-10-29 — MAPPO v04 cooperative-passing setup
+
+Implemented hybrid acceleration/lane actions, delivered lane intent, guarded cooperative headways, real passing rewards and per-car driving metrics. 145 tests and full native no-learning preflight passed: three scripted passes, seven lane changes, zero collisions/overspeed and one override across 4,800 decisions. Independent review corrected cooldown, destination-lane filtering and applied-vs-eligible telemetry. Final configuration awaits review; no v04 training started. See [setup and evidence](sumo-mappo-v4.md). Google guide and Markdown mirror synchronized, including the earlier v02 capture/release updates.
+
+## 2026-10-29 — MAPPO v04 completed pilot (not accepted)
+
+Completed the approved 1,000,000-agent-transition run in 21 min 24 s without runtime errors or monitoring. Exported update 175 failed held-out acceptance: zero collisions/overspeed, 7.7275% interventions and zero passes. Later validation checkpoints learned passing but failed other gates; no accepted v04 replaces v02. Retained checkpoints, raw metrics, exact held-out evaluation and per-seed CSV. Independent review found no evident recovery bug; the approved budget is exhausted. See [results](sumo-mappo-v4.md#completed-pilot-not-accepted). Google guide and full Markdown mirror synchronized.
+
+## 2026-10-29 — MAPPO v04r1 retraining preparation
+
+Added training-only scripted imitation initialization and on-policy auxiliary teacher labels, within a single one-million-transition budget. Preserved safety/reward/action contracts and made checkpoint selection prioritize driving targets and intervention rate over reward. Fresh validation/test seeds, 167 passing tests and successful native no-learning preflight are recorded in [the refinement note](sumo-mappo-v4-refinement.md). The user authorized retraining; learned results and Google guide synchronization follow completion.
+
+## 2026-10-29 — MAPPO v04r1 passing-capable result
+
+The authorized retraining completed without errors in 23 min 31 s, using 48,000 demonstration plus 952,000 PPO transitions. Frozen neural inference achieved 82 passes across all 50 fresh test episodes, 4.9583% aggregate overrides and zero collisions/overspeed/gap deficits. One episode exceeded the six-changes/car/minute limit (8), so full acceptance remains false. Retained all checkpoints, exact per-seed metrics and learning curves; no teacher runs at inference. See [results and limits](sumo-mappo-v4-refinement.md). Google guide and complete Markdown mirror synchronized.
+
+## 2026-10-29 — MAPPO v04r2 lane-stability preparation
+
+Prepared the authorized retraining with a stronger applied-lane-change cost, stronger auxiliary guidance, lower PPO maneuver-label weighting and reduced exploration. Initial rare-maneuver imitation remains weighted. Safety, inference, cooldown and acceptance limits are unchanged. 178 tests and native no-learning preflight pass. [Declared configuration and evidence](sumo-mappo-v4-stability.md); results and Google guide update follow completion.
+
+## 2026-10-29 — MAPPO v04r2 accepted SUMO passing actor
+
+Authorized retraining completed in 21 min 31 s without runtime errors or agent monitoring. Selected update 175 passes all declared gates across 50 fresh test scenarios: 74 passes, 3.175% aggregate interventions, at most two lane changes/car/minute and zero collisions/overspeed/gap deficits. Latest update 233 regressed and is not the accepted actor. All metrics/checkpoints retained, independently audited, and [documented](sumo-mappo-v4-stability.md). Google guide and Markdown mirror synchronized. This is SUMO acceptance, not physical or sensor-driven validation.

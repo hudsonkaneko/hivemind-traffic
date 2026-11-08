@@ -25,9 +25,13 @@ class V2VMessage:
     speed_m_s: float
     acceleration_m_s2: float
     intended_acceleration_m_s2: float
+    intended_lane_delta: int | None = None
 
     def serialize(self) -> bytes:
-        return json.dumps(asdict(self), sort_keys=True, separators=(",", ":"),
+        payload=asdict(self)
+        if self.intended_lane_delta is None:payload.pop("intended_lane_delta")
+        elif self.intended_lane_delta not in (-1,0,1):raise ValueError("Lane intent must be -1, 0 or 1")
+        return json.dumps(payload, sort_keys=True, separators=(",", ":"),
                           allow_nan=False).encode("utf-8")
 
 
@@ -103,7 +107,7 @@ class V2VChannel:
             msg = V2VMessage(sender, self.episode_id, sequence, float(now_s),
                              float(state["position_m"]), int(state["lane"]),
                              float(state["speed_m_s"]), float(state["acceleration_m_s2"]),
-                             float(state["intended_acceleration_m_s2"]))
+                             float(state["intended_acceleration_m_s2"]),state.get("intended_lane_delta"))
             payload = msg.serialize()  # immutable snapshot, validates finite values
             self._last_sent[sender] = now_s
             self._sequence[sender] = sequence + 1
