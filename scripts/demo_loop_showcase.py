@@ -69,19 +69,29 @@ def main():
     parser.add_argument('--following-gap',type=float,help='v08/v09 preferred following gap, 1.8–3 s')
     parser.add_argument('--panel-hidden',action='store_true',help='v08/v09 matched UI-overhead test')
     parser.add_argument('--control-smoke',action='store_true',help='Native-model test: v08 restart, v09 live changes (use 90 s drive); not mouse latency or FPS qualification')
+    parser.add_argument('--statistics',action=argparse.BooleanOptionalAction,default=None,
+                        help='Measured traffic statistics (default on for v09); does not change driving')
+    parser.add_argument('--control-validation',choices=['endpoints'],
+                        help='v09 endpoint/rapid-request/pause/transition test; at least 180 s drive')
     args=parser.parse_args()
     controls=None
     overrides={'traffic_count':args.traffic_count,'ego_mph':args.ego_mph,
                'traffic_mph':args.traffic_mph,'following_s':args.following_gap}
     if args.version in ('v08','v09'):
         from experiments.showcase_controls import defaults
-        controls={**defaults(),**{k:v for k,v in overrides.items() if v is not None}}
+        initial=defaults()
+        if args.control_validation:
+            from experiments.showcase_control_validation import validation_initial_controls
+            initial=validation_initial_controls(args.control_validation)
+        controls={**initial,**{k:v for k,v in overrides.items() if v is not None}}
         if args.render_hz is not None:controls['render_hz']=args.render_hz
     elif any(v is not None for v in overrides.values()):parser.error('Traffic/driving overrides require v08 or v09')
     cfg=make_config(args.version,mode=args.mode,gui=not args.headless,paced=not args.unpaced,
         camera=args.camera,capture=args.capture,drive_s=args.drive_seconds,evidence=args.evidence,render_hz=args.render_hz,
         ui_profile=args.ui_profile,cpu_threads=args.cpu_threads,profile_render=args.profile_render,
-        controls=controls,panel_hidden=args.panel_hidden,control_smoke=args.control_smoke,vehicle=args.vehicle)
+        controls=controls,panel_hidden=args.panel_hidden,control_smoke=args.control_smoke,vehicle=args.vehicle,
+        statistics=(args.version=='v09' if args.statistics is None else args.statistics),
+        control_validation=args.control_validation)
     try:
         runtime,setup=check_showcase(ROOT,cfg,load_config(ROOT))
     except (SetupError,OSError,ValueError) as error:
@@ -103,7 +113,7 @@ def next_run_config(cfg,values):
     return make_config(cfg['version'],gui=cfg['gui'],paced=cfg['paced'],camera=cfg['camera'],capture=cfg['capture'],
         drive_s=cfg['drive_s'],evidence=cfg['evidence_profile'],cpu_threads=cfg['cpu_threads'],
         controls=values,panel_hidden=cfg['panel_hidden'],control_smoke=False,
-        vehicle=cfg.get('vehicle_profile','prepared'))
+        vehicle=cfg.get('vehicle_profile','prepared'),statistics=cfg.get('traffic_statistics',False))
 
 
 def can_restart(result):
@@ -123,6 +133,9 @@ def run_once(cfg,runtime):
     if cfg['version'] in ('v07','v08','v09'):sources.extend(('visualization/highwaysim.showcase.kit','visualization/showcase_render_profile.py'))
     if cfg['version'] in ('v08','v09'):sources.extend(('experiments/showcase_controls.py','visualization/showcase_sidebar.py'))
     if cfg['version']=='v09':sources.extend(('traffic/live_showcase.py','usd/live_showcase_fleet.py'))
+    if cfg['version'] in ('v07','v08','v09'):sources.append('visualization/showcase_startup.py')
+    if cfg.get('traffic_statistics'):sources.append('traffic/showcase_metrics.py')
+    if cfg.get('control_validation'):sources.append('experiments/showcase_control_validation.py')
     output,manifest=run_package('loop_showcase',cfg,sources)
     command=[str(runtime),str(ROOT/'scripts/physics_loop_showcase.py'),'--output',str(output)]
     child=None;result=dict(passed=False);start=time.perf_counter()
@@ -157,6 +170,7 @@ def run_once(cfg,runtime):
         changed=[p for p,h in manifest['source_hashes'].items() if not (ROOT/p).is_file() or hashlib.sha256((ROOT/p).read_bytes()).hexdigest()!=h]
         result['source_changed_during_run']=changed;result['passed']=bool(result.get('passed') and not changed)
         result['restart_verified']=can_restart(result) if cfg['version'] in ('v08','v09') else False
+        result['run_directory']=output.relative_to(ROOT).as_posix()
         finish(output,manifest,result)
     print(json.dumps(dict(output=str(output),**{key:result.get(key) for key in ('passed','gates','completed_passes',
         'completed_lane_changes','min_clearance_m','preview_timing','error','runtime_error_lines','source_changed_during_run')}),indent=2),flush=True)

@@ -37,6 +37,7 @@ mixed-traffic, statistics, and visualization goals.
 | [Mentor-guided branch roadmap](mentor-loop-roadmap.md) | Separate continuous-loop progression; preserves the main plan and requires user involvement before training |
 | [Continuous physical highway loop](continuous-highway-loop.md) | Referenced V02 road, periodic scripted driver, physical acceptance, follow/overview preview and rerunnable evidence |
 | [Loop traffic showcase](loop-traffic-showcase.md) | Prepared main car, moving block obstacles, scripted safe passing, version records and measured demonstration gates |
+| [Showcase validation](showcase-validation.md) | Window readiness, live-control checks, measured statistics and matched display costs; native status recorded explicitly |
 | [Hybrid motion-authority decision](decisions/001-hybrid-motion-authority.md) | Who moves each vehicle, responsibilities transferred from SUMO, and comparison limits |
 | [Change log](CHANGELOG.md) | Meaningful changes, reasons, and evidence pointers |
 | [Contribution and documentation workflow](workflow.md) | Branches, tests, commits, GitHub review, and learning-document updates |

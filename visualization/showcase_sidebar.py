@@ -4,7 +4,7 @@ from experiments.showcase_controls import (SidebarState, RESTART_CONTROLS, LIVE_
 
 
 class ShowcaseSidebar:
-    def __init__(self, state, settings, *, visible=True, live_driving=False):
+    def __init__(self, state, settings, *, visible=True, live_driving=False, statistics=False):
         import omni.ui as ui
         self.state = state
         self.settings = SidebarState(settings,live_driving=live_driving)
@@ -23,7 +23,7 @@ class ShowcaseSidebar:
                     ui.Label('SCRIPTED SHOWCASE | '+('v09 LIVE' if live_driving else 'v08'), height=24)
                     ui.Label('Main car: PhysX. Traffic: scripted.\nNo LiDAR, trained policy or V2V in this run.',
                              height=40, word_wrap=True)
-                    self.telemetry = ui.Label('Preparing...', height=65, word_wrap=True)
+                    self.telemetry = ui.Label('Preparing...', height=110 if statistics else 65, word_wrap=True)
                     with ui.HStack(height=26):
                         for title, mode in [('Follow', 'follow'), ('Traffic', 'traffic'), ('Overview', 'overview')]:
                             ui.Button(title, clicked_fn=lambda m=mode: self.set_camera(m))

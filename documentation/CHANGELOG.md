@@ -4,6 +4,86 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-19 - Engineering-guide synchronization
+
+- Appended the validated native results, six screenshot links and matched
+  benchmark findings to the existing engineering-guide tab. All 207 native
+  checks passed; existing content, styles and all 41 tab identities/order remain
+  preserved. Record exact scope and local evidence hashes in the
+  [synchronization note](showcase-validation.md#october-19-engineering-guide-synchronization).
+- Both Windows CPU/SUMO clean-clone checks passed for implementation checkpoint
+  `7940a9757356fa2dcd6790cc8c1769e0d0ba1fbc`. Dense strict timing remains open.
+
+## 2026-10-19 - Matched display matrix and evaluator correction
+
+- Completed all 11 declared native cases on one frozen source. All physical,
+  scene and cleanup checks passed. Only the two light-traffic cases passed
+  strict display timing; all nine dense variants failed their unchanged limits.
+- Repaired a comparator mismatch caused solely by the public scene's correct
+  per-run assembly directory. Validate the exact owning run before normalizing
+  that field; asset hashes, physics, geometry, motion and timing remain strict.
+- Preserved the original rejected comparison package. A separately versioned
+  reassessment accepts all eight matched pairs with zero measured motion
+  differences; no native captures were rewritten or rerun for this correction.
+- Full CPU validation passed 1,767 tests and 116 subtests, with 181 optional
+  runtime skips. Independent review verified the repair, input hashes and all
+  timing outcomes. The [matrix report](showcase-benchmark-20261019.md) records
+  directional observations and the limits of single samples.
+- Dense driving has sustained lag and recurring mid-run stalls. Lower display
+  cadence and the minimal app improve observed wall time but do not grant
+  strict qualification. Targeted timing diagnosis is the next performance step.
+
+## 2026-10-19 - Bounded gap creation and repeated endpoint acceptance
+
+- Added a v09 slowdown/recovery supervisor with a 21-second attempt limit,
+  50 m added-lag budget and measured rear/tracking guards. The ordinary planner
+  retains its full-cruise forecast, front safety and lane-change authority.
+- The original 180-second endpoint and repeat passed all 33 gates, each with
+  11 passes and five lane changes. The settled tail added eight passes and four
+  lane changes. The 90-second legacy live-control regression also passed.
+- Full CPU validation passed 1,750 tests and 116 subtests, with 181 optional
+  runtime skips. Independent review covered stop/tracking handoffs and durable
+  failure diagnostics before native execution.
+- Preserved earlier failures and added a sixth original screenshot, bounded
+  controller design and native evidence to the [October 19 report](showcase-validation-20261019.md)
+  and [gap-creation note](showcase-gap-creation.md).
+- Strict display timing still fails. The matched 11-case matrix is the next
+  measurement; physical acceptance does not grant real-time qualification.
+
+## 2026-10-19 — Native validation and remote traffic admission
+
+- Three fresh public-car startup smokes passed and produced matching viewport
+  captures. The native 90-second live-control regression also passed.
+- Fixed dormant slots that could remain permanently inside the protected entry
+  region. Entries now use deterministic safe remote gaps when needed, with
+  40 m front/rear spacing and exact 0.8 m footprint clearance. Active cars,
+  static assets, 160 m ego exclusion and 30-tick transition limits are preserved.
+- The repaired endpoint reached all four declared targets (4/80/12/80), but
+  subsequent passing still failed. Both failed endpoint attempts are retained;
+  a separate controller improvement remains in progress.
+- Verification: 1,724 CPU tests and 100 subtests passed, 181 optional skips;
+  two OpenUSD adapter tests passed and independent review found no blocker.
+  Strict display qualification remains open; the matched matrix is pending.
+- Added actual unmodified screenshots, source hashes and measured evidence in
+  the [October 19 report](showcase-validation-20261019.md).
+
+## 2026-10-16 — Showcase validation implementation
+
+- Added bounded native window/viewport/sidebar readiness with retained failure
+  evidence, plus an opt-in live endpoint, rapid-request, pause/resume, transition
+  and subsequent-passing validation scenario.
+- Added measured drive-only gap/headway, acceleration/jerk, near-miss proxies,
+  per-lifetime time loss and exposure-qualified fairness. Undefined quantities
+  remain null; laps are not completed trips.
+- Added eleven serial public-car benchmark cases and eight matched comparisons
+  for panel, display, recording and editor costs, with source/evidence integrity,
+  physical-equivalence checks and separate strict display qualification.
+- Frozen-source regression: 1,712 tests passed, 180 optional skips, 98 subtests;
+  independent agent review found no remaining actionable defects. Native runs
+  are blocked by competing simulator work; no new runtime or performance pass
+  is claimed. Existing demonstrations and private notes remain preserved.
+- See [implementation, protocol and evidence](showcase-validation.md).
+
 ## 2026-10-15 — Clean-clone readiness
 
 - Added an explicit public procedural PhysX car option, leaving the prepared
