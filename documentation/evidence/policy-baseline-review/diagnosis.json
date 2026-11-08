@@ -1,0 +1,78 @@
+{
+  "train-20261104T225405Z-302c4943/initial-validation": {
+    "sparse_case": {
+      "requested_acceleration": 0.17743583541363478,
+      "filtered_acceleration": 0.17743583541363478,
+      "realized_acceleration": 0.14032460165026478
+    },
+    "sparse_case_speed_ratio": 0.8911285825570158,
+    "sparse_case_overrides": 0.32625,
+    "totals": {
+      "overrides": 11926,
+      "native_realization_changes": 10765,
+      "policy_filter_changes": 1188
+    }
+  },
+  "train-20261104T225405Z-302c4943/final-validation": {
+    "sparse_case": {
+      "requested_acceleration": 0.2805838892329484,
+      "filtered_acceleration": 0.2805838892329484,
+      "realized_acceleration": 0.13938560349890358
+    },
+    "sparse_case_speed_ratio": 0.8919027263267661,
+    "sparse_case_overrides": 0.75125,
+    "totals": {
+      "overrides": 18266,
+      "native_realization_changes": 16697,
+      "policy_filter_changes": 1710
+    }
+  },
+  "train-20261104T225405Z-302c4943/coverage": {
+    "cells": 41,
+    "decisions_by_av_count": {
+      "2": 15956,
+      "6": 38113,
+      "1": 5051,
+      "8": 23955,
+      "4": 16924
+    }
+  },
+  "train-20261105T045039Z-a6db8f1b/initial-validation": {
+    "sparse_case": {
+      "requested_acceleration": 0.17743583541363478,
+      "filtered_acceleration": 0.17743583541363478,
+      "realized_acceleration": 0.14032460165026478
+    },
+    "sparse_case_speed_ratio": 0.8911285825570158,
+    "sparse_case_overrides": 0.32625,
+    "totals": {
+      "overrides": 11926,
+      "native_realization_changes": 10765,
+      "policy_filter_changes": 1188
+    }
+  },
+  "train-20261105T045039Z-a6db8f1b/final-validation": {
+    "sparse_case": {
+      "requested_acceleration": 0.43129544995725155,
+      "filtered_acceleration": 0.43129544995725155,
+      "realized_acceleration": 0.13931339384246655
+    },
+    "sparse_case_speed_ratio": 0.8919622585586099,
+    "sparse_case_overrides": 0.8675,
+    "totals": {
+      "overrides": 17314,
+      "native_realization_changes": 16822,
+      "policy_filter_changes": 494
+    }
+  },
+  "train-20261105T045039Z-a6db8f1b/coverage": {
+    "cells": 41,
+    "decisions_by_av_count": {
+      "2": 15959,
+      "6": 38404,
+      "1": 5049,
+      "8": 23665,
+      "4": 16921
+    }
+  }
+}

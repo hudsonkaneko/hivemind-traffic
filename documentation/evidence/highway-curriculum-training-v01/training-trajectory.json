@@ -1,0 +1,3365 @@
+[
+  {
+    "update": 1,
+    "task": "cruise",
+    "speed": 0.05812278148937364,
+    "reward": -589.530834713246,
+    "terms": {
+      "progress": 154.98021549600332,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -329.79999999998984,
+      "jerk": -408.41105020924863,
+      "lane_change": -6.299999999999994
+    },
+    "optimizer_steps": 52,
+    "kl": 5.300156772136688e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 2,
+    "task": "following",
+    "speed": 0.05635298940181303,
+    "reward": -582.921377984539,
+    "terms": {
+      "progress": 150.2611922131381,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -402.9999999999857,
+      "jerk": -328.3825701976775,
+      "lane_change": -1.8000000000000005
+    },
+    "optimizer_steps": 52,
+    "kl": 4.512770101428032e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 3,
+    "task": "passing",
+    "speed": 0.045453212400176274,
+    "reward": -645.6889788437858,
+    "terms": {
+      "progress": 121.1977209668271,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -361.799999999988,
+      "jerk": -403.1866998106119,
+      "lane_change": -1.9000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 2.6089604943990707e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 4,
+    "task": "merge",
+    "speed": 0.051865213622834166,
+    "reward": -661.6618582476681,
+    "terms": {
+      "progress": 118.44340786068133,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -367.3999999999877,
+      "jerk": -410.5052661083491,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00027615902945399284,
+    "early_stopped": false
+  },
+  {
+    "update": 5,
+    "task": "cruise",
+    "speed": 0.04225729481372383,
+    "reward": -607.2690349920779,
+    "terms": {
+      "progress": 135.21124396374105,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -323.7999999999902,
+      "jerk": -412.2802789558194,
+      "lane_change": -6.399999999999993
+    },
+    "optimizer_steps": 52,
+    "kl": 8.291192352771759e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 6,
+    "task": "following",
+    "speed": 0.05038902700565938,
+    "reward": -593.9705751755408,
+    "terms": {
+      "progress": 161.23045863657597,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -367.1999999999877,
+      "jerk": -384.7010338121173,
+      "lane_change": -3.3000000000000016
+    },
+    "optimizer_steps": 52,
+    "kl": 2.593221142888069e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 7,
+    "task": "passing",
+    "speed": 0.041191918862498636,
+    "reward": -611.962285091852,
+    "terms": {
+      "progress": 131.802345966621,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -407.19999999998544,
+      "jerk": -330.764631058472,
+      "lane_change": -5.799999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 1.507764682173729e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 8,
+    "task": "merge",
+    "speed": 0.04092093610489024,
+    "reward": -645.0143810780165,
+    "terms": {
+      "progress": 106.2996184578928,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -285.9999999999923,
+      "jerk": -462.3139995359096,
+      "lane_change": -3.0000000000000013
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0007780594751238823,
+    "early_stopped": false
+  },
+  {
+    "update": 9,
+    "task": "cruise",
+    "speed": 0.05848950421442363,
+    "reward": -604.5823559655316,
+    "terms": {
+      "progress": 155.95805526036364,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -256.799999999994,
+      "jerk": -497.7404112258951,
+      "lane_change": -5.999999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0015386361628770828,
+    "early_stopped": false
+  },
+  {
+    "update": 10,
+    "task": "following",
+    "speed": 0.07379401525269183,
+    "reward": -543.10063071496,
+    "terms": {
+      "progress": 196.7664329393528,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -288.99999999999216,
+      "jerk": -446.16706365431276,
+      "lane_change": -4.699999999999999
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00028493767604231834,
+    "early_stopped": false
+  },
+  {
+    "update": 11,
+    "task": "passing",
+    "speed": 0.07301188367739714,
+    "reward": -554.4124122672409,
+    "terms": {
+      "progress": 194.68093536027447,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -290.99999999999204,
+      "jerk": -452.09334762751354,
+      "lane_change": -5.999999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 7.42059201002121e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 12,
+    "task": "merge",
+    "speed": 0.0506492627408879,
+    "reward": -635.9154316833655,
+    "terms": {
+      "progress": 118.06185521339377,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -258.7999999999939,
+      "jerk": -492.67728689676017,
+      "lane_change": -2.500000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.001535528339445591,
+    "early_stopped": false
+  },
+  {
+    "update": 13,
+    "task": "cruise",
+    "speed": 0.059594982927204096,
+    "reward": -555.5705911112879,
+    "terms": {
+      "progress": 190.68688166399645,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -227.19999999999564,
+      "jerk": -512.6574727752837,
+      "lane_change": -6.399999999999993
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0017847674898803234,
+    "early_stopped": false
+  },
+  {
+    "update": 14,
+    "task": "following",
+    "speed": 0.0706792609078542,
+    "reward": -509.2001874842804,
+    "terms": {
+      "progress": 226.15339746464443,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -239.19999999999496,
+      "jerk": -491.2535849489254,
+      "lane_change": -4.899999999999999
+    },
+    "optimizer_steps": 52,
+    "kl": 0.002291924087330699,
+    "early_stopped": false
+  },
+  {
+    "update": 15,
+    "task": "passing",
+    "speed": 0.10173167799839272,
+    "reward": -391.7994155580893,
+    "terms": {
+      "progress": 325.5122409826892,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -152.79999999999987,
+      "jerk": -558.7116565407775,
+      "lane_change": -5.799999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0030522430315613747,
+    "early_stopped": false
+  },
+  {
+    "update": 16,
+    "task": "merge",
+    "speed": 0.07909540633295302,
+    "reward": -496.4103047691725,
+    "terms": {
+      "progress": 208.8635259090934,
+      "merge": 5.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -135.00000000000088,
+      "jerk": -570.6738306782638,
+      "lane_change": -4.6
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0018328309524804354,
+    "early_stopped": false
+  },
+  {
+    "update": 17,
+    "task": "cruise",
+    "speed": 0.17068491503643857,
+    "reward": -121.08445667844329,
+    "terms": {
+      "progress": 523.696072264353,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -53.60000000000022,
+      "jerk": -587.2805289427965,
+      "lane_change": -5.899999999999995
+    },
+    "optimizer_steps": 48,
+    "kl": 0.0027915718965232372,
+    "early_stopped": false
+  },
+  {
+    "update": 18,
+    "task": "following",
+    "speed": 0.42034558643881054,
+    "reward": 478.10088365507147,
+    "terms": {
+      "progress": 907.9594672965361,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -51.20000000000019,
+      "jerk": -382.3585836414646,
+      "lane_change": -2.3000000000000007
+    },
+    "optimizer_steps": 36,
+    "kl": 0.0008198044379241765,
+    "early_stopped": false
+  },
+  {
+    "update": 19,
+    "task": "passing",
+    "speed": 0.25505506572623565,
+    "reward": 130.78248161272063,
+    "terms": {
+      "progress": 726.3446267226926,
+      "merge": 0.0,
+      "passing": 2.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -72.8000000000005,
+      "jerk": -522.2621451099711,
+      "lane_change": -4.5
+    },
+    "optimizer_steps": 48,
+    "kl": 0.002795830834656954,
+    "early_stopped": false
+  },
+  {
+    "update": 20,
+    "task": "merge",
+    "speed": 0.2256973143795824,
+    "reward": 47.524315899268096,
+    "terms": {
+      "progress": 620.5622628862151,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -90.00000000000074,
+      "jerk": -491.4379469869476,
+      "lane_change": -3.600000000000002
+    },
+    "optimizer_steps": 48,
+    "kl": 0.0005729611730203032,
+    "early_stopped": false
+  },
+  {
+    "update": 21,
+    "task": "cruise",
+    "speed": 0.7574077925238801,
+    "reward": 1400.5796196710303,
+    "terms": {
+      "progress": 2019.5733909459204,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -40.20000000000003,
+      "jerk": -573.2937712748941,
+      "lane_change": -5.4999999999999964
+    },
+    "optimizer_steps": 52,
+    "kl": 0.006220482289791107,
+    "early_stopped": false
+  },
+  {
+    "update": 22,
+    "task": "following",
+    "speed": 0.6600490058304491,
+    "reward": 1096.7479595110833,
+    "terms": {
+      "progress": 1760.539307788981,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -244.79999999999464,
+      "jerk": -416.59134827789984,
+      "lane_change": -2.400000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.001410673139616847,
+    "early_stopped": false
+  },
+  {
+    "update": 23,
+    "task": "passing",
+    "speed": 0.7214300807939713,
+    "reward": 1305.843568708017,
+    "terms": {
+      "progress": 1923.64141085006,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -177.79999999999845,
+      "jerk": -444.39784214205054,
+      "lane_change": -3.600000000000002
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0035124975256621838,
+    "early_stopped": false
+  },
+  {
+    "update": 24,
+    "task": "merge",
+    "speed": 0.6903646315568734,
+    "reward": 1205.399355400586,
+    "terms": {
+      "progress": 1810.496066696107,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -160.39999999999944,
+      "jerk": -451.19671129551205,
+      "lane_change": -3.5000000000000018
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0012977474834769964,
+    "early_stopped": false
+  },
+  {
+    "update": 25,
+    "task": "cruise",
+    "speed": 0.8505433584675129,
+    "reward": 2069.12478707527,
+    "terms": {
+      "progress": 2681.7926225179604,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 4.0,
+      "collision": 0.0,
+      "intervention": -161.1999999999994,
+      "jerk": -449.8678354426676,
+      "lane_change": -5.599999999999996
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0006584561779163778,
+    "early_stopped": false
+  },
+  {
+    "update": 26,
+    "task": "following",
+    "speed": 0.8118196086206261,
+    "reward": 1958.120454214366,
+    "terms": {
+      "progress": 2592.9079827656847,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -256.399999999994,
+      "jerk": -376.98752855131244,
+      "lane_change": -3.4000000000000017
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0020753848366439342,
+    "early_stopped": false
+  },
+  {
+    "update": 27,
+    "task": "passing",
+    "speed": 0.8255253849833906,
+    "reward": 1987.8583325219356,
+    "terms": {
+      "progress": 2612.4853303724294,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 4.0,
+      "collision": 0.0,
+      "intervention": -294.19999999999186,
+      "jerk": -338.6269978504765,
+      "lane_change": -3.800000000000002
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00017918321827892214,
+    "early_stopped": false
+  },
+  {
+    "update": 28,
+    "task": "merge",
+    "speed": 0.7899010229593064,
+    "reward": 1209.6432896377742,
+    "terms": {
+      "progress": 1639.4710160785949,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": -40.0,
+      "intervention": -146.60000000000022,
+      "jerk": -249.42772644080625,
+      "lane_change": -3.800000000000002
+    },
+    "optimizer_steps": 36,
+    "kl": 0.0002893097698688507,
+    "early_stopped": false
+  },
+  {
+    "update": 29,
+    "task": "cruise",
+    "speed": 0.966583821947799,
+    "reward": 1913.1667590317602,
+    "terms": {
+      "progress": 2577.326225308233,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -308.19999999999106,
+      "jerk": -350.3594662764396,
+      "lane_change": -5.599999999999996
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0035407808609306812,
+    "early_stopped": false
+  },
+  {
+    "update": 30,
+    "task": "following",
+    "speed": 0.9153226945799133,
+    "reward": 1762.0089160302568,
+    "terms": {
+      "progress": 2440.642116900641,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -405.19999999998555,
+      "jerk": -270.2332008703757,
+      "lane_change": -3.2000000000000015
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0008433191105723381,
+    "early_stopped": false
+  },
+  {
+    "update": 31,
+    "task": "passing",
+    "speed": 0.8442438453513462,
+    "reward": 1610.6734033666705,
+    "terms": {
+      "progress": 2251.115478835918,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -409.3999999999853,
+      "jerk": -236.9420754692398,
+      "lane_change": -2.1000000000000005
+    },
+    "optimizer_steps": 52,
+    "kl": 6.773695349693298e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 32,
+    "task": "merge",
+    "speed": 0.8890788189509604,
+    "reward": 1729.2167415496008,
+    "terms": {
+      "progress": 2340.72459724666,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -290.79999999999205,
+      "jerk": -325.1078556970283,
+      "lane_change": -5.599999999999996
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0048149083741009235,
+    "early_stopped": false
+  },
+  {
+    "update": 33,
+    "task": "cruise",
+    "speed": 0.9603673086273069,
+    "reward": 2427.3792407347487,
+    "terms": {
+      "progress": 3072.900407705183,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -378.1999999999871,
+      "jerk": -261.3211669703828,
+      "lane_change": -5.999999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0009078336879611015,
+    "early_stopped": false
+  },
+  {
+    "update": 34,
+    "task": "following",
+    "speed": 0.9393652873642967,
+    "reward": 2351.586411643911,
+    "terms": {
+      "progress": 3005.699953127008,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -467.399999999982,
+      "jerk": -184.31354148307722,
+      "lane_change": -2.400000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.008877802640199661,
+    "early_stopped": false
+  },
+  {
+    "update": 35,
+    "task": "passing",
+    "speed": 0.9428107186609103,
+    "reward": 2370.9830241063023,
+    "terms": {
+      "progress": 3016.7243467532467,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -509.19999999997964,
+      "jerk": -141.64132264693325,
+      "lane_change": -2.9000000000000012
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0027186707593500614,
+    "early_stopped": false
+  },
+  {
+    "update": 36,
+    "task": "merge",
+    "speed": 0.9382941354107459,
+    "reward": 2319.4878138502636,
+    "terms": {
+      "progress": 2931.0607704247914,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -422.3999999999846,
+      "jerk": -195.47295657447046,
+      "lane_change": -5.699999999999996
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00032808983814902604,
+    "early_stopped": false
+  },
+  {
+    "update": 37,
+    "task": "cruise",
+    "speed": 0.9000647828160822,
+    "reward": 807.6543988267191,
+    "terms": {
+      "progress": 974.1752640614797,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -112.60000000000106,
+      "jerk": -60.02086523475738,
+      "lane_change": -1.9000000000000006
+    },
+    "optimizer_steps": 20,
+    "kl": 4.6142216092448507e-07,
+    "early_stopped": false
+  },
+  {
+    "update": 38,
+    "task": "following",
+    "speed": 0.5508488274152846,
+    "reward": 595.8653172581987,
+    "terms": {
+      "progress": 900.8011063595578,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -262.99999999999363,
+      "jerk": -47.13578910134062,
+      "lane_change": -0.7999999999999999
+    },
+    "optimizer_steps": 28,
+    "kl": 3.3900294511113316e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 39,
+    "task": "passing",
+    "speed": 0.7904246222687167,
+    "reward": 748.0105716257714,
+    "terms": {
+      "progress": 953.816797719166,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -163.59999999999926,
+      "jerk": -57.106226093391044,
+      "lane_change": -1.0999999999999999
+    },
+    "optimizer_steps": 20,
+    "kl": 4.7612320486223325e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 40,
+    "task": "merge",
+    "speed": 0.6965378964205434,
+    "reward": 731.4593383097299,
+    "terms": {
+      "progress": 925.4049197809085,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -99.80000000000088,
+      "jerk": -110.34558147117545,
+      "lane_change": -1.8000000000000005
+    },
+    "optimizer_steps": 24,
+    "kl": 3.430525976000354e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 41,
+    "task": "cruise",
+    "speed": 0.9534803239509339,
+    "reward": 1894.644818307764,
+    "terms": {
+      "progress": 2542.3866905635564,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -473.59999999998166,
+      "jerk": -168.14187225575546,
+      "lane_change": -5.999999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 4.034489393234253e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 42,
+    "task": "following",
+    "speed": 0.9356824521237154,
+    "reward": 1853.5407660087617,
+    "terms": {
+      "progress": 2494.929945712875,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -485.99999999998096,
+      "jerk": -151.98917970408456,
+      "lane_change": -3.4000000000000017
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0024939272552728653,
+    "early_stopped": false
+  },
+  {
+    "update": 43,
+    "task": "passing",
+    "speed": 0.9456655778223095,
+    "reward": 1891.930592256533,
+    "terms": {
+      "progress": 2521.5492322034083,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -510.99999999997954,
+      "jerk": -123.21863994683464,
+      "lane_change": -3.4000000000000017
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0006723161786794662,
+    "early_stopped": false
+  },
+  {
+    "update": 44,
+    "task": "merge",
+    "speed": 0.9030287953021171,
+    "reward": 1786.61225846389,
+    "terms": {
+      "progress": 2368.222584592203,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -432.199999999984,
+      "jerk": -157.11032612828376,
+      "lane_change": -4.300000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0015596174634993076,
+    "early_stopped": false
+  },
+  {
+    "update": 45,
+    "task": "cruise",
+    "speed": 0.9364981021240645,
+    "reward": 2316.9324329750457,
+    "terms": {
+      "progress": 2899.3165961702057,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -463.59999999998223,
+      "jerk": -120.88416319511657,
+      "lane_change": -3.900000000000002
+    },
+    "optimizer_steps": 52,
+    "kl": 2.4313728772540344e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 46,
+    "task": "following",
+    "speed": 0.9415955138812909,
+    "reward": 2315.253428525645,
+    "terms": {
+      "progress": 2927.3318132490854,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -511.5999999999795,
+      "jerk": -104.27838472340729,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0006386847235262394,
+    "early_stopped": false
+  },
+  {
+    "update": 47,
+    "task": "passing",
+    "speed": 0.9140383985895497,
+    "reward": 2279.260414020037,
+    "terms": {
+      "progress": 2862.684018993028,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 4.0,
+      "collision": 0.0,
+      "intervention": -481.3999999999812,
+      "jerk": -111.3236049729544,
+      "lane_change": -2.700000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0004834711435250938,
+    "early_stopped": false
+  },
+  {
+    "update": 48,
+    "task": "merge",
+    "speed": 0.8898238629859859,
+    "reward": 2130.6898473467018,
+    "terms": {
+      "progress": 2696.7187198896236,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -417.19999999998487,
+      "jerk": -159.12887254287247,
+      "lane_change": -5.699999999999996
+    },
+    "optimizer_steps": 52,
+    "kl": 3.647059202194214e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 49,
+    "task": "cruise",
+    "speed": 0.9815248022149874,
+    "reward": 1977.1223010340686,
+    "terms": {
+      "progress": 2617.165274338529,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -521.3999999999816,
+      "jerk": -113.04297330439847,
+      "lane_change": -5.599999999999996
+    },
+    "optimizer_steps": 52,
+    "kl": 0.006189571227878332,
+    "early_stopped": false
+  },
+  {
+    "update": 50,
+    "task": "following",
+    "speed": 0.908281198059476,
+    "reward": 1806.2146282109868,
+    "terms": {
+      "progress": 2422.045212097518,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -533.9999999999844,
+      "jerk": -79.53058388649916,
+      "lane_change": -2.3000000000000007
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00015262840315699577,
+    "early_stopped": false
+  },
+  {
+    "update": 51,
+    "task": "passing",
+    "speed": 0.9549882525102589,
+    "reward": 1915.8270962074123,
+    "terms": {
+      "progress": 2546.4074735868144,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -558.59999999999,
+      "jerk": -77.78037737935838,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 8.759391494095325e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 52,
+    "task": "merge",
+    "speed": 0.9260222955652928,
+    "reward": 1839.6821962500128,
+    "terms": {
+      "progress": 2436.141886281536,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -469.99999999998187,
+      "jerk": -130.65969003147455,
+      "lane_change": -5.799999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0037367292679846287,
+    "early_stopped": false
+  },
+  {
+    "update": 53,
+    "task": "cruise",
+    "speed": 0.9558166856257446,
+    "reward": 2455.274781345738,
+    "terms": {
+      "progress": 3058.3397170702815,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -507.7999999999797,
+      "jerk": -89.26493572447207,
+      "lane_change": -5.999999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0013508554548025131,
+    "early_stopped": false
+  },
+  {
+    "update": 54,
+    "task": "following",
+    "speed": 0.8835205011798734,
+    "reward": 2201.736725794479,
+    "terms": {
+      "progress": 2827.0126272541556,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -558.39999999999,
+      "jerk": -64.67590145966578,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0014059166423976421,
+    "early_stopped": false
+  },
+  {
+    "update": 55,
+    "task": "passing",
+    "speed": 0.9254704423997172,
+    "reward": 2350.4565052687212,
+    "terms": {
+      "progress": 2961.240427721386,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -551.7999999999885,
+      "jerk": -63.88392245263009,
+      "lane_change": -3.1000000000000014
+    },
+    "optimizer_steps": 52,
+    "kl": 0.003992714919149876,
+    "early_stopped": false
+  },
+  {
+    "update": 56,
+    "task": "merge",
+    "speed": 0.9503900835076179,
+    "reward": 2375.9664962475636,
+    "terms": {
+      "progress": 2969.8056155032846,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -508.5999999999797,
+      "jerk": -91.33911925564877,
+      "lane_change": -5.899999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0006975177675485611,
+    "early_stopped": false
+  },
+  {
+    "update": 57,
+    "task": "cruise",
+    "speed": 0.9187441372816182,
+    "reward": 805.2504885283024,
+    "terms": {
+      "progress": 965.8386832163438,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -126.20000000000125,
+      "jerk": -40.688194688036994,
+      "lane_change": -1.7000000000000004
+    },
+    "optimizer_steps": 20,
+    "kl": 1.1973910659435205e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 58,
+    "task": "following",
+    "speed": 0.5797502133510513,
+    "reward": 656.224941743533,
+    "terms": {
+      "progress": 943.5748001619127,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -262.1999999999937,
+      "jerk": -31.849858418362324,
+      "lane_change": -1.3
+    },
+    "optimizer_steps": 28,
+    "kl": 8.911128679756075e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 59,
+    "task": "passing",
+    "speed": 0.7780495748369642,
+    "reward": 762.1779246941772,
+    "terms": {
+      "progress": 956.118017013387,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -168.79999999999896,
+      "jerk": -39.74009231920749,
+      "lane_change": -1.4000000000000001
+    },
+    "optimizer_steps": 20,
+    "kl": 1.4944988606657716e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 60,
+    "task": "merge",
+    "speed": 0.7294354289282863,
+    "reward": 763.9735277479936,
+    "terms": {
+      "progress": 926.5588509208484,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -117.80000000000113,
+      "jerk": -60.38532317285395,
+      "lane_change": -2.400000000000001
+    },
+    "optimizer_steps": 24,
+    "kl": 0.00013333682727534324,
+    "early_stopped": false
+  },
+  {
+    "update": 61,
+    "task": "cruise",
+    "speed": 0.9197645946462706,
+    "reward": 1841.6526064667821,
+    "terms": {
+      "progress": 2452.8303091041234,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -523.9999999999822,
+      "jerk": -81.3777026372929,
+      "lane_change": -5.799999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0006104446947574615,
+    "early_stopped": false
+  },
+  {
+    "update": 62,
+    "task": "following",
+    "speed": 0.9354804592180237,
+    "reward": 1860.9169623396788,
+    "terms": {
+      "progress": 2494.391346161214,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -572.1999999999931,
+      "jerk": -59.77438382148486,
+      "lane_change": -1.5000000000000002
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0011553005315363407,
+    "early_stopped": false
+  },
+  {
+    "update": 63,
+    "task": "passing",
+    "speed": 0.9699841832540922,
+    "reward": 1949.365048611466,
+    "terms": {
+      "progress": 2586.393044109912,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -583.1999999999956,
+      "jerk": -59.22799549840268,
+      "lane_change": -2.600000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0017495774663984776,
+    "early_stopped": false
+  },
+  {
+    "update": 64,
+    "task": "merge",
+    "speed": 0.8925300270491546,
+    "reward": 1781.1071454902235,
+    "terms": {
+      "progress": 2348.0461525128217,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -477.39999999998145,
+      "jerk": -95.23900702255497,
+      "lane_change": -4.300000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0020907633006572723,
+    "early_stopped": false
+  },
+  {
+    "update": 65,
+    "task": "cruise",
+    "speed": 0.9714724584134207,
+    "reward": 2360.0586484468354,
+    "terms": {
+      "progress": 2941.469495495455,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -518.799999999981,
+      "jerk": -65.11084704855386,
+      "lane_change": -5.4999999999999964
+    },
+    "optimizer_steps": 48,
+    "kl": 0.0007225941517390311,
+    "early_stopped": false
+  },
+  {
+    "update": 66,
+    "task": "following",
+    "speed": 0.9277457250169698,
+    "reward": 2306.730891445102,
+    "terms": {
+      "progress": 2903.8010149843394,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -545.5999999999871,
+      "jerk": -55.07012353919602,
+      "lane_change": -2.400000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 3.8377169403247535e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 67,
+    "task": "passing",
+    "speed": 0.9085603905943385,
+    "reward": 2276.6281917635947,
+    "terms": {
+      "progress": 2859.2264145553813,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 4.0,
+      "collision": 0.0,
+      "intervention": -545.399999999987,
+      "jerk": -46.9982227917551,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0008862988324835896,
+    "early_stopped": false
+  },
+  {
+    "update": 68,
+    "task": "merge",
+    "speed": 0.8746592186956155,
+    "reward": 2105.01774077918,
+    "terms": {
+      "progress": 2628.972307197784,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 4.0,
+      "collision": 0.0,
+      "intervention": -469.99999999998187,
+      "jerk": -62.95456641855628,
+      "lane_change": -4.999999999999998
+    },
+    "optimizer_steps": 48,
+    "kl": 4.650013943319209e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 69,
+    "task": "cruise",
+    "speed": 0.9811841775246134,
+    "reward": 1987.3403191645361,
+    "terms": {
+      "progress": 2616.257023106141,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -567.199999999992,
+      "jerk": -56.11670394154042,
+      "lane_change": -5.599999999999996
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00360189750790596,
+    "early_stopped": false
+  },
+  {
+    "update": 70,
+    "task": "following",
+    "speed": 0.9098891003778904,
+    "reward": 1817.459794735037,
+    "terms": {
+      "progress": 2426.1538288530105,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -574.5999999999937,
+      "jerk": -32.39403411796328,
+      "lane_change": -1.7000000000000004
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00029425020329654217,
+    "early_stopped": false
+  },
+  {
+    "update": 71,
+    "task": "passing",
+    "speed": 0.9085489595276034,
+    "reward": 1810.0809375581143,
+    "terms": {
+      "progress": 2422.5804396853146,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -588.5999999999968,
+      "jerk": -29.79950212716529,
+      "lane_change": -2.1000000000000005
+    },
+    "optimizer_steps": 52,
+    "kl": 5.63180074095726e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 72,
+    "task": "merge",
+    "speed": 0.9393095222340583,
+    "reward": 1890.635040039823,
+    "terms": {
+      "progress": 2472.15509167133,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -523.399999999982,
+      "jerk": -62.02005163145936,
+      "lane_change": -6.099999999999994
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00011008651927113533,
+    "early_stopped": false
+  },
+  {
+    "update": 73,
+    "task": "cruise",
+    "speed": 0.9444160960676423,
+    "reward": 2430.211639017582,
+    "terms": {
+      "progress": 3022.008993745426,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -533.5999999999843,
+      "jerk": -52.19735472776867,
+      "lane_change": -5.999999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.004578751046210527,
+    "early_stopped": false
+  },
+  {
+    "update": 74,
+    "task": "following",
+    "speed": 0.9083239121246081,
+    "reward": 2297.8179486129648,
+    "terms": {
+      "progress": 2906.3764403700966,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -581.5999999999952,
+      "jerk": -25.0584917571171,
+      "lane_change": -1.9000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0032562892884016037,
+    "early_stopped": false
+  },
+  {
+    "update": 75,
+    "task": "passing",
+    "speed": 0.9243933056581443,
+    "reward": 2364.523203462578,
+    "terms": {
+      "progress": 2957.93244743424,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -572.9999999999933,
+      "jerk": -26.309243971647103,
+      "lane_change": -2.1000000000000005
+    },
+    "optimizer_steps": 52,
+    "kl": 1.617521047592163e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 76,
+    "task": "merge",
+    "speed": 0.9595407426904174,
+    "reward": 2414.0883855971674,
+    "terms": {
+      "progress": 2987.043696630378,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -550.3999999999882,
+      "jerk": -28.755311033133204,
+      "lane_change": -5.799999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0004814228159375489,
+    "early_stopped": false
+  },
+  {
+    "update": 77,
+    "task": "cruise",
+    "speed": 0.9053770107450254,
+    "reward": 822.795568112106,
+    "terms": {
+      "progress": 976.2705386517662,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -143.80000000000038,
+      "jerk": -15.874970539659271,
+      "lane_change": -1.8000000000000005
+    },
+    "optimizer_steps": 20,
+    "kl": 4.768813232658431e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 78,
+    "task": "following",
+    "speed": 0.7817174012837574,
+    "reward": 768.9868964128707,
+    "terms": {
+      "progress": 951.2581758903048,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -166.1999999999991,
+      "jerk": -22.871279477431337,
+      "lane_change": -1.2
+    },
+    "optimizer_steps": 20,
+    "kl": 1.3854044482286554e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 79,
+    "task": "passing",
+    "speed": 0.7942573413951065,
+    "reward": 768.1486809498996,
+    "terms": {
+      "progress": 948.9778124030831,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -173.99999999999866,
+      "jerk": -21.329131453181233,
+      "lane_change": -1.5000000000000002
+    },
+    "optimizer_steps": 20,
+    "kl": 5.5644442909397185e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 80,
+    "task": "merge",
+    "speed": 0.6316815591020284,
+    "reward": 712.642548333856,
+    "terms": {
+      "progress": 918.5967082482233,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -193.79999999999754,
+      "jerk": -27.954159914353127,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 24,
+    "kl": 1.2108582268410828e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 81,
+    "task": "cruise",
+    "speed": 0.9644074539635185,
+    "reward": 1947.0029690272588,
+    "terms": {
+      "progress": 2571.5230966458057,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -588.3999999999968,
+      "jerk": -34.020127618493916,
+      "lane_change": -2.1000000000000005
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0001103072427213192,
+    "early_stopped": false
+  },
+  {
+    "update": 82,
+    "task": "following",
+    "speed": 0.8674331158053299,
+    "reward": 1687.6134742785177,
+    "terms": {
+      "progress": 2312.948000268379,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -594.3999999999982,
+      "jerk": -28.23452598981537,
+      "lane_change": -2.700000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0022329934872686863,
+    "early_stopped": false
+  },
+  {
+    "update": 83,
+    "task": "passing",
+    "speed": 0.8814583029878504,
+    "reward": 1779.309081737903,
+    "terms": {
+      "progress": 2350.345152920402,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -543.3999999999866,
+      "jerk": -32.036071182456645,
+      "lane_change": -3.600000000000002
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0020577451214194298,
+    "early_stopped": false
+  },
+  {
+    "update": 84,
+    "task": "merge",
+    "speed": 0.9231733918667385,
+    "reward": 1129.2222273108237,
+    "terms": {
+      "progress": 1529.005073976845,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": -40.0,
+      "intervention": -340.7999999999892,
+      "jerk": -25.48284666599066,
+      "lane_change": -3.5000000000000018
+    },
+    "optimizer_steps": 32,
+    "kl": 0.0009319278178736567,
+    "early_stopped": false
+  },
+  {
+    "update": 85,
+    "task": "cruise",
+    "speed": 0.956997157830094,
+    "reward": 2380.772161895386,
+    "terms": {
+      "progress": 2939.7612115004026,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -539.5999999999857,
+      "jerk": -23.889049604963343,
+      "lane_change": -1.5000000000000002
+    },
+    "optimizer_steps": 48,
+    "kl": 0.003761016298085451,
+    "early_stopped": false
+  },
+  {
+    "update": 86,
+    "task": "following",
+    "speed": 0.9622784722392923,
+    "reward": 2345.856992835527,
+    "terms": {
+      "progress": 2930.0266393021852,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -573.5999999999934,
+      "jerk": -16.16964646659963,
+      "lane_change": -2.400000000000001
+    },
+    "optimizer_steps": 48,
+    "kl": 0.002366692526265979,
+    "early_stopped": false
+  },
+  {
+    "update": 87,
+    "task": "passing",
+    "speed": 0.8548248237076106,
+    "reward": 2132.6061813743477,
+    "terms": {
+      "progress": 2704.7140599854465,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 4.0,
+      "collision": 0.0,
+      "intervention": -559.1999999999902,
+      "jerk": -22.00787861104593,
+      "lane_change": -2.9000000000000012
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0003229956200812012,
+    "early_stopped": false
+  },
+  {
+    "update": 88,
+    "task": "merge",
+    "speed": 0.8861034622831304,
+    "reward": 1307.0127918653595,
+    "terms": {
+      "progress": 1665.8769436765508,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": -40.0,
+      "intervention": -304.3999999999913,
+      "jerk": -21.164151811156767,
+      "lane_change": -3.3000000000000016
+    },
+    "optimizer_steps": 32,
+    "kl": 9.194442100124434e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 89,
+    "task": "cruise",
+    "speed": 0.9905408505193998,
+    "reward": 2022.2020540523617,
+    "terms": {
+      "progress": 2641.2059185288963,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -596.1999999999986,
+      "jerk": -18.803864476457225,
+      "lane_change": -4.000000000000002
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0017297733575105667,
+    "early_stopped": false
+  },
+  {
+    "update": 90,
+    "task": "following",
+    "speed": 0.8078702462921085,
+    "reward": 1520.2817913228112,
+    "terms": {
+      "progress": 2154.1278936565127,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -621.4000000000043,
+      "jerk": -10.946102333675547,
+      "lane_change": -1.5000000000000002
+    },
+    "optimizer_steps": 52,
+    "kl": 8.805841207504272e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 91,
+    "task": "passing",
+    "speed": 0.8968113364729178,
+    "reward": 1779.1579234369076,
+    "terms": {
+      "progress": 2391.282912213088,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -602.1999999999999,
+      "jerk": -15.42498877614162,
+      "lane_change": -2.500000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 7.956288754940033e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 92,
+    "task": "merge",
+    "speed": 0.9731912554717808,
+    "reward": 1965.935953684651,
+    "terms": {
+      "progress": 2564.2753258924627,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -584.1999999999958,
+      "jerk": -18.139372207740497,
+      "lane_change": -5.999999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0004365602508187294,
+    "early_stopped": false
+  },
+  {
+    "update": 93,
+    "task": "cruise",
+    "speed": 0.9534451304588895,
+    "reward": 2470.0935391382523,
+    "terms": {
+      "progress": 3051.009402913391,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -561.7999999999907,
+      "jerk": -13.215863775071135,
+      "lane_change": -5.899999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0062501574866473675,
+    "early_stopped": false
+  },
+  {
+    "update": 94,
+    "task": "following",
+    "speed": 0.9404554451479784,
+    "reward": 2398.5536699569434,
+    "terms": {
+      "progress": 3009.1881458922676,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -592.1999999999977,
+      "jerk": -15.334475935312513,
+      "lane_change": -3.1000000000000014
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0005823960527777672,
+    "early_stopped": false
+  },
+  {
+    "update": 95,
+    "task": "passing",
+    "speed": 0.9062050677165994,
+    "reward": 2293.4589598281373,
+    "terms": {
+      "progress": 2899.59674494865,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -594.7999999999982,
+      "jerk": -17.037785120468747,
+      "lane_change": -2.3000000000000007
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0007985304109752178,
+    "early_stopped": false
+  },
+  {
+    "update": 96,
+    "task": "merge",
+    "speed": 0.8752885554413107,
+    "reward": 2163.2570394373715,
+    "terms": {
+      "progress": 2720.703259607513,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -539.3999999999857,
+      "jerk": -24.94622017007972,
+      "lane_change": -5.099999999999998
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0003398351836949587,
+    "early_stopped": false
+  },
+  {
+    "update": 97,
+    "task": "cruise",
+    "speed": 0.9291764049674466,
+    "reward": 818.1682550861693,
+    "terms": {
+      "progress": 968.3984507767242,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -144.00000000000037,
+      "jerk": -12.430195690551788,
+      "lane_change": -1.8000000000000005
+    },
+    "optimizer_steps": 20,
+    "kl": 3.0673210858367383e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 98,
+    "task": "following",
+    "speed": 0.741943695899867,
+    "reward": 749.6685501558984,
+    "terms": {
+      "progress": 950.9973373196931,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -193.39999999999756,
+      "jerk": -14.32878716379357,
+      "lane_change": -1.6000000000000003
+    },
+    "optimizer_steps": 24,
+    "kl": 9.5367431640625e-07,
+    "early_stopped": false
+  },
+  {
+    "update": 99,
+    "task": "passing",
+    "speed": 0.788353708238698,
+    "reward": 766.4861647585186,
+    "terms": {
+      "progress": 954.6133791708852,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -186.59999999999795,
+      "jerk": -16.32721441236386,
+      "lane_change": -1.2
+    },
+    "optimizer_steps": 20,
+    "kl": 9.168219548882917e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 100,
+    "task": "merge",
+    "speed": 0.7141760968484707,
+    "reward": 771.8836493109608,
+    "terms": {
+      "progress": 925.1394606648215,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -142.40000000000046,
+      "jerk": -26.65581135385983,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 24,
+    "kl": 9.047313142218627e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 101,
+    "task": "cruise",
+    "speed": 0.930298441255167,
+    "reward": 1876.9682906366943,
+    "terms": {
+      "progress": 2480.883630264035,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -579.9999999999949,
+      "jerk": -18.515339627281328,
+      "lane_change": -5.399999999999997
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00016034161671996117,
+    "early_stopped": false
+  },
+  {
+    "update": 102,
+    "task": "following",
+    "speed": 0.8866819493915825,
+    "reward": 1729.4322718901378,
+    "terms": {
+      "progress": 2364.273630267522,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -617.6000000000034,
+      "jerk": -15.041358377332683,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 0.001236467156559229,
+    "early_stopped": false
+  },
+  {
+    "update": 103,
+    "task": "passing",
+    "speed": 0.9253344569576463,
+    "reward": 1876.9147057899488,
+    "terms": {
+      "progress": 2467.337761036005,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -574.9999999999937,
+      "jerk": -20.623055246016182,
+      "lane_change": -2.800000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0005599455907940865,
+    "early_stopped": false
+  },
+  {
+    "update": 104,
+    "task": "merge",
+    "speed": 0.9224056613168533,
+    "reward": 1855.8893645946243,
+    "terms": {
+      "progress": 2431.8679916804804,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -553.999999999989,
+      "jerk": -27.57862708580313,
+      "lane_change": -4.4
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0003816187381744385,
+    "early_stopped": false
+  },
+  {
+    "update": 105,
+    "task": "cruise",
+    "speed": 0.9530150243775781,
+    "reward": 2343.4910280044573,
+    "terms": {
+      "progress": 2894.366707503676,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -536.7999999999851,
+      "jerk": -14.975679499161812,
+      "lane_change": -5.099999999999998
+    },
+    "optimizer_steps": 48,
+    "kl": 0.0010238041868433356,
+    "early_stopped": false
+  },
+  {
+    "update": 106,
+    "task": "following",
+    "speed": 0.9512945929764303,
+    "reward": 2351.0601749574703,
+    "terms": {
+      "progress": 2938.480868024246,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -580.399999999995,
+      "jerk": -12.520693066720126,
+      "lane_change": -2.500000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0005953942891210318,
+    "early_stopped": false
+  },
+  {
+    "update": 107,
+    "task": "passing",
+    "speed": 0.9249637260332328,
+    "reward": 2304.7616084142096,
+    "terms": {
+      "progress": 2881.2292872913163,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -572.5999999999932,
+      "jerk": -15.3676788770695,
+      "lane_change": -2.500000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0035593744833022356,
+    "early_stopped": false
+  },
+  {
+    "update": 108,
+    "task": "merge",
+    "speed": 0.9587154235427667,
+    "reward": 2271.3837946838216,
+    "terms": {
+      "progress": 2795.0112717854245,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -518.5999999999809,
+      "jerk": -19.527477101537137,
+      "lane_change": -3.5000000000000018
+    },
+    "optimizer_steps": 48,
+    "kl": 1.0581865353742614e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 109,
+    "task": "cruise",
+    "speed": 0.9875840430339463,
+    "reward": 2019.3050860687013,
+    "terms": {
+      "progress": 2633.3218040812862,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -594.7999999999982,
+      "jerk": -13.91671801251358,
+      "lane_change": -5.299999999999997
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00020595453679561615,
+    "early_stopped": false
+  },
+  {
+    "update": 110,
+    "task": "following",
+    "speed": 0.9423826501999428,
+    "reward": 1897.112648399395,
+    "terms": {
+      "progress": 2512.7955418717406,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -601.3999999999997,
+      "jerk": -12.682893472317062,
+      "lane_change": -1.6000000000000003
+    },
+    "optimizer_steps": 52,
+    "kl": 0.001221157144755125,
+    "early_stopped": false
+  },
+  {
+    "update": 111,
+    "task": "passing",
+    "speed": 0.942664480743851,
+    "reward": 1900.5453641953713,
+    "terms": {
+      "progress": 2513.5470227422397,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -607.4000000000011,
+      "jerk": -11.701658546828753,
+      "lane_change": -1.9000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 9.592622518539429e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 112,
+    "task": "merge",
+    "speed": 0.9534544857409475,
+    "reward": 1931.1109094635103,
+    "terms": {
+      "progress": 2508.747198140071,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -562.999999999991,
+      "jerk": -18.536288676505038,
+      "lane_change": -6.099999999999994
+    },
+    "optimizer_steps": 52,
+    "kl": 0.004338840488344431,
+    "early_stopped": false
+  },
+  {
+    "update": 113,
+    "task": "cruise",
+    "speed": 0.9750136934179104,
+    "reward": 2527.8696732032768,
+    "terms": {
+      "progress": 3119.764645367342,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -575.3999999999938,
+      "jerk": -10.594972163989528,
+      "lane_change": -5.899999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0019042035564780235,
+    "early_stopped": false
+  },
+  {
+    "update": 114,
+    "task": "following",
+    "speed": 0.9060864065174056,
+    "reward": 2289.4558999210917,
+    "terms": {
+      "progress": 2899.2168447106415,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -593.799999999998,
+      "jerk": -13.260944789519865,
+      "lane_change": -2.700000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0007735239341855049,
+    "early_stopped": false
+  },
+  {
+    "update": 115,
+    "task": "passing",
+    "speed": 0.9376625753205485,
+    "reward": 2400.9669054814485,
+    "terms": {
+      "progress": 3000.2517621209317,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -592.3999999999977,
+      "jerk": -12.184856639419792,
+      "lane_change": -2.700000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 2.0465347915887833e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 116,
+    "task": "merge",
+    "speed": 0.9620305213719929,
+    "reward": 2419.45192905403,
+    "terms": {
+      "progress": 2989.436608956461,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -553.5999999999889,
+      "jerk": -22.684679902366355,
+      "lane_change": -5.699999999999996
+    },
+    "optimizer_steps": 52,
+    "kl": 0.000460228999145329,
+    "early_stopped": false
+  },
+  {
+    "update": 117,
+    "task": "cruise",
+    "speed": 0.9339048749628645,
+    "reward": 813.0993949211012,
+    "terms": {
+      "progress": 963.9679503477022,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -144.00000000000037,
+      "jerk": -13.068555426597637,
+      "lane_change": -1.8000000000000005
+    },
+    "optimizer_steps": 20,
+    "kl": 7.0855021476745605e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 118,
+    "task": "following",
+    "speed": 0.6866954648556315,
+    "reward": 725.5799268704125,
+    "terms": {
+      "progress": 959.7132206343584,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -230.39999999999546,
+      "jerk": -10.533293763939133,
+      "lane_change": -1.2
+    },
+    "optimizer_steps": 24,
+    "kl": 5.912626511417329e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 119,
+    "task": "passing",
+    "speed": 0.8666638056969038,
+    "reward": 766.6106115685561,
+    "terms": {
+      "progress": 942.5125604010345,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -183.9999999999981,
+      "jerk": -7.401948832475711,
+      "lane_change": -0.5
+    },
+    "optimizer_steps": 20,
+    "kl": 3.928986916434951e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 120,
+    "task": "merge",
+    "speed": 0.5977217313863307,
+    "reward": 682.8830693518014,
+    "terms": {
+      "progress": 905.855631586973,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -220.39999999999603,
+      "jerk": -16.472562235149102,
+      "lane_change": -2.1000000000000005
+    },
+    "optimizer_steps": 28,
+    "kl": 0.0005365339457057416,
+    "early_stopped": false
+  },
+  {
+    "update": 121,
+    "task": "cruise",
+    "speed": 0.9575933022420382,
+    "reward": 1937.4427819222574,
+    "terms": {
+      "progress": 2553.3536512896726,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -590.5999999999973,
+      "jerk": -19.310869367361946,
+      "lane_change": -5.999999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0015105796046555042,
+    "early_stopped": false
+  },
+  {
+    "update": 122,
+    "task": "following",
+    "speed": 0.9191003779411352,
+    "reward": 1833.2174412202316,
+    "terms": {
+      "progress": 2450.715037817322,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -596.1999999999986,
+      "jerk": -18.39759659704642,
+      "lane_change": -2.9000000000000012
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0013354280963540077,
+    "early_stopped": false
+  },
+  {
+    "update": 123,
+    "task": "passing",
+    "speed": 0.8747476813402848,
+    "reward": 1737.1455363699467,
+    "terms": {
+      "progress": 2332.451763058419,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -577.5999999999943,
+      "jerk": -23.20622668844339,
+      "lane_change": -2.500000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0015106843784451485,
+    "early_stopped": false
+  },
+  {
+    "update": 124,
+    "task": "merge",
+    "speed": 0.8980632082881265,
+    "reward": 1787.509040047485,
+    "terms": {
+      "progress": 2362.3625055506504,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -551.9999999999885,
+      "jerk": -27.55346550311391,
+      "lane_change": -5.299999999999997
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0014895289205014706,
+    "early_stopped": false
+  },
+  {
+    "update": 125,
+    "task": "cruise",
+    "speed": 0.9510351095698028,
+    "reward": 2366.2144821220404,
+    "terms": {
+      "progress": 2918.612472565468,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -536.7999999999851,
+      "jerk": -17.69799044336098,
+      "lane_change": -3.900000000000002
+    },
+    "optimizer_steps": 48,
+    "kl": 4.626097870641388e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 126,
+    "task": "following",
+    "speed": 0.9358723094370223,
+    "reward": 2320.202108569108,
+    "terms": {
+      "progress": 2914.237972737134,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -581.5999999999952,
+      "jerk": -16.635864167964957,
+      "lane_change": -1.8000000000000005
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0015411206986755133,
+    "early_stopped": false
+  },
+  {
+    "update": 127,
+    "task": "passing",
+    "speed": 0.9248819372411158,
+    "reward": 2337.253209571846,
+    "terms": {
+      "progress": 2910.493245800466,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 4.0,
+      "collision": 0.0,
+      "intervention": -567.7999999999921,
+      "jerk": -14.840036228576254,
+      "lane_change": -2.600000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0013206235598772764,
+    "early_stopped": false
+  },
+  {
+    "update": 128,
+    "task": "merge",
+    "speed": 0.9230833047182035,
+    "reward": 2230.357141220738,
+    "terms": {
+      "progress": 2743.4136445658487,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -503.59999999997996,
+      "jerk": -20.456503345067233,
+      "lane_change": -4.999999999999998
+    },
+    "optimizer_steps": 48,
+    "kl": 0.0007241714047268033,
+    "early_stopped": false
+  },
+  {
+    "update": 129,
+    "task": "cruise",
+    "speed": 0.9821235693654451,
+    "reward": 2010.5161238056876,
+    "terms": {
+      "progress": 2618.761843869996,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -592.1999999999977,
+      "jerk": -10.545720064237415,
+      "lane_change": -5.4999999999999964
+    },
+    "optimizer_steps": 52,
+    "kl": 0.002079309429973364,
+    "early_stopped": false
+  },
+  {
+    "update": 130,
+    "task": "following",
+    "speed": 0.9353874661543057,
+    "reward": 1877.755217536836,
+    "terms": {
+      "progress": 2494.1433868467034,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -603.2000000000002,
+      "jerk": -10.988169309832319,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0007465016096830368,
+    "early_stopped": false
+  },
+  {
+    "update": 131,
+    "task": "passing",
+    "speed": 0.9211086612138719,
+    "reward": 1858.9839988020624,
+    "terms": {
+      "progress": 2456.0699806884236,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -592.7999999999978,
+      "jerk": -10.385981886329995,
+      "lane_change": -1.9000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0031071980483829975,
+    "early_stopped": false
+  },
+  {
+    "update": 132,
+    "task": "merge",
+    "speed": 0.9448735578115827,
+    "reward": 1912.2025380926568,
+    "terms": {
+      "progress": 2489.6986322395637,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -564.3999999999913,
+      "jerk": -17.39609414683916,
+      "lane_change": -5.699999999999996
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00018234644085168839,
+    "early_stopped": false
+  },
+  {
+    "update": 133,
+    "task": "cruise",
+    "speed": 0.9664898113022663,
+    "reward": 2509.563373106874,
+    "terms": {
+      "progress": 3092.4906632220777,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -569.5999999999925,
+      "jerk": -7.527290115132965,
+      "lane_change": -5.799999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0009518852457404137,
+    "early_stopped": false
+  },
+  {
+    "update": 134,
+    "task": "following",
+    "speed": 0.9195362731220523,
+    "reward": 2333.6800818209094,
+    "terms": {
+      "progress": 2942.2527851507557,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -590.7999999999973,
+      "jerk": -15.672703329817221,
+      "lane_change": -2.1000000000000005
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0007547806017100811,
+    "early_stopped": false
+  },
+  {
+    "update": 135,
+    "task": "passing",
+    "speed": 0.9188956679555822,
+    "reward": 2332.4266592005833,
+    "terms": {
+      "progress": 2940.2030320411777,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -601.3999999999997,
+      "jerk": -11.976372840544164,
+      "lane_change": -2.400000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0005176877602934837,
+    "early_stopped": false
+  },
+  {
+    "update": 136,
+    "task": "merge",
+    "speed": 0.9602404497734539,
+    "reward": 2418.8769588317773,
+    "terms": {
+      "progress": 2982.811849085532,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -559.5999999999902,
+      "jerk": -10.334890253680934,
+      "lane_change": -5.999999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0005892816698178649,
+    "early_stopped": false
+  },
+  {
+    "update": 137,
+    "task": "cruise",
+    "speed": 0.889517437480811,
+    "reward": 829.0959284809198,
+    "terms": {
+      "progress": 973.4824476795912,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -143.6000000000004,
+      "jerk": -6.886519198668633,
+      "lane_change": -1.9000000000000006
+    },
+    "optimizer_steps": 20,
+    "kl": 3.499388549244031e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 138,
+    "task": "following",
+    "speed": 0.6981795999795409,
+    "reward": 720.0170519448087,
+    "terms": {
+      "progress": 952.6831477463409,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -229.99999999999548,
+      "jerk": -9.766095801526776,
+      "lane_change": -0.8999999999999999
+    },
+    "optimizer_steps": 24,
+    "kl": 4.151499524596147e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 139,
+    "task": "passing",
+    "speed": 0.8319770235096752,
+    "reward": 755.1918341738053,
+    "terms": {
+      "progress": 938.1640324242181,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -188.9999999999978,
+      "jerk": -9.072198250411953,
+      "lane_change": -0.8999999999999999
+    },
+    "optimizer_steps": 20,
+    "kl": 2.4218004455178743e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 140,
+    "task": "merge",
+    "speed": 0.7618441063423523,
+    "reward": 772.4988438527423,
+    "terms": {
+      "progress": 924.8531921170218,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -155.5999999999997,
+      "jerk": -12.654348264275644,
+      "lane_change": -2.1000000000000005
+    },
+    "optimizer_steps": 20,
+    "kl": 6.390310318238335e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 141,
+    "task": "cruise",
+    "speed": 0.960321109145613,
+    "reward": 1954.4345376612678,
+    "terms": {
+      "progress": 2560.6271521599742,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -594.5999999999982,
+      "jerk": -11.092614498654868,
+      "lane_change": -0.5
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00015492644160985947,
+    "early_stopped": false
+  },
+  {
+    "update": 142,
+    "task": "following",
+    "speed": 0.8567440646298765,
+    "reward": 1669.7781819092368,
+    "terms": {
+      "progress": 2284.446414277987,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -598.7999999999992,
+      "jerk": -13.168232368712868,
+      "lane_change": -2.700000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 3.543868660926819e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 143,
+    "task": "passing",
+    "speed": 0.8592015272321355,
+    "reward": 1714.9845614935664,
+    "terms": {
+      "progress": 2291.1624065246942,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -563.7999999999912,
+      "jerk": -17.077845031096707,
+      "lane_change": -3.3000000000000016
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0015290393494069576,
+    "early_stopped": false
+  },
+  {
+    "update": 144,
+    "task": "merge",
+    "speed": 0.9575938514950469,
+    "reward": 1921.3064370276086,
+    "terms": {
+      "progress": 2501.568645631632,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -567.9999999999922,
+      "jerk": -18.462208603949954,
+      "lane_change": -5.799999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00023864426475483924,
+    "early_stopped": false
+  },
+  {
+    "update": 145,
+    "task": "cruise",
+    "speed": 0.9842352024880574,
+    "reward": 2396.4658260664855,
+    "terms": {
+      "progress": 2950.536166167339,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -551.7999999999885,
+      "jerk": -6.870340100783938,
+      "lane_change": -3.4000000000000017
+    },
+    "optimizer_steps": 48,
+    "kl": 2.6176590836257674e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 146,
+    "task": "following",
+    "speed": 0.9046888713767756,
+    "reward": 2283.7396085267796,
+    "terms": {
+      "progress": 2867.7977183276325,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 4.0,
+      "collision": 0.0,
+      "intervention": -574.1999999999936,
+      "jerk": -11.458109800814956,
+      "lane_change": -2.400000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.000294925004709512,
+    "early_stopped": false
+  },
+  {
+    "update": 147,
+    "task": "passing",
+    "speed": 0.9266072399109302,
+    "reward": 2328.477304852613,
+    "terms": {
+      "progress": 2896.535212459997,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -568.7999999999923,
+      "jerk": -11.557907607348879,
+      "lane_change": -1.7000000000000004
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0007532702293246984,
+    "early_stopped": false
+  },
+  {
+    "update": 148,
+    "task": "merge",
+    "speed": 0.9574175392909696,
+    "reward": 2271.899516689494,
+    "terms": {
+      "progress": 2791.421947091558,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -516.1999999999804,
+      "jerk": -17.822430401996908,
+      "lane_change": -3.5000000000000018
+    },
+    "optimizer_steps": 48,
+    "kl": 0.0009945447091013193,
+    "early_stopped": false
+  },
+  {
+    "update": 149,
+    "task": "cruise",
+    "speed": 0.9743257962164943,
+    "reward": 1996.1068979075396,
+    "terms": {
+      "progress": 2597.9696427391154,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -587.5999999999966,
+      "jerk": -8.962744831511746,
+      "lane_change": -5.299999999999997
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0010900129564106464,
+    "early_stopped": false
+  },
+  {
+    "update": 150,
+    "task": "following",
+    "speed": 0.9260150731836044,
+    "reward": 1856.6408940376966,
+    "terms": {
+      "progress": 2469.152575239071,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -598.3999999999991,
+      "jerk": -12.311681201342626,
+      "lane_change": -1.8000000000000005
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0017137187533080578,
+    "early_stopped": false
+  },
+  {
+    "update": 151,
+    "task": "passing",
+    "speed": 0.9395741016424835,
+    "reward": 1895.303866062586,
+    "terms": {
+      "progress": 2505.306749189916,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -604.6000000000005,
+      "jerk": -11.202883127295593,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00040407152846455574,
+    "early_stopped": false
+  },
+  {
+    "update": 152,
+    "task": "merge",
+    "speed": 0.9424490201676771,
+    "reward": 1903.2415732634238,
+    "terms": {
+      "progress": 2481.1481657448253,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -569.1999999999924,
+      "jerk": -12.906592481347637,
+      "lane_change": -5.799999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0011737421154975891,
+    "early_stopped": false
+  },
+  {
+    "update": 153,
+    "task": "cruise",
+    "speed": 0.9517814038907821,
+    "reward": 2468.5643269900243,
+    "terms": {
+      "progress": 3045.4821691747165,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -559.1999999999902,
+      "jerk": -11.917842184622705,
+      "lane_change": -5.799999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0009119478054344654,
+    "early_stopped": false
+  },
+  {
+    "update": 154,
+    "task": "following",
+    "speed": 0.9517494375795218,
+    "reward": 2410.981446921726,
+    "terms": {
+      "progress": 3045.3256878887146,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -619.2000000000038,
+      "jerk": -12.944240966944596,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0009641796350479126,
+    "early_stopped": false
+  },
+  {
+    "update": 155,
+    "task": "passing",
+    "speed": 0.9228884675546927,
+    "reward": 2345.014752728562,
+    "terms": {
+      "progress": 2952.978847508612,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -597.999999999999,
+      "jerk": -15.264094780019988,
+      "lane_change": -2.700000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0008196313865482807,
+    "early_stopped": false
+  },
+  {
+    "update": 156,
+    "task": "merge",
+    "speed": 0.9589393071779313,
+    "reward": 2411.4887050071006,
+    "terms": {
+      "progress": 2978.977024417166,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -556.3999999999895,
+      "jerk": -17.28831940998556,
+      "lane_change": -5.799999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 6.428211781894788e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 157,
+    "task": "cruise",
+    "speed": 0.9362713433270351,
+    "reward": 814.80888448823,
+    "terms": {
+      "progress": 962.6557118790231,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -147.80000000000015,
+      "jerk": -6.346827390790008,
+      "lane_change": -1.7000000000000004
+    },
+    "optimizer_steps": 20,
+    "kl": 3.159046173095703e-06,
+    "early_stopped": false
+  },
+  {
+    "update": 158,
+    "task": "following",
+    "speed": 0.6401016852895828,
+    "reward": 686.4402607768013,
+    "terms": {
+      "progress": 935.8380672315142,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -250.5999999999943,
+      "jerk": -6.39780645469992,
+      "lane_change": -0.4
+    },
+    "optimizer_steps": 24,
+    "kl": 0.00014293425192590803,
+    "early_stopped": false
+  },
+  {
+    "update": 159,
+    "task": "passing",
+    "speed": 0.8011575138920313,
+    "reward": 776.6572103538604,
+    "terms": {
+      "progress": 963.8490074764104,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -194.79999999999748,
+      "jerk": -7.791797122548876,
+      "lane_change": -0.6
+    },
+    "optimizer_steps": 20,
+    "kl": 3.6417433875612915e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 160,
+    "task": "merge",
+    "speed": 0.8672670248279815,
+    "reward": 788.8374044576085,
+    "terms": {
+      "progress": 927.7689969340939,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -139.00000000000065,
+      "jerk": -15.931592476482146,
+      "lane_change": -2.0000000000000004
+    },
+    "optimizer_steps": 20,
+    "kl": 1.5291127056116238e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 161,
+    "task": "cruise",
+    "speed": 0.9499045202008176,
+    "reward": 1938.5672812707946,
+    "terms": {
+      "progress": 2532.8520671067513,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -581.3999999999952,
+      "jerk": -10.884785835892913,
+      "lane_change": -2.0000000000000004
+    },
+    "optimizer_steps": 52,
+    "kl": 3.214506432414055e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 162,
+    "task": "following",
+    "speed": 0.9368612971346727,
+    "reward": 1886.1055312376104,
+    "terms": {
+      "progress": 2498.0732511286296,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -598.3999999999991,
+      "jerk": -12.367719890988399,
+      "lane_change": -1.2
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00014297128655016422,
+    "early_stopped": false
+  },
+  {
+    "update": 163,
+    "task": "passing",
+    "speed": 0.8802364333891414,
+    "reward": 1764.5013386512014,
+    "terms": {
+      "progress": 2347.0871255365837,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -568.9999999999924,
+      "jerk": -18.985786885345494,
+      "lane_change": -2.600000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00028826529160141945,
+    "early_stopped": false
+  },
+  {
+    "update": 164,
+    "task": "merge",
+    "speed": 0.9440682354189085,
+    "reward": 1897.5490031092838,
+    "terms": {
+      "progress": 2468.765034462587,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -556.1999999999895,
+      "jerk": -21.416031353236374,
+      "lane_change": -5.599999999999996
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00015445458120666444,
+    "early_stopped": false
+  },
+  {
+    "update": 165,
+    "task": "cruise",
+    "speed": 0.980134368747715,
+    "reward": 2406.3351378710095,
+    "terms": {
+      "progress": 2970.6009086147455,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 8.0,
+      "collision": 0.0,
+      "intervention": -563.3999999999911,
+      "jerk": -7.165770743660552,
+      "lane_change": -1.7000000000000004
+    },
+    "optimizer_steps": 48,
+    "kl": 0.00011365247337380424,
+    "early_stopped": false
+  },
+  {
+    "update": 166,
+    "task": "following",
+    "speed": 0.9295961335301196,
+    "reward": 2316.4871448454783,
+    "terms": {
+      "progress": 2900.291614288207,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -579.1999999999947,
+      "jerk": -9.104469442685721,
+      "lane_change": -1.5000000000000002
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0021573666017502546,
+    "early_stopped": false
+  },
+  {
+    "update": 167,
+    "task": "passing",
+    "speed": 0.9110876624762785,
+    "reward": 2299.3514854206715,
+    "terms": {
+      "progress": 2882.6012378562605,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 4.0,
+      "collision": 0.0,
+      "intervention": -579.5999999999948,
+      "jerk": -13.449752435555377,
+      "lane_change": -2.2000000000000006
+    },
+    "optimizer_steps": 52,
+    "kl": 1.8494933101464994e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 168,
+    "task": "merge",
+    "speed": 0.8828730669260759,
+    "reward": 2097.61779128652,
+    "terms": {
+      "progress": 2606.195066571083,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 6.0,
+      "collision": 0.0,
+      "intervention": -503.39999999997997,
+      "jerk": -16.377275284498168,
+      "lane_change": -4.799999999999999
+    },
+    "optimizer_steps": 48,
+    "kl": 0.00017932330956682563,
+    "early_stopped": false
+  },
+  {
+    "update": 169,
+    "task": "cruise",
+    "speed": 0.9863456255877283,
+    "reward": 2020.1307856220792,
+    "terms": {
+      "progress": 2630.019653052536,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -596.9999999999987,
+      "jerk": -8.08886743038887,
+      "lane_change": -4.799999999999999
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0031514321453869343,
+    "early_stopped": false
+  },
+  {
+    "update": 170,
+    "task": "following",
+    "speed": 0.8648066443444907,
+    "reward": 1684.6735293334868,
+    "terms": {
+      "progress": 2306.1475901618314,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -608.6000000000014,
+      "jerk": -10.874060828321403,
+      "lane_change": -2.0000000000000004
+    },
+    "optimizer_steps": 52,
+    "kl": 4.6445056796073914e-05,
+    "early_stopped": false
+  },
+  {
+    "update": 171,
+    "task": "passing",
+    "speed": 0.9361025739813114,
+    "reward": 1873.891513725261,
+    "terms": {
+      "progress": 2496.050170422633,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -616.2000000000031,
+      "jerk": -11.45865669735076,
+      "lane_change": -2.500000000000001
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0038707726635038853,
+    "early_stopped": false
+  },
+  {
+    "update": 172,
+    "task": "merge",
+    "speed": 0.9697135749666356,
+    "reward": 1968.197679093507,
+    "terms": {
+      "progress": 2556.144786002896,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -582.5999999999955,
+      "jerk": -9.4471069093301,
+      "lane_change": -5.899999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0017522601410746574,
+    "early_stopped": false
+  },
+  {
+    "update": 173,
+    "task": "cruise",
+    "speed": 0.9814321169178046,
+    "reward": 2540.109188449717,
+    "terms": {
+      "progress": 3140.301762793628,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -585.7999999999962,
+      "jerk": -8.792574343830292,
+      "lane_change": -5.599999999999996
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00028988346457481384,
+    "early_stopped": false
+  },
+  {
+    "update": 174,
+    "task": "following",
+    "speed": 0.9108723015895487,
+    "reward": 2302.4623060439567,
+    "terms": {
+      "progress": 2914.5305569830643,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -594.7999999999982,
+      "jerk": -15.568250939071673,
+      "lane_change": -1.7000000000000004
+    },
+    "optimizer_steps": 52,
+    "kl": 0.00017089815810322762,
+    "early_stopped": false
+  },
+  {
+    "update": 175,
+    "task": "passing",
+    "speed": 0.9436567642364062,
+    "reward": 2411.4339438988245,
+    "terms": {
+      "progress": 3019.431450348467,
+      "merge": 0.0,
+      "passing": 8.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": -602.6,
+      "jerk": -11.397506449593514,
+      "lane_change": -2.0000000000000004
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0025060903280973434,
+    "early_stopped": false
+  },
+  {
+    "update": 176,
+    "task": "merge",
+    "speed": 0.9530656343849988,
+    "reward": 2410.3577316603996,
+    "terms": {
+      "progress": 2968.1181175171205,
+      "merge": 10.0,
+      "passing": 0.0,
+      "arrival": 2.0,
+      "collision": 0.0,
+      "intervention": -548.9999999999878,
+      "jerk": -14.960385856639133,
+      "lane_change": -5.799999999999995
+    },
+    "optimizer_steps": 52,
+    "kl": 0.0002578530111350119,
+    "early_stopped": false
+  },
+  {
+    "update": 177,
+    "task": "cruise",
+    "speed": 0.7783572618453124,
+    "reward": 145.9874035675865,
+    "terms": {
+      "progress": 149.43122235283676,
+      "merge": 0.0,
+      "passing": 0.0,
+      "arrival": 0.0,
+      "collision": 0.0,
+      "intervention": 0.0,
+      "jerk": -3.043818785250167,
+      "lane_change": -0.4
+    },
+    "optimizer_steps": 4,
+    "kl": 9.29910038394155e-06,
+    "early_stopped": false
+  }
+]

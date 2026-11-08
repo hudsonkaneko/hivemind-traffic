@@ -1,0 +1,109 @@
+{
+  "training": false,
+  "optimizer_steps": 0,
+  "seed": 410001,
+  "fps": 10,
+  "seconds": 60.0,
+  "frames": 600,
+  "renderer": "2D visualization of actual SUMO positions; not native GUI capture",
+  "config_sha256": "172171c4eaf04105c616b8ab430176eb6b6df61d5a8a5a9034151f35de9be0b8",
+  "config_path": "experiments\\configs\\sumo_mappo_v2.json",
+  "source_sha256": {
+    "experiments/run_sumo_mappo.py": "0334d853845fec4d1f3374ac113ff5d0271171f7228cc62b2da4b7aadad515b6",
+    "experiments/sumo_mappo_support.py": "da889dfe2efcb7cf2200ec9f4b0c5a3199c94d1532ba929a2e62cc2476687999",
+    "experiments/sumo_mappo_rollout.py": "3b1461d61fb3d626e9fa70a3cecba415b48f292619ea1c563c9b19ca5617dbed",
+    "experiments/configs/sumo_mappo_v1.json": "53aa3ad5425c7fc3db1970643436fd3d0789a9e1a4da6db59c3711ed894ae288",
+    "policies/mappo.py": "dc14e7aeefe87c57d9ac6b71cee29db596bc4a7557c37e4fc717e83e809f1c65",
+    "environments/sumo_mappo_env.py": "595998966aaddf7d2a5beba1cd017be1c73bc3f34d165562645d25db6c0ee738",
+    "traffic/mappo_sumo.py": "c0eb8e06a0e6d94c7a18a83a86a83c4ae01694452627f6fe56894d0cb529c796",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "traffic/mappo_communication.py": "9ad6f5851a403af301f1321a7f8c137eb59acdd1cbdc1a12aa8d46f7434a88eb",
+    "requirements.txt": "a057af83cf9f81ac9306afa68b62f340373a764090d7f14c4feed0438be059fc",
+    "scenarios/mappo_highway/edges.edg.xml": "e90fa974eabb39dbe74c2df963b260548aa68eeec33ab59411049bca256321f7",
+    "scenarios/mappo_highway/network.net.xml": "67aa49629d3bfe7316067adbc2d25b17eecd57ff3a81f627de50f45809508202",
+    "scenarios/mappo_highway/nodes.nod.xml": "80aa41e9d79fe3c39b92c1c9056d1ea683cb7f9bd5b165caa2114d639c567888",
+    "scenarios/mappo_highway/README.md": "e8bfa5420895bab93dd0c0102b5c56000db1779f71a31556cc4646ad1e9487fd",
+    "experiments/configs/sumo_mappo_v2.json": "6c0f81463d87b1c5c7115bf11005080bfd94978d15f82f3fe38a2c2c757e55c8",
+    "experiments/configs/sumo_mappo_v3.json": "b7ac0ad8e01de18bfb27a9edf1ceab04131999bd95c75635bbcd85f001e31d5a",
+    "experiments/configs/sumo_mappo_v3_no_comm.json": "0ba718a3529de59ee1f0eb6582523ecee04b8050dc801d0e524c76a5fb082561",
+    "scripts/record_sumo_mappo.py": "f41d310b157c10204e1f9bd0b74559f3ec120186da7dec00eb8c27ca4aab8bca"
+  },
+  "git_commit": "d8f2dc8c7bfd1b19176aac145cb33bf987c80583",
+  "runtime": {
+    "python": "3.11.9",
+    "torch": "2.14.0+cpu",
+    "sumo": [
+      22,
+      "SUMO 1.27.1"
+    ]
+  },
+  "wall_seconds": 4.008403899963014,
+  "inference_ms": {
+    "mean": 0.2932481692793469,
+    "p95": 0.2878649742342528,
+    "maximum": 82.22440001554787
+  },
+  "policy": "outputs\\sumo_mappo\\v01\\train-20261026T190003Z-9d133a8c\\policy.pt",
+  "policy_sha256": "6ec2167aa2c769ec41c9221b77382fe74658430ce852703ce32568d089e591fd",
+  "colors": {
+    "agent_0": [
+      40,
+      220,
+      100,
+      255
+    ],
+    "agent_1": [
+      70,
+      160,
+      255,
+      255
+    ],
+    "agent_2": [
+      250,
+      190,
+      40,
+      255
+    ],
+    "agent_3": [
+      240,
+      80,
+      180,
+      255
+    ]
+  },
+  "background_color": [
+    170,
+    170,
+    180,
+    255
+  ],
+  "metrics": {
+    "seed": 410001,
+    "steps": 600,
+    "agent_transitions": 2400,
+    "team_reward": 490.74822535336375,
+    "mean_progress_m": 1450.7389217549548,
+    "progress_by_agent_m": {
+      "agent_0": 1447.3761533969741,
+      "agent_1": 1440.4890149587445,
+      "agent_2": 1437.2431154976084,
+      "agent_3": 1477.8474031664914
+    },
+    "collision_vehicles": 0,
+    "collision_ids": [],
+    "interventions": 0,
+    "intervention_fraction": 0.0,
+    "overspeed_steps": 0,
+    "peak_speed_m_s": 25.64563096967728,
+    "min_ttc_s": 21.600302510480237,
+    "background_peak": 83,
+    "end_causes": {
+      "agent_0": "time_limit",
+      "agent_1": "time_limit",
+      "agent_2": "time_limit",
+      "agent_3": "time_limit"
+    },
+    "nominal_end": true
+  },
+  "original_heldout_seed_metrics_exact_match": true
+}

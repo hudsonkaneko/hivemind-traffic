@@ -13,6 +13,10 @@ they do not replace Git history.
 
 Keep `main` as the reviewed, usable baseline. Develop a coherent milestone on a
 named feature branch, make small meaningful commits, and push tested checkpoints.
+Use descriptive branch names without the `codex/` prefix (user preference,
+November 8, 2026). Push CI covers all branch names. Existing branches attached to
+open pull requests require a deliberate migration because GitHub closes a PR
+when its source branch is renamed; renaming does not authorize deleting work.
 Git commits are local snapshots; a push is what synchronizes those commits with
 GitHub. An uncommitted file is not backed up by pushing another commit.
 

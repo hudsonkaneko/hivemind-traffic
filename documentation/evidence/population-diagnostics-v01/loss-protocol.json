@@ -1,0 +1,290 @@
+{
+  "rows": [
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-2-lane/network.net.xml",
+        "network_sha256": "db7277af77350a129c5226e120a0d18662bda0150004acb9814f137f14a9bafb",
+        "through_lanes": 2,
+        "length_m": 2000,
+        "bend_m": 0,
+        "speed_limit_mph": 50,
+        "id": "train-2-lane-cruise",
+        "split": "train",
+        "task": "cruise",
+        "density": "light",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-2-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "7ee7a944b8571c4723c050b4c1473a28066cc129b091d5385a14f33a94b329b6"
+      },
+      "seed": 6530000,
+      "controlled_count": 1,
+      "total_vehicles": 24,
+      "communication": "none",
+      "packet_loss": 0.0
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-3-lane/network.net.xml",
+        "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+        "through_lanes": 3,
+        "length_m": 2100,
+        "bend_m": 20,
+        "speed_limit_mph": 60,
+        "id": "train-3-lane-cruise",
+        "split": "train",
+        "task": "cruise",
+        "density": "light",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-3-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "a4afe9d6aefac53ec37efeb1c3c52ad9af90aabd7866b31904202548e150cf38"
+      },
+      "seed": 6530001,
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "communication": "local",
+      "packet_loss": 0.0
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-4-lane/network.net.xml",
+        "network_sha256": "1b96b4dc3f403fae11e317afe00cf4c6ac4af2fe8adddc7203889dce6152153c",
+        "through_lanes": 4,
+        "length_m": 2200,
+        "bend_m": 0,
+        "speed_limit_mph": 50,
+        "id": "train-4-lane-cruise",
+        "split": "train",
+        "task": "cruise",
+        "density": "light",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-4-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "b373efb0178fd1385b42779a445d04c2f3bb0d67936bf10372b0937b212bb0d6"
+      },
+      "seed": 6530002,
+      "controlled_count": 8,
+      "total_vehicles": 8,
+      "communication": "local",
+      "packet_loss": 0.3
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-3-lane/network.net.xml",
+        "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+        "through_lanes": 3,
+        "length_m": 2100,
+        "bend_m": 20,
+        "speed_limit_mph": 60,
+        "id": "train-3-lane-following",
+        "split": "train",
+        "task": "following",
+        "density": "dense",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-3-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "a4afe9d6aefac53ec37efeb1c3c52ad9af90aabd7866b31904202548e150cf38"
+      },
+      "seed": 6530003,
+      "controlled_count": 1,
+      "total_vehicles": 24,
+      "communication": "local",
+      "packet_loss": 0.0
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-4-lane/network.net.xml",
+        "network_sha256": "1b96b4dc3f403fae11e317afe00cf4c6ac4af2fe8adddc7203889dce6152153c",
+        "through_lanes": 4,
+        "length_m": 2200,
+        "bend_m": 0,
+        "speed_limit_mph": 50,
+        "id": "train-4-lane-following",
+        "split": "train",
+        "task": "following",
+        "density": "dense",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-4-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "b373efb0178fd1385b42779a445d04c2f3bb0d67936bf10372b0937b212bb0d6"
+      },
+      "seed": 6530004,
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "communication": "local",
+      "packet_loss": 0.3
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-5-lane/network.net.xml",
+        "network_sha256": "df75952e18844d4d3c498e7238d8021f8ee2e479b51a22fdef54ed526461b8fa",
+        "through_lanes": 5,
+        "length_m": 2300,
+        "bend_m": 20,
+        "speed_limit_mph": 60,
+        "id": "train-5-lane-following",
+        "split": "train",
+        "task": "following",
+        "density": "dense",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-5-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "a8a33e1fa578cb946822130f8629b6a5fe87b1b0f782ad080ed8d8aa8736c25a"
+      },
+      "seed": 6530005,
+      "controlled_count": 8,
+      "total_vehicles": 16,
+      "communication": "none",
+      "packet_loss": 0.0
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-4-lane/network.net.xml",
+        "network_sha256": "1b96b4dc3f403fae11e317afe00cf4c6ac4af2fe8adddc7203889dce6152153c",
+        "through_lanes": 4,
+        "length_m": 2200,
+        "bend_m": 0,
+        "speed_limit_mph": 50,
+        "id": "train-4-lane-passing",
+        "split": "train",
+        "task": "passing",
+        "density": "medium",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-4-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "b373efb0178fd1385b42779a445d04c2f3bb0d67936bf10372b0937b212bb0d6"
+      },
+      "seed": 6530006,
+      "controlled_count": 1,
+      "total_vehicles": 24,
+      "communication": "local",
+      "packet_loss": 0.3
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-5-lane/network.net.xml",
+        "network_sha256": "df75952e18844d4d3c498e7238d8021f8ee2e479b51a22fdef54ed526461b8fa",
+        "through_lanes": 5,
+        "length_m": 2300,
+        "bend_m": 20,
+        "speed_limit_mph": 60,
+        "id": "train-5-lane-passing",
+        "split": "train",
+        "task": "passing",
+        "density": "medium",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-5-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "a8a33e1fa578cb946822130f8629b6a5fe87b1b0f782ad080ed8d8aa8736c25a"
+      },
+      "seed": 6530007,
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "communication": "none",
+      "packet_loss": 0.0
+    },
+    {
+      "case": {
+        "id": "i110-passing",
+        "split": "train",
+        "network": "outputs/i110-merge/v01/network/network.net.xml",
+        "network_sha256": "a216efd0a451845c19147437284fe0014d503c8015aca1d29bb4b4b8e1ac8623",
+        "through_lanes": 4,
+        "speed_limit_mph": 60,
+        "task": "passing",
+        "density": "medium"
+      },
+      "seed": 6530008,
+      "controlled_count": 8,
+      "total_vehicles": 16,
+      "communication": "local",
+      "packet_loss": 0.0
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-5-lane/network.net.xml",
+        "network_sha256": "df75952e18844d4d3c498e7238d8021f8ee2e479b51a22fdef54ed526461b8fa",
+        "through_lanes": 5,
+        "length_m": 2300,
+        "bend_m": 20,
+        "speed_limit_mph": 60,
+        "id": "train-5-lane-merge",
+        "split": "train",
+        "task": "merge",
+        "density": "medium",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-5-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "a8a33e1fa578cb946822130f8629b6a5fe87b1b0f782ad080ed8d8aa8736c25a"
+      },
+      "seed": 6530009,
+      "controlled_count": 1,
+      "total_vehicles": 24,
+      "communication": "none",
+      "packet_loss": 0.0
+    },
+    {
+      "case": {
+        "id": "i110-merge",
+        "split": "train",
+        "network": "outputs/i110-merge/v01/network/network.net.xml",
+        "network_sha256": "a216efd0a451845c19147437284fe0014d503c8015aca1d29bb4b4b8e1ac8623",
+        "through_lanes": 4,
+        "speed_limit_mph": 60,
+        "task": "merge",
+        "density": "medium"
+      },
+      "seed": 6530010,
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "communication": "local",
+      "packet_loss": 0.0
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-2-lane/network.net.xml",
+        "network_sha256": "db7277af77350a129c5226e120a0d18662bda0150004acb9814f137f14a9bafb",
+        "through_lanes": 2,
+        "length_m": 2000,
+        "bend_m": 0,
+        "speed_limit_mph": 50,
+        "id": "train-2-lane-merge",
+        "split": "train",
+        "task": "merge",
+        "density": "medium",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-2-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "7ee7a944b8571c4723c050b4c1473a28066cc129b091d5385a14f33a94b329b6"
+      },
+      "seed": 6530011,
+      "controlled_count": 8,
+      "total_vehicles": 8,
+      "communication": "local",
+      "packet_loss": 0.3
+    }
+  ],
+  "horizon": 200,
+  "max_seconds": 360,
+  "optimizer_updates": 0,
+  "source_hashes": {
+    "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+    "environments/highway_stage1_env.py": "c43df31cb5988ebb2faa086323bed24592d7e0c2128208784b91872b8e164f5a",
+    "environments/i110_merge_env.py": "ec343afd7b35920f4fd6056dcd7b4fe7ee2460a31d95f599e24942290336db76",
+    "traffic/highway_merge_context.py": "bbdc04d1cd42418453f8e0f5473729b6290c4b3da68ad92396b2847ced480a4e",
+    "traffic/highway_stage1_teacher.py": "750bbc930c294b0403dfb6841cf123798410e8095397140f90e4ec3ae087c139",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+    "policies/mappo.py": "c71e4e682b8991c6945692852a2adcd2e3c66f78773337b312b34706657b6607",
+    "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+    "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+    "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+    "scripts/build_highway_curriculum_v2.py": "97d80ac2bcd0657eec37a9a863533ad2e51c5c0cdf9fa80c00b1873f71fe0477",
+    "scripts/build_i110_sumo.py": "26ab7e55962f4d6e0422f8d0ef944baf337600af32645fb1d6364f0979c37f70",
+    "experiments/run_highway_population.py": "e777348293259340603e92165d105a00dbb446d09078c0193ef36a9918c241ca",
+    "environments/highway_population_env.py": "437f06a80bb8d07d5bababde7669cc07790f18c60cb7ac5474bf1c5c06e95415",
+    "experiments/diagnose_population_losses.py": "92bb2a65cdf4dbe4e12e93df3b6f095be9ba7ae88450c70d21b64bc204739f04"
+  },
+  "checkpoint_hashes": {
+    "parent": "b77f55ae7262178ce0fa15729fe844e18693cd168905eea8b1bbd579c6913ab1",
+    "population_v01": "bec8fd1cd21cde64244aeae18379157c12398b9f355e8cc3e48356e393de6551",
+    "population_v02": "cad1f670ba895efb5029e2690d32944313a741dfc1c8536894d5294209578636"
+  },
+  "git_commit": "6bbe5269ec94b08f57e40b724e142c7e1c4232c2",
+  "critic": "New masked population critic initialized with seed9207, not original four-agent critic",
+  "sampling": "Parent stochastic on-policy rollout. Equal128-row samples/case after per-rollout active-only advantage normalization. Cases balanced by task and AV count, not a full factorial.",
+  "evaluation": "Short training-only diagnostic windows; no acceptance or held-out evaluation"
+}

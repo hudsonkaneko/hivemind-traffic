@@ -1,0 +1,27 @@
+....................................................F........... [ 32%]
+........................................................................ [ 69%]
+...........................................................              [100%]
+================================== FAILURES ===================================
+________________ test_disabled_config_matches_checked_in_file _________________
+
+cfg = {'schema': 'highway_smooth_training_v01', 'training_authorized': False, 'readiness': None, 'status': 'implemented_requires_no_update_readiness_and_explicit_training_approval', ...}
+
+    def test_disabled_config_matches_checked_in_file(cfg):
+>       assert cfg == runner.load_config()
+E       AssertionError: assert {'schema': 'h...pproval', ...} == {'schema': 'h...isabled', ...}
+E         
+E         Omitting 20 identical items, use -vv to show
+E         Differing items:
+E         {'status': 'implemented_requires_no_update_readiness_and_explicit_training_approval'} != {'status': 'implemented_preflight_failed_four_comfort_cases_training_disabled'}
+E         Use -v to get more diff
+
+tests\test_highway_smooth_training.py:32: AssertionError
+============================== warnings summary ===============================
+tests/test_highway_smooth_training.py::test_identical_frozen_actor_fresh_critic_rng_and_no_update_diagnostics
+  C:\Users\hudso\Documents\highwaysim\.venv-traffic\Lib\site-packages\torch\jit\_serialization.py:176: FutureWarning: `torch.jit.load` is deprecated. Please switch to `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_highway_smooth_training.py::test_disabled_config_matches_checked_in_file
+1 failed, 194 passed, 1 warning, 8 subtests passed in 24.14s

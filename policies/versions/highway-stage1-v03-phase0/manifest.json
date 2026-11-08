@@ -1,0 +1,19 @@
+{
+  "version": "highway-stage1-v03-phase0",
+  "status": "experimental analysis baseline; not accepted",
+  "policy_sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8",
+  "full_checkpoint": "outputs/highway-stage1/v03/train-20261103T230506Z-04ba1761/selected-00036-d97376b9/best.pt",
+  "checkpoint_sha256": "b77f55ae7262178ce0fa15729fe844e18693cd168905eea8b1bbd579c6913ab1",
+  "selection": "Lowest pooled and worst intervention rate among three policies evaluated on identical sixteen-case population matrix; not Pareto-dominant: v02 has fewer failing cases.",
+  "simulation_run_this_review": false,
+  "verification": {
+    "checksum_verified": true,
+    "cpu_inference_shape": [
+      8,
+      2
+    ],
+    "finite": true,
+    "learning": false,
+    "driving_evaluation": false
+  }
+}

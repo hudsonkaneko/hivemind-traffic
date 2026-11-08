@@ -1,0 +1,11 @@
+{
+  "command": "python -m pytest -q tests/test_mappo_physical_adapter.py tests/test_mappo_physical_policy.py tests/test_mappo_physical_calibration.py tests/test_driver_control.py tests/test_path_following.py",
+  "passed": 209,
+  "failed": 0,
+  "duration_seconds": 2.69,
+  "warnings": [
+    "Two existing torch.jit.load deprecation warnings; no format migration"
+  ],
+  "checkpoint_sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8",
+  "contract_sha256": "8fbf5b6990aef032e234e492dd42ae58c06930b1279ab56125311030a7f05204"
+}

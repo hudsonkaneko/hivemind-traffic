@@ -1,0 +1,239 @@
+{
+  "passed": true,
+  "optimizer_steps": 6886,
+  "bc_optimizer_steps": 392,
+  "training": true,
+  "source_hashes": {
+    "experiments/run_highway_stage1.py": "d2edc2a2ab4054345c7d2d7ca6a82c18761d5918b4e140cc4802698784f393eb",
+    "environments/highway_stage1_env.py": "95d160c6b9cdb4143aa1a37ef45aa4b30dc8c22ed815f9c418f3115674005360",
+    "environments/i110_merge_env.py": "5e74d9b8c45c6faab9f4e4889bdce6a534149ff1f07dc426e0bbdf7f3fa1e208",
+    "traffic/highway_merge_context.py": "bbdc04d1cd42418453f8e0f5473729b6290c4b3da68ad92396b2847ced480a4e",
+    "traffic/highway_stage1_teacher.py": "750bbc930c294b0403dfb6841cf123798410e8095397140f90e4ec3ae087c139",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+    "policies/mappo.py": "87c84af2a4aa09ff93c141f5fdd4c1f6dcacff589a367e242c9eefbd62d25257",
+    "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+    "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+    "scripts/build_highway_curriculum_v2.py": "97d80ac2bcd0657eec37a9a863533ad2e51c5c0cdf9fa80c00b1873f71fe0477",
+    "scripts/build_i110_sumo.py": "26ab7e55962f4d6e0422f8d0ef944baf337600af32645fb1d6364f0979c37f70"
+  },
+  "preparation_sha256": "cc30b6d350b44709350bc92f76f8f4b7b37eb25e3b14d5184aa5d9db0e831399",
+  "held_out_test_run": false,
+  "geometry": {
+    "passed": true,
+    "version": "highway_right_entry_v2",
+    "manifest_sha256": "487c83de7e8dc96804fadadc90fe46a092b17f8c937a790d58a41dfa870effc5",
+    "layouts": [
+      {
+        "id": "train-2-lane",
+        "split": "train",
+        "network": "outputs/highway-curriculum/v02/train-2-lane/network.net.xml",
+        "checks": {
+          "passed": true,
+          "geometry_version": "highway_right_entry_v2",
+          "junction": "n1",
+          "ramp_internal_lane": ":n1_3_0",
+          "through_lane_count": 2,
+          "connector_crossings": [],
+          "through_lane_foes": [],
+          "approach_right_of_auxiliary_m": 48.11,
+          "auxiliary_merge_foe_retained": true,
+          "auxiliary_merge_yield_retained": true,
+          "scope": "compiled geometry only; no traffic episode run"
+        }
+      },
+      {
+        "id": "train-3-lane",
+        "split": "train",
+        "network": "outputs/highway-curriculum/v02/train-3-lane/network.net.xml",
+        "checks": {
+          "passed": true,
+          "geometry_version": "highway_right_entry_v2",
+          "junction": "n1",
+          "ramp_internal_lane": ":n1_0_0",
+          "through_lane_count": 3,
+          "connector_crossings": [],
+          "through_lane_foes": [],
+          "approach_right_of_auxiliary_m": 47.50313145769747,
+          "auxiliary_merge_foe_retained": true,
+          "auxiliary_merge_yield_retained": true,
+          "scope": "compiled geometry only; no traffic episode run"
+        }
+      },
+      {
+        "id": "train-4-lane",
+        "split": "train",
+        "network": "outputs/highway-curriculum/v02/train-4-lane/network.net.xml",
+        "checks": {
+          "passed": true,
+          "geometry_version": "highway_right_entry_v2",
+          "junction": "n1",
+          "ramp_internal_lane": ":n1_5_0",
+          "through_lane_count": 4,
+          "connector_crossings": [],
+          "through_lane_foes": [],
+          "approach_right_of_auxiliary_m": 48.1,
+          "auxiliary_merge_foe_retained": true,
+          "auxiliary_merge_yield_retained": true,
+          "scope": "compiled geometry only; no traffic episode run"
+        }
+      },
+      {
+        "id": "train-5-lane",
+        "split": "train",
+        "network": "outputs/highway-curriculum/v02/train-5-lane/network.net.xml",
+        "checks": {
+          "passed": true,
+          "geometry_version": "highway_right_entry_v2",
+          "junction": "n1",
+          "ramp_internal_lane": ":n1_0_0",
+          "through_lane_count": 5,
+          "connector_crossings": [],
+          "through_lane_foes": [],
+          "approach_right_of_auxiliary_m": 47.53417191076086,
+          "auxiliary_merge_foe_retained": true,
+          "auxiliary_merge_yield_retained": true,
+          "scope": "compiled geometry only; no traffic episode run"
+        }
+      },
+      {
+        "id": "validation-2-lane",
+        "split": "validation",
+        "network": "outputs/highway-curriculum/v02/validation-2-lane/network.net.xml",
+        "checks": {
+          "passed": true,
+          "geometry_version": "highway_right_entry_v2",
+          "junction": "n1",
+          "ramp_internal_lane": ":n1_3_0",
+          "through_lane_count": 2,
+          "connector_crossings": [],
+          "through_lane_foes": [],
+          "approach_right_of_auxiliary_m": 49.01431197512927,
+          "auxiliary_merge_foe_retained": true,
+          "auxiliary_merge_yield_retained": true,
+          "scope": "compiled geometry only; no traffic episode run"
+        }
+      },
+      {
+        "id": "validation-4-lane",
+        "split": "validation",
+        "network": "outputs/highway-curriculum/v02/validation-4-lane/network.net.xml",
+        "checks": {
+          "passed": true,
+          "geometry_version": "highway_right_entry_v2",
+          "junction": "n1",
+          "ramp_internal_lane": ":n1_5_0",
+          "through_lane_count": 4,
+          "connector_crossings": [],
+          "through_lane_foes": [],
+          "approach_right_of_auxiliary_m": 48.92227373293252,
+          "auxiliary_merge_foe_retained": true,
+          "auxiliary_merge_yield_retained": true,
+          "scope": "compiled geometry only; no traffic episode run"
+        }
+      },
+      {
+        "id": "validation-5-lane",
+        "split": "validation",
+        "network": "outputs/highway-curriculum/v02/validation-5-lane/network.net.xml",
+        "checks": {
+          "passed": true,
+          "geometry_version": "highway_right_entry_v2",
+          "junction": "n1",
+          "ramp_internal_lane": ":n1_6_0",
+          "through_lane_count": 5,
+          "connector_crossings": [],
+          "through_lane_foes": [],
+          "approach_right_of_auxiliary_m": 48.87315157013714,
+          "auxiliary_merge_foe_retained": true,
+          "auxiliary_merge_yield_retained": true,
+          "scope": "compiled geometry only; no traffic episode run"
+        }
+      },
+      {
+        "id": "test-3-lane",
+        "split": "test",
+        "network": "outputs/highway-curriculum/v02/test-3-lane/network.net.xml",
+        "checks": {
+          "passed": true,
+          "geometry_version": "highway_right_entry_v2",
+          "junction": "n1",
+          "ramp_internal_lane": ":n1_0_0",
+          "through_lane_count": 3,
+          "connector_crossings": [],
+          "through_lane_foes": [],
+          "approach_right_of_auxiliary_m": 46.96672231617045,
+          "auxiliary_merge_foe_retained": true,
+          "auxiliary_merge_yield_retained": true,
+          "scope": "compiled geometry only; no traffic episode run"
+        }
+      },
+      {
+        "id": "test-5-lane",
+        "split": "test",
+        "network": "outputs/highway-curriculum/v02/test-5-lane/network.net.xml",
+        "checks": {
+          "passed": true,
+          "geometry_version": "highway_right_entry_v2",
+          "junction": "n1",
+          "ramp_internal_lane": ":n1_0_0",
+          "through_lane_count": 5,
+          "connector_crossings": [],
+          "through_lane_foes": [],
+          "approach_right_of_auxiliary_m": 47.02867046405844,
+          "auxiliary_merge_foe_retained": true,
+          "auxiliary_merge_yield_retained": true,
+          "scope": "compiled geometry only; no traffic episode run"
+        }
+      },
+      {
+        "id": "test-6-lane",
+        "split": "test",
+        "network": "outputs/highway-curriculum/v02/test-6-lane/network.net.xml",
+        "checks": {
+          "passed": true,
+          "geometry_version": "highway_right_entry_v2",
+          "junction": "n1",
+          "ramp_internal_lane": ":n1_0_0",
+          "through_lane_count": 6,
+          "connector_crossings": [],
+          "through_lane_foes": [],
+          "approach_right_of_auxiliary_m": 47.054845251758174,
+          "auxiliary_merge_foe_retained": true,
+          "auxiliary_merge_yield_retained": true,
+          "scope": "compiled geometry only; no traffic episode run"
+        }
+      }
+    ],
+    "preserved_i110": {
+      "network": "outputs/i110-merge/v01/network/network.net.xml",
+      "network_sha256": "a216efd0a451845c19147437284fe0014d503c8015aca1d29bb4b4b8e1ac8623",
+      "geometry_version": "i110_provisional_v1"
+    },
+    "held_out_scope": "static network topology inspection only; no held-out traffic or policy evaluation"
+  },
+  "stop_reason": "transition_budget",
+  "actual_agent_transitions": 499992,
+  "charged_agent_transitions": 499992,
+  "demo_actual": 49998,
+  "ppo_actual": 449994,
+  "updates": 162,
+  "elapsed_seconds": 3563.875,
+  "best_rank": [
+    0,
+    0,
+    0,
+    6,
+    12,
+    0.9658944066617826,
+    -503,
+    -0.18147472642001042,
+    30782.689241671033
+  ],
+  "selected_generation": "selected-00162-cfaa8b0a",
+  "quality_accepted": false,
+  "sources_changed": [],
+  "wall_seconds": 3563.905999999959
+}

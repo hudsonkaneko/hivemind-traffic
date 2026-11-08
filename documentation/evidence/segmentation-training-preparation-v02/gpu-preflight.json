@@ -1,0 +1,79 @@
+{
+  "passed": true,
+  "training": false,
+  "optimizer_steps": 0,
+  "new_simulator_runs": false,
+  "scope": "Bounded train-mode forward/backward and eval forward; no learned weights or model-quality result",
+  "input_info": {
+    "mode": "dataset",
+    "training_ready": true,
+    "selection": "First declared training split microbatch only; no validation/test access"
+  },
+  "train_mode_buffers_changed": 3,
+  "microbatch_size": 4,
+  "accumulation_microbatches": 4,
+  "effective_batch": 16,
+  "input_shape": [
+    4,
+    3,
+    384,
+    640
+  ],
+  "target_shape": [
+    4,
+    360,
+    640
+  ],
+  "class_weights": [
+    0.25,
+    0.25,
+    0.7043166756629944,
+    1.300934910774231,
+    2.3999106884002686,
+    1.3780888319015503
+  ],
+  "gradient_norm_before_clip": 14.390596389770508,
+  "all_gradients_finite": true,
+  "loss_values": [
+    2.618590831756592,
+    2.620337963104248,
+    2.655085325241089,
+    2.6346359252929688
+  ],
+  "grad_scaler_initial_scale": 128.0,
+  "training_forward_backward_seconds": [
+    18.889382400084287,
+    0.05359439994208515,
+    0.056018600007519126,
+    0.04831769992597401
+  ],
+  "eval_microbatch_seconds": [
+    0.03261950006708503,
+    0.013337200041860342,
+    0.01244700001552701
+  ],
+  "peak_allocated_mib": 1475.6435546875,
+  "peak_reserved_mib": 1754.0,
+  "adam_moments_allocated_without_step": true,
+  "parameters_before_sha256": "ed06d4c5cd29afc99d4e0e128c2cf8f21a53c2abdfe72dc2a96e6d50e4d862b2",
+  "parameters_after_sha256": "ed06d4c5cd29afc99d4e0e128c2cf8f21a53c2abdfe72dc2a96e6d50e4d862b2",
+  "full_state_before_sha256": "ff3848287b51150de75840bd30cde3cf094632b3d25f8bffbc5d171ca3583f31",
+  "full_state_after_buffer_restore_sha256": "ff3848287b51150de75840bd30cde3cf094632b3d25f8bffbc5d171ca3583f31",
+  "projected_compute_only_epoch_seconds": 39.78831596206874,
+  "timing_data_residency": "Input microbatch already loaded and GPU resident; eval forward uses the same training rows, never held-out examples",
+  "projection_limit": "Compute-only extrapolation, not measured epoch throughput or completion promise; excludes optimizer-step time, IO, augmentation, checkpointing and contention",
+  "parameters_unchanged": true,
+  "full_state_restored": true,
+  "weights_file_unchanged": true,
+  "gpu_after": {
+    "wall": 1394246.2683971,
+    "name": "NVIDIA GeForce RTX 5070",
+    "total_mib": 12227.0,
+    "used_mib": 5246.0,
+    "utilization_percent": 2.0,
+    "driver": "621.01"
+  },
+  "wall_seconds": 25.681953700026497,
+  "source_changed_during_run": [],
+  "inputs_changed_during_run": []
+}

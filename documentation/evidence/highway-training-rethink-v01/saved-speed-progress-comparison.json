@@ -1,0 +1,8 @@
+{
+  "training": false,
+  "new_simulator_runs": false,
+  "source": "outputs\\highway-training-rethink\\v01\\merge-speed-traces.csv",
+  "source_sha256": "b46731a3ae9588366026b5ce7af1b2c998000e43db9a04a7012c838585d490a6",
+  "figure_sha256": "1aae3b323334c8d90fa166c2acf9fece8962d8dcb5a64691ce92248b0dd78a0f",
+  "interpretation": "Original native samples; no interpolation or invented arrivals. Native SUMO has automatic lane changes and is context, not a pure actor-only ablation. Episode ceiling 18 m/s, ramp 13.41 m/s. Past visualization covers first30s only."
+}

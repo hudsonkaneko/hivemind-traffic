@@ -1,0 +1,91 @@
+{
+  "version": "highway-stage1-v03",
+  "policy_type": "Shared hybrid actor trained with behavior cloning and MAPPO; actor-only deterministic TorchScript",
+  "status": "experimental_not_accepted",
+  "run_id": "train-20261103T230506Z-04ba1761",
+  "source_commit": "cf6ae5096ebac9f165e9811ed3916195227f3146",
+  "selected_generation": "selected-00162-80ce2ebf",
+  "trained_on": "2026-11-03",
+  "observation_schema": "highway_stage1_graph_messages_v2",
+  "observation_size": 93,
+  "output": {
+    "shape": [
+      "batch",
+      2
+    ],
+    "fields": [
+      "normalized_acceleration",
+      "lane_delta"
+    ],
+    "normalized_acceleration_range": [
+      -1,
+      1
+    ],
+    "physical_acceleration_formula": "-4.5 + (normalized_acceleration + 1) * 3.25",
+    "physical_acceleration_m_s2": [
+      -4.5,
+      2
+    ],
+    "lane_delta": {
+      "0": "stay",
+      "1": "left",
+      "-1": "right"
+    }
+  },
+  "runtime": {
+    "python": "3.11.9",
+    "torch": "2.14.0+cpu",
+    "traci": "1.27.1"
+  },
+  "quality_accepted": false,
+  "held_out_test_run": false,
+  "files": {
+    "policy.pt": {
+      "sha256": "a6d59d3acf58fcca9d7fc33406cb61ca3863d1a3dffad6dd316b195a66c7166f",
+      "bytes": 108536
+    },
+    "training-config.json": {
+      "sha256": "9c605111a6d88c78988e5e222a4fc1e993f7f920b25649aff237d26ac8850fb2",
+      "bytes": 36635
+    },
+    "contract.json": {
+      "sha256": "109cdd6dc651cfe2455ef13d608b791a8c05055d240e7e65ef8b7e52575ed248",
+      "bytes": 3731
+    },
+    "evaluation.json": {
+      "sha256": "d0c6454edbb16bc4f3db18f8f3d8f51351994d7df8b06ce3be7c9b01fc92befc",
+      "bytes": 92236
+    }
+  },
+  "ranking_version": 5,
+  "config_canonical_sha256": "4df2efa0955d84de1bca101b1dd45d5e72e4a8709a4596165f0f36e6281ea5a8",
+  "execution": {
+    "initial_run": "train-20261103T230113Z-dbea1564",
+    "initial_summary_sha256": "7a0528b5b893871aca42a080fcbec120f5213d9e1481217b7054c3e1c713a9ca",
+    "initial_failure": "Windows PermissionError while atomically replacing last.pt; closed recovery checkpoint retained",
+    "resumed_run": "train-20261103T230506Z-04ba1761",
+    "source_resume": "outputs\\highway-stage1\\v03\\train-20261103T230113Z-dbea1564\\last.pt",
+    "aggregate_elapsed_seconds": 3544.124999999767,
+    "actual_agent_transitions": 499990,
+    "demo_actual": 49998,
+    "ppo_actual": 449992,
+    "bc_optimizer_steps": 1176,
+    "ppo_updates": 162,
+    "ppo_optimizer_steps": 6555,
+    "source_drift": []
+  },
+  "loading_smoke": {
+    "device": "cpu",
+    "input_shape": [
+      4,
+      93
+    ],
+    "output_shape": [
+      4,
+      2
+    ],
+    "all_finite": true,
+    "action_ranges_valid": true,
+    "input": "zeros; loading/contract smoke only, not a driving evaluation"
+  }
+}

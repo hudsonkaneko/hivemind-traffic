@@ -1,0 +1,101 @@
+{
+  "schema": "highway_smooth_preflight_v01",
+  "passed": false,
+  "training": false,
+  "optimizer_steps": 0,
+  "status": "blocked_four_nominal_comfort_failures",
+  "checks": {
+    "contract": true,
+    "safety": true,
+    "comfort": false,
+    "reference": true,
+    "invariance": true,
+    "gradient": true,
+    "coverage": true
+  },
+  "check_scope": {
+    "reference": "Pure-reference boundary/safety-priority tests pass; this does not imply nominal comfort passed.",
+    "coverage": "All six fixed 80 s fixtures retained; generic frozen-actor post-merge baseline window is censored. The separately documented monotone maximum lower-bound comparison proves only the one-sided slowdown inequality."
+  },
+  "source_hashes": {
+    "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+    "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+    "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+    "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+    "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+    "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+    "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+    "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+    "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+    "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+    "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+    "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+    "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+    "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+    "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+    "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+    "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+    "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+    "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+    "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+    "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+    "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+    "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+    "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+    "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+    "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+    "experiments/run_highway_smooth_control.py": "c21fbceec62d963dcc31cb9cb637ac9a360c6a16870429f6d02e6b7b88099a95",
+    "traffic/highway_smooth_contract.py": "bbe158f7ba3928a948aa2822a16978d92fbacd0399ae7bc340dc40c434e45b77",
+    "traffic/highway_smooth_schedule.py": "6e6cd00cb79e1807f6acf7097e4b640803382c9a78186707279864c986d382ae",
+    "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+    "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98",
+    "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+    "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+    "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+    "scripts/check_highway_smooth_gradients.py": "927394075820cf6b0ef5fb6ee2f73588ef66fa1e524fd31d31463b80d31c980d",
+    "scripts/summarize_highway_smooth_preflight.py": "eccbf46f1cc5d2cd3aaf06d65369ba7334a505fdb43b0d8fc440e1e74280a88c"
+  },
+  "preparation_sha256": "3f88dccca05981209fee6eeb294f74b06818ab11fc1ee730370381f75d3ee3f7",
+  "preparation_ledger_sha256": "6282d469570ea587a3b2b55fde4fa1c31eeb0c54b87c68a0b2d9b2b65c6e8dec",
+  "preparation_wall_seconds": 1241.0939999999828,
+  "budget_scope": "Experimental native/frozen-gradient/visual runtime, including rejected revisions. Software development, documentation and unit-test time are not learning-runtime charges.",
+  "fixture_failures": {
+    "cruise": [
+      "nominal_controlled_peak_jerk"
+    ],
+    "following": [
+      "nominal_controlled_peak_jerk"
+    ],
+    "passing": [
+      "nominal_controlled_peak_jerk"
+    ],
+    "merge": [
+      "nominal_controlled_peak_jerk"
+    ],
+    "dense-following": [],
+    "i110-merge": []
+  },
+  "evidence": {
+    "configs/training/highway-smooth-v01.json": "08f87a93d9948011f47a87e930231210c21503ada99dcc76261fe2588c6fecef",
+    "outputs/highway-smooth-control/v02/matrix-02-offline/gates-monotone-bound-revision.json": "94d053e183130baaf14eff78eebdc5fd1263458eb25bf238e00eb4a2ed23edbe",
+    "outputs/highway-smooth-control/v02/gradients-02/summary.json": "e623b5c3c79b4ce99890a5f812ecdbb2619ea9d2c3dd92fa07d79cbacf3ceec7",
+    "outputs/highway-smooth-control/v02/entry-probe-03-offline/frozen-invariance.json": "2ff6a062bf2c42e178d4b9a4c30360cf2f1c5906656ea6b0ebad1264fd3648ff",
+    "outputs/highway-smooth-control/v02/entry-probe-01/legacy-invariance.json": "32a0c5980cd5291f727a0a3f0482c51d08de36e5ac732995b14b01546cf71808",
+    "outputs/highway-smooth-control/v02/visual-comparison-v01/manifest.json": "2816d378392f4ba360d6a8e3f6785a191e18043366419163c303ef738fb7fc84",
+    "logs/highway-smooth-preparation-final-tests.log": "0d2e629f5ea544e2ca49907a7c54aaea6b230b900a86560e2eac327074e33b7f",
+    "logs/highway-smooth-preparation-config-recheck.log": "7ff9aeea50c1e2de21a62f34db4cce98896bc807140a6c3f0bb835db8886d858",
+    "logs/highway-smooth-preparation-render-tests.log": "7f050ea150f244a829d395c01a6d70ee40f7e4231bbf9e05095309a2a1723775"
+  },
+  "git_base_commit": "69fb36a510d03cce344221c520c3d569eaff4b41",
+  "branch": "codex/highway-smooth-preparation-v01",
+  "code_state": "Task sources uncommitted when native experiments ran; exact source snapshots/hashes retained",
+  "limitations": [
+    "No optimizer updates, training or held-out promotion. Frozen actor is unchanged.",
+    "Six fixtures are preparation checks, not all 24 fixed validation rows.",
+    "SimReady visualizations use recorded SUMO motion, not physical control or sensor capture."
+  ]
+}

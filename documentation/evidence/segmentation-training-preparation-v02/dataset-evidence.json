@@ -1,0 +1,379 @@
+{
+  "run_id": "20261101T005956Z-51a9fc5b",
+  "local_run": "outputs/segmentation-dataset/v02/20261101T005956Z-51a9fc5b",
+  "training_started": false,
+  "native_capture_passed": true,
+  "original_launcher_passed": false,
+  "original_readiness": false,
+  "original_errors": [
+    "near_duplicate_review_pending"
+  ],
+  "reviewed_readiness": true,
+  "reviewed_errors": [],
+  "status_explanation": "Original capture files/manifests remain immutable; a new reviewed manifest resolves the near-duplicate QA gate without modifying images, splits or labels. Dataset readiness is not trained model quality.",
+  "frames": 3600,
+  "scene_groups": 180,
+  "split_frames": {
+    "train": 2880,
+    "validation": 360,
+    "test": 360
+  },
+  "split_scene_groups": {
+    "train": 144,
+    "validation": 18,
+    "test": 18
+  },
+  "empty_negative_frames": 600,
+  "classes": {
+    "background": 0,
+    "road": 1,
+    "lane": 2,
+    "vehicle": 3,
+    "pedestrian": 4,
+    "obstacle": 5
+  },
+  "class_counts_by_split": {
+    "train": [
+      331998229,
+      318987221,
+      7704228,
+      2258156,
+      591783,
+      2012383
+    ],
+    "validation": [
+      42037238,
+      39400447,
+      957408,
+      175825,
+      112438,
+      260644
+    ],
+    "test": [
+      41160835,
+      40167542,
+      1017236,
+      316129,
+      85041,
+      197217
+    ]
+  },
+  "wall_seconds_capture_and_finalization": 476.0091668998357,
+  "native_shutdown_elapsed_seconds_from_log": 452.4,
+  "hash_provenance": {
+    "capture_manifest_sha256": "bff11920afebf9b47e87e927383fe8d83b6afc2befaea3c66d1762358d7b8231",
+    "original_dataset_manifest_sha256": "af116f42e56d2f2b049b204a987aa5cf6ee5d632a9f164ebd8a8c6e34fe238a9",
+    "reviewed_dataset_manifest_sha256": "dd5353ae8592617eee172accfa2bc276f542acb82c828eb904774cce1d6e0e77",
+    "runtime_source_hashes": {
+      "traffic/segmentation_dataset_v02.py": "25fde60a9b6f95cd5b4358249040a818629af14f161ff43fdb7eb76d499e7322",
+      "usd/segmentation_dataset_scene.py": "22da6e5a814d6d1fd51fd349a08f2d75f41a38b9ea212f8fecdff01b2abab23b",
+      "scripts/capture_segmentation_dataset_v02.py": "26595d7cf411cb61795a675b01da2b7a0a94c709af8f0f84d5597275a1a011b5",
+      "experiments/prepare_segmentation_dataset_v02.py": "137b03d1a004ef909863d02e9b937791919e0337ee6760d66a2dc5f7a39bb0d1",
+      "configs/perception/segmentation_dataset_v02.json": "4e6a07da228ad36a354ce655193b5963abfd6001e3ba6713482c1bf39e839e7b",
+      "configs/perception/segmentation_dataset_assets_v02.json": "7bee886524ee07f0a55193d2ce5afd27e4c3e39ad43c5ead2c7564f3d447408a",
+      "scripts/fetch_segmentation_dataset_assets.py": "744683b01211d1aedfc50dbd46a4a29bef5384b82e4a5730141e4535ff1132ca"
+    },
+    "source_asset_hashes": {
+      "vehicles\\sim_ready\\americano-i7-ev\\v14\\assets\\ground.usda": "fecda741fa028cb99889147fa21a4b86f171ea87259d72b300df1c8040c6b957",
+      "vehicles\\sim_ready\\americano-i7-ev\\v14\\assets\\vehicle-geometry.usda": "3f29d13bfdf973341d21481e00ca7406fbdb7eeeb0bfcc5626558bf421a8321d",
+      "vehicles\\sim_ready\\americano-i7-ev\\v14\\assets\\vehicle-physics.usda": "567724ece7804213c30febdae2e8ac0635901d7129237cb9b3dff6bfa69c0594",
+      "vehicles\\sim_ready\\americano-i7-ev\\v14\\assets\\vehicle-sensors.usda": "3ea728bfb506d8c300bb7dedb196a3836a59cba86a3109ce3c99f7dee665e36c",
+      "vehicles\\sim_ready\\americano-i7-ev\\v14\\assets\\vehicle.usda": "eb239d3e5d16d43975b33ee4afef1720a73082a65db4f19bb9edab880281b3f6",
+      "vehicles\\sim_ready\\americano-i7-ev\\v14\\assets\\visuals.usdc": "bf84656461e0a0c79794c61ecfd8a24bd6e94e7a2ef5218fe1b2c48da818e400",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\female_adult_police_02\\textures\\female_adult_police_02_BaseColor.png": "438ecc21b9a980ce0eaa00c330fd3eafe99eaea0671e8bdfd3dfcf5bf5fe8635",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\female_adult_police_02\\textures\\female_adult_police_02_Normal.png": "f92deb073fa211aa4b701c23786283dafdf779e0405481e32951f1733a3f16ee",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\female_adult_police_02\\textures\\female_adult_police_02_ORM.png": "86c278bd7ef9488cd2504e9d5108e334624468057d63a13fcac448207fff2266",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\female_adult_police_02\\female_adult_police_02.usd": "4966f0017b7de43ea0802a9a737c4c6b3a97f9333dbf899203554ffce3a41e46",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\male_adult_construction_03\\textures\\male_adult_construction_03_BaseColor.png": "1d4fb88081020c553490731afd987a0c3a975f18f277e1fb49896905c5ce913b",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\male_adult_construction_03\\textures\\male_adult_construction_03_Normal.png": "3f3c2115bdffc5e7645b488f210a045ecaa8a1657ed0eb06af4762493af005ac",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\male_adult_construction_03\\textures\\male_adult_construction_03_ORM.png": "68e02450beb4d75b7c930627df88335e8e286a2517bb3f1aa1eb44bf04b475b7",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\male_adult_construction_03\\male_adult_construction_03.usd": "2e5d7fc72d6e2ed67f0ab86e2f3aaa91066019a4c71266361735956f232ccff0",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\male_adult_police_04\\textures\\male_adult_police_04_BaseColor.png": "7713714d56db66cec13e98cc5197d41bd5008ebe6f43c57bfc0ba0272b55ed88",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\male_adult_police_04\\textures\\male_adult_police_04_Normal.png": "8e8cd9850a091e961c6f7ee8a5e0ee8d462399c3122014461e218a47e014891e",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\male_adult_police_04\\textures\\male_adult_police_04_ORM.png": "3251967eb0bf6046afc02da3256baae6349299a710a4c14a5a9a5fa540fef279",
+      "runtimes\\perception-assets\\Isaac\\People\\Characters\\male_adult_police_04\\male_adult_police_04.usd": "3110909a21152d10bfcdf16d4e49653bae196d3093efe61a2099b4ee1761733b"
+    }
+  },
+  "near_duplicate_review": {
+    "reviewed": true,
+    "reviewer": "Codex agent; visual and source-provenance inspection",
+    "pairs_sha256": "f176e7164c4bbfc2003e3def5f360bd1c10eef78577de8e0cb4b09b9b9ce656f",
+    "dataset_frames_sha256": "19876c41b7e3f9eea7e5dba45ad778573d82a65ecf53f04840f1a907e4cbc10e",
+    "explanation": "All 100 reported pairs have different RGB hashes and mean absolute RGB differences of 9.60\u201327.65/255. Six representative reported pairs and four supplemental train/test and validation/test pairs were visually inspected. The low-resolution hash collides on common sky/road silhouettes; object presence, road curvature, appearance and reserved identity/family differ. Complete scene-seed/family isolation and exact-duplicate checks pass. This is a bounded near-pair inspection, not exhaustive visual review or a generalization guarantee.",
+    "review_artifacts": [
+      "outputs/validation/segmentation-dataset-v02-review/near-pair-review.png",
+      "outputs/validation/segmentation-dataset-v02-review/cross-split-review.png",
+      "outputs/validation/segmentation-dataset-v02-review/pair-differences.json",
+      "outputs/validation/segmentation-dataset-v02-review/supplemental-pairs.json"
+    ]
+  },
+  "independent_audit": {
+    "passed": true,
+    "issues": [],
+    "run": "20261101T005956Z-51a9fc5b",
+    "outputs_verified": 18757,
+    "source_hashes_verified": 7,
+    "original_asset_hashes_verified": 18,
+    "frames": 3600,
+    "scene_groups": 180,
+    "metadata_rows": 3600,
+    "composed_scenes": 180,
+    "class_counts_by_split": {
+      "train": [
+        331998229,
+        318987221,
+        7704228,
+        2258156,
+        591783,
+        2012383
+      ],
+      "validation": [
+        42037238,
+        39400447,
+        957408,
+        175825,
+        112438,
+        260644
+      ],
+      "test": [
+        41160835,
+        40167542,
+        1017236,
+        316129,
+        85041,
+        197217
+      ]
+    },
+    "dataset_manifest_sha256": "af116f42e56d2f2b049b204a987aa5cf6ee5d632a9f164ebd8a8c6e34fe238a9",
+    "run_manifest_sha256": "bff11920afebf9b47e87e927383fe8d83b6afc2befaea3c66d1762358d7b8231",
+    "validation_errors": [
+      "near_duplicate_review_pending"
+    ],
+    "training": false
+  },
+  "foreign_cwd_scene_audit": {
+    "passed": true,
+    "cwd": "C:\\Users\\hudso\\Documents\\highwaysim\\outputs\\validation\\segmentation-dataset-v02-audit",
+    "scope": "Fresh plain-USD processes, no SimulationApp or GPU work; actual saved composed stages",
+    "scenes": [
+      {
+        "scene": "train-000",
+        "default_prim": "/World",
+        "units": 1.0,
+        "up_axis": "Z",
+        "composition_errors": [],
+        "layers": [
+          "scenes\\train-000\\world.usda",
+          "assets\\humans\\female_adult_police_02\\female_adult_police_02.usd",
+          "assets\\humans\\male_adult_construction_03\\male_adult_construction_03.usd",
+          "assets\\humans\\male_adult_police_04\\male_adult_police_04.usd",
+          "assets\\obstacle-box.usda",
+          "assets\\obstacle-cone.usda",
+          "assets\\road-train-000.usda",
+          "assets\\vehicle\\vehicle-geometry.usda",
+          "assets\\vehicle\\visuals.usdc",
+          "scenes\\train-000\\layout.usda"
+        ],
+        "missing_dependencies": [
+          "OmniPBR.mdl"
+        ],
+        "runtime_mdl_dependency": "OmniPBR.mdl is resolved by Isaac material runtime",
+        "top_hierarchy": [
+          "/World",
+          "/World/Environment",
+          "/World/Environment/Highway",
+          "/World/Environment/Props",
+          "/World/Environment/People",
+          "/World/Cameras",
+          "/World/Cameras/Front",
+          "/World/Lighting",
+          "/World/Lighting/Sun",
+          "/World/Lighting/Dome",
+          "/World/Vehicles",
+          "/World/Vehicles/vehicle_lead",
+          "/World/Vehicles/vehicle_adjacent",
+          "/Render",
+          "/Render/OmniverseKit",
+          "/Render/OmniverseKit/HydraTextures",
+          "/Render/OmniverseGlobalRenderSettings",
+          "/Render/Vars",
+          "/Render/Vars/LdrColor"
+        ]
+      },
+      {
+        "scene": "validation-000",
+        "default_prim": "/World",
+        "units": 1.0,
+        "up_axis": "Z",
+        "composition_errors": [],
+        "layers": [
+          "scenes\\validation-000\\world.usda",
+          "assets\\humans\\female_adult_police_02\\female_adult_police_02.usd",
+          "assets\\humans\\male_adult_construction_03\\male_adult_construction_03.usd",
+          "assets\\humans\\male_adult_police_04\\male_adult_police_04.usd",
+          "assets\\obstacle-barrier.usda",
+          "assets\\obstacle-cylinder.usda",
+          "assets\\road-validation-000.usda",
+          "assets\\vehicle\\vehicle-geometry.usda",
+          "assets\\vehicle\\visuals.usdc",
+          "scenes\\validation-000\\layout.usda"
+        ],
+        "missing_dependencies": [
+          "OmniPBR.mdl"
+        ],
+        "runtime_mdl_dependency": "OmniPBR.mdl is resolved by Isaac material runtime",
+        "top_hierarchy": [
+          "/World",
+          "/World/Environment",
+          "/World/Environment/Highway",
+          "/World/Environment/Props",
+          "/World/Environment/People",
+          "/World/Cameras",
+          "/World/Cameras/Front",
+          "/World/Lighting",
+          "/World/Lighting/Sun",
+          "/World/Lighting/Dome",
+          "/World/Vehicles",
+          "/World/Vehicles/vehicle_lead",
+          "/World/Vehicles/vehicle_adjacent",
+          "/Render",
+          "/Render/OmniverseKit",
+          "/Render/OmniverseKit/HydraTextures",
+          "/Render/OmniverseGlobalRenderSettings",
+          "/Render/Vars",
+          "/Render/Vars/LdrColor"
+        ]
+      },
+      {
+        "scene": "test-000",
+        "default_prim": "/World",
+        "units": 1.0,
+        "up_axis": "Z",
+        "composition_errors": [],
+        "layers": [
+          "scenes\\test-000\\world.usda",
+          "assets\\humans\\female_adult_police_02\\female_adult_police_02.usd",
+          "assets\\humans\\male_adult_construction_03\\male_adult_construction_03.usd",
+          "assets\\humans\\male_adult_police_04\\male_adult_police_04.usd",
+          "assets\\obstacle-lowcylinder.usda",
+          "assets\\obstacle-pyramid.usda",
+          "assets\\road-test-000.usda",
+          "assets\\vehicle\\vehicle-geometry.usda",
+          "assets\\vehicle\\visuals.usdc",
+          "scenes\\test-000\\layout.usda"
+        ],
+        "missing_dependencies": [
+          "OmniPBR.mdl"
+        ],
+        "runtime_mdl_dependency": "OmniPBR.mdl is resolved by Isaac material runtime",
+        "top_hierarchy": [
+          "/World",
+          "/World/Environment",
+          "/World/Environment/Highway",
+          "/World/Environment/Props",
+          "/World/Environment/People",
+          "/World/Cameras",
+          "/World/Cameras/Front",
+          "/World/Lighting",
+          "/World/Lighting/Sun",
+          "/World/Lighting/Dome",
+          "/World/Vehicles",
+          "/World/Vehicles/vehicle_lead",
+          "/World/Vehicles/vehicle_adjacent",
+          "/Render",
+          "/Render/OmniverseKit",
+          "/Render/OmniverseKit/HydraTextures",
+          "/Render/OmniverseGlobalRenderSettings",
+          "/Render/Vars",
+          "/Render/Vars/LdrColor"
+        ]
+      }
+    ]
+  },
+  "environment_audit": {
+    "isaac_installed_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+    "version_file_sha256": "dd69799842a727b6a272edfaaa11b471be6ca19a2d2806973eb5ddb89a2aac0d",
+    "version_scope": "Installed version file read during native capture; not a package-version query inside the running process",
+    "native_interpreter_version": "Python 3.12.13",
+    "interpreter_scope": "Same bundled interpreter selected by python.bat default; direct --version probe, no new SimulationApp",
+    "gpu": "NVIDIA GeForce RTX 5070, 621.01, 12227 MiB",
+    "capture_log": "logs/segmentation-dataset-20261101T005956Z-51a9fc5b.log",
+    "training": false
+  },
+  "screenshots": [
+    {
+      "file": "train-000.png",
+      "source": "outputs/segmentation-dataset/v02/20261101T005956Z-51a9fc5b/frames/train-000/capture.png",
+      "sha256": "5c78dca20fbbf1a556d82381e31cf3d53176d7404fb75281858162ec9a0db9fa",
+      "dimensions": [
+        1280,
+        420
+      ],
+      "kind": "Actual saved simulator RGB/GT"
+    },
+    {
+      "file": "validation-000.png",
+      "source": "outputs/segmentation-dataset/v02/20261101T005956Z-51a9fc5b/frames/validation-000/capture.png",
+      "sha256": "377ec799c602dae2d51258a40e1559ba3bfe56d818b8c0d419d98f10fa642445",
+      "dimensions": [
+        1280,
+        420
+      ],
+      "kind": "Actual saved simulator RGB/GT"
+    },
+    {
+      "file": "test-000.png",
+      "source": "outputs/segmentation-dataset/v02/20261101T005956Z-51a9fc5b/frames/test-000/capture.png",
+      "sha256": "9e4506d38c8945d768b0d13c10bd0540bff56198344b20176a543a72e333c3e1",
+      "dimensions": [
+        1280,
+        420
+      ],
+      "kind": "Actual saved simulator RGB/GT"
+    },
+    {
+      "file": "train-001-empty.png",
+      "source": "outputs/segmentation-dataset/v02/20261101T005956Z-51a9fc5b/frames/train-001/capture.png",
+      "sha256": "2c88296d615950f4958c03e5c53771955c1087a934b937f602810bc99639546f",
+      "dimensions": [
+        1280,
+        420
+      ],
+      "kind": "Actual saved simulator RGB/GT"
+    },
+    {
+      "file": "dataset-near-pair-review.png",
+      "source": "outputs/validation/segmentation-dataset-v02-review/near-pair-review.png",
+      "sha256": "dc3959405b886dc406d58e832003d8af6b899660265294740862a669c8d17a0f",
+      "dimensions": [
+        1280,
+        2460
+      ],
+      "kind": "Contact sheet of actual saved RGB pairs; no image synthesis"
+    },
+    {
+      "file": "dataset-cross-split-review.png",
+      "source": "outputs/validation/segmentation-dataset-v02-review/cross-split-review.png",
+      "sha256": "8109d2199316b2145b311379ddbe700cb0b0663d4770bdfbcac48d7c8d6a30d9",
+      "dimensions": [
+        1280,
+        1640
+      ],
+      "kind": "Contact sheet of actual saved RGB pairs; no image synthesis"
+    }
+  ],
+  "validation_limits": [
+    "Shared vehicle visual identity across splits; only road-family, obstacle-family and pedestrian-identity holdout",
+    "Static rigged human rest poses, procedural road/props, simple lighting; not photoreal or real-road generalization",
+    "No motion vectors; temporal flicker cannot be motion-compensated from this dataset alone",
+    "Only one shared Americano I7 vehicle visual; no held-out vehicle identity claim.",
+    "Three official NVIDIA humans in static rigged rest poses, one visible identity per split; no walking animation or pedestrian motion-policy validation.",
+    "Road-family, obstacle-family and visible-human-identity splits are fixed; source image groups are correlated twenty-frame sequences.",
+    "Obstacle shapes are box/cone, cylinder/barrier and pyramid/low-cylinder. The low cylinder is not a realistic tire asset.",
+    "Camera is a scripted stand-alone front-view camera with recorded intrinsics; no physical ego vehicle or control policy is evaluated.",
+    "No LiDAR or motion vectors in this new dataset. Six-class segmentation and object-metric labels are synthetic ground truth.",
+    "Near-pair QA inspects ten representative pairs and numerical differences for the first one hundred flagged pairs; not exhaustive perceptual-duplicate review.",
+    "Official human assets and private vehicle geometry remain local; GitHub evidence does not redistribute source models or the full dataset.",
+    "Native Isaac resolves OmniPBR.mdl; plain USD dependency checks list it as a runtime-supplied material dependency."
+  ]
+}

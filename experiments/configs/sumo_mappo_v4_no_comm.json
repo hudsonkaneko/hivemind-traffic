@@ -1,0 +1,198 @@
+{
+  "schema_version": 1,
+  "study": "sumo-mappo-v04-cooperative-passing-no-comm",
+  "environment": {
+    "dt": 0.1,
+    "horizon": 600,
+    "speed_limit_m_s": 26.8224,
+    "route_length_m": 5000.0,
+    "neighbor_range_m": 120.0,
+    "acceleration_min_m_s2": -4.5,
+    "acceleration_max_m_s2": 2.0,
+    "min_gap_m": 2.5,
+    "time_headway_s": 1.5,
+    "initial_speed_range_m_s": [
+      12.0,
+      22.0
+    ],
+    "background_depart_interval_range_s": [
+      1.5,
+      3.0
+    ],
+    "reward_weights": {
+      "progress": 1.0,
+      "headway": -0.5,
+      "jerk": -0.02,
+      "collision": -10.0,
+      "intervention": -1.0,
+      "cruise_excess": -2.0,
+      "passing": 1.0,
+      "lane_change": -0.05,
+      "cooperative_tracking": 0.05,
+      "lane_change_rejected": -0.25
+    },
+    "cruise_speed_m_s": 26.0,
+    "communication": {
+      "mode": "none",
+      "range_m": 150.0,
+      "max_neighbors": 6,
+      "update_hz": 10.0,
+      "latency_s": [
+        0.0,
+        0.3
+      ],
+      "packet_loss": 0.1,
+      "expiry_s": 0.5,
+      "outages_s": []
+    },
+    "wave": null,
+    "driving": {
+      "enabled": true,
+      "cooperative_headway_s": 0.8,
+      "ordinary_headway_s": 1.5,
+      "cooperative_max_age_s": 0.2,
+      "response_time_s": 0.3,
+      "follower_braking_m_s2": 4.5,
+      "leader_braking_m_s2": 9.0,
+      "lane_change_min_ttc_s": 3.0,
+      "lane_change_cooldown_s": 5.0,
+      "slow_leader_speed_m_s": 17.0,
+      "pass_speed_deficit_m_s": 2.0,
+      "pass_clearance_m": 10.0
+    }
+  },
+  "model": {
+    "observation_size": 81,
+    "state_size": 328,
+    "num_agents": 4,
+    "actor_hidden_sizes": [
+      128,
+      128
+    ],
+    "critic_hidden_sizes": [
+      256,
+      256
+    ],
+    "normalization": "fixed_environment_feature_scaling",
+    "communication": "none",
+    "action": "hybrid_tanh_gaussian_categorical_lane",
+    "critic_input": "joint_observations_alive_masks_and_agent_one_hot",
+    "message_encoder": true
+  },
+  "training": {
+    "algorithm": "MAPPO",
+    "seed": 6104,
+    "episode_seed_start": 1000000,
+    "episode_seed_end": 1099999,
+    "num_workers": 4,
+    "rollout_steps": 256,
+    "max_agent_transitions": 1000000,
+    "max_wall_seconds": 7200,
+    "device": "cpu",
+    "torch_threads": 1,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "actor_lr": 0.0003,
+    "critic_lr": 0.0003,
+    "clip": 0.2,
+    "value_clip": 0.2,
+    "entropy_coef": 0.01,
+    "value_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "epochs": 4,
+    "minibatch_size": 256,
+    "target_kl": 0.02
+  },
+  "evaluation": {
+    "validation_seeds": [
+      1110001,
+      1110002,
+      1110003,
+      1110004,
+      1110005,
+      1110006,
+      1110007,
+      1110008,
+      1110009,
+      1110010
+    ],
+    "test_seeds": [
+      1210001,
+      1210002,
+      1210003,
+      1210004,
+      1210005,
+      1210006,
+      1210007,
+      1210008,
+      1210009,
+      1210010,
+      1210011,
+      1210012,
+      1210013,
+      1210014,
+      1210015,
+      1210016,
+      1210017,
+      1210018,
+      1210019,
+      1210020,
+      1210021,
+      1210022,
+      1210023,
+      1210024,
+      1210025,
+      1210026,
+      1210027,
+      1210028,
+      1210029,
+      1210030,
+      1210031,
+      1210032,
+      1210033,
+      1210034,
+      1210035,
+      1210036,
+      1210037,
+      1210038,
+      1210039,
+      1210040,
+      1210041,
+      1210042,
+      1210043,
+      1210044,
+      1210045,
+      1210046,
+      1210047,
+      1210048,
+      1210049,
+      1210050
+    ],
+    "every_updates": 25,
+    "selection": "accepted_then_fewer_collisions_then_fewer_overspeed_steps_then_nominal_episodes_then_reward_then_fewer_interventions",
+    "acceptance": {
+      "collision_vehicles": 0,
+      "overspeed_steps": 0,
+      "minimum_mean_progress_m": 600.0,
+      "maximum_intervention_fraction": 0.05
+    },
+    "driving_targets": {
+      "minimum_passes_per_episode": 1,
+      "maximum_lane_changes_per_vehicle_minute": 6.0
+    }
+  },
+  "preflight": {
+    "seeds": [
+      1310001,
+      1310002
+    ],
+    "rollout_steps": 32,
+    "max_wall_seconds": 300
+  },
+  "execution": {
+    "worker_timeout_seconds": 30,
+    "log_mode": "files_only",
+    "rendering": false,
+    "requires_explicit_train_mode": true
+  }
+}

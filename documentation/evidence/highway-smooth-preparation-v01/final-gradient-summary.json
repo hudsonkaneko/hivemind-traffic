@@ -1,0 +1,206 @@
+{
+  "passed": true,
+  "training": false,
+  "optimizer_steps": 0,
+  "state_unchanged": true,
+  "arms": {
+    "unchanged_objective_control": {
+      "phase": "frozen_no_update",
+      "optimizer_steps": 0,
+      "active_samples": 512,
+      "component_samples": 256,
+      "component_sampling": "First active rows, without shuffling; diagnostic only",
+      "representative_minibatch": {
+        "components": {
+          "ppo": {
+            "weighted_loss": -0.5316600203514099,
+            "actor": 5.564571857452393,
+            "critic": 0.0,
+            "joint": 5.564571857452393
+          },
+          "value": {
+            "weighted_loss": 13.687342643737793,
+            "actor": 0.0,
+            "critic": 37.302974700927734,
+            "joint": 37.30297088623047
+          },
+          "entropy": {
+            "weighted_loss": 0.0010109099093824625,
+            "actor": 0.006768899969756603,
+            "critic": 0.0,
+            "joint": 0.006768899969756603
+          },
+          "acceleration": {
+            "weighted_loss": 0.006329052150249481,
+            "actor": 0.06684984266757965,
+            "critic": 0.0,
+            "joint": 0.06684984266757965
+          },
+          "lane": {
+            "weighted_loss": 0.0005401454982347786,
+            "actor": 0.0035403110086917877,
+            "critic": 0.0,
+            "joint": 0.0035403110086917877
+          },
+          "near_limit": {
+            "weighted_loss": 0.0,
+            "actor": 0.0,
+            "critic": 0.0,
+            "joint": 0.0
+          }
+        },
+        "actor_cosines": {
+          "ppo__value": null,
+          "ppo__entropy": 0.6292813951836919,
+          "ppo__acceleration": -0.840824077158531,
+          "ppo__lane": -0.03536155503706983,
+          "ppo__near_limit": null,
+          "value__entropy": null,
+          "value__acceleration": null,
+          "value__lane": null,
+          "value__near_limit": null,
+          "entropy__acceleration": -0.9359153443019318,
+          "entropy__lane": -0.036817834673335784,
+          "entropy__near_limit": null,
+          "acceleration__lane": 0.04719797791854861,
+          "acceleration__near_limit": null,
+          "lane__near_limit": null
+        },
+        "scope": "Weighted derivatives on this batch only; not optimizer parameter steps"
+      },
+      "critic": {
+        "samples": 512,
+        "mse": 39.50543021411534,
+        "explained_variance": 0.0220047455041098,
+        "target_variance": 6.337141291440027
+      }
+    },
+    "anticipatory_alignment_comfort_bundle": {
+      "phase": "frozen_no_update",
+      "optimizer_steps": 0,
+      "active_samples": 512,
+      "component_samples": 256,
+      "component_sampling": "First active rows, without shuffling; diagnostic only",
+      "representative_minibatch": {
+        "components": {
+          "ppo": {
+            "weighted_loss": -0.18696774542331696,
+            "actor": 6.357264041900635,
+            "critic": 0.0,
+            "joint": 6.357264518737793
+          },
+          "value": {
+            "weighted_loss": 8.479545593261719,
+            "actor": 0.0,
+            "critic": 23.392658233642578,
+            "joint": 23.392658233642578
+          },
+          "entropy": {
+            "weighted_loss": 0.0010109099093824625,
+            "actor": 0.006768899969756603,
+            "critic": 0.0,
+            "joint": 0.006768899969756603
+          },
+          "acceleration": {
+            "weighted_loss": 0.024581070989370346,
+            "actor": 0.05326402932405472,
+            "critic": 0.0,
+            "joint": 0.05326402932405472
+          },
+          "lane": {
+            "weighted_loss": 0.0005401454982347786,
+            "actor": 0.0035403110086917877,
+            "critic": 0.0,
+            "joint": 0.0035403110086917877
+          },
+          "near_limit": {
+            "weighted_loss": 0.0,
+            "actor": 0.0,
+            "critic": 0.0,
+            "joint": 0.0
+          }
+        },
+        "actor_cosines": {
+          "ppo__value": null,
+          "ppo__entropy": -0.14916803232209902,
+          "ppo__acceleration": -0.955379007750759,
+          "ppo__lane": -0.010962259866766948,
+          "ppo__near_limit": null,
+          "value__entropy": null,
+          "value__acceleration": null,
+          "value__lane": null,
+          "value__near_limit": null,
+          "entropy__acceleration": -0.006268168633983698,
+          "entropy__lane": -0.036817834673335784,
+          "entropy__near_limit": null,
+          "acceleration__lane": 0.024062906778831775,
+          "acceleration__near_limit": null,
+          "lane__near_limit": null
+        },
+        "scope": "Weighted derivatives on this batch only; not optimizer parameter steps"
+      },
+      "critic": {
+        "samples": 512,
+        "mse": 23.369189931132677,
+        "explained_variance": 0.035587548777343714,
+        "target_variance": 10.524184125339218
+      }
+    }
+  },
+  "collection_invariance": {
+    "local_obs": true,
+    "global_states": true,
+    "agent_indices": true,
+    "actions": true,
+    "pre_tanh_actions": true,
+    "active": true,
+    "old_log_probs": true
+  },
+  "batches_sha256": "b29267029d3ba91140d4b8147fc98414aa50cd89fa5dd45eefed74afc0793371",
+  "error": null,
+  "wall_seconds": 6.7810000000172295,
+  "source_hashes": {
+    "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+    "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+    "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+    "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+    "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+    "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+    "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+    "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+    "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+    "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+    "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+    "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+    "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+    "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+    "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+    "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+    "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+    "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+    "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+    "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+    "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+    "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+    "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+    "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+    "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+    "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+    "experiments/run_highway_smooth_control.py": "c21fbceec62d963dcc31cb9cb637ac9a360c6a16870429f6d02e6b7b88099a95",
+    "traffic/highway_smooth_contract.py": "bbe158f7ba3928a948aa2822a16978d92fbacd0399ae7bc340dc40c434e45b77",
+    "traffic/highway_smooth_schedule.py": "6e6cd00cb79e1807f6acf7097e4b640803382c9a78186707279864c986d382ae",
+    "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+    "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98",
+    "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+    "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+    "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+    "scripts/check_highway_smooth_gradients.py": "927394075820cf6b0ef5fb6ee2f73588ef66fa1e524fd31d31463b80d31c980d",
+    "scripts/summarize_highway_smooth_preflight.py": "eccbf46f1cc5d2cd3aaf06d65369ba7334a505fdb43b0d8fc440e1e74280a88c"
+  },
+  "preparation_sha256": "3f88dccca05981209fee6eeb294f74b06818ab11fc1ee730370381f75d3ee3f7",
+  "preparation_total_wall_seconds": 1000.0309999999881
+}

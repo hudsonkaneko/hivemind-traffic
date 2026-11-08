@@ -1,0 +1,27 @@
+{
+  "quality_accepted": false,
+  "selection_status": "diagnostic_only",
+  "selection": "Posthoc validation comparison of retained update 10 and final update 177 only; not an accepted policy",
+  "schema": "highway_curriculum_graph_messages_v1",
+  "observation_size": 81,
+  "action_size": 2,
+  "legacy_v04_compatible": false,
+  "config_sha256": "38fc212de8f7d2c20bb5a8c2524e77d909f31686ec83ab351ca9935714ac1730",
+  "source_checkpoint": "outputs/i110-merge/v01/train-20261103T003534Z-eaf909f7/last.pt",
+  "checkpoint_sha256": "955510ad825ac6adba261d5e7140e89119bec796ac7f838d8fbac4ac52ae894e",
+  "policy_sha256": "51575d6e480644e64659eb21654046331264d8dc83c675adb7f67c06c4f9eac4",
+  "validation_run": "evaluate-20261103T023055Z-8204e1e5",
+  "ranking_version": 2,
+  "validation_rank": [
+    0,
+    -3,
+    0,
+    8,
+    0.9865455641494286,
+    -504,
+    -0.9644270833333334,
+    22186.207817411287
+  ],
+  "held_out_test_run": false,
+  "export_roundtrip_passed": true
+}

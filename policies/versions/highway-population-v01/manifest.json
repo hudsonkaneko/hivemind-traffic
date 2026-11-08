@@ -1,0 +1,114 @@
+{
+  "version": "highway-population-v01",
+  "policy_type": "Shared hybrid MAPPO actor with fresh masked population critic; actor-only deterministic TorchScript",
+  "status": "experimental_not_accepted",
+  "run_id": "train-20261104T225405Z-302c4943",
+  "source_commit": "07482466f4d85805d931e4f9c639acb9600aafa0",
+  "trained_on": "2026-11-04",
+  "selection": "Final endpoint; not an accepted replacement",
+  "config_canonical_sha256": "9917f0b103e97671492fc4dd0e63aaf6b73b0f17cdd2387fce67883ad545033c",
+  "runtime": {
+    "python": "3.11.9",
+    "torch": "2.14.0+cpu",
+    "traci": "1.27.1",
+    "sumo": "Eclipse SUMO sumo 1.27.1",
+    "platform": "Windows-10-10.0.26200-SP0"
+  },
+  "parent": {
+    "path": "outputs/highway-stage1/v03/train-20261103T230506Z-04ba1761/selected-00036-d97376b9/best.pt",
+    "sha256": "b77f55ae7262178ce0fa15729fe844e18693cd168905eea8b1bbd579c6913ab1",
+    "actor_sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8",
+    "imported": "actor and exploration log_std only; fresh masked critic/optimizers",
+    "parent_config_sha256": "4df2efa0955d84de1bca101b1dd45d5e72e4a8709a4596165f0f36e6281ea5a8"
+  },
+  "quality_accepted": false,
+  "held_out_test_run": false,
+  "execution": {
+    "spent": 99999,
+    "actual": 99999,
+    "critic_actual": 4096,
+    "ppo_actual": 95903,
+    "updates": 41,
+    "optimizer_steps": 1392,
+    "critic_optimizer_steps": 76,
+    "elapsed_seconds": 474.2960000000894,
+    "process_wall_seconds": 474.3279999999795,
+    "stop_reason": "learning_time_or_remainder",
+    "source_drift": [],
+    "resume": null
+  },
+  "loading_smoke": {
+    "device": "cpu",
+    "cases": [
+      {
+        "input_shape": [
+          1,
+          93
+        ],
+        "output_shape": [
+          1,
+          2
+        ],
+        "finite": true,
+        "action_ranges_valid": true
+      },
+      {
+        "input_shape": [
+          3,
+          93
+        ],
+        "output_shape": [
+          3,
+          2
+        ],
+        "finite": true,
+        "action_ranges_valid": true
+      },
+      {
+        "input_shape": [
+          8,
+          93
+        ],
+        "output_shape": [
+          8,
+          2
+        ],
+        "finite": true,
+        "action_ranges_valid": true
+      }
+    ],
+    "input": "Zero local features with stay lane mask; loading/contract check only, not driving evaluation"
+  },
+  "files": {
+    "policy.pt": {
+      "sha256": "8d2e8793072e8a575acba03391da6783705b87521e0848ba14401345d4616e59",
+      "bytes": 108534
+    },
+    "training-config.json": {
+      "sha256": "107961b6c007e4439e24690b0904be51abe058839ce2264e1b4de51137940f62",
+      "bytes": 30123
+    },
+    "contract.json": {
+      "sha256": "7a18455510d4535cb3ed5552d244cd4faf81bacb3466b8e59a0c4dd25e2782ed",
+      "bytes": 8050
+    },
+    "observation-interface.json": {
+      "sha256": "6dc823e812cbde571f1fc32bdbb294999e7f48ef6fc609431832ab1682e24c17",
+      "bytes": 3079
+    },
+    "evaluation.json": {
+      "sha256": "87396a4fb23d7ce4af252bd72e1c0925bc9db5022501d728ccd7b37113522541",
+      "bytes": 192059
+    }
+  },
+  "source_artifacts": {
+    "checkpoint": {
+      "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/last.pt",
+      "sha256": "bec8fd1cd21cde64244aeae18379157c12398b9f355e8cc3e48356e393de6551"
+    },
+    "provenance": {
+      "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/provenance.json",
+      "sha256": "cfd6bdce9a4898e1c20a59bdc529ab68221b5cde0808004719763df7bc2178fc"
+    }
+  }
+}

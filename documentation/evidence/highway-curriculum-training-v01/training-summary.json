@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "training": true,
+  "optimizer_steps": 8184,
+  "transitions": 499998,
+  "updates": 177,
+  "best_rank": [
+    0,
+    0,
+    -504,
+    -0.7498177083333334,
+    -3167.02928513048
+  ],
+  "held_out_test_run": false,
+  "sources_changed": [],
+  "wall_seconds": 6758.7970000000205
+}

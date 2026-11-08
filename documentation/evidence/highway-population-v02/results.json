@@ -1,0 +1,444 @@
+{
+  "run": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b",
+  "counters": {
+    "spent": 99998,
+    "actual": 99998,
+    "critic_actual": 4096,
+    "ppo_actual": 95902,
+    "updates": 41,
+    "optimizer_steps": 1141,
+    "critic_optimizer_steps": 76,
+    "elapsed_seconds": 514.5160000000001
+  },
+  "sources_changed": [],
+  "initial": {
+    "cases": 16,
+    "pooled_override_fraction": 0.2063928837201253,
+    "worst_override_fraction": 0.44875,
+    "failures": [
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510000,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides",
+          "cruise_speed"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510001,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510002,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510003,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-following",
+        "seed": 6510005,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-passing",
+        "seed": 6510006,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-merge",
+        "seed": 6510007,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-cruise",
+        "seed": 6510008,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-following",
+        "seed": 6510009,
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-passing",
+        "seed": 6510010,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-merge",
+        "seed": 6510011,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510012,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510013,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510014,
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510015,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      }
+    ],
+    "nominal_gates_passed": false,
+    "held_out_test_run": false,
+    "acceptance_status": "experimental; held-out qualification not run"
+  },
+  "final": {
+    "cases": 16,
+    "pooled_override_fraction": 0.29971610580252045,
+    "worst_override_fraction": 0.8675,
+    "failures": [
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510000,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides",
+          "cruise_speed"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510001,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510002,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510003,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-following",
+        "seed": 6510005,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-passing",
+        "seed": 6510006,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-merge",
+        "seed": 6510007,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-cruise",
+        "seed": 6510008,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-following",
+        "seed": 6510009,
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510012,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510013,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510014,
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      }
+    ],
+    "nominal_gates_passed": false,
+    "held_out_test_run": false,
+    "acceptance_status": "experimental; held-out qualification not run"
+  },
+  "native_emergency_warnings": [
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\final-validation\\12\\episode-6510012-8cc0b882\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_4' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-20.59, offset=0.42), time=55.00."
+    },
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\final-validation\\14\\episode-6510014-ab78dbe1\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_7' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-12.77, offset=0.43), time=59.20."
+    },
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\initial-validation\\12\\episode-6510012-24b79c92\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_4' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-26.71, offset=0.60), time=54.20."
+    },
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\train\\1\\episode-6500000-eeded87c\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_0' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-23.19, offset=0.87), time=60.00."
+    },
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\train\\12\\episode-6500011-37260761\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_7' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-18.68, offset=1.18), time=39.70."
+    },
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\train\\20\\episode-6500019-27dfa6aa\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_3' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-12.07, offset=0.14), time=26.60."
+    },
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\train\\21\\episode-6500020-304cd60a\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_3' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-6.69, offset=0.13), time=64.40."
+    },
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\train\\22\\episode-6500021-39fe2c7d\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_3' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-28.46, offset=0.05), time=52.10."
+    },
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\train\\28\\episode-6500027-717a91e1\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_3' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-23.18, offset=1.39), time=51.60."
+    },
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\train\\32\\episode-6500031-bd9f4417\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_2' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-20.67, offset=0.20), time=59.20."
+    },
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\train\\34\\episode-6500033-edee8e0a\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_2' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-26.81, offset=1.44), time=55.70."
+    },
+    {
+      "file": "outputs\\highway-population\\v01\\train-20261105T045039Z-a6db8f1b\\train\\36\\episode-6500035-ba6e8d12\\sumo-errors.log",
+      "text": "Warning: Vehicle 'agent_1' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-12.42, offset=0.67), time=33.00."
+    }
+  ],
+  "hashes": {
+    "policy.pt": "680d50cebf5f943c8d93adb9e1f2dce3da272ee784b7cefc1981083a8e6cebbf",
+    "last.pt": "cad1f670ba895efb5029e2690d32944313a741dfc1c8536894d5294209578636",
+    "summary.json": "37ac8338ee850b9bca05be769da248ac8a2830ea964025a720e24a10cd424f2d",
+    "initial-validation.json": "b63b7cd2ad6e6b716b5b1bbd308c5974a02017bba1d7d498256276b337a8d529",
+    "final-validation.json": "c67d3f289fb98e3e010263b4354eb117cfa845851e5001e3e62ad7bc1688a09d"
+  }
+}
