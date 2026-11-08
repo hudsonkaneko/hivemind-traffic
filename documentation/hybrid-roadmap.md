@@ -651,3 +651,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ### 2026-11-07 — early crossing found; longitudinal comfort improved
 
 [GPUDrive v05](gpudrive-i110-v05.md) reduces scalar longitudinal jerk with a transparent external filter while retaining all final guards. One short CPU run and saved baseline metrics show continued arrival but an unconnected early ramp exit in both versions. Mainline occupancy was insufficient to certify proper merging. Raw actions are still changed99.29%; no acceptance/promotion/training. Forty tests plus 16 subtests pass. See living roadmap v26; next transfer work is merge-corridor/steering validation. Guide sync pending.
+
+
+### 2026-11-07 — MAPPO plan from GPUDrive findings
+
+[The saved plan](mappo-gpudrive-lessons-plan-v01.md) transfers merge validity audits, transparent control-stage metrics and anticipatory smooth gap alignment to flow117/SUMO MAPPO. Reference qualification remains blocked; training stays disabled and no initializer is selected. Proposed cheap checks precede existing full gates and the paired pilot within its reconciled budget. No runtime changes or runs this milestone. See living roadmap v27; guide sync pending.

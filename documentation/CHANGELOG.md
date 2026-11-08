@@ -1030,3 +1030,8 @@ Fixed off-route continuous-pose association and rebuilt the edge route to the or
 ## 2026-11-07 — GPUDrive crossing audit and comfort filter (v05)
 
 Implemented network-transition verification, separate range/comfort/guard accounting, anticipatory following and routine jerk limiting before unchanged safety controls. Forty tests plus 16 subtests pass. One short run reaches goal in 28.4 s; peak longitudinal jerk60→3 m/s³, no stop/contact/overspeed. Audit exposes an early unconnected ramp exit in both v04/v05; raw-command modification remains99.29%, so neither proper merging nor policy acceptance is established. [Evidence, settings and limits](gpudrive-i110-v05.md). No training/render; guide sync pending.
+
+
+## 2026-11-07 — GPUDrive lessons applied to a MAPPO plan
+
+Saved a staged [transfer plan](mappo-gpudrive-lessons-plan-v01.md) for the prepared flow117 path: valid merge corridors and stage-wise control metrics, persistent gap alignment/native-response qualification, bounded CPU checks, then the existing initializer and MAPPO comparison gates. Keeps current safety/action limits and budgets, explicitly distinguishes 93/99/117 input generations, and requires actual merge-event exposure rather than scheduled coverage. No implementation, config/weights change, simulation or training. Living roadmap v27 updated; guide incremental sync pending.
