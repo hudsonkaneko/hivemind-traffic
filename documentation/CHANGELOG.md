@@ -4,6 +4,19 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-25 - Prepared CIRCLES highway test with PPO lane traffic
+
+- Added a separate three-physical-car inference probe with a 60 mph ceiling,
+  CIRCLES longitudinal control on the main car and two frozen PPO lane actors
+  retaining their 3 m/s trained target. No new training is configured.
+- Preserved a zero-step native failure and repaired scene export without
+  invalidating live vehicle bindings. All 55 selected CPU/OpenUSD checks pass;
+  the user deferred the repaired native run, so driving results are pending.
+- Published the required fleet helpers and isolated binding/composition tests;
+  unrelated pair/endurance work remains local. Updated the Google guide and
+  verified its complete Markdown mirror. See [the prepared protocol and launch
+  instructions](highway-circles-60mph.md).
+
 ## 2026-10-22 - CIRCLES controller actuation smoke
 
 - Tested seven pinned public ONNX exports on the existing physical-car loop task

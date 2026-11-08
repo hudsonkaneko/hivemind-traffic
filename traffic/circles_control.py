@@ -27,11 +27,11 @@ def measured_leader_input(state, leader, *, now_s):
     return [max(0., speed), max(0., lead_speed), gap]
 
 
-def acceleration_to_pedals(speed, acceleration):
-    """CRA's documented T=.6 target, existing gains, explicit 3 m/s test cap."""
-    if not all(math.isfinite(v) for v in (speed, acceleration)) or speed < 0:
+def acceleration_to_pedals(speed, acceleration, *, speed_ceiling=3.):
+    """CRA's documented T=.6 target; caller declares its test speed ceiling."""
+    if not all(math.isfinite(v) for v in (speed, acceleration, speed_ceiling)) or speed < 0 or speed_ceiling <= 0:
         raise ValueError('Finite speed and acceleration required')
-    target = min(3., max(0., speed+.6*acceleration))
+    target = min(speed_ceiling, max(0., speed+.6*acceleration))
     error = target-speed
     throttle = min(1., max(0., .7*error))
     brake = min(1., max(0., -.35*error))

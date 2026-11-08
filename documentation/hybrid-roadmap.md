@@ -1,6 +1,6 @@
 # Active roadmap: physical research cars, economical background traffic
 
-Updated: October 22, 2026. Status: physical lane following, the bounded visible
+Updated: October 25, 2026. Status: physical lane following, the bounded visible
 LiDAR-braking subset and a separate one-car Isaac Lab lane task are verified
 within their stated fixtures. Broader lifecycle/endurance, shared-map and hybrid
 integration remain **in progress**. The first bounded Isaac Lab PPO pilot and its
@@ -10,6 +10,13 @@ held-out successes against the scripted controller's 15/15. See the
 This is the active development order, replacing the old immediate-next-step
 sections in the preserved [implementation roadmap](../experiments/ROADMAP.md)
 and [capacity study](scaling-foundations.md). Historical evidence is unchanged.
+
+October 25 CIRCLES highway preparation: a separate bounded three-physical-car
+runner uses CIRCLES for the main car and the frozen 3 m/s PPO lane policy for
+two adjacent-lane cars, with a 60 mph ceiling. CPU and OpenUSD checks pass.
+The first native attempt failed before driving; its export bug is repaired,
+but the user deferred the native retry. No driving, speed or interaction gate
+advances. See [the prepared protocol and pending status](highway-circles-60mph.md).
 
 October 22 CIRCLES smoke: seven public ONNX exports actuated the existing
 physical car through a longitudinal adapter, with local scripted steering.

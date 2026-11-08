@@ -52,6 +52,19 @@ Google webhook, or automatic bidirectional GitHub integration.
    has not changed since the last read. Edits made outside this chat are imported
    at the next requested synchronization, not continuously monitored.
 
+## October 25: CIRCLES highway preparation
+
+Appended the prepared 60 mph ceiling / CIRCLES main-car / two PPO lane-car
+protocol and its deferred driving status to **41 Isaac Lab lane task**. The
+note records the failed zero-step native attempt, the scene-export repair and
+55 passing CPU/OpenUSD checks without implying a successful highway drive.
+The start-tab Markdown link now follows `codex/highway-60mph-ppo-traffic`.
+Revision-guarded editing and full native readback verified the exact additions,
+unchanged historical last-tab content and all 40 unaffected tabs. All 42 tabs
+were regenerated and checked from
+`outputs/doc-sync/highway-60mph-20261025/verified-source.json`. Native pagination
+was not inspected. See [the prepared experiment](highway-circles-60mph.md).
+
 ## October 22: CIRCLES control smoke
 
 Appended the bounded seven-export physical-car result to **41 Isaac Lab lane
