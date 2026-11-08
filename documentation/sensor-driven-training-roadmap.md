@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v33**, updated **November 8, 2026, America/Los_Angeles**.
-Status: **Flow117 v02 preparation tested; resolved configuration ready for review, training disabled. Frozen-parent driving gates still fail.**
+Revision **v34**, updated **November 8, 2026, America/Los_Angeles**.
+Status: **Research-backed reward revision proposed after offline audit; implementation/configuration review next, training disabled. Frozen-parent driving gates still fail.**
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** review the [resolved flow117 v02 configuration and evidence](highway-flow-rl-v02.md). The visibility candidate eliminates empty-approach native braking while retaining occupied-approach braking, but the frozen actor still detours into an ending lane and stops. New cruise/detour rewards, unchanged masks, full observation journals and a bounded runner are implemented. 158 focused tests and zero-update native/export/gradient preflight pass. Five frozen development cases fail at least one driving-quality gate; no held-out evaluation or training ran. The full 54.6-second SimReady replay retains the failure. The initial pilot is 30,000 decisions / 900 seconds; training remains disabled until configuration approval.
+**Next action:** review the [reward revision plan](highway-flow-rl-reward-revision-plan.md), then implement its saved-state audit and present a revised resolved configuration before learning. The current cruise addition pays nothing in either recorded focal dip; simply raising its weight misses the relevant states. Proposed candidates replace it with context-valid speed-target error (0.30), normalized Huber comfort (0.09, jerk scale 2 m/s3), and a one-time optional-detour penalty of 2.0. Exact target construction remains to be qualified. The prepared v02 configuration and frozen weights are unchanged. Preserve the 30,000-decision / 900-second pilot, existing cost ledger and all driving gates; no training or new simulator run is authorized by planning.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -549,3 +549,8 @@ Implemented the [v02 setup](highway-flow-rl-v02.md) with a versioned 100 m synth
 ### v33 - November 8: adjacent native-car speed comparison
 
 Analyzed the saved v02 replay without running SUMO or training. Geometry selects native IDM car main_8 alongside agent_0 at 3.7 s. Over 3.7-12.9 s, native speed increases 33.42 to 37.07 mph while MAPPO ends at 26.80 mph after a 20.76 mph dip; mean absolute jerk is 0.045 versus 1.176 m/s3. Saved raw traces, unsmoothed plots, metrics and provenance with finite/cadence/kinematic checks. Different starts, route duties and driver profiles prevent a causal matched-policy claim. [Evidence](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic). Configuration review remains next; training disabled and guide synchronization pending.
+
+
+### v34 - November 8: researched reward revision and scale audit
+
+Two sub-agents reviewed primary AV-RL sources and actual reward code/journals. [Plan](highway-flow-rl-reward-revision-plan.md) addresses cruise eligibility before coefficients, a context-dependent speed target, normalized Huber jerk and a stronger optional-ending-lane penalty. The saved focal audit finds zero cruise payment in both speed dips, including nine rows excluded solely by its own braking; 69/545 decisions receive the existing addition. One-time merge/pass guards are present; the asymmetric action mapping is preserved, not declared causal. Candidate coefficients are unvalidated and the exact target helper needs counterexample qualification. No implementation, configuration, policy, simulator or training changes. Existing budget retained with an explicit evaluation-reserve reallocation proposal; terminal-only review remains the preference. Guide synchronization pending.

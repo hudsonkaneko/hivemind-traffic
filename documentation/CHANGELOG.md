@@ -1067,3 +1067,8 @@ Implemented separately versioned training without unqualified teacher rewards/lo
 ## November 8, 2026 - Offline adjacent traffic comparison
 
 Compared frozen MAPPO agent_0 with geometry-selected native IDM main_8 in the saved v02 replay. The native car accelerates more steadily; retained speed/acceleration plots, raw traces, hashes and explicit unequal-start/route limitations. Finite/cadence/kinematic checks passed. No simulator runs, training or parameter changes. See [analysis](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic). Google guide sync remains pending.
+
+
+## November 8, 2026 - Research-backed reward revision proposal
+
+Saved a [reward revision plan](highway-flow-rl-reward-revision-plan.md) and source-hashed offline audit. The v02 cruise addition pays zero during both focal speed dips; proposed changes prioritize target/eligibility design, normalized Huber comfort and optional-ending-lane cost. Two sub-agents supplied research and code review. Candidate weights and reserve reallocation require review; runtime configuration, weights and training remain unchanged. No simulator runs. Google guide synchronization pending.

@@ -686,3 +686,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ## November 8 - Adjacent native traffic comparison
 
 [Saved-replay comparison](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) shows the frozen MAPPO car still has speed oscillations while its native neighbor accelerates steadily. Metrics and unsmoothed plots are retained; different starts and route duties are explicit. No new simulation or learning. Next action remains review of the v02 training configuration.
+
+
+## November 8 - Reward revision plan after native comparison
+
+[Proposed reward revision](highway-flow-rl-reward-revision-plan.md) replaces the ineffective-in-dip cruise addition with a context-valid speed objective, reshapes comfort and strengthens the optional-detour penalty. Saved-state audit and target qualification come before final configuration or training. Research informs the design; candidate weights are not validated. Existing safety gates, policy ABI and study budget are preserved. No new simulation or learning.
