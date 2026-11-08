@@ -124,6 +124,19 @@ class I110MergeEnv(ParallelEnv):
         if self.journal is not None:
             self.journal.close();self.journal=None
 
+    def _controlled_agents(self):
+        """Stable episode participants; legacy environments retain four cars."""
+        return AGENTS
+
+    def _merge_agents(self):
+        return ('agent_2', 'agent_3')
+
+    def _write_demand(self, path, seed):
+        write_demand(path, seed, self.graph, self.task, self.density)
+
+    def _spawn_ready(self):
+        return set(self._controlled_agents()).issubset(self.states)
+
     def reset(self, seed=None, options=None):
         self.close()
         seed = 0 if seed is None else int(seed)
@@ -132,17 +145,18 @@ class I110MergeEnv(ParallelEnv):
         self.directory.mkdir(parents=True)
         self.journal=gzip.open(self.directory/'actions.jsonl.gz','wt',encoding='utf-8')
         shutil.copyfile(self.network, self.directory/'network.net.xml')
-        write_demand(self.directory/'routes.rou.xml', seed, self.graph,self.task,self.density)
-        self.ledger = TripLedger(read_requests(self.directory/'routes.rou.xml', AGENTS))
+        self._write_demand(self.directory/'routes.rou.xml', seed)
+        controlled = self._controlled_agents()
+        self.ledger = TripLedger(read_requests(self.directory/'routes.rou.xml', controlled))
         label = 'i110-'+uuid.uuid4().hex
         command = [str(find_sumo_binary()), '-n', str(self.directory/'network.net.xml'),
             '-r', str(self.directory/'routes.rou.xml'), '--seed', str(seed), '--step-length', '.1',
             '--no-step-log', 'true', '--duration-log.disable', 'true', '--time-to-teleport', '-1',
             '--collision.action', 'warn', '--collision.check-junctions', 'true',
             '--error-log', str(self.directory/'sumo-errors.log')]
-        self.previous = {a:(0.,0) for a in AGENTS}
-        self.last_change = {a:-5. for a in AGENTS}
-        self.inbox = {a:{} for a in AGENTS}
+        self.previous = {a:(0.,0) for a in controlled}
+        self.last_change = {a:-5. for a in controlled}
+        self.inbox = {a:{} for a in controlled}
         self.merged = set()
         self.passed = set()
         self.steps = 0
@@ -157,12 +171,12 @@ class I110MergeEnv(ParallelEnv):
             for _ in range(100):
                 self._advance()
                 if self.stats['collisions'] or self.stats['teleports']: raise RuntimeError('Invalid spawn event')
-                if set(AGENTS).issubset(self.states): break
+                if self._spawn_ready(): break
             else: raise RuntimeError('Controlled spawn timeout; no vehicle discarded')
-            for a in AGENTS:
+            for a in controlled:
                 self.conn.vehicle.setSpeedMode(a,31)
                 self.conn.vehicle.setLaneChangeMode(a,512)
-            self.agents = list(AGENTS)
+            self.agents = list(controlled)
             self.start_time = self.time
             self.obs = self._observations()
             return self.obs, {a:{} for a in self.agents}
@@ -349,7 +363,7 @@ class I110MergeEnv(ParallelEnv):
         primary=self.start_time+self.horizon*.1
         while self.time<primary-1e-8:self._advance()
         report=self.report()
-        for a in AGENTS:
+        for a in self._controlled_agents():
             if a in self.states:
                 self.conn.vehicle.setSpeed(a,-1)
                 self.conn.vehicle.setLaneChangeMode(a,1621)

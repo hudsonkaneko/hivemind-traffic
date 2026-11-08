@@ -117,6 +117,44 @@ def _log_tanh_jacobian(pre_tanh: torch.Tensor) -> torch.Tensor:
     return 2.0 * (math.log(2.0) - pre_tanh - F.softplus(-2.0 * pre_tanh))
 
 
+class MaskedPopulationCritic(nn.Module):
+    """Shared row encoder and focal-agent value for a padded, unordered fleet.
+
+    Each state row contains one local observation and a binary presence flag.
+    Absent rows are erased before encoding, and the pooled representation is
+    divided by the number present. The focal row replaces a fixed one-hot ID,
+    so relabeling slots while relabeling the focal index preserves its value.
+    This network is training-only; it is never included in an exported actor.
+    """
+
+    def __init__(self, observation_size: int, max_agents: int,
+                 hidden_sizes: Sequence[int]):
+        super().__init__()
+        self.observation_size = observation_size
+        self.max_agents = max_agents
+        self.row_encoder = _mlp(observation_size, (64,), 64, 1.0)
+        self.value_head = _mlp(observation_size + 65, hidden_sizes, 1, 1.0)
+
+    def forward(self, global_states: torch.Tensor,
+                agent_indices: torch.Tensor) -> torch.Tensor:
+        rows = global_states.unflatten(-1, (self.max_agents, self.observation_size + 1))
+        present = rows[..., -1:]
+        if not torch.isfinite(present).all() or ((present != 0) & (present != 1)).any():
+            raise ValueError('Population critic requires binary finite presence flags')
+        observations = torch.where(present.bool(), rows[..., :-1], 0.0)
+        if not torch.isfinite(observations).all():
+            raise ValueError('Present population observations must be finite')
+        encoded = self.row_encoder(observations) * present
+        count = present.sum(-2)
+        pooled = encoded.sum(-2) / count.clamp_min(1.0)
+        focal_indices = agent_indices[..., None, None].expand(*agent_indices.shape, 1,
+                                                            self.observation_size)
+        focal = observations.gather(-2, focal_indices).squeeze(-2)
+        focal_present = present.squeeze(-1).gather(-1, agent_indices[..., None]).squeeze(-1)
+        value = self.value_head(torch.cat((focal, pooled, count / self.max_agents), -1)).squeeze(-1)
+        return value * focal_present
+
+
 class MappoActorCritic(nn.Module):
     """Shared local Gaussian actor and agent-conditioned centralized critic."""
 
@@ -132,6 +170,7 @@ class MappoActorCritic(nn.Module):
         driving_local_size: int = 33,
         driving_message_size: int = 8,
         driving_mask_start: int = 30,
+        population_critic: bool = False,
     ):
         super().__init__()
         if num_agents <= 0 or state_size <= 0:
@@ -140,15 +179,22 @@ class MappoActorCritic(nn.Module):
         self.state_size = state_size
         self.num_agents = num_agents
         self.hybrid_actions = bool(hybrid_actions)
+        self.population_critic = bool(population_critic)
         self.action_size = 2 if self.hybrid_actions else 1
-        if self.hybrid_actions and (not message_encoder or state_size != 4 * (observation_size + 1) or num_agents != 4):
+        if self.population_critic and (not self.hybrid_actions or not message_encoder
+                or state_size != num_agents * (observation_size + 1)):
+            raise ValueError('Population critic requires a padded local-observation/presence state')
+        if self.hybrid_actions and (not message_encoder or (not self.population_critic
+                and (state_size != 4 * (observation_size + 1) or num_agents != 4))):
             raise ValueError('Driving actor requires the declared message/state contract')
         self.actor = (LocalDrivingActor(observation_size, actor_hidden_sizes,
                         local_size=driving_local_size, message_size=driving_message_size,
                         mask_start=driving_mask_start) if self.hybrid_actions
                       else LocalAccelerationActor(observation_size, actor_hidden_sizes, message_encoder))
         self.log_std = nn.Parameter(torch.zeros(1))
-        self.critic = _mlp(state_size + num_agents, critic_hidden_sizes, 1, 1.0)
+        self.critic = (MaskedPopulationCritic(observation_size, num_agents, critic_hidden_sizes)
+                       if self.population_critic else
+                       _mlp(state_size + num_agents, critic_hidden_sizes, 1, 1.0))
         nodes, weights = np.polynomial.hermite.hermgauss(20)
         self.register_buffer("entropy_nodes", torch.tensor(nodes, dtype=torch.float32))
         self.register_buffer("entropy_weights", torch.tensor(weights / math.sqrt(math.pi), dtype=torch.float32))
@@ -229,13 +275,15 @@ class MappoActorCritic(nn.Module):
         return log_prob + lane_log_prob, self._entropy(distribution) + lane_entropy
 
     def values(self, global_states: torch.Tensor, agent_indices: torch.Tensor) -> torch.Tensor:
-        """Joint state [...,112] plus one-hot ID [...,4] -> per-agent value."""
+        """Centralized state and stable focal slot -> per-agent training value."""
         if global_states.shape[-1] != self.state_size or agent_indices.shape != global_states.shape[:-1]:
             raise ValueError("Critic state width or agent-index shape is incorrect")
         if agent_indices.dtype != torch.long:
             raise ValueError("Agent indices must be torch.long")
         if ((agent_indices < 0) | (agent_indices >= self.num_agents)).any():
             raise ValueError("Agent index is outside the configured stable slots")
+        if self.population_critic:
+            return self.critic(global_states, agent_indices)
         identity = F.one_hot(agent_indices, num_classes=self.num_agents).to(global_states.dtype)
         return self.critic(torch.cat((global_states, identity), dim=-1)).squeeze(-1)
 

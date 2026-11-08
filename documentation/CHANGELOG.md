@@ -873,3 +873,20 @@ change. Native guide and full 42-tab Markdown mirror synchronized and verified.
 - Saved a proposed matched A/B comparison of current-rollout imitation and retained training-only acceleration corrections, starting from the verified v03 phase-0 model.
 - Defined explicit warm-start provenance, buffer/PPO separation, fixed evaluation milestones, worst-case-first selection, efficiency protections and unchanged acceptance gates. Proposed screen: 100k decisions/30 minutes per arm; no automatic scale-up.
 - Updated the living roadmap and synchronized the engineering guide. This is planning only; no learner/config implementation, simulator run or training occurred. [Complete plan](highway-stage1-v04-training-plan.md).
+
+
+## November 4, 2026 — variable-population MAPPO preparation
+
+- Added reset-based 0–8 AV population fixtures, six-message selection and a masked population critic; old four-car behavior remains covered.
+- Added bounded 100k/30-minute runner with verified actor warm start, critic-only warmup, fixed validation, atomic recovery and retained coverage.
+- 157 targeted tests and final no-learning SUMO preflight pass. Failed spawn/API checks and repairs are retained.
+- [Plan and resolved configuration](highway-population-training-v01.md). User authorized this pilot; result and engineering-guide milestone sync follow process exit. No training result is claimed yet.
+
+
+## November 4, 2026 — population pilot result, no promotion
+
+- Completed the authorized run once: 99,999 decisions in 474.296 charged seconds, no runtime failure or source drift. No metric monitoring or agent work ran during learning.
+- Matched validation worsened from 20.6393% pooled/44.875% worst interventions to 31.7013%/75.125%; 15/16 cases fail at both endpoints. Final 4/4 merge targets and 14 passes are retained alongside regressions.
+- Native logs reveal four training and one initial-validation emergency lane-end stops missed by sampled counters; final validation has none. Added independent hashed audit, exact per-case results and coverage.
+- Published the frozen experimental actor and exact configuration without replacing older policies. [Result and next action](highway-population-training-v01.md).
+- Google guide updated with revision guard and verified native readback; all 42 tabs/history preserved, 40 unaffected tabs unchanged. Generated Markdown and manifest passed synchronization checks.

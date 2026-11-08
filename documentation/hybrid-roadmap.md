@@ -534,3 +534,13 @@ retained acceleration corrections. Each arm is capped at 100k new training
 decisions or 30 minutes, with a shared frozen warm start and fixed evaluation.
 Screening progress is separate from nominal acceptance. Stage 1 remains open;
 implementation, final configuration review and launch authorization are next.
+
+
+## November 4, 2026 — population adaptation pilot
+
+The user requested training for variable autonomous-car allocation. [Population v01](highway-population-training-v01.md) now has tested reset-based cohorts, a shared 93-input actor, masked critic and bounded 100k/30-minute configuration. No live slider handoff or arbitrary fleet-size capability is claimed. The separate v04 correction-memory comparison remains planned. Next action is the authorized pilot and retained per-population comparison.
+
+
+## November 4, 2026 — variable-population result
+
+The [population pilot](highway-population-training-v01.md) completed 99,999 decisions but regressed from 20.64% to 31.70% pooled interventions. It remains unaccepted despite 4/4 controlled merge targets and 14 passes. Save this candidate as evidence, preserve older policies and diagnose lane-end emergency warnings plus acceleration corrections before another proposal. Actual training covered 1/2/4/6/8 AVs, total cohorts 8/16/24 and 0–6 received peers; this does not establish live slider adaptation.
