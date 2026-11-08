@@ -11,6 +11,13 @@ This is the active development order, replacing the old immediate-next-step
 sections in the preserved [implementation roadmap](../experiments/ROADMAP.md)
 and [capacity study](scaling-foundations.md). Historical evidence is unchanged.
 
+October 25 SUMO/MAPPO setup: a separate headless four-car fixed-lane environment,
+shared local actor, centralized critic and bounded quiet training runner are
+implemented. No-learning native preflight passes with unchanged actor weights
+and zero optimizer updates. Training awaits user approval of the final config;
+merging, jump-in hazards and physical transfer remain future gates. See
+[the configuration, measured baselines and limitations](sumo-mappo-setup.md).
+
 October 25 CIRCLES highway preparation: a separate bounded three-physical-car
 runner uses CIRCLES for the main car and the frozen 3 m/s PPO lane policy for
 two adjacent-lane cars, with a 60 mph ceiling. CPU and OpenUSD checks pass.

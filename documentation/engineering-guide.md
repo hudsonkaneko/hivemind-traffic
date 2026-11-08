@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-60mph-ppo-traffic/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-60mph-ppo-traffic/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sumo-mappo-setup/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sumo-mappo-setup/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4188,3 +4188,31 @@ The first native attempt, v01-20261025T211416Z-ee14a001, failed during scene exp
 Run later from the configured checkout root after Isaac is free: python experiments/run\_highway\_circles.py. The existing policy remains outputs/rsl\_integration/v02-train-20261022T203726Z-61afe5d7/policy.pt; no new checkpoint is created. New evidence and logs use unique outputs/highway\_circles and logs/highway\_circles directories. Models, checkpoints and raw outputs remain local and are not included in a Git clone.
 
 Protocol, exact checkpoint hash, launch prerequisites and retained failure: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-60mph-ppo-traffic/documentation/highway-circles-60mph.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-60mph-ppo-traffic/documentation/highway-circles-60mph.md>)
+
+<a id="docs-h-f79cqbasl293"></a>
+
+### October 25, 2026: headless SUMO MAPPO v01 setup
+
+The SUMO environment, shared local actor, centralized training critic and quiet bounded runner are implemented. No driving-policy training has started, and no trained MAPPO policy exists. The task is four fixed-lane cars following ordinary traffic on a straight three-lane 5 km road. SUMO owns motion; merging, learned steering, jump-in obstacles, sensor perception, communication and physical/Omniverse controller transfer remain later work.
+
+Each actor sees 27 simulator-derived local features: speed, acceleration, lane index, remaining route fraction, speed limit, previous requested acceleration, six front/rear neighbor slots across own/left/right lanes (gap, relative speed and presence), lane-existence flags and elapsed episode fraction. Neighbors are limited to 120 m. The critic alone receives the four local observations plus alive masks (112 values) and a four-value agent identity (116 effective inputs). No global critic state reaches the deployed actor.
+
+The single normalized action u in \[-1,1\] maps to acceleration a = -4.5 + (u + 1) \* 3.25 m/s². Its range is -4.5 to +2.0 m/s²; normalized zero means -1.25 m/s². A local speed/headway filter and SUMO safety checks remain active, with proposed, filtered and realized actions logged. The speed ceiling is 26.8224 m/s (60 mph), control interval 0.1 s, episode horizon 600 steps (60 s), initial speed 12–22 m/s and background arrival interval 1.5–3 s per lane.
+
+Proposed training configuration, awaiting approval: CPU with one Torch thread and four SUMO workers; shared actor \[128,128\] and critic \[256,256\] with Tanh; 256 rollout steps per worker; maximum 1,000,000 actual vehicle decisions and a 7,200-second run deadline including evaluation. Adam actor/critic learning rates are both 0.0003; gamma 0.99; GAE lambda 0.95; policy/value clips 0.2; entropy coefficient 0.01; value coefficient 0.5; gradient norm limit 0.5; four epochs; minibatch 256; target KL 0.02.
+
+Shared reward averages local normalized progress (+1), headway deficit (-0.5), clipped jerk (-0.02), collision (-10) and intervention (-0.1). Runtime seed is 5101; training episode seeds are 100000–199999. Validation uses 300001–300010 on the first, every 25th and final updates; held-out comparison uses 400001–400020 for the selected actor, scripted controller and SUMO-native baseline. Selection first prefers passing policies, then collision/overspeed counts, nominal episodes, reward and fewer overrides. Acceptance requires zero colliding vehicles, zero overspeed decisions, at least 600 m mean progress per car, at most 5% overridden decisions and nominal completion throughout evaluation.
+
+No-learning preflight preflight-20261026T002632Z-df0749c6 completed in 24.969 seconds with zero optimizer updates and unchanged weights. Two 60-second episodes each for native, scripted, random and untrained controllers completed without collisions or overspeed; a scripted repeat matched exactly. A four-worker rollout collected 512 vehicle decisions, passed finite-value and likelihood checks, and exported actor outputs matched their source. Workers closed without forced cleanup. Native/scripted mean progress was 1581.756/1580.709 m. Scripted overrides were 9.25%, failing the unchanged 5% limit; random/untrained progress was 122.264/109.862 m and also failed. Native external overrides are zero by definition. These are setup checks, not learned-policy results.
+
+Subagents implemented and reviewed the setup. Broad regression: 2724 passed, 215 skipped and 116 subtests passed; optional runtime skips remain explicit. Review repaired checkpoint selection, save-before-validation ordering, temporary-directory scope, SUMO error logging and owned process cleanup. POSIX forced cleanup is code-reviewed but untested on this Windows host. Synthetic optimizer unit tests are distinct from actual driving-policy training.
+
+Configuration inspection only: python experiments/run\_sumo\_mappo.py
+
+Bounded no-learning check: python experiments/run\_sumo\_mappo.py --mode preflight
+
+Actual training requires a later user approval and explicit --mode train with the displayed configuration SHA-256. Digest: 0c8e70ef98827a27ed5c77dc680ea35739811cdbbca045e8fb76af9fd2d3265c. The future best actor saves to outputs/sumo\_mappo/v01/train-&lt;UTC&gt;-&lt;id&gt;/policy.pt, with best/latest checkpoints and full evidence alongside it. Preflight's untrained actor is not a trained driving policy. Logs stay in logs/sumo\_mappo; checkpoints and raw evidence are local, not included in a clone.
+
+The runner handles collection, learning, checkpointing, evaluation and shutdown itself, with only start/final status printed. After approval, wait for process completion without continuous chat analysis. No monitoring automation or automatic retraining loop was installed. The Google guide and GitHub Markdown mirror remain chat-managed.
+
+Full configuration, component definitions, commands, evidence and transfer limits: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sumo-mappo-setup/documentation/sumo-mappo-setup.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/sumo-mappo-setup/documentation/sumo-mappo-setup.md>)

@@ -52,6 +52,18 @@ Google webhook, or automatic bidirectional GitHub integration.
    has not changed since the last read. Edits made outside this chat are imported
    at the next requested synchronization, not continuously monitored.
 
+## October 25: SUMO MAPPO setup
+
+Appended the separate headless SUMO/MAPPO setup, exact proposed training
+parameters, no-learning preflight results, failed scripted override criterion
+and future transfer boundaries to **41 Isaac Lab lane task**. No training or
+learned-driving result is claimed. The start-tab Markdown link follows
+`codex/sumo-mappo-setup`. Revision-guarded editing and full readback verified the
+exact insertion, unchanged historical last-tab body and all 40 unaffected tabs.
+All 42 tabs were regenerated and checked from
+`outputs/doc-sync/sumo-mappo-20261025/verified-source.json`. Native pagination
+was not inspected. See [the setup and final proposal](sumo-mappo-setup.md).
+
 ## October 25: CIRCLES highway preparation
 
 Appended the prepared 60 mph ceiling / CIRCLES main-car / two PPO lane-car

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2026-10-25T17:16:51.202273-08:00 by Eclipse SUMO netconvert 1.27.1
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <node-files value="scenarios/mappo_highway/nodes.nod.xml"/>
+        <edge-files value="scenarios/mappo_highway/edges.edg.xml"/>
+    </input>
+
+    <output>
+        <precision value="4"/>
+        <output-file value="scenarios/mappo_highway/network.net.xml"/>
+    </output>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+    </junctions>
+
+</netconvertConfiguration>
+-->
+
+<net version="1.20" junctionCornerDetail="5" limitTurnSpeed="5.5000" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+
+    <location netOffset="0.0000,0.0000" convBoundary="0.0000,0.0000,5000.0000,0.0000" origBoundary="0.0000,0.0000,5000.0000,0.0000" projParameter="!"/>
+
+    <edge id="highway" from="start" to="finish" priority="2">
+        <lane id="highway_0" index="0" speed="26.8224" length="5000.0000" width="3.7000" shape="0.0000,-9.2500 5000.0000,-9.2500"/>
+        <lane id="highway_1" index="1" speed="26.8224" length="5000.0000" width="3.7000" shape="0.0000,-5.5500 5000.0000,-5.5500"/>
+        <lane id="highway_2" index="2" speed="26.8224" length="5000.0000" width="3.7000" shape="0.0000,-1.8500 5000.0000,-1.8500"/>
+    </edge>
+
+    <junction id="finish" type="dead_end" x="5000.0000" y="0.0000" incLanes="highway_0 highway_1 highway_2" intLanes="" shape="5000.0000,-11.1000 5000.0000,0.0000"/>
+    <junction id="start" type="dead_end" x="0.0000" y="0.0000" incLanes="" intLanes="" shape="0.0000,0.0000 0.0000,-11.1000"/>
+
+</net>
