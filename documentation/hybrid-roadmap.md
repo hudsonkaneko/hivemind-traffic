@@ -636,3 +636,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ### GPUDrive native-safety follow-up — November 6, 2026
 
 [Guarded v02 evaluation](gpudrive-i110-v02.md) applies60mph/lower-road limits and the existing native safety stack. Zero recorded collisions/overspeed, but failed merge/progress and intervention checks. Existing accepted policies unchanged; no training.
+
+
+### 2026-11-06 — bounded continuous GPUDrive repair
+
+[GPUDrive v03](gpudrive-i110-v03.md) fixes the steering-to-lane reinterpretation and retains explicit limits; its 1.1-second diagnostic still ends at an unsupported route association, not a completed merge. 23 tests plus 4 subtests pass. Metrics and initial failure preserved; no training or rendering. SUMO-native MAPPO remains the primary path. See living sensor roadmap v24; guide sync pending.
