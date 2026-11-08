@@ -656,3 +656,23 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ### 2026-11-07 — MAPPO plan from GPUDrive findings
 
 [The saved plan](mappo-gpudrive-lessons-plan-v01.md) transfers merge validity audits, transparent control-stage metrics and anticipatory smooth gap alignment to flow117/SUMO MAPPO. Reference qualification remains blocked; training stays disabled and no initializer is selected. Proposed cheap checks precede existing full gates and the paired pilot within its reconciled budget. No runtime changes or runs this milestone. See living roadmap v27; guide sync pending.
+
+
+### 2026-11-08 — Teacher-free MAPPO learning and bounded restart completed
+
+[Flow RL v01](highway-flow-rl-v01.md) is the first trained flow117 experimental actor, with native SUMO motion and no teacher losses/alignment reward. Two sequential rounds with terminal review reduce four-case pooled interventions to 7.61%, including a stable I-110 merge at 0.67%; comfort and broader acceptance remain open. Original teacher-assisted qualification failures are preserved. [Actor/contract](../policies/versions/highway-flow-rl-v01/README.md) published without promotion; living roadmap v28 records next actions. No third run, held-out test or physical validation. Guide incremental sync pending.
+
+
+## November 8 - Recorded flow117 SimReady merge replay
+
+[Final pilot video](highway-flow-rl-v01.md#november-8-frozen-policy-merge-video) shows the round-two actor on its matched I-110 development case, with SimReady main car and lightweight traffic. Exact metric reproduction, 25 seconds at normal speed, verified video/poses/assets. Visualization only; no training, sensors, physical validation or acceptance promotion.
+
+
+## November 8 - MAPPO velocity diagnosis
+
+[Offline speed and command analysis](highway-flow-rl-velocity-analysis.md) separates native entry braking from learned speed/route problems. Next: isolate minor-junction behavior, then ending-lane detours and cruise behavior, retaining full-route/per-car metrics. Saved CSV and charts; no new simulation, training or promotion.
+
+
+## November 8 - Next flow117 improvement plan
+
+[Flow117 v02 proposal](highway-flow-rl-v02-plan.md) separates native junction modeling from learned route/speed behavior. Keep collision/right-of-way protection, test counterexamples and whole-route performance, then present a resolved configuration before learning. Planning only; existing results and actors preserved.

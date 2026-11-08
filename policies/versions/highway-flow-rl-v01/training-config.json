@@ -1,0 +1,487 @@
+{
+  "schema": "highway_flow_rl_v01",
+  "training_authorized": true,
+  "round_index": 2,
+  "seed": 9608,
+  "initializer_id": "v05_initializer",
+  "initializer": {
+    "path": "outputs/highway-stage1/v03/train-20261103T230506Z-04ba1761/selected-00036-d97376b9/best.pt",
+    "sha256": "b77f55ae7262178ce0fa15729fe844e18693cd168905eea8b1bbd579c6913ab1",
+    "observation_size": 93,
+    "actor_sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8"
+  },
+  "observation_size": 117,
+  "state_size": 2832,
+  "action_contract": {
+    "acceleration": [
+      -1.0,
+      1.0
+    ],
+    "lane_intent": [
+      -1,
+      0,
+      1
+    ]
+  },
+  "safety": {
+    "native_guards_unchanged": true,
+    "safety_shield_unchanged": true
+  },
+  "optimizer": {
+    "actor_lr": 0.0001,
+    "critic_lr": 0.0003,
+    "clip": 0.2,
+    "value_clip": 0.2,
+    "entropy_coef": 0.001,
+    "value_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "epochs": 4,
+    "minibatch_size": 256,
+    "target_kl": 0.02,
+    "imitation_coef": 0.0,
+    "imitation_lane_change_weight": 10.0,
+    "gradient_diagnostics": true,
+    "imitation_acceleration_weight": 1.0,
+    "near_limit_coef": 0.0,
+    "near_limit_band_m_s": 1.0
+  },
+  "reward_weights": {
+    "progress": 1.0,
+    "merge": 5.0,
+    "passing": 2.0,
+    "arrival": 2.0,
+    "collision": 20.0,
+    "intervention": 0.2,
+    "jerk": 0.03,
+    "lane_change": 0.1,
+    "feasible_acceleration": 0.0,
+    "unsafe_request": 0.5,
+    "cooperation": 0.1
+  },
+  "budget": {
+    "per_round_decisions": 30000,
+    "total_decisions": 60000,
+    "per_round_wall_seconds": 1500,
+    "inherited_spent_seconds": 1018.6849924,
+    "total_wall_seconds": 5400,
+    "final_reserve_seconds": 900
+  },
+  "critic_warmup_decisions": 2048,
+  "training_rows": [
+    {
+      "case": {
+        "id": "i110-merge",
+        "split": "train",
+        "network": "outputs/i110-merge-blocking/v01/network-v02/network.net.xml",
+        "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+        "through_lanes": 4,
+        "speed_limit_mph": 60,
+        "task": "merge",
+        "density": "medium"
+      },
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "seed": 7300000,
+      "speed_limit_m_s": 18.0,
+      "communication": "local",
+      "packet_loss": 0.0,
+      "difficulty": 0,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-3-lane/network.net.xml",
+        "network_sha256": "33674fe72be4628e103dfb682eac12afa2e096ec1ea9ec0db18b12f47f8a3f61",
+        "through_lanes": 3,
+        "length_m": 2100,
+        "bend_m": 20,
+        "speed_limit_mph": 60,
+        "id": "train-3-lane-cruise",
+        "split": "train",
+        "task": "cruise",
+        "density": "light",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-3-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "a4afe9d6aefac53ec37efeb1c3c52ad9af90aabd7866b31904202548e150cf38"
+      },
+      "controlled_count": 1,
+      "total_vehicles": 8,
+      "seed": 7300001,
+      "speed_limit_m_s": 22.352,
+      "communication": "none",
+      "packet_loss": 0.0,
+      "difficulty": 1,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "id": "i110-following",
+        "split": "train",
+        "network": "outputs/i110-merge-blocking/v01/network-v02/network.net.xml",
+        "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+        "through_lanes": 4,
+        "speed_limit_mph": 60,
+        "task": "following",
+        "density": "dense"
+      },
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "seed": 7300002,
+      "speed_limit_m_s": 26.8224,
+      "communication": "local",
+      "packet_loss": 0.0,
+      "difficulty": 2,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-2-lane/network.net.xml",
+        "network_sha256": "db7277af77350a129c5226e120a0d18662bda0150004acb9814f137f14a9bafb",
+        "through_lanes": 2,
+        "length_m": 2000,
+        "bend_m": 0,
+        "speed_limit_mph": 50,
+        "id": "train-2-lane-passing",
+        "split": "train",
+        "task": "passing",
+        "density": "medium",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-2-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "7ee7a944b8571c4723c050b4c1473a28066cc129b091d5385a14f33a94b329b6"
+      },
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "seed": 7300003,
+      "speed_limit_m_s": 18.0,
+      "communication": "local",
+      "packet_loss": 0.1,
+      "difficulty": 0,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "bend_m": 0,
+        "compiled_ramp_length_m": 95.31,
+        "geometry_manifest": "outputs/highway-environment/v05/network-bank/train-4-lane-ramp120/geometry-manifest.json",
+        "geometry_manifest_sha256": "cc018aa69641ecb9944110cc0a22f0329f9f64c04f94005936f45ab93eba1aba",
+        "geometry_version": "highway_right_entry_v2",
+        "id": "train-4-lane-ramp120-merge",
+        "length_m": 2200,
+        "network": "outputs/highway-environment/v05/network-bank/train-4-lane-ramp120/network.net.xml",
+        "network_sha256": "8ee68d7730a6b09711f6486038062ca28e0bd5d17f9e08eb6d679e8e45f5a2a3",
+        "ramp_upstream_distance_m": 120.0,
+        "speed_limit_mph": 50,
+        "split": "train",
+        "through_lanes": 4,
+        "task": "merge",
+        "density": "medium"
+      },
+      "controlled_count": 8,
+      "total_vehicles": 24,
+      "seed": 7300004,
+      "speed_limit_m_s": 22.352,
+      "communication": "local",
+      "packet_loss": 0.0,
+      "difficulty": 1,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-5-lane/network.net.xml",
+        "network_sha256": "df75952e18844d4d3c498e7238d8021f8ee2e479b51a22fdef54ed526461b8fa",
+        "through_lanes": 5,
+        "length_m": 2300,
+        "bend_m": 20,
+        "speed_limit_mph": 60,
+        "id": "train-5-lane-following",
+        "split": "train",
+        "task": "following",
+        "density": "dense",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-5-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "a8a33e1fa578cb946822130f8629b6a5fe87b1b0f782ad080ed8d8aa8736c25a"
+      },
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "seed": 7300005,
+      "speed_limit_m_s": 26.8224,
+      "communication": "none",
+      "packet_loss": 0.0,
+      "difficulty": 2,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "id": "i110-passing",
+        "split": "train",
+        "network": "outputs/i110-merge-blocking/v01/network-v02/network.net.xml",
+        "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+        "through_lanes": 4,
+        "speed_limit_mph": 60,
+        "task": "passing",
+        "density": "medium"
+      },
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "seed": 7300006,
+      "speed_limit_m_s": 18.0,
+      "communication": "local",
+      "packet_loss": 0.0,
+      "difficulty": 0,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "bend_m": 0,
+        "compiled_ramp_length_m": 104.66,
+        "geometry_manifest": "outputs/highway-environment/v05/network-bank/train-2-lane-ramp120/geometry-manifest.json",
+        "geometry_manifest_sha256": "1269b8e32baa8f0c3b9b7fc66cad24501afe1ff743efc0229e015324214edcfb",
+        "geometry_version": "highway_right_entry_v2",
+        "id": "train-2-lane-ramp120-merge",
+        "length_m": 2000,
+        "network": "outputs/highway-environment/v05/network-bank/train-2-lane-ramp120/network.net.xml",
+        "network_sha256": "d3b67073b0782ca3612ce017e4162bd9e824b27cccb533ffc6f33a99b1380167",
+        "ramp_upstream_distance_m": 120.0,
+        "speed_limit_mph": 50,
+        "split": "train",
+        "through_lanes": 2,
+        "task": "merge",
+        "density": "medium"
+      },
+      "controlled_count": 1,
+      "total_vehicles": 8,
+      "seed": 7300007,
+      "speed_limit_m_s": 22.352,
+      "communication": "local",
+      "packet_loss": 0.1,
+      "difficulty": 1,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-4-lane/network.net.xml",
+        "network_sha256": "1b96b4dc3f403fae11e317afe00cf4c6ac4af2fe8adddc7203889dce6152153c",
+        "through_lanes": 4,
+        "length_m": 2200,
+        "bend_m": 0,
+        "speed_limit_mph": 50,
+        "id": "train-4-lane-cruise",
+        "split": "train",
+        "task": "cruise",
+        "density": "light",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-4-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "b373efb0178fd1385b42779a445d04c2f3bb0d67936bf10372b0937b212bb0d6"
+      },
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "seed": 7300008,
+      "speed_limit_m_s": 22.352,
+      "communication": "local",
+      "packet_loss": 0.0,
+      "difficulty": 2,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "bend_m": 20,
+        "compiled_ramp_length_m": 187.33,
+        "geometry_manifest": "outputs/highway-environment/v05/network-bank/train-3-lane-ramp240/geometry-manifest.json",
+        "geometry_manifest_sha256": "a23ab755fe1f7b3316dc3d5211bbc0706725051c62988b28a7966d5f7c6c2a1d",
+        "geometry_version": "highway_right_entry_v2",
+        "id": "train-3-lane-ramp240-merge",
+        "length_m": 2100,
+        "network": "outputs/highway-environment/v05/network-bank/train-3-lane-ramp240/network.net.xml",
+        "network_sha256": "fd0b6daa48fb00c480e5e51292b94f541a5dd00f802557133f594876108368ea",
+        "ramp_upstream_distance_m": 240.0,
+        "speed_limit_mph": 60,
+        "split": "train",
+        "through_lanes": 3,
+        "task": "merge",
+        "density": "medium"
+      },
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "seed": 7300009,
+      "speed_limit_m_s": 18.0,
+      "communication": "none",
+      "packet_loss": 0.0,
+      "difficulty": 0,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "network": "outputs/highway-curriculum/v02/train-5-lane/network.net.xml",
+        "network_sha256": "df75952e18844d4d3c498e7238d8021f8ee2e479b51a22fdef54ed526461b8fa",
+        "through_lanes": 5,
+        "length_m": 2300,
+        "bend_m": 20,
+        "speed_limit_mph": 60,
+        "id": "train-5-lane-passing",
+        "split": "train",
+        "task": "passing",
+        "density": "medium",
+        "geometry_version": "highway_right_entry_v2",
+        "geometry_manifest": "outputs/highway-curriculum/v02/train-5-lane/geometry-manifest.json",
+        "geometry_manifest_sha256": "a8a33e1fa578cb946822130f8629b6a5fe87b1b0f782ad080ed8d8aa8736c25a"
+      },
+      "controlled_count": 8,
+      "total_vehicles": 24,
+      "seed": 7300010,
+      "speed_limit_m_s": 22.352,
+      "communication": "local",
+      "packet_loss": 0.0,
+      "difficulty": 1,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "id": "i110-cruise",
+        "split": "train",
+        "network": "outputs/i110-merge-blocking/v01/network-v02/network.net.xml",
+        "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+        "through_lanes": 4,
+        "speed_limit_mph": 60,
+        "task": "cruise",
+        "density": "light"
+      },
+      "controlled_count": 4,
+      "total_vehicles": 16,
+      "seed": 7300011,
+      "speed_limit_m_s": 26.8224,
+      "communication": "local",
+      "packet_loss": 0.1,
+      "difficulty": 2,
+      "traffic_mode": "initial"
+    }
+  ],
+  "validation_rows": [
+    {
+      "case": {
+        "bend_m": -30,
+        "compiled_ramp_length_m": 151.64,
+        "geometry_manifest": "outputs/highway-environment/v05/network-bank/validation-2-lane-ramp180/geometry-manifest.json",
+        "geometry_manifest_sha256": "cc7bad171c5e6a1e32d003019a5be9f5cea8c2ed2149c7c324c703bc5b526448",
+        "geometry_version": "highway_right_entry_v2",
+        "id": "v05-val-0-cruise",
+        "length_m": 2100,
+        "network": "outputs/highway-environment/v05/network-bank/validation-2-lane-ramp180/network.net.xml",
+        "network_sha256": "374fb9ee0c1b87a011d6a050d08166e8df29b6f54a249e70c1518a71f234b470",
+        "ramp_upstream_distance_m": 180.0,
+        "speed_limit_mph": 55,
+        "split": "validation",
+        "through_lanes": 2,
+        "task": "cruise",
+        "density": "medium"
+      },
+      "controlled_count": 1,
+      "total_vehicles": 8,
+      "seed": 6900000,
+      "speed_limit_m_s": 12.0,
+      "communication": "none",
+      "packet_loss": 0.0,
+      "difficulty": 0,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "bend_m": -30,
+        "compiled_ramp_length_m": 151.64,
+        "geometry_manifest": "outputs/highway-environment/v05/network-bank/validation-2-lane-ramp180/geometry-manifest.json",
+        "geometry_manifest_sha256": "cc7bad171c5e6a1e32d003019a5be9f5cea8c2ed2149c7c324c703bc5b526448",
+        "geometry_version": "highway_right_entry_v2",
+        "id": "v05-val-0-passing",
+        "length_m": 2100,
+        "network": "outputs/highway-environment/v05/network-bank/validation-2-lane-ramp180/network.net.xml",
+        "network_sha256": "374fb9ee0c1b87a011d6a050d08166e8df29b6f54a249e70c1518a71f234b470",
+        "ramp_upstream_distance_m": 180.0,
+        "speed_limit_mph": 55,
+        "split": "validation",
+        "through_lanes": 2,
+        "task": "passing",
+        "density": "medium"
+      },
+      "controlled_count": 1,
+      "total_vehicles": 8,
+      "seed": 6900002,
+      "speed_limit_m_s": 12.0,
+      "communication": "none",
+      "packet_loss": 0.0,
+      "difficulty": 0,
+      "traffic_mode": "initial"
+    },
+    {
+      "case": {
+        "id": "v05-validation-i110-following",
+        "split": "validation",
+        "network": "outputs/i110-merge-blocking/v01/network-v02/network.net.xml",
+        "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+        "through_lanes": 4,
+        "speed_limit_mph": 60,
+        "task": "following",
+        "density": "dense",
+        "partition_note": "Shared engineering road; disjoint validation demand seeds, not held-out geometry"
+      },
+      "controlled_count": 8,
+      "total_vehicles": 16,
+      "seed": 6900017,
+      "speed_limit_m_s": 18.0,
+      "communication": "local",
+      "packet_loss": 0.0,
+      "difficulty": 2,
+      "traffic_mode": "sustained"
+    },
+    {
+      "case": {
+        "id": "v05-validation-i110-merge",
+        "split": "validation",
+        "network": "outputs/i110-merge-blocking/v01/network-v02/network.net.xml",
+        "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+        "through_lanes": 4,
+        "speed_limit_mph": 60,
+        "task": "merge",
+        "density": "medium",
+        "partition_note": "Shared engineering road; disjoint validation demand seeds, not held-out geometry"
+      },
+      "controlled_count": 8,
+      "total_vehicles": 16,
+      "seed": 6900019,
+      "speed_limit_m_s": 18.0,
+      "communication": "local",
+      "packet_loss": 0.0,
+      "difficulty": 2,
+      "traffic_mode": "sustained"
+    }
+  ],
+  "reference_imitation": false,
+  "near_limit_supervision": false,
+  "initializer_selection": "Predeclared earlier checkpoint; no new comparative selection or accepted-policy claim",
+  "provenance": {
+    "parent_plan": "documentation/mappo-gpudrive-lessons-plan-v01.md",
+    "revised_plan": "documentation/highway-flow-rl-v01.md",
+    "authorization": "User request November8: revise plan, train, inspect on completion/failure, adjust and restart within bounded study"
+  },
+  "restart_policy": {
+    "max_rounds": 2,
+    "jerk_weight_if_peak_over_5": 0.03,
+    "actor_lr_if_kl_or_override_regression": 5e-05,
+    "optimizer_on_objective_change": "fresh optimizer; model warm-start, not exact resume"
+  },
+  "warm_start": {
+    "path": "outputs/highway-flow-rl/v01/round-01/last.pt",
+    "sha256": "f785b4b0d27f1cfd3df1811b18dc9c71e9221eba7019b0509454de6094af29c3",
+    "optimizer": "reset because reward objective changes",
+    "exact_resume": false
+  },
+  "revision": {
+    "reason": "Round1 peak jerk59.597989m/s3 exceeds5; interventions improved24.9386%->16.4414%, KL.00435, so keepactorLR.",
+    "source_summary": "outputs/highway-flow-rl/v01/round-01/summary.json",
+    "source_sha256": "1e432f71bd1e6d9cf45ad552617b6a355d1abaec380a461009dae47621d50197",
+    "changes": {
+      "reward_weights.jerk": {
+        "before": 0.01,
+        "after": 0.03
+      }
+    }
+  }
+}

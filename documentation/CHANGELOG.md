@@ -1035,3 +1035,23 @@ Implemented network-transition verification, separate range/comfort/guard accoun
 ## 2026-11-07 — GPUDrive lessons applied to a MAPPO plan
 
 Saved a staged [transfer plan](mappo-gpudrive-lessons-plan-v01.md) for the prepared flow117 path: valid merge corridors and stage-wise control metrics, persistent gap alignment/native-response qualification, bounded CPU checks, then the existing initializer and MAPPO comparison gates. Keeps current safety/action limits and budgets, explicitly distinguishes 93/99/117 input generations, and requires actual merge-event exposure rather than scheduled coverage. No implementation, config/weights change, simulation or training. Living roadmap v27 updated; guide incremental sync pending.
+
+
+## 2026-11-08 — Teacher-free flow117 MAPPO pilot, two completed rounds
+
+Implemented separately versioned training without unqualified teacher rewards/losses, preserving native SUMO safety and the original disabled imitation study. Fixed runtime population validation and independent critic/PPO curriculum cursors. User-authorized learning and terminal-only review collected 59,995 decisions in two rounds; round2 increased jerk penalty after measured failure. Pooled development interventions fell 24.94%→16.44%→7.61%; I-110 merge is 0.67% with one stable target passed. Comfort and three per-case intervention gates still fail; no promotion. [Full evidence](highway-flow-rl-v01.md) and [downloadable experimental actor](../policies/versions/highway-flow-rl-v01/README.md). 88 focused tests, source-bound preflight and exact CPU export parity pass. All failed/runtime costs retained; Google guide incremental sync pending.
+
+
+## 2026-11-08 - Final flow117 merge video
+
+- Added frozen117 recorder and saved a 25-second I-110 replay using the SimReady main car. Same seed and ten compared metrics match the completed evaluation exactly; 250-frame encode/decode and unchanged asset/pose checks pass. No training or promotion. [Evidence](highway-flow-rl-v01.md#november-8-frozen-policy-merge-video). Guide sync pending.
+
+
+## 2026-11-08 - Offline MAPPO slowdown diagnosis
+
+- Saved speed/velocity/command traces and graphs from the existing SimReady replay. Identified native junction braking despite positive policy acceleration, later policy-requested speed dips and an ending-lane detour. Verified exact speed-change decomposition across 399 steps; actual episode cap is 18 m/s. [Analysis](highway-flow-rl-velocity-analysis.md). No simulation/training or control changes. Guide sync pending.
+
+
+## 2026-11-08 - Proposed flow117 v02 plan
+
+- Saved the staged [ramp and policy improvement plan](highway-flow-rl-v02-plan.md), with frozen-policy network comparisons, route-aware lane-choice checks, cruise/comfort reward design and full-route acceptance. Defined bounded diagnostic and proposed training budgets with terminal-only review. Documentation only; no controller changes, simulator runs or training. Guide sync pending.

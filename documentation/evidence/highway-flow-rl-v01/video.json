@@ -1,0 +1,85 @@
+{
+  "recording": {
+    "training": false,
+    "policy_sha256": "888a380b7c6741aea623e9b99ad155f7cb9a2ef8fdc2e590823b7e2629031819",
+    "source_recording_sha256": "12064d16db76955113dd335531660e3079cf93a8a176c094c9fa6fd574596f62",
+    "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+    "reference_report": "outputs\\highway-flow-rl\\v01\\round-02\\final-validation\\03.json",
+    "reference_sha256": "3451405089aa27b7db42c995955bbbdaa3e872a8e7f4491355ed9836deca3502",
+    "comparison": {
+      "collisions": {
+        "original": 0,
+        "replay": 0,
+        "equal": true
+      },
+      "teleports": {
+        "original": 0,
+        "replay": 0,
+        "equal": true
+      },
+      "agent_steps": {
+        "original": 3123,
+        "replay": 3123,
+        "equal": true
+      },
+      "overrides": {
+        "original": 21,
+        "replay": 21,
+        "equal": true
+      },
+      "completed_trips": {
+        "original": 16,
+        "replay": 16,
+        "equal": true
+      },
+      "overspeed_steps": {
+        "original": 0,
+        "replay": 0,
+        "equal": true
+      },
+      "peak_abs_jerk": {
+        "original": 57.37613901495937,
+        "replay": 57.37613901495937,
+        "equal": true
+      },
+      "mean_abs_jerk": {
+        "original": 0.3116862685678606,
+        "replay": 0.3116862685678606,
+        "equal": true
+      },
+      "intervention_fraction": {
+        "original": 0.0067243035542747355,
+        "replay": 0.0067243035542747355,
+        "equal": true
+      },
+      "stable_merge": {
+        "equal": true
+      }
+    },
+    "all_compared_metrics_match": true,
+    "frames": 476,
+    "wall_time_s": 8.78200000000652,
+    "limitation": "New deterministic replay of the same development case; not held-out evaluation."
+  },
+  "render": {
+    "passed": true,
+    "frames": 250,
+    "start_time": 0.1,
+    "end_time": 25.0,
+    "fps": 10,
+    "playback_speed": 1.0,
+    "video_sha256": "8e8d5def72541fdb1fda4eba242109148f513400f8a1a2307344f19709e79f18",
+    "video_decode_verified": true,
+    "decoded_frames": 250,
+    "static_layers_unchanged": true,
+    "max_position_error_m": 0.0,
+    "learned_policy_sha256": "888a380b7c6741aea623e9b99ad155f7cb9a2ef8fdc2e590823b7e2629031819",
+    "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+    "limitation": "Kinematic visualization, not PhysX control validation or sensor capture. Road reconstructed from recorded SUMO network polylines; markings illustrative."
+  },
+  "main_vehicle": {
+    "version": "v14",
+    "source_unchanged": true
+  },
+  "video": "outputs/highway-flow-rl/v01/round-02/replay-01/i110-merge.mp4"
+}
