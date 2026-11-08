@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4472,3 +4472,77 @@ Source and actual screenshots: [`https://github.com/hudsonkaneko/hivemind-traffi
 Final config: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/configs/perception/segmentation_training_v02.json`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/segmentation-training-preparation/configs/perception/segmentation_training_v02.json>)
 
 Future checkpoints: outputs/perception-training/segmentation-refinement-v02/&lt;run&gt;/best.pt and last.pt. Raw data, runtime, weights and logs remain local; GitHub contains source, compact evidence and screenshots. The previous failed smoke attempts and capture review state are preserved.
+
+<a id="docs-h-6zr2wl20ov3h"></a>
+
+#### Highway curriculum v01 with I-110 — November 2, 2026
+
+The new SUMO MAPPO setup covers ordinary highway driving as well as merging. Selected I-110 road/graph/accounting source was imported from Sam's PR 16 at `b4f19e2b450ea585d1b80fa7472a091f928976de`; the PR itself was not merged. The corridor remains provisional engineering geometry, not calibrated real traffic.
+
+Training cycles through 20 cases: four tasks (cruise, dense following, passing a slower leader, and ramp/auxiliary-lane merging) on generated two-, three-, four- and five-through-lane layouts plus I-110. Following/passing include vehicles already ahead in every lane. Gaps, speeds and background routes vary by seed. Mainline training limits are 50/60 mph; ramps 30 mph, all under the 60 mph ceiling. Separate validation layouts use 55 mph; held-out layouts include six through lanes, different bends and 45/60 mph conditions. No held-out traffic outcome has been inspected.
+
+This is a fresh highway\_curriculum\_graph\_messages\_v1 actor, not a relabeling of v04r2 weights. Its 81 fields contain 33 graph/local features and six eight-field delivered peer messages; the centralized critic has 328 joint-state fields. Actors receive current local SUMO state/map and delayed messages, not camera/LiDAR output or privileged critic state. Actions are acceleration -4.5 to 2 m/s2 and masked lane changes. SUMO owns vehicle motion and steering. Messages use 150 m range, 10 Hz, 0.1 s delay and 0.5 s expiry, with configurable seeded loss. Following uses a 1.5 s gap and stopping-distance lane-change floor, not an achieved short-headway claim.
+
+Final no-learning preflight preflight-20261103T002100Z-596c57ad passed in 367.844 seconds: 20 scripted cases, two random cases, two native cases, an exact repeat, PettingZoo API/seed checks and finite untrained forward/collector checks. Zero optimizer steps ran; source hashes stayed unchanged. 129 focused CPU tests pass. Scripted cases had zero collisions/teleports, 10/10 ramp merges and 2/3/4/4/4 passes across the five passing layouts. Cruise speed averaged 94.5–99.4% of the applicable limit. Dense following still needed 60.6–77.9% interventions and passing 40.4–67.1%; this is plumbing readiness, not accepted policy quality or demonstrated adaptation.
+
+Proposed pilot: fresh shared-actor MAPPO on CPU, one worker, 500,000 active-agent transitions or two hours; actor/critic LR 3e-5/3e-4, four PPO epochs, batch 256, clip 0.2, entropy 0.001, target KL 0.02. Episodes have 0.1 s steps and an 80 s control horizon, complete requested-trip accounting and a separate native drain. Validation runs every ten episodes on twelve fixed seeds; twenty-four test seeds remain reserved. Resume/best checkpoints, actor contract/hash, action journals and per-case metrics are retained. Per-task acceptance is separate from validation ranking. Training remains disabled for final configuration review; no new learned controller exists yet.
+
+Results and limitations: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/highway-curriculum-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/highway-curriculum-v01.md>)
+
+Final configuration: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/experiments/configs/i110_merge_v1.json`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/experiments/configs/i110_merge_v1.json>)
+
+<a id="docs-h-au22rd5c0026"></a>
+
+#### November 2, 2026: Highway curriculum pilot completed; not accepted
+
+The approved 500,000-transition / two-hour CPU MAPPO pilot completed 499,998 active-agent transitions, 177 updates and 8,184 optimizer steps in 6,758.797 seconds. No runtime failure occurred. The assistant waited for process exit without monitoring or analysis during training. Run: train-20261103T003534Z-eaf909f7. No Isaac or rendering job ran.
+
+The original validation ranking selected update 10, which averaged only 7.64% of the speed limit. It favored lower interventions ahead of driving competence. The original best.pt and policy.pt are preserved. Ranking now prioritizes safety and per-task competence before intervention minimization; versioned resume re-scores saved validation and checks actor completeness/checksum. These changes do not rewrite the historical run.
+
+Frozen final-checkpoint validation covered 12 cases on independent 2/4/5-through-lane roads at 55 mph: cruise averaged 98.76% of the applicable speed limit; passing cases recorded 3, 2 and 3 passes. Merge success was 0/6 ramp cars. Overall safety overrides were 96.44%, far above the proposed 5% maximum. Zero collisions, teleports and overspeed steps were measured with protections enabled. All 504 requested cohort trips remained unfinished at the primary accounting horizon and remained in the ledger.
+
+The faster final actor is retained separately at outputs/i110-merge/v01/postrun-review-20261103-v01/policy.pt with quality\_accepted=false. A successful actor export round trip and 137 focused regression tests verify implementation, not driving acceptance. Only update 10 and final update 177 weights were retained, so this is a posthoc comparison of those two models. No held-out test seeds were used, and no six-lane or arbitrary-road adaptation claim is supported.
+
+The read-only post-run audit found persistent acceleration saturation: a late merge episode requested over 1.8 m/s² on 90.6% of steps while guards heavily reduced actual acceleration. The next reviewed experiment should address feasible acceleration tracking and deterministic merge learning using training-only demonstrations and a staged curriculum. No additional learning was started beyond this approved pilot budget. The default configuration remains disabled; prior accepted v04r2 is unchanged.
+
+The exact authorized configuration, runtime/source hashes, per-seed validation, action audit and artifact checksums are retained in repository evidence. Weights, raw journals and full source snapshots remain local under outputs/ and are not included in GitHub. Source HEAD was `3dbcdaa5edaecc65c4536ec30a00a9ff86ff22de` plus recorded recovery changes; Python 3.11.9, Torch 2.14.0+cpu and TraCI 1.27.1. The new 81-observation/two-action graph contract uses SUMO state and messages, not camera/LiDAR inputs or physical steering.
+
+Results and retained artifact paths: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/highway-curriculum-training-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/highway-curriculum-training-v01.md>)
+
+<a id="docs-h-xpxhtepi99wi"></a>
+
+#### November 2, 2026 — Living plan for structured, robust and sensor-driven training
+
+Status: planning only. No new training, simulator run, model download or dependency change was started for this milestone.
+
+Persistent roadmap: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/sensor-driven-training-roadmap.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/sensor-driven-training-roadmap.md>)
+
+The repository AGENTS.md now directs relevant future project work to read this plan and update its status, evidence, decisions, next action and append-only progress history. The overall hybrid roadmap links it. This is chat-managed project memory, not a background watcher. Future guide updates still require a fresh native read, guarded edit, verified readback and regenerated Markdown mirror.
+
+Target architecture: cameras and LiDAR plus ego motion, localization, map/route and actually delivered V2V messages feed perception/tracking, then structured estimates with confidence and age feed MAPPO. Its acceleration/lane intent must pass through a physical trajectory and vehicle controller in Isaac. Privileged state may train a teacher/critic and score evaluation, but must not leak into the deployed actor, masks or safety decisions.
+
+Stage 1 — improve driving with structured observations.
+
+The completed highway pilot is not accepted: final validation was 98.76% cruise speed ratio, eight passes, zero of six merges and 96.44% overrides. First separate speed-cap, following and lane-gap interventions; audit connected-road merge observations; validate a feasible demonstration controller. Use train-only behavior cloning followed by MAPPO, retaining cruise/follow/pass tasks while introducing easy-to-dense merges. Fix saturated acceleration incentives without lowering the 60 mph ceiling or existing headway/stopping protections. Existing accepted v04r2 stays separate.
+
+Proposed allocation for review: at most two attempts, each 500,000 active-agent transitions/two hours, total one million transitions/four hours including failures/resumes. Per attempt: up to 50k demonstration transitions, 100k foundational, 100k passing and 250k merge/mixed; up to four BC epochs and evaluations count toward wall time. Proposed nominal gates: zero collisions/teleports/overspeed, at least 90% cruise speed ratio, one valid pass per passing case, at least 90% merges overall/by scenario group and at most 5% overrides per case. Keep held-out tests untouched until a candidate is frozen; six merge cars are too small for strong reliability claims.
+
+Stage 2 — train for imperfect observations.
+
+Define units, frames, timestamps, validity, uncertainty and unknown values. Calibrate correlated position/velocity/lane error, occlusion, missed/false detections, stale tracks/ID switches, map uncertainty and V2V delay/loss from evidence. Compare clean, corrupted and robustness-trained actors on paired scenarios. Missing data must not imply clear road. Distinguish the existing oracle simulator shield from a deployable estimate-based guard. Start with timestamped history; consider a GRU only if delayed-state failures justify it.
+
+Proposed evaluation is frozen first. A later robustness fine-tune may request up to 250k transitions/60 minutes including evaluation, separately reviewed and authorized. Numeric noise bounds/degradation tolerances remain pending calibration. Nominal cases retain driving gates; severe failures are assessed for controlled fallback and availability, not forced cruise speed.
+
+Stage 3 — perception and physical transfer.
+
+Reuse the prepared SegFormer B0 six-class setup, whose training configuration remains disabled and new head untrained. The 3,600-frame corpus is RGB-only: synchronized temporal RGB/LiDAR/ego-motion sequences are a separate requirement. Measure boundaries, false-drivable area and obstacle recall, then occupancy, object tracking, velocity and uncertainty. Start with geometric tracking; CenterPoint is a possible benchmark after compatibility/license/runtime checks. BEVFusion is an optional later comparison, not a required replacement.
+
+Progress from saved frames to saved sequences, shadow inference, bounded low-speed physical control and then mixed highway tests. A semantic mask or pose replay cannot establish sensor-driven driving. Benchmark a proposed 10 Hz/100 ms end-to-end target, latency percentiles, deadline misses and VRAM on the approximately 12 GB RTX 5070 with competing GPU work serialized. Supervised learning, paired capture, physical runs and further policy fine-tuning require their own scoped configurations/budgets before launch.
+
+Research basis and limits:
+
+Waymo imitation-plus-RL and its Driver/Simulator/Critic approach motivate warm-starting and failure mining; NVIDIA Alpamayo post-training motivates targeted closed-loop improvement but uses a different algorithm. DriveAdapter warns that predicted perception inputs differ from privileged planner inputs. DAROM motivates delay-aware history. SegFormer, CenterPoint and BEVFusion inform perception options; nuPlan informs distinct reactive closed-loop evaluation. Sources and limitations are linked in the roadmap. Cosmos may later expand weather/appearance or interactive sensor scenarios, but published AV examples require multiple GPUs; no local fit or cloud usage is assumed.
+
+Low-usage execution: put checkpointing, failure detection, scheduled validation and completion reports in scripts. Proposed sentinel every 50k transitions and full validation at stage boundaries/completion, deduplicated and included in the budget. The agent waits without progress polling or analysis while training runs, then checks results on completion/failure. Compatible mechanical recovery uses the remaining aggregate budget; material reward/observation changes get new versions. Preserve every attempt, raw metrics and checkpoint hashes locally, with compact results in GitHub; ignored weights are not automatically uploaded.
+
+Next gate: prepare Stage 1 diagnostics, merge contract and teacher, then present the final resolved configuration for review. No training authorization is implied by this plan.

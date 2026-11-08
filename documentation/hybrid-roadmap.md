@@ -448,3 +448,38 @@ training disabled. Next gate is user review and explicit supervised-training lau
 then validation-only checkpoint selection and frozen held-out evaluation. No trained
 six-class quality, new-corpus LiDAR fusion or driving-policy integration is claimed.
 Instance/distance/temporal/calibration gates and broader scene diversity remain open.
+
+## 2026-11-02 checkpoint — General highway curriculum, including I-110
+
+[New graph-policy preparation](highway-curriculum-v01.md) now covers cruise, dense
+following, passing and merges across 2–5 through-lane training roads. Six-lane
+and changed-speed/geometry conditions remain held out. Native no-learning
+preflight and 129 CPU tests pass; high scripted dense-traffic intervention rates
+are retained as a limitation. The new 81-field ABI is not compatible with v04r2
+weights. Next gate is final-config review and the bounded MAPPO pilot, followed
+by per-task validation and untouched transfer tests. No learned adaptation,
+physical steering, sensor-policy integration or arbitrary-road competence is claimed.
+
+
+## November 2 follow-up: completed highway curriculum pilot
+
+The [first broad highway pilot](highway-curriculum-training-v01.md) completed its
+approved 500k-transition budget (499,998 usable joint transitions). It is not an
+accepted controller: final validation passes the cruise and passing targets,
+but merges are 0/6 and interventions are 96.44%. Ranking/recovery fixes are tested;
+the final diagnostic export and original selected actor are both preserved.
+No held-out seeds, new training budget or physical transfer were used. Next work
+is a reviewed acceleration-tracking/merge-learning revision with training-only
+demonstrations, retained guards and the same validation gates. Accepted v04r2
+remains separate.
+
+
+## November 2: living plan for sensor-driven training
+
+The [persistent three-stage roadmap](sensor-driven-training-roadmap.md) now tracks
+structured highway competence, robustness to imperfect observations and eventual
+camera/LiDAR-driven physical control. AGENTS.md requires updates after relevant
+progress and failures. The next gate is Stage 1 diagnostics/merge observations/
+teacher preparation, followed by final-config review. All new learning budgets
+are proposals; no training or simulator run started for this planning milestone.
+The overall project roadmap remains this file.
