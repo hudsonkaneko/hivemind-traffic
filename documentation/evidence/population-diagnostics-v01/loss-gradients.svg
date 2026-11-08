@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="650" viewBox="0 0 1160 650">
+<rect width="1160" height="650" fill="#f7f8fa"/>
+<style>text{font-family:Arial,sans-serif;fill:#152238}.title{font-size:24px;font-weight:bold}.label{font-size:15px}.small{font-size:13px;fill:#4a5668}</style>
+<text x="32" y="38" class="title">Frozen parent: loss gradients on identical training-only observations</text>
+<text x="32" y="65" class="small">1,536 balanced diagnostic rows · fresh population critic BEFORE warmup · zero optimizer updates</text>
+<text x="32" y="106" class="label">Weighted gradient norms (log scale)</text>
+<line x1="230.0" y1="126" x2="230.0" y2="315" stroke="#d7dde6"/>
+<text x="218.0" y="335" class="small">0.001</text>
+<line x1="346.0" y1="126" x2="346.0" y2="315" stroke="#d7dde6"/>
+<text x="334.0" y="335" class="small">0.01</text>
+<line x1="462.0" y1="126" x2="462.0" y2="315" stroke="#d7dde6"/>
+<text x="450.0" y="335" class="small">0.1</text>
+<line x1="578.0" y1="126" x2="578.0" y2="315" stroke="#d7dde6"/>
+<text x="566.0" y="335" class="small">1</text>
+<line x1="694.0" y1="126" x2="694.0" y2="315" stroke="#d7dde6"/>
+<text x="682.0" y="335" class="small">10</text>
+<line x1="810.0" y1="126" x2="810.0" y2="315" stroke="#d7dde6"/>
+<text x="798.0" y="335" class="small">100</text>
+<text x="32" y="152" class="label">PPO actor</text>
+<rect x="230" y="136" width="376.85581553762864" height="21" fill="#4566a4"/>
+<text x="614.8558155376286" y="152" class="label">1.7732</text>
+<text x="32" y="187" class="label">Acceleration ×1</text>
+<rect x="230" y="171" width="191.3319473081528" height="21" fill="#56a6a0"/>
+<text x="429.3319473081528" y="187" class="label">0.0446</text>
+<text x="32" y="222" class="label">Acceleration ×50</text>
+<rect x="230" y="206" width="388.41247168171844" height="21" fill="#d19049"/>
+<text x="626.4124716817184" y="222" class="label">2.2304</text>
+<text x="32" y="257" class="label">Lane actor</text>
+<rect x="230" y="241" width="51.4257456212325" height="21" fill="#56a6a0"/>
+<text x="289.4257456212325" y="257" class="label">0.0028</text>
+<text x="32" y="292" class="label">Value critic</text>
+<rect x="230" y="276" width="537.00502866926" height="21" fill="#a05c75"/>
+<text x="775.00502866926" y="292" class="label">42.5945</text>
+<text x="32" y="382" class="label">Global clipping retains only ~1.17% of the joint gradient in this diagnostic</text>
+<text x="32" y="409" class="small">Actor norm after global clipping: 0.02065 (×1), 0.02568 (×50). Hypothetical actor-only clipping: 0.5.</text>
+<text x="32" y="436" class="small">PPO / acceleration gradient cosine: -0.420. Opposing derivatives here are not proof of historical causality.</text>
+<text x="32" y="477" class="label">Acceleration fit to teacher on the same observations (RMSE, m/s²)</text>
+<text x="32" y="509" class="label">Parent: 1.2553</text>
+<text x="382" y="509" class="label">Population v01: 1.2563</text>
+<text x="732" y="509" class="label">Population v02: 1.1774</text>
+<text x="32" y="555" class="small">Later actors improve label fit only modestly; these are parent-visited states, not an evaluation of their driving.</text>
+<text x="32" y="580" class="small">Separate clipping is a mathematical counterfactual; no Adam step or new training was applied.</text>
+<text x="32" y="607" class="small">Source: loss-summary.json · raw batch/checkpoint hashes retained · no held-out data</text>
+</svg>

@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import copy
 import math
+import time
 from pathlib import Path
 from typing import Mapping, Sequence
 
@@ -22,6 +23,10 @@ import numpy as np
 import torch
 from torch import nn
 from torch.nn import functional as F
+
+from policies.mappo_diagnostics import (
+    critic_fit_metrics, current_gradient_norms, weighted_gradient_report,
+)
 
 
 def _mlp(input_size: int, hidden_sizes: Sequence[int], output_size: int, gain: float):
@@ -42,13 +47,35 @@ def _mlp(input_size: int, hidden_sizes: Sequence[int], output_size: int, gain: f
     return nn.Sequential(*layers)
 
 
+class MessageObservationEncoder(nn.Module):
+    """Permutation-invariant masked encoding of six delivered-message slots."""
+    def __init__(self, local_size: int = 27, message_size: int = 7):
+        super().__init__()
+        self.local_size = local_size
+        self.message_size = message_size
+        self.message_net = _mlp(message_size - 1, (16,), 16, 1.0)
+
+    def forward(self, observations: torch.Tensor) -> torch.Tensor:
+        slots = observations[..., self.local_size:].unflatten(-1, (6, self.message_size))
+        mask = slots[..., -1:]
+        encoded = self.message_net(slots[..., :-1] * mask) * mask
+        pooled = encoded.sum(-2) / mask.sum(-2).clamp_min(1.0)
+        # Count distinguishes absent messages from messages whose embedding cancels.
+        return torch.cat((observations[..., :self.local_size], pooled, mask.sum(-2) / 6.0), dim=-1)
+
+
 class LocalAccelerationActor(nn.Module):
     """Deployment interface: local observations -> normalized acceleration."""
 
-    def __init__(self, observation_size: int, hidden_sizes: Sequence[int]):
+    def __init__(self, observation_size: int, hidden_sizes: Sequence[int], message_encoder: bool = False):
         super().__init__()
         self.observation_size = observation_size
-        self.mean_net = _mlp(observation_size, hidden_sizes, 1, 0.01)
+        if message_encoder:
+            if observation_size != 69:
+                raise ValueError("Message encoder requires 27 local plus six 7-feature slots")
+            self.mean_net = nn.Sequential(MessageObservationEncoder(), _mlp(44, hidden_sizes, 1, 0.01))
+        else:
+            self.mean_net = _mlp(observation_size, hidden_sizes, 1, 0.01)
 
     def forward(self, local_obs: torch.Tensor) -> torch.Tensor:
         if local_obs.shape[-1] != self.observation_size:
@@ -56,9 +83,80 @@ class LocalAccelerationActor(nn.Module):
         return torch.tanh(self.mean_net(local_obs))
 
 
+class LocalDrivingActor(nn.Module):
+    """v04 deployment: local state/messages -> acceleration plus lane delta.
+
+    The mask is part of the stored observation. Category order is right, stay,
+    left, mapped to -1, 0, +1. An empty malformed mask conservatively permits
+    staying only; it never invents permission to cross a lane boundary.
+    """
+    def __init__(self, observation_size: int, hidden_sizes: Sequence[int], *,
+                 local_size: int = 33, message_size: int = 8, mask_start: int = 30):
+        super().__init__()
+        if (local_size not in (33, 45, 51) or message_size != 8 or mask_start != 30
+                or observation_size != local_size + 6 * message_size):
+            raise ValueError('Driving actor requires an explicit supported local/message contract')
+        self.observation_size = observation_size
+        self.mask_start = mask_start
+        self.mean_net = nn.Sequential(MessageObservationEncoder(local_size, message_size),
+                                      _mlp(local_size + 17, hidden_sizes, 4, .01))
+
+    def lane_logits(self, local_obs: torch.Tensor, raw: torch.Tensor) -> torch.Tensor:
+        mask = local_obs[..., self.mask_start:self.mask_start + 3] > .5
+        fallback = torch.zeros_like(mask)
+        fallback[..., 1] = True
+        mask = torch.where(mask.any(dim=-1, keepdim=True), mask, fallback)
+        return raw[..., 1:4].masked_fill(~mask, -1e9)
+
+    def forward(self, local_obs: torch.Tensor) -> torch.Tensor:
+        if local_obs.shape[-1] != self.observation_size:
+            raise ValueError('Actor expects local observations of the configured width')
+        raw = self.mean_net(local_obs)
+        lane = self.lane_logits(local_obs, raw).argmax(-1, keepdim=True).to(raw.dtype) - 1.
+        return torch.cat((raw[..., :1].tanh(), lane), dim=-1)
+
+
 def _log_tanh_jacobian(pre_tanh: torch.Tensor) -> torch.Tensor:
     # log(1-tanh(z)^2), without cancellation when |z| is large.
     return 2.0 * (math.log(2.0) - pre_tanh - F.softplus(-2.0 * pre_tanh))
+
+
+class MaskedPopulationCritic(nn.Module):
+    """Shared row encoder and focal-agent value for a padded, unordered fleet.
+
+    Each state row contains one local observation and a binary presence flag.
+    Absent rows are erased before encoding, and the pooled representation is
+    divided by the number present. The focal row replaces a fixed one-hot ID,
+    so relabeling slots while relabeling the focal index preserves its value.
+    This network is training-only; it is never included in an exported actor.
+    """
+
+    def __init__(self, observation_size: int, max_agents: int,
+                 hidden_sizes: Sequence[int]):
+        super().__init__()
+        self.observation_size = observation_size
+        self.max_agents = max_agents
+        self.row_encoder = _mlp(observation_size, (64,), 64, 1.0)
+        self.value_head = _mlp(observation_size + 65, hidden_sizes, 1, 1.0)
+
+    def forward(self, global_states: torch.Tensor,
+                agent_indices: torch.Tensor) -> torch.Tensor:
+        rows = global_states.unflatten(-1, (self.max_agents, self.observation_size + 1))
+        present = rows[..., -1:]
+        if not torch.isfinite(present).all() or ((present != 0) & (present != 1)).any():
+            raise ValueError('Population critic requires binary finite presence flags')
+        observations = torch.where(present.bool(), rows[..., :-1], 0.0)
+        if not torch.isfinite(observations).all():
+            raise ValueError('Present population observations must be finite')
+        encoded = self.row_encoder(observations) * present
+        count = present.sum(-2)
+        pooled = encoded.sum(-2) / count.clamp_min(1.0)
+        focal_indices = agent_indices[..., None, None].expand(*agent_indices.shape, 1,
+                                                            self.observation_size)
+        focal = observations.gather(-2, focal_indices).squeeze(-2)
+        focal_present = present.squeeze(-1).gather(-1, agent_indices[..., None]).squeeze(-1)
+        value = self.value_head(torch.cat((focal, pooled, count / self.max_agents), -1)).squeeze(-1)
+        return value * focal_present
 
 
 class MappoActorCritic(nn.Module):
@@ -71,6 +169,12 @@ class MappoActorCritic(nn.Module):
         num_agents: int = 4,
         actor_hidden_sizes: Sequence[int] = (128, 128),
         critic_hidden_sizes: Sequence[int] = (256, 256),
+        message_encoder: bool = False,
+        hybrid_actions: bool = False,
+        driving_local_size: int = 33,
+        driving_message_size: int = 8,
+        driving_mask_start: int = 30,
+        population_critic: bool = False,
     ):
         super().__init__()
         if num_agents <= 0 or state_size <= 0:
@@ -78,9 +182,23 @@ class MappoActorCritic(nn.Module):
         self.observation_size = observation_size
         self.state_size = state_size
         self.num_agents = num_agents
-        self.actor = LocalAccelerationActor(observation_size, actor_hidden_sizes)
+        self.hybrid_actions = bool(hybrid_actions)
+        self.population_critic = bool(population_critic)
+        self.action_size = 2 if self.hybrid_actions else 1
+        if self.population_critic and (not self.hybrid_actions or not message_encoder
+                or state_size != num_agents * (observation_size + 1)):
+            raise ValueError('Population critic requires a padded local-observation/presence state')
+        if self.hybrid_actions and (not message_encoder or (not self.population_critic
+                and (state_size != 4 * (observation_size + 1) or num_agents != 4))):
+            raise ValueError('Driving actor requires the declared message/state contract')
+        self.actor = (LocalDrivingActor(observation_size, actor_hidden_sizes,
+                        local_size=driving_local_size, message_size=driving_message_size,
+                        mask_start=driving_mask_start) if self.hybrid_actions
+                      else LocalAccelerationActor(observation_size, actor_hidden_sizes, message_encoder))
         self.log_std = nn.Parameter(torch.zeros(1))
-        self.critic = _mlp(state_size + num_agents, critic_hidden_sizes, 1, 1.0)
+        self.critic = (MaskedPopulationCritic(observation_size, num_agents, critic_hidden_sizes)
+                       if self.population_critic else
+                       _mlp(state_size + num_agents, critic_hidden_sizes, 1, 1.0))
         nodes, weights = np.polynomial.hermite.hermgauss(20)
         self.register_buffer("entropy_nodes", torch.tensor(nodes, dtype=torch.float32))
         self.register_buffer("entropy_weights", torch.tensor(weights / math.sqrt(math.pi), dtype=torch.float32))
@@ -89,6 +207,8 @@ class MappoActorCritic(nn.Module):
         if local_obs.shape[-1] != self.observation_size:
             raise ValueError("Actor only accepts local observations")
         mean = self.actor.mean_net(local_obs)
+        if self.hybrid_actions:
+            mean = mean[..., :1]
         log_std = self.log_std.clamp(-5.0, 2.0).expand_as(mean)
         return torch.distributions.Normal(mean, log_std.exp())
 
@@ -105,7 +225,17 @@ class MappoActorCritic(nn.Module):
         pre_tanh = distribution.loc if deterministic else distribution.sample()
         actions = pre_tanh.tanh()
         log_prob = (distribution.log_prob(pre_tanh) - _log_tanh_jacobian(pre_tanh)).sum(-1)
-        return actions, log_prob, self._entropy(distribution), pre_tanh
+        entropy = self._entropy(distribution)
+        if self.hybrid_actions:
+            categorical = torch.distributions.Categorical(logits=self.actor.lane_logits(local_obs, self.actor.mean_net(local_obs)))
+            lane = categorical.logits.argmax(-1) if deterministic else categorical.sample()
+            log_prob = log_prob + categorical.log_prob(lane)
+            entropy = entropy + categorical.entropy()
+            delta = (lane - 1).to(actions.dtype).unsqueeze(-1)
+            actions = torch.cat((actions, delta), -1)
+            # Second stored latent is the exact categorical delta, not a Gaussian.
+            pre_tanh = torch.cat((pre_tanh, delta), -1)
+        return actions, log_prob, entropy, pre_tanh
 
     def evaluate_actions(
         self,
@@ -115,8 +245,24 @@ class MappoActorCritic(nn.Module):
     ):
         """Evaluate the stored latent sample; optional inversion rejects saturation."""
         distribution = self._distribution(local_obs)
-        if actions.shape != distribution.loc.shape or not torch.isfinite(actions).all():
-            raise ValueError("Actions must be finite with shape [...,1]")
+        expected = distribution.loc.shape[:-1] + (self.action_size,)
+        if actions.shape != expected or not torch.isfinite(actions).all():
+            raise ValueError('Actions must be finite with the configured action width')
+        lane_log_prob = lane_entropy = 0.
+        if self.hybrid_actions:
+            delta = actions[..., 1]
+            if ((delta < -1) | (delta > 1) | (delta != delta.round())).any():
+                raise ValueError('Lane action must be exactly -1, 0 or 1')
+            categorical = torch.distributions.Categorical(logits=self.actor.lane_logits(local_obs, self.actor.mean_net(local_obs)))
+            lane = (delta + 1).long()
+            if (categorical.logits.gather(-1, lane.unsqueeze(-1)) < -1e8).any():
+                raise ValueError('Stored lane action violates its observation mask')
+            lane_log_prob, lane_entropy = categorical.log_prob(lane), categorical.entropy()
+            if pre_tanh_actions is not None:
+                if pre_tanh_actions.shape != actions.shape or not torch.equal(pre_tanh_actions[..., 1], delta):
+                    raise ValueError('Stored categorical samples disagree')
+                pre_tanh_actions = pre_tanh_actions[..., :1]
+            actions = actions[..., :1]
         if pre_tanh_actions is None:
             if (actions.abs() >= 1.0).any():
                 raise ValueError("Saturated actions require their stored pre-tanh sample")
@@ -130,16 +276,18 @@ class MappoActorCritic(nn.Module):
         log_prob = (
             distribution.log_prob(pre_tanh_actions) - _log_tanh_jacobian(pre_tanh_actions)
         ).sum(-1)
-        return log_prob, self._entropy(distribution)
+        return log_prob + lane_log_prob, self._entropy(distribution) + lane_entropy
 
     def values(self, global_states: torch.Tensor, agent_indices: torch.Tensor) -> torch.Tensor:
-        """Joint state [...,112] plus one-hot ID [...,4] -> per-agent value."""
+        """Centralized state and stable focal slot -> per-agent training value."""
         if global_states.shape[-1] != self.state_size or agent_indices.shape != global_states.shape[:-1]:
             raise ValueError("Critic state width or agent-index shape is incorrect")
         if agent_indices.dtype != torch.long:
             raise ValueError("Agent indices must be torch.long")
         if ((agent_indices < 0) | (agent_indices >= self.num_agents)).any():
             raise ValueError("Agent index is outside the configured stable slots")
+        if self.population_critic:
+            return self.critic(global_states, agent_indices)
         identity = F.one_hot(agent_indices, num_classes=self.num_agents).to(global_states.dtype)
         return self.critic(torch.cat((global_states, identity), dim=-1)).squeeze(-1)
 
@@ -209,11 +357,30 @@ class MappoTrainer:
         epochs: int = 4,
         minibatch_size: int = 256,
         target_kl: float = 0.02,
+        imitation_coef: float = 0.0,
+        imitation_lane_change_weight: float = 10.0,
+        imitation_acceleration_weight: float = 1.0,
+        gradient_diagnostics: bool = False,
+        near_limit_coef: float = 0.0,
+        near_limit_band_m_s: float = 1.0,
     ):
         if any(not math.isfinite(v) or v <= 0 for v in (actor_lr, critic_lr, clip, value_clip, max_grad_norm, target_kl)):
             raise ValueError("Optimizer rates, clipping bounds and KL limit must be positive")
         if epochs <= 0 or minibatch_size <= 0 or entropy_coef < 0 or value_coef < 0:
             raise ValueError("Invalid PPO update parameters")
+        if (not math.isfinite(imitation_acceleration_weight) or imitation_acceleration_weight < 1
+                or not math.isfinite(imitation_coef) or imitation_coef < 0
+                or not math.isfinite(imitation_lane_change_weight) or imitation_lane_change_weight < 1):
+            raise ValueError('Invalid imitation loss settings')
+        if imitation_coef and not model.hybrid_actions:
+            raise ValueError('Imitation assistance requires the hybrid driving actor')
+        if type(gradient_diagnostics) is not bool:
+            raise ValueError('gradient_diagnostics must be a boolean')
+        if (not math.isfinite(near_limit_coef) or near_limit_coef < 0
+                or not math.isfinite(near_limit_band_m_s) or not 0 < near_limit_band_m_s <= 5):
+            raise ValueError('Invalid near-limit loss settings')
+        if near_limit_coef and (not model.hybrid_actions or model.observation_size not in (93, 99)):
+            raise ValueError('Near-limit supervision requires a 93-field or 99-field highway actor')
         self.model = model
         self.clip = clip
         self.value_clip = value_clip
@@ -223,18 +390,197 @@ class MappoTrainer:
         self.epochs = epochs
         self.minibatch_size = minibatch_size
         self.target_kl = target_kl
+        self.imitation_coef = imitation_coef
+        self.imitation_lane_change_weight = imitation_lane_change_weight
+        self.imitation_acceleration_weight = imitation_acceleration_weight
+        self.gradient_diagnostics = gradient_diagnostics
+        self.near_limit_coef = near_limit_coef
+        self.near_limit_band_m_s = near_limit_band_m_s
         self.optimizer = torch.optim.Adam([
             {"params": list(model.actor.parameters()) + [model.log_std], "lr": actor_lr},
             {"params": model.critic.parameters(), "lr": critic_lr},
         ], eps=1e-5)
 
-    def update(self, batch: Mapping[str, torch.Tensor]) -> dict:
+    def _imitation_loss(self, observations: torch.Tensor, teacher_actions: torch.Tensor):
+        """Training-only supervision; never changes deployment action selection.
+
+        Labels must use the observation's legal lane mask. The continuous mean
+        is fit in the normalized action space, so saturated teacher actions do
+        not require an undefined inverse tanh. Lane-change rows receive the
+        declared relative weight to account for their rarity in demonstrations.
+        """
+        if not self.model.hybrid_actions:
+            raise ValueError('Imitation assistance requires the hybrid driving actor')
+        if (observations.ndim != 2 or observations.shape[-1] != self.model.observation_size
+                or teacher_actions.shape != (observations.shape[0], self.model.action_size)
+                or not len(observations)):
+            raise ValueError('Imitation observations/actions have incompatible shapes')
+        if not torch.isfinite(observations).all() or not torch.isfinite(teacher_actions).all():
+            raise ValueError('Imitation observations/actions must be finite')
+        delta = teacher_actions[:, 1]
+        if (teacher_actions[:, 0].abs() > 1).any() or (
+                (delta < -1) | (delta > 1) | (delta != delta.round())).any():
+            raise ValueError('Imitation action is outside the hybrid action contract')
+        raw = self.model.actor.mean_net(observations)
+        logits = self.model.actor.lane_logits(observations, raw)
+        labels = (delta + 1).long()
+        if (logits.gather(-1, labels.unsqueeze(-1)) < -1e8).any():
+            raise ValueError('Imitation lane label violates its observation mask')
+        acceleration_loss = F.mse_loss(raw[:, :1].tanh(), teacher_actions[:, :1].detach())
+        weights = torch.where(delta == 0, torch.ones_like(delta),
+                              torch.full_like(delta, self.imitation_lane_change_weight))
+        lane_loss = (F.cross_entropy(logits, labels, reduction='none') * weights).mean()
+        return self.imitation_acceleration_weight * acceleration_loss + lane_loss, acceleration_loss, lane_loss
+
+    def _near_limit_terms(self, observations: torch.Tensor, teacher_actions: torch.Tensor):
+        """Opt-in conditional mean supervision of raw acceleration in SI units.
+
+        Both the original 93-field and extended 99-field contracts provide ego speed at index 0 and the
+        local legal speed at index 4, both divided by 26.8224 m/s. Select rows
+        within the configured band below the limit and all overspeed rows.
+        Labels must be produced by the same observation-only teacher as the
+        rest of this rollout. No action clipping or inference modification is
+        performed here. Averaging over selected rows prevents unrelated cruise
+        startup rows from diluting the near-limit signal.
+
+        Output diagnostics are minibatch quantities. Empty selections report
+        zero metrics together with zero selected samples; these zeros do not
+        establish driving performance. Shared actor features may still couple
+        longitudinal and lane behavior after a future update.
+        """
+        if (not self.model.hybrid_actions or self.model.observation_size not in (93, 99)
+                or observations.ndim != 2 or observations.shape[1] != self.model.observation_size
+                or teacher_actions.shape != (len(observations), 2) or not len(observations)):
+            raise ValueError('Near-limit supervision requires nonempty supported highway observations/actions')
+        if not torch.isfinite(observations).all() or not torch.isfinite(teacher_actions).all():
+            raise ValueError('Near-limit observations and targets must be finite')
+        if ((observations[:, 0] < 0) | (observations[:, 0] > 1)
+                | (observations[:, 4] <= 0) | (observations[:, 4] > 1)).any():
+            raise ValueError('Near-limit observations require valid ego and allowed-speed fractions')
+        if (teacher_actions[:, 0].abs() > 1).any():
+            raise ValueError('Near-limit acceleration targets must be normalized to [-1,1]')
+        selected = observations[:, 0] >= observations[:, 4] - self.near_limit_band_m_s / 26.8224
+        raw = self.model.actor.mean_net(observations)[:, 0].tanh()
+        predicted = -1.25 + 3.25 * raw
+        target = -1.25 + 3.25 * teacher_actions[:, 0].detach()
+        count = int(selected.sum())
+        if count:
+            error = predicted[selected] - target[selected]
+            loss = error.square().mean()
+            prediction_mean = float(predicted[selected].detach().mean())
+            target_mean = float(target[selected].detach().mean())
+            excess_fraction = float((error.detach() > .05).float().mean())
+        else:
+            loss = raw.sum() * 0.
+            prediction_mean = target_mean = excess_fraction = 0.
+        stats = dict(near_limit_mse_m2_s4=float(loss.detach()), near_limit_samples=count,
+            near_limit_batch_samples=len(observations),
+            near_limit_sample_fraction=count / len(observations),
+            near_limit_raw_acceleration_mean_m_s2=prediction_mean,
+            near_limit_target_mean_m_s2=target_mean,
+            near_limit_above_target_0p05_fraction=excess_fraction)
+        return loss, stats
+
+    def _near_limit_loss(self, observations: torch.Tensor, teacher_actions: torch.Tensor):
+        """Scalar physical-unit loss for no-update derivative audits."""
+        return self._near_limit_terms(observations, teacher_actions)[0]
+
+    @staticmethod
+    def _aggregate_update_stats(stats: list[dict]) -> dict:
+        """Preserve step-mean losses while labeling row-weighted evidence.
+
+        Every accepted optimizer minibatch contributes one loss. Selected-row
+        telemetry instead weights by selected count; an exposure is repeated
+        when an epoch revisits that row, and is not a unique rollout sample.
+        Empty selections carry no performance evidence.
+        """
+        result = {name: sum(item[name] for item in stats) / len(stats)
+                  for name in stats[0]} if stats else {}
+        if stats and 'near_limit_samples' in stats[0]:
+            selected = sum(item['near_limit_samples'] for item in stats)
+            exposed = sum(item['near_limit_batch_samples'] for item in stats)
+            result['near_limit_conditional_step_mean_mse_m2_s4'] = result.pop('near_limit_mse_m2_s4')
+            result.pop('near_limit_samples')
+            result.pop('near_limit_batch_samples')
+            result.pop('near_limit_sample_fraction')
+            result.update(near_limit_selected_row_exposures=selected,
+                near_limit_row_exposures=exposed,
+                near_limit_selected_exposure_fraction=selected / exposed if exposed else None,
+                near_limit_exposure_scope='Accepted optimizer minibatches; repeated epochs count repeated row exposures, not unique samples')
+            weighted_fields = {
+                'near_limit_mse_m2_s4': 'near_limit_selected_exposure_weighted_mse_m2_s4',
+                'near_limit_raw_acceleration_mean_m_s2': 'near_limit_selected_exposure_weighted_raw_acceleration_mean_m_s2',
+                'near_limit_target_mean_m_s2': 'near_limit_selected_exposure_weighted_target_mean_m_s2',
+                'near_limit_above_target_0p05_fraction': 'near_limit_selected_exposure_weighted_above_target_0p05_fraction',
+            }
+            for source, destination in weighted_fields.items():
+                result.pop(source, None)
+                result[destination] = (sum(item[source] * item['near_limit_samples'] for item in stats)
+                                       / selected if selected else None)
+        return result
+
+    def behavior_clone(self, observations: torch.Tensor, teacher_actions: torch.Tensor, *,
+                       epochs: int, minibatch_size: int = 512, learning_rate: float = 3e-4,
+                       initial_log_std: float = -2., deadline: float | None = None,
+                       seed: int = 0) -> dict:
+        """Fit only actor parameters on training demonstrations before MAPPO.
+
+        Uses a separate optimizer, leaving critic and PPO optimizer state
+        untouched. The caller owns transition/seed accounting and persists this
+        stage's dataset, metrics and resulting full checkpoint before PPO.
+        """
+        if (type(epochs) is not int or epochs <= 0 or type(minibatch_size) is not int
+                or minibatch_size <= 0 or not math.isfinite(learning_rate) or learning_rate <= 0
+                or not math.isfinite(initial_log_std) or not -5 <= initial_log_std <= 2
+                or type(seed) is not int or seed < 0):
+            raise ValueError('Invalid behavior-cloning settings')
+        observations, teacher_actions = observations.detach(), teacher_actions.detach()
+        with torch.no_grad():
+            initial_loss = float(self._imitation_loss(observations, teacher_actions)[0])
+        if not math.isfinite(initial_loss):
+            raise ValueError('Nonfinite initial behavior-cloning loss')
+        parameters = list(self.model.actor.parameters())
+        optimizer = torch.optim.Adam(parameters, lr=learning_rate, eps=1e-5)
+        generator = torch.Generator(device=observations.device).manual_seed(seed)
+        totals = np.zeros(3, dtype=np.float64)
+        steps = samples_seen = 0
+        for _epoch in range(epochs):
+            permutation = torch.randperm(len(observations), generator=generator, device=observations.device)
+            for start in range(0, len(observations), minibatch_size):
+                if deadline is not None and time.monotonic() >= deadline:
+                    raise TimeoutError('Experiment wall-time budget reached during behavior cloning')
+                indices = permutation[start:start + minibatch_size]
+                losses = self._imitation_loss(observations[indices], teacher_actions[indices])
+                if not all(torch.isfinite(value) for value in losses):
+                    raise ValueError('Nonfinite behavior-cloning loss')
+                optimizer.zero_grad(set_to_none=True)
+                losses[0].backward()
+                nn.utils.clip_grad_norm_(parameters, self.max_grad_norm, error_if_nonfinite=True)
+                optimizer.step()
+                totals += np.asarray([float(value.detach()) for value in losses]) * len(indices)
+                samples_seen += len(indices)
+                steps += 1
+        with torch.no_grad():
+            final_loss = float(self._imitation_loss(observations, teacher_actions)[0])
+            if not math.isfinite(final_loss):
+                raise ValueError('Nonfinite final behavior-cloning loss')
+            self.model.log_std.fill_(initial_log_std)
+        means = totals / samples_seen
+        return dict(optimizer_steps=steps, examples=len(observations), samples_seen=samples_seen,
+                    epochs=epochs, initial_loss=initial_loss, final_loss=final_loss,
+                    imitation_loss=float(means[0]), imitation_acceleration_loss=float(means[1]),
+                    imitation_lane_loss=float(means[2]), initial_log_std=initial_log_std, seed=seed)
+
+    def _prepare_batch(self, batch: Mapping[str, torch.Tensor]):
+        """Remove padding and normalize the active rollout once, before sampling."""
         widths = {
             "local_obs": self.model.observation_size,
             "global_states": self.model.state_size,
-            "actions": 1,
-            "pre_tanh_actions": 1,
+            "actions": self.model.action_size,
+            "pre_tanh_actions": self.model.action_size,
         }
+        if self.imitation_coef or self.near_limit_coef:
+            widths['teacher_actions'] = self.model.action_size
         scalar_names = ("agent_indices", "old_log_probs", "old_values", "advantages", "returns")
         leading = batch["active"].shape
         active = batch["active"].bool().reshape(-1)
@@ -243,6 +589,8 @@ class MappoTrainer:
             raise ValueError("MAPPO update needs at least one active transition")
         data = {}
         for name in (*widths, *scalar_names):
+            if name not in batch:
+                raise ValueError(f'Missing required batch field {name}')
             expected = leading + ((widths[name],) if name in widths else ())
             if batch[name].shape != expected:
                 raise ValueError(f"Batch field {name} expected shape {expected}")
@@ -252,13 +600,86 @@ class MappoTrainer:
                 raise ValueError(f"Active batch field {name} is not finite")
         advantages = data["advantages"]
         data["advantages"] = (advantages - advantages.mean()) / (advantages.std(unbiased=False) + 1e-8)
+        return data, samples
+
+    def _loss_terms(self, part, ratio, entropy):
+        """Build the ordinary objective and its exactly weighted diagnostic parts."""
+        actor_loss = -torch.minimum(
+            ratio * part["advantages"],
+            ratio.clamp(1.0 - self.clip, 1.0 + self.clip) * part["advantages"],
+        ).mean()
+        values = self.model.values(part["global_states"], part["agent_indices"])
+        clipped_values = part["old_values"] + (values - part["old_values"]).clamp(-self.value_clip, self.value_clip)
+        value_loss = 0.5 * torch.maximum(
+            (values - part["returns"]).square(),
+            (clipped_values - part["returns"]).square(),
+        ).mean()
+        entropy_mean = entropy.mean()
+        # Keep the legacy arithmetic order, independently of diagnostics.
+        loss = actor_loss + self.value_coef * value_loss - self.entropy_coef * entropy_mean
+        weighted = dict(ppo=actor_loss, value=self.value_coef * value_loss,
+                        entropy=-self.entropy_coef * entropy_mean)
+        imitation_stats = {}
+        if self.imitation_coef:
+            imitation_loss, acceleration_imitation, lane_imitation = self._imitation_loss(
+                part['local_obs'], part['teacher_actions'])
+            loss = loss + self.imitation_coef * imitation_loss
+            weighted.update(acceleration=self.imitation_coef * self.imitation_acceleration_weight * acceleration_imitation,
+                            lane=self.imitation_coef * lane_imitation)
+            imitation_stats = dict(imitation_loss=float(imitation_loss.detach()),
+                imitation_acceleration_loss=float(acceleration_imitation.detach()),
+                imitation_lane_loss=float(lane_imitation.detach()))
+        if self.near_limit_coef:
+            near_limit_loss, near_limit_stats = self._near_limit_terms(part['local_obs'], part['teacher_actions'])
+            weighted['near_limit'] = self.near_limit_coef * near_limit_loss
+            loss = loss + weighted['near_limit']
+            imitation_stats.update(near_limit_stats)
+        if not torch.isfinite(loss):
+            raise ValueError('Nonfinite MAPPO loss')
+        return loss, weighted, dict(actor_loss=float(actor_loss.detach()), value_loss=float(value_loss.detach()),
+                                   entropy=float(entropy_mean.detach()), **imitation_stats)
+
+    def diagnose_batch(self, batch: Mapping[str, torch.Tensor], *, phase: str = 'preflight') -> dict:
+        """No-update preflight: first active minibatch, no sampling or optimizer call.
+
+        Existing gradients, weights and RNG state are preserved. This is a
+        derivative diagnostic; it does not claim old stored rollouts are newly
+        on-policy. The caller owns policy/return provenance and phase labeling.
+        """
+        data, samples = self._prepare_batch(batch)
+        count = min(samples, self.minibatch_size)
+        part = {name: value[:count] for name, value in data.items()}
+        log_probs, entropy = self.model.evaluate_actions(part['local_obs'], part['actions'], part['pre_tanh_actions'])
+        log_ratio = log_probs - part['old_log_probs']
+        ratio = log_ratio.exp()
+        _, weighted, _ = self._loss_terms(part, ratio, entropy)
+        return dict(phase=phase, optimizer_steps=0, active_samples=samples,
+            component_samples=count, component_sampling='First active rows, without shuffling; diagnostic only',
+            representative_minibatch=weighted_gradient_report(self.model, weighted),
+            critic=critic_fit_metrics(self.model, data['global_states'], data['agent_indices'], data['returns']))
+
+    def update(self, batch: Mapping[str, torch.Tensor], *, deadline: float | None = None,
+               phase: str = 'ppo') -> dict:
+        data, samples = self._prepare_batch(batch)
+        diagnostics = None
+        if self.gradient_diagnostics:
+            diagnostics = dict(phase=phase, clipping_mode='global', representative_minibatch=None,
+                component_sampling='First accepted minibatch of this update only; not an average across optimizer steps',
+                actual_steps=[], critic_before=critic_fit_metrics(
+                    self.model, data['global_states'], data['agent_indices'], data['returns']),
+                critic_targets='Identical detached active rollout returns before/after update; no target recomputation',
+                limitations='Gradient clipping measures derivatives, not Adam parameter steps')
         stats: list[dict] = []
         early_stopped = False
         last_kl = 0.0
         completed_epochs = 0
+        budget_exhausted = False
         for _epoch in range(self.epochs):
-            permutation = torch.randperm(samples, device=active.device)
+            permutation = torch.randperm(samples, device=data['advantages'].device)
             for start in range(0, samples, self.minibatch_size):
+                if deadline is not None and time.monotonic() >= deadline:
+                    budget_exhausted = True
+                    break
                 indices = permutation[start:start + self.minibatch_size]
                 part = {name: value[indices] for name, value in data.items()}
                 log_probs, entropy = self.model.evaluate_actions(part["local_obs"], part["actions"], part["pre_tanh_actions"])
@@ -271,38 +692,40 @@ class MappoTrainer:
                 if last_kl > self.target_kl:
                     early_stopped = True
                     break
-                actor_loss = -torch.minimum(
-                    ratio * part["advantages"],
-                    ratio.clamp(1.0 - self.clip, 1.0 + self.clip) * part["advantages"],
-                ).mean()
-                values = self.model.values(part["global_states"], part["agent_indices"])
-                clipped_values = part["old_values"] + (values - part["old_values"]).clamp(-self.value_clip, self.value_clip)
-                value_loss = 0.5 * torch.maximum(
-                    (values - part["returns"]).square(),
-                    (clipped_values - part["returns"]).square(),
-                ).mean()
-                entropy_mean = entropy.mean()
-                loss = actor_loss + self.value_coef * value_loss - self.entropy_coef * entropy_mean
-                if not torch.isfinite(loss):
-                    raise ValueError("Nonfinite MAPPO loss")
+                loss, weighted, losses = self._loss_terms(part, ratio, entropy)
+                if diagnostics is not None and diagnostics['representative_minibatch'] is None:
+                    diagnostics['representative_minibatch'] = dict(epoch=_epoch, minibatch=start // self.minibatch_size,
+                        samples=len(indices), **weighted_gradient_report(self.model, weighted))
                 self.optimizer.zero_grad(set_to_none=True)
                 loss.backward()
+                before_clip = current_gradient_norms(self.model) if diagnostics is not None else None
                 grad_norm = nn.utils.clip_grad_norm_(self.model.parameters(), self.max_grad_norm, error_if_nonfinite=True)
+                if diagnostics is not None:
+                    diagnostics['actual_steps'].append(dict(epoch=_epoch, minibatch=start // self.minibatch_size,
+                        samples=len(indices), before_clip=before_clip, after_clip=current_gradient_norms(self.model),
+                        global_clip_factor=min(1., self.max_grad_norm / (float(grad_norm) + 1e-6)),
+                        ppo_clip_fraction=float(((ratio - 1.).abs() > self.clip).float().mean().detach())))
                 self.optimizer.step()
                 stats.append({
-                    "actor_loss": float(actor_loss.detach()),
-                    "value_loss": float(value_loss.detach()),
-                    "entropy": float(entropy_mean.detach()),
+                    **losses,
                     "approx_kl": last_kl,
                     "clip_fraction": float(((ratio - 1.0).abs() > self.clip).float().mean().detach()),
                     "grad_norm_before_clip": float(grad_norm),
                 })
-            if early_stopped:
+            if early_stopped or budget_exhausted:
                 break
             completed_epochs += 1
-        result = {name: sum(item[name] for item in stats) / len(stats) for name in stats[0]} if stats else {}
+        result = self._aggregate_update_stats(stats)
+        if diagnostics is not None:
+            steps = diagnostics['actual_steps']
+            diagnostics.update(optimizer_steps=len(steps),
+                gradient_clip_fraction=sum(step['global_clip_factor'] < 1. for step in steps) / len(steps) if steps else None,
+                aggregation='Clip fraction is an unweighted fraction of performed optimizer steps; each step retains sample count and measured norms',
+                critic_after=critic_fit_metrics(self.model, data['global_states'], data['agent_indices'], data['returns']))
+            result['gradient_diagnostics'] = diagnostics
         return dict(result, optimizer_steps=len(stats), completed_epochs=completed_epochs,
-                    early_stopped=early_stopped, last_kl=last_kl, active_samples=samples)
+                    early_stopped=early_stopped, last_kl=last_kl, active_samples=samples,
+                    budget_exhausted=budget_exhausted)
 
 
 def export_actor(model: MappoActorCritic, path: str | Path) -> Path:

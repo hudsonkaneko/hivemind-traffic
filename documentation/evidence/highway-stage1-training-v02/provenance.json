@@ -1,0 +1,37 @@
+{
+  "run": "outputs/highway-stage1/v02/train-20261103T190020Z-8469072d",
+  "source_commit": "38c3b41b1dbc6a5a6d4417e8a5f60a958d193bd9",
+  "python": "3.11.9",
+  "torch": "2.14.0+cpu",
+  "traci": "1.27.1",
+  "config_sha256": "1fa2582534c201cdf623a877a0ac03c70da554842e9cd998e066bb7116185d39",
+  "source_hashes": {
+    "experiments/run_highway_stage1.py": "d2edc2a2ab4054345c7d2d7ca6a82c18761d5918b4e140cc4802698784f393eb",
+    "environments/highway_stage1_env.py": "95d160c6b9cdb4143aa1a37ef45aa4b30dc8c22ed815f9c418f3115674005360",
+    "environments/i110_merge_env.py": "5e74d9b8c45c6faab9f4e4889bdce6a534149ff1f07dc426e0bbdf7f3fa1e208",
+    "traffic/highway_merge_context.py": "bbdc04d1cd42418453f8e0f5473729b6290c4b3da68ad92396b2847ced480a4e",
+    "traffic/highway_stage1_teacher.py": "750bbc930c294b0403dfb6841cf123798410e8095397140f90e4ec3ae087c139",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+    "policies/mappo.py": "87c84af2a4aa09ff93c141f5fdd4c1f6dcacff589a367e242c9eefbd62d25257",
+    "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+    "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+    "scripts/build_highway_curriculum_v2.py": "97d80ac2bcd0657eec37a9a863533ad2e51c5c0cdf9fa80c00b1873f71fe0477",
+    "scripts/build_i110_sumo.py": "26ab7e55962f4d6e0422f8d0ef944baf337600af32645fb1d6364f0979c37f70"
+  },
+  "source_drift": [],
+  "artifact_hashes": {
+    "summary.json": "37a23c2fa74d4a593d8fc47fc4da13389f130084a4963d29f83c55df207c06c3",
+    "config.json": "e53d70a2a200eae35934eba7055f49955227c070e37f4c4f4b5c5fb1a2a0b638",
+    "last.pt": "b6c7c802c332f650c6d4b97633877d5ee43fa8a6d765eba57b2e1ae8bfdf2bdf",
+    "bc-metrics.jsonl": "a79f56e5b443be64ed86c37be271d8ed64c9d295c366ae37ad52d619647de6f7",
+    "selected-00162-cfaa8b0a/policy.pt": "07ef91a2e7591becd235862c9b2ebb0dd5707ef364546ec251f8bf8964e1a6b3",
+    "selected-00162-cfaa8b0a/best.pt": "91c1752996cb2fcc40f06b0ecbdff4f621e51c492571d17dcce98e5740de8ee7",
+    "selected-00162-cfaa8b0a/validation.json": "910252bb2ddc56b4e9611d4b8892fa56cd28c4f28b18ed51199029b759387a1e"
+  },
+  "authorization": "User explicitly authorized the reviewed Stage 1 configuration on 2026-11-03. Only training_authorized changed from the disabled reviewed configuration.",
+  "artifact_storage": "The frozen selected actor is intentionally packaged in policies/versions/highway-stage1-v02/policy.pt for GitHub publication. Resume weights, full journals and source snapshots remain local. No GitHub release asset is claimed.",
+  "no_monitoring": "Waited for process exit without reading progress or analyzing training while it ran."
+}

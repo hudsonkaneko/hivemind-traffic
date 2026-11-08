@@ -1,0 +1,25 @@
+{
+  "scope": "Frozen after-BC actor on retained TRAINING demonstrations; not validation/control accuracy",
+  "learning": false,
+  "optimizer_steps": 0,
+  "simulator_run": false,
+  "samples": 49998,
+  "acceleration_rmse_m_s2": 0.14399494230747223,
+  "acceleration_mae_m_s2": 0.059589918702840805,
+  "acceleration_bias_m_s2": -0.0006176905590109527,
+  "acceleration_error_p50_m_s2": 0.027988296002149582,
+  "acceleration_error_p95_m_s2": 0.24667862057685852,
+  "fraction_label_error_above_0p05": 0.2986319363117218,
+  "lane_agreement": 0.9978598952293396,
+  "sources": [
+    {
+      "path": "outputs/highway-stage1/v03/train-20261103T230506Z-04ba1761/selected-00000-c127e64d/policy.pt",
+      "sha256": "a282cc4ded4160470712a93fe91b11ee5d12a4c664489c8882911263684b3b4d"
+    },
+    {
+      "path": "outputs/highway-stage1/v03/train-20261103T230506Z-04ba1761/demonstrations-6200015.pt",
+      "sha256": "ad24347df7dd6e5ae8ab4e64c6bb887366522c4a3d10f8e4397718ffc414fada"
+    }
+  ],
+  "torch": "2.14.0+cpu"
+}

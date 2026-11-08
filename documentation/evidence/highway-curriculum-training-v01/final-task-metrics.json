@@ -1,0 +1,66 @@
+[
+  {
+    "task": "cruise",
+    "cases": 3,
+    "speed_fraction": 0.9875901438812449,
+    "overrides": 9068,
+    "agent_steps": 9600,
+    "intervention_fraction": 0.9445833333333333,
+    "passes": [
+      0,
+      0,
+      0
+    ],
+    "merges": 0,
+    "collisions": 0,
+    "overspeed_steps": 0
+  },
+  {
+    "task": "following",
+    "cases": 3,
+    "speed_fraction": 0.8565914790009682,
+    "overrides": 9600,
+    "agent_steps": 9600,
+    "intervention_fraction": 1.0,
+    "passes": [
+      0,
+      0,
+      0
+    ],
+    "merges": 0,
+    "collisions": 0,
+    "overspeed_steps": 0
+  },
+  {
+    "task": "passing",
+    "cases": 3,
+    "speed_fraction": 0.7829524133404825,
+    "overrides": 9582,
+    "agent_steps": 9600,
+    "intervention_fraction": 0.998125,
+    "passes": [
+      3,
+      2,
+      3
+    ],
+    "merges": 0,
+    "collisions": 0,
+    "overspeed_steps": 0
+  },
+  {
+    "task": "merge",
+    "cases": 3,
+    "speed_fraction": 0.7516818913137937,
+    "overrides": 8784,
+    "agent_steps": 9600,
+    "intervention_fraction": 0.915,
+    "passes": [
+      0,
+      0,
+      0
+    ],
+    "merges": 0,
+    "collisions": 0,
+    "overspeed_steps": 0
+  }
+]

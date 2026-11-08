@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "scope": "static comparison; no simulator or policy executed",
+  "baseline_network_sha256": "a216efd0a451845c19147437284fe0014d503c8015aca1d29bb4b4b8e1ac8623",
+  "corrected_network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+  "source_inputs": {
+    "nodes.nod.xml": {
+      "unchanged": true,
+      "baseline_sha256": "27ddc565e5ac69c5b60607a743e5170efbf3c20d0e0b510cb04c661a604a837d",
+      "corrected_sha256": "27ddc565e5ac69c5b60607a743e5170efbf3c20d0e0b510cb04c661a604a837d"
+    },
+    "edges.edg.xml": {
+      "unchanged": true,
+      "baseline_sha256": "076ec9a793d7944595ba8c78bbe11343cf339bd07686d4070595c197275b3b6f",
+      "corrected_sha256": "076ec9a793d7944595ba8c78bbe11343cf339bd07686d4070595c197275b3b6f"
+    },
+    "connections.con.xml": {
+      "unchanged": true,
+      "baseline_sha256": "55c6cba28cccb5bf19db9f8ecaf3ed4ac1daa8e15604c0cc0b85f44005da7d0c",
+      "corrected_sha256": "55c6cba28cccb5bf19db9f8ecaf3ed4ac1daa8e15604c0cc0b85f44005da7d0c"
+    }
+  },
+  "all_source_inputs_byte_identical": true,
+  "all_non_junction_elements_identical": true,
+  "junction_changes": [
+    {
+      "junction": "n2",
+      "before": {
+        "index": "1",
+        "response": "000000",
+        "foes": "100000",
+        "cont": "0"
+      },
+      "after": {
+        "index": "1",
+        "response": "000000",
+        "foes": "000000",
+        "cont": "0"
+      }
+    },
+    {
+      "junction": "n2",
+      "before": {
+        "index": "2",
+        "response": "000000",
+        "foes": "100000",
+        "cont": "0"
+      },
+      "after": {
+        "index": "2",
+        "response": "000000",
+        "foes": "000000",
+        "cont": "0"
+      }
+    },
+    {
+      "junction": "n2",
+      "before": {
+        "index": "3",
+        "response": "000000",
+        "foes": "100000",
+        "cont": "0"
+      },
+      "after": {
+        "index": "3",
+        "response": "000000",
+        "foes": "000000",
+        "cont": "0"
+      }
+    },
+    {
+      "junction": "n2",
+      "before": {
+        "index": "4",
+        "response": "000000",
+        "foes": "100000",
+        "cont": "0"
+      },
+      "after": {
+        "index": "4",
+        "response": "000000",
+        "foes": "000000",
+        "cont": "0"
+      }
+    },
+    {
+      "junction": "n2",
+      "before": {
+        "index": "5",
+        "response": "011111",
+        "foes": "011111",
+        "cont": "0"
+      },
+      "after": {
+        "index": "5",
+        "response": "000001",
+        "foes": "000001",
+        "cont": "0"
+      }
+    }
+  ],
+  "only_n2_conflict_matrix_changed": true
+}

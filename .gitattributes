@@ -54,3 +54,10 @@ tests/test_report_lane_follow_ppo.py text eol=lf
 # The guide manifest hashes exact Markdown bytes on every checkout platform.
 documentation/engineering-guide.md text eol=lf
 documentation/engineering-guide.sync.json text eol=lf
+# Frozen preparation evidence includes literal logs/patches; preserve bytes and hashes.
+documentation/evidence/highway-smooth-preparation-v01/** -text -whitespace
+documentation/evidence/highway-training-rethink-v01/** -text -whitespace
+documentation/evidence/highway-flow-preparation-v01/** -text -whitespace
+# Flow preparation manifests identify exact checked-out runtime bytes.
+*highway_flow*.py text eol=lf
+configs/training/highway-flow-v01.json text eol=crlf

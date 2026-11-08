@@ -1,0 +1,90 @@
+{
+  "schema": "highway_population_v1",
+  "actor_observation_layout": "45 local features, followed by six ordered 8-field message slots",
+  "observation_size": 93,
+  "local_features": [
+    "speed_over_cap",
+    "acceleration_over_4p5",
+    "lane_index_fraction",
+    "remaining_route_fraction",
+    "allowed_speed_over_cap",
+    "previous_request_over_4p5",
+    "own_front_gap_over_120",
+    "own_front_relative_speed_over_cap",
+    "own_front_present",
+    "own_rear_gap_over_120",
+    "own_rear_relative_speed_over_cap",
+    "own_rear_present",
+    "left_front_gap_over_120",
+    "left_front_relative_speed_over_cap",
+    "left_front_present",
+    "left_rear_gap_over_120",
+    "left_rear_relative_speed_over_cap",
+    "left_rear_present",
+    "right_front_gap_over_120",
+    "right_front_relative_speed_over_cap",
+    "right_front_present",
+    "right_rear_gap_over_120",
+    "right_rear_relative_speed_over_cap",
+    "right_rear_present",
+    "left_lane_exists",
+    "right_lane_exists",
+    "lane_count_over_7",
+    "distance_to_required_merge_over_240",
+    "requires_merge",
+    "lane_cooldown_over_5",
+    "mask_right",
+    "mask_stay",
+    "mask_left",
+    "merge_context_known",
+    "merge_target_lane_index_over_7",
+    "merge_target_lane_delta",
+    "distance_to_target_lane_start_over_240",
+    "target_front_gap_over_120",
+    "target_front_relative_speed_over_cap",
+    "target_front_present",
+    "target_rear_gap_over_120",
+    "target_rear_relative_speed_over_cap",
+    "target_rear_present",
+    "feasible_acceleration_ceiling_over_4p5",
+    "target_allowed_speed_over_cap"
+  ],
+  "message_features": [
+    "southbound_position_delta_over_150",
+    "sender_requires_merge",
+    "relative_speed_over_cap",
+    "acceleration_over_4p5",
+    "previous_acceleration_request_over_4p5",
+    "age_over_0p5",
+    "previous_lane_request",
+    "present"
+  ],
+  "mask_slice": [
+    30,
+    33
+  ],
+  "message_slice": [
+    45,
+    93
+  ],
+  "message_selection": "Nearest six fresh received sender snapshots by Euclidean distance; stable sender ID tie break",
+  "message_aggregation": "Presence-masked mean embedding plus received-neighbor count",
+  "normalization": "fixed analytic scaling; no running statistics",
+  "critic_state_size": 752,
+  "critic_layout": "Eight padded rows of 93 local observation fields plus presence; training-only masked population critic",
+  "outputs": [
+    "normalized_acceleration",
+    "lane_delta"
+  ],
+  "physical_acceleration_formula": "-4.5 + (normalized_acceleration + 1) * 3.25",
+  "lane_delta": {
+    "-1": "right",
+    "0": "stay",
+    "1": "left"
+  },
+  "environment": "environments/highway_population_env.py at 07482466f4d85805d931e4f9c639acb9600aafa0",
+  "limitations": [
+    "The 93-field tensor shape is compatible with Stage 1, but population demand and message selection semantics are versioned.",
+    "The actor does not include safety filtering, SUMO motion, a reset/destination interface, cameras, LiDAR or physical control."
+  ]
+}

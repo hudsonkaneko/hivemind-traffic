@@ -1,0 +1,16 @@
+{
+  "tests": 137,
+  "passed": true,
+  "warnings": 6,
+  "warning_type": "TorchScript deprecation warnings",
+  "command": ".venv-traffic/Scripts/python.exe -m pytest -q tests/test_highway_training_recovery.py tests/test_i110_merge.py tests/test_i110_policy_interface.py tests/test_mappo_policy.py tests/test_mappo_driving_actor.py tests/test_sumo_mappo_config.py tests/test_sumo_mappo_env.py tests/test_sumo_mappo_runner.py tests/test_sumo_mappo_rollout.py tests/test_sumo_mappo_refinement_config.py",
+  "export_roundtrip": true,
+  "quality_accepted": false,
+  "held_out_test_run": false,
+  "guide": {
+    "tabs": 42,
+    "unaffected_bodies": 41,
+    "exact_append": true,
+    "history_preserved": true
+  }
+}

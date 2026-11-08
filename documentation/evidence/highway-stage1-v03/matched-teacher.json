@@ -1,0 +1,1952 @@
+{
+  "source_path": "outputs/highway-stage1/v03/teacher-comparison-20261103T205557Z/compact-summary.json",
+  "source_sha256": "cc15a61ba7daed2399a1ad65f34f2ea763dd1440ea5ae8a1ebfe0f16e06de91d",
+  "completed": true,
+  "optimizer_steps": 0,
+  "training": false,
+  "test_split_run": false,
+  "teacher_quality": {
+    "passed": true,
+    "failures": [],
+    "cases": 12
+  },
+  "teacher_statistics": {
+    "cases": 12,
+    "agent_decisions": 38353,
+    "overrides": 448,
+    "pooled_overrides": 0.011680963679503558,
+    "worst_case_overrides": 0.0415625,
+    "passing_cases_succeeded": 3,
+    "passes": 10,
+    "successful_merges": 6,
+    "collisions": 0,
+    "teleports": 0,
+    "overspeed_steps": 0,
+    "min_cruise_speed_ratio": 0.9726860271302951,
+    "all_primary_horizons_complete": true,
+    "all_accounting_comparison_valid": true
+  },
+  "comparison_sources": {
+    "validation-after-bc": {
+      "path": "outputs/highway-stage1/v02/train-20261103T190020Z-8469072d/validation-after-bc.json",
+      "sha256": "91bf76bf6a11f836815c20e69721f5e67602969419d370bb51ac46a0aad0f2a1"
+    },
+    "validation-phase-2": {
+      "path": "outputs/highway-stage1/v02/train-20261103T190020Z-8469072d/validation-phase-2.json",
+      "sha256": "474d8529b78ebbc11b8ab5081f5a80ade2725b65c7ee67fcd00bc3656923ec57"
+    },
+    "validation-phase-3": {
+      "path": "outputs/highway-stage1/v02/train-20261103T190020Z-8469072d/validation-phase-3.json",
+      "sha256": "910252bb2ddc56b4e9611d4b8892fa56cd28c4f28b18ed51199029b759387a1e"
+    }
+  },
+  "source_drift": [],
+  "wall_seconds": 152.89100000006147,
+  "reports": [
+    {
+      "case_id": "validation-5-lane-cruise",
+      "seed": 5210000,
+      "task": "cruise",
+      "density": "light",
+      "through_lanes": 5,
+      "agent_steps": 3200,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 0,
+      "successful_merges": 0,
+      "overrides": 0,
+      "intervention_fraction": 0,
+      "mean_fraction_of_speed_limit": 0.9820920850381037,
+      "lane_changes": 0,
+      "override_causes": {},
+      "policy_filter_changes": 0,
+      "native_realization_changes": 0,
+      "mean_feasible_acceleration_error": 0.0760601191541164,
+      "mean_abs_acceleration": 0.12800302274990835,
+      "mean_abs_jerk": 0.05000499787277137,
+      "minimum_headway_s": null,
+      "minimum_ttc_s": null,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210000-7439de7b"
+    },
+    {
+      "case_id": "validation-5-lane-following",
+      "seed": 5210001,
+      "task": "following",
+      "density": "dense",
+      "through_lanes": 5,
+      "agent_steps": 3200,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 0,
+      "successful_merges": 0,
+      "overrides": 0,
+      "intervention_fraction": 0,
+      "mean_fraction_of_speed_limit": 0.926178659812647,
+      "lane_changes": 5,
+      "override_causes": {},
+      "policy_filter_changes": 0,
+      "native_realization_changes": 0,
+      "mean_feasible_acceleration_error": 0.14632486467637718,
+      "mean_abs_acceleration": 0.1496515857428293,
+      "mean_abs_jerk": 0.06590891230903953,
+      "minimum_headway_s": 1.7216815043512397,
+      "minimum_ttc_s": 33.1147707013248,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210001-4a44b2ca"
+    },
+    {
+      "case_id": "validation-5-lane-passing",
+      "seed": 5210002,
+      "task": "passing",
+      "density": "medium",
+      "through_lanes": 5,
+      "agent_steps": 3200,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 4,
+      "successful_merges": 0,
+      "overrides": 42,
+      "intervention_fraction": 0.013125,
+      "mean_fraction_of_speed_limit": 0.9394647476444133,
+      "lane_changes": 4,
+      "override_causes": {
+        "native_realization_unattributed": 42
+      },
+      "policy_filter_changes": 0,
+      "native_realization_changes": 42,
+      "mean_feasible_acceleration_error": 0.10583594704988465,
+      "mean_abs_acceleration": 0.17756220104428905,
+      "mean_abs_jerk": 0.09727902372625294,
+      "minimum_headway_s": 1.6554454279630333,
+      "minimum_ttc_s": 4.378527317521716,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210002-a14e3017"
+    },
+    {
+      "case_id": "validation-5-lane-merge",
+      "seed": 5210003,
+      "task": "merge",
+      "density": "medium",
+      "through_lanes": 5,
+      "agent_steps": 3200,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 0,
+      "successful_merges": 2,
+      "overrides": 49,
+      "intervention_fraction": 0.0153125,
+      "mean_fraction_of_speed_limit": 0.9608499026573182,
+      "lane_changes": 2,
+      "override_causes": {
+        "native_realization_unattributed": 49
+      },
+      "policy_filter_changes": 0,
+      "native_realization_changes": 49,
+      "mean_feasible_acceleration_error": 0.07059742736784465,
+      "mean_abs_acceleration": 0.2665839745341965,
+      "mean_abs_jerk": 0.17453264983132358,
+      "minimum_headway_s": 3.6778870247775193,
+      "minimum_ttc_s": 8.470454558674733,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210003-36aed82d"
+    },
+    {
+      "case_id": "validation-2-lane-cruise",
+      "seed": 5210004,
+      "task": "cruise",
+      "density": "light",
+      "through_lanes": 2,
+      "agent_steps": 3200,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 0,
+      "successful_merges": 0,
+      "overrides": 0,
+      "intervention_fraction": 0,
+      "mean_fraction_of_speed_limit": 0.9726860271302951,
+      "lane_changes": 3,
+      "override_causes": {},
+      "policy_filter_changes": 0,
+      "native_realization_changes": 0,
+      "mean_feasible_acceleration_error": 0.08654724356191824,
+      "mean_abs_acceleration": 0.20823162971762418,
+      "mean_abs_jerk": 0.07753472224695449,
+      "minimum_headway_s": 1.6931867112078876,
+      "minimum_ttc_s": null,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210004-048feb89"
+    },
+    {
+      "case_id": "validation-2-lane-following",
+      "seed": 5210005,
+      "task": "following",
+      "density": "dense",
+      "through_lanes": 2,
+      "agent_steps": 3200,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 0,
+      "successful_merges": 0,
+      "overrides": 0,
+      "intervention_fraction": 0,
+      "mean_fraction_of_speed_limit": 0.6951483083632677,
+      "lane_changes": 11,
+      "override_causes": {},
+      "policy_filter_changes": 0,
+      "native_realization_changes": 0,
+      "mean_feasible_acceleration_error": 0.5233350614610529,
+      "mean_abs_acceleration": 0.2938908426078357,
+      "mean_abs_jerk": 0.2775082958339421,
+      "minimum_headway_s": 1.6533511966988335,
+      "minimum_ttc_s": 4.121455901693474,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210005-574380b5"
+    },
+    {
+      "case_id": "validation-2-lane-passing",
+      "seed": 5210006,
+      "task": "passing",
+      "density": "medium",
+      "through_lanes": 2,
+      "agent_steps": 3200,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 2,
+      "successful_merges": 0,
+      "overrides": 5,
+      "intervention_fraction": 0.0015625,
+      "mean_fraction_of_speed_limit": 0.6710133026796377,
+      "lane_changes": 6,
+      "override_causes": {
+        "native_realization_unattributed": 5
+      },
+      "policy_filter_changes": 0,
+      "native_realization_changes": 5,
+      "mean_feasible_acceleration_error": 0.7234786766332789,
+      "mean_abs_acceleration": 0.4222193774659106,
+      "mean_abs_jerk": 0.5534347552421311,
+      "minimum_headway_s": 1.7214896798365287,
+      "minimum_ttc_s": 9.094269322783797,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210006-72eba12b"
+    },
+    {
+      "case_id": "validation-2-lane-merge",
+      "seed": 5210007,
+      "task": "merge",
+      "density": "medium",
+      "through_lanes": 2,
+      "agent_steps": 3153,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 0,
+      "successful_merges": 2,
+      "overrides": 114,
+      "intervention_fraction": 0.03615604186489058,
+      "mean_fraction_of_speed_limit": 0.9613374327777852,
+      "lane_changes": 4,
+      "override_causes": {
+        "native_realization_unattributed": 114
+      },
+      "policy_filter_changes": 0,
+      "native_realization_changes": 114,
+      "mean_feasible_acceleration_error": 0.10233119878857959,
+      "mean_abs_acceleration": 0.2584189264712857,
+      "mean_abs_jerk": 0.19844722617737937,
+      "minimum_headway_s": 1.9702002399632477,
+      "minimum_ttc_s": 5.809524214067742,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210007-941866c0"
+    },
+    {
+      "case_id": "validation-4-lane-cruise",
+      "seed": 5210008,
+      "task": "cruise",
+      "density": "light",
+      "through_lanes": 4,
+      "agent_steps": 3200,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 0,
+      "successful_merges": 0,
+      "overrides": 0,
+      "intervention_fraction": 0,
+      "mean_fraction_of_speed_limit": 0.9842526324168243,
+      "lane_changes": 0,
+      "override_causes": {},
+      "policy_filter_changes": 0,
+      "native_realization_changes": 0,
+      "mean_feasible_acceleration_error": 0.07652317712414314,
+      "mean_abs_acceleration": 0.11635155197465799,
+      "mean_abs_jerk": 0.05000503722115033,
+      "minimum_headway_s": null,
+      "minimum_ttc_s": null,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210008-e37db179"
+    },
+    {
+      "case_id": "validation-4-lane-following",
+      "seed": 5210009,
+      "task": "following",
+      "density": "dense",
+      "through_lanes": 4,
+      "agent_steps": 3200,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 0,
+      "successful_merges": 0,
+      "overrides": 35,
+      "intervention_fraction": 0.0109375,
+      "mean_fraction_of_speed_limit": 0.8700488859917018,
+      "lane_changes": 7,
+      "override_causes": {
+        "native_realization_unattributed": 35
+      },
+      "policy_filter_changes": 0,
+      "native_realization_changes": 35,
+      "mean_feasible_acceleration_error": 0.4623976810755974,
+      "mean_abs_acceleration": 0.19085471253157568,
+      "mean_abs_jerk": 0.12464709334644343,
+      "minimum_headway_s": 1.6799661430048218,
+      "minimum_ttc_s": 38.68793538387248,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210009-19c25fec"
+    },
+    {
+      "case_id": "validation-4-lane-passing",
+      "seed": 5210010,
+      "task": "passing",
+      "density": "medium",
+      "through_lanes": 4,
+      "agent_steps": 3200,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 4,
+      "successful_merges": 0,
+      "overrides": 70,
+      "intervention_fraction": 0.021875,
+      "mean_fraction_of_speed_limit": 0.9334236047885435,
+      "lane_changes": 3,
+      "override_causes": {
+        "native_realization_unattributed": 70
+      },
+      "policy_filter_changes": 0,
+      "native_realization_changes": 70,
+      "mean_feasible_acceleration_error": 0.09873262725819294,
+      "mean_abs_acceleration": 0.16344420808985732,
+      "mean_abs_jerk": 0.06482432906763735,
+      "minimum_headway_s": 1.7292505337578452,
+      "minimum_ttc_s": 20.989706790644316,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210010-16ff8299"
+    },
+    {
+      "case_id": "validation-4-lane-merge",
+      "seed": 5210011,
+      "task": "merge",
+      "density": "medium",
+      "through_lanes": 4,
+      "agent_steps": 3200,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0,
+      "passes": 0,
+      "successful_merges": 2,
+      "overrides": 133,
+      "intervention_fraction": 0.0415625,
+      "mean_fraction_of_speed_limit": 0.9603850223144574,
+      "lane_changes": 2,
+      "override_causes": {
+        "native_realization_unattributed": 133
+      },
+      "policy_filter_changes": 0,
+      "native_realization_changes": 133,
+      "mean_feasible_acceleration_error": 0.07115262926272668,
+      "mean_abs_acceleration": 0.26261743892186773,
+      "mean_abs_jerk": 0.18980499296716222,
+      "minimum_headway_s": 3.8033650567290542,
+      "minimum_ttc_s": 8.878627466173741,
+      "primary_horizon_complete": true,
+      "accounting_comparison_valid": true,
+      "episode_directory": "outputs\\highway-stage1\\v03\\teacher-comparison-20261103T205557Z\\episodes\\episode-5210011-fbf2b902"
+    }
+  ],
+  "comparisons": {
+    "validation-after-bc": {
+      "quality": {
+        "passed": false,
+        "failures": [
+          {
+            "case_id": "validation-5-lane-following",
+            "seed": 5210001,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-5-lane-passing",
+            "seed": 5210002,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-5-lane-merge",
+            "seed": 5210003,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-2-lane-cruise",
+            "seed": 5210004,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-2-lane-following",
+            "seed": 5210005,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-2-lane-merge",
+            "seed": 5210007,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-4-lane-following",
+            "seed": 5210009,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-4-lane-passing",
+            "seed": 5210010,
+            "causes": [
+              "overrides"
+            ]
+          }
+        ],
+        "cases": 12
+      },
+      "statistics": {
+        "cases": 12,
+        "agent_decisions": 38398,
+        "overrides": 6916,
+        "pooled_overrides": 0.18011354758060316,
+        "worst_case_overrides": 0.551875,
+        "passing_cases_succeeded": 3,
+        "passes": 11,
+        "successful_merges": 6,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "min_cruise_speed_ratio": 0.9682000795650488,
+        "all_primary_horizons_complete": true,
+        "all_accounting_comparison_valid": true
+      },
+      "reports": [
+        {
+          "case_id": "validation-5-lane-cruise",
+          "seed": 5210000,
+          "task": "cruise",
+          "density": "light",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 7,
+          "intervention_fraction": 0.0021875,
+          "mean_fraction_of_speed_limit": 0.9682000795650488,
+          "lane_changes": 0,
+          "override_causes": {
+            "speed_ceiling": 7
+          },
+          "policy_filter_changes": 7,
+          "native_realization_changes": 0,
+          "mean_feasible_acceleration_error": 0.2048517415202981,
+          "mean_abs_acceleration": 0.14171488223038597,
+          "mean_abs_jerk": 0.08478499324992592,
+          "minimum_headway_s": null,
+          "minimum_ttc_s": null,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210000-b663479e"
+        },
+        {
+          "case_id": "validation-5-lane-following",
+          "seed": 5210001,
+          "task": "following",
+          "density": "dense",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 975,
+          "intervention_fraction": 0.3046875,
+          "mean_fraction_of_speed_limit": 0.9302737445506872,
+          "lane_changes": 1,
+          "override_causes": {
+            "native_realization_unattributed": 975
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 975,
+          "mean_feasible_acceleration_error": 0.148838969518155,
+          "mean_abs_acceleration": 0.14754863366569235,
+          "mean_abs_jerk": 0.09403493427048923,
+          "minimum_headway_s": 1.6163920219655212,
+          "minimum_ttc_s": 48.84041289872442,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210001-c8b61643"
+        },
+        {
+          "case_id": "validation-5-lane-passing",
+          "seed": 5210002,
+          "task": "passing",
+          "density": "medium",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 4,
+          "successful_merges": 0,
+          "overrides": 1766,
+          "intervention_fraction": 0.551875,
+          "mean_fraction_of_speed_limit": 0.9411518592928096,
+          "lane_changes": 1,
+          "override_causes": {
+            "following": 3,
+            "native_realization_unattributed": 1760,
+            "speed_ceiling": 3
+          },
+          "policy_filter_changes": 6,
+          "native_realization_changes": 1760,
+          "mean_feasible_acceleration_error": 0.1863877236114541,
+          "mean_abs_acceleration": 0.1633590547990839,
+          "mean_abs_jerk": 0.1461941505675384,
+          "minimum_headway_s": 1.618758782914687,
+          "minimum_ttc_s": 10.495382350023805,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210002-6a23671b"
+        },
+        {
+          "case_id": "validation-5-lane-merge",
+          "seed": 5210003,
+          "task": "merge",
+          "density": "medium",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 2,
+          "overrides": 197,
+          "intervention_fraction": 0.0615625,
+          "mean_fraction_of_speed_limit": 0.8892382156831897,
+          "lane_changes": 4,
+          "override_causes": {
+            "native_realization_unattributed": 196,
+            "speed_ceiling": 1
+          },
+          "policy_filter_changes": 1,
+          "native_realization_changes": 196,
+          "mean_feasible_acceleration_error": 0.5250812487121592,
+          "mean_abs_acceleration": 0.4881037329311978,
+          "mean_abs_jerk": 0.31266022814676725,
+          "minimum_headway_s": 1.759589570311934,
+          "minimum_ttc_s": 5.669187377121351,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210003-fdd89b2c"
+        },
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 5210004,
+          "task": "cruise",
+          "density": "light",
+          "through_lanes": 2,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 219,
+          "intervention_fraction": 0.0684375,
+          "mean_fraction_of_speed_limit": 0.9723646549326862,
+          "lane_changes": 0,
+          "override_causes": {
+            "native_realization_unattributed": 217,
+            "speed_ceiling": 2
+          },
+          "policy_filter_changes": 2,
+          "native_realization_changes": 217,
+          "mean_feasible_acceleration_error": 0.18917120882493632,
+          "mean_abs_acceleration": 0.17574141675295762,
+          "mean_abs_jerk": 0.27527178672386166,
+          "minimum_headway_s": 1.6024870593474851,
+          "minimum_ttc_s": null,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210004-074caa77"
+        },
+        {
+          "case_id": "validation-2-lane-following",
+          "seed": 5210005,
+          "task": "following",
+          "density": "dense",
+          "through_lanes": 2,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 831,
+          "intervention_fraction": 0.2596875,
+          "mean_fraction_of_speed_limit": 0.757395331506179,
+          "lane_changes": 2,
+          "override_causes": {
+            "native_realization_unattributed": 814,
+            "lane_end": 17
+          },
+          "policy_filter_changes": 17,
+          "native_realization_changes": 814,
+          "mean_feasible_acceleration_error": 0.6175009220789749,
+          "mean_abs_acceleration": 0.3616970310823923,
+          "mean_abs_jerk": 0.2288694253435528,
+          "minimum_headway_s": 1.6028858467294007,
+          "minimum_ttc_s": 9.983195477113393,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210005-71103180"
+        },
+        {
+          "case_id": "validation-2-lane-passing",
+          "seed": 5210006,
+          "task": "passing",
+          "density": "medium",
+          "through_lanes": 2,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 3,
+          "successful_merges": 0,
+          "overrides": 154,
+          "intervention_fraction": 0.048125,
+          "mean_fraction_of_speed_limit": 0.8292189544178895,
+          "lane_changes": 4,
+          "override_causes": {
+            "native_realization_unattributed": 147,
+            "following": 7
+          },
+          "policy_filter_changes": 7,
+          "native_realization_changes": 147,
+          "mean_feasible_acceleration_error": 0.5567982472197074,
+          "mean_abs_acceleration": 0.21316806479910458,
+          "mean_abs_jerk": 0.12240546967478766,
+          "minimum_headway_s": 1.7403337506169374,
+          "minimum_ttc_s": 5.159350543439555,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210006-87259f2d"
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 5210007,
+          "task": "merge",
+          "density": "medium",
+          "through_lanes": 2,
+          "agent_steps": 3198,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 2,
+          "overrides": 213,
+          "intervention_fraction": 0.06660412757973734,
+          "mean_fraction_of_speed_limit": 0.9259119233408147,
+          "lane_changes": 2,
+          "override_causes": {
+            "native_realization_unattributed": 200,
+            "speed_ceiling": 14
+          },
+          "policy_filter_changes": 14,
+          "native_realization_changes": 200,
+          "mean_feasible_acceleration_error": 0.3880868936335829,
+          "mean_abs_acceleration": 0.4164286888245699,
+          "mean_abs_jerk": 0.5547539187041606,
+          "minimum_headway_s": 1.7455926399873816,
+          "minimum_ttc_s": 11.36090479054737,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210007-e6d9aa38"
+        },
+        {
+          "case_id": "validation-4-lane-cruise",
+          "seed": 5210008,
+          "task": "cruise",
+          "density": "light",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 8,
+          "intervention_fraction": 0.0025,
+          "mean_fraction_of_speed_limit": 0.9753412598877835,
+          "lane_changes": 0,
+          "override_causes": {
+            "speed_ceiling": 8
+          },
+          "policy_filter_changes": 8,
+          "native_realization_changes": 0,
+          "mean_feasible_acceleration_error": 0.17407581835421795,
+          "mean_abs_acceleration": 0.16784823194927714,
+          "mean_abs_jerk": 0.26559437292162164,
+          "minimum_headway_s": null,
+          "minimum_ttc_s": null,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210008-29dc80a9"
+        },
+        {
+          "case_id": "validation-4-lane-following",
+          "seed": 5210009,
+          "task": "following",
+          "density": "dense",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 1316,
+          "intervention_fraction": 0.41125,
+          "mean_fraction_of_speed_limit": 0.8850536659723482,
+          "lane_changes": 2,
+          "override_causes": {
+            "native_realization_unattributed": 1316
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 1316,
+          "mean_feasible_acceleration_error": 0.48881500631672353,
+          "mean_abs_acceleration": 0.19171267896288272,
+          "mean_abs_jerk": 0.1383156605498196,
+          "minimum_headway_s": 1.6029045869333653,
+          "minimum_ttc_s": 34.845872746389716,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210009-3768a908"
+        },
+        {
+          "case_id": "validation-4-lane-passing",
+          "seed": 5210010,
+          "task": "passing",
+          "density": "medium",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 4,
+          "successful_merges": 0,
+          "overrides": 1081,
+          "intervention_fraction": 0.3378125,
+          "mean_fraction_of_speed_limit": 0.9316126031429842,
+          "lane_changes": 1,
+          "override_causes": {
+            "native_realization_unattributed": 1079,
+            "speed_ceiling": 2
+          },
+          "policy_filter_changes": 2,
+          "native_realization_changes": 1079,
+          "mean_feasible_acceleration_error": 0.1726383897567526,
+          "mean_abs_acceleration": 0.1619425029542646,
+          "mean_abs_jerk": 0.14120459533569926,
+          "minimum_headway_s": 1.6080339222071458,
+          "minimum_ttc_s": 28.390339810503974,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210010-8ae48689"
+        },
+        {
+          "case_id": "validation-4-lane-merge",
+          "seed": 5210011,
+          "task": "merge",
+          "density": "medium",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 2,
+          "overrides": 149,
+          "intervention_fraction": 0.0465625,
+          "mean_fraction_of_speed_limit": 0.8972183818075975,
+          "lane_changes": 4,
+          "override_causes": {
+            "native_realization_unattributed": 147,
+            "speed_ceiling": 2
+          },
+          "policy_filter_changes": 2,
+          "native_realization_changes": 147,
+          "mean_feasible_acceleration_error": 0.47745653468219723,
+          "mean_abs_acceleration": 0.4952763267584993,
+          "mean_abs_jerk": 0.4002491556670439,
+          "minimum_headway_s": 1.7959165226446827,
+          "minimum_ttc_s": 6.335531849469157,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-after-bc\\episode-5210011-8571e2f8"
+        }
+      ],
+      "paired_differences": [
+        {
+          "case_id": "validation-5-lane-cruise",
+          "seed": 5210000,
+          "learned_minus_teacher_override_fraction": 0.0021875,
+          "learned_minus_teacher_speed_ratio": -0.013892005473054914
+        },
+        {
+          "case_id": "validation-5-lane-following",
+          "seed": 5210001,
+          "learned_minus_teacher_override_fraction": 0.3046875,
+          "learned_minus_teacher_speed_ratio": 0.004095084738040211
+        },
+        {
+          "case_id": "validation-5-lane-passing",
+          "seed": 5210002,
+          "learned_minus_teacher_override_fraction": 0.53875,
+          "learned_minus_teacher_speed_ratio": 0.0016871116483963
+        },
+        {
+          "case_id": "validation-5-lane-merge",
+          "seed": 5210003,
+          "learned_minus_teacher_override_fraction": 0.04625,
+          "learned_minus_teacher_speed_ratio": -0.07161168697412845
+        },
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 5210004,
+          "learned_minus_teacher_override_fraction": 0.0684375,
+          "learned_minus_teacher_speed_ratio": -0.00032137219760886016
+        },
+        {
+          "case_id": "validation-2-lane-following",
+          "seed": 5210005,
+          "learned_minus_teacher_override_fraction": 0.2596875,
+          "learned_minus_teacher_speed_ratio": 0.062247023142911306
+        },
+        {
+          "case_id": "validation-2-lane-passing",
+          "seed": 5210006,
+          "learned_minus_teacher_override_fraction": 0.0465625,
+          "learned_minus_teacher_speed_ratio": 0.15820565173825185
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 5210007,
+          "learned_minus_teacher_override_fraction": 0.030448085714846758,
+          "learned_minus_teacher_speed_ratio": -0.035425509436970426
+        },
+        {
+          "case_id": "validation-4-lane-cruise",
+          "seed": 5210008,
+          "learned_minus_teacher_override_fraction": 0.0025,
+          "learned_minus_teacher_speed_ratio": -0.008911372529040729
+        },
+        {
+          "case_id": "validation-4-lane-following",
+          "seed": 5210009,
+          "learned_minus_teacher_override_fraction": 0.4003125,
+          "learned_minus_teacher_speed_ratio": 0.015004779980646421
+        },
+        {
+          "case_id": "validation-4-lane-passing",
+          "seed": 5210010,
+          "learned_minus_teacher_override_fraction": 0.31593750000000004,
+          "learned_minus_teacher_speed_ratio": -0.0018110016455592515
+        },
+        {
+          "case_id": "validation-4-lane-merge",
+          "seed": 5210011,
+          "learned_minus_teacher_override_fraction": 0.0049999999999999975,
+          "learned_minus_teacher_speed_ratio": -0.06316664050685994
+        }
+      ]
+    },
+    "validation-phase-2": {
+      "quality": {
+        "passed": false,
+        "failures": [
+          {
+            "case_id": "validation-5-lane-following",
+            "seed": 5210001,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-5-lane-passing",
+            "seed": 5210002,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-5-lane-merge",
+            "seed": 5210003,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-2-lane-following",
+            "seed": 5210005,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-2-lane-passing",
+            "seed": 5210006,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-4-lane-following",
+            "seed": 5210009,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-4-lane-passing",
+            "seed": 5210010,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-4-lane-merge",
+            "seed": 5210011,
+            "causes": [
+              "overrides"
+            ]
+          }
+        ],
+        "cases": 12
+      },
+      "statistics": {
+        "cases": 12,
+        "agent_decisions": 38386,
+        "overrides": 4788,
+        "pooled_overrides": 0.12473297556400771,
+        "worst_case_overrides": 0.46625,
+        "passing_cases_succeeded": 3,
+        "passes": 12,
+        "successful_merges": 6,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "min_cruise_speed_ratio": 0.9622960574887146,
+        "all_primary_horizons_complete": true,
+        "all_accounting_comparison_valid": true
+      },
+      "reports": [
+        {
+          "case_id": "validation-5-lane-cruise",
+          "seed": 5210000,
+          "task": "cruise",
+          "density": "light",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 0,
+          "intervention_fraction": 0,
+          "mean_fraction_of_speed_limit": 0.9622960574887146,
+          "lane_changes": 0,
+          "override_causes": {},
+          "policy_filter_changes": 0,
+          "native_realization_changes": 0,
+          "mean_feasible_acceleration_error": 0.26180595779594124,
+          "mean_abs_acceleration": 0.12991932478733367,
+          "mean_abs_jerk": 0.03280431900638692,
+          "minimum_headway_s": null,
+          "minimum_ttc_s": null,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210000-4235c6cc"
+        },
+        {
+          "case_id": "validation-5-lane-following",
+          "seed": 5210001,
+          "task": "following",
+          "density": "dense",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 271,
+          "intervention_fraction": 0.0846875,
+          "mean_fraction_of_speed_limit": 0.9243294806012459,
+          "lane_changes": 1,
+          "override_causes": {
+            "native_realization_unattributed": 271
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 271,
+          "mean_feasible_acceleration_error": 0.3764901551680959,
+          "mean_abs_acceleration": 0.14735383097242305,
+          "mean_abs_jerk": 0.0521382499683594,
+          "minimum_headway_s": 1.674633027568355,
+          "minimum_ttc_s": 48.84041289872442,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210001-cd834ca7"
+        },
+        {
+          "case_id": "validation-5-lane-passing",
+          "seed": 5210002,
+          "task": "passing",
+          "density": "medium",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 4,
+          "successful_merges": 0,
+          "overrides": 590,
+          "intervention_fraction": 0.184375,
+          "mean_fraction_of_speed_limit": 0.9000431753396164,
+          "lane_changes": 1,
+          "override_causes": {
+            "following": 6,
+            "native_realization_unattributed": 584
+          },
+          "policy_filter_changes": 6,
+          "native_realization_changes": 584,
+          "mean_feasible_acceleration_error": 0.4429900075684885,
+          "mean_abs_acceleration": 0.17642707922449805,
+          "mean_abs_jerk": 0.11388442508172568,
+          "minimum_headway_s": 1.6554454279630333,
+          "minimum_ttc_s": 5.093860758569301,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210002-945ccf08"
+        },
+        {
+          "case_id": "validation-5-lane-merge",
+          "seed": 5210003,
+          "task": "merge",
+          "density": "medium",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 2,
+          "overrides": 201,
+          "intervention_fraction": 0.0628125,
+          "mean_fraction_of_speed_limit": 0.9316799436921219,
+          "lane_changes": 2,
+          "override_causes": {
+            "native_realization_unattributed": 201
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 201,
+          "mean_feasible_acceleration_error": 0.325206779509254,
+          "mean_abs_acceleration": 0.2730941706860206,
+          "mean_abs_jerk": 0.17787029758724732,
+          "minimum_headway_s": 2.890479863913366,
+          "minimum_ttc_s": 8.51412405969308,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210003-eba28b66"
+        },
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 5210004,
+          "task": "cruise",
+          "density": "light",
+          "through_lanes": 2,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 65,
+          "intervention_fraction": 0.0203125,
+          "mean_fraction_of_speed_limit": 0.962820016635038,
+          "lane_changes": 0,
+          "override_causes": {
+            "native_realization_unattributed": 65
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 65,
+          "mean_feasible_acceleration_error": 0.24316254449556776,
+          "mean_abs_acceleration": 0.11639868117945305,
+          "mean_abs_jerk": 0.10213553240611838,
+          "minimum_headway_s": 1.602922933636885,
+          "minimum_ttc_s": null,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210004-30dc56be"
+        },
+        {
+          "case_id": "validation-2-lane-following",
+          "seed": 5210005,
+          "task": "following",
+          "density": "dense",
+          "through_lanes": 2,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 1492,
+          "intervention_fraction": 0.46625,
+          "mean_fraction_of_speed_limit": 0.8066181390631687,
+          "lane_changes": 0,
+          "override_causes": {
+            "native_realization_unattributed": 1492
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 1492,
+          "mean_feasible_acceleration_error": 0.28067180948417847,
+          "mean_abs_acceleration": 0.08996022563114453,
+          "mean_abs_jerk": 0.0344622105513302,
+          "minimum_headway_s": 1.6330835580327152,
+          "minimum_ttc_s": 43.99052409015835,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210005-ec20d527"
+        },
+        {
+          "case_id": "validation-2-lane-passing",
+          "seed": 5210006,
+          "task": "passing",
+          "density": "medium",
+          "through_lanes": 2,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 4,
+          "successful_merges": 0,
+          "overrides": 352,
+          "intervention_fraction": 0.11,
+          "mean_fraction_of_speed_limit": 0.8909159936488666,
+          "lane_changes": 3,
+          "override_causes": {
+            "native_realization_unattributed": 352
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 352,
+          "mean_feasible_acceleration_error": 0.48413585889891453,
+          "mean_abs_acceleration": 0.2331324741905955,
+          "mean_abs_jerk": 0.08981839061106114,
+          "minimum_headway_s": 1.7403337506169374,
+          "minimum_ttc_s": 21.388553123097722,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210006-a73b2d3c"
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 5210007,
+          "task": "merge",
+          "density": "medium",
+          "through_lanes": 2,
+          "agent_steps": 3186,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 2,
+          "overrides": 121,
+          "intervention_fraction": 0.03797865662272442,
+          "mean_fraction_of_speed_limit": 0.9265110916196238,
+          "lane_changes": 2,
+          "override_causes": {
+            "native_realization_unattributed": 121
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 121,
+          "mean_feasible_acceleration_error": 0.34626264578649973,
+          "mean_abs_acceleration": 0.282925108755689,
+          "mean_abs_jerk": 0.18965909902243472,
+          "minimum_headway_s": 2.5899045723033733,
+          "minimum_ttc_s": 6.855678034244079,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210007-e78cda61"
+        },
+        {
+          "case_id": "validation-4-lane-cruise",
+          "seed": 5210008,
+          "task": "cruise",
+          "density": "light",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 0,
+          "intervention_fraction": 0,
+          "mean_fraction_of_speed_limit": 0.968963825372429,
+          "lane_changes": 0,
+          "override_causes": {},
+          "policy_filter_changes": 0,
+          "native_realization_changes": 0,
+          "mean_feasible_acceleration_error": 0.2298620118363749,
+          "mean_abs_acceleration": 0.11898383295163514,
+          "mean_abs_jerk": 0.034809676744047,
+          "minimum_headway_s": null,
+          "minimum_ttc_s": null,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210008-da2a9b5a"
+        },
+        {
+          "case_id": "validation-4-lane-following",
+          "seed": 5210009,
+          "task": "following",
+          "density": "dense",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 892,
+          "intervention_fraction": 0.27875,
+          "mean_fraction_of_speed_limit": 0.9351715316901021,
+          "lane_changes": 1,
+          "override_causes": {
+            "native_realization_unattributed": 892
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 892,
+          "mean_feasible_acceleration_error": 0.3472396385453148,
+          "mean_abs_acceleration": 0.12679866144197102,
+          "mean_abs_jerk": 0.04132089745810207,
+          "minimum_headway_s": 1.6295999456277663,
+          "minimum_ttc_s": 38.68793538387248,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210009-b74acd34"
+        },
+        {
+          "case_id": "validation-4-lane-passing",
+          "seed": 5210010,
+          "task": "passing",
+          "density": "medium",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 4,
+          "successful_merges": 0,
+          "overrides": 635,
+          "intervention_fraction": 0.1984375,
+          "mean_fraction_of_speed_limit": 0.9192864823548197,
+          "lane_changes": 1,
+          "override_causes": {
+            "native_realization_unattributed": 635
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 635,
+          "mean_feasible_acceleration_error": 0.4081182162814343,
+          "mean_abs_acceleration": 0.16016897290438645,
+          "mean_abs_jerk": 0.04784004509472245,
+          "minimum_headway_s": 1.6344066333741307,
+          "minimum_ttc_s": 28.390339810503974,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210010-03e90817"
+        },
+        {
+          "case_id": "validation-4-lane-merge",
+          "seed": 5210011,
+          "task": "merge",
+          "density": "medium",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 2,
+          "overrides": 169,
+          "intervention_fraction": 0.0528125,
+          "mean_fraction_of_speed_limit": 0.9338345130629804,
+          "lane_changes": 2,
+          "override_causes": {
+            "native_realization_unattributed": 169
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 169,
+          "mean_feasible_acceleration_error": 0.29643633319782203,
+          "mean_abs_acceleration": 0.26672949701264437,
+          "mean_abs_jerk": 0.18226941627417287,
+          "minimum_headway_s": 2.987747147630653,
+          "minimum_ttc_s": 9.11982857288053,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-2\\episode-5210011-dcbf778d"
+        }
+      ],
+      "paired_differences": [
+        {
+          "case_id": "validation-5-lane-cruise",
+          "seed": 5210000,
+          "learned_minus_teacher_override_fraction": 0,
+          "learned_minus_teacher_speed_ratio": -0.01979602754938914
+        },
+        {
+          "case_id": "validation-5-lane-following",
+          "seed": 5210001,
+          "learned_minus_teacher_override_fraction": 0.0846875,
+          "learned_minus_teacher_speed_ratio": -0.001849179211401153
+        },
+        {
+          "case_id": "validation-5-lane-passing",
+          "seed": 5210002,
+          "learned_minus_teacher_override_fraction": 0.17125,
+          "learned_minus_teacher_speed_ratio": -0.039421572304796926
+        },
+        {
+          "case_id": "validation-5-lane-merge",
+          "seed": 5210003,
+          "learned_minus_teacher_override_fraction": 0.047499999999999994,
+          "learned_minus_teacher_speed_ratio": -0.029169958965196252
+        },
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 5210004,
+          "learned_minus_teacher_override_fraction": 0.0203125,
+          "learned_minus_teacher_speed_ratio": -0.009866010495257038
+        },
+        {
+          "case_id": "validation-2-lane-following",
+          "seed": 5210005,
+          "learned_minus_teacher_override_fraction": 0.46625,
+          "learned_minus_teacher_speed_ratio": 0.11146983069990102
+        },
+        {
+          "case_id": "validation-2-lane-passing",
+          "seed": 5210006,
+          "learned_minus_teacher_override_fraction": 0.1084375,
+          "learned_minus_teacher_speed_ratio": 0.219902690969229
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 5210007,
+          "learned_minus_teacher_override_fraction": 0.0018226147578338375,
+          "learned_minus_teacher_speed_ratio": -0.03482634115816141
+        },
+        {
+          "case_id": "validation-4-lane-cruise",
+          "seed": 5210008,
+          "learned_minus_teacher_override_fraction": 0,
+          "learned_minus_teacher_speed_ratio": -0.01528880704439528
+        },
+        {
+          "case_id": "validation-4-lane-following",
+          "seed": 5210009,
+          "learned_minus_teacher_override_fraction": 0.2678125,
+          "learned_minus_teacher_speed_ratio": 0.06512264569840032
+        },
+        {
+          "case_id": "validation-4-lane-passing",
+          "seed": 5210010,
+          "learned_minus_teacher_override_fraction": 0.17656249999999998,
+          "learned_minus_teacher_speed_ratio": -0.014137122433723781
+        },
+        {
+          "case_id": "validation-4-lane-merge",
+          "seed": 5210011,
+          "learned_minus_teacher_override_fraction": 0.011249999999999996,
+          "learned_minus_teacher_speed_ratio": -0.02655050925147706
+        }
+      ]
+    },
+    "validation-phase-3": {
+      "quality": {
+        "passed": false,
+        "failures": [
+          {
+            "case_id": "validation-5-lane-following",
+            "seed": 5210001,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-5-lane-passing",
+            "seed": 5210002,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-5-lane-merge",
+            "seed": 5210003,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-2-lane-following",
+            "seed": 5210005,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-2-lane-passing",
+            "seed": 5210006,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-4-lane-following",
+            "seed": 5210009,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-4-lane-passing",
+            "seed": 5210010,
+            "causes": [
+              "overrides"
+            ]
+          },
+          {
+            "case_id": "validation-4-lane-merge",
+            "seed": 5210011,
+            "causes": [
+              "overrides"
+            ]
+          }
+        ],
+        "cases": 12
+      },
+      "statistics": {
+        "cases": 12,
+        "agent_decisions": 38380,
+        "overrides": 6965,
+        "pooled_overrides": 0.18147472642001042,
+        "worst_case_overrides": 0.535625,
+        "passing_cases_succeeded": 3,
+        "passes": 12,
+        "successful_merges": 6,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "min_cruise_speed_ratio": 0.9658944066617826,
+        "all_primary_horizons_complete": true,
+        "all_accounting_comparison_valid": true
+      },
+      "reports": [
+        {
+          "case_id": "validation-5-lane-cruise",
+          "seed": 5210000,
+          "task": "cruise",
+          "density": "light",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 0,
+          "intervention_fraction": 0,
+          "mean_fraction_of_speed_limit": 0.9658944066617826,
+          "lane_changes": 0,
+          "override_causes": {},
+          "policy_filter_changes": 0,
+          "native_realization_changes": 0,
+          "mean_feasible_acceleration_error": 0.23395646689972838,
+          "mean_abs_acceleration": 0.12988831448135896,
+          "mean_abs_jerk": 0.03484477519523288,
+          "minimum_headway_s": null,
+          "minimum_ttc_s": null,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210000-42c90303"
+        },
+        {
+          "case_id": "validation-5-lane-following",
+          "seed": 5210001,
+          "task": "following",
+          "density": "dense",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 511,
+          "intervention_fraction": 0.1596875,
+          "mean_fraction_of_speed_limit": 0.9216966421836988,
+          "lane_changes": 1,
+          "override_causes": {
+            "native_realization_unattributed": 511
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 511,
+          "mean_feasible_acceleration_error": 0.3743776544196988,
+          "mean_abs_acceleration": 0.14568680951403568,
+          "mean_abs_jerk": 0.09033128048655868,
+          "minimum_headway_s": 1.6091772507537425,
+          "minimum_ttc_s": 48.84041289872442,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210001-2c4f441d"
+        },
+        {
+          "case_id": "validation-5-lane-passing",
+          "seed": 5210002,
+          "task": "passing",
+          "density": "medium",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 4,
+          "successful_merges": 0,
+          "overrides": 1084,
+          "intervention_fraction": 0.33875,
+          "mean_fraction_of_speed_limit": 0.9332240809818434,
+          "lane_changes": 1,
+          "override_causes": {
+            "native_realization_unattributed": 1084
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 1084,
+          "mean_feasible_acceleration_error": 0.3746696552191993,
+          "mean_abs_acceleration": 0.12498587628695397,
+          "mean_abs_jerk": 0.06523087999249755,
+          "minimum_headway_s": 1.6087858792167054,
+          "minimum_ttc_s": 31.870029918067424,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210002-c7500482"
+        },
+        {
+          "case_id": "validation-5-lane-merge",
+          "seed": 5210003,
+          "task": "merge",
+          "density": "medium",
+          "through_lanes": 5,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 2,
+          "overrides": 194,
+          "intervention_fraction": 0.060625,
+          "mean_fraction_of_speed_limit": 0.9383770004944619,
+          "lane_changes": 2,
+          "override_causes": {
+            "native_realization_unattributed": 194
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 194,
+          "mean_feasible_acceleration_error": 0.29749753008921487,
+          "mean_abs_acceleration": 0.2652815920161114,
+          "mean_abs_jerk": 0.17482631364328977,
+          "minimum_headway_s": 3.043508974624039,
+          "minimum_ttc_s": 8.876851946510214,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210003-f60a9fab"
+        },
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 5210004,
+          "task": "cruise",
+          "density": "light",
+          "through_lanes": 2,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 42,
+          "intervention_fraction": 0.013125,
+          "mean_fraction_of_speed_limit": 0.9705315424192681,
+          "lane_changes": 0,
+          "override_causes": {
+            "native_realization_unattributed": 42
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 42,
+          "mean_feasible_acceleration_error": 0.1694936629169302,
+          "mean_abs_acceleration": 0.11704982040375686,
+          "mean_abs_jerk": 0.095900995286507,
+          "minimum_headway_s": 1.602770158488835,
+          "minimum_ttc_s": null,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210004-b4bc7b79"
+        },
+        {
+          "case_id": "validation-2-lane-following",
+          "seed": 5210005,
+          "task": "following",
+          "density": "dense",
+          "through_lanes": 2,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 1714,
+          "intervention_fraction": 0.535625,
+          "mean_fraction_of_speed_limit": 0.8101744854284896,
+          "lane_changes": 0,
+          "override_causes": {
+            "native_realization_unattributed": 1714
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 1714,
+          "mean_feasible_acceleration_error": 0.24957554496700265,
+          "mean_abs_acceleration": 0.08978142948230898,
+          "mean_abs_jerk": 0.06419473333831455,
+          "minimum_headway_s": 1.603009638201938,
+          "minimum_ttc_s": 44.0148309097639,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210005-9e3256fb"
+        },
+        {
+          "case_id": "validation-2-lane-passing",
+          "seed": 5210006,
+          "task": "passing",
+          "density": "medium",
+          "through_lanes": 2,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 4,
+          "successful_merges": 0,
+          "overrides": 314,
+          "intervention_fraction": 0.098125,
+          "mean_fraction_of_speed_limit": 0.9494791624706121,
+          "lane_changes": 3,
+          "override_causes": {
+            "native_realization_unattributed": 312,
+            "speed_ceiling": 2
+          },
+          "policy_filter_changes": 2,
+          "native_realization_changes": 312,
+          "mean_feasible_acceleration_error": 0.17972088838472053,
+          "mean_abs_acceleration": 0.1459001547177277,
+          "mean_abs_jerk": 0.05768488478440673,
+          "minimum_headway_s": 1.7282111943126894,
+          "minimum_ttc_s": 21.388553123097722,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210006-8ac74a94"
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 5210007,
+          "task": "merge",
+          "density": "medium",
+          "through_lanes": 2,
+          "agent_steps": 3180,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 2,
+          "overrides": 140,
+          "intervention_fraction": 0.0440251572327044,
+          "mean_fraction_of_speed_limit": 0.9342464971825543,
+          "lane_changes": 2,
+          "override_causes": {
+            "native_realization_unattributed": 140
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 140,
+          "mean_feasible_acceleration_error": 0.2967735203475799,
+          "mean_abs_acceleration": 0.2805833424786791,
+          "mean_abs_jerk": 0.19416309907045037,
+          "minimum_headway_s": 2.8537983542006975,
+          "minimum_ttc_s": 6.807440232371717,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210007-e0caafe1"
+        },
+        {
+          "case_id": "validation-4-lane-cruise",
+          "seed": 5210008,
+          "task": "cruise",
+          "density": "light",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 1,
+          "intervention_fraction": 0.0003125,
+          "mean_fraction_of_speed_limit": 0.9742499233531261,
+          "lane_changes": 0,
+          "override_causes": {
+            "speed_ceiling": 1
+          },
+          "policy_filter_changes": 1,
+          "native_realization_changes": 0,
+          "mean_feasible_acceleration_error": 0.1793311651086754,
+          "mean_abs_acceleration": 0.12552423638438215,
+          "mean_abs_jerk": 0.08916591794695615,
+          "minimum_headway_s": null,
+          "minimum_ttc_s": null,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210008-0cd99233"
+        },
+        {
+          "case_id": "validation-4-lane-following",
+          "seed": 5210009,
+          "task": "following",
+          "density": "dense",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 0,
+          "overrides": 1656,
+          "intervention_fraction": 0.5175,
+          "mean_fraction_of_speed_limit": 0.9390158973338107,
+          "lane_changes": 1,
+          "override_causes": {
+            "native_realization_unattributed": 1656
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 1656,
+          "mean_feasible_acceleration_error": 0.2924116901079962,
+          "mean_abs_acceleration": 0.11921295764996753,
+          "mean_abs_jerk": 0.08871477045037246,
+          "minimum_headway_s": 1.607069496516196,
+          "minimum_ttc_s": 38.68793538387248,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210009-c1c15fc5"
+        },
+        {
+          "case_id": "validation-4-lane-passing",
+          "seed": 5210010,
+          "task": "passing",
+          "density": "medium",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 4,
+          "successful_merges": 0,
+          "overrides": 1138,
+          "intervention_fraction": 0.355625,
+          "mean_fraction_of_speed_limit": 0.9261612989550752,
+          "lane_changes": 1,
+          "override_causes": {
+            "native_realization_unattributed": 1138
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 1138,
+          "mean_feasible_acceleration_error": 0.3500032894691097,
+          "mean_abs_acceleration": 0.15208553429262625,
+          "mean_abs_jerk": 0.08113245361965003,
+          "minimum_headway_s": 1.608540030406749,
+          "minimum_ttc_s": 28.48455051048143,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210010-36c7fa2d"
+        },
+        {
+          "case_id": "validation-4-lane-merge",
+          "seed": 5210011,
+          "task": "merge",
+          "density": "medium",
+          "through_lanes": 4,
+          "agent_steps": 3200,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0,
+          "passes": 0,
+          "successful_merges": 2,
+          "overrides": 171,
+          "intervention_fraction": 0.0534375,
+          "mean_fraction_of_speed_limit": 0.9389314334407751,
+          "lane_changes": 2,
+          "override_causes": {
+            "native_realization_unattributed": 171
+          },
+          "policy_filter_changes": 0,
+          "native_realization_changes": 171,
+          "mean_feasible_acceleration_error": 0.28530378340033297,
+          "mean_abs_acceleration": 0.26031348863411147,
+          "mean_abs_jerk": 0.18148357483533278,
+          "minimum_headway_s": 3.176543270983421,
+          "minimum_ttc_s": 9.439727731205851,
+          "primary_horizon_complete": true,
+          "accounting_comparison_valid": true,
+          "episode_directory": "outputs\\highway-stage1\\v02\\train-20261103T190020Z-8469072d\\validation-phase-3\\episode-5210011-68ee22e8"
+        }
+      ],
+      "paired_differences": [
+        {
+          "case_id": "validation-5-lane-cruise",
+          "seed": 5210000,
+          "learned_minus_teacher_override_fraction": 0,
+          "learned_minus_teacher_speed_ratio": -0.016197678376321134
+        },
+        {
+          "case_id": "validation-5-lane-following",
+          "seed": 5210001,
+          "learned_minus_teacher_override_fraction": 0.1596875,
+          "learned_minus_teacher_speed_ratio": -0.004482017628948176
+        },
+        {
+          "case_id": "validation-5-lane-passing",
+          "seed": 5210002,
+          "learned_minus_teacher_override_fraction": 0.325625,
+          "learned_minus_teacher_speed_ratio": -0.006240666662569949
+        },
+        {
+          "case_id": "validation-5-lane-merge",
+          "seed": 5210003,
+          "learned_minus_teacher_override_fraction": 0.0453125,
+          "learned_minus_teacher_speed_ratio": -0.022472902162856245
+        },
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 5210004,
+          "learned_minus_teacher_override_fraction": 0.013125,
+          "learned_minus_teacher_speed_ratio": -0.0021544847110269716
+        },
+        {
+          "case_id": "validation-2-lane-following",
+          "seed": 5210005,
+          "learned_minus_teacher_override_fraction": 0.535625,
+          "learned_minus_teacher_speed_ratio": 0.11502617706522189
+        },
+        {
+          "case_id": "validation-2-lane-passing",
+          "seed": 5210006,
+          "learned_minus_teacher_override_fraction": 0.09656250000000001,
+          "learned_minus_teacher_speed_ratio": 0.2784658597909745
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 5210007,
+          "learned_minus_teacher_override_fraction": 0.007869115367813817,
+          "learned_minus_teacher_speed_ratio": -0.027090935595230903
+        },
+        {
+          "case_id": "validation-4-lane-cruise",
+          "seed": 5210008,
+          "learned_minus_teacher_override_fraction": 0.0003125,
+          "learned_minus_teacher_speed_ratio": -0.010002709063698156
+        },
+        {
+          "case_id": "validation-4-lane-following",
+          "seed": 5210009,
+          "learned_minus_teacher_override_fraction": 0.5065624999999999,
+          "learned_minus_teacher_speed_ratio": 0.06896701134210892
+        },
+        {
+          "case_id": "validation-4-lane-passing",
+          "seed": 5210010,
+          "learned_minus_teacher_override_fraction": 0.33375000000000005,
+          "learned_minus_teacher_speed_ratio": -0.007262305833468319
+        },
+        {
+          "case_id": "validation-4-lane-merge",
+          "seed": 5210011,
+          "learned_minus_teacher_override_fraction": 0.011874999999999997,
+          "learned_minus_teacher_speed_ratio": -0.021453588873682317
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "no_training": true,
+  "optimizer_steps": 0,
+  "checkpoint_sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8",
+  "config_sha256": "690b9a06e412427e9aab3dc4414cecb72cfee53c9a9178048f1feb970f9cb742",
+  "source_commit": "ce074407138add3896f66fa4383924d8274ec2c4",
+  "physical": [
+    {
+      "case": "frozen_cruise",
+      "source": "outputs/mappo-physical-adapter/v01/20261105T204908Z-32331979/frozen_cruise/policy-decisions.json",
+      "source_sha256": "4846ef7d965554ae8d8ee21c9e12f321fe856e04cb9912283a5a2bfcf62049f6",
+      "decisions": 380,
+      "near_limit_decisions": 314,
+      "override_decisions": 312,
+      "correction_causes": {
+        "speed_ceiling": 312
+      },
+      "median_correction_m_s2": 0.9440707787871361,
+      "maximum_correction_m_s2": 1.1660635471343994,
+      "corrections_above_0p05_m_s2": 312,
+      "positive_request_within_0p05_m_s_of_limit": 311,
+      "used_for_fitting": false
+    },
+    {
+      "case": "frozen_pass",
+      "source": "outputs/mappo-physical-adapter/v01/20261105T204908Z-32331979/frozen_pass/policy-decisions.json",
+      "source_sha256": "9e45fc3751f9153553b572de690216953df28e31536a2911f8bd7a772dbc8e5b",
+      "decisions": 580,
+      "near_limit_decisions": 401,
+      "override_decisions": 161,
+      "correction_causes": {
+        "speed_ceiling": 161
+      },
+      "median_correction_m_s2": 0.0,
+      "maximum_correction_m_s2": 0.84436631296429,
+      "corrections_above_0p05_m_s2": 146,
+      "positive_request_within_0p05_m_s_of_limit": 151,
+      "used_for_fitting": false
+    }
+  ],
+  "synthetic_grouped": [
+    {
+      "limit_m_s": 6.0,
+      "probes": 48,
+      "at_limit_probes": 8,
+      "at_limit_raw_acceleration_mean_m_s2": 0.358291395008564,
+      "at_limit_raw_acceleration_range_m_s2": [
+        -0.4265539348125458,
+        1.0631366521120071
+      ],
+      "at_limit_positive_requests": 6,
+      "at_limit_positive_fraction": 0.75,
+      "near_limit_teacher_mse_m2_s4": 0.7530260205231025,
+      "near_limit_raw_positive_fraction": 0.825,
+      "at_limit_teacher_range_m_s2": [
+        -0.07999995350837708,
+        -0.07999995350837708
+      ]
+    },
+    {
+      "limit_m_s": 9.0,
+      "probes": 48,
+      "at_limit_probes": 8,
+      "at_limit_raw_acceleration_mean_m_s2": 0.30832374235615134,
+      "at_limit_raw_acceleration_range_m_s2": [
+        -0.4891067184507847,
+        1.0256520062685013
+      ],
+      "at_limit_positive_requests": 6,
+      "at_limit_positive_fraction": 0.75,
+      "near_limit_teacher_mse_m2_s4": 0.6979929308655074,
+      "near_limit_raw_positive_fraction": 0.8,
+      "at_limit_teacher_range_m_s2": [
+        -0.07999995350837708,
+        -0.07999995350837708
+      ]
+    },
+    {
+      "limit_m_s": 12.0,
+      "probes": 48,
+      "at_limit_probes": 8,
+      "at_limit_raw_acceleration_mean_m_s2": 0.2557190884836018,
+      "at_limit_raw_acceleration_range_m_s2": [
+        -0.5509387366473675,
+        0.9834703505039215
+      ],
+      "at_limit_positive_requests": 5,
+      "at_limit_positive_fraction": 0.625,
+      "near_limit_teacher_mse_m2_s4": 0.6418630025653743,
+      "near_limit_raw_positive_fraction": 0.775,
+      "at_limit_teacher_range_m_s2": [
+        -0.07999995350837708,
+        -0.07999995350837708
+      ]
+    },
+    {
+      "limit_m_s": 15.0,
+      "probes": 48,
+      "at_limit_probes": 8,
+      "at_limit_raw_acceleration_mean_m_s2": 0.20156137831509113,
+      "at_limit_raw_acceleration_range_m_s2": [
+        -0.610616110265255,
+        0.9372878968715668
+      ],
+      "at_limit_positive_requests": 4,
+      "at_limit_positive_fraction": 0.5,
+      "near_limit_teacher_mse_m2_s4": 0.586435095977237,
+      "near_limit_raw_positive_fraction": 0.75,
+      "at_limit_teacher_range_m_s2": [
+        -0.07999995350837708,
+        -0.07999995350837708
+      ]
+    },
+    {
+      "limit_m_s": 18.0,
+      "probes": 48,
+      "at_limit_probes": 8,
+      "at_limit_raw_acceleration_mean_m_s2": 0.14690985204651952,
+      "at_limit_raw_acceleration_range_m_s2": [
+        -0.666935384273529,
+        0.8878905475139618
+      ],
+      "at_limit_positive_requests": 4,
+      "at_limit_positive_fraction": 0.5,
+      "near_limit_teacher_mse_m2_s4": 0.5333225295928699,
+      "near_limit_raw_positive_fraction": 0.725,
+      "at_limit_teacher_range_m_s2": [
+        -0.07999995350837708,
+        -0.07999995350837708
+      ]
+    },
+    {
+      "limit_m_s": 22.352,
+      "probes": 48,
+      "at_limit_probes": 8,
+      "at_limit_raw_acceleration_mean_m_s2": 0.06868437305092812,
+      "at_limit_raw_acceleration_range_m_s2": [
+        -0.7409291751682758,
+        0.8122203946113586
+      ],
+      "at_limit_positive_requests": 4,
+      "at_limit_positive_fraction": 0.5,
+      "near_limit_teacher_mse_m2_s4": 0.46299745649296165,
+      "near_limit_raw_positive_fraction": 0.675,
+      "at_limit_teacher_range_m_s2": [
+        -0.07999995350837708,
+        -0.07999995350837708
+      ]
+    },
+    {
+      "limit_m_s": 26.8224,
+      "probes": 40,
+      "at_limit_probes": 8,
+      "at_limit_raw_acceleration_mean_m_s2": -0.00819028215482831,
+      "at_limit_raw_acceleration_range_m_s2": [
+        -0.8061559051275253,
+        0.7319041788578033
+      ],
+      "at_limit_positive_requests": 4,
+      "at_limit_positive_fraction": 0.5,
+      "near_limit_teacher_mse_m2_s4": 0.31045143499257566,
+      "near_limit_raw_positive_fraction": 0.6875,
+      "at_limit_teacher_range_m_s2": [
+        -0.07999995350837708,
+        -0.07999995350837708
+      ]
+    }
+  ],
+  "synthetic_rows": 352,
+  "objective": {
+    "weighted_loss_m2_s4": 0.06563892215490341,
+    "coefficient": 0.1,
+    "band_m_s": 1.0,
+    "selected_count": 296,
+    "directional_rows": 296,
+    "gradient_descent_moves_toward_target": true,
+    "direct_lane_output_derivative_zero": true,
+    "outside_band_derivative_zero": true,
+    "weights_unchanged": true,
+    "actions_unchanged": true,
+    "optimizer_state_entries": 0,
+    "parameter_gradients_untouched": true,
+    "zero_optimizer_steps": true,
+    "normalized_to_si_mse_factor": 10.5625,
+    "lane_retention_limit": "Zero direct lane-logit derivative does not guarantee retention after future shared-trunk updates"
+  },
+  "checkpoint_unchanged": true,
+  "limitations": [
+    "Synthetic developmental probes are not a closed-loop evaluation or a training dataset.",
+    "Saved physical validation traces are diagnosis-only; no fitting or optimizer step.",
+    "The original speed feature clips above 60 mph; probes exceeding that cap are omitted.",
+    "Unchanged weights still need training and complete matched evaluation before improvement can be claimed."
+  ],
+  "rows_sha256": "a1d343dbb8f4bf179fc4302f7779ca97e64905ac1edfc7a1cda6a5a59652c8b6",
+  "local_output": "outputs/near-limit-v01/diagnostic-20261105T214424Z-042c0809",
+  "source_sha256": {
+    "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+    "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+    "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+    "policies/mappo.py": "9124a1e9b96fb0f9158d4b344a08aa59746d870d26549873bf5b37feb82d631b"
+  }
+}

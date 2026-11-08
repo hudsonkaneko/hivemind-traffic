@@ -1,0 +1,49 @@
+{
+  "schema": "smooth_control_visual_comparison_v01",
+  "training": false,
+  "optimizer_steps": 0,
+  "inputs": [
+    {
+      "path": "outputs/highway-smooth-control/v02/render-frozen-v05/i110-merge.mp4",
+      "sha256": "086657118aa7c4f69dab7d21ba05daf514900e25e86a36ce16f237415d667f9c"
+    },
+    {
+      "path": "outputs/highway-smooth-control/v02/render-reference-v4/i110-merge.mp4",
+      "sha256": "5e8dd182cb9a8896f91936790c9260d3df23aa01648525362dabfcf61b9cc307"
+    }
+  ],
+  "command": [
+    "C:\\Users\\hudso\\Documents\\highwaysim\\outputs\\i110-merge-visual\\v01\\encoder\\imageio_ffmpeg\\binaries\\ffmpeg-win-x86_64-v7.1.exe",
+    "-hide_banner",
+    "-v",
+    "warning",
+    "-i",
+    "C:\\Users\\hudso\\Documents\\highwaysim\\outputs\\highway-smooth-control\\v02\\render-frozen-v05\\i110-merge.mp4",
+    "-i",
+    "C:\\Users\\hudso\\Documents\\highwaysim\\outputs\\highway-smooth-control\\v02\\render-reference-v4\\i110-merge.mp4",
+    "-filter_complex",
+    "[0:v]scale=960:540,pad=960:580:0:40:black,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='Frozen MAPPO - unchanged':fontcolor=white:fontsize=24:x=20:y=8[left];[1:v]scale=960:540,pad=960:580:0:40:black,drawtext=fontfile='C\\:/Windows/Fonts/arial.ttf':text='Scripted training reference v4':fontcolor=white:fontsize=24:x=20:y=8[right];[left][right]hstack=inputs=2[v]",
+    "-map",
+    "[v]",
+    "-an",
+    "-c:v",
+    "libx264",
+    "-crf",
+    "20",
+    "-preset",
+    "medium",
+    "-pix_fmt",
+    "yuv420p",
+    "-movflags",
+    "+faststart",
+    "C:\\Users\\hudso\\Documents\\highwaysim\\outputs\\highway-smooth-control\\v02\\visual-comparison-v01\\i110-frozen-vs-reference.mp4"
+  ],
+  "source_frames": 300,
+  "decoded_frames": 300,
+  "fps": 10,
+  "duration_seconds": 30,
+  "output": "outputs/highway-smooth-control/v02/visual-comparison-v01/i110-frozen-vs-reference.mp4",
+  "output_sha256": "92511b4c56f115bf7dc345b658f63a49f156196a6cbcbd12e16097d2a514965a",
+  "wall_seconds": 1.062999999994645,
+  "interpretation": "Left frozen learned actor; right scripted supervisory reference. Neither is a newly trained policy. Actual native poses, no motion interpolation; rendered SimReady main cars, lightweight background vehicles."
+}

@@ -1,0 +1,67 @@
+{
+  "schema": "highway_flow_rl_v02_offline_reward_audit_v1",
+  "training": false,
+  "simulator_runs": 0,
+  "scope": "Focal agent_0 saved-context inspection, not complete observation replay or new policy evidence",
+  "missing_observation117": true,
+  "weights": {
+    "cruise_speed": 0.1,
+    "route_detour": 0.5
+  },
+  "samples": 400,
+  "cruise_formula": ".1 * (pre_action_speed / executed_legal_limit)^2 when eligible, else zero",
+  "opening_leader_gate": {
+    "minimum_headway_s": 3.0,
+    "minimum_opening_speed_m_s": 1.0,
+    "minimum_response_m_s2": 0.2
+  },
+  "cruise_eligible_decisions": 19,
+  "cruise_speed_reward": 1.351710771205416,
+  "exclusions": {
+    "not_through_lane": 171,
+    "route_obligation_or_unknown": 171,
+    "entry_context": 169,
+    "yield_ahead": 41,
+    "braking_or_response_bound": 109,
+    "lateral_maneuver": 133,
+    "leader_not_safely_opening": 108,
+    "route_end_approach": 126
+  },
+  "detour_events": [
+    {
+      "time_s": 18.9,
+      "speed_m_s": 14.669553125268688,
+      "cruise_speed_reward": 0.06641845336267911,
+      "cruise_eligible": true,
+      "exclusion_reasons": [],
+      "measured_braking_veto": false,
+      "lane_request": -1,
+      "detour_evidence": {
+        "optional_detour": true,
+        "reason": "optional_ending_lane_without_benefit",
+        "passing_benefit": false,
+        "source_lane": "sb3_1",
+        "target_lane": "sb3_0",
+        "target_route_reachable": false,
+        "target_runway_m": 175.98558945625143,
+        "return_runway_required_m": 196.30448740077856
+      },
+      "first_observed_motion": true,
+      "route_detour_reward": -0.5
+    }
+  ],
+  "inputs": {
+    "outputs\\highway-flow-rl\\v01\\round-02\\video-recording-01\\recording.json": "12064d16db76955113dd335531660e3079cf93a8a176c094c9fa6fd574596f62",
+    "outputs\\highway-flow-rl\\v01\\round-02\\video-recording-01\\episode\\episode-6900019-ebc4c10a\\actions.jsonl.gz": "2242d99b73613506c1ad5c90e035e68fbd5993cd19096b5910c32f9e11a21dfa",
+    "outputs\\highway-flow-rl\\v01\\round-02\\video-recording-01\\resolved-config.json": "a06a774eb2e650626e804b5fcad41fa7832bdfa7d605a0e9c964fa88b126ab4f",
+    "outputs\\highway-flow-rl\\v01\\round-02\\video-recording-01\\network.net.xml": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836"
+  },
+  "sources": {
+    "traffic\\highway_flow_rl_v02_rewards.py": "5604c6b74d92709a3a5581c60106e46985b779467188f4f3a22f38b7981f4cbc",
+    "tests\\test_highway_flow_rl_v02_rewards.py": "f937b0548a99a604976890eda705578d569766b832a6557d822fac7bef5ab040"
+  },
+  "full_audit": {
+    "local_path": "outputs/highway-flow-rl/v02/reward-audit-02/reward-audit.json",
+    "sha256": "2ef0610a7ebd69dd14846344e05c359d69af4504ae4ce5551008f3bf45e283d3"
+  }
+}

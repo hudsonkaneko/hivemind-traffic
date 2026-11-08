@@ -1,0 +1,40 @@
+{
+  "schema": "i110_merge_fix_visual_artifacts_v01",
+  "training": false,
+  "source_before_directory": "outputs/highway-environment/v05/visuals/i110-failure/render-01",
+  "source_after_directory": "outputs/i110-merge-blocking/v01/render-corrected-01",
+  "files": {
+    "baseline-10p1s.png": {
+      "sha256": "a481008986c0ca516a8fec06fb8ba4f7bef20187dcce004c96df3dc276df1e4e",
+      "bytes": 605637
+    },
+    "render-before.png": {
+      "sha256": "486da83df957122a646ea944689a011d9766f54d3440d1a8468653d1e30b1a94",
+      "bytes": 561095
+    },
+    "render-merge.png": {
+      "sha256": "b3a47ca0938f402c195deca257298731bb349886c20fcc62a461145d50cc722e",
+      "bytes": 563569
+    },
+    "render-after.png": {
+      "sha256": "adc574b90d76df28642a1ae18f85fe2f39f6590b84a66a733e27d94ccf9a946c",
+      "bytes": 619646
+    },
+    "render-report.json": {
+      "sha256": "b224b88ba15b47087aabb868e6d1713593a8dfd8bc3fcc976af7f0f6a0b5a224",
+      "bytes": 9366
+    },
+    "network-v02.net.xml": {
+      "sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+      "bytes": 45894
+    }
+  },
+  "baseline_screenshot_time_s": 10.1,
+  "baseline_screenshot_source_frame": "frames/00100.png",
+  "actual_renderer_screenshots": true,
+  "video_local_only": {
+    "path": "outputs/i110-merge-blocking/v01/render-corrected-01/i110-merge.mp4",
+    "sha256": "938091d8529087bd1900493113132d002fc46cff09f8509beab4cc1c4e961fb1"
+  },
+  "no_asset_redistribution": true
+}

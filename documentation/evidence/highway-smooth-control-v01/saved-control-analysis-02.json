@@ -1,0 +1,1549 @@
+{
+  "schema": "highway_smooth_control_saved_diagnostic_v01",
+  "training": false,
+  "optimizer_steps": 0,
+  "native_runs": 0,
+  "policy_inference_calls": 0,
+  "demonstration_export": false,
+  "allowed_use": "Validation diagnosis and objective review only; never use as demonstration/training data",
+  "policy_sha256": "fd639c39f0c514256a458b2b85d35baba242125f44dcc3d9542d767eb2dd46ec",
+  "seed": 6900019,
+  "inputs": {
+    "outputs\\i110-merge-blocking\\v01\\replay-corrected-01\\manifest.json": "c69a1f93af316d20f8f78a718a8fd53f389983d19062edacbd2bdd31d6bdc173",
+    "outputs\\i110-merge-blocking\\v01\\replay-corrected-01\\recording.json": "d2e4323afe3c3ce9765abff68e6115a55783b6ca8e21ead68ea6971eb4f1a81d",
+    "outputs\\i110-merge-blocking\\v01\\replay-corrected-01\\evaluation.json": "0f76b725ad7a604675ec5935e91c996656bcce37fb464c62b11e001221a6e858",
+    "outputs\\i110-merge-blocking\\v01\\replay-corrected-01\\config.json": "b37cf31041dbbdabf2d459d46b10f5ec4677ff3ef48faf54ffb322ed15153e55",
+    "outputs\\i110-merge-blocking\\v01\\replay-corrected-01\\network.net.xml": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+    "outputs\\i110-merge-blocking\\v01\\replay-corrected-01\\simulation\\episode-6900019-64b7259a\\actions.jsonl.gz": "b733fc3f71434abd1ca71eda6e2f70d4cf59f79b5d0c3b6f2e529c84c6755574",
+    "outputs\\i110-merge-blocking\\v01\\replay-corrected-01\\simulation\\episode-6900019-64b7259a\\routes.rou.xml": "fbde2a92e5a8b5ea73aea7c8fc2cae02d4fbeec4be281c2ae88f0be5cf4897ce"
+  },
+  "analytical_sources": {
+    "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+    "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+    "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23"
+  },
+  "intervention_definition": "Unchanged recorded override/policy-filter/native-realization booleans",
+  "denominator_note": "Includes final arrival decisions. Native residual/jerk statistics exclude only the eight decisions with no post-arrival vehicle state; no decision is removed from the intervention denominator.",
+  "analytical_match_tolerance_m_s2": 0.0001,
+  "analytical_match_limit": "Numerical agreement with pinned model equations supports cause attribution; it does not change the recorded unattributed native flags",
+  "overall": {
+    "counts": {
+      "decisions": 2864,
+      "override": 244,
+      "policy_filter_changed": 0,
+      "native_realization_changed": 244,
+      "realized_samples": 2856,
+      "arrival_without_realization": 8
+    },
+    "intervention_fraction": 0.08519553072625698,
+    "analytical_match_causes": {
+      "acc_following_response_match": 233,
+      "minor_approach_stopping_response_match": 11
+    },
+    "residuals": {
+      "absolute_filtered_native_error_m_s2": {
+        "samples": 2856,
+        "mean": 0.03572832573893653,
+        "median": 7.105427357601002e-15,
+        "p95": 0.15750747366919704,
+        "maximum": 5.928403317928307
+      },
+      "absolute_filtered_target_error_m_s2": {
+        "samples": 2864,
+        "mean": 0.2259797725157919,
+        "median": 0.040900845080613375,
+        "p95": 0.9396087741374967,
+        "maximum": 5.928399034579591
+      },
+      "absolute_native_target_error_m_s2": {
+        "samples": 2856,
+        "mean": 0.19085003935422923,
+        "median": 0.01909628467202537,
+        "p95": 0.9143299854642097,
+        "maximum": 1.6778014078736376
+      },
+      "absolute_realized_jerk_m_s3": {
+        "samples": 2856,
+        "mean": 0.11216581356797803,
+        "median": 0.009154975414382704,
+        "p95": 0.2857355773450365,
+        "maximum": 58.92567962407957
+      },
+      "absolute_request_target_error_m_s2": {
+        "samples": 2864,
+        "mean": 0.2259797725157919,
+        "median": 0.040900845080613375,
+        "p95": 0.9396087741374967,
+        "maximum": 5.928399034579591
+      },
+      "absolute_requested_jerk_m_s3": {
+        "samples": 2856,
+        "mean": 0.051909574367502494,
+        "median": 0.00783529132604599,
+        "p95": 0.2361057698726654,
+        "maximum": 4.765455275774002
+      },
+      "realized_acceleration_m_s2": {
+        "samples": 2856,
+        "mean": 0.16390162822173132,
+        "median": 0.003653634339570999,
+        "p95": 0.6021944880485597,
+        "maximum": 1.7156161665916425
+      },
+      "requested_acceleration_m_s2": {
+        "samples": 2864,
+        "mean": 0.19905288257589304,
+        "median": 0.1440029814839363,
+        "p95": 0.6211501494050022,
+        "maximum": 1.7156161665916443
+      },
+      "speed_m_s": {
+        "samples": 2856,
+        "mean": 16.579528360740067,
+        "median": 17.77526401146998,
+        "p95": 17.918223472169142,
+        "maximum": 17.92948290351386
+      }
+    },
+    "mean_weighted_reward_terms": {
+      "arrival": 0.00558659217877095,
+      "collision": 0.0,
+      "cooperation": 3.491620111731844e-05,
+      "feasible_acceleration": -0.012554431806432884,
+      "intervention": -0.0170391061452514,
+      "jerk": -0.0011185250123957585,
+      "lane_change": -0.00017458100558659218,
+      "lane_oscillation": 0.0,
+      "merge": 0.0017458100558659217,
+      "passing": 0.0,
+      "progress": 0.6188685251994034,
+      "stable_merge": 0.0006983240223463687,
+      "unsafe_request": 0.0
+    }
+  },
+  "intervention_steps": {
+    "counts": {
+      "decisions": 244,
+      "override": 244,
+      "policy_filter_changed": 0,
+      "native_realization_changed": 244,
+      "realized_samples": 244
+    },
+    "intervention_fraction": 1.0,
+    "analytical_match_causes": {
+      "acc_following_response_match": 233,
+      "minor_approach_stopping_response_match": 11
+    },
+    "residuals": {
+      "absolute_filtered_native_error_m_s2": {
+        "samples": 244,
+        "mean": 0.416221207942069,
+        "median": 0.16528838861692563,
+        "p95": 0.6723378335506073,
+        "maximum": 5.928403317928307
+      },
+      "absolute_filtered_target_error_m_s2": {
+        "samples": 244,
+        "mean": 0.41622113279506545,
+        "median": 0.16528842225670815,
+        "p95": 0.6723375612869859,
+        "maximum": 5.928399034579591
+      },
+      "absolute_native_target_error_m_s2": {
+        "samples": 244,
+        "mean": 1.3582155810243722e-07,
+        "median": 4.325344704625422e-08,
+        "p95": 1.887282945034482e-07,
+        "maximum": 4.283348715716784e-06
+      },
+      "absolute_realized_jerk_m_s3": {
+        "samples": 244,
+        "mean": 0.3833947776010938,
+        "median": 0.005682115198801796,
+        "p95": 0.5984014258208066,
+        "maximum": 37.03663469075238
+      },
+      "absolute_request_target_error_m_s2": {
+        "samples": 244,
+        "mean": 0.41622113279506545,
+        "median": 0.16528842225670815,
+        "p95": 0.6723375612869859,
+        "maximum": 5.928399034579591
+      },
+      "absolute_requested_jerk_m_s3": {
+        "samples": 244,
+        "mean": 0.052353735463541065,
+        "median": 0.002884902060031891,
+        "p95": 0.2268839627504348,
+        "maximum": 2.0209869742393494
+      },
+      "realized_acceleration_m_s2": {
+        "samples": 244,
+        "mean": -0.19235704944873974,
+        "median": -0.013908158585635988,
+        "p95": 0.1115698714393556,
+        "maximum": 0.27106822673907516
+      },
+      "requested_acceleration_m_s2": {
+        "samples": 244,
+        "mean": 0.22386415849332927,
+        "median": 0.16252897307276726,
+        "p95": 0.4257267966866492,
+        "maximum": 1.6024665981531143
+      },
+      "speed_m_s": {
+        "samples": 244,
+        "mean": 16.55192363707332,
+        "median": 17.516291203244045,
+        "p95": 17.737824326178238,
+        "maximum": 17.797184970166015
+      }
+    },
+    "mean_weighted_reward_terms": {
+      "arrival": 0.0,
+      "collision": 0.0,
+      "cooperation": 0.0,
+      "feasible_acceleration": -0.023123396266392524,
+      "intervention": -0.2,
+      "jerk": -0.003833947776010938,
+      "lane_change": 0.0,
+      "lane_oscillation": 0.0,
+      "merge": 0.0,
+      "passing": 0.0,
+      "progress": 0.6163761606764661,
+      "stable_merge": 0.0,
+      "unsafe_request": 0.0
+    }
+  },
+  "per_agent": {
+    "agent_0": {
+      "counts": {
+        "decisions": 371,
+        "override": 11,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 11,
+        "realized_samples": 370,
+        "arrival_without_realization": 1
+      },
+      "intervention_fraction": 0.029649595687331536,
+      "analytical_match_causes": {
+        "minor_approach_stopping_response_match": 11
+      },
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 370,
+          "mean": 0.16599217677632236,
+          "median": 7.105427357601002e-15,
+          "p95": 1.4210854715202004e-14,
+          "maximum": 5.928403317928307
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 371,
+          "mean": 0.40327503143737714,
+          "median": 0.03410989534139617,
+          "p95": 0.9563271090149876,
+          "maximum": 5.928399034579591
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 370,
+          "mean": 0.2383394925126566,
+          "median": 0.021063572520014163,
+          "p95": 0.8426083805022243,
+          "maximum": 1.0430986699438058
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 370,
+          "mean": 0.454553883220708,
+          "median": 0.031854994595015285,
+          "p95": 0.4869623631239284,
+          "maximum": 58.92567962407957
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 371,
+          "mean": 0.40327503143737714,
+          "median": 0.03410989534139617,
+          "p95": 0.9563271090149876,
+          "maximum": 5.928399034579591
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 370,
+          "mean": 0.12011039055682518,
+          "median": 0.035067759454250336,
+          "p95": 0.48259108513593685,
+          "maximum": 4.765455275774002
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 370,
+          "mean": 0.28266983565656295,
+          "median": 0.01972690224647522,
+          "p95": 1.6389509476721318,
+          "maximum": 1.7156161665916425
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 371,
+          "mean": 0.44744638309404855,
+          "median": 0.23997486382722855,
+          "p95": 1.6387863382697105,
+          "maximum": 1.7156161665916443
+        },
+        "speed_m_s": {
+          "samples": 370,
+          "mean": 15.407334998779783,
+          "median": 17.70848953888986,
+          "p95": 17.907093502033977,
+          "maximum": 17.9075050143269
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.005390835579514825,
+        "collision": 0.0,
+        "cooperation": 3.369272237196766e-05,
+        "feasible_acceleration": -0.022404168413187625,
+        "intervention": -0.005929919137466308,
+        "jerk": -0.004533286705974715,
+        "lane_change": -0.0005390835579514825,
+        "lane_oscillation": 0.0,
+        "merge": 0.013477088948787063,
+        "passing": 0.0,
+        "progress": 0.5757194371983574,
+        "stable_merge": 0.005390835579514825,
+        "unsafe_request": 0.0
+      },
+      "first_intervention_time_s": 2.5,
+      "last_intervention_time_s": 3.5,
+      "leaders_during_interventions": {},
+      "interventions_with_laterally_displaced_leader": 0,
+      "vehicle_type": {
+        "id": "controlled",
+        "carFollowModel": "ACC",
+        "tau": "1.5",
+        "accel": "2",
+        "decel": "4.5",
+        "speedFactor": "1",
+        "length": "4.8",
+        "minGap": "2.5",
+        "emergencyDecel": "9",
+        "maxSpeed": "26.8224",
+        "speedDev": "0",
+        "sigma": "0"
+      }
+    },
+    "agent_1": {
+      "counts": {
+        "decisions": 360,
+        "override": 3,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 3,
+        "realized_samples": 359,
+        "arrival_without_realization": 1
+      },
+      "intervention_fraction": 0.008333333333333333,
+      "analytical_match_causes": {
+        "acc_following_response_match": 3
+      },
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 359,
+          "mean": 0.0011229106506006439,
+          "median": 7.105427357601002e-15,
+          "p95": 1.4210854715202004e-14,
+          "maximum": 0.06711459270515974
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 360,
+          "mean": 0.17721436677092306,
+          "median": 0.011147780122756502,
+          "p95": 0.9998378748989107,
+          "maximum": 1.3770543287229537
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 359,
+          "mean": 0.17655106441783056,
+          "median": 0.0068581923842430115,
+          "p95": 1.00065661353588,
+          "maximum": 1.3770543287229573
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 359,
+          "mean": 0.04539622284205118,
+          "median": 0.006902068853342769,
+          "p95": 0.21911878134313054,
+          "maximum": 1.4258072525262122
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 360,
+          "mean": 0.17721436677092306,
+          "median": 0.011147780122756502,
+          "p95": 0.9998378748989107,
+          "maximum": 1.3770543287229537
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 359,
+          "mean": 0.03858119415373523,
+          "median": 0.006478801369667053,
+          "p95": 0.18726816028356552,
+          "maximum": 1.2976528704166412
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 359,
+          "mean": 0.14414632948534073,
+          "median": 9.223818793202554e-06,
+          "p95": 0.43463027179241814,
+          "maximum": 0.4499689042568278
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 360,
+          "mean": 0.14486392643302679,
+          "median": 7.528811693191528e-06,
+          "p95": 0.4345790728926659,
+          "maximum": 0.4499689042568207
+        },
+        "speed_m_s": {
+          "samples": 359,
+          "mean": 16.852789605474364,
+          "median": 17.899579866003872,
+          "p95": 17.908498422649377,
+          "maximum": 17.928568345081676
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.005555555555555556,
+        "collision": 0.0,
+        "cooperation": 3.472222222222222e-05,
+        "feasible_acceleration": -0.009845242598384615,
+        "intervention": -0.001666666666666667,
+        "jerk": -0.0004527012222304548,
+        "lane_change": -0.0002777777777777778,
+        "lane_oscillation": 0.0,
+        "merge": 0.0,
+        "passing": 0.0,
+        "progress": 0.6289516508068821,
+        "stable_merge": 0.0,
+        "unsafe_request": 0.0
+      },
+      "first_intervention_time_s": 0.8,
+      "last_intervention_time_s": 1.0,
+      "leaders_during_interventions": {
+        "agent_2": 3
+      },
+      "interventions_with_laterally_displaced_leader": 0,
+      "vehicle_type": {
+        "id": "controlled",
+        "carFollowModel": "ACC",
+        "tau": "1.5",
+        "accel": "2",
+        "decel": "4.5",
+        "speedFactor": "1",
+        "length": "4.8",
+        "minGap": "2.5",
+        "emergencyDecel": "9",
+        "maxSpeed": "26.8224",
+        "speedDev": "0",
+        "sigma": "0"
+      }
+    },
+    "agent_2": {
+      "counts": {
+        "decisions": 332,
+        "override": 6,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 6,
+        "realized_samples": 331,
+        "arrival_without_realization": 1
+      },
+      "intervention_fraction": 0.018072289156626505,
+      "analytical_match_causes": {
+        "acc_following_response_match": 6
+      },
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 331,
+          "mean": 0.008309422513520643,
+          "median": 7.105427357601002e-15,
+          "p95": 1.4210854715202004e-14,
+          "maximum": 0.6738752789921598
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 332,
+          "mean": 0.14799450624854432,
+          "median": 0.025082981690168545,
+          "p95": 0.5229148000478744,
+          "maximum": 1.6778014078736305
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 331,
+          "mean": 0.14009782111051572,
+          "median": 0.024689950895316316,
+          "p95": 0.5185842216014809,
+          "maximum": 1.6778014078736376
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 331,
+          "mean": 0.09747667768286739,
+          "median": 0.008552521467208862,
+          "p95": 0.34202046692382027,
+          "maximum": 6.2247898356387665
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 332,
+          "mean": 0.14799450624854432,
+          "median": 0.025082981690168545,
+          "p95": 0.5229148000478744,
+          "maximum": 1.6778014078736305
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 331,
+          "mean": 0.050648125591955154,
+          "median": 0.008366554975509644,
+          "p95": 0.24937864392995834,
+          "maximum": 0.9197592735290527
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 331,
+          "mean": 0.18361544014013417,
+          "median": 0.0009645298123217572,
+          "p95": 0.5904907062649745,
+          "maximum": 0.6296737492084503
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 332,
+          "mean": 0.1913449159453073,
+          "median": 0.0022566579282283783,
+          "p95": 0.5902781717479229,
+          "maximum": 0.6296737492084503
+        },
+        "speed_m_s": {
+          "samples": 331,
+          "mean": 16.589174246853794,
+          "median": 17.841899628664308,
+          "p95": 17.87321129413968,
+          "maximum": 17.877048664267118
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.006024096385542169,
+        "collision": 0.0,
+        "cooperation": 3.765060240963856e-05,
+        "feasible_acceleration": -0.00822191701380802,
+        "intervention": -0.0036144578313253017,
+        "jerk": -0.0009718307323201538,
+        "lane_change": 0.0,
+        "lane_oscillation": 0.0,
+        "merge": 0.0,
+        "passing": 0.0,
+        "progress": 0.6193087757214163,
+        "stable_merge": 0.0,
+        "unsafe_request": 0.0
+      },
+      "first_intervention_time_s": 0.3,
+      "last_intervention_time_s": 0.8,
+      "leaders_during_interventions": {
+        "agent_6": 6
+      },
+      "interventions_with_laterally_displaced_leader": 6,
+      "vehicle_type": {
+        "id": "controlled",
+        "carFollowModel": "ACC",
+        "tau": "1.5",
+        "accel": "2",
+        "decel": "4.5",
+        "speedFactor": "1",
+        "length": "4.8",
+        "minGap": "2.5",
+        "emergencyDecel": "9",
+        "maxSpeed": "26.8224",
+        "speedDev": "0",
+        "sigma": "0"
+      }
+    },
+    "agent_3": {
+      "counts": {
+        "decisions": 311,
+        "override": 0,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 0,
+        "realized_samples": 310,
+        "arrival_without_realization": 1
+      },
+      "intervention_fraction": 0.0,
+      "analytical_match_causes": {},
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 310,
+          "mean": 6.944982223719689e-15,
+          "median": 7.105427357601002e-15,
+          "p95": 1.4210854715202004e-14,
+          "maximum": 1.4210854715202004e-14
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 311,
+          "mean": 0.25718073614243137,
+          "median": 0.01627632975578308,
+          "p95": 1.3443686217069626,
+          "maximum": 1.6207152158021927
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 310,
+          "mean": 0.257998413883771,
+          "median": 0.01632582396268134,
+          "p95": 1.344395722448831,
+          "maximum": 1.6207152158021927
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 310,
+          "mean": 0.04687224881303751,
+          "median": 0.003108642995286459,
+          "p95": 0.11183947324750163,
+          "maximum": 3.7927471101284027
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 311,
+          "mean": 0.25718073614243137,
+          "median": 0.01627632975578308,
+          "p95": 1.3443686217069626,
+          "maximum": 1.6207152158021927
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 310,
+          "mean": 0.0346768892580463,
+          "median": 0.0031086429953575134,
+          "p95": 0.10064303129911428,
+          "maximum": 1.4176283776760101
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 310,
+          "mean": 0.1998551574685889,
+          "median": -0.00020938366651179763,
+          "p95": 0.6411713697016204,
+          "maximum": 0.656322941184051
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 311,
+          "mean": 0.1991907322952985,
+          "median": -0.00021151453256607056,
+          "p95": 0.6410604193806648,
+          "maximum": 0.6563229411840439
+        },
+        "speed_m_s": {
+          "samples": 310,
+          "mean": 16.840188178817883,
+          "median": 17.916642443320264,
+          "p95": 17.92242649678747,
+          "maximum": 17.9275138391615
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.006430868167202572,
+        "collision": 0.0,
+        "cooperation": 4.019292604501608e-05,
+        "feasible_acceleration": -0.014287818674579521,
+        "intervention": 0.0,
+        "jerk": -0.0004672153418662903,
+        "lane_change": 0.0,
+        "lane_oscillation": 0.0,
+        "merge": 0.0,
+        "passing": 0.0,
+        "progress": 0.628711797460871,
+        "stable_merge": 0.0,
+        "unsafe_request": 0.0
+      },
+      "first_intervention_time_s": null,
+      "last_intervention_time_s": null,
+      "leaders_during_interventions": {},
+      "interventions_with_laterally_displaced_leader": 0,
+      "vehicle_type": {
+        "id": "controlled",
+        "carFollowModel": "ACC",
+        "tau": "1.5",
+        "accel": "2",
+        "decel": "4.5",
+        "speedFactor": "1",
+        "length": "4.8",
+        "minGap": "2.5",
+        "emergencyDecel": "9",
+        "maxSpeed": "26.8224",
+        "speedDev": "0",
+        "sigma": "0"
+      }
+    },
+    "agent_4": {
+      "counts": {
+        "decisions": 410,
+        "override": 0,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 0,
+        "realized_samples": 409,
+        "arrival_without_realization": 1
+      },
+      "intervention_fraction": 0.0,
+      "analytical_match_causes": {},
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 409,
+          "mean": 7.183604431217639e-15,
+          "median": 7.105427357601002e-15,
+          "p95": 1.4210854715202004e-14,
+          "maximum": 1.4210854715202004e-14
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 410,
+          "mean": 0.134844185931979,
+          "median": 0.04629890052080156,
+          "p95": 0.39016596591341496,
+          "maximum": 1.0673721134662628
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 409,
+          "mean": 0.1351612802060774,
+          "median": 0.048950061202035045,
+          "p95": 0.3902632825097896,
+          "maximum": 1.0673721134662664
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 409,
+          "mean": 0.05023326606360029,
+          "median": 0.0045571476221084595,
+          "p95": 0.2440521568060916,
+          "maximum": 1.4527811110019329
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 410,
+          "mean": 0.134844185931979,
+          "median": 0.04629890052080156,
+          "p95": 0.39016596591341496,
+          "maximum": 1.0673721134662628
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 409,
+          "mean": 0.04668485254850831,
+          "median": 0.004347935318946838,
+          "p95": 0.23868063092231706,
+          "maximum": 1.0799558460712433
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 409,
+          "mean": 0.1210312681195204,
+          "median": 0.1077758371829951,
+          "p95": 0.2515799283981295,
+          "maximum": 0.30381483584642766
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 410,
+          "mean": 0.12069649727242748,
+          "median": 0.10461096838116646,
+          "p95": 0.2515736181288957,
+          "maximum": 0.3038148358464241
+        },
+        "speed_m_s": {
+          "samples": 409,
+          "mean": 16.634843183121394,
+          "median": 17.81124465409275,
+          "p95": 17.892687150422294,
+          "maximum": 17.92948290351386
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.004878048780487805,
+        "collision": 0.0,
+        "cooperation": 3.0487804878048784e-05,
+        "feasible_acceleration": -0.007491343662887721,
+        "intervention": 0.0,
+        "jerk": -0.0005011074590246956,
+        "lane_change": -0.00024390243902439027,
+        "lane_oscillation": 0.0,
+        "merge": 0.0,
+        "passing": 0.0,
+        "progress": 0.6207523455272037,
+        "stable_merge": 0.0,
+        "unsafe_request": 0.0
+      },
+      "first_intervention_time_s": null,
+      "last_intervention_time_s": null,
+      "leaders_during_interventions": {},
+      "interventions_with_laterally_displaced_leader": 0,
+      "vehicle_type": {
+        "id": "controlled",
+        "carFollowModel": "ACC",
+        "tau": "1.5",
+        "accel": "2",
+        "decel": "4.5",
+        "speedFactor": "1",
+        "length": "4.8",
+        "minGap": "2.5",
+        "emergencyDecel": "9",
+        "maxSpeed": "26.8224",
+        "speedDev": "0",
+        "sigma": "0"
+      }
+    },
+    "agent_5": {
+      "counts": {
+        "decisions": 386,
+        "override": 26,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 26,
+        "realized_samples": 385,
+        "arrival_without_realization": 1
+      },
+      "intervention_fraction": 0.06735751295336788,
+      "analytical_match_causes": {
+        "acc_following_response_match": 26
+      },
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 385,
+          "mean": 0.019504171293273753,
+          "median": 7.105427357601002e-15,
+          "p95": 0.12374155613187868,
+          "maximum": 0.8144907412777087
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 386,
+          "mean": 0.15531262358520295,
+          "median": 0.014281321464777362,
+          "p95": 0.6485630855077503,
+          "maximum": 1.3014157374334332
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 385,
+          "mean": 0.13612261493570804,
+          "median": 0.010280988261692414,
+          "p95": 0.6365988899216624,
+          "maximum": 1.301415737433426
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 385,
+          "mean": 0.08047791958294385,
+          "median": 0.007993653416527025,
+          "p95": 0.3531074011086226,
+          "maximum": 9.489270804176542
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 386,
+          "mean": 0.15531262358520295,
+          "median": 0.014281321464777362,
+          "p95": 0.6485630855077503,
+          "maximum": 1.3014157374334332
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 385,
+          "mean": 0.03819277011728906,
+          "median": 0.007993653416633606,
+          "p95": 0.16685242950916274,
+          "maximum": 1.3443633913993835
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 385,
+          "mean": 0.10249293307903008,
+          "median": 0.0011497214436673175,
+          "p95": 0.30868214070795824,
+          "maximum": 0.3161193281412267
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 386,
+          "mean": 0.12160967728557365,
+          "median": 0.013015788048505783,
+          "p95": 0.30865156278014183,
+          "maximum": 0.31611932814121246
+        },
+        "speed_m_s": {
+          "samples": 385,
+          "mean": 16.69389789950275,
+          "median": 17.873523277021373,
+          "p95": 17.881715638018587,
+          "maximum": 17.915804985887743
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.0051813471502590676,
+        "collision": 0.0,
+        "cooperation": 3.238341968911917e-05,
+        "feasible_acceleration": -0.008628479088066831,
+        "intervention": -0.013471502590673576,
+        "jerk": -0.0008026942756329893,
+        "lane_change": 0.0,
+        "lane_oscillation": 0.0,
+        "merge": 0.0,
+        "passing": 0.0,
+        "progress": 0.622882409412346,
+        "stable_merge": 0.0,
+        "unsafe_request": 0.0
+      },
+      "first_intervention_time_s": 0.3,
+      "last_intervention_time_s": 2.8,
+      "leaders_during_interventions": {
+        "agent_1": 26
+      },
+      "interventions_with_laterally_displaced_leader": 26,
+      "vehicle_type": {
+        "id": "controlled",
+        "carFollowModel": "ACC",
+        "tau": "1.5",
+        "accel": "2",
+        "decel": "4.5",
+        "speedFactor": "1",
+        "length": "4.8",
+        "minGap": "2.5",
+        "emergencyDecel": "9",
+        "maxSpeed": "26.8224",
+        "speedDev": "0",
+        "sigma": "0"
+      }
+    },
+    "agent_6": {
+      "counts": {
+        "decisions": 309,
+        "override": 0,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 0,
+        "realized_samples": 308,
+        "arrival_without_realization": 1
+      },
+      "intervention_fraction": 0.0,
+      "analytical_match_causes": {},
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 308,
+          "mean": 7.278449127672455e-15,
+          "median": 7.105427357601002e-15,
+          "p95": 1.4210854715202004e-14,
+          "maximum": 1.4210854715202004e-14
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 309,
+          "mean": 0.22141732989244078,
+          "median": 0.009737186133861542,
+          "p95": 1.1042463349609375,
+          "maximum": 1.6155476719141006
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 308,
+          "mean": 0.22210899540781992,
+          "median": 0.009738057851787829,
+          "p95": 1.1043404900510323,
+          "maximum": 1.6155476719141078
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 308,
+          "mean": 0.06895590162316341,
+          "median": 0.005385763943266397,
+          "p95": 0.33682841807587804,
+          "maximum": 3.844422549009252
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 309,
+          "mean": 0.22141732989244078,
+          "median": 0.009737186133861542,
+          "p95": 1.1042463349609375,
+          "maximum": 1.6155476719141006
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 308,
+          "mean": 0.05647407941423453,
+          "median": 0.005051121115684509,
+          "p95": 0.3052949905395496,
+          "maximum": 1.7897705733776093
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 308,
+          "mean": 0.17759122868830554,
+          "median": 0.00017315521835925551,
+          "p95": 0.6056760229170296,
+          "maximum": 0.7408419996500015
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 309,
+          "mean": 0.17701532190189392,
+          "median": 0.00017010420560836792,
+          "p95": 0.6048254877328867,
+          "maximum": 0.7408419996500015
+        },
+        "speed_m_s": {
+          "samples": 308,
+          "mean": 16.993180196751812,
+          "median": 17.906831744596445,
+          "p95": 17.912156479716394,
+          "maximum": 17.916963913202363
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.006472491909385114,
+        "collision": 0.0,
+        "cooperation": 4.045307443365696e-05,
+        "feasible_acceleration": -0.012300962771802267,
+        "intervention": 0.0,
+        "jerk": -0.0006873274336548327,
+        "lane_change": -0.00032362459546925567,
+        "lane_oscillation": 0.0,
+        "merge": 0.0,
+        "passing": 0.0,
+        "progress": 0.6343113087566741,
+        "stable_merge": 0.0,
+        "unsafe_request": 0.0
+      },
+      "first_intervention_time_s": null,
+      "last_intervention_time_s": null,
+      "leaders_during_interventions": {},
+      "interventions_with_laterally_displaced_leader": 0,
+      "vehicle_type": {
+        "id": "controlled",
+        "carFollowModel": "ACC",
+        "tau": "1.5",
+        "accel": "2",
+        "decel": "4.5",
+        "speedFactor": "1",
+        "length": "4.8",
+        "minGap": "2.5",
+        "emergencyDecel": "9",
+        "maxSpeed": "26.8224",
+        "speedDev": "0",
+        "sigma": "0"
+      }
+    },
+    "agent_7": {
+      "counts": {
+        "decisions": 385,
+        "override": 198,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 198,
+        "realized_samples": 384,
+        "arrival_without_realization": 1
+      },
+      "intervention_fraction": 0.5142857142857142,
+      "analytical_match_causes": {
+        "acc_following_response_match": 198
+      },
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 384,
+          "mean": 0.07802172703048113,
+          "median": 0.08690631052368758,
+          "p95": 0.18276205657369463,
+          "maximum": 0.19210009822734975
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 385,
+          "mean": 0.3143421581736415,
+          "median": 0.1749107837677002,
+          "p95": 1.0106772729115483,
+          "maximum": 1.137270525097847
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 384,
+          "mean": 0.2371110416882893,
+          "median": 1.1081755246777902e-07,
+          "p95": 1.0109297687826204,
+          "maximum": 1.1372705250978505
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 384,
+          "mean": 0.04244891342118732,
+          "median": 0.01105338335030126,
+          "p95": 0.11660447591331985,
+          "maximum": 3.058926251160088
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 385,
+          "mean": 0.3143421581736415,
+          "median": 0.1749107837677002,
+          "p95": 1.0106772729115483,
+          "maximum": 1.137270525097847
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 384,
+          "mean": 0.029311323693643015,
+          "median": 0.007412508130073547,
+          "p95": 0.06802446022629721,
+          "maximum": 1.453787237405777
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 384,
+          "mean": 0.1181645908571447,
+          "median": 0.08566708603199302,
+          "p95": 0.3056882157921832,
+          "maximum": 0.3438442200422287
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 385,
+          "mean": 0.19567368943969926,
+          "median": 0.19096116721630096,
+          "p95": 0.30568019598722457,
+          "maximum": 0.3438442200422287
+        },
+        "speed_m_s": {
+          "samples": 384,
+          "mean": 16.729404988054437,
+          "median": 17.458160869338684,
+          "p95": 17.89194782473838,
+          "maximum": 17.926332454949076
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.005194805194805195,
+        "collision": 0.0,
+        "cooperation": 3.246753246753247e-05,
+        "feasible_acceleration": -0.01746345323186897,
+        "intervention": -0.10285714285714286,
+        "jerk": -0.0004233865650321021,
+        "lane_change": 0.0,
+        "lane_oscillation": 0.0,
+        "merge": 0.0,
+        "passing": 0.0,
+        "progress": 0.6242644208442875,
+        "stable_merge": 0.0,
+        "unsafe_request": 0.0
+      },
+      "first_intervention_time_s": 16.5,
+      "last_intervention_time_s": 36.2,
+      "leaders_during_interventions": {
+        "main_9": 198
+      },
+      "interventions_with_laterally_displaced_leader": 0,
+      "vehicle_type": {
+        "id": "controlled",
+        "carFollowModel": "ACC",
+        "tau": "1.5",
+        "accel": "2",
+        "decel": "4.5",
+        "speedFactor": "1",
+        "length": "4.8",
+        "minGap": "2.5",
+        "emergencyDecel": "9",
+        "maxSpeed": "26.8224",
+        "speedDev": "0",
+        "sigma": "0"
+      }
+    }
+  },
+  "per_stage": {
+    "auxiliary_lane": {
+      "counts": {
+        "decisions": 42,
+        "override": 0,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 0,
+        "realized_samples": 42
+      },
+      "intervention_fraction": 0.0,
+      "analytical_match_causes": {},
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 42,
+          "mean": 4.65236315081018e-15,
+          "median": 5.329070518200751e-15,
+          "p95": 7.105427357601002e-15,
+          "maximum": 7.105427357601002e-15
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 42,
+          "mean": 0.7786722232896941,
+          "median": 0.7758303135633469,
+          "p95": 0.8328035794198513,
+          "maximum": 0.866036981339454
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 42,
+          "mean": 0.7786722232896933,
+          "median": 0.7758303135633433,
+          "p95": 0.8328035794198447,
+          "maximum": 0.8660369813394575
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 42,
+          "mean": 0.2169033459254682,
+          "median": 0.07542490959169257,
+          "p95": 0.729560978710655,
+          "maximum": 2.79882475733757
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 42,
+          "mean": 0.7786722232896941,
+          "median": 0.7758303135633469,
+          "p95": 0.8328035794198513,
+          "maximum": 0.866036981339454
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 42,
+          "mean": 0.21690334592546737,
+          "median": 0.0754249095916748,
+          "p95": 0.7295609787106514,
+          "maximum": 2.79882475733757
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 42,
+          "mean": 1.2211818847627873,
+          "median": 1.2241596132516896,
+          "p95": 1.2712257854640416,
+          "maximum": 1.3570952415466309
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 42,
+          "mean": 1.2211818847627867,
+          "median": 1.224159613251686,
+          "p95": 1.2712257854640483,
+          "maximum": 1.3570952415466309
+        },
+        "speed_m_s": {
+          "samples": 42,
+          "mean": 10.404988006858195,
+          "median": 10.39777085163865,
+          "p95": 12.672427696075776,
+          "maximum": 12.914285759415963
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.0,
+        "collision": 0.0,
+        "cooperation": 0.0,
+        "feasible_acceleration": -0.043259567960538564,
+        "intervention": 0.0,
+        "jerk": -0.002169033459254682,
+        "lane_change": 0.0,
+        "lane_oscillation": 0.0,
+        "merge": 0.0,
+        "passing": 0.0,
+        "progress": 0.39247443164424034,
+        "stable_merge": 0.0,
+        "unsafe_request": 0.0
+      }
+    },
+    "during_lane_change": {
+      "counts": {
+        "decisions": 134,
+        "override": 3,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 3,
+        "realized_samples": 134
+      },
+      "intervention_fraction": 0.022388059701492536,
+      "analytical_match_causes": {
+        "acc_following_response_match": 3
+      },
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 134,
+          "mean": 0.0030083949519680315,
+          "median": 7.105427357601002e-15,
+          "p95": 0.024176459123279547,
+          "maximum": 0.06711459270515974
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 134,
+          "mean": 0.40481497096752045,
+          "median": 0.09774665039181726,
+          "p95": 1.2591745726764203,
+          "maximum": 1.6155476719141006
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 134,
+          "mean": 0.4018065775695752,
+          "median": 0.09774665039181193,
+          "p95": 1.259174572676419,
+          "maximum": 1.6155476719141078
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 134,
+          "mean": 0.22789367390552748,
+          "median": 0.07618343308744002,
+          "p95": 1.046401437371873,
+          "maximum": 3.844422549009252
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 134,
+          "mean": 0.40481497096752045,
+          "median": 0.09774665039181726,
+          "p95": 1.2591745726764203,
+          "maximum": 1.6155476719141006
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 132,
+          "mean": 0.18368581930796304,
+          "median": 0.05076788365840912,
+          "p95": 0.8843967765569665,
+          "maximum": 1.7897705733776093
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 134,
+          "mean": 0.36569355937856246,
+          "median": 0.30935752618847623,
+          "p95": 0.7738998971879516,
+          "maximum": 0.951911062002182
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 134,
+          "mean": 0.36870195433052616,
+          "median": 0.32949385419487953,
+          "p95": 0.7738998971879482,
+          "maximum": 0.951911062002182
+        },
+        "speed_m_s": {
+          "samples": 134,
+          "mean": 15.180282470154927,
+          "median": 13.99034815937122,
+          "p95": 17.91442984491195,
+          "maximum": 17.92591112944837
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.0,
+        "collision": 0.0,
+        "cooperation": 0.0,
+        "feasible_acceleration": -0.02248972060930669,
+        "intervention": -0.004477611940298508,
+        "jerk": -0.002278936739055275,
+        "lane_change": 0.0,
+        "lane_oscillation": 0.0,
+        "merge": 0.0,
+        "passing": 0.0,
+        "progress": 0.5673188016766871,
+        "stable_merge": 0.014925373134328358,
+        "unsafe_request": 0.0
+      }
+    },
+    "ramp_approach": {
+      "counts": {
+        "decisions": 41,
+        "override": 11,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 11,
+        "realized_samples": 41
+      },
+      "intervention_fraction": 0.2682926829268293,
+      "analytical_match_causes": {
+        "minor_approach_stopping_response_match": 11
+      },
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 41,
+          "mean": 1.4979781806643144,
+          "median": 3.552713678800501e-15,
+          "p95": 5.835386171936991,
+          "maximum": 5.928403317928307
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 41,
+          "mean": 1.7472837456857708,
+          "median": 0.3628496825695038,
+          "p95": 5.835386171936989,
+          "maximum": 5.928399034579591
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 41,
+          "mean": 0.24930652723555363,
+          "median": 0.28437376022339045,
+          "p95": 0.6074219644069707,
+          "maximum": 0.9741649329662323
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 41,
+          "mean": 3.4282840352233586,
+          "median": 0.03470987081524157,
+          "p95": 24.03508275032955,
+          "maximum": 58.92567962407957
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 41,
+          "mean": 1.7472837456857708,
+          "median": 0.3628496825695038,
+          "p95": 5.835386171936989,
+          "maximum": 5.928399034579591
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 40,
+          "mean": 0.420378852635622,
+          "median": 0.04481405019760132,
+          "p95": 2.0542725548148137,
+          "maximum": 4.765455275774002
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 41,
+          "mean": 0.03731265262571929,
+          "median": 1.6331532001495397,
+          "p95": 1.7107899487018585,
+          "maximum": 1.7156161665916425
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 41,
+          "mean": 1.5352908332900304,
+          "median": 1.6331532001495361,
+          "p95": 1.7107899487018585,
+          "maximum": 1.7156161665916443
+        },
+        "speed_m_s": {
+          "samples": 41,
+          "mean": 8.752620089102104,
+          "median": 8.6644598139908,
+          "p95": 10.90801450886995,
+          "maximum": 11.117663681366654
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.0,
+        "collision": 0.0,
+        "cooperation": 0.0,
+        "feasible_acceleration": -0.09707131920476504,
+        "intervention": -0.05365853658536586,
+        "jerk": -0.034282840352233585,
+        "lane_change": 0.0,
+        "lane_oscillation": 0.0,
+        "merge": 0.0,
+        "passing": 0.0,
+        "progress": 0.32645666884263574,
+        "stable_merge": 0.0,
+        "unsafe_request": 0.0
+      }
+    },
+    "through_lane": {
+      "counts": {
+        "decisions": 2647,
+        "override": 230,
+        "policy_filter_changed": 0,
+        "native_realization_changed": 230,
+        "realized_samples": 2639,
+        "arrival_without_realization": 8
+      },
+      "intervention_fraction": 0.08689081979599547,
+      "analytical_match_causes": {
+        "acc_following_response_match": 230
+      },
+      "residuals": {
+        "absolute_filtered_native_error_m_s2": {
+          "samples": 2639,
+          "mean": 0.015240571420841956,
+          "median": 7.105427357601002e-15,
+          "p95": 0.15742653326591588,
+          "maximum": 0.8144907412777087
+        },
+        "absolute_filtered_target_error_m_s2": {
+          "samples": 2647,
+          "mean": 0.1845931225630134,
+          "median": 0.025330670177936554,
+          "p95": 0.8276659488792413,
+          "maximum": 1.6778014078736305
+        },
+        "absolute_native_target_error_m_s2": {
+          "samples": 2639,
+          "mean": 0.16987488821770777,
+          "median": 0.01692091673613305,
+          "p95": 0.8290374330549243,
+          "maximum": 1.6778014078736376
+        },
+        "absolute_realized_jerk_m_s3": {
+          "samples": 2639,
+          "mean": 0.05310277577634604,
+          "median": 0.0069398432970047,
+          "p95": 0.20568657309757649,
+          "maximum": 9.489270804176542
+        },
+        "absolute_request_target_error_m_s2": {
+          "samples": 2647,
+          "mean": 0.1845931225630134,
+          "median": 0.025330670177936554,
+          "p95": 0.8276659488792413,
+          "maximum": 1.6778014078736305
+        },
+        "absolute_requested_jerk_m_s3": {
+          "samples": 2642,
+          "mean": 0.03712419440221101,
+          "median": 0.005789659917354584,
+          "p95": 0.16761266440153122,
+          "maximum": 1.453787237405777
+        },
+        "realized_acceleration_m_s2": {
+          "samples": 2639,
+          "mean": 0.13879524642927082,
+          "median": 0.0011497214436673175,
+          "p95": 0.5127492353320181,
+          "maximum": 1.653054520487789
+        },
+        "requested_acceleration_m_s2": {
+          "samples": 2647,
+          "mean": 0.15354923705785375,
+          "median": 0.018861964344978333,
+          "p95": 0.5126363381743431,
+          "maximum": 1.6530545204877853
+        },
+        "speed_m_s": {
+          "samples": 2639,
+          "mean": 16.870446467348103,
+          "median": 17.84370848658209,
+          "p95": 17.918340715175965,
+          "maximum": 17.92948290351386
+        }
+      },
+      "mean_weighted_reward_terms": {
+        "arrival": 0.006044578768417076,
+        "collision": 0.0,
+        "cooperation": 3.7778617302606726e-05,
+        "feasible_acceleration": -0.010255173475722967,
+        "intervention": -0.017378163959199094,
+        "jerk": -0.0005294228382084519,
+        "lane_change": -0.00018889308651303362,
+        "lane_oscillation": 0.0,
+        "merge": 0.0018889308651303363,
+        "passing": 0.0,
+        "progress": 0.6295995795975856,
+        "stable_merge": 0.0,
+        "unsafe_request": 0.0
+      }
+    }
+  },
+  "stage_definition": "Pre-step recorded ramp/auxiliary identity takes precedence; other roads use the recorded post-step maneuver-in-progress flag, then through_lane.",
+  "objective_review": {
+    "evidence_scope": "One fixed validation case; not a training or generalization result",
+    "priorities": [
+      {
+        "topic": "Following response consistency",
+        "observed_interventions": 233,
+        "interpretation": "Existing actor-visible following target already explains native response; preserve exact intervention accounting."
+      },
+      {
+        "topic": "Anticipatory minor-entry braking and smooth acceleration recovery",
+        "observed_interventions": 11,
+        "interpretation": "Evaluate realized jerk as well as overrides: a released native constraint can cause a large jerk without an override on that tick."
+      }
+    ],
+    "proposed_training_source": "Separately generated training-only scenarios after explicit configuration/budget approval; never these validation trajectories"
+  },
+  "reward_weights": {
+    "progress": 1.0,
+    "merge": 5.0,
+    "passing": 2.0,
+    "arrival": 2.0,
+    "collision": 20.0,
+    "intervention": 0.2,
+    "jerk": 0.01,
+    "lane_change": 0.1,
+    "feasible_acceleration": 0.25,
+    "unsafe_request": 0.5,
+    "cooperation": 0.1
+  },
+  "references": [
+    {
+      "url": "https://raw.githubusercontent.com/eclipse-sumo/sumo/v1_27_1/src/microsim/cfmodels/MSCFModel_ACC.cpp",
+      "lines": "110-123,185-220,224-286",
+      "role": "Ordinary ACC following response and mode thresholds"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/eclipse-sumo/sumo/v1_27_1/src/microsim/MSVehicle.cpp",
+      "lines": "2777-2779,2801-2849",
+      "role": "Minor-junction approach and waiting speed"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/eclipse-sumo/sumo/v1_27_1/src/microsim/cfmodels/MSCFModel.cpp",
+      "role": "Discrete safe stop-speed calculation"
+    }
+  ],
+  "decision": "Do not change the native car-following model, intervention threshold, or raw actor accounting to conceal this residual. Existing actor-visible teacher targets explain the mismatches; improving frozen weights needs separately authorized training or an explicitly different controller.",
+  "analysis_script_sha256": "f19899a3bded19bbb1fccf73bbb587548f351d4692a7f91e631349a0a9dc4c1e",
+  "command": [
+    "C:\\Users\\hudso\\Documents\\highwaysim\\.venv-traffic\\Scripts\\python.exe",
+    "scripts/diagnose_highway_smooth_control.py",
+    "--recording",
+    "outputs/i110-merge-blocking/v01/replay-corrected-01",
+    "--output",
+    "outputs/highway-smooth-control/v01/saved-control-analysis-02.json"
+  ]
+}

@@ -1,0 +1,284 @@
+{
+  "schema": "read_only_native_acc_peak_fit_v01",
+  "no_simulator_run": true,
+  "no_training": true,
+  "analytical_fit_only": true,
+  "interpretation": "Saved previous states plus the existing ACC calibration reproduce these four next measured accelerations. This is offline mechanistic evidence, not native-emitted causal labels or a complete native-mode model.",
+  "calculation": "traffic.highway_stage1_teacher.acc_response_ceiling with measured previous ego speed, native lane limit and specified current occupied/destination corridor leader; DT=.1",
+  "calculator_source_sha256": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+  "occupancy_source_sha256": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+  "fits": [
+    {
+      "fixture": "cruise",
+      "ego_id": "agent_2",
+      "time_s": 31.6,
+      "previous_time_s": 31.5,
+      "ego_previous": {
+        "lane_id": "sb3_1",
+        "speed_m_s": 17.899989597935285,
+        "acceleration_m_s2": 4.284083843231201e-06,
+        "lateral_position_m": 0.0
+      },
+      "leader_previous": {
+        "id": "main_12",
+        "lane_id": "sb3_0",
+        "speed_m_s": 14.416297646260775,
+        "acceleration_m_s2": -1.9444444444444464,
+        "lateral_position_m": 0.10666666666666667,
+        "bumper_gap_m": 44.12709772050337,
+        "relative_speed_m_s": -3.48369195167451,
+        "context_corridor": "own"
+      },
+      "all_previous_neighbors": {
+        "own": {
+          "front": {
+            "id": "main_12",
+            "bumper_gap_m": 44.12709772050337,
+            "relative_speed_m_s": -3.48369195167451
+          },
+          "rear": null
+        },
+        "left": {
+          "front": null,
+          "rear": {
+            "id": "agent_0",
+            "bumper_gap_m": 11.063383451770576,
+            "relative_speed_m_s": 1.3715788718116073e-06
+          }
+        },
+        "right": {
+          "front": {
+            "id": "main_12",
+            "bumper_gap_m": 44.12709772050337,
+            "relative_speed_m_s": -3.48369195167451
+          },
+          "rear": {
+            "id": "main_6",
+            "bumper_gap_m": 87.96300114277035,
+            "relative_speed_m_s": -0.16987784158951058
+          }
+        }
+      },
+      "limit_m_s": 18.0,
+      "requested_acceleration_m_s2": -0.1999957039952278,
+      "filtered_acceleration_m_s2": -0.1999957039952278,
+      "observed_acceleration_m_s2": -2.1958690283955917,
+      "predicted_acceleration_m_s2": -2.1958690283955904,
+      "absolute_error_m_s2": 1.3322676295501878e-15,
+      "observed_jerk_m_s3": -21.95873312479435,
+      "recorded_native_cause": "unattributed",
+      "recorded_override_causes": [
+        "native_realization_unattributed"
+      ],
+      "recording_path": "outputs/highway-smooth-control/v02/matrix-02/cruise/smooth/recording.json",
+      "recording_sha256": "4ef669407272930e22169f5779c22bcab37374aaf03ca0cb7f6d224d77bd9633",
+      "action_journal_path": "outputs/highway-smooth-control/v02/matrix-02/cruise/smooth/simulation/episode-6800020-ed465ca1/actions.jsonl.gz",
+      "action_journal_sha256": "6810b0985b503017f042209edfb1d5d39849aafbdfa94ab6902afcf01e113481"
+    },
+    {
+      "fixture": "following",
+      "ego_id": "agent_3",
+      "time_s": 55.0,
+      "previous_time_s": 54.9,
+      "ego_previous": {
+        "lane_id": "sb3_2",
+        "speed_m_s": 17.89999962946566,
+        "acceleration_m_s2": -1.7136336794010276e-07,
+        "lateral_position_m": 0.0
+      },
+      "leader_previous": {
+        "id": "agent_2",
+        "lane_id": "sb3_1",
+        "speed_m_s": 7.178470129464651,
+        "acceleration_m_s2": -0.9000002145767194,
+        "lateral_position_m": 0.10666666666666667,
+        "bumper_gap_m": 69.10108186669989,
+        "relative_speed_m_s": -10.72152950000101,
+        "context_corridor": "own"
+      },
+      "all_previous_neighbors": {
+        "own": {
+          "front": {
+            "id": "agent_2",
+            "bumper_gap_m": 69.10108186669989,
+            "relative_speed_m_s": -10.72152950000101
+          },
+          "rear": null
+        },
+        "left": {
+          "front": {
+            "id": "agent_1",
+            "bumper_gap_m": 30.16702713043561,
+            "relative_speed_m_s": 1.0799833916053103e-08
+          },
+          "rear": null
+        },
+        "right": {
+          "front": {
+            "id": "agent_2",
+            "bumper_gap_m": 69.10108186669989,
+            "relative_speed_m_s": -10.72152950000101
+          },
+          "rear": {
+            "id": "agent_5",
+            "bumper_gap_m": 13.526985942771471,
+            "relative_speed_m_s": -4.759691162133578
+          }
+        }
+      },
+      "limit_m_s": 18.0,
+      "requested_acceleration_m_s2": -0.20000015944242477,
+      "filtered_acceleration_m_s2": -0.20000015944242477,
+      "observed_acceleration_m_s2": -4.499999999999993,
+      "predicted_acceleration_m_s2": -4.5,
+      "absolute_error_m_s2": 7.105427357601002e-15,
+      "observed_jerk_m_s3": -44.99999828636625,
+      "recorded_native_cause": "unattributed",
+      "recorded_override_causes": [
+        "native_realization_unattributed"
+      ],
+      "recording_path": "outputs/highway-smooth-control/v02/matrix-02/following/smooth/recording.json",
+      "recording_sha256": "3f5e244702990256ee86fef48c16d70910594f2141e420950f95e4ff0cc64d4b",
+      "action_journal_path": "outputs/highway-smooth-control/v02/matrix-02/following/smooth/simulation/episode-6800021-a2e67eea/actions.jsonl.gz",
+      "action_journal_sha256": "c14ca0624a9916cf32324c67662b1e69c5e97b6a275712383411e2df70f601a1"
+    },
+    {
+      "fixture": "passing",
+      "ego_id": "agent_1",
+      "time_s": 44.8,
+      "previous_time_s": 44.7,
+      "ego_previous": {
+        "lane_id": "sb3_1",
+        "speed_m_s": 16.445005099364934,
+        "acceleration_m_s2": -0.5578724294900894,
+        "lateral_position_m": -0.10666666666666667
+      },
+      "leader_previous": {
+        "id": "slow_leader",
+        "lane_id": "sb3_0",
+        "speed_m_s": 10.0,
+        "acceleration_m_s2": 0.0,
+        "lateral_position_m": 1.28,
+        "bumper_gap_m": 84.69794251143897,
+        "relative_speed_m_s": -6.445005099364934,
+        "context_corridor": "right"
+      },
+      "all_previous_neighbors": {
+        "own": {
+          "front": {
+            "id": "main_8",
+            "bumper_gap_m": 32.47801288314484,
+            "relative_speed_m_s": -1.0018370178094234
+          },
+          "rear": {
+            "id": "agent_3",
+            "bumper_gap_m": 70.41104191139723,
+            "relative_speed_m_s": 1.454994519396152
+          }
+        },
+        "left": {
+          "front": {
+            "id": "agent_4",
+            "bumper_gap_m": 91.07829216363321,
+            "relative_speed_m_s": 1.45499454987824
+          },
+          "rear": {
+            "id": "main_6",
+            "bumper_gap_m": 12.390712455925193,
+            "relative_speed_m_s": 0.08181361434920476
+          }
+        },
+        "right": {
+          "front": {
+            "id": "slow_leader",
+            "bumper_gap_m": 84.69794251143897,
+            "relative_speed_m_s": -6.445005099364934
+          },
+          "rear": null
+        }
+      },
+      "limit_m_s": 18.0,
+      "requested_acceleration_m_s2": -0.5890493243932724,
+      "filtered_acceleration_m_s2": -0.5890493243932724,
+      "observed_acceleration_m_s2": -2.8547866849962844,
+      "predicted_acceleration_m_s2": -2.854786684996285,
+      "absolute_error_m_s2": 4.440892098500626e-16,
+      "observed_jerk_m_s3": -22.96914255506195,
+      "recorded_native_cause": "unattributed",
+      "recorded_override_causes": [
+        "native_realization_unattributed"
+      ],
+      "recording_path": "outputs/highway-smooth-control/v02/matrix-02/passing/smooth/recording.json",
+      "recording_sha256": "c5a8fcafb0abd0422c66185230d813ca46a5af274ddcf105587d2d366e25db85",
+      "action_journal_path": "outputs/highway-smooth-control/v02/matrix-02/passing/smooth/simulation/episode-6800022-179ef66a/actions.jsonl.gz",
+      "action_journal_sha256": "304b48dcd1ab5b4d52a41015ea371488cf863cd7dbc508bb3d912334628fc8bc"
+    },
+    {
+      "fixture": "merge",
+      "ego_id": "agent_5",
+      "time_s": 51.9,
+      "previous_time_s": 51.8,
+      "ego_previous": {
+        "lane_id": "sb3_0",
+        "speed_m_s": 17.47183812989498,
+        "acceleration_m_s2": 0.17840058356522803,
+        "lateral_position_m": 0.10666666666666667
+      },
+      "leader_previous": {
+        "id": "main_7",
+        "lane_id": "sb3_1",
+        "speed_m_s": 15.80953124504775,
+        "acceleration_m_s2": -0.04693612984723927,
+        "lateral_position_m": 0.0,
+        "bumper_gap_m": 39.56609956395094,
+        "relative_speed_m_s": -1.6623068848472293,
+        "context_corridor": "own"
+      },
+      "all_previous_neighbors": {
+        "own": {
+          "front": {
+            "id": "main_7",
+            "bumper_gap_m": 39.56609956395094,
+            "relative_speed_m_s": -1.6623068848472293
+          },
+          "rear": {
+            "id": "agent_1",
+            "bumper_gap_m": 35.08417770731383,
+            "relative_speed_m_s": 0.07638731651746866
+          }
+        },
+        "left": {
+          "front": {
+            "id": "main_7",
+            "bumper_gap_m": 39.56609956395094,
+            "relative_speed_m_s": -1.6623068848472293
+          },
+          "rear": {
+            "id": "agent_1",
+            "bumper_gap_m": 35.08417770731383,
+            "relative_speed_m_s": 0.07638731651746866
+          }
+        },
+        "right": {
+          "front": null,
+          "rear": null
+        }
+      },
+      "limit_m_s": 18.0,
+      "requested_acceleration_m_s2": -0.021599404513835907,
+      "filtered_acceleration_m_s2": -0.021599404513835907,
+      "observed_acceleration_m_s2": -0.8955118131134299,
+      "predicted_acceleration_m_s2": -0.8955118131134447,
+      "absolute_error_m_s2": 1.4876988529977098e-14,
+      "observed_jerk_m_s3": -10.739123966786579,
+      "recorded_native_cause": "unattributed",
+      "recorded_override_causes": [
+        "native_realization_unattributed"
+      ],
+      "recording_path": "outputs/highway-smooth-control/v02/matrix-02/merge/smooth/recording.json",
+      "recording_sha256": "43bd91c14bdaa96dc52b4f47bde54e870bbe20b6ad8bbf5a05a0dec35a7384a3",
+      "action_journal_path": "outputs/highway-smooth-control/v02/matrix-02/merge/smooth/simulation/episode-6800023-5668c892/actions.jsonl.gz",
+      "action_journal_sha256": "c7f9cf7ff75269993ce6b250dfa18d6140a72530b95a491a60cda7bf8c57c5fd"
+    }
+  ]
+}

@@ -1,0 +1,389 @@
+{
+  "status": "comfort_improved_one_seed_early_crossing_unresolved_not_policy_qualification",
+  "training": false,
+  "optimizer_updates": 0,
+  "tests": {
+    "passed": 40,
+    "subtests_passed": 16
+  },
+  "baseline": "v04/policy-01 saved run; not rerun",
+  "candidate": "v05/policy-01 one new run",
+  "provenance": {
+    "git_commit": "33cb2b63ec6b34a76457c7426faf8d002561c6f7",
+    "source_sha256": {
+      "scripts/evaluate_gpudrive_i110.py": "52bced5ced9745fdcb0e7af357ec63730627fdd1dd5e38d72054ff423d9eed05",
+      "traffic/gpudrive_sumo_bridge.py": "ca856e89a763f41d8e061cd631e7ee40bfa00def06eb0956fe65003367e784a3",
+      "traffic/gpudrive_pretrained.py": "f3daae0451c0075d8769e24a466af3e4ae03d6df0619e8ac622f86e83994f938",
+      "traffic/gpudrive_continuous_safety.py": "8946b9f9d14dcdf462f54a3c5e2719dd1fe1f95478168e5cde4a9848b9b7e011",
+      "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+      "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+      "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+      "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+      "traffic/gpudrive_longitudinal.py": "6e498b6ea590f9350544347914246936b81e0df662d5a8688b40100f4c136db0",
+      "traffic/gpudrive_merge_audit.py": "b87979d394288f99235237bdff236c59f0f097aaf8358ace6e348287e6dce858"
+    },
+    "checkpoint_sha256": "f3f26475def35f375c6c72d8f8f20b2b091f77175010345dc3fa968a860521b7",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.6"
+  },
+  "runs": {
+    "v04": {
+      "metrics": {
+        "goal_reached": true,
+        "simulated_duration_s": 28.5,
+        "wall_seconds": 3.8589999999967404,
+        "distance_m": 577.8656837009322,
+        "maximum_speed_m_s": 26.82,
+        "minimum_speed_m_s": 6.212214045539055,
+        "stopped_exposure_s": 0.0,
+        "speed_limit_exceedance_steps": 0,
+        "peak_abs_jerk_m_s3": 60.00000000000005,
+        "policy_safety_override_fraction": 0.897887323943662,
+        "actor_decisions": 284,
+        "contacts": [],
+        "native_collision_events": [],
+        "teleports": [],
+        "pose_readback_max_error_m": 5.684341886080802e-14,
+        "jerk_rms_m_s3": 15.004289945147129,
+        "jerk_p95_m_s3": 31.15486594277642,
+        "background_emergency_braking_warnings": 3,
+        "range_clipped_decisions": 251,
+        "guard_changes_after_range_clip": 137
+      },
+      "merge_audit": {
+        "mapped_lane_transitions": [
+          {
+            "time_s": 1.1,
+            "previous_sample_time_s": 1.0,
+            "from_lane": "mlk_on_0",
+            "to_lane": "sb1_0",
+            "classification": "unconnected_cross_road"
+          },
+          {
+            "time_s": 2.3,
+            "previous_sample_time_s": 2.2,
+            "from_lane": "sb1_0",
+            "to_lane": "sb1_1",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 2.4,
+            "previous_sample_time_s": 2.3,
+            "from_lane": "sb1_1",
+            "to_lane": "sb1_0",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 2.5,
+            "previous_sample_time_s": 2.4,
+            "from_lane": "sb1_0",
+            "to_lane": "sb1_1",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 5.0,
+            "previous_sample_time_s": 4.9,
+            "from_lane": "sb1_1",
+            "to_lane": "sb1_2",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 5.1,
+            "previous_sample_time_s": 5.0,
+            "from_lane": "sb1_2",
+            "to_lane": ":n2_0_2",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 5.3,
+            "previous_sample_time_s": 5.2,
+            "from_lane": ":n2_0_2",
+            "to_lane": "sb2_2",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 6.7,
+            "previous_sample_time_s": 6.6,
+            "from_lane": "sb2_2",
+            "to_lane": "sb2_1",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 12.7,
+            "previous_sample_time_s": 12.6,
+            "from_lane": "sb2_1",
+            "to_lane": "sb2_0",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 13.8,
+            "previous_sample_time_s": 13.7,
+            "from_lane": "sb2_0",
+            "to_lane": ":n3_1_0",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 13.9,
+            "previous_sample_time_s": 13.8,
+            "from_lane": ":n3_1_0",
+            "to_lane": "sb3_0",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 14.0,
+            "previous_sample_time_s": 13.9,
+            "from_lane": "sb3_0",
+            "to_lane": "sb3_1",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 21.9,
+            "previous_sample_time_s": 21.8,
+            "from_lane": "sb3_1",
+            "to_lane": ":n4_0_0",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 22.0,
+            "previous_sample_time_s": 21.9,
+            "from_lane": ":n4_0_0",
+            "to_lane": "sb4_0",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 26.0,
+            "previous_sample_time_s": 25.9,
+            "from_lane": "sb4_0",
+            "to_lane": ":n5_0_0",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 26.1,
+            "previous_sample_time_s": 26.0,
+            "from_lane": ":n5_0_0",
+            "to_lane": "sb5_0",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 27.5,
+            "previous_sample_time_s": 27.4,
+            "from_lane": "sb5_0",
+            "to_lane": "sb5_1",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 27.6,
+            "previous_sample_time_s": 27.5,
+            "from_lane": "sb5_1",
+            "to_lane": "sb5_0",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 28.2,
+            "previous_sample_time_s": 28.1,
+            "from_lane": "sb5_0",
+            "to_lane": "sb5_1",
+            "classification": "same_edge_lane_change"
+          }
+        ],
+        "first_ramp_exit": {
+          "time_s": 1.1,
+          "previous_sample_time_s": 1.0,
+          "from_lane": "mlk_on_0",
+          "to_lane": "sb1_0",
+          "classification": "unconnected_cross_road",
+          "source_ramp_projection": {
+            "projected_front_bumper_xy": [
+              -14.3479,
+              -246.8338
+            ],
+            "projected_position_m": 264.6589,
+            "projected_distance_to_ramp_end_m": 32.2311,
+            "distance_to_ramp_centerline_m": 3.0874
+          }
+        },
+        "unconnected_cross_road_transition_count": 1,
+        "unknown_mapping_transition_count": 0,
+        "missing_ego_frames": 0,
+        "lane_marking_legality_verified": false,
+        "legitimate_merge_verified": false,
+        "limitations": [
+          "Lane mappings are sampled associations, not exact physical crossing times.",
+          "No verified painted-line, gore or barrier masks are available.",
+          "Same-edge lane changes and graph links do not establish physical or legal permission.",
+          "Three-second mainline occupancy alone does not establish a legitimate merge."
+        ]
+      },
+      "artifact_sha256": {
+        "evaluation.json": "a1abbb52a428a2a281c3f3146c3b83bd4decc236dcbcf102ca26574318fcca67",
+        "recording.json": "5fc7944678a44a9336526e99a1505e95030800c4eeb784b5c51758842d137ed8",
+        "actions.jsonl.gz": "11baaec28b511f1368cd134a3d1f5a8698b9f6857d4497df47a8e335fdbf9af1",
+        "resolved-config.json": "9030750814c70e4ebfd1e0d3d6c40f2d7d79031c63db610ec2d89d1e912457d6",
+        "manifest.json": "a9889dde8878e4df2f91f42a710ac9b9f66bc3908fa0cb252c03630df8bc8228"
+      }
+    },
+    "v05": {
+      "metrics": {
+        "goal_reached": true,
+        "simulated_duration_s": 28.4,
+        "wall_seconds": 3.812999999994645,
+        "distance_m": 576.6502951207118,
+        "maximum_speed_m_s": 26.439224649380034,
+        "minimum_speed_m_s": 6.342614111914804,
+        "stopped_exposure_s": 0.0,
+        "speed_limit_exceedance_steps": 0,
+        "peak_abs_jerk_m_s3": 3.0000000000001137,
+        "policy_safety_override_fraction": 0.9929328621908127,
+        "actor_decisions": 283,
+        "contacts": [],
+        "native_collision_events": [],
+        "teleports": [],
+        "pose_readback_max_error_m": 1.1369030711563004e-13,
+        "jerk_rms_m_s3": 1.1731552150528866,
+        "jerk_p95_m_s3": 3.000000000000025,
+        "background_emergency_braking_warnings": 2,
+        "longitudinal_conditioning": {
+          "decisions": 283,
+          "range_clipped_decisions": 262,
+          "comfort_changed_decisions": 177,
+          "jerk_limited_decisions": 37,
+          "final_guard_changed_decisions": 0,
+          "final_guard_changed_fraction": 0.0,
+          "minimum_recorded_leader_gap_m": 11.894219472103355,
+          "minimum_recorded_leader_time_headway_s": 1.8752866345375927,
+          "minimum_recorded_leader_ttc_s": 31.10220639852899,
+          "scope": "Current graph-selected front vehicle; not all lateral conflicts. Counts overlap."
+        }
+      },
+      "merge_audit": {
+        "mapped_lane_transitions": [
+          {
+            "time_s": 0.8,
+            "previous_sample_time_s": 0.7,
+            "from_lane": "mlk_on_0",
+            "to_lane": "sb1_0",
+            "classification": "unconnected_cross_road"
+          },
+          {
+            "time_s": 2.4,
+            "previous_sample_time_s": 2.3,
+            "from_lane": "sb1_0",
+            "to_lane": "sb1_1",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 5.0,
+            "previous_sample_time_s": 4.9,
+            "from_lane": "sb1_1",
+            "to_lane": "sb1_2",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 5.3,
+            "previous_sample_time_s": 5.2,
+            "from_lane": "sb1_2",
+            "to_lane": ":n2_0_2",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 5.5,
+            "previous_sample_time_s": 5.4,
+            "from_lane": ":n2_0_2",
+            "to_lane": "sb2_2",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 10.0,
+            "previous_sample_time_s": 9.9,
+            "from_lane": "sb2_2",
+            "to_lane": "sb2_1",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 14.3,
+            "previous_sample_time_s": 14.2,
+            "from_lane": "sb2_1",
+            "to_lane": ":n3_1_1",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 14.4,
+            "previous_sample_time_s": 14.3,
+            "from_lane": ":n3_1_1",
+            "to_lane": "sb3_1",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 15.2,
+            "previous_sample_time_s": 15.1,
+            "from_lane": "sb3_1",
+            "to_lane": "sb3_2",
+            "classification": "same_edge_lane_change"
+          },
+          {
+            "time_s": 22.0,
+            "previous_sample_time_s": 21.9,
+            "from_lane": "sb3_2",
+            "to_lane": ":n4_0_1",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 22.1,
+            "previous_sample_time_s": 22.0,
+            "from_lane": ":n4_0_1",
+            "to_lane": "sb4_1",
+            "classification": "graph_connected"
+          },
+          {
+            "time_s": 26.0,
+            "previous_sample_time_s": 25.9,
+            "from_lane": "sb4_1",
+            "to_lane": "sb5_1",
+            "classification": "graph_connected"
+          }
+        ],
+        "first_ramp_exit": {
+          "time_s": 0.8,
+          "previous_sample_time_s": 0.7,
+          "from_lane": "mlk_on_0",
+          "to_lane": "sb1_0",
+          "classification": "unconnected_cross_road",
+          "source_ramp_projection": {
+            "projected_front_bumper_xy": [
+              -14.495,
+              -245.6685
+            ],
+            "projected_position_m": 263.4834,
+            "projected_distance_to_ramp_end_m": 33.4066,
+            "distance_to_ramp_centerline_m": 2.1208
+          }
+        },
+        "unconnected_cross_road_transition_count": 1,
+        "unknown_mapping_transition_count": 0,
+        "missing_ego_frames": 0,
+        "lane_marking_legality_verified": false,
+        "legitimate_merge_verified": false,
+        "limitations": [
+          "Lane mappings are sampled associations, not exact physical crossing times.",
+          "No verified painted-line, gore or barrier masks are available.",
+          "Same-edge lane changes and graph links do not establish physical or legal permission.",
+          "Three-second mainline occupancy alone does not establish a legitimate merge."
+        ]
+      },
+      "artifact_sha256": {
+        "evaluation.json": "cc9774894909203f28b03da9d32c81349486306c3690f21b9e4a67127f3e19fd",
+        "recording.json": "90e36229560fa1875cdedc8cf27e5ee0b213c9f6b669f65a7dca37ee294c94bc",
+        "actions.jsonl.gz": "f1b4a5d564b62d01ed02501b89ea9ad359ded4fa1f09230da637967279960643",
+        "resolved-config.json": "e5c79a25519fc6757ef85055d86adde3056b2686b77ca3cd65f7f4e438f17c29",
+        "manifest.json": "55c06520d034cca1379e5ed4151b85d02661f1d788f5cde3ebc138a7abd461b9"
+      }
+    }
+  },
+  "limitations": [
+    "Single exploratory seed; not held-out acceptance.",
+    "Additional guard changes are measured after different input stages: range clip in v04; comfort filter in v05.",
+    "Raw intervention metric retained: 89.79% -> 99.29%; do not claim 5% qualification from downstream guard rate.",
+    "Neither trace follows the original ramp connection; lane marking and physical crossing permission are unverified."
+  ]
+}

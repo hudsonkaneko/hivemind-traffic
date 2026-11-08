@@ -1,0 +1,5907 @@
+{
+  "protocol": "Fixed sixteen full 800-step validation cases compared at the frozen parent and final endpoint; no checkpoint selection by best interim score.",
+  "held_out_test_run": false,
+  "accepted": false,
+  "initial": {
+    "summary": {
+      "cases": 16,
+      "pooled_override_fraction": 0.2063928837201253,
+      "worst_override_fraction": 0.44875,
+      "failures": [
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 6510000,
+          "population": {
+            "controlled_count": 1,
+            "total_vehicles": 24,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides",
+            "cruise_speed"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-following",
+          "seed": 6510001,
+          "population": {
+            "controlled_count": 3,
+            "total_vehicles": 16,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-passing",
+          "seed": 6510002,
+          "population": {
+            "controlled_count": 5,
+            "total_vehicles": 24,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 6510003,
+          "population": {
+            "controlled_count": 7,
+            "total_vehicles": 8,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-4-lane-following",
+          "seed": 6510005,
+          "population": {
+            "controlled_count": 1,
+            "total_vehicles": 8,
+            "communication": "local",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-4-lane-passing",
+          "seed": 6510006,
+          "population": {
+            "controlled_count": 3,
+            "total_vehicles": 16,
+            "communication": "local",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-4-lane-merge",
+          "seed": 6510007,
+          "population": {
+            "controlled_count": 5,
+            "total_vehicles": 24,
+            "communication": "local",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-5-lane-cruise",
+          "seed": 6510008,
+          "population": {
+            "controlled_count": 7,
+            "total_vehicles": 16,
+            "communication": "local",
+            "packet_loss": 0.3
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-5-lane-following",
+          "seed": 6510009,
+          "population": {
+            "controlled_count": 8,
+            "total_vehicles": 24,
+            "communication": "local",
+            "packet_loss": 0.3
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-5-lane-passing",
+          "seed": 6510010,
+          "population": {
+            "controlled_count": 1,
+            "total_vehicles": 8,
+            "communication": "local",
+            "packet_loss": 0.3
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-5-lane-merge",
+          "seed": 6510011,
+          "population": {
+            "controlled_count": 3,
+            "total_vehicles": 16,
+            "communication": "local",
+            "packet_loss": 0.3
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 6510012,
+          "population": {
+            "controlled_count": 5,
+            "total_vehicles": 8,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-following",
+          "seed": 6510013,
+          "population": {
+            "controlled_count": 7,
+            "total_vehicles": 16,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-passing",
+          "seed": 6510014,
+          "population": {
+            "controlled_count": 8,
+            "total_vehicles": 24,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 6510015,
+          "population": {
+            "controlled_count": 1,
+            "total_vehicles": 8,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        }
+      ],
+      "nominal_gates_passed": false,
+      "held_out_test_run": false,
+      "acceptance_status": "experimental; held-out qualification not run"
+    },
+    "reports": [
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510000,
+        "task": "cruise",
+        "through_lanes": 2,
+        "density": "light",
+        "controlled_count": 1,
+        "total_vehicles": 24,
+        "requested_av_fraction": 0.041666666666666664,
+        "population_setting": {
+          "controlled_count": 1,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 800,
+        "agent_transitions": 800,
+        "overrides": 261,
+        "intervention_fraction": 0.32625,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.8911285825570158,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 0,
+        "mean_abs_acceleration": 0.1454237308432135,
+        "mean_abs_jerk": 0.0378318559748827,
+        "peak_abs_jerk": 3.3613891154526954,
+        "minimum_ttc_s": 88.14655318755271,
+        "minimum_headway_s": 1.7054883843011635,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 17968,
+          "controlled_on_road_sum": 801,
+          "on_road_av_fraction_sum": 36.69909466029431,
+          "maximum_on_road": 24,
+          "peer_observations": 801,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 801,
+          "selected_peer_histogram": {
+            "0": 801,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 22.43196004993758,
+          "mean_controlled_on_road": 1.0,
+          "mean_on_road_av_fraction": 0.04581659757839489,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 261
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.32625
+        },
+        "policy_filter_changes": 0,
+        "native_realization_changes": 261,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 24,
+        "completed_trips": 12,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 12,
+            "teleporting": 0,
+            "completed": 12,
+            "removed": 0,
+            "requested": 24,
+            "initial": 0,
+            "unfinished": 12,
+            "boundary_time_s": 1797.999999999999,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 1,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 1,
+              "initial": 0,
+              "unfinished": 1,
+              "boundary_time_s": 80.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 11,
+              "teleporting": 0,
+              "completed": 12,
+              "removed": 0,
+              "requested": 23,
+              "initial": 0,
+              "unfinished": 11,
+              "boundary_time_s": 1717.8999999999992,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 12,
+              "teleporting": 0,
+              "completed": 12,
+              "removed": 0,
+              "requested": 24,
+              "initial": 0,
+              "unfinished": 12,
+              "boundary_time_s": 1797.999999999999,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510001,
+        "task": "following",
+        "through_lanes": 2,
+        "density": "dense",
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "requested_av_fraction": 0.1875,
+        "population_setting": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 2400,
+        "agent_transitions": 2400,
+        "overrides": 944,
+        "intervention_fraction": 0.3933333333333333,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.7066841337081939,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 16,
+        "mean_abs_acceleration": 0.8071734116822395,
+        "mean_abs_jerk": 0.5277109698531296,
+        "peak_abs_jerk": 53.89043188021709,
+        "minimum_ttc_s": 5.773660476700154,
+        "minimum_headway_s": 1.6600736369777838,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 803,
+          "total_on_road_sum": 12652,
+          "controlled_on_road_sum": 2407,
+          "on_road_av_fraction_sum": 153.0753205128202,
+          "maximum_on_road": 16,
+          "peer_observations": 2403,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 2403,
+          "selected_peer_histogram": {
+            "0": 2403,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 15.755915317559154,
+          "mean_controlled_on_road": 2.9975093399750934,
+          "mean_on_road_av_fraction": 0.1906292908005233,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 919,
+          "lane_end": 25
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.3829166666666667,
+          "lane_end": 0.010416666666666666
+        },
+        "policy_filter_changes": 25,
+        "native_realization_changes": 919,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 16,
+        "completed_trips": 3,
+        "cohort_accounting": {
+          "time": 80.3,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 13,
+            "teleporting": 0,
+            "completed": 3,
+            "removed": 0,
+            "requested": 16,
+            "initial": 0,
+            "unfinished": 13,
+            "boundary_time_s": 1265.6999999999996,
+            "external_wait_s": 0.2,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 3,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 3,
+              "initial": 0,
+              "unfinished": 3,
+              "boundary_time_s": 240.89999999999998,
+              "external_wait_s": 0.2,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 10,
+              "teleporting": 0,
+              "completed": 3,
+              "removed": 0,
+              "requested": 13,
+              "initial": 0,
+              "unfinished": 10,
+              "boundary_time_s": 1024.7999999999997,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 13,
+              "teleporting": 0,
+              "completed": 3,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 13,
+              "boundary_time_s": 1265.6999999999996,
+              "external_wait_s": 0.2,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510002,
+        "task": "passing",
+        "through_lanes": 2,
+        "density": "medium",
+        "controlled_count": 5,
+        "total_vehicles": 24,
+        "requested_av_fraction": 0.20833333333333334,
+        "population_setting": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 3548,
+        "agent_transitions": 3548,
+        "overrides": 807,
+        "intervention_fraction": 0.2274520856820744,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9191857452971952,
+        "passes": 5,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 1,
+        "mean_abs_acceleration": 0.23132787528261384,
+        "mean_abs_jerk": 0.3427127820960329,
+        "peak_abs_jerk": 12.760873436927689,
+        "minimum_ttc_s": 36.61296160757123,
+        "minimum_headway_s": 1.6483571424725265,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 802,
+          "total_on_road_sum": 18525,
+          "controlled_on_road_sum": 3554,
+          "on_road_av_fraction_sum": 151.65662616686518,
+          "maximum_on_road": 24,
+          "peer_observations": 3550,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 3550,
+          "selected_peer_histogram": {
+            "0": 3550,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 23.09850374064838,
+          "mean_controlled_on_road": 4.43142144638404,
+          "mean_on_road_av_fraction": 0.1890980376145451,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 707,
+          "speed_ceiling": 100
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.19926719278466742,
+          "speed_ceiling": 0.02818489289740699
+        },
+        "policy_filter_changes": 100,
+        "native_realization_changes": 707,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 24,
+        "completed_trips": 6,
+        "cohort_accounting": {
+          "time": 80.2,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 18,
+            "teleporting": 0,
+            "completed": 6,
+            "removed": 0,
+            "requested": 24,
+            "initial": 0,
+            "unfinished": 18,
+            "boundary_time_s": 1853.4000000000005,
+            "external_wait_s": 0.30000000000000004,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 2,
+              "teleporting": 0,
+              "completed": 3,
+              "removed": 0,
+              "requested": 5,
+              "initial": 0,
+              "unfinished": 2,
+              "boundary_time_s": 355.8,
+              "external_wait_s": 0.1,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 16,
+              "teleporting": 0,
+              "completed": 3,
+              "removed": 0,
+              "requested": 19,
+              "initial": 0,
+              "unfinished": 16,
+              "boundary_time_s": 1497.6000000000004,
+              "external_wait_s": 0.2,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 18,
+              "teleporting": 0,
+              "completed": 6,
+              "removed": 0,
+              "requested": 24,
+              "initial": 0,
+              "unfinished": 18,
+              "boundary_time_s": 1853.4000000000005,
+              "external_wait_s": 0.30000000000000004,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510003,
+        "task": "merge",
+        "through_lanes": 2,
+        "density": "medium",
+        "controlled_count": 7,
+        "total_vehicles": 8,
+        "requested_av_fraction": 0.875,
+        "population_setting": {
+          "controlled_count": 7,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 5600,
+        "agent_transitions": 5600,
+        "overrides": 1038,
+        "intervention_fraction": 0.18535714285714286,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9147101045085285,
+        "passes": 0,
+        "successful_merges": 1,
+        "merge_target_count": 1,
+        "lane_changes": 29,
+        "mean_abs_acceleration": 0.5243062035003593,
+        "mean_abs_jerk": 0.6717320761126464,
+        "peak_abs_jerk": 61.646231859922196,
+        "minimum_ttc_s": 4.772606464186723,
+        "minimum_headway_s": 1.7912573620599936,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6408,
+          "controlled_on_road_sum": 5607,
+          "on_road_av_fraction_sum": 700.875,
+          "maximum_on_road": 8,
+          "peer_observations": 5607,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 5607,
+          "selected_peer_histogram": {
+            "0": 5607,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 8.0,
+          "mean_controlled_on_road": 7.0,
+          "mean_on_road_av_fraction": 0.875,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 849,
+          "speed_ceiling": 167,
+          "following": 1,
+          "lane_end": 43
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.15160714285714286,
+          "speed_ceiling": 0.02982142857142857,
+          "following": 0.00017857142857142857,
+          "lane_end": 0.007678571428571429
+        },
+        "policy_filter_changes": 211,
+        "native_realization_changes": 849,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 8,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 8,
+            "boundary_time_s": 640.8000000000001,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 560.7,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 1,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 1,
+              "initial": 0,
+              "unfinished": 1,
+              "boundary_time_s": 80.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 6,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 6,
+              "initial": 0,
+              "unfinished": 6,
+              "boundary_time_s": 480.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:ramp": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 2,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 2,
+              "initial": 0,
+              "unfinished": 2,
+              "boundary_time_s": 160.2,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-4-lane-cruise",
+        "seed": 6510004,
+        "task": "cruise",
+        "through_lanes": 4,
+        "density": "light",
+        "controlled_count": 8,
+        "total_vehicles": 8,
+        "requested_av_fraction": 1.0,
+        "population_setting": {
+          "controlled_count": 8,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 6400,
+        "agent_transitions": 6400,
+        "overrides": 93,
+        "intervention_fraction": 0.01453125,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9595004618270143,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 5,
+        "mean_abs_acceleration": 0.18736257965436248,
+        "mean_abs_jerk": 0.0932592016239067,
+        "peak_abs_jerk": 8.482358064087592,
+        "minimum_ttc_s": 34.9288766367294,
+        "minimum_headway_s": 1.6420520084698302,
+        "delivered_messages": 44800,
+        "dropped_messages": 0,
+        "delivered_bytes": 8441139,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6408,
+          "controlled_on_road_sum": 6408,
+          "on_road_av_fraction_sum": 801.0,
+          "maximum_on_road": 8,
+          "peer_observations": 6408,
+          "selected_peer_sum": 38400,
+          "maximum_selected_peers": 6,
+          "overflow_peer_observations": 6400,
+          "zero_peer_observations": 8,
+          "selected_peer_histogram": {
+            "0": 8,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 6400
+          },
+          "mean_total_on_road": 8.0,
+          "mean_controlled_on_road": 8.0,
+          "mean_on_road_av_fraction": 1.0,
+          "mean_selected_peers": 5.992509363295881
+        },
+        "override_causes": {
+          "native_realization_unattributed": 89,
+          "speed_ceiling": 4
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.01390625,
+          "speed_ceiling": 0.000625
+        },
+        "policy_filter_changes": 4,
+        "native_realization_changes": 89,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 8,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 8,
+            "boundary_time_s": 640.8000000000001,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 8,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 8,
+              "boundary_time_s": 640.8000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 8,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 8,
+              "boundary_time_s": 640.8000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-4-lane-following",
+        "seed": 6510005,
+        "task": "following",
+        "through_lanes": 4,
+        "density": "dense",
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "requested_av_fraction": 0.125,
+        "population_setting": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 800,
+        "agent_transitions": 800,
+        "overrides": 359,
+        "intervention_fraction": 0.44875,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.6649473931090085,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 6,
+        "mean_abs_acceleration": 0.7218267366704455,
+        "mean_abs_jerk": 0.46768310896333376,
+        "peak_abs_jerk": 12.502768831645916,
+        "minimum_ttc_s": 37.20344352648565,
+        "minimum_headway_s": 1.691681948791467,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6408,
+          "controlled_on_road_sum": 801,
+          "on_road_av_fraction_sum": 100.125,
+          "maximum_on_road": 8,
+          "peer_observations": 801,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 801,
+          "selected_peer_histogram": {
+            "0": 801,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 8.0,
+          "mean_controlled_on_road": 1.0,
+          "mean_on_road_av_fraction": 0.125,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 359
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.44875
+        },
+        "policy_filter_changes": 0,
+        "native_realization_changes": 359,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 8,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 8,
+            "boundary_time_s": 640.8000000000001,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 1,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 1,
+              "initial": 0,
+              "unfinished": 1,
+              "boundary_time_s": 80.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 560.7,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 8,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 8,
+              "boundary_time_s": 640.8000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-4-lane-passing",
+        "seed": 6510006,
+        "task": "passing",
+        "through_lanes": 4,
+        "density": "medium",
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "requested_av_fraction": 0.1875,
+        "population_setting": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 2400,
+        "agent_transitions": 2400,
+        "overrides": 167,
+        "intervention_fraction": 0.06958333333333333,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.8178616321742923,
+        "passes": 3,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 4,
+        "mean_abs_acceleration": 0.3747070331899461,
+        "mean_abs_jerk": 0.20768401498407987,
+        "peak_abs_jerk": 51.18340253829956,
+        "minimum_ttc_s": 4.7856139295890365,
+        "minimum_headway_s": 2.059589980159598,
+        "delivered_messages": 2620,
+        "dropped_messages": 0,
+        "delivered_bytes": 491232,
+        "population_metrics": {
+          "road_samples": 808,
+          "total_on_road_sum": 12900,
+          "controlled_on_road_sum": 2417,
+          "on_road_av_fraction_sum": 151.35416666666666,
+          "maximum_on_road": 16,
+          "peer_observations": 2403,
+          "selected_peer_sum": 2636,
+          "maximum_selected_peers": 2,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 519,
+          "selected_peer_histogram": {
+            "0": 519,
+            "1": 1132,
+            "2": 752,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 15.965346534653465,
+          "mean_controlled_on_road": 2.991336633663366,
+          "mean_on_road_av_fraction": 0.18731951320132012,
+          "mean_selected_peers": 1.096962130669996
+        },
+        "override_causes": {
+          "following": 7,
+          "native_realization_unattributed": 160
+        },
+        "override_cause_fractions": {
+          "following": 0.002916666666666667,
+          "native_realization_unattributed": 0.06666666666666667
+        },
+        "policy_filter_changes": 7,
+        "native_realization_changes": 160,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 16,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.8,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 16,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 16,
+            "initial": 0,
+            "unfinished": 16,
+            "boundary_time_s": 1292.7999999999997,
+            "external_wait_s": 2.8,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 3,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 3,
+              "initial": 0,
+              "unfinished": 3,
+              "boundary_time_s": 242.39999999999998,
+              "external_wait_s": 0.7,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 13,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 13,
+              "initial": 0,
+              "unfinished": 13,
+              "boundary_time_s": 1050.3999999999999,
+              "external_wait_s": 2.0999999999999996,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 16,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 16,
+              "boundary_time_s": 1292.7999999999997,
+              "external_wait_s": 2.8,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-4-lane-merge",
+        "seed": 6510007,
+        "task": "merge",
+        "through_lanes": 4,
+        "density": "medium",
+        "controlled_count": 5,
+        "total_vehicles": 24,
+        "requested_av_fraction": 0.20833333333333334,
+        "population_setting": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 4000,
+        "agent_transitions": 4000,
+        "overrides": 928,
+        "intervention_fraction": 0.232,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.88278296094874,
+        "passes": 0,
+        "successful_merges": 1,
+        "merge_target_count": 1,
+        "lane_changes": 4,
+        "mean_abs_acceleration": 0.3751868773704448,
+        "mean_abs_jerk": 0.20315768337974538,
+        "peak_abs_jerk": 63.1323637068272,
+        "minimum_ttc_s": 11.780757845703901,
+        "minimum_headway_s": 1.6226694079783044,
+        "delivered_messages": 13906,
+        "dropped_messages": 0,
+        "delivered_bytes": 2575638,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 19224,
+          "controlled_on_road_sum": 4005,
+          "on_road_av_fraction_sum": 166.8750000000006,
+          "maximum_on_road": 24,
+          "peer_observations": 4005,
+          "selected_peer_sum": 13938,
+          "maximum_selected_peers": 4,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 61,
+          "selected_peer_histogram": {
+            "0": 61,
+            "1": 2,
+            "2": 601,
+            "3": 630,
+            "4": 2711,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 24.0,
+          "mean_controlled_on_road": 5.0,
+          "mean_on_road_av_fraction": 0.2083333333333341,
+          "mean_selected_peers": 3.480149812734082
+        },
+        "override_causes": {
+          "native_realization_unattributed": 928
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.232
+        },
+        "policy_filter_changes": 0,
+        "native_realization_changes": 928,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 24,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 24,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 24,
+            "initial": 0,
+            "unfinished": 24,
+            "boundary_time_s": 1922.3999999999992,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 5,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 5,
+              "initial": 0,
+              "unfinished": 5,
+              "boundary_time_s": 400.5,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 19,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 19,
+              "initial": 0,
+              "unfinished": 19,
+              "boundary_time_s": 1521.8999999999996,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 22,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 22,
+              "initial": 0,
+              "unfinished": 22,
+              "boundary_time_s": 1762.1999999999994,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:ramp": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 2,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 2,
+              "initial": 0,
+              "unfinished": 2,
+              "boundary_time_s": 160.2,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-5-lane-cruise",
+        "seed": 6510008,
+        "task": "cruise",
+        "through_lanes": 5,
+        "density": "light",
+        "controlled_count": 7,
+        "total_vehicles": 16,
+        "requested_av_fraction": 0.4375,
+        "population_setting": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "agent_steps": 5600,
+        "agent_transitions": 5600,
+        "overrides": 282,
+        "intervention_fraction": 0.05035714285714286,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9465310727954241,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 7,
+        "mean_abs_acceleration": 0.1925471685496492,
+        "mean_abs_jerk": 0.10619692936182132,
+        "peak_abs_jerk": 9.772377236918928,
+        "minimum_ttc_s": 46.12243630473474,
+        "minimum_headway_s": 1.5872958009432019,
+        "delivered_messages": 21962,
+        "dropped_messages": 9368,
+        "delivered_bytes": 4114028,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 12816,
+          "controlled_on_road_sum": 5607,
+          "on_road_av_fraction_sum": 350.4375,
+          "maximum_on_road": 16,
+          "peer_observations": 5607,
+          "selected_peer_sum": 31267,
+          "maximum_selected_peers": 6,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 7,
+          "selected_peer_histogram": {
+            "0": 7,
+            "1": 0,
+            "2": 2,
+            "3": 8,
+            "4": 501,
+            "5": 1299,
+            "6": 3790
+          },
+          "mean_total_on_road": 16.0,
+          "mean_controlled_on_road": 7.0,
+          "mean_on_road_av_fraction": 0.4375,
+          "mean_selected_peers": 5.576422329231318
+        },
+        "override_causes": {
+          "native_realization_unattributed": 282
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.05035714285714286
+        },
+        "policy_filter_changes": 0,
+        "native_realization_changes": 282,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 16,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 16,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 16,
+            "initial": 0,
+            "unfinished": 16,
+            "boundary_time_s": 1281.6,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 560.7,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 9,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 9,
+              "initial": 0,
+              "unfinished": 9,
+              "boundary_time_s": 720.9000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 16,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 16,
+              "boundary_time_s": 1281.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-5-lane-following",
+        "seed": 6510009,
+        "task": "following",
+        "through_lanes": 5,
+        "density": "dense",
+        "controlled_count": 8,
+        "total_vehicles": 24,
+        "requested_av_fraction": 0.3333333333333333,
+        "population_setting": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "agent_steps": 6400,
+        "agent_transitions": 6400,
+        "overrides": 1086,
+        "intervention_fraction": 0.1696875,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.8626984689771153,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 13,
+        "mean_abs_acceleration": 0.36612923331479486,
+        "mean_abs_jerk": 0.22797112261209623,
+        "peak_abs_jerk": 45.0245206803082,
+        "minimum_ttc_s": 13.267385564979731,
+        "minimum_headway_s": 1.6012707003542093,
+        "delivered_messages": 18797,
+        "dropped_messages": 8031,
+        "delivered_bytes": 3486033,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 19224,
+          "controlled_on_road_sum": 6408,
+          "on_road_av_fraction_sum": 267.0000000000023,
+          "maximum_on_road": 24,
+          "peer_observations": 6408,
+          "selected_peer_sum": 25926,
+          "maximum_selected_peers": 6,
+          "overflow_peer_observations": 947,
+          "zero_peer_observations": 8,
+          "selected_peer_histogram": {
+            "0": 8,
+            "1": 143,
+            "2": 910,
+            "3": 1561,
+            "4": 1097,
+            "5": 1242,
+            "6": 1447
+          },
+          "mean_total_on_road": 24.0,
+          "mean_controlled_on_road": 8.0,
+          "mean_on_road_av_fraction": 0.33333333333333615,
+          "mean_selected_peers": 4.045880149812734
+        },
+        "override_causes": {
+          "native_realization_unattributed": 1083,
+          "speed_ceiling": 1,
+          "following": 2
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.16921875,
+          "speed_ceiling": 0.00015625,
+          "following": 0.0003125
+        },
+        "policy_filter_changes": 3,
+        "native_realization_changes": 1083,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 24,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 24,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 24,
+            "initial": 0,
+            "unfinished": 24,
+            "boundary_time_s": 1922.3999999999992,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 8,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 8,
+              "boundary_time_s": 640.8000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 16,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 16,
+              "boundary_time_s": 1281.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 24,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 24,
+              "initial": 0,
+              "unfinished": 24,
+              "boundary_time_s": 1922.3999999999992,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-5-lane-passing",
+        "seed": 6510010,
+        "task": "passing",
+        "through_lanes": 5,
+        "density": "medium",
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "requested_av_fraction": 0.125,
+        "population_setting": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "agent_steps": 800,
+        "agent_transitions": 800,
+        "overrides": 194,
+        "intervention_fraction": 0.2425,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9702716459778626,
+        "passes": 1,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 0,
+        "mean_abs_acceleration": 0.4756015039720712,
+        "mean_abs_jerk": 2.0786306610330945,
+        "peak_abs_jerk": 10.087751895189001,
+        "minimum_ttc_s": null,
+        "minimum_headway_s": null,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6408,
+          "controlled_on_road_sum": 801,
+          "on_road_av_fraction_sum": 100.125,
+          "maximum_on_road": 8,
+          "peer_observations": 801,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 801,
+          "selected_peer_histogram": {
+            "0": 801,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 8.0,
+          "mean_controlled_on_road": 1.0,
+          "mean_on_road_av_fraction": 0.125,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "speed_ceiling": 194
+        },
+        "override_cause_fractions": {
+          "speed_ceiling": 0.2425
+        },
+        "policy_filter_changes": 194,
+        "native_realization_changes": 0,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 8,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 8,
+            "boundary_time_s": 640.8000000000001,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 1,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 1,
+              "initial": 0,
+              "unfinished": 1,
+              "boundary_time_s": 80.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 560.7,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 8,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 8,
+              "boundary_time_s": 640.8000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-5-lane-merge",
+        "seed": 6510011,
+        "task": "merge",
+        "through_lanes": 5,
+        "density": "medium",
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "requested_av_fraction": 0.1875,
+        "population_setting": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "agent_steps": 2400,
+        "agent_transitions": 2400,
+        "overrides": 222,
+        "intervention_fraction": 0.0925,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9463791743989145,
+        "passes": 0,
+        "successful_merges": 1,
+        "merge_target_count": 1,
+        "lane_changes": 1,
+        "mean_abs_acceleration": 0.28806352895394166,
+        "mean_abs_jerk": 0.579410691466184,
+        "peak_abs_jerk": 56.849797666072895,
+        "minimum_ttc_s": 1962.5881888945162,
+        "minimum_headway_s": 3.6066922591379487,
+        "delivered_messages": 1122,
+        "dropped_messages": 478,
+        "delivered_bytes": 210237,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 12816,
+          "controlled_on_road_sum": 2403,
+          "on_road_av_fraction_sum": 150.1875,
+          "maximum_on_road": 16,
+          "peer_observations": 2403,
+          "selected_peer_sum": 1598,
+          "maximum_selected_peers": 1,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 805,
+          "selected_peer_histogram": {
+            "0": 805,
+            "1": 1598,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 16.0,
+          "mean_controlled_on_road": 3.0,
+          "mean_on_road_av_fraction": 0.1875,
+          "mean_selected_peers": 0.6650020807324178
+        },
+        "override_causes": {
+          "native_realization_unattributed": 13,
+          "speed_ceiling": 209
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.005416666666666667,
+          "speed_ceiling": 0.08708333333333333
+        },
+        "policy_filter_changes": 209,
+        "native_realization_changes": 13,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 16,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 16,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 16,
+            "initial": 0,
+            "unfinished": 16,
+            "boundary_time_s": 1281.6,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 3,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 3,
+              "initial": 0,
+              "unfinished": 3,
+              "boundary_time_s": 240.29999999999998,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 13,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 13,
+              "initial": 0,
+              "unfinished": 13,
+              "boundary_time_s": 1041.3000000000002,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 14,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 14,
+              "initial": 0,
+              "unfinished": 14,
+              "boundary_time_s": 1121.4,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:ramp": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 2,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 2,
+              "initial": 0,
+              "unfinished": 2,
+              "boundary_time_s": 160.2,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510012,
+        "task": "cruise",
+        "through_lanes": 2,
+        "density": "light",
+        "controlled_count": 5,
+        "total_vehicles": 8,
+        "requested_av_fraction": 0.625,
+        "population_setting": {
+          "controlled_count": 5,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 4000,
+        "agent_transitions": 4000,
+        "overrides": 1264,
+        "intervention_fraction": 0.316,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9161597793377665,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 22,
+        "mean_abs_acceleration": 0.3276391622289523,
+        "mean_abs_jerk": 0.4467061699567829,
+        "peak_abs_jerk": 45.3157802615042,
+        "minimum_ttc_s": 35.183338739703196,
+        "minimum_headway_s": 1.618328531556845,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6405,
+          "controlled_on_road_sum": 4005,
+          "on_road_av_fraction_sum": 500.89285714285717,
+          "maximum_on_road": 8,
+          "peer_observations": 4005,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 4005,
+          "selected_peer_histogram": {
+            "0": 4005,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 7.99625468164794,
+          "mean_controlled_on_road": 5.0,
+          "mean_on_road_av_fraction": 0.6253344034242911,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 1173,
+          "speed_ceiling": 48,
+          "lane_end": 44
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.29325,
+          "speed_ceiling": 0.012,
+          "lane_end": 0.011
+        },
+        "policy_filter_changes": 92,
+        "native_realization_changes": 1173,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 1,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 7,
+            "teleporting": 0,
+            "completed": 1,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 7,
+            "boundary_time_s": 640.6,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 5,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 5,
+              "initial": 0,
+              "unfinished": 5,
+              "boundary_time_s": 400.5,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 2,
+              "teleporting": 0,
+              "completed": 1,
+              "removed": 0,
+              "requested": 3,
+              "initial": 0,
+              "unfinished": 2,
+              "boundary_time_s": 240.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 1,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 640.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510013,
+        "task": "following",
+        "through_lanes": 2,
+        "density": "dense",
+        "controlled_count": 7,
+        "total_vehicles": 16,
+        "requested_av_fraction": 0.4375,
+        "population_setting": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 5512,
+        "agent_transitions": 5512,
+        "overrides": 1641,
+        "intervention_fraction": 0.29771407837445574,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.8608629894076317,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 35,
+        "mean_abs_acceleration": 0.5923540443477039,
+        "mean_abs_jerk": 0.46945485223281486,
+        "peak_abs_jerk": 41.974034033979784,
+        "minimum_ttc_s": 11.27677373175976,
+        "minimum_headway_s": 1.6528523518176943,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 12587,
+          "controlled_on_road_sum": 5517,
+          "on_road_av_fraction_sum": 351.10256410256414,
+          "maximum_on_road": 16,
+          "peer_observations": 5517,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 5517,
+          "selected_peer_histogram": {
+            "0": 5517,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 15.71410736579276,
+          "mean_controlled_on_road": 6.887640449438202,
+          "mean_on_road_av_fraction": 0.43833029226287656,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 1536,
+          "speed_ceiling": 51,
+          "lane_end": 57
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.27866473149492016,
+          "speed_ceiling": 0.009252539912917272,
+          "lane_end": 0.010341074020319304
+        },
+        "policy_filter_changes": 108,
+        "native_realization_changes": 1536,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 16,
+        "completed_trips": 4,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 12,
+            "teleporting": 0,
+            "completed": 4,
+            "removed": 0,
+            "requested": 16,
+            "initial": 0,
+            "unfinished": 12,
+            "boundary_time_s": 1259.1,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 5,
+              "teleporting": 0,
+              "completed": 2,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 5,
+              "boundary_time_s": 551.9,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 2,
+              "removed": 0,
+              "requested": 9,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 707.2,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 12,
+              "teleporting": 0,
+              "completed": 4,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 12,
+              "boundary_time_s": 1259.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510014,
+        "task": "passing",
+        "through_lanes": 2,
+        "density": "medium",
+        "controlled_count": 8,
+        "total_vehicles": 24,
+        "requested_av_fraction": 0.3333333333333333,
+        "population_setting": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 6351,
+        "agent_transitions": 6351,
+        "overrides": 2458,
+        "intervention_fraction": 0.387025665249567,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.7514420310051241,
+        "passes": 4,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 33,
+        "mean_abs_acceleration": 0.7001924258254112,
+        "mean_abs_jerk": 0.5808836606465667,
+        "peak_abs_jerk": 56.79317086935036,
+        "minimum_ttc_s": 3.7908047275192893,
+        "minimum_headway_s": 1.650417079528467,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 802,
+          "total_on_road_sum": 18550,
+          "controlled_on_road_sum": 6365,
+          "on_road_av_fraction_sum": 276.451412564197,
+          "maximum_on_road": 24,
+          "peer_observations": 6358,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 6358,
+          "selected_peer_histogram": {
+            "0": 6358,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 23.129675810473817,
+          "mean_controlled_on_road": 7.93640897755611,
+          "mean_on_road_av_fraction": 0.34470250943166714,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 2394,
+          "speed_ceiling": 5,
+          "following": 37,
+          "lane_end": 23
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.3769485120453472,
+          "speed_ceiling": 0.0007872775940796725,
+          "following": 0.005825854196189577,
+          "lane_end": 0.0036214769327664936
+        },
+        "policy_filter_changes": 65,
+        "native_realization_changes": 2394,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 24,
+        "completed_trips": 7,
+        "cohort_accounting": {
+          "time": 80.2,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 17,
+            "teleporting": 0,
+            "completed": 7,
+            "removed": 0,
+            "requested": 24,
+            "initial": 0,
+            "unfinished": 17,
+            "boundary_time_s": 1856.1000000000004,
+            "external_wait_s": 0.4,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 1,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 636.7,
+              "external_wait_s": 0.1,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 10,
+              "teleporting": 0,
+              "completed": 6,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 10,
+              "boundary_time_s": 1219.4,
+              "external_wait_s": 0.30000000000000004,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 17,
+              "teleporting": 0,
+              "completed": 7,
+              "removed": 0,
+              "requested": 24,
+              "initial": 0,
+              "unfinished": 17,
+              "boundary_time_s": 1856.1000000000004,
+              "external_wait_s": 0.4,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510015,
+        "task": "merge",
+        "through_lanes": 2,
+        "density": "medium",
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "requested_av_fraction": 0.125,
+        "population_setting": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 772,
+        "agent_transitions": 772,
+        "overrides": 182,
+        "intervention_fraction": 0.23575129533678757,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9383611183927799,
+        "passes": 0,
+        "successful_merges": 1,
+        "merge_target_count": 1,
+        "lane_changes": 1,
+        "mean_abs_acceleration": 0.5692907893143843,
+        "mean_abs_jerk": 1.6474457981711592,
+        "peak_abs_jerk": 56.893832981586456,
+        "minimum_ttc_s": null,
+        "minimum_headway_s": null,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6379,
+          "controlled_on_road_sum": 772,
+          "on_road_av_fraction_sum": 96.5,
+          "maximum_on_road": 8,
+          "peer_observations": 772,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 772,
+          "selected_peer_histogram": {
+            "0": 772,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 7.963795255930087,
+          "mean_controlled_on_road": 0.9637952559300874,
+          "mean_on_road_av_fraction": 0.12047440699126093,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 12,
+          "speed_ceiling": 170
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.015544041450777202,
+          "speed_ceiling": 0.22020725388601037
+        },
+        "policy_filter_changes": 170,
+        "native_realization_changes": 12,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 1,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 7,
+            "teleporting": 0,
+            "completed": 1,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 7,
+            "boundary_time_s": 638.0,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 0,
+              "teleporting": 0,
+              "completed": 1,
+              "removed": 0,
+              "requested": 1,
+              "initial": 0,
+              "unfinished": 0,
+              "boundary_time_s": 77.3,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 560.7,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 6,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 6,
+              "initial": 0,
+              "unfinished": 6,
+              "boundary_time_s": 480.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:ramp": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 1,
+              "teleporting": 0,
+              "completed": 1,
+              "removed": 0,
+              "requested": 2,
+              "initial": 0,
+              "unfinished": 1,
+              "boundary_time_s": 157.39999999999998,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      }
+    ]
+  },
+  "final": {
+    "summary": {
+      "cases": 16,
+      "pooled_override_fraction": 0.3170134851351117,
+      "worst_override_fraction": 0.75125,
+      "failures": [
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 6510000,
+          "population": {
+            "controlled_count": 1,
+            "total_vehicles": 24,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides",
+            "cruise_speed"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-following",
+          "seed": 6510001,
+          "population": {
+            "controlled_count": 3,
+            "total_vehicles": 16,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-passing",
+          "seed": 6510002,
+          "population": {
+            "controlled_count": 5,
+            "total_vehicles": 24,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 6510003,
+          "population": {
+            "controlled_count": 7,
+            "total_vehicles": 8,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-4-lane-following",
+          "seed": 6510005,
+          "population": {
+            "controlled_count": 1,
+            "total_vehicles": 8,
+            "communication": "local",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-4-lane-passing",
+          "seed": 6510006,
+          "population": {
+            "controlled_count": 3,
+            "total_vehicles": 16,
+            "communication": "local",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-4-lane-merge",
+          "seed": 6510007,
+          "population": {
+            "controlled_count": 5,
+            "total_vehicles": 24,
+            "communication": "local",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-5-lane-cruise",
+          "seed": 6510008,
+          "population": {
+            "controlled_count": 7,
+            "total_vehicles": 16,
+            "communication": "local",
+            "packet_loss": 0.3
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-5-lane-following",
+          "seed": 6510009,
+          "population": {
+            "controlled_count": 8,
+            "total_vehicles": 24,
+            "communication": "local",
+            "packet_loss": 0.3
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-5-lane-passing",
+          "seed": 6510010,
+          "population": {
+            "controlled_count": 1,
+            "total_vehicles": 8,
+            "communication": "local",
+            "packet_loss": 0.3
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-5-lane-merge",
+          "seed": 6510011,
+          "population": {
+            "controlled_count": 3,
+            "total_vehicles": 16,
+            "communication": "local",
+            "packet_loss": 0.3
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 6510012,
+          "population": {
+            "controlled_count": 5,
+            "total_vehicles": 8,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-following",
+          "seed": 6510013,
+          "population": {
+            "controlled_count": 7,
+            "total_vehicles": 16,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-passing",
+          "seed": 6510014,
+          "population": {
+            "controlled_count": 8,
+            "total_vehicles": 24,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 6510015,
+          "population": {
+            "controlled_count": 1,
+            "total_vehicles": 8,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "overrides"
+          ]
+        }
+      ],
+      "nominal_gates_passed": false,
+      "held_out_test_run": false,
+      "acceptance_status": "experimental; held-out qualification not run"
+    },
+    "reports": [
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510000,
+        "task": "cruise",
+        "through_lanes": 2,
+        "density": "light",
+        "controlled_count": 1,
+        "total_vehicles": 24,
+        "requested_av_fraction": 0.041666666666666664,
+        "population_setting": {
+          "controlled_count": 1,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 800,
+        "agent_transitions": 800,
+        "overrides": 601,
+        "intervention_fraction": 0.75125,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.8919027263267661,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 0,
+        "mean_abs_acceleration": 0.1585179988171974,
+        "mean_abs_jerk": 0.037851354991947694,
+        "peak_abs_jerk": 4.809906333684921,
+        "minimum_ttc_s": 55.311433127395475,
+        "minimum_headway_s": 1.6446885557431328,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 17968,
+          "controlled_on_road_sum": 801,
+          "on_road_av_fraction_sum": 36.69909466029431,
+          "maximum_on_road": 24,
+          "peer_observations": 801,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 801,
+          "selected_peer_histogram": {
+            "0": 801,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 22.43196004993758,
+          "mean_controlled_on_road": 1.0,
+          "mean_on_road_av_fraction": 0.04581659757839489,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 601
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.75125
+        },
+        "policy_filter_changes": 0,
+        "native_realization_changes": 601,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 24,
+        "completed_trips": 12,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 12,
+            "teleporting": 0,
+            "completed": 12,
+            "removed": 0,
+            "requested": 24,
+            "initial": 0,
+            "unfinished": 12,
+            "boundary_time_s": 1797.999999999999,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 1,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 1,
+              "initial": 0,
+              "unfinished": 1,
+              "boundary_time_s": 80.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 11,
+              "teleporting": 0,
+              "completed": 12,
+              "removed": 0,
+              "requested": 23,
+              "initial": 0,
+              "unfinished": 11,
+              "boundary_time_s": 1717.8999999999992,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 12,
+              "teleporting": 0,
+              "completed": 12,
+              "removed": 0,
+              "requested": 24,
+              "initial": 0,
+              "unfinished": 12,
+              "boundary_time_s": 1797.999999999999,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510001,
+        "task": "following",
+        "through_lanes": 2,
+        "density": "dense",
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "requested_av_fraction": 0.1875,
+        "population_setting": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 2346,
+        "agent_transitions": 2346,
+        "overrides": 1350,
+        "intervention_fraction": 0.5754475703324808,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.8325892498474766,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 12,
+        "mean_abs_acceleration": 0.4508239678356001,
+        "mean_abs_jerk": 0.30109249157931933,
+        "peak_abs_jerk": 39.554088711738444,
+        "minimum_ttc_s": 6.772098293668145,
+        "minimum_headway_s": 1.6348207137108604,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 803,
+          "total_on_road_sum": 12594,
+          "controlled_on_road_sum": 2352,
+          "on_road_av_fraction_sum": 149.72440476190454,
+          "maximum_on_road": 16,
+          "peer_observations": 2348,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 2348,
+          "selected_peer_histogram": {
+            "0": 2348,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 15.683686176836861,
+          "mean_controlled_on_road": 2.929016189290162,
+          "mean_on_road_av_fraction": 0.18645629484670553,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 1220,
+          "speed_ceiling": 25,
+          "lane_end": 111
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.5200341005967605,
+          "speed_ceiling": 0.010656436487638534,
+          "lane_end": 0.04731457800511509
+        },
+        "policy_filter_changes": 136,
+        "native_realization_changes": 1220,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 16,
+        "completed_trips": 4,
+        "cohort_accounting": {
+          "time": 80.3,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 12,
+            "teleporting": 0,
+            "completed": 4,
+            "removed": 0,
+            "requested": 16,
+            "initial": 0,
+            "unfinished": 12,
+            "boundary_time_s": 1259.9999999999995,
+            "external_wait_s": 0.2,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 2,
+              "teleporting": 0,
+              "completed": 1,
+              "removed": 0,
+              "requested": 3,
+              "initial": 0,
+              "unfinished": 2,
+              "boundary_time_s": 235.5,
+              "external_wait_s": 0.2,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 10,
+              "teleporting": 0,
+              "completed": 3,
+              "removed": 0,
+              "requested": 13,
+              "initial": 0,
+              "unfinished": 10,
+              "boundary_time_s": 1024.4999999999998,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 12,
+              "teleporting": 0,
+              "completed": 4,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 12,
+              "boundary_time_s": 1259.9999999999995,
+              "external_wait_s": 0.2,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510002,
+        "task": "passing",
+        "through_lanes": 2,
+        "density": "medium",
+        "controlled_count": 5,
+        "total_vehicles": 24,
+        "requested_av_fraction": 0.20833333333333334,
+        "population_setting": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 3539,
+        "agent_transitions": 3539,
+        "overrides": 1487,
+        "intervention_fraction": 0.42017519073184517,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9233115803257281,
+        "passes": 5,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 1,
+        "mean_abs_acceleration": 0.1947282808923684,
+        "mean_abs_jerk": 0.12359104625604993,
+        "peak_abs_jerk": 11.706255525350429,
+        "minimum_ttc_s": 36.61296160757123,
+        "minimum_headway_s": 1.6161383734479244,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 802,
+          "total_on_road_sum": 18502,
+          "controlled_on_road_sum": 3545,
+          "on_road_av_fraction_sum": 151.3604998361582,
+          "maximum_on_road": 24,
+          "peer_observations": 3541,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 3541,
+          "selected_peer_histogram": {
+            "0": 3541,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 23.069825436408976,
+          "mean_controlled_on_road": 4.420199501246882,
+          "mean_on_road_av_fraction": 0.18872880278822718,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 1484,
+          "speed_ceiling": 3
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.41932749364227184,
+          "speed_ceiling": 0.0008476970895733258
+        },
+        "policy_filter_changes": 3,
+        "native_realization_changes": 1484,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 24,
+        "completed_trips": 7,
+        "cohort_accounting": {
+          "time": 80.2,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 17,
+            "teleporting": 0,
+            "completed": 7,
+            "removed": 0,
+            "requested": 24,
+            "initial": 0,
+            "unfinished": 17,
+            "boundary_time_s": 1851.2000000000005,
+            "external_wait_s": 0.30000000000000004,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 2,
+              "teleporting": 0,
+              "completed": 3,
+              "removed": 0,
+              "requested": 5,
+              "initial": 0,
+              "unfinished": 2,
+              "boundary_time_s": 354.9,
+              "external_wait_s": 0.1,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 15,
+              "teleporting": 0,
+              "completed": 4,
+              "removed": 0,
+              "requested": 19,
+              "initial": 0,
+              "unfinished": 15,
+              "boundary_time_s": 1496.3000000000004,
+              "external_wait_s": 0.2,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 17,
+              "teleporting": 0,
+              "completed": 7,
+              "removed": 0,
+              "requested": 24,
+              "initial": 0,
+              "unfinished": 17,
+              "boundary_time_s": 1851.2000000000005,
+              "external_wait_s": 0.30000000000000004,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510003,
+        "task": "merge",
+        "through_lanes": 2,
+        "density": "medium",
+        "controlled_count": 7,
+        "total_vehicles": 8,
+        "requested_av_fraction": 0.875,
+        "population_setting": {
+          "controlled_count": 7,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 5600,
+        "agent_transitions": 5600,
+        "overrides": 1085,
+        "intervention_fraction": 0.19375,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9130951013023194,
+        "passes": 0,
+        "successful_merges": 1,
+        "merge_target_count": 1,
+        "lane_changes": 28,
+        "mean_abs_acceleration": 0.4180502736371947,
+        "mean_abs_jerk": 0.45537661228939336,
+        "peak_abs_jerk": 53.71392089934268,
+        "minimum_ttc_s": 4.307955816275125,
+        "minimum_headway_s": 2.342449069912692,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6408,
+          "controlled_on_road_sum": 5607,
+          "on_road_av_fraction_sum": 700.875,
+          "maximum_on_road": 8,
+          "peer_observations": 5607,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 5607,
+          "selected_peer_histogram": {
+            "0": 5607,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 8.0,
+          "mean_controlled_on_road": 7.0,
+          "mean_on_road_av_fraction": 0.875,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 960,
+          "speed_ceiling": 178,
+          "following": 8,
+          "lane_end": 53
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.17142857142857143,
+          "speed_ceiling": 0.031785714285714285,
+          "following": 0.0014285714285714286,
+          "lane_end": 0.009464285714285715
+        },
+        "policy_filter_changes": 239,
+        "native_realization_changes": 960,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 8,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 8,
+            "boundary_time_s": 640.8000000000001,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 560.7,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 1,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 1,
+              "initial": 0,
+              "unfinished": 1,
+              "boundary_time_s": 80.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 6,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 6,
+              "initial": 0,
+              "unfinished": 6,
+              "boundary_time_s": 480.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:ramp": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 2,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 2,
+              "initial": 0,
+              "unfinished": 2,
+              "boundary_time_s": 160.2,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-4-lane-cruise",
+        "seed": 6510004,
+        "task": "cruise",
+        "through_lanes": 4,
+        "density": "light",
+        "controlled_count": 8,
+        "total_vehicles": 8,
+        "requested_av_fraction": 1.0,
+        "population_setting": {
+          "controlled_count": 8,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 6400,
+        "agent_transitions": 6400,
+        "overrides": 261,
+        "intervention_fraction": 0.04078125,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9616535739424382,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 5,
+        "mean_abs_acceleration": 0.2222959806949773,
+        "mean_abs_jerk": 0.21071425947011638,
+        "peak_abs_jerk": 32.83766929293037,
+        "minimum_ttc_s": 34.9288766367294,
+        "minimum_headway_s": 1.9097954831285309,
+        "delivered_messages": 44800,
+        "dropped_messages": 0,
+        "delivered_bytes": 8401008,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6408,
+          "controlled_on_road_sum": 6408,
+          "on_road_av_fraction_sum": 801.0,
+          "maximum_on_road": 8,
+          "peer_observations": 6408,
+          "selected_peer_sum": 38400,
+          "maximum_selected_peers": 6,
+          "overflow_peer_observations": 6400,
+          "zero_peer_observations": 8,
+          "selected_peer_histogram": {
+            "0": 8,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 6400
+          },
+          "mean_total_on_road": 8.0,
+          "mean_controlled_on_road": 8.0,
+          "mean_on_road_av_fraction": 1.0,
+          "mean_selected_peers": 5.992509363295881
+        },
+        "override_causes": {
+          "native_realization_unattributed": 5,
+          "speed_ceiling": 229,
+          "lane_end": 27
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.00078125,
+          "speed_ceiling": 0.03578125,
+          "lane_end": 0.00421875
+        },
+        "policy_filter_changes": 256,
+        "native_realization_changes": 5,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 8,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 8,
+            "boundary_time_s": 640.8000000000001,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 8,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 8,
+              "boundary_time_s": 640.8000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 8,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 8,
+              "boundary_time_s": 640.8000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-4-lane-following",
+        "seed": 6510005,
+        "task": "following",
+        "through_lanes": 4,
+        "density": "dense",
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "requested_av_fraction": 0.125,
+        "population_setting": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 800,
+        "agent_transitions": 800,
+        "overrides": 120,
+        "intervention_fraction": 0.15,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9380814246563604,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 8,
+        "mean_abs_acceleration": 0.2498392653645788,
+        "mean_abs_jerk": 0.45091239040760833,
+        "peak_abs_jerk": 16.679341547365212,
+        "minimum_ttc_s": 30.50441619746675,
+        "minimum_headway_s": 2.2446844574611724,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6408,
+          "controlled_on_road_sum": 801,
+          "on_road_av_fraction_sum": 100.125,
+          "maximum_on_road": 8,
+          "peer_observations": 801,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 801,
+          "selected_peer_histogram": {
+            "0": 801,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 8.0,
+          "mean_controlled_on_road": 1.0,
+          "mean_on_road_av_fraction": 0.125,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 51,
+          "speed_ceiling": 69
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.06375,
+          "speed_ceiling": 0.08625
+        },
+        "policy_filter_changes": 69,
+        "native_realization_changes": 51,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 8,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 8,
+            "boundary_time_s": 640.8000000000001,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 1,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 1,
+              "initial": 0,
+              "unfinished": 1,
+              "boundary_time_s": 80.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 560.7,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 8,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 8,
+              "boundary_time_s": 640.8000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-4-lane-passing",
+        "seed": 6510006,
+        "task": "passing",
+        "through_lanes": 4,
+        "density": "medium",
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "requested_av_fraction": 0.1875,
+        "population_setting": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 2400,
+        "agent_transitions": 2400,
+        "overrides": 508,
+        "intervention_fraction": 0.21166666666666667,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9527677682401984,
+        "passes": 3,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 2,
+        "mean_abs_acceleration": 0.17138993432790708,
+        "mean_abs_jerk": 0.09536976493036903,
+        "peak_abs_jerk": 8.90796942787837,
+        "minimum_ttc_s": 31.316223881558756,
+        "minimum_headway_s": 1.6944940580663128,
+        "delivered_messages": 4186,
+        "dropped_messages": 0,
+        "delivered_bytes": 786157,
+        "population_metrics": {
+          "road_samples": 808,
+          "total_on_road_sum": 12900,
+          "controlled_on_road_sum": 2417,
+          "on_road_av_fraction_sum": 151.35416666666666,
+          "maximum_on_road": 16,
+          "peer_observations": 2403,
+          "selected_peer_sum": 4194,
+          "maximum_selected_peers": 2,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 3,
+          "selected_peer_histogram": {
+            "0": 3,
+            "1": 606,
+            "2": 1794,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 15.965346534653465,
+          "mean_controlled_on_road": 2.991336633663366,
+          "mean_on_road_av_fraction": 0.18731951320132012,
+          "mean_selected_peers": 1.7453183520599251
+        },
+        "override_causes": {
+          "native_realization_unattributed": 506,
+          "speed_ceiling": 2
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.21083333333333334,
+          "speed_ceiling": 0.0008333333333333334
+        },
+        "policy_filter_changes": 2,
+        "native_realization_changes": 506,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 16,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.8,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 16,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 16,
+            "initial": 0,
+            "unfinished": 16,
+            "boundary_time_s": 1292.7999999999997,
+            "external_wait_s": 2.8,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 3,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 3,
+              "initial": 0,
+              "unfinished": 3,
+              "boundary_time_s": 242.39999999999998,
+              "external_wait_s": 0.7,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 13,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 13,
+              "initial": 0,
+              "unfinished": 13,
+              "boundary_time_s": 1050.3999999999999,
+              "external_wait_s": 2.0999999999999996,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 16,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 16,
+              "boundary_time_s": 1292.7999999999997,
+              "external_wait_s": 2.8,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-4-lane-merge",
+        "seed": 6510007,
+        "task": "merge",
+        "through_lanes": 4,
+        "density": "medium",
+        "controlled_count": 5,
+        "total_vehicles": 24,
+        "requested_av_fraction": 0.20833333333333334,
+        "population_setting": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 4000,
+        "agent_transitions": 4000,
+        "overrides": 1940,
+        "intervention_fraction": 0.485,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.8638833827269503,
+        "passes": 0,
+        "successful_merges": 1,
+        "merge_target_count": 1,
+        "lane_changes": 9,
+        "mean_abs_acceleration": 0.5357721883041957,
+        "mean_abs_jerk": 0.35424372745148625,
+        "peak_abs_jerk": 63.70558410882951,
+        "minimum_ttc_s": 6.408870971990366,
+        "minimum_headway_s": 1.605364049882498,
+        "delivered_messages": 12736,
+        "dropped_messages": 0,
+        "delivered_bytes": 2345432,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 19224,
+          "controlled_on_road_sum": 4005,
+          "on_road_av_fraction_sum": 166.8750000000006,
+          "maximum_on_road": 24,
+          "peer_observations": 4005,
+          "selected_peer_sum": 12800,
+          "maximum_selected_peers": 4,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 101,
+          "selected_peer_histogram": {
+            "0": 101,
+            "1": 399,
+            "2": 510,
+            "3": 599,
+            "4": 2396,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 24.0,
+          "mean_controlled_on_road": 5.0,
+          "mean_on_road_av_fraction": 0.2083333333333341,
+          "mean_selected_peers": 3.1960049937578026
+        },
+        "override_causes": {
+          "native_realization_unattributed": 1852,
+          "speed_ceiling": 10,
+          "lane_end": 78
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.463,
+          "speed_ceiling": 0.0025,
+          "lane_end": 0.0195
+        },
+        "policy_filter_changes": 88,
+        "native_realization_changes": 1852,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 24,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 24,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 24,
+            "initial": 0,
+            "unfinished": 24,
+            "boundary_time_s": 1922.3999999999992,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 5,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 5,
+              "initial": 0,
+              "unfinished": 5,
+              "boundary_time_s": 400.5,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 19,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 19,
+              "initial": 0,
+              "unfinished": 19,
+              "boundary_time_s": 1521.8999999999996,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 22,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 22,
+              "initial": 0,
+              "unfinished": 22,
+              "boundary_time_s": 1762.1999999999994,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:ramp": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 2,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 2,
+              "initial": 0,
+              "unfinished": 2,
+              "boundary_time_s": 160.2,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-5-lane-cruise",
+        "seed": 6510008,
+        "task": "cruise",
+        "through_lanes": 5,
+        "density": "light",
+        "controlled_count": 7,
+        "total_vehicles": 16,
+        "requested_av_fraction": 0.4375,
+        "population_setting": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "agent_steps": 5600,
+        "agent_transitions": 5600,
+        "overrides": 874,
+        "intervention_fraction": 0.15607142857142858,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9542465312772419,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 8,
+        "mean_abs_acceleration": 0.23818026628152636,
+        "mean_abs_jerk": 0.2582803989642608,
+        "peak_abs_jerk": 33.51788117550303,
+        "minimum_ttc_s": 46.12243630473474,
+        "minimum_headway_s": 1.6321687043875288,
+        "delivered_messages": 22188,
+        "dropped_messages": 9458,
+        "delivered_bytes": 4148314,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 12816,
+          "controlled_on_road_sum": 5607,
+          "on_road_av_fraction_sum": 350.4375,
+          "maximum_on_road": 16,
+          "peer_observations": 5607,
+          "selected_peer_sum": 31589,
+          "maximum_selected_peers": 6,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 7,
+          "selected_peer_histogram": {
+            "0": 7,
+            "1": 0,
+            "2": 1,
+            "3": 8,
+            "4": 679,
+            "5": 625,
+            "6": 4287
+          },
+          "mean_total_on_road": 16.0,
+          "mean_controlled_on_road": 7.0,
+          "mean_on_road_av_fraction": 0.4375,
+          "mean_selected_peers": 5.633850543962904
+        },
+        "override_causes": {
+          "native_realization_unattributed": 780,
+          "speed_ceiling": 64,
+          "lane_end": 30
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.1392857142857143,
+          "speed_ceiling": 0.011428571428571429,
+          "lane_end": 0.005357142857142857
+        },
+        "policy_filter_changes": 94,
+        "native_realization_changes": 780,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 16,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 16,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 16,
+            "initial": 0,
+            "unfinished": 16,
+            "boundary_time_s": 1281.6,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 560.7,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 9,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 9,
+              "initial": 0,
+              "unfinished": 9,
+              "boundary_time_s": 720.9000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 16,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 16,
+              "boundary_time_s": 1281.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-5-lane-following",
+        "seed": 6510009,
+        "task": "following",
+        "through_lanes": 5,
+        "density": "dense",
+        "controlled_count": 8,
+        "total_vehicles": 24,
+        "requested_av_fraction": 0.3333333333333333,
+        "population_setting": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "agent_steps": 6400,
+        "agent_transitions": 6400,
+        "overrides": 2854,
+        "intervention_fraction": 0.4459375,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9371064841816619,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 14,
+        "mean_abs_acceleration": 0.22986474516886493,
+        "mean_abs_jerk": 0.20456304558123903,
+        "peak_abs_jerk": 41.65804926190866,
+        "minimum_ttc_s": 12.145752570666291,
+        "minimum_headway_s": 1.6372059682739404,
+        "delivered_messages": 21989,
+        "dropped_messages": 9425,
+        "delivered_bytes": 4083502,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 19224,
+          "controlled_on_road_sum": 6408,
+          "on_road_av_fraction_sum": 267.0000000000023,
+          "maximum_on_road": 24,
+          "peer_observations": 6408,
+          "selected_peer_sum": 30110,
+          "maximum_selected_peers": 6,
+          "overflow_peer_observations": 1243,
+          "zero_peer_observations": 8,
+          "selected_peer_histogram": {
+            "0": 8,
+            "1": 1,
+            "2": 41,
+            "3": 869,
+            "4": 1676,
+            "5": 2162,
+            "6": 1651
+          },
+          "mean_total_on_road": 24.0,
+          "mean_controlled_on_road": 8.0,
+          "mean_on_road_av_fraction": 0.33333333333333615,
+          "mean_selected_peers": 4.698813982521847
+        },
+        "override_causes": {
+          "native_realization_unattributed": 2777,
+          "speed_ceiling": 77
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.43390625,
+          "speed_ceiling": 0.01203125
+        },
+        "policy_filter_changes": 77,
+        "native_realization_changes": 2777,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 24,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 24,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 24,
+            "initial": 0,
+            "unfinished": 24,
+            "boundary_time_s": 1922.3999999999992,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 8,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 8,
+              "boundary_time_s": 640.8000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 16,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 16,
+              "boundary_time_s": 1281.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 24,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 24,
+              "initial": 0,
+              "unfinished": 24,
+              "boundary_time_s": 1922.3999999999992,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-5-lane-passing",
+        "seed": 6510010,
+        "task": "passing",
+        "through_lanes": 5,
+        "density": "medium",
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "requested_av_fraction": 0.125,
+        "population_setting": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "agent_steps": 800,
+        "agent_transitions": 800,
+        "overrides": 106,
+        "intervention_fraction": 0.1325,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9695873505601394,
+        "passes": 1,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 0,
+        "mean_abs_acceleration": 0.5220841207328398,
+        "mean_abs_jerk": 2.303993120696393,
+        "peak_abs_jerk": 8.894050329066161,
+        "minimum_ttc_s": null,
+        "minimum_headway_s": null,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6408,
+          "controlled_on_road_sum": 801,
+          "on_road_av_fraction_sum": 100.125,
+          "maximum_on_road": 8,
+          "peer_observations": 801,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 801,
+          "selected_peer_histogram": {
+            "0": 801,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 8.0,
+          "mean_controlled_on_road": 1.0,
+          "mean_on_road_av_fraction": 0.125,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "speed_ceiling": 106
+        },
+        "override_cause_fractions": {
+          "speed_ceiling": 0.1325
+        },
+        "policy_filter_changes": 106,
+        "native_realization_changes": 0,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 8,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 8,
+            "boundary_time_s": 640.8000000000001,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 1,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 1,
+              "initial": 0,
+              "unfinished": 1,
+              "boundary_time_s": 80.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 560.7,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 8,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 8,
+              "boundary_time_s": 640.8000000000001,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-5-lane-merge",
+        "seed": 6510011,
+        "task": "merge",
+        "through_lanes": 5,
+        "density": "medium",
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "requested_av_fraction": 0.1875,
+        "population_setting": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "agent_steps": 2400,
+        "agent_transitions": 2400,
+        "overrides": 163,
+        "intervention_fraction": 0.06791666666666667,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9522965588890004,
+        "passes": 0,
+        "successful_merges": 1,
+        "merge_target_count": 1,
+        "lane_changes": 1,
+        "mean_abs_acceleration": 0.26235763946223256,
+        "mean_abs_jerk": 0.39663373548537656,
+        "peak_abs_jerk": 60.695840418338776,
+        "minimum_ttc_s": 214.46343844246041,
+        "minimum_headway_s": 3.111241469571174,
+        "delivered_messages": 1122,
+        "dropped_messages": 478,
+        "delivered_bytes": 210562,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 12816,
+          "controlled_on_road_sum": 2403,
+          "on_road_av_fraction_sum": 150.1875,
+          "maximum_on_road": 16,
+          "peer_observations": 2403,
+          "selected_peer_sum": 1598,
+          "maximum_selected_peers": 1,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 805,
+          "selected_peer_histogram": {
+            "0": 805,
+            "1": 1598,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 16.0,
+          "mean_controlled_on_road": 3.0,
+          "mean_on_road_av_fraction": 0.1875,
+          "mean_selected_peers": 0.6650020807324178
+        },
+        "override_causes": {
+          "native_realization_unattributed": 13,
+          "speed_ceiling": 150
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.005416666666666667,
+          "speed_ceiling": 0.0625
+        },
+        "policy_filter_changes": 150,
+        "native_realization_changes": 13,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 16,
+        "completed_trips": 0,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 16,
+            "teleporting": 0,
+            "completed": 0,
+            "removed": 0,
+            "requested": 16,
+            "initial": 0,
+            "unfinished": 16,
+            "boundary_time_s": 1281.6,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 3,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 3,
+              "initial": 0,
+              "unfinished": 3,
+              "boundary_time_s": 240.29999999999998,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 13,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 13,
+              "initial": 0,
+              "unfinished": 13,
+              "boundary_time_s": 1041.3000000000002,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 14,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 14,
+              "initial": 0,
+              "unfinished": 14,
+              "boundary_time_s": 1121.4,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:ramp": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 2,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 2,
+              "initial": 0,
+              "unfinished": 2,
+              "boundary_time_s": 160.2,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510012,
+        "task": "cruise",
+        "through_lanes": 2,
+        "density": "light",
+        "controlled_count": 5,
+        "total_vehicles": 8,
+        "requested_av_fraction": 0.625,
+        "population_setting": {
+          "controlled_count": 5,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 4000,
+        "agent_transitions": 4000,
+        "overrides": 1341,
+        "intervention_fraction": 0.33525,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.948422192511658,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 20,
+        "mean_abs_acceleration": 0.23454676825068305,
+        "mean_abs_jerk": 0.24920612525908573,
+        "peak_abs_jerk": 27.034767395761605,
+        "minimum_ttc_s": 35.183338739703196,
+        "minimum_headway_s": 1.630475889713355,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6405,
+          "controlled_on_road_sum": 4005,
+          "on_road_av_fraction_sum": 500.89285714285717,
+          "maximum_on_road": 8,
+          "peer_observations": 4005,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 4005,
+          "selected_peer_histogram": {
+            "0": 4005,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 7.99625468164794,
+          "mean_controlled_on_road": 5.0,
+          "mean_on_road_av_fraction": 0.6253344034242911,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 1281,
+          "speed_ceiling": 42,
+          "lane_end": 19
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.32025,
+          "speed_ceiling": 0.0105,
+          "lane_end": 0.00475
+        },
+        "policy_filter_changes": 61,
+        "native_realization_changes": 1281,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 1,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 7,
+            "teleporting": 0,
+            "completed": 1,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 7,
+            "boundary_time_s": 640.6,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 5,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 5,
+              "initial": 0,
+              "unfinished": 5,
+              "boundary_time_s": 400.5,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 2,
+              "teleporting": 0,
+              "completed": 1,
+              "removed": 0,
+              "requested": 3,
+              "initial": 0,
+              "unfinished": 2,
+              "boundary_time_s": 240.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 1,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 640.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510013,
+        "task": "following",
+        "through_lanes": 2,
+        "density": "dense",
+        "controlled_count": 7,
+        "total_vehicles": 16,
+        "requested_av_fraction": 0.4375,
+        "population_setting": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 5508,
+        "agent_transitions": 5508,
+        "overrides": 2309,
+        "intervention_fraction": 0.4192084241103849,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.8511441239573575,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 33,
+        "mean_abs_acceleration": 0.49109879059462186,
+        "mean_abs_jerk": 0.33210944867245784,
+        "peak_abs_jerk": 61.73520581644549,
+        "minimum_ttc_s": 5.367607199112462,
+        "minimum_headway_s": 1.6327278126945588,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 12582,
+          "controlled_on_road_sum": 5513,
+          "on_road_av_fraction_sum": 350.9695970695972,
+          "maximum_on_road": 16,
+          "peer_observations": 5513,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 5513,
+          "selected_peer_histogram": {
+            "0": 5513,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 15.707865168539326,
+          "mean_controlled_on_road": 6.882646691635456,
+          "mean_on_road_av_fraction": 0.4381642909732799,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 2173,
+          "speed_ceiling": 59,
+          "following": 31,
+          "lane_end": 51
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.39451706608569354,
+          "speed_ceiling": 0.010711692084241104,
+          "following": 0.005628177196804648,
+          "lane_end": 0.009259259259259259
+        },
+        "policy_filter_changes": 141,
+        "native_realization_changes": 2173,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 16,
+        "completed_trips": 4,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 12,
+            "teleporting": 0,
+            "completed": 4,
+            "removed": 0,
+            "requested": 16,
+            "initial": 0,
+            "unfinished": 12,
+            "boundary_time_s": 1258.6,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 5,
+              "teleporting": 0,
+              "completed": 2,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 5,
+              "boundary_time_s": 551.5,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 2,
+              "removed": 0,
+              "requested": 9,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 707.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 12,
+              "teleporting": 0,
+              "completed": 4,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 12,
+              "boundary_time_s": 1258.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510014,
+        "task": "passing",
+        "through_lanes": 2,
+        "density": "medium",
+        "controlled_count": 8,
+        "total_vehicles": 24,
+        "requested_av_fraction": 0.3333333333333333,
+        "population_setting": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 6256,
+        "agent_transitions": 6256,
+        "overrides": 3046,
+        "intervention_fraction": 0.4868925831202046,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.8074858620313061,
+        "passes": 5,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 29,
+        "mean_abs_acceleration": 0.5566542581553778,
+        "mean_abs_jerk": 0.410581653191022,
+        "peak_abs_jerk": 59.68617409467702,
+        "minimum_ttc_s": 3.4273663680747015,
+        "minimum_headway_s": 1.6154535886710941,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 802,
+          "total_on_road_sum": 18433,
+          "controlled_on_road_sum": 6269,
+          "on_road_av_fraction_sum": 273.616323616337,
+          "maximum_on_road": 24,
+          "peer_observations": 6262,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 6262,
+          "selected_peer_histogram": {
+            "0": 6262,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 22.98379052369077,
+          "mean_controlled_on_road": 7.816708229426434,
+          "mean_on_road_av_fraction": 0.3411674858059065,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 2981,
+          "speed_ceiling": 17,
+          "following": 43,
+          "lane_end": 20
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.476502557544757,
+          "speed_ceiling": 0.002717391304347826,
+          "following": 0.0068734015345268545,
+          "lane_end": 0.00319693094629156
+        },
+        "policy_filter_changes": 80,
+        "native_realization_changes": 2981,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 24,
+        "completed_trips": 8,
+        "cohort_accounting": {
+          "time": 80.2,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 16,
+            "teleporting": 0,
+            "completed": 8,
+            "removed": 0,
+            "requested": 24,
+            "initial": 0,
+            "unfinished": 16,
+            "boundary_time_s": 1844.5000000000007,
+            "external_wait_s": 0.4,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 6,
+              "teleporting": 0,
+              "completed": 2,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 6,
+              "boundary_time_s": 627.2,
+              "external_wait_s": 0.1,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 10,
+              "teleporting": 0,
+              "completed": 6,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 10,
+              "boundary_time_s": 1217.3000000000002,
+              "external_wait_s": 0.30000000000000004,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 16,
+              "teleporting": 0,
+              "completed": 8,
+              "removed": 0,
+              "requested": 24,
+              "initial": 0,
+              "unfinished": 16,
+              "boundary_time_s": 1844.5000000000007,
+              "external_wait_s": 0.4,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510015,
+        "task": "merge",
+        "through_lanes": 2,
+        "density": "medium",
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "requested_av_fraction": 0.125,
+        "population_setting": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 770,
+        "agent_transitions": 770,
+        "overrides": 221,
+        "intervention_fraction": 0.287012987012987,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.9412048575338188,
+        "passes": 0,
+        "successful_merges": 1,
+        "merge_target_count": 1,
+        "lane_changes": 1,
+        "mean_abs_acceleration": 0.39024215333538903,
+        "mean_abs_jerk": 0.45811638187665404,
+        "peak_abs_jerk": 60.71446418762205,
+        "minimum_ttc_s": null,
+        "minimum_headway_s": null,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6377,
+          "controlled_on_road_sum": 770,
+          "on_road_av_fraction_sum": 96.25,
+          "maximum_on_road": 8,
+          "peer_observations": 770,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 770,
+          "selected_peer_histogram": {
+            "0": 770,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 7.961298377028714,
+          "mean_controlled_on_road": 0.9612983770287141,
+          "mean_on_road_av_fraction": 0.12016229712858927,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {
+          "native_realization_unattributed": 13,
+          "speed_ceiling": 208
+        },
+        "override_cause_fractions": {
+          "native_realization_unattributed": 0.016883116883116882,
+          "speed_ceiling": 0.2701298701298701
+        },
+        "policy_filter_changes": 208,
+        "native_realization_changes": 13,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 1,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 7,
+            "teleporting": 0,
+            "completed": 1,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 7,
+            "boundary_time_s": 637.8000000000001,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:controlled": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 0,
+              "teleporting": 0,
+              "completed": 1,
+              "removed": 0,
+              "requested": 1,
+              "initial": 0,
+              "unfinished": 0,
+              "boundary_time_s": 77.1,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 7,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 7,
+              "initial": 0,
+              "unfinished": 7,
+              "boundary_time_s": 560.7,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 6,
+              "teleporting": 0,
+              "completed": 0,
+              "removed": 0,
+              "requested": 6,
+              "initial": 0,
+              "unfinished": 6,
+              "boundary_time_s": 480.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:ramp": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 1,
+              "teleporting": 0,
+              "completed": 1,
+              "removed": 0,
+              "requested": 2,
+              "initial": 0,
+              "unfinished": 1,
+              "boundary_time_s": 157.2,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      }
+    ]
+  },
+  "native_baseline": {
+    "summary": {
+      "cases": 3,
+      "pooled_override_fraction": 0.0,
+      "worst_override_fraction": 0.0,
+      "failures": [
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 6510000,
+          "population": {
+            "controlled_count": 0,
+            "total_vehicles": 8,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "cruise_speed"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 6510000,
+          "population": {
+            "controlled_count": 0,
+            "total_vehicles": 16,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "cruise_speed"
+          ]
+        },
+        {
+          "case_id": "validation-2-lane-cruise",
+          "seed": 6510000,
+          "population": {
+            "controlled_count": 0,
+            "total_vehicles": 24,
+            "communication": "none",
+            "packet_loss": 0.0
+          },
+          "causes": [
+            "cruise_speed"
+          ]
+        }
+      ],
+      "nominal_gates_passed": false,
+      "held_out_test_run": false,
+      "acceptance_status": "experimental; held-out qualification not run"
+    },
+    "reports": [
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510000,
+        "task": "cruise",
+        "through_lanes": 2,
+        "density": "light",
+        "controlled_count": 0,
+        "total_vehicles": 8,
+        "requested_av_fraction": 0.0,
+        "population_setting": {
+          "controlled_count": 0,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 0,
+        "agent_transitions": 0,
+        "overrides": 0,
+        "intervention_fraction": 0.0,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.0,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 0,
+        "mean_abs_acceleration": 0.0,
+        "mean_abs_jerk": 0.0,
+        "peak_abs_jerk": 0.0,
+        "minimum_ttc_s": null,
+        "minimum_headway_s": null,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 6394,
+          "controlled_on_road_sum": 0,
+          "on_road_av_fraction_sum": 0.0,
+          "maximum_on_road": 8,
+          "peer_observations": 0,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 0,
+          "selected_peer_histogram": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 7.982521847690387,
+          "mean_controlled_on_road": 0.0,
+          "mean_on_road_av_fraction": 0.0,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {},
+        "override_cause_fractions": {},
+        "policy_filter_changes": 0,
+        "native_realization_changes": 0,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 8,
+        "completed_trips": 2,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 6,
+            "teleporting": 0,
+            "completed": 2,
+            "removed": 0,
+            "requested": 8,
+            "initial": 0,
+            "unfinished": 6,
+            "boundary_time_s": 639.6,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 6,
+              "teleporting": 0,
+              "completed": 2,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 6,
+              "boundary_time_s": 639.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 6,
+              "teleporting": 0,
+              "completed": 2,
+              "removed": 0,
+              "requested": 8,
+              "initial": 0,
+              "unfinished": 6,
+              "boundary_time_s": 639.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510000,
+        "task": "cruise",
+        "through_lanes": 2,
+        "density": "light",
+        "controlled_count": 0,
+        "total_vehicles": 16,
+        "requested_av_fraction": 0.0,
+        "population_setting": {
+          "controlled_count": 0,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 0,
+        "agent_transitions": 0,
+        "overrides": 0,
+        "intervention_fraction": 0.0,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.0,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 0,
+        "mean_abs_acceleration": 0.0,
+        "mean_abs_jerk": 0.0,
+        "peak_abs_jerk": 0.0,
+        "minimum_ttc_s": null,
+        "minimum_headway_s": null,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 12430,
+          "controlled_on_road_sum": 0,
+          "on_road_av_fraction_sum": 0.0,
+          "maximum_on_road": 16,
+          "peer_observations": 0,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 0,
+          "selected_peer_histogram": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 15.518102372034956,
+          "mean_controlled_on_road": 0.0,
+          "mean_on_road_av_fraction": 0.0,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {},
+        "override_cause_fractions": {},
+        "policy_filter_changes": 0,
+        "native_realization_changes": 0,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 16,
+        "completed_trips": 6,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 10,
+            "teleporting": 0,
+            "completed": 6,
+            "removed": 0,
+            "requested": 16,
+            "initial": 0,
+            "unfinished": 10,
+            "boundary_time_s": 1243.6,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 10,
+              "teleporting": 0,
+              "completed": 6,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 10,
+              "boundary_time_s": 1243.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 10,
+              "teleporting": 0,
+              "completed": 6,
+              "removed": 0,
+              "requested": 16,
+              "initial": 0,
+              "unfinished": 10,
+              "boundary_time_s": 1243.6,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      },
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510000,
+        "task": "cruise",
+        "through_lanes": 2,
+        "density": "light",
+        "controlled_count": 0,
+        "total_vehicles": 24,
+        "requested_av_fraction": 0.0,
+        "population_setting": {
+          "controlled_count": 0,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "agent_steps": 0,
+        "agent_transitions": 0,
+        "overrides": 0,
+        "intervention_fraction": 0.0,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0,
+        "mean_fraction_of_speed_limit": 0.0,
+        "passes": 0,
+        "successful_merges": 0,
+        "merge_target_count": 0,
+        "lane_changes": 0,
+        "mean_abs_acceleration": 0.0,
+        "mean_abs_jerk": 0.0,
+        "peak_abs_jerk": 0.0,
+        "minimum_ttc_s": null,
+        "minimum_headway_s": null,
+        "delivered_messages": 0,
+        "dropped_messages": 0,
+        "delivered_bytes": 0,
+        "population_metrics": {
+          "road_samples": 801,
+          "total_on_road_sum": 17968,
+          "controlled_on_road_sum": 0,
+          "on_road_av_fraction_sum": 0.0,
+          "maximum_on_road": 24,
+          "peer_observations": 0,
+          "selected_peer_sum": 0,
+          "maximum_selected_peers": 0,
+          "overflow_peer_observations": 0,
+          "zero_peer_observations": 0,
+          "selected_peer_histogram": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 0,
+            "4": 0,
+            "5": 0,
+            "6": 0
+          },
+          "mean_total_on_road": 22.43196004993758,
+          "mean_controlled_on_road": 0.0,
+          "mean_on_road_av_fraction": 0.0,
+          "mean_selected_peers": 0.0
+        },
+        "override_causes": {},
+        "override_cause_fractions": {},
+        "policy_filter_changes": 0,
+        "native_realization_changes": 0,
+        "primary_horizon_complete": true,
+        "accounting_comparison_valid": true,
+        "partial_control_horizon": false,
+        "requested_trips": 24,
+        "completed_trips": 12,
+        "cohort_accounting": {
+          "time": 80.1,
+          "totals": {
+            "scheduled": 0,
+            "waiting": 0,
+            "active": 12,
+            "teleporting": 0,
+            "completed": 12,
+            "removed": 0,
+            "requested": 24,
+            "initial": 0,
+            "unfinished": 12,
+            "boundary_time_s": 1797.999999999999,
+            "external_wait_s": 0.0,
+            "teleported": 0
+          },
+          "groups": {
+            "role:human_proxy": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 12,
+              "teleporting": 0,
+              "completed": 12,
+              "removed": 0,
+              "requested": 24,
+              "initial": 0,
+              "unfinished": 12,
+              "boundary_time_s": 1797.999999999999,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            },
+            "origin:main": {
+              "scheduled": 0,
+              "waiting": 0,
+              "active": 12,
+              "teleporting": 0,
+              "completed": 12,
+              "removed": 0,
+              "requested": 24,
+              "initial": 0,
+              "unfinished": 12,
+              "boundary_time_s": 1797.999999999999,
+              "external_wait_s": 0.0,
+              "teleported": 0
+            }
+          },
+          "metric": "Sum from requested departure to observed successful arrival or horizon; failed/removed trips accrue through horizon",
+          "initial_cohort": "Time before observation boundary is excluded",
+          "comparison_valid": true
+        }
+      }
+    ]
+  },
+  "paired_comparison": [
+    {
+      "case_id": "validation-2-lane-cruise",
+      "seed": 6510000,
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.32625,
+      "final_overrides": 0.75125,
+      "override_delta": 0.425,
+      "speed_ratio_delta": 0.0007741437697503795,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-following",
+      "seed": 6510001,
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.3933333333333333,
+      "final_overrides": 0.5754475703324808,
+      "override_delta": 0.18211423699914753,
+      "speed_ratio_delta": 0.12590511613928268,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-passing",
+      "seed": 6510002,
+      "population": {
+        "controlled_count": 5,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.2274520856820744,
+      "final_overrides": 0.42017519073184517,
+      "override_delta": 0.19272310504977078,
+      "speed_ratio_delta": 0.00412583502853292,
+      "initial_passes": 5,
+      "final_passes": 5,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-merge",
+      "seed": 6510003,
+      "population": {
+        "controlled_count": 7,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.18535714285714286,
+      "final_overrides": 0.19375,
+      "override_delta": 0.008392857142857146,
+      "speed_ratio_delta": -0.001615003206209109,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 1,
+      "final_merges": 1
+    },
+    {
+      "case_id": "validation-4-lane-cruise",
+      "seed": 6510004,
+      "population": {
+        "controlled_count": 8,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.01453125,
+      "final_overrides": 0.04078125,
+      "override_delta": 0.026249999999999996,
+      "speed_ratio_delta": 0.0021531121154239052,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-4-lane-following",
+      "seed": 6510005,
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.44875,
+      "final_overrides": 0.15,
+      "override_delta": -0.29874999999999996,
+      "speed_ratio_delta": 0.27313403154735183,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-4-lane-passing",
+      "seed": 6510006,
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.06958333333333333,
+      "final_overrides": 0.21166666666666667,
+      "override_delta": 0.14208333333333334,
+      "speed_ratio_delta": 0.13490613606590607,
+      "initial_passes": 3,
+      "final_passes": 3,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-4-lane-merge",
+      "seed": 6510007,
+      "population": {
+        "controlled_count": 5,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.232,
+      "final_overrides": 0.485,
+      "override_delta": 0.253,
+      "speed_ratio_delta": -0.01889957822178967,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 1,
+      "final_merges": 1
+    },
+    {
+      "case_id": "validation-5-lane-cruise",
+      "seed": 6510008,
+      "population": {
+        "controlled_count": 7,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "initial_overrides": 0.05035714285714286,
+      "final_overrides": 0.15607142857142858,
+      "override_delta": 0.10571428571428573,
+      "speed_ratio_delta": 0.007715458481817761,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-5-lane-following",
+      "seed": 6510009,
+      "population": {
+        "controlled_count": 8,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "initial_overrides": 0.1696875,
+      "final_overrides": 0.4459375,
+      "override_delta": 0.27625,
+      "speed_ratio_delta": 0.07440801520454654,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-5-lane-passing",
+      "seed": 6510010,
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "initial_overrides": 0.2425,
+      "final_overrides": 0.1325,
+      "override_delta": -0.10999999999999999,
+      "speed_ratio_delta": -0.0006842954177231908,
+      "initial_passes": 1,
+      "final_passes": 1,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-5-lane-merge",
+      "seed": 6510011,
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "initial_overrides": 0.0925,
+      "final_overrides": 0.06791666666666667,
+      "override_delta": -0.024583333333333332,
+      "speed_ratio_delta": 0.005917384490085942,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 1,
+      "final_merges": 1
+    },
+    {
+      "case_id": "validation-2-lane-cruise",
+      "seed": 6510012,
+      "population": {
+        "controlled_count": 5,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.316,
+      "final_overrides": 0.33525,
+      "override_delta": 0.01924999999999999,
+      "speed_ratio_delta": 0.03226241317389156,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-following",
+      "seed": 6510013,
+      "population": {
+        "controlled_count": 7,
+        "total_vehicles": 16,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.29771407837445574,
+      "final_overrides": 0.4192084241103849,
+      "override_delta": 0.12149434573592915,
+      "speed_ratio_delta": -0.009718865450274228,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-passing",
+      "seed": 6510014,
+      "population": {
+        "controlled_count": 8,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.387025665249567,
+      "final_overrides": 0.4868925831202046,
+      "override_delta": 0.09986691787063762,
+      "speed_ratio_delta": 0.056043831026182045,
+      "initial_passes": 4,
+      "final_passes": 5,
+      "initial_merges": 0,
+      "final_merges": 0
+    },
+    {
+      "case_id": "validation-2-lane-merge",
+      "seed": 6510015,
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "initial_overrides": 0.23575129533678757,
+      "final_overrides": 0.287012987012987,
+      "override_delta": 0.05126169167619943,
+      "speed_ratio_delta": 0.002843739141038859,
+      "initial_passes": 0,
+      "final_passes": 0,
+      "initial_merges": 1,
+      "final_merges": 1
+    }
+  ],
+  "training_coverage": {
+    "passing|2|8|none|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 1600
+    },
+    "passing|2|16|none|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 1594
+    },
+    "cruise|6|24|none|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 900
+    },
+    "cruise|1|16|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 2
+    },
+    "cruise|2|24|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 505
+    },
+    "following|1|16|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 800
+    },
+    "cruise|2|24|none|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 1531
+    },
+    "cruise|2|8|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 1600
+    },
+    "passing|8|24|none|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 6400
+    },
+    "following|4|24|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 1223
+    },
+    "following|4|16|none|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 3200
+    },
+    "merge|8|24|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 6336
+    },
+    "merge|1|24|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 800
+    },
+    "following|6|8|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 4800
+    },
+    "passing|6|24|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 1901
+    },
+    "passing|2|8|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 1600
+    },
+    "passing|4|16|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 3171
+    },
+    "passing|2|8|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 1600
+    },
+    "passing|6|24|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 4800
+    },
+    "cruise|8|8|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 2463
+    },
+    "following|4|8|none|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 3200
+    },
+    "cruise|6|8|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 4784
+    },
+    "merge|8|16|none|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 6400
+    },
+    "following|1|8|none|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 800
+    },
+    "passing|1|24|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 288
+    },
+    "merge|1|16|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 800
+    },
+    "merge|2|24|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 1600
+    },
+    "merge|6|16|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 4800
+    },
+    "following|2|8|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 1600
+    },
+    "following|2|16|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 572
+    },
+    "cruise|4|24|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 2930
+    },
+    "passing|6|8|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 4800
+    },
+    "following|1|8|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 800
+    },
+    "merge|6|8|none|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 4800
+    },
+    "cruise|8|16|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 2356
+    },
+    "following|2|24|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 1586
+    },
+    "following|1|8|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 761
+    },
+    "cruise|6|24|local|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 4800
+    },
+    "cruise|4|16|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 3200
+    },
+    "following|2|16|none|0.0": {
+      "episodes": 1,
+      "actual_agent_transitions": 568
+    },
+    "passing|6|16|local|0.3": {
+      "episodes": 1,
+      "actual_agent_transitions": 1728
+    }
+  },
+  "source_artifacts": {
+    "summary.json": {
+      "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/summary.json",
+      "sha256": "0fc8c350b6b3a2b037db319698f05357c37942620bfb443022c38d6cfc221561"
+    },
+    "initial-validation.json": {
+      "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation.json",
+      "sha256": "3aef44df81e489f71872b0fb0caed1123e5a1c1b57fdaad237df7403c5fbd74a"
+    },
+    "final-validation.json": {
+      "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/final-validation.json",
+      "sha256": "9d08a768ef77dac1d4eb1f2d3ca21ebfd9447380ad9b8fbe9cc95e8cc4efb38a"
+    },
+    "native-baseline.json": {
+      "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/native-baseline.json",
+      "sha256": "fc36b3f16c62e94dc4f8fcc79ce42685fe9be2d205ac7826df1384f738c348c3"
+    },
+    "comparison.json": {
+      "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/comparison.json",
+      "sha256": "e85a19a0ddfcb1af66436f764cefc4d7ee4e4d37adcc43e9d60b3697d2ddd32b"
+    },
+    "training-coverage.json": {
+      "path": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/training-coverage.json",
+      "sha256": "3871c70a9ca5ab6e3b6e4e4030c066eedb04afb46170a079573c6a3201bcec67"
+    }
+  },
+  "omitted": "Per-trip records and step journals remain in the immutable local run; this compact copy preserves all case summaries and cohort totals/groups."
+}

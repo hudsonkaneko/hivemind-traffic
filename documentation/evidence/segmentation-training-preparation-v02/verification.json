@@ -1,0 +1,25 @@
+{
+  "tests_passed": 139,
+  "trainer_tests": 29,
+  "preflight_tests": 7,
+  "dataset_tests": 5,
+  "dataset_check_passed": true,
+  "learner_created": false,
+  "training_started": false,
+  "configuration_sha256": "76b626700cd53d936bd13c424bebdd673d7fadb25d37bc654aa4537521866059",
+  "launch_enabled": false,
+  "training_authorized": false,
+  "google_tabs_preserved": 42,
+  "unaffected_google_tab_bodies_verified": 40,
+  "mirror_check_passed": true,
+  "native_google_pagination_inspected": false,
+  "post_preflight_change": "Trainer manifest missing/hash guards and tests only; model, loss and preprocessing unchanged",
+  "clean_archive": {
+    "commit": "81cf626ea33375217c17b4f3b929b9394d6e5f27",
+    "tests_passed": 139,
+    "seconds": 5.66,
+    "path": "outputs/validation/segmentation-training-preparation-v02-clean/source",
+    "generated_dataset_or_runtime_copied": false
+  },
+  "source_byte_note": "Git normalizes text line endings. Capture source hashes describe original runtime bytes; dataset module subsequently lost one trailing blank line and trainer gained manifest guards. Historical evidence is preserved."
+}

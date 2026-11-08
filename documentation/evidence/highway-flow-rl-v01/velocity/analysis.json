@@ -1,0 +1,188 @@
+{
+  "training": false,
+  "simulation_runs": 0,
+  "samples": 399,
+  "agent": "agent_0",
+  "policy_sha256": "888a380b7c6741aea623e9b99ad155f7cb9a2ef8fdc2e590823b7e2629031819",
+  "episode_speed_cap_m_s": 18.0,
+  "inputs": {
+    "outputs\\highway-flow-rl\\v01\\round-02\\video-recording-01\\recording.json": "12064d16db76955113dd335531660e3079cf93a8a176c094c9fa6fd574596f62",
+    "outputs\\highway-flow-rl\\v01\\round-02\\video-recording-01\\episode\\episode-6900019-ebc4c10a\\actions.jsonl.gz": "2242d99b73613506c1ad5c90e035e68fbd5993cd19096b5910c32f9e11a21dfa",
+    "outputs\\highway-flow-rl\\v01\\round-02\\video-recording-01\\network.net.xml": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+    "outputs\\highway-flow-rl\\v01\\round-02\\video-recording-01\\resolved-config.json": "a06a774eb2e650626e804b5fcad41fa7832bdfa7d605a0e9c964fa88b126ab4f"
+  },
+  "time_alignment": "Row at t contains command/context from t-0.1 and realized speed/acceleration at t.",
+  "velocity_definition": "x/y finite differences of recorded SUMO front-bumper position; includes lateral motion and geometry/reference effects.",
+  "maximum_speed_derivative_acceleration_error": 7.72715225139109e-14,
+  "decomposition_error": 7.716050021144838e-15,
+  "correlation_request_realized": {
+    "pearson_r": 0.6744551380381154,
+    "n": 399
+  },
+  "correlation_request_realized_without_overrides": {
+    "pearson_r": 1.0,
+    "n": 384
+  },
+  "context_correlations": {
+    "previous_speed_m_s": {
+      "pearson_r": -0.4621931558655195,
+      "n": 399
+    },
+    "front_gap_m": {
+      "pearson_r": 0.4334177970181752,
+      "n": 186
+    },
+    "front_relative_speed": {
+      "pearson_r": 0.10927257448860413,
+      "n": 186
+    },
+    "pre_native_estimate": {
+      "pearson_r": 0.2787229337371805,
+      "n": 399
+    },
+    "pre_route_remaining_m": {
+      "pearson_r": 0.3049562591975748,
+      "n": 399
+    },
+    "pre_entry_distance_m": {
+      "pearson_r": 0.35120760134893547,
+      "n": 41
+    }
+  },
+  "slowdowns": [
+    {
+      "start_s": 2.4,
+      "end_s": 3.5,
+      "start_mph": 25.200033996204528,
+      "end_mph": 14.127199350535268,
+      "min_requested_acceleration": 0.9948970228433609,
+      "max_requested_acceleration": 1.6925078928470612,
+      "min_realized_acceleration": -4.500000000000002,
+      "overrides": 11,
+      "native_changes": 11,
+      "filter_changes": 0,
+      "policy_delta_v_m_s": 1.2672909691929821,
+      "filter_delta_v_m_s": 0.0,
+      "native_delta_v_m_s": -6.217290969192974,
+      "front_present_steps": 0,
+      "front_gap_min_m": null,
+      "front_gap_max_m": null,
+      "front_relative_speed_min": null,
+      "lane_requests": [
+        0
+      ],
+      "lanes": [
+        "mlk_on_0"
+      ]
+    },
+    {
+      "start_s": 12.8,
+      "end_s": 16.1,
+      "start_mph": 33.27659109512772,
+      "end_mph": 32.182107297031294,
+      "min_requested_acceleration": -0.21897339075803757,
+      "max_requested_acceleration": -0.010078005492687225,
+      "min_realized_acceleration": -0.21897339075803046,
+      "overrides": 0,
+      "native_changes": 0,
+      "filter_changes": 0,
+      "policy_delta_v_m_s": -0.4892780371010304,
+      "filter_delta_v_m_s": 0.0,
+      "native_delta_v_m_s": 1.7763568394002252e-15,
+      "front_present_steps": 33,
+      "front_gap_min_m": 37.26632954438492,
+      "front_gap_max_m": 43.511008748595174,
+      "front_relative_speed_min": 1.6792754799793919,
+      "lane_requests": [
+        0,
+        1
+      ],
+      "lanes": [
+        "sb2_1"
+      ]
+    },
+    {
+      "start_s": 18.8,
+      "end_s": 20.8,
+      "start_mph": 32.81485577413357,
+      "end_mph": 30.70709662314715,
+      "min_requested_acceleration": -0.724338736385107,
+      "max_requested_acceleration": -0.04396574944257736,
+      "min_realized_acceleration": -0.7243387363851106,
+      "overrides": 0,
+      "native_changes": 0,
+      "filter_changes": 0,
+      "policy_delta_v_m_s": -0.9422526508569717,
+      "filter_delta_v_m_s": 0.0,
+      "native_delta_v_m_s": 1.776356839400263e-15,
+      "front_present_steps": 16,
+      "front_gap_min_m": 49.61325802411268,
+      "front_gap_max_m": 53.16989602093501,
+      "front_relative_speed_min": 2.0565968897130773,
+      "lane_requests": [
+        -1,
+        0
+      ],
+      "lanes": [
+        "sb3_0",
+        "sb3_1"
+      ]
+    },
+    {
+      "start_s": 25.6,
+      "end_s": 28.2,
+      "start_mph": 39.91482315470453,
+      "end_mph": 27.805042840524276,
+      "min_requested_acceleration": -3.6154575496912003,
+      "max_requested_acceleration": -0.020614460110664368,
+      "min_realized_acceleration": -3.6154575496911967,
+      "overrides": 0,
+      "native_changes": 0,
+      "filter_changes": 0,
+      "policy_delta_v_m_s": -5.413556191651152,
+      "filter_delta_v_m_s": 0.0,
+      "native_delta_v_m_s": 4.2632564145605986e-15,
+      "front_present_steps": 0,
+      "front_gap_min_m": null,
+      "front_gap_max_m": null,
+      "front_relative_speed_min": null,
+      "lane_requests": [
+        0,
+        1
+      ],
+      "lanes": [
+        "sb3_0"
+      ]
+    },
+    {
+      "start_s": 33.8,
+      "end_s": 34.4,
+      "start_mph": 40.21477459891071,
+      "end_mph": 39.783152098383994,
+      "min_requested_acceleration": -0.5123668164014816,
+      "max_requested_acceleration": -0.05136489123106003,
+      "min_realized_acceleration": -0.5123668164014816,
+      "overrides": 0,
+      "native_changes": 0,
+      "filter_changes": 0,
+      "policy_delta_v_m_s": -0.19295252263546087,
+      "filter_delta_v_m_s": 0.0,
+      "native_delta_v_m_s": -2.1316282072802804e-15,
+      "front_present_steps": 6,
+      "front_gap_min_m": 73.45753829453368,
+      "front_gap_max_m": 73.71260477672587,
+      "front_relative_speed_min": -0.6375171236300581,
+      "lane_requests": [
+        0
+      ],
+      "lanes": [
+        "sb4_0"
+      ]
+    }
+  ],
+  "limitations": [
+    "Single development replay; descriptive correlations are not causal explanations of network features.",
+    "Journal records command stages and partial context, not all 117 actor inputs; no feature ablation inferred.",
+    "Native intervention reason is unattributed in original logs; network inspection can suggest, not prove, its specific cause."
+  ]
+}

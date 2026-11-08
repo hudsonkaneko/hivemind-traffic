@@ -1,0 +1,1108 @@
+{
+  "passed": true,
+  "training": false,
+  "new_simulator_runs": false,
+  "quality_accepted": false,
+  "scope": "Exploratory same-capture comparisons; sparse occupancy is not a dense semantic obstacle mask",
+  "wall_seconds": 41.0135437999852,
+  "variants": {
+    "square512": {
+      "metrics": {
+        "total_pixels": 5529600,
+        "evaluated_pixels": 5477014,
+        "unsupported_gt_pixels": 52586,
+        "unsupported_gt_by_class": {
+          "lane": 9362,
+          "obstacle": 43224
+        },
+        "evaluated_fraction": 0.990490089699074,
+        "correct_pixels": 4759221,
+        "accuracy": 0.8689444649949772,
+        "mean_iou_present_union": 0.7152041811368287,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            1676350,
+            696122,
+            0,
+            10367,
+            0,
+            0
+          ],
+          [
+            2291,
+            3049719,
+            0,
+            8808,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            192,
+            13,
+            0,
+            33152,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 2382839,
+            "predicted_pixels": 1678833,
+            "true_positive": 1676350,
+            "false_positive": 2483,
+            "false_negative": 706489,
+            "iou": 0.7027772351070422,
+            "recall": 0.7035095531003144,
+            "precision": 0.9985209964302584
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 3060818,
+            "predicted_pixels": 3745854,
+            "true_positive": 3049719,
+            "false_positive": 696135,
+            "false_negative": 11099,
+            "iou": 0.811753301145902,
+            "recall": 0.9963738451616528,
+            "precision": 0.8141585336748309
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 9362,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 33357,
+            "predicted_pixels": 52327,
+            "true_positive": 33152,
+            "false_positive": 19175,
+            "false_negative": 205,
+            "iou": 0.631082007157542,
+            "recall": 0.9938543634019846,
+            "precision": 0.6335543791923863
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 43224,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "frames": 24,
+        "prediction_pixels_all_image": {
+          "background": 1714870,
+          "drivable": 3759425,
+          "vehicle": 55305,
+          "pedestrian": 0
+        }
+      },
+      "boundary_metrics": {
+        "frames": 24,
+        "tolerance_px": 2,
+        "scope": "Original-resolution foreground-side internal 4-neighbor boundaries; Euclidean tolerance; GT road includes lane; image border alone excluded; obstacle errors included in road spill",
+        "per_class": {
+          "road": {
+            "prediction_boundary_pixels": 30459,
+            "truth_boundary_pixels": 16565,
+            "matched_prediction_boundary_pixels": 2947,
+            "matched_truth_boundary_pixels": 2897,
+            "precision": 0.09675301224597,
+            "recall": 0.17488680953818292,
+            "f1": 0.12458280611266083
+          },
+          "vehicle": {
+            "prediction_boundary_pixels": 5770,
+            "truth_boundary_pixels": 4980,
+            "matched_prediction_boundary_pixels": 1632,
+            "matched_truth_boundary_pixels": 1584,
+            "precision": 0.282842287694974,
+            "recall": 0.3180722891566265,
+            "f1": 0.29942456842631976
+          }
+        },
+        "false_drivable": {
+          "false_drivable_pixels": 700543,
+          "predicted_road_pixels_excluding_gt_lane": 3750262,
+          "nonroad_gt_pixels": 2459420,
+          "obstacle_gt_pixels": 43224,
+          "obstacle_pixels_predicted_road": 4408,
+          "false_drivable_fraction_of_evaluated_prediction": 0.18679841568402422,
+          "false_drivable_rate_on_nonroad": 0.28484073480739364,
+          "obstacle_pixels_predicted_road_fraction": 0.10198038126966501
+        }
+      },
+      "latency_seconds": {
+        "median": 0.21803109999746084,
+        "p95": 0.22988566491985693
+      }
+    },
+    "letterbox512": {
+      "metrics": {
+        "total_pixels": 5529600,
+        "evaluated_pixels": 5477014,
+        "unsupported_gt_pixels": 52586,
+        "unsupported_gt_by_class": {
+          "lane": 9362,
+          "obstacle": 43224
+        },
+        "evaluated_fraction": 0.990490089699074,
+        "correct_pixels": 5273351,
+        "accuracy": 0.9628149572011319,
+        "mean_iou_present_union": 0.8455924120757791,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            2212145,
+            167123,
+            0,
+            3571,
+            0,
+            0
+          ],
+          [
+            22606,
+            3031678,
+            0,
+            6534,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3814,
+            15,
+            0,
+            29528,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 2382839,
+            "predicted_pixels": 2238565,
+            "true_positive": 2212145,
+            "false_positive": 26420,
+            "false_negative": 170694,
+            "iou": 0.9181848028792255,
+            "recall": 0.9283652819179139,
+            "precision": 0.9881977963561478
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 3060818,
+            "predicted_pixels": 3198816,
+            "true_positive": 3031678,
+            "false_positive": 167138,
+            "false_negative": 29140,
+            "iou": 0.9391943384606234,
+            "recall": 0.9904796691603356,
+            "precision": 0.9477500425157308
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 9362,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 33357,
+            "predicted_pixels": 39633,
+            "true_positive": 29528,
+            "false_positive": 10105,
+            "false_negative": 3829,
+            "iou": 0.6793980948874879,
+            "recall": 0.885211499835117,
+            "precision": 0.7450357025710898
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 43224,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "frames": 24,
+        "prediction_pixels_all_image": {
+          "background": 2281788,
+          "drivable": 3207195,
+          "vehicle": 40617,
+          "pedestrian": 0
+        }
+      },
+      "boundary_metrics": {
+        "frames": 24,
+        "tolerance_px": 2,
+        "scope": "Original-resolution foreground-side internal 4-neighbor boundaries; Euclidean tolerance; GT road includes lane; image border alone excluded; obstacle errors included in road spill",
+        "per_class": {
+          "road": {
+            "prediction_boundary_pixels": 18977,
+            "truth_boundary_pixels": 16565,
+            "matched_prediction_boundary_pixels": 4023,
+            "matched_truth_boundary_pixels": 4019,
+            "precision": 0.21199346577435843,
+            "recall": 0.2426199818895261,
+            "f1": 0.22627509630951342
+          },
+          "vehicle": {
+            "prediction_boundary_pixels": 4827,
+            "truth_boundary_pixels": 4980,
+            "matched_prediction_boundary_pixels": 2555,
+            "matched_truth_boundary_pixels": 2663,
+            "precision": 0.5293142738761135,
+            "recall": 0.5347389558232932,
+            "f1": 0.532012786982165
+          }
+        },
+        "false_drivable": {
+          "false_drivable_pixels": 167140,
+          "predicted_road_pixels_excluding_gt_lane": 3198818,
+          "nonroad_gt_pixels": 2459420,
+          "obstacle_gt_pixels": 43224,
+          "obstacle_pixels_predicted_road": 2,
+          "false_drivable_fraction_of_evaluated_prediction": 0.05225055004692358,
+          "false_drivable_rate_on_nonroad": 0.06795911231103269,
+          "obstacle_pixels_predicted_road_fraction": 4.6270590412733666e-05
+        }
+      },
+      "latency_seconds": {
+        "median": 0.23189744993578643,
+        "p95": 0.24213705509901046
+      }
+    },
+    "letterbox1024": {
+      "metrics": {
+        "total_pixels": 5529600,
+        "evaluated_pixels": 5477014,
+        "unsupported_gt_pixels": 52586,
+        "unsupported_gt_by_class": {
+          "lane": 9362,
+          "obstacle": 43224
+        },
+        "evaluated_fraction": 0.990490089699074,
+        "correct_pixels": 5300018,
+        "accuracy": 0.9676838510911238,
+        "mean_iou_present_union": 0.8606215984150648,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            2223488,
+            153629,
+            0,
+            5722,
+            0,
+            0
+          ],
+          [
+            9519,
+            3043317,
+            0,
+            7982,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            121,
+            23,
+            0,
+            33213,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 2382839,
+            "predicted_pixels": 2233128,
+            "true_positive": 2223488,
+            "false_positive": 9640,
+            "false_negative": 159351,
+            "iou": 0.929365733199748,
+            "recall": 0.9331255699608744,
+            "precision": 0.995683185200311
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 3060818,
+            "predicted_pixels": 3196969,
+            "true_positive": 3043317,
+            "false_positive": 153652,
+            "false_negative": 17501,
+            "iou": 0.9467554526873793,
+            "recall": 0.9942822474253614,
+            "precision": 0.9519382264889025
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 9362,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 33357,
+            "predicted_pixels": 46917,
+            "true_positive": 33213,
+            "false_positive": 13704,
+            "false_negative": 144,
+            "iou": 0.7057436093580672,
+            "recall": 0.9956830650238331,
+            "precision": 0.707909712897244
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 43224,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "frames": 24,
+        "prediction_pixels_all_image": {
+          "background": 2278755,
+          "drivable": 3203889,
+          "vehicle": 46956,
+          "pedestrian": 0
+        }
+      },
+      "boundary_metrics": {
+        "frames": 24,
+        "tolerance_px": 2,
+        "scope": "Original-resolution foreground-side internal 4-neighbor boundaries; Euclidean tolerance; GT road includes lane; image border alone excluded; obstacle errors included in road spill",
+        "per_class": {
+          "road": {
+            "prediction_boundary_pixels": 27802,
+            "truth_boundary_pixels": 16565,
+            "matched_prediction_boundary_pixels": 10286,
+            "matched_truth_boundary_pixels": 10230,
+            "precision": 0.369973383209841,
+            "recall": 0.6175671596740114,
+            "f1": 0.46273221503728934
+          },
+          "vehicle": {
+            "prediction_boundary_pixels": 4781,
+            "truth_boundary_pixels": 4980,
+            "matched_prediction_boundary_pixels": 2542,
+            "matched_truth_boundary_pixels": 2411,
+            "precision": 0.5316879313951056,
+            "recall": 0.48413654618473895,
+            "f1": 0.5067992836065565
+          }
+        },
+        "false_drivable": {
+          "false_drivable_pixels": 153715,
+          "predicted_road_pixels_excluding_gt_lane": 3197032,
+          "nonroad_gt_pixels": 2459420,
+          "obstacle_gt_pixels": 43224,
+          "obstacle_pixels_predicted_road": 63,
+          "false_drivable_fraction_of_evaluated_prediction": 0.048080532193609575,
+          "false_drivable_rate_on_nonroad": 0.06250050824991259,
+          "obstacle_pixels_predicted_road_fraction": 0.0014575235980011105
+        }
+      },
+      "latency_seconds": {
+        "median": 0.5081632499350235,
+        "p95": 0.5190538400085642
+      }
+    }
+  },
+  "baseline_comparison": {
+    "compared": 24,
+    "mismatches": 0
+  },
+  "repeat_identical": {
+    "square512": true,
+    "letterbox512": true,
+    "letterbox1024": true
+  },
+  "weights_unchanged": true,
+  "source_changed_during_run": [],
+  "inputs_changed_during_run": [],
+  "run_id": "20261031T211308Z-4e1fb1a4",
+  "source_capture": "20261030T223941Z-65f18896",
+  "source_hashes": {
+    "experiments/preview_segmentation_refinement.py": "8684d37f580de0cde4610818388173e0d44efc5bd2f86409f94f925c7cef4fca",
+    "experiments/preview_pretrained_segmentation.py": "f6dc33cfc4386ebe0b40293c687fde1d65e1df7c74d9d9458a32ad4af2591da5",
+    "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+    "traffic/segmentation_refinement.py": "cdd00438d1acd94b461ff65687cb3295c5bfe0c867e7a5274f62421dccfee7f7",
+    "traffic/lidar_obstacle_preview.py": "217d2b15a4bcbfdab08ab18c46f312e78de7082030c1a46e63222dbd0dd0b26b",
+    "traffic/semantic_lidar_fusion.py": "4772144e1b65550eadd9d7f858f8cdf8a72969525d5949c746f3af1e29a5ff53",
+    "traffic/segmentation_preview.py": "6eedfcacf68a80b62c1b742413ef8599b6b9f54118f390be6b2214a396095b9a",
+    "scripts/fetch_segmentation_preview_model.py": "dcdf5365ffc22f6c16e4f0219051b468671b3e4e0a5ee406a533417d3a7b156e",
+    "traffic/segmentation_refinement_gallery.py": "5438c7de0cbb8999fef559a956d3cd6a657d85ea1d0fbfe131eda941d466d269",
+    "environments/requirements-perception-preview.lock.txt": "3edf64d48006c1386eba1fb83f22a67e2a9147dd0c4ea1ac043501f8803d6b89",
+    "configs/perception/pretrained_segmentation_preview_v01.json": "3ec1b5f5b94ba178ef38710009079cfb4bab0d66ad9b2d3dd65a4a8c326edb15",
+    "configs/perception/segmentation_refinement_preview_v02.json": "494683a8813015d04ad4fd18c298d6e76e3efe0dfe2aff636debbfd74b406186"
+  },
+  "input_hashes": {
+    "static-101/0000-rgb.png": "c49c3c38bf1ebb6ad7e0a09d57db0e2bf6062532d6359f1d9fe7091e72425b27",
+    "static-101/0000-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0001-rgb.png": "be103e2717c423617e87e8c779884e522396534c4c375246416acd5ebff77b95",
+    "static-101/0001-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0002-rgb.png": "e6a3084ee20e1c5bf8d66ccb3662642f4f656f39f070c6507423d7a3bbb28463",
+    "static-101/0002-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0003-rgb.png": "1fa0bf3c3c10d241932ef43b701732406115ef25cd29723227a32fafd4c2a1aa",
+    "static-101/0003-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0004-rgb.png": "14e68a3cbd7e70859716fb0dc55a84070cc43852dce2c3313bb803ceefd27e82",
+    "static-101/0004-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0005-rgb.png": "2f9a40ec0eaf3660b62a77d79c8dd0bc3eb5e54b8e11a33f91b6bc71be934635",
+    "static-101/0005-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0006-rgb.png": "a99cf94a7060353cae8398eb6d52af315fdd8c0ebdf0e82e8be9e8051d10cde8",
+    "static-101/0006-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0007-rgb.png": "95edd029ced451d47bc31997614a21d4d77bdf31117c2706c37552fccaf4832d",
+    "static-101/0007-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "moving-2mps-201/0000-rgb.png": "8a019a8aa1866da7eb6bd0e2be26d429528ba7cb508ee8d388ca764be5b8929d",
+    "moving-2mps-201/0000-semantic.npy": "4a6bd964639faf24998614c5ff8069717bf630e2397f7540ab0076cf783f343b",
+    "moving-2mps-201/0001-rgb.png": "2046042238ca8dfee935f4da1d1ad833ef913c041e65ae45cdee96cad2227372",
+    "moving-2mps-201/0001-semantic.npy": "43a32c4b02d497c6bb05329d694daede9505f3fc24cb63db372be1eb7bad1643",
+    "moving-2mps-201/0002-rgb.png": "22902ef046364b224287e29326f56d6712b0f5ff0cefebc354a665041cc462fa",
+    "moving-2mps-201/0002-semantic.npy": "e679e428b003416ecbe4ff94c8dba13931073c92e23d626c60ce2c03d49934fb",
+    "moving-2mps-201/0003-rgb.png": "40cf32352e6c309840c447be6d13fc2643247875a4a481db85c43eb7a9c7e16f",
+    "moving-2mps-201/0003-semantic.npy": "8f9f4eb89f38348de97136400de046b1d0829fe7e9b69a7c2f31552ddb815da2",
+    "moving-2mps-201/0004-rgb.png": "0727208570ed78e2d8a011ea35e8455eddaff25b4f752b4856ead9d583b21126",
+    "moving-2mps-201/0004-semantic.npy": "938afdb8582529387895bdf7cee788b8a217178227de8e175ed4c823479b39fd",
+    "moving-2mps-201/0005-rgb.png": "2505a8f9f0d008c3d0a3c6a45e2809de397538898929940e7f1ec0bc581e638b",
+    "moving-2mps-201/0005-semantic.npy": "9f3f94f0dd6a96dbd4add5883f77c3ff7498cb5fddd9187b5c58e5bb9c69b176",
+    "moving-2mps-201/0006-rgb.png": "fc583ad4173942542de1c5e4ba66e51dd21d6054b41df97850ff4c721dc88997",
+    "moving-2mps-201/0006-semantic.npy": "878de098bf90ac17ed9f80a079814f3eef340ef90dad606e978aa63a9555352c",
+    "moving-2mps-201/0007-rgb.png": "91beb6b58a8eed69a9a01eb9c0852e7e85af51555bbcc69a6d70476ab61ee3aa",
+    "moving-2mps-201/0007-semantic.npy": "9b716fed0dcd93ff07c8a5647a6b45a5552dd58e81d21ad2fb5dbb6e01ded335",
+    "moving-10mps-301/0000-rgb.png": "f3831ceac92107fe39ce4a987f430733f91dd162f07d2385c394c9aee1cff757",
+    "moving-10mps-301/0000-semantic.npy": "a27d6e1a57f6eb0efa7d25734ffcb3817efb0a95a254bcef4cffcb73d0d4f882",
+    "moving-10mps-301/0001-rgb.png": "b7f65122042a47fc9c3a511f1904b846eee29e5b3d965b05b1f0bc14d0fdde96",
+    "moving-10mps-301/0001-semantic.npy": "9657af7fa0806841e4256d7870a0cce9823233385437e87cf1db315acbb61e1b",
+    "moving-10mps-301/0002-rgb.png": "04754b130a35b5563c30fbf03aca9518edd1860c7bfaf0ec8323e020d68d0f29",
+    "moving-10mps-301/0002-semantic.npy": "0c79e57ffe1ad9b5cd284666ef29eea79d39b92c1b35ad8aecb0d86024d8b659",
+    "moving-10mps-301/0003-rgb.png": "cedc24dcebfe6d2e4af770bd8ead28dac47cc3111fe6141a815bb800343f1cf7",
+    "moving-10mps-301/0003-semantic.npy": "43a32c4b02d497c6bb05329d694daede9505f3fc24cb63db372be1eb7bad1643",
+    "moving-10mps-301/0004-rgb.png": "d3eb1094989e1f1cbf2ae3e683eab3192129c8d70b7a6d4044bc7d6ac0bef387",
+    "moving-10mps-301/0004-semantic.npy": "878de098bf90ac17ed9f80a079814f3eef340ef90dad606e978aa63a9555352c",
+    "moving-10mps-301/0005-rgb.png": "e8d8229c8918ef795780442c1b2c99ca2c8e040c447ffc68ce638f1d7b37a5da",
+    "moving-10mps-301/0005-semantic.npy": "e23b666bb545e15376f5ae55618c436a1af269611780e212f5863f6b4c7b293b",
+    "moving-10mps-301/0006-rgb.png": "ebf8bf9f5b55a93ffc54051d80244d7716e378340ab82b8acedf9312c544effc",
+    "moving-10mps-301/0006-semantic.npy": "f0d4e4d596883f88ae7ee26fcdf21ebcddd2bb2231f0f64cb5d8a38055e28984",
+    "moving-10mps-301/0007-rgb.png": "673f82376afcb158a090755f1e8ca496d2fe039a92e9de5de6a8ff5f158219b8",
+    "moving-10mps-301/0007-semantic.npy": "e09db8b7afbd2983c9d7e82b8ca5272eb75946bdc9324166c425027c1bc0a2d8",
+    "static-101/0000-metadata.json": "09d99f0b92a5ca8ba3331418ed256f055826eed2ab72d6a197a9540e487c393b",
+    "static-101/0000-lidar.npz": "8150031d22f27d583feaba495efeead473acb417e1d422fec66438067f2c9f1a",
+    "static-101/0001-metadata.json": "8dae8dd56578749b7b562ab71132c518b95f5f9569976cf843f5cdd3675828d5",
+    "static-101/0001-lidar.npz": "2993b93714313e453d2f1e6d2182903ab6b1b5fa3737a2aa4c27c59699b29378",
+    "static-101/0002-metadata.json": "e28f78375cf4a35142188d9c234b09dc526911f8d3f0368843e61bff8104978d",
+    "static-101/0002-lidar.npz": "30e764a8cc4c5b8664271d7b1ac65ca73a0e9b8e8660370ab19e415b4c572484",
+    "static-101/0003-metadata.json": "b6fdcd761ca004e08e81181c8b2d6c88985c473e80ea82932df51aa1a374ea64",
+    "static-101/0003-lidar.npz": "448ed517088568a356b4448fe7b97b1dd23e29b64e5c8074cc0af1d4355d1d01",
+    "static-101/0004-metadata.json": "14fc1b33f1f3ef16445d8f2df579cfaab9b1ea93810833604b33367e853965f2",
+    "static-101/0004-lidar.npz": "939bf6d4327ccdb08b7b08e06dfc81934d93dd5d882613697e0fe6dfebc3168d",
+    "static-101/0005-metadata.json": "cf290a643f3179dd720c88ec82e39fb42bf721b5ba6dd1b852fadf72f5bbb845",
+    "static-101/0005-lidar.npz": "07bb8e12e8034aaeaecc2cf5cdd1b8669101e5979ceff059507c7ee708cc07a1",
+    "static-101/0006-metadata.json": "e3cadf0cb446f15a78c07ef85a870544d95bf44dae53930b91d5274c1647ba51",
+    "static-101/0006-lidar.npz": "3bac9d10694148b40fc6d66b257a86655a913b81ab9d0c14f82603091fc7ee97",
+    "static-101/0007-metadata.json": "deba21e33f2b658206a64c58db773e07ffaa22729d3bd6ba86964a39cd84e6a1",
+    "static-101/0007-lidar.npz": "3ad881079f783bb24d086548cb60a67df7b17e758010481a61b6b915851cdca9",
+    "moving-2mps-201/0000-metadata.json": "4a955c23e0e1a664a1d5e7af7ada12c48755b9200ff210560ddf3fc3377e19c5",
+    "moving-2mps-201/0000-lidar.npz": "79df86fa55b5b64dbc3127ab70daca27f5ebb1dbfb0c088a3f0665f22318e958",
+    "moving-2mps-201/0001-metadata.json": "ed90c8132be05b8fb2bb823fe8dfb55e0e82a8168749f384ca2212b37f53617e",
+    "moving-2mps-201/0001-lidar.npz": "e55fa3965c332af5691b884e3df5eccf5690737cfe32f7f9aa413ef0aab289d3",
+    "moving-2mps-201/0002-metadata.json": "71c39e6713eb952d12c98eac6c53b4e04f4af9ef3541bcd0770d6a04fdf03b40",
+    "moving-2mps-201/0002-lidar.npz": "58934167cb867f99faf489938245e3df1c5249161c44593e0fc1a843f574b4b0",
+    "moving-2mps-201/0003-metadata.json": "7fc1338f407f0e877ed5e9b3e8ba41ca3fc4260d9dbdb56215e16a3afc3c9b8f",
+    "moving-2mps-201/0003-lidar.npz": "c51c49db86c73c262ee7eadac3195f514fdd438215f03cf923601ae73b50c1b6",
+    "moving-2mps-201/0004-metadata.json": "d5c381606533076bbbf9cf869128421a07778ff0237f0053f926753584760ec0",
+    "moving-2mps-201/0004-lidar.npz": "31ba93ab7bdf69fa1593f6bc5dde177b15bec9f4adfc79652a559cb7fd0982fe",
+    "moving-2mps-201/0005-metadata.json": "e35073d1e8c8eb4d6314931c6024153f10e4af06c53e01ea6cf759d80ba3ce75",
+    "moving-2mps-201/0005-lidar.npz": "7ba98ec5da48f13566b4c7d132135faa1e044ae252ec21c2006954693738acd5",
+    "moving-2mps-201/0006-metadata.json": "5435ac03f7729148cf35f66e9c17da893d700808d5112006880f09460d2c007f",
+    "moving-2mps-201/0006-lidar.npz": "c55355efa3db21222f7743611db9e9b1b12b43f731f3bf9098d85ddb771cbe9d",
+    "moving-2mps-201/0007-metadata.json": "e944965ec5bed7ca85e6825ad3af4f7e9bc5018edd04b1703012d9fee17c3710",
+    "moving-2mps-201/0007-lidar.npz": "d6389c61200ad5eb5bca4cde25da2b810521eb81aec2ad592373d52fa16f53a0",
+    "moving-10mps-301/0000-metadata.json": "b08caf3a5b571bad60b0ac6eaea32249aa60e66bdab607c9066205b82f1a96e8",
+    "moving-10mps-301/0000-lidar.npz": "02153a8afdcde6da1f39b3353f8f662ba5255de3fd2f4e9077385b2960f86c71",
+    "moving-10mps-301/0001-metadata.json": "495fe922247a689bd893bce4ead78e14f94c376e4007ce00fd3cfb9d4b51d830",
+    "moving-10mps-301/0001-lidar.npz": "5f8d669f82c3850bdfae8e848292c9ed273610e564e4552d6021572ff6b35155",
+    "moving-10mps-301/0002-metadata.json": "78e937b3517afc98cc68dfcb4ef39060746949fd2585082176a4926b70fd6067",
+    "moving-10mps-301/0002-lidar.npz": "246ba88d631d9304244a453efde3540ee4e5ab57ce776e106b29be8a5fdcae2b",
+    "moving-10mps-301/0003-metadata.json": "1bea5d875091be3f8d807c33a145568ff6d5acd80a1b55635e29f7a185d74d39",
+    "moving-10mps-301/0003-lidar.npz": "6640761e209324301b11ea4fe8a3c23aaccff0e8f8342163bf6edb47dd53f220",
+    "moving-10mps-301/0004-metadata.json": "2fb35871ccfc5b0a157f9f1e75ce1123e81dce294c6f42c479ad29e0bc2c8116",
+    "moving-10mps-301/0004-lidar.npz": "ecbb8bf87fc80fb83dc4c098a5ec3f9578b233e8506d241b91d1dc4b14ad2b02",
+    "moving-10mps-301/0005-metadata.json": "6f57f3ade07c0829a09402076bd20f61102074558174fd70cca2c348bc1414d3",
+    "moving-10mps-301/0005-lidar.npz": "35833a5660a36a689027c84b43734e5002752899c41c4f063f6b39e45bd56d49",
+    "moving-10mps-301/0006-metadata.json": "02cd69c6e6eefccb2fef966c47131d66a95322dd9e0cdc725ff11fecfbcf4139",
+    "moving-10mps-301/0006-lidar.npz": "690ea0093d2e3e7b85e5b704d032a5ceb5c23f89c25db670e62f6c56fa42c648",
+    "moving-10mps-301/0007-metadata.json": "be6975214fcd4b46e6822c6fa5c145e98aa8f583de24230be6531e542a337486",
+    "moving-10mps-301/0007-lidar.npz": "8aec949c4ffe697d4ba2955c8e5e39a8c3e73776d42ea0825786967fc26d9e9a"
+  },
+  "model": {
+    "schema_version": 1,
+    "model_id": "nvidia/segformer-b0-finetuned-cityscapes-1024-1024",
+    "revision": "21b3847fae21ddee674abd31129307b6a1235bd9",
+    "downloaded_utc": "2026-10-31T02:06:29.573477+00:00",
+    "files": {
+      "config.json": {
+        "url": "https://huggingface.co/nvidia/segformer-b0-finetuned-cityscapes-1024-1024/resolve/21b3847fae21ddee674abd31129307b6a1235bd9/config.json",
+        "sha256": "649ba4afbaa11ee730b14ad5e31bd50f2e2d5be661a291e31a91512510dba8d9",
+        "bytes": 1680
+      },
+      "preprocessor_config.json": {
+        "url": "https://huggingface.co/nvidia/segformer-b0-finetuned-cityscapes-1024-1024/resolve/21b3847fae21ddee674abd31129307b6a1235bd9/preprocessor_config.json",
+        "sha256": "d96ab2cb112985c19d5ea32f1d1f2369104fc78b1379f5ce26e33ca8646202a7",
+        "bytes": 272
+      },
+      "pytorch_model.bin": {
+        "url": "https://huggingface.co/nvidia/segformer-b0-finetuned-cityscapes-1024-1024/resolve/21b3847fae21ddee674abd31129307b6a1235bd9/pytorch_model.bin",
+        "sha256": "027ed78d8ff9c535df5a66361c92b9673cca3cb923cbeb8c5802385b6b93194c",
+        "bytes": 14957601
+      }
+    },
+    "training": false,
+    "new_simulator_runs": false,
+    "weights_executed": false,
+    "source_model_card": "https://huggingface.co/nvidia/segformer-b0-finetuned-cityscapes-1024-1024/blob/21b3847fae21ddee674abd31129307b6a1235bd9/README.md",
+    "license_name": "NVIDIA Source Code License for SegFormer; noncommercial research/evaluation",
+    "license_url": "https://github.com/NVlabs/SegFormer/blob/master/LICENSE"
+  },
+  "runtime": {
+    "torch": "2.9.1+cpu",
+    "transformers": "4.57.1",
+    "Pillow": "11.3.0",
+    "numpy": "2.2.6",
+    "device": "cpu",
+    "threads": 2,
+    "interop_threads": 1
+  },
+  "independent_audit": {
+    "passed": true,
+    "predictions": 72,
+    "baseline_equal": 24,
+    "panels_exact": 306,
+    "source_hashes": 12,
+    "input_hashes": 96,
+    "output_hashes": 450,
+    "table": [
+      {
+        "variant": "square512",
+        "mean_iou": 0.7152041811368287,
+        "road_boundary_f1": 0.12458280611266083,
+        "vehicle_boundary_f1": 0.29942456842631976,
+        "false_drivable_pixels": 700543,
+        "false_drivable_rate_nonroad": 0.28484073480739364,
+        "latency": {
+          "median": 0.21803109999746084,
+          "p95": 0.22988566491985693
+        }
+      },
+      {
+        "variant": "letterbox512",
+        "mean_iou": 0.8455924120757791,
+        "road_boundary_f1": 0.22627509630951342,
+        "vehicle_boundary_f1": 0.532012786982165,
+        "false_drivable_pixels": 167140,
+        "false_drivable_rate_nonroad": 0.06795911231103269,
+        "latency": {
+          "median": 0.23189744993578643,
+          "p95": 0.24213705509901046
+        }
+      },
+      {
+        "variant": "letterbox1024",
+        "mean_iou": 0.8606215984150648,
+        "road_boundary_f1": 0.46273221503728934,
+        "vehicle_boundary_f1": 0.5067992836065565,
+        "false_drivable_pixels": 153715,
+        "false_drivable_rate_nonroad": 0.06250050824991259,
+        "latency": {
+          "median": 0.5081632499350235,
+          "p95": 0.5190538400085642
+        }
+      }
+    ]
+  },
+  "lidar_audit": {
+    "run": "20261031T211308Z-4e1fb1a4",
+    "results": {
+      "square512": {
+        "geometry_identical_to_baseline": true,
+        "semantic_confusion": [
+          [
+            37,
+            12366,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            44,
+            145873,
+            0,
+            258,
+            0,
+            0
+          ],
+          [
+            6,
+            460,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4,
+            0,
+            0,
+            5825,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3560,
+            121,
+            0,
+            163,
+            0,
+            0
+          ]
+        ],
+        "semantic_correct": 151735,
+        "semantic_compared": 168717,
+        "semantic_accuracy": 0.899346242524464,
+        "semantic_assignment_coverage": 0.9531064637494492,
+        "occupancy_precision": 1.0,
+        "occupancy_recall_eligible": 0.9337090713902308,
+        "occupied_tp": 10437,
+        "occupied_fp": 0,
+        "occupied_fn": 741,
+        "classes": {
+          "3": {
+            "occupied": 5897,
+            "eligible": 6093,
+            "projectable": 6365,
+            "semantic_assigned": 5829,
+            "semantic_correct": 5825,
+            "occupancy_recall_eligible": 0.9678319382898408,
+            "occupancy_recall_projectable": 0.9264728986645718,
+            "semantic_recall_conditional": 0.999313775947847,
+            "semantic_roi_coverage": 0.9157894736842105
+          },
+          "4": {
+            "occupied": 0,
+            "eligible": 0,
+            "projectable": 0,
+            "semantic_assigned": 0,
+            "semantic_correct": 0,
+            "occupancy_recall_eligible": null,
+            "occupancy_recall_projectable": null,
+            "semantic_recall_conditional": null,
+            "semantic_roi_coverage": null
+          },
+          "5": {
+            "occupied": 4540,
+            "eligible": 5085,
+            "projectable": 5106,
+            "semantic_assigned": 3844,
+            "semantic_correct": 0,
+            "occupancy_recall_eligible": 0.8928220255653884,
+            "occupancy_recall_projectable": 0.8891500195848022,
+            "semantic_recall_conditional": 0.0,
+            "semantic_roi_coverage": 0.7528397963180572
+          }
+        },
+        "plane_failures": 0,
+        "invalid_occupied_timestamps": 0,
+        "occupied_signed_time_delta_range_s": [
+          -0.049992999999999954,
+          -0.00012838799999981276
+        ]
+      },
+      "letterbox512": {
+        "geometry_identical_to_baseline": true,
+        "semantic_confusion": [
+          [
+            4681,
+            5779,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            983,
+            142688,
+            0,
+            266,
+            0,
+            0
+          ],
+          [
+            56,
+            368,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            232,
+            0,
+            0,
+            4610,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4939,
+            0,
+            0,
+            73,
+            0,
+            0
+          ]
+        ],
+        "semantic_correct": 151979,
+        "semantic_compared": 164675,
+        "semantic_accuracy": 0.9229026871109761,
+        "semantic_assignment_coverage": 0.9302726276423866,
+        "occupancy_precision": 1.0,
+        "occupancy_recall_eligible": 0.9337090713902308,
+        "occupied_tp": 10437,
+        "occupied_fp": 0,
+        "occupied_fn": 741,
+        "classes": {
+          "3": {
+            "occupied": 5897,
+            "eligible": 6093,
+            "projectable": 6365,
+            "semantic_assigned": 4842,
+            "semantic_correct": 4610,
+            "occupancy_recall_eligible": 0.9678319382898408,
+            "occupancy_recall_projectable": 0.9264728986645718,
+            "semantic_recall_conditional": 0.9520859149111938,
+            "semantic_roi_coverage": 0.7607227022780833
+          },
+          "4": {
+            "occupied": 0,
+            "eligible": 0,
+            "projectable": 0,
+            "semantic_assigned": 0,
+            "semantic_correct": 0,
+            "occupancy_recall_eligible": null,
+            "occupancy_recall_projectable": null,
+            "semantic_recall_conditional": null,
+            "semantic_roi_coverage": null
+          },
+          "5": {
+            "occupied": 4540,
+            "eligible": 5085,
+            "projectable": 5106,
+            "semantic_assigned": 5012,
+            "semantic_correct": 0,
+            "occupancy_recall_eligible": 0.8928220255653884,
+            "occupancy_recall_projectable": 0.8891500195848022,
+            "semantic_recall_conditional": 0.0,
+            "semantic_roi_coverage": 0.981590285938112
+          }
+        },
+        "plane_failures": 0,
+        "invalid_occupied_timestamps": 0,
+        "occupied_signed_time_delta_range_s": [
+          -0.049992999999999954,
+          -0.00012838799999981276
+        ]
+      },
+      "letterbox1024": {
+        "geometry_identical_to_baseline": true,
+        "semantic_confusion": [
+          [
+            4880,
+            4815,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            303,
+            143682,
+            0,
+            191,
+            0,
+            0
+          ],
+          [
+            10,
+            101,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            5610,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            4884,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "semantic_correct": 154172,
+        "semantic_compared": 164476,
+        "semantic_accuracy": 0.937352562075926,
+        "semantic_assignment_coverage": 0.929148448180411,
+        "occupancy_precision": 1.0,
+        "occupancy_recall_eligible": 0.9337090713902308,
+        "occupied_tp": 10437,
+        "occupied_fp": 0,
+        "occupied_fn": 741,
+        "classes": {
+          "3": {
+            "occupied": 5897,
+            "eligible": 6093,
+            "projectable": 6365,
+            "semantic_assigned": 5610,
+            "semantic_correct": 5610,
+            "occupancy_recall_eligible": 0.9678319382898408,
+            "occupancy_recall_projectable": 0.9264728986645718,
+            "semantic_recall_conditional": 1.0,
+            "semantic_roi_coverage": 0.8813825608798115
+          },
+          "4": {
+            "occupied": 0,
+            "eligible": 0,
+            "projectable": 0,
+            "semantic_assigned": 0,
+            "semantic_correct": 0,
+            "occupancy_recall_eligible": null,
+            "occupancy_recall_projectable": null,
+            "semantic_recall_conditional": null,
+            "semantic_roi_coverage": null
+          },
+          "5": {
+            "occupied": 4540,
+            "eligible": 5085,
+            "projectable": 5106,
+            "semantic_assigned": 4884,
+            "semantic_correct": 0,
+            "occupancy_recall_eligible": 0.8928220255653884,
+            "occupancy_recall_projectable": 0.8891500195848022,
+            "semantic_recall_conditional": 0.0,
+            "semantic_roi_coverage": 0.9565217391304348
+          }
+        },
+        "plane_failures": 0,
+        "invalid_occupied_timestamps": 0,
+        "occupied_signed_time_delta_range_s": [
+          -0.049992999999999954,
+          -0.00012838799999981276
+        ]
+      }
+    }
+  },
+  "visibility_audit": {
+    "occupied_points_with_valid_depth_evaluation": 10289,
+    "behind_camera_visible_surface": 163,
+    "fraction": 0.01584216153173292,
+    "role": "Rendered depth evaluation only; no inference use"
+  }
+}

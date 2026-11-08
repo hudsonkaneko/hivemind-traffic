@@ -1,0 +1,63 @@
+{
+  "run": "outputs/i110-merge-visual/v01/20261105T232020Z-0089b54e",
+  "source_artifacts": {
+    "evaluation.json": {
+      "source": "outputs/i110-merge-visual/v01/20261105T232020Z-0089b54e/evaluation.json",
+      "sha256": "047bed10b51cf1e036d132db546c13744ec50b21265a31bc9e31e4a9b4d86ef3"
+    },
+    "manifest.json": {
+      "source": "outputs/i110-merge-visual/v01/20261105T232020Z-0089b54e/manifest.json",
+      "sha256": "6b4a5a78c58a42ab8f59c32b9f9c9099e66cedc876f3a13a2b60fc34904a3771"
+    },
+    "recording-check.json": {
+      "source": "outputs/i110-merge-visual/v01/20261105T232020Z-0089b54e/recording-check.json",
+      "sha256": "3fed63054114bf1241beed2d7d0fe0e21798d5fc0f02598b70599e3b04083a58"
+    },
+    "recording.json": {
+      "source": "outputs/i110-merge-visual/v01/20261105T232020Z-0089b54e/recording.json",
+      "sha256": "0216ca92dd799f7aae6ccbb0221f87e1dd9b1615f86a607b586d613dba0ac743"
+    },
+    "network.net.xml": {
+      "source": "outputs/i110-merge-visual/v01/20261105T232020Z-0089b54e/network.net.xml",
+      "sha256": "a216efd0a451845c19147437284fe0014d503c8015aca1d29bb4b4b8e1ac8623"
+    },
+    "render/render-report.json": {
+      "source": "outputs/i110-merge-visual/v01/render-01/render-report.json",
+      "sha256": "8be5df16a72820747bbe77779786495b986b5d98596daf22a5eeb3c259c5f169"
+    },
+    "render/render-request.json": {
+      "source": "outputs/i110-merge-visual/v01/render-01/render-request.json",
+      "sha256": "4cf30fd1bb8f8670565be8b49de61a689e3885d9674edc14d4337ddb24a31729"
+    },
+    "render/before.png": {
+      "source": "outputs/i110-merge-visual/v01/render-01/before.png",
+      "sha256": "dc946648c7cb74703ba09a1ea3daff42c27f9b3ba738743930b73308f79065fc"
+    },
+    "render/merge.png": {
+      "source": "outputs/i110-merge-visual/v01/render-01/merge.png",
+      "sha256": "4e301318a21dbe7569d22b086ef075b901213bae433559fc399d6627a009ff5a"
+    },
+    "render/merge-2.png": {
+      "source": "outputs/i110-merge-visual/v01/render-01/merge-2.png",
+      "sha256": "e60241699f84cbe0e063fff7d37af18146e823453c31f617b774da837651f720"
+    },
+    "render/after.png": {
+      "source": "outputs/i110-merge-visual/v01/render-01/after.png",
+      "sha256": "076fbfc21190e36a75cb98413895fb999c287c57b53ada91a0825c1b57dd24e3"
+    },
+    "render/i110-merge.mp4": {
+      "source": "outputs/i110-merge-visual/v01/render-01/i110-merge.mp4",
+      "sha256": "cf9fb7ec1863d01317ebf2f65710eab7df460acf9856bb7ad0411f99c3695693"
+    }
+  },
+  "copy_notes": {
+    "evaluation.json": "Compact derived copy; only trip ledgers omitted, with provenance and row counts recorded.",
+    "manifest.json": "Byte-for-byte copy including dirty worktree status and source hashes.",
+    "recording-check.json": "Byte-for-byte copy.",
+    "recording.json": "Trajectory kept in ignored outputs only.",
+    "network.net.xml": "Network kept in ignored outputs only.",
+    "render-report.json": "Byte-for-byte copy of completed render result.",
+    "screenshots": "Four original native rendered PNGs copied without editing.",
+    "i110-merge.mp4": "Video retained locally in ignored outputs; not copied to documentation."
+  }
+}
