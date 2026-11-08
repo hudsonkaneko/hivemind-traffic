@@ -11,6 +11,17 @@ This is the active development order, replacing the old immediate-next-step
 sections in the preserved [implementation roadmap](../experiments/ROADMAP.md)
 and [capacity study](scaling-foundations.md). Historical evidence is unchanged.
 
+October 25 sensor milestone: the [input audit](sensor-input-audit.md) identifies
+privileged policy inputs and safety-controller shortcuts. A separate forward
+RGB/RTX LiDAR and noisy ego-estimation prototype, plus source-authored v08 camera
+and LiDAR mounts, is implemented. The final seeded 15-second, 2 m/s scripted
+native test passed: 8.52 m travel, a 2.57 m obstacle clearance, no contacts or lane
+departures, and braking/recovery during a blank-camera fault. 163 CPU and 18 USD
+tests pass. This does not establish generalization, repeated native reset,
+moving-hazard performance or sensor-trained policies. See [sensor perception v01](sensor-perception-v01.md).
+No policy training or replacement of existing policy observation contracts is
+authorized by this sensing milestone.
+
 October 25 SUMO/MAPPO setup: a separate headless four-car fixed-lane environment,
 shared local actor, centralized critic and bounded quiet training runner are
 implemented. No-learning native preflight passes with unchanged actor weights

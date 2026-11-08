@@ -130,14 +130,16 @@ def _configure_rotary_profile(prim, speed_profile='low-speed'):
 class PhysicalLidar:
     """Bounded latest-packet sink and switchable RTX debug writer."""
     def __init__(self, vehicle_path, *, episode_id, vehicle_id, tick_source, points=False,
-                 sensor_path=None, speed_profile='low-speed'):
+                 sensor_path=None, speed_profile='low-speed', mount_translation_m=None):
         import omni.replicator.core as rep
         from isaacsim.sensors.experimental.rtx import Lidar, LidarSensor, parse_generic_model_output_data
         from isaacsim.core.experimental.utils.app import enable_extension
         from isaacsim.core.rendering_manager import RenderingManager
         self.latest, self.errors, self.packet_count, self.points_enabled = None, [], 0, False
         self.episode_id, self.vehicle_id = episode_id, vehicle_id
-        self.mount_translation_m = [0.0, 0.0, 1.2]
+        self.mount_translation_m = [0.0, 0.0, 1.2] if mount_translation_m is None else list(mount_translation_m)
+        if len(self.mount_translation_m) != 3 or not np.isfinite(self.mount_translation_m).all():
+            raise ValueError('Finite XYZ LiDAR mount required')
         self.path = sensor_path or vehicle_path+'/Lidar'
         if not re.fullmatch(r'(?:/[A-Za-z_][A-Za-z0-9_]*)+', self.path) or not self.path.startswith(vehicle_path+'/'):
             raise ValueError('LiDAR must be a descendant of the actual chassis rigid body')
