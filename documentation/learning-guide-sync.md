@@ -566,3 +566,16 @@ and checked the complete Markdown mirror against
 `outputs/doc-sync/mappo-physical-adapter-v01/verified-source.json`.
 Native pagination was not inspected. No policy training or promotion occurred.
 [Results and actual screenshots](mappo-physical-adapter-v01.md).
+
+
+## November 5: population v04 near-limit preparation
+
+Appended the raw-acceleration diagnosis, localized physical-unit objective, four
+speed ceilings, 171 tests, zero-update preflight, retained background emergency
+and exact disabled training configuration to tab 41. The start-tab GitHub link
+now follows `codex/population-near-limit-v04`. Revision-guarded native editing
+and full readback preserved all 42 tabs, the 40 unaffected tab bodies and the
+historical content of the milestone tab. Regenerated and checked the mirror
+against `outputs/doc-sync/population-near-limit-v04/verified-source.json`. Native
+pagination was not inspected. No experiment training or policy promotion.
+[Final configuration and evidence](population-near-limit-v04.md).

@@ -6,6 +6,7 @@ live GUI slider or mid-episode controller handoff. SUMO remains motion owner.
 from __future__ import annotations
 
 import math
+from numbers import Real
 import xml.etree.ElementTree as ET
 
 import gymnasium as gym
@@ -16,6 +17,24 @@ from environments.highway_stage1_env import HighwayStage1Env, OBSERVATION_SIZE
 SCHEMA = 'highway_population_graph_messages_v1'
 MAX_AGENTS = 8
 STATE_SIZE = MAX_AGENTS * (OBSERVATION_SIZE + 1)
+SPEED_CAP_M_S = 26.8224
+
+
+def episode_speed_ceiling(value):
+    """Opt-in highway curriculum ceiling; never raises a native lane limit."""
+    if value is None:
+        return None
+    if (isinstance(value, bool) or not isinstance(value, Real) or not math.isfinite(value)
+            or not 6. <= value <= SPEED_CAP_M_S):
+        raise ValueError('Episode speed ceiling must be finite and between 6 and 26.8224 m/s')
+    return float(value)
+
+
+def population_leader_speed(task, speed_limit_m_s=None):
+    """Preserve legacy speeds, with a genuinely slower leader at low limits."""
+    ceiling = episode_speed_ceiling(speed_limit_m_s)
+    legacy = 10. if task == 'passing' else 16.
+    return legacy if ceiling is None else min(legacy, (.6 if task == 'passing' else .8) * ceiling)
 
 
 def _main_start(graph, distance, lane):
@@ -34,13 +53,14 @@ def _main_start(graph, distance, lane):
     raise ValueError('Population exceeds available route length')
 
 
-def write_population_demand(path, seed, graph, task, controlled_count, total_vehicles):
+def write_population_demand(path, seed, graph, task, controlled_count, total_vehicles, *, speed_limit_m_s=None):
     """Keep positions/routes/speeds fixed across AV counts for a given seed.
 
     AV assignment is a seeded permutation (merge tasks stratify one ramp car
     first). The slow leader, where required, is included in the requested total
     and excluded from AV assignment. No extra vehicles are inserted later.
     """
+    ceiling = episode_speed_ceiling(speed_limit_m_s)
     rng = np.random.default_rng(np.random.SeedSequence([seed, 901]))
     assignment_rng = np.random.default_rng(np.random.SeedSequence([seed, 902]))
     leader_count = int(task in ('following', 'passing'))
@@ -61,7 +81,7 @@ def write_population_demand(path, seed, graph, task, controlled_count, total_veh
         distance = 25. + 60. * math.ceil(main_count / graph.through_lanes)
         edge, lane, position = _main_start(graph, distance, 1)
         physical.append(dict(slot='slow_leader', route='main', edge=edge, lane=lane,
-                             position=position, speed=10. if task == 'passing' else 16.))
+                             position=position, speed=population_leader_speed(task, ceiling)))
     ramp_length = graph.lanes['mlk_on_0']['length']
     if ramp_count and ramp_length < 90.:
         raise ValueError('Ramp too short for population fixture')
@@ -69,6 +89,15 @@ def write_population_demand(path, seed, graph, task, controlled_count, total_veh
         physical.append(dict(slot=f'ramp_{i}', route='ramp', edge=0, lane=0,
                              position=max(5., ramp_length - 35. - 60. * i),
                              speed=float(rng.uniform(7., 9.))))
+    if ceiling is not None:
+        for item in physical:
+            edge = ('sb1', 'sb2', 'sb3', 'sb4', 'sb5')[item['edge']] if item['route'] == 'main' else 'mlk_on'
+            source_limit = graph.speed_limits[f"{edge}_{item['lane']}"]
+            if not math.isfinite(source_limit) or source_limit <= 0:
+                raise ValueError('Invalid source-lane speed for curriculum departure')
+            # Reset must insert below the actual local limit, including ramps.
+            # Original network files remain unchanged and no policy state is fitted.
+            item['speed'] = min(item['speed'], .8 * min(ceiling, source_limit))
     eligible = [v['slot'] for v in physical if v['slot'] != 'slow_leader']
     order = list(assignment_rng.permutation(eligible))
     if ramp_count:
@@ -103,7 +132,7 @@ class HighwayPopulationEnv(HighwayStage1Env):
     state_size = STATE_SIZE
 
     def __init__(self, network, run_directory, *, controlled_count, total_vehicles,
-                 max_agents=MAX_AGENTS, **kwargs):
+                 max_agents=MAX_AGENTS, speed_limit_m_s=None, **kwargs):
         if max_agents != MAX_AGENTS:
             raise ValueError('Population v1 declares exactly eight stable critic slots')
         if (isinstance(controlled_count, bool) or int(controlled_count) != controlled_count
@@ -115,6 +144,9 @@ class HighwayPopulationEnv(HighwayStage1Env):
         if kwargs.get('task', 'merge') in ('following', 'passing') and controlled_count == total_vehicles:
             raise ValueError('Following/passing requires a native slow leader within the total population')
         self.controlled_count, self.total_vehicles = int(controlled_count), int(total_vehicles)
+        self.speed_limit_m_s = episode_speed_ceiling(speed_limit_m_s)
+        self.native_speed_limit_manifest = []
+        self._speed_limits_applied = False
         self.possible_agents = [f'agent_{i}' for i in range(MAX_AGENTS)]
         self.population_manifest = []
         self.merge_agents = ()
@@ -133,14 +165,16 @@ class HighwayPopulationEnv(HighwayStage1Env):
 
     def _write_demand(self, path, seed):
         self.population_manifest = write_population_demand(path, seed, self.graph, self.task,
-                                                         self.controlled_count, self.total_vehicles)
+            self.controlled_count, self.total_vehicles, speed_limit_m_s=self.speed_limit_m_s)
         self.merge_agents = tuple(v['vehicle_id'] for v in self.population_manifest
                                   if v['controlled'] and v['route'] == 'ramp')
 
     def reset(self, seed=None, options=None):
         if options and set(options) & {'controlled_count', 'total_vehicles', 'max_agents',
-                                      'communication', 'packet_loss'}:
+                                      'communication', 'packet_loss', 'speed_limit_m_s'}:
             raise ValueError('Population is configured at construction; live slider handoff is not implemented')
+        self.native_speed_limit_manifest = []
+        self._speed_limits_applied = False
         self.population_stats = dict(road_samples=0, total_on_road_sum=0, controlled_on_road_sum=0,
                                     on_road_av_fraction_sum=0., maximum_on_road=0,
                                     peer_observations=0, selected_peer_sum=0, maximum_selected_peers=0,
@@ -152,8 +186,46 @@ class HighwayPopulationEnv(HighwayStage1Env):
             raise RuntimeError('Population fixture did not spawn the entire fixed cohort at reset')
         return result
 
+    def _apply_episode_speed_limit(self):
+        """Lower every native lane, including connectors, before first departure.
+
+        SUMO's getAllowedSpeed supplies actor field 4 after stepping. The known
+        map's speed table also receives the verified readback for merge field44.
+        There is no observation-only speed override or modified network file.
+        """
+        ceiling = getattr(self, 'speed_limit_m_s', None)
+        if ceiling is None or self._speed_limits_applied:
+            return
+        lane_api = self.conn.lane
+        lane_ids = sorted(lane_api.getIDList())
+        if not lane_ids or set(lane_ids) != set(self.graph.speed_limits):
+            raise ValueError('Native lane inventory differs from the frozen map speed contract')
+        pending = []
+        for lane_id in lane_ids:
+            original = float(lane_api.getMaxSpeed(lane_id))
+            if not math.isfinite(original) or original <= 0:
+                raise ValueError('Invalid native lane speed limit')
+            pending.append(dict(lane_id=lane_id, native_speed_m_s=original,
+                                applied_speed_m_s=min(original, ceiling)))
+        for row in pending:
+            lane_api.setMaxSpeed(row['lane_id'], row['applied_speed_m_s'])
+        for row in pending:
+            row['readback_speed_m_s'] = float(lane_api.getMaxSpeed(row['lane_id']))
+            if not math.isclose(row['readback_speed_m_s'], row['applied_speed_m_s'], rel_tol=0, abs_tol=1e-6):
+                raise ValueError('Native lane speed readback differs from requested curriculum ceiling')
+        self.graph.speed_limits.update({r['lane_id']: r['readback_speed_m_s'] for r in pending})
+        self.native_speed_limit_manifest = pending
+        self._speed_limits_applied = True
+
     def _advance(self):
+        self._apply_episode_speed_limit()
         super()._advance()
+        if (getattr(self, 'speed_limit_m_s', None) is not None and self.task in ('passing', 'following')
+                and 'slow_leader' in self.states):
+            # Supersede the legacy fixed leader request before the next tick;
+            # no physics step occurs between these requests, and native speed
+            # protections remain enabled for the human vehicle.
+            self.conn.vehicle.setSpeed('slow_leader', population_leader_speed(self.task, self.speed_limit_m_s))
         stats = self.population_stats
         controlled = sum(a in self.states for a in self._controlled_agents())
         total = len(self.states)
@@ -206,4 +278,13 @@ class HighwayPopulationEnv(HighwayStage1Env):
             population_contract='Fixed requested cohort, controller assignment only at reset; actual on-road counts change with arrivals',
             message_selection='Nearest six fresh received sender snapshots by Euclidean distance, stable sender-ID tie break',
             communication_mode=self.communication, packet_loss=self.packet_loss)
+        if getattr(self, 'speed_limit_m_s', None) is not None:
+            report['speed_curriculum'] = dict(
+                requested_episode_speed_ceiling_m_s=self.speed_limit_m_s,
+                rule='min(original native lane limit, episode ceiling); all lanes including internal connectors',
+                applied_before_first_simulation_step=self._speed_limits_applied,
+                lanes=self.native_speed_limit_manifest,
+                leader_speed_target_m_s=(population_leader_speed(self.task, self.speed_limit_m_s)
+                                         if self.task in ('passing', 'following') else None),
+                network_file_modified=False)
         return report

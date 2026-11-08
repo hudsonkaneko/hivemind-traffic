@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-physical-adapter-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-physical-adapter-v01/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-near-limit-v04/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-near-limit-v04/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4744,3 +4744,23 @@ The second native run completes 269 simulation seconds with zero rigid contacts,
 Code, final configuration, actual screenshots and compact evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-physical-adapter-v01/documentation/mappo-physical-adapter-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-physical-adapter-v01/documentation/mappo-physical-adapter-v01.md>)
 
 Next: retain the frozen baseline, review the disabled population v03 configuration before any learning, address raw near-limit acceleration and repeat matched physical tests. Sensor estimates, native fault injection, curves, merges, reactive/cooperative physical traffic and 60 mph remain unqualified. No policy promotion, hardware or asset/BOM changes.
+
+<a id="docs-h-ay7ja9hk1x2p"></a>
+
+#### November 5, 2026: population v04 near-limit acceleration preparation
+
+Status: setup verified, training disabled. Three sub-agents implemented/reviewed the objective, speed curriculum and frozen diagnostic. The best phase-0 actor is unchanged and still needs speed-ceiling corrections on 82.11% of physical cruise decisions and 27.76% of passing decisions. This milestone does not claim learned improvement.
+
+Diagnosis: explicit 12/18 m/s coverage was missing from the 50/60 mph training layouts, but positive at-limit requests also appear at highway limits. Previous raw requests strongly affect the next action; both SUMO and the physical bridge use the raw previous request. The actual v3 teacher target is -0.080 m/s² at the exact limit in empty-road probes. Saved physical traces are diagnosis only, not new training samples.
+
+Correction: add 0.1 times conditional mean squared raw deterministic acceleration error in physical units for active rows within 1.0 m/s below the local limit or above it, using the existing v3 teacher target. Keep shared teacher/reward alignment, inference, action mapping, 60 mph ceiling and 1.5 s following guards intact. Add independent shuffled episode ceilings of 12/18/22.352/26.8224 m/s; native lane limits can reduce them further. Every lane/connector is set and read back before the first simulation step, and map/departure/slow-leader values remain coherent.
+
+Verification: 171 tests pass. A 352-state frozen diagnostic checks 296 selected derivatives, all pointing toward teacher acceleration, with no outside-band/direct lane-logit derivative and unchanged weights/actions/RNG. Final no-learning SUMO preflight passed in 27.657 seconds with exact lane-limit readbacks, finite frozen collection, seed/API/repeat/export checks and zero optimizer steps. One background emergency-braking event in the teacher I-110 merge case remains recorded: ramp\_0 at 5.2 s, 9.0 m/s². These are setup checks, not nominal driving acceptance. No new Isaac run occurred.
+
+Final proposal: shared MAPPO, 93 actor inputs/752 masked critic inputs, up to eight controlled cars; frozen best phase-0 actor/log\_std with fresh critic/optimizer. Train-only 2–5-lane roads plus I-110; cruise/follow/pass/merge; 1/2/4/6/8 AVs among 8/16/24 vehicles; none/local/local-with-30%-loss messages. CPU, one worker/thread, seed 9307, 100,000 active-agent decisions including 4,096 critic-warmup decisions, 1,800 seconds including validation with 600 seconds reserved for final evaluation. Actor/critic rates 0.0001/0.0003; four epochs, minibatch 256, clip 0.2, target KL 0.02, global gradient norm 0.5; imitation 0.04 with acceleration/lane weights 1/10; near-limit SI loss 0.1 and band 1 m/s.
+
+Evaluation retains all sixteen original cases and adds eight 12/18 m/s cruise/passing cases with 1/5 AVs. Matched initial/final raw acceleration errors, positive requests, overrides, native events, traffic accounting, gradient/clipping components and boundary probes are retained. Gates stay unchanged, including at most 5% interventions per case. The auxiliary loss acts through shared features, so lane/passing/merge regressions still require checks. Single-seed development is not held-out qualification.
+
+Reviewed disabled config canonical SHA-256: a34f3aa17ce055037aad1510b8171b977a6c310e675fd2ea60e9d2ecadca8f3f. Preflight: outputs/highway-population/v04/preflight-20261105T214741Z-d8274460. Evidence and final configuration: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-near-limit-v04/documentation/population-near-limit-v04.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-near-limit-v04/documentation/population-near-limit-v04.md>)
+
+Next: review this configuration before authorizing a bounded pilot. Once authorized, let the runner retain metrics without assistant monitoring while it learns; inspect completion or failure, retain budgets on valid resumes, and evaluate the candidate before repeating physical tests. No new policy is promoted by this preparation.

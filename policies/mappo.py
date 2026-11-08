@@ -361,6 +361,8 @@ class MappoTrainer:
         imitation_lane_change_weight: float = 10.0,
         imitation_acceleration_weight: float = 1.0,
         gradient_diagnostics: bool = False,
+        near_limit_coef: float = 0.0,
+        near_limit_band_m_s: float = 1.0,
     ):
         if any(not math.isfinite(v) or v <= 0 for v in (actor_lr, critic_lr, clip, value_clip, max_grad_norm, target_kl)):
             raise ValueError("Optimizer rates, clipping bounds and KL limit must be positive")
@@ -374,6 +376,11 @@ class MappoTrainer:
             raise ValueError('Imitation assistance requires the hybrid driving actor')
         if type(gradient_diagnostics) is not bool:
             raise ValueError('gradient_diagnostics must be a boolean')
+        if (not math.isfinite(near_limit_coef) or near_limit_coef < 0
+                or not math.isfinite(near_limit_band_m_s) or not 0 < near_limit_band_m_s <= 5):
+            raise ValueError('Invalid near-limit loss settings')
+        if near_limit_coef and (not model.hybrid_actions or model.observation_size != 93):
+            raise ValueError('Near-limit supervision requires the explicit 93-field highway actor')
         self.model = model
         self.clip = clip
         self.value_clip = value_clip
@@ -387,6 +394,8 @@ class MappoTrainer:
         self.imitation_lane_change_weight = imitation_lane_change_weight
         self.imitation_acceleration_weight = imitation_acceleration_weight
         self.gradient_diagnostics = gradient_diagnostics
+        self.near_limit_coef = near_limit_coef
+        self.near_limit_band_m_s = near_limit_band_m_s
         self.optimizer = torch.optim.Adam([
             {"params": list(model.actor.parameters()) + [model.log_std], "lr": actor_lr},
             {"params": model.critic.parameters(), "lr": critic_lr},
@@ -422,6 +431,93 @@ class MappoTrainer:
                               torch.full_like(delta, self.imitation_lane_change_weight))
         lane_loss = (F.cross_entropy(logits, labels, reduction='none') * weights).mean()
         return self.imitation_acceleration_weight * acceleration_loss + lane_loss, acceleration_loss, lane_loss
+
+    def _near_limit_terms(self, observations: torch.Tensor, teacher_actions: torch.Tensor):
+        """Opt-in conditional mean supervision of raw acceleration in SI units.
+
+        The original 93-field contract provides ego speed at index 0 and the
+        local legal speed at index 4, both divided by 26.8224 m/s. Select rows
+        within the configured band below the limit and all overspeed rows.
+        Labels must be produced by the same observation-only teacher as the
+        rest of this rollout. No action clipping or inference modification is
+        performed here. Averaging over selected rows prevents unrelated cruise
+        startup rows from diluting the near-limit signal.
+
+        Output diagnostics are minibatch quantities. Empty selections report
+        zero metrics together with zero selected samples; these zeros do not
+        establish driving performance. Shared actor features may still couple
+        longitudinal and lane behavior after a future update.
+        """
+        if (not self.model.hybrid_actions or self.model.observation_size != 93
+                or observations.ndim != 2 or observations.shape[1] != 93
+                or teacher_actions.shape != (len(observations), 2) or not len(observations)):
+            raise ValueError('Near-limit supervision requires nonempty 93-field hybrid observations/actions')
+        if not torch.isfinite(observations).all() or not torch.isfinite(teacher_actions).all():
+            raise ValueError('Near-limit observations and targets must be finite')
+        if ((observations[:, 0] < 0) | (observations[:, 0] > 1)
+                | (observations[:, 4] <= 0) | (observations[:, 4] > 1)).any():
+            raise ValueError('Near-limit observations require valid ego and allowed-speed fractions')
+        if (teacher_actions[:, 0].abs() > 1).any():
+            raise ValueError('Near-limit acceleration targets must be normalized to [-1,1]')
+        selected = observations[:, 0] >= observations[:, 4] - self.near_limit_band_m_s / 26.8224
+        raw = self.model.actor.mean_net(observations)[:, 0].tanh()
+        predicted = -1.25 + 3.25 * raw
+        target = -1.25 + 3.25 * teacher_actions[:, 0].detach()
+        count = int(selected.sum())
+        if count:
+            error = predicted[selected] - target[selected]
+            loss = error.square().mean()
+            prediction_mean = float(predicted[selected].detach().mean())
+            target_mean = float(target[selected].detach().mean())
+            excess_fraction = float((error.detach() > .05).float().mean())
+        else:
+            loss = raw.sum() * 0.
+            prediction_mean = target_mean = excess_fraction = 0.
+        stats = dict(near_limit_mse_m2_s4=float(loss.detach()), near_limit_samples=count,
+            near_limit_batch_samples=len(observations),
+            near_limit_sample_fraction=count / len(observations),
+            near_limit_raw_acceleration_mean_m_s2=prediction_mean,
+            near_limit_target_mean_m_s2=target_mean,
+            near_limit_above_target_0p05_fraction=excess_fraction)
+        return loss, stats
+
+    def _near_limit_loss(self, observations: torch.Tensor, teacher_actions: torch.Tensor):
+        """Scalar physical-unit loss for no-update derivative audits."""
+        return self._near_limit_terms(observations, teacher_actions)[0]
+
+    @staticmethod
+    def _aggregate_update_stats(stats: list[dict]) -> dict:
+        """Preserve step-mean losses while labeling row-weighted evidence.
+
+        Every accepted optimizer minibatch contributes one loss. Selected-row
+        telemetry instead weights by selected count; an exposure is repeated
+        when an epoch revisits that row, and is not a unique rollout sample.
+        Empty selections carry no performance evidence.
+        """
+        result = {name: sum(item[name] for item in stats) / len(stats)
+                  for name in stats[0]} if stats else {}
+        if stats and 'near_limit_samples' in stats[0]:
+            selected = sum(item['near_limit_samples'] for item in stats)
+            exposed = sum(item['near_limit_batch_samples'] for item in stats)
+            result['near_limit_conditional_step_mean_mse_m2_s4'] = result.pop('near_limit_mse_m2_s4')
+            result.pop('near_limit_samples')
+            result.pop('near_limit_batch_samples')
+            result.pop('near_limit_sample_fraction')
+            result.update(near_limit_selected_row_exposures=selected,
+                near_limit_row_exposures=exposed,
+                near_limit_selected_exposure_fraction=selected / exposed if exposed else None,
+                near_limit_exposure_scope='Accepted optimizer minibatches; repeated epochs count repeated row exposures, not unique samples')
+            weighted_fields = {
+                'near_limit_mse_m2_s4': 'near_limit_selected_exposure_weighted_mse_m2_s4',
+                'near_limit_raw_acceleration_mean_m_s2': 'near_limit_selected_exposure_weighted_raw_acceleration_mean_m_s2',
+                'near_limit_target_mean_m_s2': 'near_limit_selected_exposure_weighted_target_mean_m_s2',
+                'near_limit_above_target_0p05_fraction': 'near_limit_selected_exposure_weighted_above_target_0p05_fraction',
+            }
+            for source, destination in weighted_fields.items():
+                result.pop(source, None)
+                result[destination] = (sum(item[source] * item['near_limit_samples'] for item in stats)
+                                       / selected if selected else None)
+        return result
 
     def behavior_clone(self, observations: torch.Tensor, teacher_actions: torch.Tensor, *,
                        epochs: int, minibatch_size: int = 512, learning_rate: float = 3e-4,
@@ -483,7 +579,7 @@ class MappoTrainer:
             "actions": self.model.action_size,
             "pre_tanh_actions": self.model.action_size,
         }
-        if self.imitation_coef:
+        if self.imitation_coef or self.near_limit_coef:
             widths['teacher_actions'] = self.model.action_size
         scalar_names = ("agent_indices", "old_log_probs", "old_values", "advantages", "returns")
         leading = batch["active"].shape
@@ -533,6 +629,11 @@ class MappoTrainer:
             imitation_stats = dict(imitation_loss=float(imitation_loss.detach()),
                 imitation_acceleration_loss=float(acceleration_imitation.detach()),
                 imitation_lane_loss=float(lane_imitation.detach()))
+        if self.near_limit_coef:
+            near_limit_loss, near_limit_stats = self._near_limit_terms(part['local_obs'], part['teacher_actions'])
+            weighted['near_limit'] = self.near_limit_coef * near_limit_loss
+            loss = loss + weighted['near_limit']
+            imitation_stats.update(near_limit_stats)
         if not torch.isfinite(loss):
             raise ValueError('Nonfinite MAPPO loss')
         return loss, weighted, dict(actor_loss=float(actor_loss.detach()), value_loss=float(value_loss.detach()),
@@ -614,7 +715,7 @@ class MappoTrainer:
             if early_stopped or budget_exhausted:
                 break
             completed_epochs += 1
-        result = {name: sum(item[name] for item in stats) / len(stats) for name in stats[0]} if stats else {}
+        result = self._aggregate_update_stats(stats)
         if diagnostics is not None:
             steps = diagnostics['actual_steps']
             diagnostics.update(optimizer_steps=len(steps),

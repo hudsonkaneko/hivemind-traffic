@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v11**, updated **November 5, 2026, America/Los_Angeles**.
-Status: **Stage 1 remains unaccepted; physical acceleration/lane adapter calibrated and validated in bounded straight-road fixtures, training disabled**.
+Revision **v12**, updated **November 5, 2026, America/Los_Angeles**.
+Status: **Stage 1 remains unaccepted; population v04 near-limit correction prepared and preflight-verified, training disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,11 +14,11 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** review the [final population v03 configuration](population-control-v03.md#proposed-pilot-configuration) before authorizing any training, retaining the new [physical transfer baseline](mappo-physical-adapter-v01.md). The calibrated adapter passes scripted acceleration/lane changes at 6/12/18 m/s. The unchanged actor cruises and passes, but speed-ceiling corrections affect 82.11%/27.76% of decisions, so it remains unaccepted. Its SUMO merge override rate remains 11.17% in the earlier fixture. Keep the phase-0 weights frozen; target near-limit acceleration behavior through the shared teacher/reward and separate actor/critic diagnostics, then repeat matched SUMO/physical checks. No new training is authorized by this milestone.
+**Next action:** review the [final population v04 configuration](population-near-limit-v04.md#final-configuration-for-review) before authorizing learning. The frozen phase-0 actor still needs speed-ceiling corrections on 82.11% of physical cruise decisions and 27.76% of passing decisions. V04 adds a localized raw-acceleration loss and explicit 12/18 m/s training coverage, retaining shared v3 targets and all guards. 171 tests, 296 derivative directions and a 27.657-second zero-update SUMO preflight pass. One background emergency in the teacher I-110 fixture remains recorded; setup readiness is not driving acceptance. After any authorized pilot, compare all 24 matched cases and raw-action diagnostics before repeating physical validation.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
-| 1. Learn driving with structured observations | Population v03 setup verified, training disabled; frozen actor still fails its merge override gate; prior v02 remains rejected | Per-task driving gates with low intervention, complete native safety accounting and a frozen held-out evaluation |
+| 1. Learn driving with structured observations | Population v04 near-limit setup verified, training disabled; frozen actor still fails intervention gates; prior v02 remains rejected | Per-task driving gates with low intervention, complete native safety accounting and a frozen held-out evaluation |
 | 2. Learn with imperfect observations | Planned; existing message delay is only part of the problem | Paired clean/noisy results, leakage audit and reliable stale/missing-data behavior |
 | 3. Replace ideal fields with sensor estimates | Frozen segmentation/fusion previews and dataset/trainer preparation exist; policy integration open | Perception/tracking accuracy and latency, then physical closed-loop validation |
 
@@ -402,3 +402,10 @@ Implemented opt-in near-limit taper, first minor-entry conflict observations, so
 - Frozen reference cruises and passes a scripted slower car, but intervention gates fail at 312/380 (82.11%) and 161/580 (27.76%). All corrections are speed-ceiling related. No contacts, analytic overlaps, overspeed or adapter/driver fallbacks in these nominal cases.
 - 209 targeted CPU tests and six fresh-process composed-scene reopen checks pass. Full traces, screenshots, source/config hashes and both attempts retained; [report and compact evidence](mappo-physical-adapter-v01.md).
 - Next gate remains configuration review before any learning, followed by matched SUMO/physical evaluation. Curves, merges, reactive cooperation, native fault injection and sensor estimates remain unqualified. No real-car dynamics identification or policy promotion claimed.
+
+
+### v12 — November 5: population v04 near-limit correction prepared
+
+Three sub-agents implemented/reviewed the localized SI acceleration objective, speed curriculum and frozen diagnostic. Added four episode ceilings (12/18/22.352/26.8224 m/s), exact native lane/connector readback, eight additional lower-limit validation cases and raw-request diagnostics. Lower-limit coverage contributes to the mismatch, but synthetic highway-limit failures and previous-request sensitivity show it is not the sole cause.
+
+171 tests and the final 27.657-second SUMO preflight passed with zero optimizer steps, unchanged weights and exact export/repeat checks. A background emergency in the teacher I-110 case remains in native evidence; no nominal acceptance is implied. [Final disabled configuration, diagnosis and evidence](population-near-limit-v04.md) retain the 100k-decision/30-minute pilot ceiling and unchanged safety gates. Review before learning; then evaluate matched initial/final cases before physical confirmation. The best actor, historical failures and held-out partition remain preserved.
