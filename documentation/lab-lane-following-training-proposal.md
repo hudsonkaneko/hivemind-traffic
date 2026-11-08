@@ -1,5 +1,10 @@
 # One-car Isaac Lab training proposal
 
+Historical review-stage proposal. The user subsequently approved this exact
+single pilot on October 19, 2026. See the [approved run and results](lab-lane-ppo-pilot.md)
+and [approval record](../experiments/lane-follow-ppo-pilot.json) for current status.
+The review-stage statement below and machine-readable proposal are preserved.
+
 **UNAPPROVED — training has not launched for this task. No policy or optimizer has
 been created, no optimizer steps have run, and there is no trainer entrypoint.** This document
 is the proposed setup for the user's review after bounded native validation.

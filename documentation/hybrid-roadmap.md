@@ -3,7 +3,10 @@
 Updated: October 19, 2026. Status: physical lane following, the bounded visible
 LiDAR-braking subset and a separate one-car Isaac Lab lane task are verified
 within their stated fixtures. Broader lifecycle/endurance, shared-map and hybrid
-integration remain **in progress**. New Isaac Lab training remains **unapproved**.
+integration remain **in progress**. The first bounded Isaac Lab PPO pilot and its
+fixed evaluation are **complete, with failed learned driving**: PPO achieved 0/15
+held-out successes against the scripted controller's 15/15. See the
+[pilot record](lab-lane-ppo-pilot.md). Further training needs a reviewed experiment.
 This is the active development order, replacing the old immediate-next-step
 sections in the preserved [implementation roadmap](../experiments/ROADMAP.md)
 and [capacity study](scaling-foundations.md). Historical evidence is unchanged.
@@ -33,7 +36,10 @@ nominal repeat pairs passed; bounded signed reset corners, native terminal-state
 handling and composed scene exports were checked. This advances the task/reset
 plumbing part of step 19. It does not complete the 100 m step-7 protocol, authorize
 training, validate cloning or add a physical fleet. The
-[training proposal](lab-lane-following-training-proposal.md) awaits user review.
+[training proposal](lab-lane-following-training-proposal.md) was subsequently
+approved for one bounded pilot; its [run record](lab-lane-ppo-pilot.md) tracks the
+later implementation and measured outcomes without changing this task-validation
+evidence.
 
 October 19 validation continuation: [native results and screenshots](showcase-validation-20261019.md)
 record three startup passes, a verified remote-admission repair and the first
@@ -322,7 +328,10 @@ and layer stack. The legacy compatibility probe is preserved separately.
 Plain OpenUSD audits through the installed runtime still use a `kit.exe` Python
 process and must run outside native process-isolation measurement windows.
 
-For the Lab task, next review the unapproved training proposal with the user.
+For the Lab task, the approved pilot, frozen checkpoint selection and matched
+held-out evaluation are complete. Review the observed stationary-policy failure
+and action clipping/conflicts before choosing a new longitudinal-action or
+warm-start experiment; no extension or second training run is authorized.
 Broader scene work still includes live-window timing under matched desktop load
 and reuse of the scene/control boundary for a two-car/hybrid fixture. Library
 promotion and cloning/reset validation are required before expanding beyond the

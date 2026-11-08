@@ -1,0 +1,1302 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-19",
+  "status": "completed_experiment_failed_learned_driving",
+  "authorization": {
+    "user_message": "yes start training",
+    "approval": {
+      "path": "experiments/lane-follow-ppo-pilot.json",
+      "sha256": "0bf67c3c701c332e80cee7fd919760f6ac17a3ee6f89d966c5bb5a80ffcb206a"
+    },
+    "reviewed_proposal_sha256": "5999396ed15fbdd15f82a4f49779da8c2f3458e3118a477ce0219d908681dafd",
+    "single_run_no_extension_resume_or_reseed": true
+  },
+  "training_implementation_checkpoint": "267c451e6ea4127e0ae596555c136bab8bc23ee3",
+  "preview_verification_checkpoint": "fc00d932ef3caee805ec5b340118dcca4c6e197b",
+  "pull_request": "https://github.com/hudsonkaneko/hivemind-traffic/pull/14",
+  "source_capture": {
+    "git_commit_at_run": "fb6be71741e886bbe1155cbc5c21631c5dd2bccc",
+    "source_hash_definition": "Exact checked-out bytes; per-path Git line endings pinned",
+    "source_hashes": {
+      "experiments/lab-lane-following-validation.json": "811ad576ffdb23d0dd0dc6c0f51b47f3891168dc1220c164d7124ec74c014f57",
+      "experiments/verify_lane_following_lab.py": "5284ff7e6d37fd138cbd7512d0767b59ce4f96a867af72481aba7aa118f07999",
+      "experiments/lane_following_lab_validation.py": "e5f40099724e4898389c06b2e598d7944fa736fd184ae10e0c371221274530f1",
+      "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+      "experiments/verify_physics_vehicle.py": "95b8f97f79a71963812ef0a19e8385381870c07d4fbf28bcd880649eabe9ab8e",
+      "scripts/probe_lane_following_lab.py": "d6c3e89e65fd25e4ac5b10e851ae03647ee119520a6f5927ff9093f43b4a48e4",
+      "scripts/probe_vehicle_lab.py": "9f6bcd8ee3b406ebffb5a10635a562a478423cc473b0b213e64e9651b86bd0bb",
+      "hivemind/launcher.py": "b2ea5e656c887a920ef06b6c70ccdb0830bbba7a097d82ae13187dbb829f23d3",
+      "environments/__init__.py": "52d667e6abf1afede7b32e6de9abce7da7a06fe545f398b4f15d91bc55b415bd",
+      "environments/lane_following_contract.py": "19f929c9809745c4aab2352cc1a404a222615ce5596c69a2e8e015523808a41d",
+      "environments/lane_following_lab.py": "a5d009b4ebff49c46d8d4ed21d6b7c370a1d3eed5ddd8c5bfd64af049fbe0fc4",
+      "environments/lane_following_scene.py": "6d944fb96416f831c79dd595445126a3106d1ee831e15b6beb8b94b893118a1e",
+      "environments/lane_follow_sb3.py": "922b33f8c6595d9ce8c17808c6b024b14d6a0f991aa72ad6e355154235107616",
+      "environments/physics_vehicle_contract.py": "8944dd3e78041fe1de4db189d34a34f06f00c47f27e8e6fd08a7493fdbfa7bc6",
+      "traffic/physx_vehicle.py": "167f0e6ce5da581e4520707a71596c9efe7a3dca6b36f466ee5081df210fe8a6",
+      "traffic/physics_session.py": "d0016c776819bdd93ff612d533f6ff4d2b70de9b332e52d81493255419d7c61a",
+      "traffic/wheel_geometry.py": "8d4f23a9e3fdaf7eef41ee0d3be7eae1350e1208a250bb72ad0530ba551082b5",
+      "traffic/driver_control.py": "29755844f3b1df77ac002caba87be3ba22ff9918b0e8a5ba03ff568d2690e18a",
+      "traffic/lane_geometry.py": "2b7976bf1e04ae6ae223ea93c3dd18551394a57404e350713e2b42004e8413b0",
+      "traffic/path_following.py": "c89288bee58812817873203222ecb404f3186bd7735d3c1f23d90770e7ec906b",
+      "traffic/speed_profiles.py": "0f9337601191671641af539ea75a513b600c3ba7974031b682287ab137b8b1d9",
+      "traffic/vehicle_contacts.py": "628fbf2c7e1cc735437a6c67b3051f57a604b72bf67227c1d39769ab9488170d",
+      "traffic/lane_validation.py": "bd247d77efc1c96a1f0e9641873763a395f66b77e82dedf8b9204886b1fced79",
+      "traffic/dynamics_validation.py": "6ce4d6442260280dbe601f63600cf9e376470e60b2aca5c6f54bfab9e90d0a45",
+      "usd/physical_scene.py": "2f7a0283cf2165538a6d0bf0336e042bf7c46c5110b63a3842fde7435d5e91f9",
+      "usd/scene_validation.py": "fb998a59fb325eed9a258d5441067fa05f832e8b1668be446f2cecc40b678475",
+      "visualization/physics_road_view.py": "b1f2b0d473a7ae6c6d9a70262f1c2b6c0a0c9fa5528d4f8a7f8995d81bd6c219",
+      "scenarios/physics-road/routes.json": "2efc40e7a60a0d1e72e657ee56ea3de3a6fda576f0b5231f57b8f0bd31114cc7",
+      "experiments/lane-follow-ppo-pilot.json": "0bf67c3c701c332e80cee7fd919760f6ac17a3ee6f89d966c5bb5a80ffcb206a",
+      "experiments/lane-follow-ppo-proposal.json": "5999396ed15fbdd15f82a4f49779da8c2f3458e3118a477ce0219d908681dafd",
+      "experiments/lane_follow_ppo_protocol.py": "2878ececce6d8a454959d1fae020e637f13b24aa6b08f3edc4e410156b43b848",
+      "experiments/run_lane_follow_ppo.py": "206dd4ff7a9695a409847b3777a0b87679f53a49eb8bd5a1b3c297a4618c4232",
+      "experiments/lane_follow_ppo_evaluation.py": "d21a530e5b65b2bc61e16cf3ce8f7a39c50ac8dd938b2a3cb80c3bab3ebabf99",
+      "environments/lane_follow_ppo.py": "8f4b9c34004053724065cc0ee225760112dd5dc2cb1850216ab0c191f3cbebeb",
+      "scripts/run_lane_follow_ppo.py": "37f410a2cdc29f75f7196045d60530f767236294e6763efbd12a888b0e9e8add",
+      "documentation/evidence/lab-lane-following-20261019.json": "10fc4c221028683e9176fd34e9b6f4955f9afbe7109b13da70e785215caab9b2"
+    }
+  },
+  "runtime": {
+    "stable-baselines3": "2.9.0",
+    "gymnasium": "1.2.1",
+    "torch": "2.10.0+cu128",
+    "numpy": "2.3.1",
+    "isaaclab": "6.1.18",
+    "isaaclab_rl": "0.5.7"
+  },
+  "training": {
+    "run": "outputs/lab_lane_ppo/20261019T201853Z-b6ac4cb8",
+    "manifest": {
+      "path": "outputs/lab_lane_ppo/20261019T201853Z-b6ac4cb8/manifest.json",
+      "sha256": "f16d870da8b6dae62f20dd445b60a07403ff63be4eb18931bea8d0f7e21f7089"
+    },
+    "summary": {
+      "path": "outputs/lab_lane_ppo/20261019T201853Z-b6ac4cb8/summary.json",
+      "sha256": "50ce57ff5abc17767e3beeb01d22eb70068860cd3842ddbc92c0222c1632dc44"
+    },
+    "execution_passed": true,
+    "seed": 2101,
+    "route": "left_r60",
+    "state": {
+      "control_steps": 65536,
+      "completed_updates": 32,
+      "optimizer_steps": 5120,
+      "completed_episodes": 31,
+      "status": "completed",
+      "stop_reason": null,
+      "elapsed_wall_s": 378.60999999998603,
+      "training_seed": 2101,
+      "proposal_sha256": "5999396ed15fbdd15f82a4f49779da8c2f3458e3118a477ce0219d908681dafd",
+      "clipped_transitions": 53512,
+      "clipped_action_components": [
+        14406,
+        34310,
+        32883
+      ],
+      "brake_priority_requests": 15680,
+      "settling_transitions": 3840,
+      "partial_episode": {
+        "steps": 436,
+        "reward": -2.082230401225388,
+        "reward_components": {
+          "progress": 0.01504217921624947,
+          "lateral": -0.46039802690411646,
+          "heading": -0.012948984590209264,
+          "speed": -1.3084255965198255,
+          "steering_rate": -0.05216663844674584,
+          "time": -0.26333333333333264,
+          "terminal": 0.0
+        },
+        "clipped_transitions": 374,
+        "brake_priority_requests": 88,
+        "settling_transitions": 120
+      },
+      "checkpoints": [
+        "update-08",
+        "update-16",
+        "update-24",
+        "update-32"
+      ],
+      "exact_native_mid_episode_resume": false
+    },
+    "complete_episodes": 31,
+    "terminal_reasons": {
+      "time_limit": 31
+    },
+    "mean_complete_episode_progress_m": 0.1616173892492248,
+    "maximum_complete_episode_progress_m": 0.3228980302810669,
+    "partial_episode_control_steps": 436,
+    "wall_process_seconds": 385.97257260000333,
+    "gpu_peak_mib": 2757.0,
+    "checkpoints": [
+      {
+        "path": "outputs/lab_lane_ppo/20261019T201853Z-b6ac4cb8/checkpoints/update-08",
+        "identity": {
+          "update": 8,
+          "control_steps": 16384,
+          "model_sha256": "d74e08057ca03ed333003bf8e64be2fe7c8433bf94f78afcd1861d57249dbc47",
+          "normalization_sha256": "183b8cda525b8d826dfbfa5e4c22dd004d01955f9fef4514c73717dbecac1c14"
+        }
+      },
+      {
+        "path": "outputs/lab_lane_ppo/20261019T201853Z-b6ac4cb8/checkpoints/update-16",
+        "identity": {
+          "update": 16,
+          "control_steps": 32768,
+          "model_sha256": "a299418876da290fec0c39f45ef7d54d85612ff6fb2af35b5dddf59d5798ce7e",
+          "normalization_sha256": "c2e3bf6da884ab1c064ae89dbe6274fb81c207fd242d0962afcba7014c49861e"
+        }
+      },
+      {
+        "path": "outputs/lab_lane_ppo/20261019T201853Z-b6ac4cb8/checkpoints/update-24",
+        "identity": {
+          "update": 24,
+          "control_steps": 49152,
+          "model_sha256": "3ad5848d18d0f88e1f4dc91bd5421a8932e519ef73aeefed54dc5ee8a0bc59a2",
+          "normalization_sha256": "6d4b680a8920597d81115ead5eb7daab5063f1f5cc66c2b12ebd23a1f7b57db7"
+        }
+      },
+      {
+        "path": "outputs/lab_lane_ppo/20261019T201853Z-b6ac4cb8/checkpoints/update-32",
+        "identity": {
+          "update": 32,
+          "control_steps": 65536,
+          "model_sha256": "d8c9e213a105090cf0fbaa7b1063465d397aa55a35551cb9e9f7c3b480de9b87",
+          "normalization_sha256": "72d481c1853823028f36f05626e3220726a7637f723c6068bb0ae975ed841b9b"
+        }
+      }
+    ]
+  },
+  "selection": {
+    "report": {
+      "path": "outputs/lab_lane_ppo/reports/selection.json",
+      "sha256": "0bc64cd9f967a9b60cf632a05b2d36aad9285fe96c6dd767264becd889318f8b"
+    },
+    "valid": true,
+    "seeds": [
+      3101,
+      3102,
+      3103
+    ],
+    "rankings": [
+      {
+        "checkpoint": {
+          "update": 24,
+          "control_steps": 49152,
+          "model_sha256": "3ad5848d18d0f88e1f4dc91bd5421a8932e519ef73aeefed54dc5ee8a0bc59a2",
+          "normalization_sha256": "6d4b680a8920597d81115ead5eb7daab5063f1f5cc66c2b12ebd23a1f7b57db7"
+        },
+        "aggregate": {
+          "episodes": 3,
+          "driving_successes": 0,
+          "task_successes": 0,
+          "physical_failures": 0,
+          "terminal_reasons": {
+            "time_limit": 3
+          },
+          "mean_progress_m": 0.0012343798520314901,
+          "mean_driving_lateral_rms_m": 0.0757463022905943,
+          "progress_m": {
+            "count": 3,
+            "mean": 0.0012343798520314901,
+            "std_population": 0.001745479611351871,
+            "minimum": 1.319640432484448e-07,
+            "maximum": 0.003702860791236162,
+            "rms": 0.0021378476776296204
+          },
+          "driving_lateral_rms_m": {
+            "count": 3,
+            "mean": 0.0757463022905943,
+            "std_population": 0.030091293870512605,
+            "minimum": 0.052731059491634244,
+            "maximum": 0.1182531639933626,
+            "rms": 0.081504529183964
+          },
+          "missing_driving_rms_episodes": 0
+        }
+      },
+      {
+        "checkpoint": {
+          "update": 32,
+          "control_steps": 65536,
+          "model_sha256": "d8c9e213a105090cf0fbaa7b1063465d397aa55a35551cb9e9f7c3b480de9b87",
+          "normalization_sha256": "72d481c1853823028f36f05626e3220726a7637f723c6068bb0ae975ed841b9b"
+        },
+        "aggregate": {
+          "episodes": 3,
+          "driving_successes": 0,
+          "task_successes": 0,
+          "physical_failures": 0,
+          "terminal_reasons": {
+            "time_limit": 3
+          },
+          "mean_progress_m": 3.363952525129813e-05,
+          "mean_driving_lateral_rms_m": 0.07574234424610755,
+          "progress_m": {
+            "count": 3,
+            "mean": 3.363952525129813e-05,
+            "std_population": 2.9581042567409697e-05,
+            "minimum": -6.27509552941774e-06,
+            "maximum": 6.444461905630305e-05,
+            "rms": 4.4795711161980996e-05
+          },
+          "driving_lateral_rms_m": {
+            "count": 3,
+            "mean": 0.07574234424610755,
+            "std_population": 0.03009304591035186,
+            "minimum": 0.05272355205575348,
+            "maximum": 0.11825155522487361,
+            "rms": 0.08150149767984884
+          },
+          "missing_driving_rms_episodes": 0
+        }
+      },
+      {
+        "checkpoint": {
+          "update": 8,
+          "control_steps": 16384,
+          "model_sha256": "d74e08057ca03ed333003bf8e64be2fe7c8433bf94f78afcd1861d57249dbc47",
+          "normalization_sha256": "183b8cda525b8d826dfbfa5e4c22dd004d01955f9fef4514c73717dbecac1c14"
+        },
+        "aggregate": {
+          "episodes": 3,
+          "driving_successes": 0,
+          "task_successes": 0,
+          "physical_failures": 0,
+          "terminal_reasons": {
+            "time_limit": 3
+          },
+          "mean_progress_m": 1.3894677408643474e-07,
+          "mean_driving_lateral_rms_m": 0.07574603209861754,
+          "progress_m": {
+            "count": 3,
+            "mean": 1.3894677408643474e-07,
+            "std_population": 6.027629739605509e-09,
+            "minimum": 1.3042242130723025e-07,
+            "maximum": 1.4321508956527396e-07,
+            "rms": 1.3907745449678215e-07
+          },
+          "driving_lateral_rms_m": {
+            "count": 3,
+            "mean": 0.07574603209861754,
+            "std_population": 0.03009146888913269,
+            "minimum": 0.052731059491634244,
+            "maximum": 0.1182531639933626,
+            "rms": 0.08150434269773874
+          },
+          "missing_driving_rms_episodes": 0
+        }
+      },
+      {
+        "checkpoint": {
+          "update": 16,
+          "control_steps": 32768,
+          "model_sha256": "a299418876da290fec0c39f45ef7d54d85612ff6fb2af35b5dddf59d5798ce7e",
+          "normalization_sha256": "c2e3bf6da884ab1c064ae89dbe6274fb81c207fd242d0962afcba7014c49861e"
+        },
+        "aggregate": {
+          "episodes": 3,
+          "driving_successes": 0,
+          "task_successes": 0,
+          "physical_failures": 1,
+          "terminal_reasons": {
+            "time_limit": 2,
+            "lane_departure": 1
+          },
+          "mean_progress_m": 4.241558122440907,
+          "mean_driving_lateral_rms_m": 0.12268763323649011,
+          "progress_m": {
+            "count": 3,
+            "mean": 4.241558122440907,
+            "std_population": 3.017867407024407,
+            "minimum": 1.4246920443383715e-07,
+            "maximum": 6.772428512573242,
+            "rms": 5.205606496117877
+          },
+          "driving_lateral_rms_m": {
+            "count": 3,
+            "mean": 0.12268763323649011,
+            "std_population": 0.017677828796482102,
+            "minimum": 0.10359735607616308,
+            "maximum": 0.14621237963994466,
+            "rms": 0.12395467308709762
+          },
+          "missing_driving_rms_episodes": 0
+        }
+      }
+    ],
+    "selected_checkpoint": {
+      "update": 24,
+      "control_steps": 49152,
+      "model_sha256": "3ad5848d18d0f88e1f4dc91bd5421a8932e519ef73aeefed54dc5ee8a0bc59a2",
+      "normalization_sha256": "6d4b680a8920597d81115ead5eb7daab5063f1f5cc66c2b12ebd23a1f7b57db7"
+    },
+    "rule": [
+      "most_driving_successes",
+      "fewest_physical_failures",
+      "highest_mean_progress_m",
+      "lowest_mean_driving_lateral_rms_m",
+      "earliest_update"
+    ],
+    "packages": [
+      {
+        "path": "outputs/lab_lane_ppo/20261019T202531Z-67b7f85e",
+        "manifest_sha256": "3cb1a8fccc337bbc3f52070ccaf45f93d3009900833d9f95708620b46693fa94"
+      },
+      {
+        "path": "outputs/lab_lane_ppo/20261019T202610Z-eb85c9c6",
+        "manifest_sha256": "7ba3e087334a62d53a5153156ff02f950b67640be9c25f9dbc15e443144dc6c4"
+      },
+      {
+        "path": "outputs/lab_lane_ppo/20261019T202646Z-65ac2214",
+        "manifest_sha256": "309a167a35ccecdc3157f13d24becb402a8cd106d99b9b7cc65ff49ec0078456"
+      },
+      {
+        "path": "outputs/lab_lane_ppo/20261019T202728Z-77958604",
+        "manifest_sha256": "11faa1c0b5de2d011ccada22ba98a9a0077bc6668fe7b9a54462e72ba707bfe0"
+      }
+    ]
+  },
+  "heldout": {
+    "report": {
+      "path": "outputs/lab_lane_ppo/reports/heldout.json",
+      "sha256": "3b50eef2ab01e5e7e1b3e214d2cc9654484fdd6ebbf877812e82eed3e4d323f2"
+    },
+    "valid": true,
+    "seeds": [
+      4101,
+      4102,
+      4103,
+      4104,
+      4105
+    ],
+    "held_out_used_for_selection": false,
+    "checks": {
+      "selected_checkpoint": true,
+      "cases_schema": true,
+      "exact_case_inventory": true,
+      "all_case_evidence_valid": true,
+      "matched_initial_native_states": true
+    },
+    "aggregates": {
+      "ppo": {
+        "all_routes": {
+          "episodes": 15,
+          "driving_successes": 0,
+          "task_successes": 0,
+          "physical_failures": 0,
+          "terminal_reasons": {
+            "time_limit": 15
+          },
+          "mean_progress_m": 0.03999577292470538,
+          "mean_driving_lateral_rms_m": 0.06598478071174595,
+          "progress_m": {
+            "count": 15,
+            "mean": 0.03999577292470538,
+            "std_population": 0.10246527486413302,
+            "minimum": 1.305562449260833e-07,
+            "maximum": 0.32754582166671753,
+            "rms": 0.10999451988543305
+          },
+          "driving_lateral_rms_m": {
+            "count": 15,
+            "mean": 0.06598478071174595,
+            "std_population": 0.049732306434273135,
+            "minimum": 0.0007307799737433749,
+            "maximum": 0.14172669733147028,
+            "rms": 0.0826274384744538
+          },
+          "missing_driving_rms_episodes": 0
+        },
+        "by_route": {
+          "straight100": {
+            "episodes": 5,
+            "driving_successes": 0,
+            "task_successes": 0,
+            "physical_failures": 0,
+            "terminal_reasons": {
+              "time_limit": 5
+            },
+            "mean_progress_m": 1.5356402229826927e-07,
+            "mean_driving_lateral_rms_m": 0.06262951079643261,
+            "progress_m": {
+              "count": 5,
+              "mean": 1.5356402229826927e-07,
+              "std_population": 9.82816055663714e-09,
+              "minimum": 1.4272976045504038e-07,
+              "maximum": 1.655574521919334e-07,
+              "rms": 1.5387820405876322e-07
+            },
+            "driving_lateral_rms_m": {
+              "count": 5,
+              "mean": 0.06262951079643261,
+              "std_population": 0.03300717864651582,
+              "minimum": 0.017501050606369573,
+              "maximum": 0.10527739673853277,
+              "rms": 0.07079498191823683
+            },
+            "missing_driving_rms_episodes": 0
+          },
+          "left_r60": {
+            "episodes": 5,
+            "driving_successes": 0,
+            "task_successes": 0,
+            "physical_failures": 0,
+            "terminal_reasons": {
+              "time_limit": 5
+            },
+            "mean_progress_m": 0.11998701780795215,
+            "mean_driving_lateral_rms_m": 0.08567850610159736,
+            "progress_m": {
+              "count": 5,
+              "mean": 0.11998701780795215,
+              "std_population": 0.1479847923672883,
+              "minimum": 1.496784420851327e-07,
+              "maximum": 0.32754582166671753,
+              "rms": 0.19051609699559577
+            },
+            "driving_lateral_rms_m": {
+              "count": 5,
+              "mean": 0.08567850610159736,
+              "std_population": 0.060019485858836236,
+              "minimum": 0.007431308268522327,
+              "maximum": 0.14172669733147028,
+              "rms": 0.10460948853024996
+            },
+            "missing_driving_rms_episodes": 0
+          },
+          "right_r60": {
+            "episodes": 5,
+            "driving_successes": 0,
+            "task_successes": 0,
+            "physical_failures": 0,
+            "terminal_reasons": {
+              "time_limit": 5
+            },
+            "mean_progress_m": 1.4740214169250975e-07,
+            "mean_driving_lateral_rms_m": 0.04964632523720788,
+            "progress_m": {
+              "count": 5,
+              "mean": 1.4740214169250975e-07,
+              "std_population": 1.1044497139249885e-08,
+              "minimum": 1.305562449260833e-07,
+              "maximum": 1.6315392770138715e-07,
+              "rms": 1.4781533172373434e-07
+            },
+            "driving_lateral_rms_m": {
+              "count": 5,
+              "mean": 0.04964632523720788,
+              "std_population": 0.045409785306983516,
+              "minimum": 0.0007307799737433749,
+              "maximum": 0.13141967356204906,
+              "rms": 0.06728154435790665
+            },
+            "missing_driving_rms_episodes": 0
+          }
+        }
+      },
+      "scripted": {
+        "all_routes": {
+          "episodes": 15,
+          "driving_successes": 15,
+          "task_successes": 15,
+          "physical_failures": 0,
+          "terminal_reasons": {
+            "success": 15
+          },
+          "mean_progress_m": 59.87728053058952,
+          "mean_driving_lateral_rms_m": 0.022961821268425237,
+          "progress_m": {
+            "count": 15,
+            "mean": 59.87728053058952,
+            "std_population": 0.00036937681239653506,
+            "minimum": 59.87693853345896,
+            "maximum": 59.87797546386719,
+            "rms": 59.87728053172885
+          },
+          "driving_lateral_rms_m": {
+            "count": 15,
+            "mean": 0.022961821268425237,
+            "std_population": 0.00958008116289727,
+            "minimum": 0.005169185112444113,
+            "maximum": 0.03918510517123389,
+            "rms": 0.024880176668400183
+          },
+          "missing_driving_rms_episodes": 0
+        },
+        "by_route": {
+          "straight100": {
+            "episodes": 5,
+            "driving_successes": 5,
+            "task_successes": 5,
+            "physical_failures": 0,
+            "terminal_reasons": {
+              "success": 5
+            },
+            "mean_progress_m": 59.877787017822264,
+            "mean_driving_lateral_rms_m": 0.01539693838044534,
+            "progress_m": {
+              "count": 5,
+              "mean": 59.877787017822264,
+              "std_population": 0.00013007166763407177,
+              "minimum": 59.87761688232422,
+              "maximum": 59.87797546386719,
+              "rms": 59.87778701796354
+            },
+            "driving_lateral_rms_m": {
+              "count": 5,
+              "mean": 0.01539693838044534,
+              "std_population": 0.007877493606751424,
+              "minimum": 0.005169185112444113,
+              "maximum": 0.024108004791023596,
+              "rms": 0.017295103845182323
+            },
+            "missing_driving_rms_episodes": 0
+          },
+          "left_r60": {
+            "episodes": 5,
+            "driving_successes": 5,
+            "task_successes": 5,
+            "physical_failures": 0,
+            "terminal_reasons": {
+              "success": 5
+            },
+            "mean_progress_m": 59.87706462841628,
+            "mean_driving_lateral_rms_m": 0.030135281036001126,
+            "progress_m": {
+              "count": 5,
+              "mean": 59.87706462841628,
+              "std_population": 6.184948352744903e-05,
+              "minimum": 59.87701125433875,
+              "maximum": 59.877184515988056,
+              "rms": 59.877064628448224
+            },
+            "driving_lateral_rms_m": {
+              "count": 5,
+              "mean": 0.030135281036001126,
+              "std_population": 0.008454642098921392,
+              "minimum": 0.019867724317982116,
+              "maximum": 0.03918510517123389,
+              "rms": 0.031298820043887
+            },
+            "missing_driving_rms_episodes": 0
+          },
+          "right_r60": {
+            "episodes": 5,
+            "driving_successes": 5,
+            "task_successes": 5,
+            "physical_failures": 0,
+            "terminal_reasons": {
+              "success": 5
+            },
+            "mean_progress_m": 59.876989945530035,
+            "mean_driving_lateral_rms_m": 0.02335324438882925,
+            "progress_m": {
+              "count": 5,
+              "mean": 59.876989945530035,
+              "std_population": 3.1479344546791645e-05,
+              "minimum": 59.87693853345896,
+              "maximum": 59.87703449408285,
+              "rms": 59.8769899455383
+            },
+            "driving_lateral_rms_m": {
+              "count": 5,
+              "mean": 0.02335324438882925,
+              "std_population": 0.005740975223145104,
+              "minimum": 0.019214051801559353,
+              "maximum": 0.03455286796009598,
+              "rms": 0.0240485513076599
+            },
+            "missing_driving_rms_episodes": 0
+          }
+        }
+      }
+    },
+    "paired_differences": [
+      {
+        "route_id": "straight100",
+        "seed": 4101,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.87761673959446,
+        "driving_lateral_rms_m": 0.08246302521564045
+      },
+      {
+        "route_id": "straight100",
+        "seed": 4102,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.877975298309735,
+        "driving_lateral_rms_m": 0.0664215113789508
+      },
+      {
+        "route_id": "straight100",
+        "seed": 4103,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.87776551002871,
+        "driving_lateral_rms_m": 0.01233186549392546
+      },
+      {
+        "route_id": "straight100",
+        "seed": 4104,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.87788756066507,
+        "driving_lateral_rms_m": 0.04777789206491041
+      },
+      {
+        "route_id": "straight100",
+        "seed": 4105,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.87768921269324,
+        "driving_lateral_rms_m": 0.027168567926509273
+      },
+      {
+        "route_id": "left_r60",
+        "seed": 4101,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.604663006269334,
+        "driving_lateral_rms_m": -0.0020026986418593545
+      },
+      {
+        "route_id": "left_r60",
+        "seed": 4102,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.87704987876313,
+        "driving_lateral_rms_m": 0.08730303521749966
+      },
+      {
+        "route_id": "left_r60",
+        "seed": 4103,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.87701109314562,
+        "driving_lateral_rms_m": 0.10231061264156427
+      },
+      {
+        "route_id": "left_r60",
+        "seed": 4104,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.54963869432134,
+        "driving_lateral_rms_m": 0.1025415921602364
+      },
+      {
+        "route_id": "left_r60",
+        "seed": 4105,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.877025380542236,
+        "driving_lateral_rms_m": -0.01243641604945979
+      },
+      {
+        "route_id": "right_r60",
+        "seed": 4101,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.8770063256423,
+        "driving_lateral_rms_m": -0.01879777284484721
+      },
+      {
+        "route_id": "right_r60",
+        "seed": 4102,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.87698318029634,
+        "driving_lateral_rms_m": -0.0034662419681360003
+      },
+      {
+        "route_id": "right_r60",
+        "seed": 4103,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.87693839084941,
+        "driving_lateral_rms_m": 0.09686680560195307
+      },
+      {
+        "route_id": "right_r60",
+        "seed": 4104,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.87703433939535,
+        "driving_lateral_rms_m": 0.02315580055409175
+      },
+      {
+        "route_id": "right_r60",
+        "seed": 4105,
+        "driving_success": -1,
+        "physical_failure": 0,
+        "progress_m": -59.876986754456034,
+        "driving_lateral_rms_m": 0.033706812898831554
+      }
+    ],
+    "packages": [
+      {
+        "path": "outputs/lab_lane_ppo/20261019T202833Z-52cebbea",
+        "manifest_sha256": "2263ebad0efe6151329abae0c52e2d0b124d4e719d1255fd14ab50fa65ad93e4"
+      },
+      {
+        "path": "outputs/lab_lane_ppo/20261019T202946Z-a234c003",
+        "manifest_sha256": "ab0fe930bc3c338bf32fabb6f055dfe641f1690b1413e378939279eaac1b72d8"
+      },
+      {
+        "path": "outputs/lab_lane_ppo/20261019T203044Z-bad7e3b3",
+        "manifest_sha256": "c8b122a682f8c8e85d1787613966810d69f250cfd15527777d62451a23f786b2"
+      },
+      {
+        "path": "outputs/lab_lane_ppo/20261019T203142Z-52354a54",
+        "manifest_sha256": "dd54471ffabf18f1f6c3b9a31a0f7db0f8670da57483da5bfb46c46f21ddc4c7"
+      },
+      {
+        "path": "outputs/lab_lane_ppo/20261019T203220Z-aeaaec89",
+        "manifest_sha256": "df72b864e5dacd5bcbc6353668cdff89c10a175021c8184ccc866c400139bd9e"
+      },
+      {
+        "path": "outputs/lab_lane_ppo/20261019T203300Z-26d70250",
+        "manifest_sha256": "1a2c2d9901b50e68e4d945f0dc9df70328e0f06f448dc1661b1b5e2ae3b8d594"
+      }
+    ]
+  },
+  "preview": {
+    "run": "outputs/lab_lane_ppo_preview/20261019T203832Z-84dbf806",
+    "manifest": {
+      "path": "outputs/lab_lane_ppo_preview/20261019T203832Z-84dbf806/manifest.json",
+      "sha256": "d9fb8ed3cc125d6dca7fbf8461525ced59ff2739112a737884bc52756678c582"
+    },
+    "summary": {
+      "path": "outputs/lab_lane_ppo_preview/20261019T203832Z-84dbf806/summary.json",
+      "sha256": "f95c7e7b8b4c89af370263332efb84b96bd4037b2ac503932b8811081fab95ef"
+    },
+    "execution_passed": true,
+    "route": "left_r60",
+    "seed": 4101,
+    "excluded_from_selection_and_heldout_counts": true,
+    "optimizer_steps": 0,
+    "evaluation_frozen": true,
+    "heldout_replay_comparison": {
+      "reference_control_steps": 2100,
+      "preview_control_steps": 2100,
+      "reset_spec_and_native_state_exact": true,
+      "exact_selected_fields": false,
+      "fields_compared": [
+        "tick",
+        "physics_state",
+        "physics_samples",
+        "policy_action_raw",
+        "env_action",
+        "requested_action",
+        "observation",
+        "route_state",
+        "reward",
+        "reward_components",
+        "terminated",
+        "truncated",
+        "reason",
+        "success"
+      ],
+      "differing_fields": {
+        "observation": {
+          "count": 2100,
+          "first_control_step": 1
+        }
+      },
+      "excluded": [
+        "wall timing",
+        "episode serial/IDs",
+        "capture metadata"
+      ],
+      "contact_metadata_caveat": "physics_samples retains raw contact metadata; process-specific contact identifiers may differ without proving changed motion.",
+      "performance_comparison": false,
+      "changes_heldout_outcomes": false
+    },
+    "comparison_note": "Original in-memory comparison retained: observation tuple/list mismatch. Independent saved-JSON comparison found exact equality of all 14 selected fields for all 2100 records; this is not whole-file byte equality.",
+    "source_hashes": {
+      "experiments/lab-lane-following-validation.json": "811ad576ffdb23d0dd0dc6c0f51b47f3891168dc1220c164d7124ec74c014f57",
+      "experiments/verify_lane_following_lab.py": "5284ff7e6d37fd138cbd7512d0767b59ce4f96a867af72481aba7aa118f07999",
+      "experiments/lane_following_lab_validation.py": "e5f40099724e4898389c06b2e598d7944fa736fd184ae10e0c371221274530f1",
+      "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+      "experiments/verify_physics_vehicle.py": "95b8f97f79a71963812ef0a19e8385381870c07d4fbf28bcd880649eabe9ab8e",
+      "scripts/probe_lane_following_lab.py": "d6c3e89e65fd25e4ac5b10e851ae03647ee119520a6f5927ff9093f43b4a48e4",
+      "scripts/probe_vehicle_lab.py": "9f6bcd8ee3b406ebffb5a10635a562a478423cc473b0b213e64e9651b86bd0bb",
+      "hivemind/launcher.py": "b2ea5e656c887a920ef06b6c70ccdb0830bbba7a097d82ae13187dbb829f23d3",
+      "environments/__init__.py": "52d667e6abf1afede7b32e6de9abce7da7a06fe545f398b4f15d91bc55b415bd",
+      "environments/lane_following_contract.py": "19f929c9809745c4aab2352cc1a404a222615ce5596c69a2e8e015523808a41d",
+      "environments/lane_following_lab.py": "a5d009b4ebff49c46d8d4ed21d6b7c370a1d3eed5ddd8c5bfd64af049fbe0fc4",
+      "environments/lane_following_scene.py": "6d944fb96416f831c79dd595445126a3106d1ee831e15b6beb8b94b893118a1e",
+      "environments/lane_follow_sb3.py": "922b33f8c6595d9ce8c17808c6b024b14d6a0f991aa72ad6e355154235107616",
+      "environments/physics_vehicle_contract.py": "8944dd3e78041fe1de4db189d34a34f06f00c47f27e8e6fd08a7493fdbfa7bc6",
+      "traffic/physx_vehicle.py": "167f0e6ce5da581e4520707a71596c9efe7a3dca6b36f466ee5081df210fe8a6",
+      "traffic/physics_session.py": "d0016c776819bdd93ff612d533f6ff4d2b70de9b332e52d81493255419d7c61a",
+      "traffic/wheel_geometry.py": "8d4f23a9e3fdaf7eef41ee0d3be7eae1350e1208a250bb72ad0530ba551082b5",
+      "traffic/driver_control.py": "29755844f3b1df77ac002caba87be3ba22ff9918b0e8a5ba03ff568d2690e18a",
+      "traffic/lane_geometry.py": "2b7976bf1e04ae6ae223ea93c3dd18551394a57404e350713e2b42004e8413b0",
+      "traffic/path_following.py": "c89288bee58812817873203222ecb404f3186bd7735d3c1f23d90770e7ec906b",
+      "traffic/speed_profiles.py": "0f9337601191671641af539ea75a513b600c3ba7974031b682287ab137b8b1d9",
+      "traffic/vehicle_contacts.py": "628fbf2c7e1cc735437a6c67b3051f57a604b72bf67227c1d39769ab9488170d",
+      "traffic/lane_validation.py": "bd247d77efc1c96a1f0e9641873763a395f66b77e82dedf8b9204886b1fced79",
+      "traffic/dynamics_validation.py": "6ce4d6442260280dbe601f63600cf9e376470e60b2aca5c6f54bfab9e90d0a45",
+      "usd/physical_scene.py": "2f7a0283cf2165538a6d0bf0336e042bf7c46c5110b63a3842fde7435d5e91f9",
+      "usd/scene_validation.py": "fb998a59fb325eed9a258d5441067fa05f832e8b1668be446f2cecc40b678475",
+      "visualization/physics_road_view.py": "b1f2b0d473a7ae6c6d9a70262f1c2b6c0a0c9fa5528d4f8a7f8995d81bd6c219",
+      "scenarios/physics-road/routes.json": "2efc40e7a60a0d1e72e657ee56ea3de3a6fda576f0b5231f57b8f0bd31114cc7",
+      "experiments/lane-follow-ppo-pilot.json": "0bf67c3c701c332e80cee7fd919760f6ac17a3ee6f89d966c5bb5a80ffcb206a",
+      "experiments/lane-follow-ppo-proposal.json": "5999396ed15fbdd15f82a4f49779da8c2f3458e3118a477ce0219d908681dafd",
+      "experiments/lane_follow_ppo_protocol.py": "2878ececce6d8a454959d1fae020e637f13b24aa6b08f3edc4e410156b43b848",
+      "experiments/run_lane_follow_ppo.py": "206dd4ff7a9695a409847b3777a0b87679f53a49eb8bd5a1b3c297a4618c4232",
+      "experiments/lane_follow_ppo_evaluation.py": "d21a530e5b65b2bc61e16cf3ce8f7a39c50ac8dd938b2a3cb80c3bab3ebabf99",
+      "environments/lane_follow_ppo.py": "8f4b9c34004053724065cc0ee225760112dd5dc2cb1850216ab0c191f3cbebeb",
+      "scripts/run_lane_follow_ppo.py": "37f410a2cdc29f75f7196045d60530f767236294e6763efbd12a888b0e9e8add",
+      "documentation/evidence/lab-lane-following-20261019.json": "10fc4c221028683e9176fd34e9b6f4955f9afbe7109b13da70e785215caab9b2",
+      "experiments/preview_lane_follow_ppo.py": "433d17042d7a4a4457435f6f14322edda4aff9faa2da447e750eb88d74217eda",
+      "scripts/preview_lane_follow_ppo.py": "0f8094eeae42b9fa140e432d5b7ceccaf4221a980b7e28c29735c17c5a01d001",
+      "experiments/report_lane_follow_ppo.py": "076e72e12e226774b69d00bb4858b2583e057bc3e0788e3a37ef9ac6c01b223a"
+    },
+    "captures": [
+      {
+        "file": "preview-00s-follow.png",
+        "width": 1440,
+        "height": 900,
+        "bytes": 332493,
+        "sha256": "938cb5cd02944a82431c135658943254c324767a30135d4ad53dbe98cde5d5d7",
+        "native_completion_confirmed": true,
+        "requested_sim_seconds": 0,
+        "label": "Initial perturbed reset before policy steps",
+        "camera_state_at_request_not_exact_frame_timestamp": true,
+        "camera_path": "/World/Cameras/Follow",
+        "episode_serial": 1,
+        "episode_tick": 0,
+        "physics_state": {
+          "position_m": [
+            0.0,
+            0.006633684039115906,
+            1.0
+          ],
+          "quaternion_xyzw": [
+            0.0,
+            0.0,
+            0.015956968069076538,
+            0.9998726844787598
+          ],
+          "velocity_m_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "speed_m_s": 0.0,
+          "yaw_rad": 0.03191529079957604,
+          "upright_z": 1.0,
+          "wheel_on_ground": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      },
+      {
+        "file": "preview-02s-follow.png",
+        "width": 1440,
+        "height": 900,
+        "bytes": 357644,
+        "sha256": "a2a694167265b13c5fc39b798f8bc19edb32fca6c797df7a8138b0bbc16d34b7",
+        "native_completion_confirmed": true,
+        "requested_sim_seconds": 2,
+        "label": "Selected policy illustrative replay",
+        "camera_state_at_request_not_exact_frame_timestamp": true,
+        "camera_path": "/World/Cameras/Follow",
+        "episode_serial": 1,
+        "episode_tick": 240,
+        "physics_state": {
+          "position_m": [
+            8.295424436255416e-08,
+            0.006633684504777193,
+            1.0018997192382812
+          ],
+          "quaternion_xyzw": [
+            1.4609920218067174e-10,
+            6.03998557835439e-08,
+            0.015956968069076538,
+            0.9998726844787598
+          ],
+          "velocity_m_s": [
+            1.1196275018221513e-08,
+            -5.934095881343637e-09,
+            -3.1674593628849834e-05
+          ],
+          "speed_m_s": 1.2671624529342347e-08,
+          "yaw_rad": 0.0319152907995763,
+          "upright_z": 0.9999999999999927,
+          "wheel_on_ground": [
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      },
+      {
+        "file": "preview-05s-follow.png",
+        "width": 1440,
+        "height": 900,
+        "bytes": 362204,
+        "sha256": "a9df21e987d564d2840934ffddb97ef7af0cd3702903077c231c1b3450750df7",
+        "native_completion_confirmed": true,
+        "requested_sim_seconds": 5,
+        "label": "Selected policy illustrative replay",
+        "camera_state_at_request_not_exact_frame_timestamp": true,
+        "camera_path": "/World/Cameras/Follow",
+        "episode_serial": 1,
+        "episode_tick": 600,
+        "physics_state": {
+          "position_m": [
+            9.093394481851647e-08,
+            0.006633684504777193,
+            1.0018997192382812
+          ],
+          "quaternion_xyzw": [
+            -1.2355810818931445e-10,
+            6.041628353159467e-08,
+            0.015956968069076538,
+            0.9998726844787598
+          ],
+          "velocity_m_s": [
+            1.1623858320319869e-08,
+            1.0962375007750325e-08,
+            4.046742105856538e-05
+          ],
+          "speed_m_s": 1.5977726623691443e-08,
+          "yaw_rad": 0.031915290799576265,
+          "upright_z": 0.9999999999999927,
+          "wheel_on_ground": [
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      },
+      {
+        "file": "preview-10s-follow.png",
+        "width": 1440,
+        "height": 900,
+        "bytes": 366772,
+        "sha256": "20d70897894967b6db2999501fc3e5de0073bc563428fdc06700183dd74b4332",
+        "native_completion_confirmed": true,
+        "requested_sim_seconds": 10,
+        "label": "Selected policy illustrative replay",
+        "camera_state_at_request_not_exact_frame_timestamp": true,
+        "camera_path": "/World/Cameras/Follow",
+        "episode_serial": 1,
+        "episode_tick": 1200,
+        "physics_state": {
+          "position_m": [
+            0.12060150504112244,
+            0.01726609282195568,
+            1.00190007686615
+          ],
+          "quaternion_xyzw": [
+            -6.782703394492273e-07,
+            5.803871317766607e-06,
+            0.018020693212747574,
+            0.9998376965522766
+          ],
+          "velocity_m_s": [
+            -1.0921584362222347e-05,
+            -8.061637686296308e-07,
+            1.0160350939258933e-05
+          ],
+          "speed_m_s": 1.0951296955292137e-05,
+          "yaw_rad": 0.0360433403864083,
+          "upright_z": 0.9999999999317101,
+          "wheel_on_ground": [
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      },
+      {
+        "file": "preview-15s-follow.png",
+        "width": 1440,
+        "height": 900,
+        "bytes": 357271,
+        "sha256": "68a9a306884344ed8eed010b77f702eb440fe6357dd856cea0f1fe4499d279a7",
+        "native_completion_confirmed": true,
+        "requested_sim_seconds": 15,
+        "label": "Selected policy illustrative replay",
+        "camera_state_at_request_not_exact_frame_timestamp": true,
+        "camera_path": "/World/Cameras/Follow",
+        "episode_serial": 1,
+        "episode_tick": 1800,
+        "physics_state": {
+          "position_m": [
+            0.1205933541059494,
+            0.017265016213059425,
+            1.00190007686615
+          ],
+          "quaternion_xyzw": [
+            2.4774489126855315e-09,
+            6.055250167946724e-08,
+            0.018020693212747574,
+            0.9998376965522766
+          ],
+          "velocity_m_s": [
+            -8.592937028595315e-09,
+            -5.530917945861802e-08,
+            5.082931602373719e-05
+          ],
+          "speed_m_s": 5.597270673429165e-08,
+          "yaw_rad": 0.03604334039184923,
+          "upright_z": 0.9999999999999927,
+          "wheel_on_ground": [
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      },
+      {
+        "file": "preview-20s-follow.png",
+        "width": 1440,
+        "height": 900,
+        "bytes": 362362,
+        "sha256": "91a2d3f0a91d1099d1dd1c670137d8c8b419e57c3ad973f52f31f1fbb77938b5",
+        "native_completion_confirmed": true,
+        "requested_sim_seconds": 20,
+        "label": "Selected policy illustrative replay",
+        "camera_state_at_request_not_exact_frame_timestamp": true,
+        "camera_path": "/World/Cameras/Follow",
+        "episode_serial": 1,
+        "episode_tick": 2400,
+        "physics_state": {
+          "position_m": [
+            0.1205933541059494,
+            0.017265018075704575,
+            1.00190007686615
+          ],
+          "quaternion_xyzw": [
+            -1.1957422829667053e-09,
+            6.039446986960684e-08,
+            0.018020693212747574,
+            0.9998376965522766
+          ],
+          "velocity_m_s": [
+            8.543154628171123e-09,
+            1.0091665281208861e-08,
+            5.664851050823927e-05
+          ],
+          "speed_m_s": 1.3222223683964736e-08,
+          "yaw_rad": 0.03604334039184878,
+          "upright_z": 0.9999999999999927,
+          "wheel_on_ground": [
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      },
+      {
+        "file": "preview-25s-follow.png",
+        "width": 1440,
+        "height": 900,
+        "bytes": 362375,
+        "sha256": "eef49df19c21eeb018da5d85836662b3366e43a47f7b5b575498f583e2ef708d",
+        "native_completion_confirmed": true,
+        "requested_sim_seconds": 25,
+        "label": "Selected policy illustrative replay",
+        "camera_state_at_request_not_exact_frame_timestamp": true,
+        "camera_path": "/World/Cameras/Follow",
+        "episode_serial": 1,
+        "episode_tick": 3000,
+        "physics_state": {
+          "position_m": [
+            0.1205933541059494,
+            0.017265018075704575,
+            1.00190007686615
+          ],
+          "quaternion_xyzw": [
+            -1.3101801865644802e-09,
+            6.105261718403199e-08,
+            0.018020693212747574,
+            0.9998376965522766
+          ],
+          "velocity_m_s": [
+            4.580410362109433e-08,
+            8.32603319622649e-09,
+            1.3646479601447936e-05
+          ],
+          "speed_m_s": 4.6554685449658145e-08,
+          "yaw_rad": 0.036043340391848776,
+          "upright_z": 0.9999999999999926,
+          "wheel_on_ground": [
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      },
+      {
+        "file": "preview-30s-follow.png",
+        "width": 1440,
+        "height": 900,
+        "bytes": 365329,
+        "sha256": "8d80c455eb5b1b52f264eb8c3a811f5a964661759ae691da5cb006506213bab2",
+        "native_completion_confirmed": true,
+        "requested_sim_seconds": 30,
+        "label": "Selected policy illustrative replay",
+        "camera_state_at_request_not_exact_frame_timestamp": true,
+        "camera_path": "/World/Cameras/Follow",
+        "episode_serial": 1,
+        "episode_tick": 3600,
+        "physics_state": {
+          "position_m": [
+            0.12306822836399078,
+            0.017745688557624817,
+            1.0019029378890991
+          ],
+          "quaternion_xyzw": [
+            0.00011844007531180978,
+            -0.0001501789956819266,
+            0.018201319500803947,
+            0.9998343586921692
+          ],
+          "velocity_m_s": [
+            0.050246596336364746,
+            0.010983938351273537,
+            9.148749882115226e-07
+          ],
+          "speed_m_s": 0.051433134700250974,
+          "yaw_rad": 0.036404615949655425,
+          "upright_z": 0.9999999268364357,
+          "wheel_on_ground": [
+            true,
+            true,
+            true,
+            true
+          ]
+        }
+      },
+      {
+        "file": "preview-scene-overview.png",
+        "width": 1440,
+        "height": 900,
+        "bytes": 153242,
+        "sha256": "35ddf9f6697833f9f94469296d9c81e9e1c146d323afa6bbabc29def658f99a1",
+        "native_completion_confirmed": true,
+        "requested_sim_seconds": null,
+        "label": "Post-auto-reset scene overview; not terminal state",
+        "camera_state_at_request_not_exact_frame_timestamp": true,
+        "camera_path": "/World/Cameras/Overview",
+        "episode_serial": 2,
+        "episode_tick": 0,
+        "physics_state": {
+          "position_m": [
+            0.0,
+            -0.06894378364086151,
+            1.0
+          ],
+          "quaternion_xyzw": [
+            0.0,
+            0.0,
+            -0.01642841100692749,
+            0.9998650550842285
+          ],
+          "velocity_m_s": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "speed_m_s": 0.0,
+          "yaw_rad": -0.03285830050867621,
+          "upright_z": 1.0,
+          "wheel_on_ground": [
+            false,
+            false,
+            false,
+            false
+          ]
+        }
+      }
+    ],
+    "captures_skipped": [
+      {
+        "requested_sim_seconds": 35,
+        "reason": "Not reached before terminal auto-reset"
+      }
+    ]
+  },
+  "public_visuals": [
+    {
+      "path": "documentation/images/lab-lane-ppo-20261019/outcomes.png",
+      "sha256": "a5f25b6004103acc75ee6418ae012297568ab8c3d0761b8902e572f24fc6d405"
+    },
+    {
+      "path": "documentation/images/lab-lane-ppo-20261019/preview-00s-follow.png",
+      "sha256": "938cb5cd02944a82431c135658943254c324767a30135d4ad53dbe98cde5d5d7"
+    },
+    {
+      "path": "documentation/images/lab-lane-ppo-20261019/preview-30s-follow.png",
+      "sha256": "8d80c455eb5b1b52f264eb8c3a811f5a964661759ae691da5cb006506213bab2"
+    },
+    {
+      "path": "documentation/images/lab-lane-ppo-20261019/preview-scene-overview.png",
+      "sha256": "35ddf9f6697833f9f94469296d9c81e9e1c146d323afa6bbabc29def658f99a1"
+    }
+  ],
+  "plot_metadata": {
+    "path": "outputs/lab_lane_ppo/reports/outcomes-v2.json",
+    "sha256": "152ee5883a634717e6ba8e9aa7dd9ec7121c39f7efee383740478646cf56e49e"
+  },
+  "plot_verified_data": {
+    "path": "outputs/lab_lane_ppo/reports/outcomes-verified-data-v2.json",
+    "sha256": "b0465315ed7f567558cc2960c04c5aba0840bf6427a1cdc99ec68e46744a20d3"
+  },
+  "checks": {
+    "full_local_suite": {
+      "passed": 2292,
+      "skipped": 187,
+      "subtests_passed": 116,
+      "log": {
+        "path": "outputs/lab_lane_ppo/review/pytest-final.log",
+        "sha256": "7f7d818f762303102e413b5a9c5763425a73ebcd4525cec869f3e593eadafa22"
+      }
+    },
+    "subsequent_preview_focused_tests_passed": 48,
+    "subsequent_plot_focused_tests_passed": 5,
+    "preview_code_review": {
+      "path": "outputs/lab_lane_ppo/review/preview-worker-independent-review.json",
+      "sha256": "a66dff31ebad854a8e8d1bd8b6a8877ea70480d391cc131db3eb2e6670a66b25"
+    },
+    "native_preview_audit": {
+      "path": "outputs/lab_lane_ppo/review/native-preview-independent-audit.json",
+      "sha256": "73d3facea705ef32512e3fc9827ba2fe003d943f9de5c42f2e8d1d2f534c0333"
+    },
+    "training_raw_audit": {
+      "path": "outputs/lab_lane_ppo/review/completed-training-independent-audit-final.json",
+      "sha256": "13559936b3f8ba1aa6a3f448ac1efc2fcb106770690881ef81b80f8f96049209"
+    },
+    "heldout_independent_review": {
+      "path": "outputs/lab_lane_ppo/review/heldout-final-independent-review.json",
+      "sha256": "acc1977be7ff3962ecd9d5e36b48e49390d44eccf50d2e2141b9ebb5c46a00e1"
+    },
+    "checkout_line_endings": {
+      "path": "outputs/lab_lane_ppo/review/checkout-line-ending-proof.json",
+      "sha256": "d9b66ca0507a9aca8883a5b31e2bcde2d415515fbec7bd3d8cdf717aa32ed5dd"
+    }
+  },
+  "limits": [
+    "Single training seed and three fixed low-speed roads; privileged simulator/map observations.",
+    "No successful learned drive. Low tracking error while stationary is not lane-following ability.",
+    "Known baseline OmniPlaybackAPI startup messages retained; no unexpected errors or USD reference warnings.",
+    "Raw traces, optimizer checkpoints and local proof files are ignored outputs, not included in Git.",
+    "Further training or changed action/reward/budget requires a separately reviewed experiment."
+  ]
+}
