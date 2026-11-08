@@ -13,6 +13,7 @@ authority for historical measurements and failures.
   zero collisions, overspeed or overrides, with 1,445.453 m mean progress per car.
   Preserve the speed/progress tradeoff and different seed-set qualification in
   [the v02 training record](sumo-mappo-v2.md). Google guide sync remains pending.
+
 ## October 26, 2026: Near-field sensing and perception preparation
 
 - Versioned local source v12-v14 preserves seven body cameras and adds four compact perimeter LiDARs. Independent writer registrations support five concurrent scanners.
@@ -1123,3 +1124,8 @@ Saved a [reward revision plan](highway-flow-rl-reward-revision-plan.md) and sour
 ## November 8, 2026 - Repair CI across historical open PRs
 
 [Open-PR audit](ci-open-pr-audit-2026-11-08.md): inspected all failure groups and backported the portable checkpoint fixture to ten historical branches; added the missing Pillow CI dependency to semantic-lidar-fusion. Local oldest-branch module: 67 passed. Semantic tests: seven passed; full collection: 3,169 tests. Exact repair commits and logs retained; per-head GitHub checks remain the remote acceptance evidence. No policy or training changes.
+
+
+## November 8, 2026 - Integrate passing PRs in dependency order
+
+[Ordered integration](pr-integration-2026-11-08.md) records the 44-PR main chain and four sensor PRs, preservation of all original heads, documentation conflict resolutions, local validation and its corrected output-directory setup. Preserve the newer verified engineering-guide pair and all historical sensor evidence. GitHub checks on the revised heads and final main remain the remote acceptance record. No training or policy acceptance changes.
