@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-preparation-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-preparation-v01/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-training-rethink-v01/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-training-rethink-v01/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4868,3 +4868,23 @@ Verification: 195 CPU checks plus eight subtests verified across the full run an
 Source, configuration, metrics, screenshots and failed-gate explanation: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-preparation-v01/documentation/highway-smooth-preparation-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-smooth-preparation-v01/documentation/highway-smooth-preparation-v01.md>)
 
 Local comparison: outputs/highway-smooth-control/v02/visual-comparison-v01/i110-frozen-vs-reference.mp4. Raw videos, recordings, batches and logs remain local; compact evidence and this guide mirror are committed to GitHub. Next work is to diagnose the remaining native-response peaks and preserve safety and progress while improving anticipation. No training starts from this milestone.
+
+<a id="docs-h-fe9ldm7apx4g"></a>
+
+#### November 6, 2026 — Highway training rethink: explain the slowdown before retraining
+
+The user rejected the scripted replay's driving quality. A read-only three-agent audit inspected the active control/learning chain, saved raw traces, reward weights and checkpoint history. Seven selected actors match their trusted resume checkpoints; all inspected tensors are finite. Seventy local weight files were inventoried. No simulator or training run was started and no runtime source, policy weights, reward configuration or disabled launch contract was changed. Repository cataloguing covers 1,039 tracked files; detailed audit inventories distinguish content review from cataloguing.
+
+The saved 18 m/s I-110 test shows a real tradeoff: at 30 s the scripted main car has traveled 352.482 m versus MAPPO's 407.304 m and spends 13.0 versus 4.6 sampled seconds below 9 m/s. It ultimately arrives earlier, but another scripted car unnecessarily passes into an ending auxiliary lane, slows to 1.456 m/s and arrives 7.7 s later. Controlled mean boundary time is exactly 39.8875 s for both controllers. An earlier focal merge and fewer overrides did not establish better traffic.
+
+The native minor-junction model still brakes toward a 4.5 m visibility point. The script anticipates that, then yields behind a gap. Its stopping-profile feed-forward also brakes another car even when that profile is not the active speed target. All four retained comfort-failure accelerations can be reproduced offline from saved leader/occupancy states and the existing ACC equation; one case exposes a nearest-only reduction that misses a farther, slower destination-lane leader. These are analytical matches, not rewritten native cause labels.
+
+The learned v05 endpoint improved speed utilization and stable merges but worsened interventions. It trained all 48 PPO episodes at difficulty 0, with only four merge episodes and no I-110 training episode. Stronger imitation of the current script would reinforce route mistakes. The previous unlaunched smooth reward bundle remains disabled and is superseded as the recommended next action, not erased from history.
+
+New proposed sequence: (1) qualify highway topology, visibility and multi-corridor leader constraints with a zero-learning counterfactual bank; (2) build route-useful passing, gap selection and conditional stopping targets visible to the actor; (3) compare one learning change at a time, initially keeping legacy reward/loss formulas and coefficients under the same qualified reference; (4) preserve foundations while guaranteeing generic/I-110 and harder-case exposure, then test cooperative gap creation over varied AV populations and message loss; (5) evaluate all cars' speed, full-trip delay, stops, useful passes, safety and jerk before a complete SimReady replay. Keep real yielding/braking and all historical safety/override metrics.
+
+Proposed first study: 63 zero-learning diagnostic episodes within 1,800 s, then two 30k-decision longitudinal arms with a shared 5,400 s cap including preparation/evaluations and 900 s reserved for final evaluation. This needs a new reviewed contract; the current runner's 3,600 s cap is not changed. A later two-by-100k route/merge pilot has a separately approved 7,200 s proposal. These are ceilings and plans, not authorization. Final configurations and passing prerequisites precede any launch. While approved training runs, use bounded automated evaluation/checkpointing and wait without assistant polling until completion or failure.
+
+Plan, actual saved-sample figure, audits and precise proposed gates: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-training-rethink-v01/documentation/highway-training-rethink-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-training-rethink-v01/documentation/highway-training-rethink-v01.md>)
+
+Living sensor-driven roadmap is v19. Immediate next action is review of Steps 1–2, not training. Structured driving competence still precedes imperfect-observation and camera/LiDAR policy integration.
