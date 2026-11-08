@@ -1,0 +1,1980 @@
+{
+  "schema": "highway_smooth_offline_gate_summary_v01",
+  "training": false,
+  "optimizer_steps": 0,
+  "training_ready": false,
+  "status": "failed",
+  "candidate_study": "outputs/highway-smooth-control/v02/matrix-02",
+  "baseline_studies": [
+    "outputs/highway-smooth-control/v02/matrix-01"
+  ],
+  "required_fixtures": [
+    "cruise",
+    "following",
+    "passing",
+    "merge",
+    "dense-following",
+    "i110-merge"
+  ],
+  "baseline_selection": "Candidate study first, then explicit baseline-study order; selection does not inspect outcomes",
+  "limitations": [
+    "This is a measured gate subset, not a training-readiness certificate.",
+    "Gradient, dangerous-boundary reference, all-fixture coverage and frozen-actor invariance proofs remain separate.",
+    "Native baseline metrics are context, not evidence of learned-policy improvement."
+  ],
+  "fixtures": {
+    "cruise": {
+      "status": "failed",
+      "gates": {
+        "integrity": {
+          "status": "passed",
+          "failures": []
+        },
+        "unchanged_v05_safety_and_task": {
+          "status": "passed",
+          "unchanged_v05_result": {
+            "cases": 1,
+            "failures": [],
+            "all_gates_passed": true,
+            "pooled_intervention_fraction": 0.0003125,
+            "worst_intervention_fraction": 0.0003125,
+            "merges": 0,
+            "stable_merges": 0,
+            "passes": 0,
+            "held_out_test_run": false,
+            "acceptance_status": "development validation only; no held-out promotion"
+          }
+        },
+        "nominal_controlled_peak_jerk": {
+          "status": "failed",
+          "measured_m_s3": 21.95873312479435,
+          "maximum_m_s3": 5.0,
+          "startup_included": true,
+          "measured_intervals": 6400
+        },
+        "completed_trips_vs_teacher": {
+          "status": "passed",
+          "candidate": 0,
+          "baseline": 0,
+          "matched": true
+        },
+        "boundary_time_vs_teacher": {
+          "status": "passed",
+          "candidate_mean_s": 57.76205555555555,
+          "teacher_mean_s": 57.76205555555555,
+          "maximum_ratio": 1.05,
+          "matched": true,
+          "unfinished_trips_included": true
+        }
+      },
+      "candidate_path": "outputs/highway-smooth-control/v02/matrix-02/cruise/smooth",
+      "teacher_path": "outputs/highway-smooth-control/v02/matrix-01/cruise/teacher",
+      "frozen_actor_path": "outputs/highway-smooth-control/v02/matrix-01/cruise/frozen-v05",
+      "metrics": {
+        "interventions": 2,
+        "decisions": 6400,
+        "intervention_fraction": 0.0003125,
+        "completed_trips": 0,
+        "requested_trips": 36,
+        "mean_boundary_time_s": 57.76205555555555,
+        "passes": 0,
+        "stable_merges": 0,
+        "controlled_jerk": {
+          "requested": {
+            "samples": 6392,
+            "eligible_samples": 6400,
+            "missing_samples": 8,
+            "mean_abs": 0.034033864076821616,
+            "rms": 0.29339368955941264,
+            "p95_abs": 0.14293205365538592,
+            "peak_abs": 18.8134153932333
+          },
+          "filtered": {
+            "samples": 6392,
+            "eligible_samples": 6400,
+            "missing_samples": 8,
+            "mean_abs": 0.034033864076821616,
+            "rms": 0.29339368955941264,
+            "p95_abs": 0.14293205365538592,
+            "peak_abs": 18.8134153932333
+          },
+          "realized": {
+            "samples": 6400,
+            "eligible_samples": 6400,
+            "missing_samples": 0,
+            "mean_abs": 0.03684923370554183,
+            "rms": 0.33255064564850234,
+            "p95_abs": 0.1486236937344109,
+            "peak_abs": 21.95873312479435
+          }
+        },
+        "background_jerk": {
+          "requested": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "filtered": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "realized": {
+            "samples": 14349,
+            "eligible_samples": 14369,
+            "missing_samples": 20,
+            "mean_abs": 0.13090671521413844,
+            "rms": 0.8395888626295667,
+            "p95_abs": 0.2776759233359625,
+            "peak_abs": 37.166129848492346
+          }
+        }
+      },
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 21.95873312479435,
+        "controlled_measured_intervals": 6400,
+        "controlled_startup_peak_abs_jerk_m_s3": 2.000000104308164,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_1": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_2": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 21.95873312479435,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_3": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_4": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_5": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_6": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_7": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          }
+        },
+        "stopped_intervals": [],
+        "stopped_intervals_at_least_two_seconds": 0,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+        "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98"
+      },
+      "input_sha256": {
+        "evaluation.json": "170890cedec5bd3cac3b4c983cd0c6fc519b481acc56ea34657fe2568d3f908f",
+        "manifest.json": "c021aa12cbdc47dea9bd1b4e6693d0434005f95d8f8f756ebe82e59c34b47fa0",
+        "recording-check.json": "1f73d507a7b4af3c5107404189e3495bdf5a2651d70b1779eecff9d468fd51df",
+        "recording.json": "4ef669407272930e22169f5779c22bcab37374aaf03ca0cb7f6d224d77bd9633"
+      }
+    },
+    "following": {
+      "status": "failed",
+      "gates": {
+        "integrity": {
+          "status": "passed",
+          "failures": []
+        },
+        "unchanged_v05_safety_and_task": {
+          "status": "passed",
+          "unchanged_v05_result": {
+            "cases": 1,
+            "failures": [],
+            "all_gates_passed": true,
+            "pooled_intervention_fraction": 0.00125,
+            "worst_intervention_fraction": 0.00125,
+            "merges": 0,
+            "stable_merges": 0,
+            "passes": 0,
+            "held_out_test_run": false,
+            "acceptance_status": "development validation only; no held-out promotion"
+          }
+        },
+        "nominal_controlled_peak_jerk": {
+          "status": "failed",
+          "measured_m_s3": 44.99999828636625,
+          "maximum_m_s3": 5.0,
+          "startup_included": true,
+          "measured_intervals": 6400
+        },
+        "completed_trips_vs_teacher": {
+          "status": "passed",
+          "candidate": 0,
+          "baseline": 0,
+          "matched": true
+        },
+        "boundary_time_vs_teacher": {
+          "status": "passed",
+          "candidate_mean_s": 58.43822857142857,
+          "teacher_mean_s": 58.43822857142857,
+          "maximum_ratio": 1.05,
+          "matched": true,
+          "unfinished_trips_included": true
+        }
+      },
+      "candidate_path": "outputs/highway-smooth-control/v02/matrix-02/following/smooth",
+      "teacher_path": "outputs/highway-smooth-control/v02/matrix-01/following/teacher",
+      "frozen_actor_path": "outputs/highway-smooth-control/v02/matrix-01/following/frozen-v05",
+      "metrics": {
+        "interventions": 8,
+        "decisions": 6400,
+        "intervention_fraction": 0.00125,
+        "completed_trips": 0,
+        "requested_trips": 35,
+        "mean_boundary_time_s": 58.43822857142857,
+        "passes": 0,
+        "stable_merges": 0,
+        "controlled_jerk": {
+          "requested": {
+            "samples": 6392,
+            "eligible_samples": 6400,
+            "missing_samples": 8,
+            "mean_abs": 0.09600233175303409,
+            "rms": 0.8393161688979569,
+            "p95_abs": 0.35252050310373295,
+            "peak_abs": 44.04076762497425
+          },
+          "filtered": {
+            "samples": 6392,
+            "eligible_samples": 6400,
+            "missing_samples": 8,
+            "mean_abs": 0.09600233175303409,
+            "rms": 0.8393161688979569,
+            "p95_abs": 0.35252050310373295,
+            "peak_abs": 44.04076762497425
+          },
+          "realized": {
+            "samples": 6400,
+            "eligible_samples": 6400,
+            "missing_samples": 0,
+            "mean_abs": 0.09857103043630122,
+            "rms": 0.8620900926596768,
+            "p95_abs": 0.3614120259879603,
+            "peak_abs": 44.99999828636625
+          }
+        },
+        "background_jerk": {
+          "requested": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "filtered": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "realized": {
+            "samples": 14010,
+            "eligible_samples": 14029,
+            "missing_samples": 19,
+            "mean_abs": 0.2610607374874459,
+            "rms": 2.6904641644984313,
+            "p95_abs": 0.2636550916885038,
+            "peak_abs": 60.712644867245125
+          }
+        }
+      },
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 44.99999828636625,
+        "controlled_measured_intervals": 6400,
+        "controlled_startup_peak_abs_jerk_m_s3": 2.000000104308164,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_1": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_2": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 44.04076762497411,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_3": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 44.99999828636625,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_4": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_5": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 7.18348749177018,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_6": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 8.60969388928865,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_7": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          }
+        },
+        "stopped_intervals": [],
+        "stopped_intervals_at_least_two_seconds": 0,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+        "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98"
+      },
+      "input_sha256": {
+        "evaluation.json": "e62d4d24a960ab4555b38c14f7abe8dc5a7d185366d9b11597db6f267f62f035",
+        "manifest.json": "f5c0847e1e10a3d51e9a69b388634c729799c54608701e337cd2da468777b725",
+        "recording-check.json": "73026a3b420a11ba2d7cf35577d6bbdf29f37cf28ac153fe61d573a7012bd280",
+        "recording.json": "3f5e244702990256ee86fef48c16d70910594f2141e420950f95e4ff0cc64d4b"
+      }
+    },
+    "passing": {
+      "status": "failed",
+      "gates": {
+        "integrity": {
+          "status": "passed",
+          "failures": []
+        },
+        "unchanged_v05_safety_and_task": {
+          "status": "passed",
+          "unchanged_v05_result": {
+            "cases": 1,
+            "failures": [],
+            "all_gates_passed": true,
+            "pooled_intervention_fraction": 0.0025,
+            "worst_intervention_fraction": 0.0025,
+            "merges": 0,
+            "stable_merges": 0,
+            "passes": 7,
+            "held_out_test_run": false,
+            "acceptance_status": "development validation only; no held-out promotion"
+          }
+        },
+        "nominal_controlled_peak_jerk": {
+          "status": "failed",
+          "measured_m_s3": 22.96914255506195,
+          "maximum_m_s3": 5.0,
+          "startup_included": true,
+          "measured_intervals": 6400
+        },
+        "completed_trips_vs_teacher": {
+          "status": "passed",
+          "candidate": 0,
+          "baseline": 0,
+          "matched": true
+        },
+        "boundary_time_vs_teacher": {
+          "status": "passed",
+          "candidate_mean_s": 58.70017142857141,
+          "teacher_mean_s": 58.70017142857141,
+          "maximum_ratio": 1.05,
+          "matched": true,
+          "unfinished_trips_included": true
+        }
+      },
+      "candidate_path": "outputs/highway-smooth-control/v02/matrix-02/passing/smooth",
+      "teacher_path": "outputs/highway-smooth-control/v02/matrix-01/passing/teacher",
+      "frozen_actor_path": "outputs/highway-smooth-control/v02/matrix-01/passing/frozen-v05",
+      "metrics": {
+        "interventions": 16,
+        "decisions": 6400,
+        "intervention_fraction": 0.0025,
+        "completed_trips": 0,
+        "requested_trips": 35,
+        "mean_boundary_time_s": 58.70017142857141,
+        "passes": 7,
+        "stable_merges": 0,
+        "controlled_jerk": {
+          "requested": {
+            "samples": 6392,
+            "eligible_samples": 6400,
+            "missing_samples": 8,
+            "mean_abs": 0.08116974061744309,
+            "rms": 0.4074900498748765,
+            "p95_abs": 0.3668344747275112,
+            "peak_abs": 20.657372921705246
+          },
+          "filtered": {
+            "samples": 6392,
+            "eligible_samples": 6400,
+            "missing_samples": 8,
+            "mean_abs": 0.08116974061744309,
+            "rms": 0.4074900498748765,
+            "p95_abs": 0.3668344747275112,
+            "peak_abs": 20.657372921705246
+          },
+          "realized": {
+            "samples": 6400,
+            "eligible_samples": 6400,
+            "missing_samples": 0,
+            "mean_abs": 0.08332681931561886,
+            "rms": 0.44786424192619345,
+            "p95_abs": 0.3709171792950714,
+            "peak_abs": 22.96914255506195
+          }
+        },
+        "background_jerk": {
+          "requested": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "filtered": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "realized": {
+            "samples": 14103,
+            "eligible_samples": 14122,
+            "missing_samples": 19,
+            "mean_abs": 0.12861419217195844,
+            "rms": 1.341918292177678,
+            "p95_abs": 0.2913148955118493,
+            "peak_abs": 59.81213309857125
+          }
+        }
+      },
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 22.96914255506195,
+        "controlled_measured_intervals": 6400,
+        "controlled_startup_peak_abs_jerk_m_s3": 2.000000104308164,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 10.602875040603266,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_1": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 22.96914255506195,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_2": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_3": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_4": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_5": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_6": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 5.333166420667013,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_7": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          }
+        },
+        "stopped_intervals": [],
+        "stopped_intervals_at_least_two_seconds": 0,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+        "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98"
+      },
+      "input_sha256": {
+        "evaluation.json": "c1154fb5334be304345e2ab80da5d2e650a172de2229167d0db8ba94b0695afd",
+        "manifest.json": "be20a0eeecac88b01ac927cbf8b2e6a08d1205492912ec153f8538fa37f705ed",
+        "recording-check.json": "8d50ce6232a16a891a86d5b60a538cd2ae2f555ec67e3cda84ec91542ef3da78",
+        "recording.json": "c5a8fcafb0abd0422c66185230d813ca46a5af274ddcf105587d2d366e25db85"
+      }
+    },
+    "merge": {
+      "status": "failed",
+      "gates": {
+        "integrity": {
+          "status": "passed",
+          "failures": []
+        },
+        "unchanged_v05_safety_and_task": {
+          "status": "passed",
+          "unchanged_v05_result": {
+            "cases": 1,
+            "failures": [],
+            "all_gates_passed": true,
+            "pooled_intervention_fraction": 0.0021875,
+            "worst_intervention_fraction": 0.0021875,
+            "merges": 1,
+            "stable_merges": 1,
+            "passes": 0,
+            "held_out_test_run": false,
+            "acceptance_status": "development validation only; no held-out promotion"
+          }
+        },
+        "nominal_controlled_peak_jerk": {
+          "status": "failed",
+          "measured_m_s3": 10.739123966786579,
+          "maximum_m_s3": 5.0,
+          "startup_included": true,
+          "measured_intervals": 6400
+        },
+        "completed_trips_vs_teacher": {
+          "status": "passed",
+          "candidate": 0,
+          "baseline": 0,
+          "matched": true
+        },
+        "boundary_time_vs_teacher": {
+          "status": "passed",
+          "candidate_mean_s": 57.558388888888885,
+          "teacher_mean_s": 57.558388888888885,
+          "maximum_ratio": 1.05,
+          "matched": true,
+          "unfinished_trips_included": true
+        },
+        "nominal_continuous_merge": {
+          "status": "passed",
+          "target_ids": [
+            "agent_0"
+          ],
+          "failed_intervals": [],
+          "per_target": {
+            "agent_0": {
+              "coverage_complete": true,
+              "longest_consecutive_stop_s": 0.0,
+              "threshold_speed_m_s": 0.1,
+              "start_time_s": null,
+              "end_time_s": null,
+              "stable_completion_time_s": 22.7,
+              "observed_start_time_s": 0.1,
+              "observed_end_time_s": 22.7,
+              "measured_samples": 227,
+              "nonconsecutive_gaps": 0,
+              "duration_definition": "Elapsed span between consecutive measured speed<0.1 samples, including reset; first/arrival duration is not invented"
+            }
+          },
+          "threshold_m_s": 0.1,
+          "minimum_consecutive_intervals": 20,
+          "sample_interval_s": 0.1,
+          "minimum_observed_span_s": 2.0,
+          "scope": "Nominal controlled merge targets through first stable completion inclusive; danger stops excluded from this criterion",
+          "introduced": "2026-11-06 before entry-probe-03; original relative slowdown and trip/time bounds remain separately reported"
+        },
+        "merge_drawdown_vs_frozen_actor": {
+          "status": "incomplete",
+          "maximum_additional_loss_m_s": 0.1,
+          "matched": true,
+          "comparisons": [
+            {
+              "vehicle_id": "agent_0",
+              "candidate": {
+                "coverage_complete": true,
+                "requested_start_s": 0.7999999999999998,
+                "requested_end_s": 22.7,
+                "available_start_s": 0.8,
+                "available_end_s": 22.7,
+                "samples": 220,
+                "nonconsecutive_gaps": 0,
+                "entry_time_s": 5.8,
+                "settled_completion_time_s": 14.7,
+                "legal_limit_changes": [
+                  {
+                    "time_s": 5.8,
+                    "before_m_s": 13.41,
+                    "after_m_s": 18.0
+                  }
+                ],
+                "interpretation": "Observed slowdown, not a causal claim; incomplete windows retain available trajectory",
+                "observed_loss_m_s": 0.9537934839725493,
+                "fraction_of_preceding_peak": 0.1360808760170579,
+                "peak_time_s": 0.8,
+                "trough_time_s": 5.2,
+                "slowdown_interval": {
+                  "samples": 44,
+                  "reference_braking_samples": 44,
+                  "unknown_reference_samples": 0,
+                  "falling_legal_limit": false
+                }
+              },
+              "frozen_actor": {
+                "coverage_complete": false,
+                "requested_start_s": 6.0,
+                "requested_end_s": 83.5,
+                "available_start_s": 6.0,
+                "available_end_s": 80.1,
+                "samples": 742,
+                "nonconsecutive_gaps": 0,
+                "entry_time_s": 11.0,
+                "settled_completion_time_s": 75.5,
+                "legal_limit_changes": [
+                  {
+                    "time_s": 11.0,
+                    "before_m_s": 13.41,
+                    "after_m_s": 18.0
+                  }
+                ],
+                "interpretation": "Observed slowdown, not a causal claim; incomplete windows retain available trajectory",
+                "observed_loss_m_s": 16.861424818547864,
+                "fraction_of_preceding_peak": 1.0,
+                "peak_time_s": 56.3,
+                "trough_time_s": 72.9,
+                "slowdown_interval": {
+                  "samples": 166,
+                  "reference_braking_samples": 142,
+                  "unknown_reference_samples": 0,
+                  "falling_legal_limit": false
+                }
+              },
+              "observed_bound_pass": true,
+              "complete_available_coverage": false,
+              "candidate_coverage": {
+                "usable": true,
+                "boundary_censored": false,
+                "full_requested_window_complete": true,
+                "explanation": "Pre-reset history does not exist; use every available measured approach sample through completion+8s, retain left censoring explicitly"
+              },
+              "frozen_actor_coverage": {
+                "usable": false,
+                "boundary_censored": false,
+                "full_requested_window_complete": false,
+                "explanation": "Pre-reset history does not exist; use every available measured approach sample through completion+8s, retain left censoring explicitly"
+              }
+            }
+          ],
+          "explanation": "Compare complete available measured approach; flag nonexistent pre-reset history as boundary censoring, never fill it with zeros"
+        }
+      },
+      "candidate_path": "outputs/highway-smooth-control/v02/matrix-02/merge/smooth",
+      "teacher_path": "outputs/highway-smooth-control/v02/matrix-01/merge/teacher",
+      "frozen_actor_path": "outputs/highway-smooth-control/v02/matrix-01/merge/frozen-v05",
+      "metrics": {
+        "interventions": 14,
+        "decisions": 6400,
+        "intervention_fraction": 0.0021875,
+        "completed_trips": 0,
+        "requested_trips": 36,
+        "mean_boundary_time_s": 57.558388888888885,
+        "passes": 0,
+        "stable_merges": 1,
+        "controlled_jerk": {
+          "requested": {
+            "samples": 6392,
+            "eligible_samples": 6400,
+            "missing_samples": 8,
+            "mean_abs": 0.06397977208506517,
+            "rms": 0.293619014914781,
+            "p95_abs": 0.2896050363779068,
+            "peak_abs": 8.068095706403255
+          },
+          "filtered": {
+            "samples": 6392,
+            "eligible_samples": 6400,
+            "missing_samples": 8,
+            "mean_abs": 0.06397977208506517,
+            "rms": 0.293619014914781,
+            "p95_abs": 0.2896050363779068,
+            "peak_abs": 8.068095706403255
+          },
+          "realized": {
+            "samples": 6400,
+            "eligible_samples": 6400,
+            "missing_samples": 0,
+            "mean_abs": 0.06772450699750981,
+            "rms": 0.32021681551267517,
+            "p95_abs": 0.2973323384040675,
+            "peak_abs": 10.739123966786579
+          }
+        },
+        "background_jerk": {
+          "requested": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "filtered": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "realized": {
+            "samples": 14276,
+            "eligible_samples": 14296,
+            "missing_samples": 20,
+            "mean_abs": 0.2117945754386501,
+            "rms": 2.385494916691415,
+            "p95_abs": 0.28385308590959113,
+            "peak_abs": 87.33986769781038
+          }
+        }
+      },
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 10.739123966786579,
+        "controlled_measured_intervals": 6400,
+        "controlled_startup_peak_abs_jerk_m_s3": 2.000000104308164,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.7336252978150455,
+            "startup_jerk_m_s3": -1.9999996572733103,
+            "nominal_merge_stop": {
+              "coverage_complete": true,
+              "longest_consecutive_stop_s": 0.0,
+              "threshold_speed_m_s": 0.1,
+              "start_time_s": null,
+              "end_time_s": null,
+              "stable_completion_time_s": 22.7,
+              "observed_start_time_s": 0.1,
+              "observed_end_time_s": 22.7,
+              "measured_samples": 227,
+              "nonconsecutive_gaps": 0,
+              "duration_definition": "Elapsed span between consecutive measured speed<0.1 samples, including reset; first/arrival duration is not invented"
+            }
+          },
+          "agent_1": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_2": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_3": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_4": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_5": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 10.739123966786579,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_6": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_7": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          }
+        },
+        "stopped_intervals": [
+          {
+            "vehicle_id": "inflow_13",
+            "controlled": false,
+            "start_s": 70.8,
+            "last_sample_s": 71.6,
+            "sampled_duration_s": 0.9,
+            "observed_span_s": 0.7999999999999972,
+            "at_least_two_seconds": false,
+            "lane_id": "mlk_on_0"
+          },
+          {
+            "vehicle_id": "inflow_13",
+            "controlled": false,
+            "start_s": 72.1,
+            "last_sample_s": 80.1,
+            "sampled_duration_s": 8.1,
+            "observed_span_s": 8.0,
+            "at_least_two_seconds": true,
+            "lane_id": "mlk_on_0"
+          }
+        ],
+        "stopped_intervals_at_least_two_seconds": 1,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+        "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98"
+      },
+      "input_sha256": {
+        "evaluation.json": "ccd89aad5e8b2fe1e7614af7a90a25da0d060ade9dd0309498bf37a2885f440f",
+        "manifest.json": "79b365886c6b483eb02092f609072e08861a5d5fe3cd22acef66163bec8294d4",
+        "recording-check.json": "309086156e85f6da6a56c90a10cf10305028761f150eda3d8b192c6604c58ec6",
+        "recording.json": "43bd91c14bdaa96dc52b4f47bde54e870bbe20b6ad8bbf5a05a0dec35a7384a3"
+      }
+    },
+    "dense-following": {
+      "status": "passed_measured_subset",
+      "gates": {
+        "integrity": {
+          "status": "passed",
+          "failures": []
+        },
+        "unchanged_v05_safety_and_task": {
+          "status": "passed",
+          "unchanged_v05_result": {
+            "cases": 1,
+            "failures": [],
+            "all_gates_passed": true,
+            "pooled_intervention_fraction": 0.00125,
+            "worst_intervention_fraction": 0.00125,
+            "merges": 0,
+            "stable_merges": 0,
+            "passes": 0,
+            "held_out_test_run": false,
+            "acceptance_status": "development validation only; no held-out promotion"
+          }
+        },
+        "nominal_controlled_peak_jerk": {
+          "status": "passed",
+          "measured_m_s3": 3.690363847586653,
+          "maximum_m_s3": 5.0,
+          "startup_included": true,
+          "measured_intervals": 6400
+        },
+        "completed_trips_vs_teacher": {
+          "status": "passed",
+          "candidate": 0,
+          "baseline": 0,
+          "matched": true
+        },
+        "boundary_time_vs_teacher": {
+          "status": "passed",
+          "candidate_mean_s": 54.66604761904761,
+          "teacher_mean_s": 54.66604761904761,
+          "maximum_ratio": 1.05,
+          "matched": true,
+          "unfinished_trips_included": true
+        }
+      },
+      "candidate_path": "outputs/highway-smooth-control/v02/matrix-02/dense-following/smooth",
+      "teacher_path": "outputs/highway-smooth-control/v02/matrix-01/dense-following/teacher",
+      "frozen_actor_path": "outputs/highway-smooth-control/v02/matrix-01/dense-following/frozen-v05",
+      "metrics": {
+        "interventions": 8,
+        "decisions": 6400,
+        "intervention_fraction": 0.00125,
+        "completed_trips": 0,
+        "requested_trips": 63,
+        "mean_boundary_time_s": 54.66604761904761,
+        "passes": 0,
+        "stable_merges": 0,
+        "controlled_jerk": {
+          "requested": {
+            "samples": 6392,
+            "eligible_samples": 6400,
+            "missing_samples": 8,
+            "mean_abs": 0.07704362010662542,
+            "rms": 0.2652344395111989,
+            "p95_abs": 0.329918104223907,
+            "peak_abs": 3.6903641000390053
+          },
+          "filtered": {
+            "samples": 6392,
+            "eligible_samples": 6400,
+            "missing_samples": 8,
+            "mean_abs": 0.07704362010662542,
+            "rms": 0.2652344395111989,
+            "p95_abs": 0.329918104223907,
+            "peak_abs": 3.6903641000390053
+          },
+          "realized": {
+            "samples": 6400,
+            "eligible_samples": 6400,
+            "missing_samples": 0,
+            "mean_abs": 0.07944731654410428,
+            "rms": 0.2743644666584872,
+            "p95_abs": 0.3393247913502678,
+            "peak_abs": 3.690363847586653
+          }
+        },
+        "background_jerk": {
+          "requested": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "filtered": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "realized": {
+            "samples": 27958,
+            "eligible_samples": 27997,
+            "missing_samples": 39,
+            "mean_abs": 0.4358333685536553,
+            "rms": 3.528280181466735,
+            "p95_abs": 0.3059795054210562,
+            "peak_abs": 60.77110280554354
+          }
+        }
+      },
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 3.690363847586653,
+        "controlled_measured_intervals": 6400,
+        "controlled_startup_peak_abs_jerk_m_s3": 2.000000104308164,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_1": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_2": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.000000849366401,
+            "startup_jerk_m_s3": 2.0000001043079862
+          },
+          "agent_3": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000001043079862,
+            "startup_jerk_m_s3": 2.0000001043079862
+          },
+          "agent_4": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 3.690363847586653,
+            "startup_jerk_m_s3": 2.0000001043079862
+          },
+          "agent_5": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.0000001043079862,
+            "startup_jerk_m_s3": 2.0000001043079862
+          },
+          "agent_6": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.000000849366401,
+            "startup_jerk_m_s3": 2.0000001043079862
+          },
+          "agent_7": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 2.000000849366401,
+            "startup_jerk_m_s3": 2.0000001043079862
+          }
+        },
+        "stopped_intervals": [
+          {
+            "vehicle_id": "agent_4",
+            "controlled": true,
+            "start_s": 60.6,
+            "last_sample_s": 63.7,
+            "sampled_duration_s": 3.2,
+            "observed_span_s": 3.1000000000000014,
+            "at_least_two_seconds": true,
+            "lane_id": "sb3_0"
+          },
+          {
+            "vehicle_id": "agent_7",
+            "controlled": true,
+            "start_s": 77.9,
+            "last_sample_s": 80.1,
+            "sampled_duration_s": 2.3000000000000003,
+            "observed_span_s": 2.1999999999999886,
+            "at_least_two_seconds": true,
+            "lane_id": "sb3_0"
+          }
+        ],
+        "stopped_intervals_at_least_two_seconds": 2,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+        "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98"
+      },
+      "input_sha256": {
+        "evaluation.json": "1c7ec245157520ca3c6a1921cddf4fcd3d6d7aab4e16c623741d43b169c85997",
+        "manifest.json": "372aa256f9deebb38c817f78c2ffaf94c460eddffbb58f23395f16d264f1f59e",
+        "recording-check.json": "2a38dd07ec47d20cf0ad9bf6d92910eb99d9bd6f58b8a460818301141c0c42ce",
+        "recording.json": "52a5747f2169e2fcf6ca4903278895d80ad565f4dbcb803d5e378e57b74ecdbf"
+      }
+    },
+    "i110-merge": {
+      "status": "passed_measured_subset",
+      "gates": {
+        "integrity": {
+          "status": "passed",
+          "failures": []
+        },
+        "unchanged_v05_safety_and_task": {
+          "status": "passed",
+          "unchanged_v05_result": {
+            "cases": 1,
+            "failures": [],
+            "all_gates_passed": true,
+            "pooled_intervention_fraction": 0.0,
+            "worst_intervention_fraction": 0.0,
+            "merges": 1,
+            "stable_merges": 1,
+            "passes": 0,
+            "held_out_test_run": false,
+            "acceptance_status": "development validation only; no held-out promotion"
+          }
+        },
+        "nominal_controlled_peak_jerk": {
+          "status": "passed",
+          "measured_m_s3": 2.000000849366401,
+          "maximum_m_s3": 5.0,
+          "startup_included": true,
+          "measured_intervals": 3175
+        },
+        "completed_trips_vs_teacher": {
+          "status": "passed",
+          "candidate": 33,
+          "baseline": 33,
+          "matched": true
+        },
+        "boundary_time_vs_teacher": {
+          "status": "passed",
+          "candidate_mean_s": 34.23743636363636,
+          "teacher_mean_s": 33.93198181818182,
+          "maximum_ratio": 1.05,
+          "matched": true,
+          "unfinished_trips_included": true
+        },
+        "nominal_continuous_merge": {
+          "status": "passed",
+          "target_ids": [
+            "agent_0"
+          ],
+          "failed_intervals": [],
+          "per_target": {
+            "agent_0": {
+              "coverage_complete": true,
+              "longest_consecutive_stop_s": 0.0,
+              "threshold_speed_m_s": 0.1,
+              "start_time_s": null,
+              "end_time_s": null,
+              "stable_completion_time_s": 28.0,
+              "observed_start_time_s": 0.1,
+              "observed_end_time_s": 28.0,
+              "measured_samples": 280,
+              "nonconsecutive_gaps": 0,
+              "duration_definition": "Elapsed span between consecutive measured speed<0.1 samples, including reset; first/arrival duration is not invented"
+            }
+          },
+          "threshold_m_s": 0.1,
+          "minimum_consecutive_intervals": 20,
+          "sample_interval_s": 0.1,
+          "minimum_observed_span_s": 2.0,
+          "scope": "Nominal controlled merge targets through first stable completion inclusive; danger stops excluded from this criterion",
+          "introduced": "2026-11-06 before entry-probe-03; original relative slowdown and trip/time bounds remain separately reported"
+        },
+        "merge_drawdown_vs_frozen_actor": {
+          "status": "passed",
+          "maximum_additional_loss_m_s": 0.1,
+          "matched": true,
+          "comparisons": [
+            {
+              "vehicle_id": "agent_0",
+              "candidate": {
+                "coverage_complete": true,
+                "requested_start_s": 0.5999999999999996,
+                "requested_end_s": 28.0,
+                "available_start_s": 0.6,
+                "available_end_s": 28.0,
+                "samples": 275,
+                "nonconsecutive_gaps": 0,
+                "entry_time_s": 5.6,
+                "settled_completion_time_s": 20.0,
+                "legal_limit_changes": [
+                  {
+                    "time_s": 5.6,
+                    "before_m_s": 13.41,
+                    "after_m_s": 18.0
+                  }
+                ],
+                "interpretation": "Observed slowdown, not a causal claim; incomplete windows retain available trajectory",
+                "observed_loss_m_s": 2.3703310810029503,
+                "fraction_of_preceding_peak": 0.28266736842578954,
+                "peak_time_s": 0.6,
+                "trough_time_s": 5.0,
+                "slowdown_interval": {
+                  "samples": 44,
+                  "reference_braking_samples": 44,
+                  "unknown_reference_samples": 0,
+                  "falling_legal_limit": false
+                }
+              },
+              "frozen_actor": {
+                "coverage_complete": false,
+                "requested_start_s": -0.7000000000000002,
+                "requested_end_s": 43.9,
+                "available_start_s": 0.1,
+                "available_end_s": 43.9,
+                "samples": 439,
+                "nonconsecutive_gaps": 0,
+                "entry_time_s": 4.3,
+                "settled_completion_time_s": 35.9,
+                "legal_limit_changes": [
+                  {
+                    "time_s": 4.3,
+                    "before_m_s": 13.41,
+                    "after_m_s": 18.0
+                  }
+                ],
+                "interpretation": "Observed slowdown, not a causal claim; incomplete windows retain available trajectory",
+                "observed_loss_m_s": 17.929373434312552,
+                "fraction_of_preceding_peak": 1.0,
+                "peak_time_s": 14.3,
+                "trough_time_s": 30.1,
+                "slowdown_interval": {
+                  "samples": 158,
+                  "reference_braking_samples": 59,
+                  "unknown_reference_samples": 0,
+                  "falling_legal_limit": false
+                }
+              },
+              "observed_bound_pass": true,
+              "complete_available_coverage": true,
+              "candidate_coverage": {
+                "usable": true,
+                "boundary_censored": false,
+                "full_requested_window_complete": true,
+                "explanation": "Pre-reset history does not exist; use every available measured approach sample through completion+8s, retain left censoring explicitly"
+              },
+              "frozen_actor_coverage": {
+                "usable": true,
+                "boundary_censored": true,
+                "full_requested_window_complete": false,
+                "explanation": "Pre-reset history does not exist; use every available measured approach sample through completion+8s, retain left censoring explicitly"
+              }
+            }
+          ],
+          "explanation": "Compare complete available measured approach; flag nonexistent pre-reset history as boundary censoring, never fill it with zeros"
+        }
+      },
+      "candidate_path": "outputs/highway-smooth-control/v02/matrix-02/i110-merge/smooth",
+      "teacher_path": "outputs/highway-smooth-control/v02/matrix-01/i110-merge/teacher",
+      "frozen_actor_path": "outputs/highway-smooth-control/v02/matrix-01/i110-merge/frozen-v05",
+      "metrics": {
+        "interventions": 0,
+        "decisions": 3183,
+        "intervention_fraction": 0.0,
+        "completed_trips": 33,
+        "requested_trips": 55,
+        "mean_boundary_time_s": 34.23743636363636,
+        "passes": 0,
+        "stable_merges": 1,
+        "controlled_jerk": {
+          "requested": {
+            "samples": 3175,
+            "eligible_samples": 3183,
+            "missing_samples": 8,
+            "mean_abs": 0.09533001149263907,
+            "rms": 0.33441694306102737,
+            "p95_abs": 0.42162419855594613,
+            "peak_abs": 2.000000849366188
+          },
+          "filtered": {
+            "samples": 3175,
+            "eligible_samples": 3183,
+            "missing_samples": 8,
+            "mean_abs": 0.09533001149263907,
+            "rms": 0.33441694306102737,
+            "p95_abs": 0.42162419855594613,
+            "peak_abs": 2.000000849366188
+          },
+          "realized": {
+            "samples": 3175,
+            "eligible_samples": 3175,
+            "missing_samples": 0,
+            "mean_abs": 0.10033325420263788,
+            "rms": 0.3491592810682005,
+            "p95_abs": 0.44666536152364594,
+            "peak_abs": 2.000000849366401
+          }
+        },
+        "background_jerk": {
+          "requested": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "filtered": {
+            "samples": 0,
+            "eligible_samples": 0,
+            "missing_samples": 0,
+            "mean_abs": null,
+            "rms": null,
+            "p95_abs": null,
+            "peak_abs": null
+          },
+          "realized": {
+            "samples": 15550,
+            "eligible_samples": 15589,
+            "missing_samples": 39,
+            "mean_abs": 0.3684159016672801,
+            "rms": 2.1566677773443974,
+            "p95_abs": 0.942910612111003,
+            "peak_abs": 47.48151343924505
+          }
+        }
+      },
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 2.000000849366401,
+        "controlled_measured_intervals": 3175,
+        "controlled_startup_peak_abs_jerk_m_s3": 2.000000104308164,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 427,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": -1.9999996572732215,
+            "nominal_merge_stop": {
+              "coverage_complete": true,
+              "longest_consecutive_stop_s": 0.0,
+              "threshold_speed_m_s": 0.1,
+              "start_time_s": null,
+              "end_time_s": null,
+              "stable_completion_time_s": 28.0,
+              "observed_start_time_s": 0.1,
+              "observed_end_time_s": 28.0,
+              "measured_samples": 280,
+              "nonconsecutive_gaps": 0,
+              "duration_definition": "Elapsed span between consecutive measured speed<0.1 samples, including reset; first/arrival duration is not invented"
+            }
+          },
+          "agent_1": {
+            "measured_intervals": 373,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_2": {
+            "measured_intervals": 375,
+            "peak_abs_jerk_m_s3": 2.000000104308164,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_3": {
+            "measured_intervals": 365,
+            "peak_abs_jerk_m_s3": 2.000000104308164,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_4": {
+            "measured_intervals": 498,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_5": {
+            "measured_intervals": 347,
+            "peak_abs_jerk_m_s3": 2.000000849366401,
+            "startup_jerk_m_s3": 2.0000001043079862
+          },
+          "agent_6": {
+            "measured_intervals": 390,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          },
+          "agent_7": {
+            "measured_intervals": 400,
+            "peak_abs_jerk_m_s3": 2.0000008493662236,
+            "startup_jerk_m_s3": 2.000000104308164
+          }
+        },
+        "stopped_intervals": [],
+        "stopped_intervals_at_least_two_seconds": 0,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "source_sha256": {
+        "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+        "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+        "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+        "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+        "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+        "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+        "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+        "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+        "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+        "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+        "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+        "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+        "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+        "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+        "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+        "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+        "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+        "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+        "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+        "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+        "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+        "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+        "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+        "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+        "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+        "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+        "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+        "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+        "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+        "scripts/prepare_highway_smooth_control.py": "d723ada2d54e42ddcb6d5e2dbbc6af00503809588b1497abfb2d4f449c4f811d",
+        "environments/highway_smooth_control.py": "71032477bebd92bfee52c370b6c54ce642ba1454e73b7892bec3e22bff2ba9cb",
+        "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+        "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98"
+      },
+      "input_sha256": {
+        "evaluation.json": "048dbf2c3d2968fb678bbfc306955cb21baabe2e062ae18ad0760475ee3daac3",
+        "manifest.json": "50c2fbc3fa91c0b854a014b2dee2ab99b57baf7b57f7921e5a02e40c27b2e900",
+        "recording-check.json": "380300eaef8294e78d634ba70f361d6da9829bc1350bfad852da75823c6d3b21",
+        "recording.json": "9015202476e942f2eb03ce91b0a691886a842f957fc9ae9ddba9b868574be8dd"
+      }
+    }
+  },
+  "native_baseline_context": {
+    "cruise": {
+      "path": "outputs/highway-smooth-control/v02/matrix-01/cruise/native",
+      "input_sha256": {
+        "evaluation.json": "8f515fb5e49925a6db7d5666c6d09217efe1daad38e2cb1db4beaea435fcbe7d",
+        "manifest.json": "b23abc8a54f0cef9bc5ce68c19522fc1609706b24ffcec0269b6968482be3f11",
+        "recording-check.json": "c1161dc8d617c02a180b6bd8015889575b5617dc5680ba2d0eb7f5fd242a9c39",
+        "recording.json": "ba90fa4481d2ccb1b32c33514516739386e08afd674b14f495ca9092457ae30c"
+      },
+      "integrity_failures": [],
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 64.99999999999986,
+        "controlled_measured_intervals": 6400,
+        "controlled_startup_peak_abs_jerk_m_s3": 19.99999999999993,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 64.99999999999986,
+            "startup_jerk_m_s3": 12.404279722311884
+          },
+          "agent_1": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 27.370432314867088,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_2": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 19.99999999999993,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_3": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 53.6971076729273,
+            "startup_jerk_m_s3": 13.466181922818876
+          },
+          "agent_4": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 18.48032728406661,
+            "startup_jerk_m_s3": 18.48032728406661
+          },
+          "agent_5": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 64.99999999999986,
+            "startup_jerk_m_s3": 13.732172583435265
+          },
+          "agent_6": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 19.99999999999993,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_7": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 25.291286641920863,
+            "startup_jerk_m_s3": 13.393372765569644
+          }
+        },
+        "stopped_intervals": [],
+        "stopped_intervals_at_least_two_seconds": 0,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "role": "Native baseline context only; never accepted as a learned-controller result"
+    },
+    "following": {
+      "path": "outputs/highway-smooth-control/v02/matrix-01/following/native",
+      "input_sha256": {
+        "evaluation.json": "e64b68a924832a5088926b111a1ae64f11cd11bfd9ae540c5381e384e60c3d51",
+        "manifest.json": "8eb79930c0a7fa60fa644ec02f3682fa753ab7eb5f3d80787f89384129d425cb",
+        "recording-check.json": "20cf6919b3e3801152d2016fa424ba6d43cbc8053e62081e2b8a0eee9053bb57",
+        "recording.json": "d3e4218b17d0375576ad38f6155d0ddd8d16886bba3055ce905ee79ad28197e9"
+      },
+      "integrity_failures": [],
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 55.481260828977064,
+        "controlled_measured_intervals": 6400,
+        "controlled_startup_peak_abs_jerk_m_s3": 19.99999999999993,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 19.99999999999993,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_1": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 13.13999678441089,
+            "startup_jerk_m_s3": 13.13999678441089
+          },
+          "agent_2": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 27.31889922091817,
+            "startup_jerk_m_s3": 14.42570767578335
+          },
+          "agent_3": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 18.784467000509153,
+            "startup_jerk_m_s3": 14.284683348047444
+          },
+          "agent_4": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 13.678093577131278,
+            "startup_jerk_m_s3": 13.678093577131278
+          },
+          "agent_5": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 55.481260828977064,
+            "startup_jerk_m_s3": 14.71720611675238
+          },
+          "agent_6": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 43.81505122149214,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_7": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 19.99999999999993,
+            "startup_jerk_m_s3": 19.99999999999993
+          }
+        },
+        "stopped_intervals": [],
+        "stopped_intervals_at_least_two_seconds": 0,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "role": "Native baseline context only; never accepted as a learned-controller result"
+    },
+    "passing": {
+      "path": "outputs/highway-smooth-control/v02/matrix-01/passing/native",
+      "input_sha256": {
+        "evaluation.json": "57d8aea2786c9d077dfa96dee65ad247e521b068bdc2e4f90d3fab38485877f3",
+        "manifest.json": "d6c8808f57d4120213c77b35ededd7e7b171ad93d97eac6b664d123cb50f9b79",
+        "recording-check.json": "153e7cdb9916eaec61f07a4233b004bbbd090756b8749716aea25be2e11b6ddf",
+        "recording.json": "123a7547107eed6e4289d1f7fa18601a51153ca9333e9a571089e19a2ec407ad"
+      },
+      "integrity_failures": [],
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 64.99999999999986,
+        "controlled_measured_intervals": 6400,
+        "controlled_startup_peak_abs_jerk_m_s3": 19.99999999999993,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 48.21163206623602,
+            "startup_jerk_m_s3": 15.667599940187316
+          },
+          "agent_1": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 64.67130542934356,
+            "startup_jerk_m_s3": 15.918332022449277
+          },
+          "agent_2": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 19.99999999999993,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_3": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 64.99999999999986,
+            "startup_jerk_m_s3": 14.484692849785397
+          },
+          "agent_4": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 15.252629317013344,
+            "startup_jerk_m_s3": 14.165556057625572
+          },
+          "agent_5": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 16.396414427440575,
+            "startup_jerk_m_s3": 14.576945419729803
+          },
+          "agent_6": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 14.476523469453006,
+            "startup_jerk_m_s3": 14.476523469453006
+          },
+          "agent_7": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 64.99999999999986,
+            "startup_jerk_m_s3": 19.99999999999993
+          }
+        },
+        "stopped_intervals": [],
+        "stopped_intervals_at_least_two_seconds": 0,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "role": "Native baseline context only; never accepted as a learned-controller result"
+    },
+    "merge": {
+      "path": "outputs/highway-smooth-control/v02/matrix-01/merge/native",
+      "input_sha256": {
+        "evaluation.json": "c73de96696572adec1dc06afff9c04a3c847f7ed1b12654fd041af5d214d1614",
+        "manifest.json": "e582d9e770fb6f2a6f6c43f4491140e64809e236ebff300a8870a74cf059b0dc",
+        "recording-check.json": "7d660f86a54f8f77d7697662008a38d7ad95db687c7008147c980f642bfa48e2",
+        "recording.json": "82884faae7b3461adf68113d4b4c96fb2addfd7ccbd34a73ee4371ac833df2cc"
+      },
+      "integrity_failures": [],
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 64.99999999999959,
+        "controlled_measured_intervals": 6400,
+        "controlled_startup_peak_abs_jerk_m_s3": 20.000000000000018,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 64.99999999999959,
+            "startup_jerk_m_s3": 20.000000000000018,
+            "nominal_merge_stop": {
+              "coverage_complete": true,
+              "longest_consecutive_stop_s": 0.0,
+              "threshold_speed_m_s": 0.1,
+              "start_time_s": null,
+              "end_time_s": null,
+              "stable_completion_time_s": 32.8,
+              "observed_start_time_s": 0.1,
+              "observed_end_time_s": 32.8,
+              "measured_samples": 328,
+              "nonconsecutive_gaps": 0,
+              "duration_definition": "Elapsed span between consecutive measured speed<0.1 samples, including reset; first/arrival duration is not invented"
+            }
+          },
+          "agent_1": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 53.09135083615608,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_2": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 19.99999999999993,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_3": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 19.99999999999993,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_4": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 19.99999999999993,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_5": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 51.96033356002587,
+            "startup_jerk_m_s3": 17.344052833043122
+          },
+          "agent_6": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 19.99999999999993,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_7": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 18.48588028914957,
+            "startup_jerk_m_s3": 18.48588028914957
+          }
+        },
+        "stopped_intervals": [],
+        "stopped_intervals_at_least_two_seconds": 0,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "role": "Native baseline context only; never accepted as a learned-controller result"
+    },
+    "dense-following": {
+      "path": "outputs/highway-smooth-control/v02/matrix-01/dense-following/native",
+      "input_sha256": {
+        "evaluation.json": "3fe84223012b220d2aae2ed24bf6d1de81af3d1143a7a8de09b873ab6e5a642d",
+        "manifest.json": "c81b0ce39406663653d478b21b227d19459baa74ae852ef309624b52063e555b",
+        "recording-check.json": "65d3e2640088fc6c672be57c32bc4a2a29be594483a92e99e68cb1407248669e",
+        "recording.json": "0131ae58b71acc1119df844a4f8d0a3c02ffbba25ff8a0e6231bc6526efdb732"
+      },
+      "integrity_failures": [],
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 64.99999999999986,
+        "controlled_measured_intervals": 6400,
+        "controlled_startup_peak_abs_jerk_m_s3": 19.99999999999993,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 13.690680683462908,
+            "startup_jerk_m_s3": 13.690680683462908
+          },
+          "agent_1": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 29.948022931147733,
+            "startup_jerk_m_s3": 19.99999999999993
+          },
+          "agent_2": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 6.83383581350121,
+            "startup_jerk_m_s3": 6.83383581350121
+          },
+          "agent_3": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 3.7024630331057296,
+            "startup_jerk_m_s3": 3.7024630331057296
+          },
+          "agent_4": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 59.75233325238314,
+            "startup_jerk_m_s3": 11.75518657154484
+          },
+          "agent_5": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 64.99999999999986,
+            "startup_jerk_m_s3": 2.3529685479175555
+          },
+          "agent_6": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 6.505683240960991,
+            "startup_jerk_m_s3": 6.505683240960991
+          },
+          "agent_7": {
+            "measured_intervals": 800,
+            "peak_abs_jerk_m_s3": 42.80988949867428,
+            "startup_jerk_m_s3": 5.760000000000076
+          }
+        },
+        "stopped_intervals": [],
+        "stopped_intervals_at_least_two_seconds": 0,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "role": "Native baseline context only; never accepted as a learned-controller result"
+    },
+    "i110-merge": {
+      "path": "outputs/highway-smooth-control/v02/matrix-01/i110-merge/native",
+      "input_sha256": {
+        "evaluation.json": "8aa666e6f3ea1d9e9f1d4a38ede9c8f14b5a59039455753c0c30daa014bba9cd",
+        "manifest.json": "6d54c845b54f03d93a6964d21857c1c5092bec705084c9e98d2cc21cb374c358",
+        "recording-check.json": "634199d503b3f52aa19e823b3e2d521acc6634573786e23c6c383b464a3a0fee",
+        "recording.json": "6d7af49f157aa2a9f8165528b073ace7c8df1a65532684109971d4cdf56d4c0d"
+      },
+      "integrity_failures": [],
+      "recording_audit": {
+        "controlled_peak_abs_jerk_m_s3": 65.00000000000136,
+        "controlled_measured_intervals": 3070,
+        "controlled_startup_peak_abs_jerk_m_s3": 19.99999999999993,
+        "reported_controlled_jerk_agrees": true,
+        "per_controlled_car": {
+          "agent_0": {
+            "measured_intervals": 371,
+            "peak_abs_jerk_m_s3": 65.00000000000136,
+            "startup_jerk_m_s3": 19.99999999999993,
+            "nominal_merge_stop": {
+              "coverage_complete": true,
+              "longest_consecutive_stop_s": 0.0,
+              "threshold_speed_m_s": 0.1,
+              "start_time_s": null,
+              "end_time_s": null,
+              "stable_completion_time_s": 23.2,
+              "observed_start_time_s": 0.1,
+              "observed_end_time_s": 23.2,
+              "measured_samples": 232,
+              "nonconsecutive_gaps": 0,
+              "duration_definition": "Elapsed span between consecutive measured speed<0.1 samples, including reset; first/arrival duration is not invented"
+            }
+          },
+          "agent_1": {
+            "measured_intervals": 379,
+            "peak_abs_jerk_m_s3": 52.02608655207399,
+            "startup_jerk_m_s3": 10.198480042563673
+          },
+          "agent_2": {
+            "measured_intervals": 375,
+            "peak_abs_jerk_m_s3": 19.59517123968162,
+            "startup_jerk_m_s3": 2.9339413512339263
+          },
+          "agent_3": {
+            "measured_intervals": 363,
+            "peak_abs_jerk_m_s3": 20.31325285396761,
+            "startup_jerk_m_s3": 2.3927077006380415
+          },
+          "agent_4": {
+            "measured_intervals": 436,
+            "peak_abs_jerk_m_s3": 18.951224108327835,
+            "startup_jerk_m_s3": 16.054503551513655
+          },
+          "agent_5": {
+            "measured_intervals": 359,
+            "peak_abs_jerk_m_s3": 23.332576677874783,
+            "startup_jerk_m_s3": 7.246227778663794
+          },
+          "agent_6": {
+            "measured_intervals": 387,
+            "peak_abs_jerk_m_s3": 4.8833246315638235,
+            "startup_jerk_m_s3": 4.8833246315638235
+          },
+          "agent_7": {
+            "measured_intervals": 400,
+            "peak_abs_jerk_m_s3": 28.45274964343858,
+            "startup_jerk_m_s3": 14.706588298355783
+          }
+        },
+        "stopped_intervals": [],
+        "stopped_intervals_at_least_two_seconds": 0,
+        "stop_duration_definition": "Sampled exposure is N*0.1; observed span is last-minus-first consecutive measured low-speed timestamps. The nominal stop gate uses observed span, with no inferred first/arrival interval."
+      },
+      "role": "Native baseline context only; never accepted as a learned-controller result"
+    }
+  },
+  "helper_source_sha256": "fcf635ad394db11b925442da829e3ab4d9c6fa48c0c48da8fd84b5b7ec58426a",
+  "recomputed_metrics_source_sha256": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98",
+  "original_acceptance_source_sha256": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48"
+}

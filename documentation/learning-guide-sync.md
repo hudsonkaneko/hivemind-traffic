@@ -603,3 +603,10 @@ A revision-guarded native write and complete readback preserved all 42 tabs, the
 Appended the remaining intervention attribution, observed approach slowdown and jerk, train-only teacher comparison, fresh SimReady replay, disabled proposed weights/budget and approval gates to tab 41. The start-tab mirror link follows `codex/highway-smooth-control-v01`.
 
 Revision-guarded native editing and full readback preserved all 42 tabs, the historical target prefix and 40 unaffected tab bodies. Regeneration and check passed from `outputs/doc-sync/highway-smooth-control-v01/verified-source.json`: 2,621 paragraphs, 14 tables and 182 code blocks. Native page layout was not inspected. Both copies clearly retain the 8.52% failure and no-training status. [Evidence](highway-smooth-control-v01.md); [proposal](highway-smooth-training-plan-v01.md).
+
+
+## November 6, 2026 — Smooth-control preparation v01
+
+Appended implemented reference/reward/trainer behavior, 44 preserved full native runs, retained v4 results, rejected v5, four comfort failures, disabled final configuration, test outcomes and SimReady replay limitations to tab `t.k82ts3ro3qz9`. Updated only the start-tab mirror URL to branch `codex/highway-smooth-preparation-v01`.
+
+Revision-guarded native editing and a full readback preserved all 42 tabs, all 40 unaffected tab bodies and the exact historical target-tab elements. The intended target addition and start-tab URL replacement matched exactly. Regenerated and checked the mirror from `outputs/doc-sync/highway-smooth-preparation-v01/verified-source.json`: 2,630 paragraphs, 14 tables and 182 code blocks. Native page layout was not inspected. Raw source reads remain local. [Results and screenshots](highway-smooth-preparation-v01.md).
