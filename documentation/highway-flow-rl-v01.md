@@ -114,3 +114,38 @@ Next work should diagnose the remaining cruise/passing interventions and measure
 jerk spikes using these journals before another revision. Preserve all safety
 thresholds and distinguish peak/typical comfort and unfinished trips. The two
 planned rounds are complete; no third round was started.
+
+
+## November 8: frozen-policy merge video
+
+Recorded the final round-two TorchScript actor on the same I-110 merge development
+case (seed 6900019, 8 controlled / 16 total cars). The original evaluation had
+no full pose recording. This fresh deterministic replay exactly matches all ten
+compared metrics, including the complete stable-merge report: 21 interventions
+in 3,123 decisions (0.6724%), zero collisions/teleports/speed violations, and
+16 completed trips. Agent 0 enters the through lane at 9.1 s, completes its
+lateral merge at 10.6 s and passes its eight-second stability window.
+
+The local video is `outputs/highway-flow-rl/v01/round-02/replay-01/i110-merge.mp4`:
+25 seconds, 1280x720, 10 fps, normal playback speed, simulation 0.1-25.0 s.
+Americano v14 SimReady is the main car; background cars use lightweight assets.
+Every pose is recorded native SUMO motion. This is kinematic visualization, not
+physical-control validation or sensor capture. Road markings are illustrative.
+The actor remains experimental; this clip does not remove the other failed gates.
+
+Validation: 250 frames encoded and decoded; exact pose placement; static layers
+and prepared source assets unchanged. No training or weight changes.
+[Video provenance and metric comparison](evidence/highway-flow-rl-v01/video.json).
+
+![SimReady main car at merge completion](evidence/highway-flow-rl-v01/merge-video.png)
+
+Reproduce the recording from the project root:
+
+```text
+.venv-traffic/Scripts/python.exe scripts/record_highway_flow_rl.py --config policies/versions/highway-flow-rl-v01/training-config.json --policy policies/versions/highway-flow-rl-v01/policy.pt --reference outputs/highway-flow-rl/v01/round-02/final-validation/03.json --output outputs/highway-flow-rl/v01/round-02/video-recording-new
+```
+
+Use `scripts/render_i110_merge_replay.py` with `--simready-main`,
+`--focal-agent agent_0`, `--camera-mode follow`, `--fps 10`, and the 0.1-25.0 s
+window. Exact render inputs/source/asset hashes are retained locally. Google
+engineering-guide synchronization of this incremental video note remains pending.

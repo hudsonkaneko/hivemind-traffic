@@ -661,3 +661,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ### 2026-11-08 — Teacher-free MAPPO learning and bounded restart completed
 
 [Flow RL v01](highway-flow-rl-v01.md) is the first trained flow117 experimental actor, with native SUMO motion and no teacher losses/alignment reward. Two sequential rounds with terminal review reduce four-case pooled interventions to 7.61%, including a stable I-110 merge at 0.67%; comfort and broader acceptance remain open. Original teacher-assisted qualification failures are preserved. [Actor/contract](../policies/versions/highway-flow-rl-v01/README.md) published without promotion; living roadmap v28 records next actions. No third run, held-out test or physical validation. Guide incremental sync pending.
+
+
+## November 8 - Recorded flow117 SimReady merge replay
+
+[Final pilot video](highway-flow-rl-v01.md#november-8-frozen-policy-merge-video) shows the round-two actor on its matched I-110 development case, with SimReady main car and lightweight traffic. Exact metric reproduction, 25 seconds at normal speed, verified video/poses/assets. Visualization only; no training, sensors, physical validation or acceptance promotion.

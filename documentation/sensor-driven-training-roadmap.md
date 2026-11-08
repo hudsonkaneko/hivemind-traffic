@@ -1,6 +1,6 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v28**, updated **November 8, 2026, America/Los_Angeles**.
+Revision **v29**, updated **November 8, 2026, America/Los_Angeles**.
 Status: **Teacher-free flow117 pilot trained in two bounded rounds; improved but not accepted. Original imitation study remains disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
@@ -522,3 +522,8 @@ Saved [plan v01](mappo-gpudrive-lessons-plan-v01.md), anchored to the current fl
 ### v28 — November 8: revised plan, trained MAPPO, terminal review and restart
 
 User authorized revising and launching training, checking only terminal results, then adjusting/restarting. Implemented a separate teacher-free flow117 environment/runner/contract with no imitation, near-limit teacher auxiliary or teacher-alignment reward; native guards and physical action limits unchanged. The failed reference-assisted study remains intact and disabled. After runtime/migration/finite-gradient/native-mode checks, two rounds collected 59,995 decisions (2,048 critic warmup) with actual I-110 merge PPO exposure. Initial→round1→round2 pooled interventions: 24.94→16.44→7.61%; stable targets 0→0→1 of one. Round2 follows a measured .01→.03 jerk-penalty revision with fresh optimizer; not a causal ablation. Zero evaluation collisions/teleports/overspeed, but three cases fail interventions and all four fail peak comfort. Both runs were left uninspected until completion. New runtime 375.969 s; inherited-plus-new ledger 1,394.654 s. Export/parity and 88 focused tests pass; final actor is published as experimental, not promoted. Last scheduled I-110 cruise row has only four decisions, so complete curriculum coverage is not claimed. [Results and artifacts](highway-flow-rl-v01.md). Guide incremental sync pending.
+
+
+### v29 - November 8: SimReady video of final flow117 pilot
+
+Recorded and rendered the same frozen round-two I-110 merge development case. All ten compared evaluation metrics exactly reproduce, including stable-merge details. The 25-second, normal-speed clip uses the SimReady main car with lightweight backgrounds. Decode, pose and immutable-source checks passed. No new training, sensors or physical validation; acceptance status and next diagnostic action are unchanged. [Video and evidence](highway-flow-rl-v01.md#november-8-frozen-policy-merge-video). Guide incremental sync pending.

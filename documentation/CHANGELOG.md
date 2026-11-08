@@ -1040,3 +1040,8 @@ Saved a staged [transfer plan](mappo-gpudrive-lessons-plan-v01.md) for the prepa
 ## 2026-11-08 — Teacher-free flow117 MAPPO pilot, two completed rounds
 
 Implemented separately versioned training without unqualified teacher rewards/losses, preserving native SUMO safety and the original disabled imitation study. Fixed runtime population validation and independent critic/PPO curriculum cursors. User-authorized learning and terminal-only review collected 59,995 decisions in two rounds; round2 increased jerk penalty after measured failure. Pooled development interventions fell 24.94%→16.44%→7.61%; I-110 merge is 0.67% with one stable target passed. Comfort and three per-case intervention gates still fail; no promotion. [Full evidence](highway-flow-rl-v01.md) and [downloadable experimental actor](../policies/versions/highway-flow-rl-v01/README.md). 88 focused tests, source-bound preflight and exact CPU export parity pass. All failed/runtime costs retained; Google guide incremental sync pending.
+
+
+## 2026-11-08 - Final flow117 merge video
+
+- Added frozen117 recorder and saved a 25-second I-110 replay using the SimReady main car. Same seed and ten compared metrics match the completed evaluation exactly; 250-frame encode/decode and unchanged asset/pose checks pass. No training or promotion. [Evidence](highway-flow-rl-v01.md#november-8-frozen-policy-merge-video). Guide sync pending.
