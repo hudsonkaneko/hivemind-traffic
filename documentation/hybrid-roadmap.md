@@ -554,3 +554,8 @@ The [population pilot](highway-population-training-v01.md) completed 99,999 deci
 ## November 4: population analysis checkpoint
 
 The [AV comparison](policy-baseline-av-comparison.md) restores the phase-0 reference and prioritizes action-interface calibration and objective diagnostics before more learning. Population v02 remains rejected. Follow the living sensor-driven roadmap; no new learning or physical-transfer capability.
+
+
+## November 4: frozen control and loss diagnosis completed
+
+[Steps 1 and 2](population-control-diagnostics-v01.md) now have training-only acceleration calibration, identical-observation loss gradients, retained metrics/plots and independent review. No timing/duration bug was found; ordinary native following saturation, near-limit/merge response gaps, target disagreement and shared clipping need deliberate correction. Twelve historical native lane-end emergencies were missed by sampled counters. Keep the phase-0 parent frozen and Stage 1 unaccepted. Next: target consistency and post-warm-up actor/critic telemetry, followed by a reviewed configuration before any new training. The Google guide and Markdown mirror are synchronized.

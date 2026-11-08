@@ -1,0 +1,71 @@
+{
+  "schema": "population_loss_provenance_supplement_v1",
+  "captured_utc": "2026-11-05T05:22:42.999823+00:00",
+  "capture_timing": "Post-run supplementary audit; original sealed run files were not rewritten",
+  "run": "outputs/population-diagnostics/v01/loss-20261105T051756Z-0530a0b0",
+  "optimizer_updates": 0,
+  "scope_note": "Config equals its content at the sealed run source commit and was not changed during the diagnostic task. Runtime versions were read post-run from the same unchanged environment; they were not recorded contemporaneously inside the original protocol.",
+  "versions": {
+    "python": "3.11.9",
+    "python_executable": "C:\\Users\\hudso\\Documents\\highwaysim\\.venv-traffic\\Scripts\\python.exe",
+    "python_executable_sha256": "21bb438c0d4a6f1f164b9a646f6ee000340185e5871180aec06db8d3f07c0082",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.6",
+    "traci": "1.27.1",
+    "sumo_binary": "C:\\Program Files (x86)\\Eclipse\\Sumo\\bin\\sumo.exe",
+    "sumo_binary_sha256": "8cc770aca4257d2cb821d91c0d346256c72c2983708137bc94789c75d00254b4",
+    "sumo_version": "Eclipse SUMO sumo 1.27.1",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "cuda": null,
+    "execution_device": "cpu"
+  },
+  "git": {
+    "run_source_commit": "6bbe5269ec94b08f57e40b724e142c7e1c4232c2",
+    "current_head": "6bbe5269ec94b08f57e40b724e142c7e1c4232c2",
+    "dirty": true,
+    "status_postrun": " M documentation/CHANGELOG.md\n M documentation/hybrid-roadmap.md\n M documentation/learning-guide-sync.md\n M usd/vehicle_sensor_rig.py\n?? configs/perception/dataset_smoke_v01.json\n?? configs/perception/segmentation_pilot_v01.json\n?? documentation/body-camera-v01.md\n?? documentation/evidence/body-camera-v01/\n?? documentation/evidence/perception-preparation-v01/\n?? documentation/evidence/population-diagnostics-v01/\n?? documentation/evidence/roof-lidar-v01/\n?? documentation/evidence/seven-camera-v01/\n?? documentation/perception-preparation-v01.md\n?? documentation/population-control-diagnostics-v01.md\n?? documentation/roof-lidar-v01.md\n?? documentation/seven-camera-v01.md\n?? environments/endurance_loop_hazard_contract.py\n?? environments/endurance_loop_hazard_lab.py\n?? environments/physical_pair_loop_contract.py\n?? environments/physical_pair_loop_lab.py\n?? experiments/diagnose_population_acceleration.py\n?? experiments/diagnose_population_losses.py\n?? experiments/prepare_perception_dataset.py\n?? experiments/verify_body_cameras.py\n?? experiments/verify_near_field_sensors.py\n?? experiments/verify_roof_lidar.py\n?? experiments/verify_seven_cameras.py\n?? scripts/capture_perception_scene.py\n?? scripts/probe_body_cameras.py\n?? scripts/probe_near_field_sensors.py\n?? scripts/probe_physical_rl_fleet.py\n?? scripts/probe_roof_lidar.py\n?? scripts/probe_seven_cameras.py\n?? scripts/run_physical_pair_loop.py\n?? tests/test_body_camera_rig.py\n?? tests/test_full_perimeter_lidar_rig.py\n?? tests/test_near_field_lidar.py\n?? tests/test_near_field_sensor_rig.py\n?? tests/test_perception_capture_config.py\n?? tests/test_perception_dataset.py\n?? tests/test_perimeter_lidar_rig.py\n?? tests/test_physical_pair_loop.py\n?? tests/test_physical_rl_fleet.py\n?? tests/test_population_acceleration_diagnostics.py\n?? tests/test_population_loss_diagnostics.py\n?? tests/test_roof_lidar_rig.py\n?? tests/test_seven_camera_rig.py\n?? traffic/endurance_road_hazards.py\n?? traffic/perception_dataset.py\n?? ucode.elf\n?? usd/body_camera_rig.py\n?? usd/full_perimeter_lidar_rig.py\n?? usd/near_field_sensor_rig.py\n?? usd/perimeter_lidar_rig.py\n?? usd/roof_lidar_rig.py\n?? usd/seven_camera_rig.py\n",
+    "diff_sha256_postrun": "15557fdbd64526ae7133e4d7e21100676e72f82447314901211091a240ad1b9a",
+    "status_scope": "Post-run working tree, including unrelated existing changes and documentation written after collection; not a reconstruction of exact launch-time status"
+  },
+  "config": {
+    "source_path": "experiments/configs/highway_population_v1.json",
+    "file_sha256": "b55928a3f39b695657606b23da6af6c0cfcb25eae2f41f0a4e7c43f5f90ea42e",
+    "semantic_sha256": "e99060ca8cfee87c6333649f57b61fcef7411d115a5b162a369733b5211d72ef",
+    "matches_run_commit_semantically": true,
+    "resolved_path": "documentation/evidence/population-diagnostics-v01/loss-resolved-config.json",
+    "resolved_sha256": "98b37a0f58a8a4435d1a88fa1909059f85ddaf55837d3a102e3c63a75e4d2fb2"
+  },
+  "source_hashes": {
+    "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+    "environments/highway_stage1_env.py": "c43df31cb5988ebb2faa086323bed24592d7e0c2128208784b91872b8e164f5a",
+    "environments/i110_merge_env.py": "ec343afd7b35920f4fd6056dcd7b4fe7ee2460a31d95f599e24942290336db76",
+    "traffic/highway_merge_context.py": "bbdc04d1cd42418453f8e0f5473729b6290c4b3da68ad92396b2847ced480a4e",
+    "traffic/highway_stage1_teacher.py": "750bbc930c294b0403dfb6841cf123798410e8095397140f90e4ec3ae087c139",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+    "policies/mappo.py": "c71e4e682b8991c6945692852a2adcd2e3c66f78773337b312b34706657b6607",
+    "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+    "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+    "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+    "scripts/build_highway_curriculum_v2.py": "97d80ac2bcd0657eec37a9a863533ad2e51c5c0cdf9fa80c00b1873f71fe0477",
+    "scripts/build_i110_sumo.py": "26ab7e55962f4d6e0422f8d0ef944baf337600af32645fb1d6364f0979c37f70",
+    "experiments/run_highway_population.py": "e777348293259340603e92165d105a00dbb446d09078c0193ef36a9918c241ca",
+    "environments/highway_population_env.py": "437f06a80bb8d07d5bababde7669cc07790f18c60cb7ac5474bf1c5c06e95415",
+    "experiments/diagnose_population_losses.py": "92bb2a65cdf4dbe4e12e93df3b6f095be9ba7ae88450c70d21b64bc204739f04",
+    "tests/test_population_loss_diagnostics.py": "cca577716ec3f4c6e82b037248734a7a3cf36affaef045721148d049951a59c6"
+  },
+  "source_hashes_match_sealed_run": true,
+  "sealed_artifacts": {
+    "raw_summary_sha256": "73b88b526603c9c8c46d61af53a3caccd52a15f457a565253c18dd31f63c72ee",
+    "protocol_sha256": "209e5b19b24e41920a3c04666356a0acb3a5dbb47ae454a1fd84490709e19bc9",
+    "dataset_sha256": "cc87b5739a24af1310f43224492884099f54a6fc53e0619cacce0d8c19d0a60d"
+  },
+  "limitations": [
+    "The 1536-row equal-case diagnostic aggregate is not a replay of actual 256-row training minibatches.",
+    "Fresh critic is BEFORE the configured 4096-decision warmup; this cannot establish historical postwarmup clipping or a cause of the earlier regression.",
+    "Global versus separate clipping compares derivative scaling only, not Adam parameter steps.",
+    "Later critics are cross-fitted to fixed parent-policy GAE returns bootstrapped by the fresh critic; these are not later-policy on-policy value targets."
+  ]
+}
