@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-diagnostics/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-diagnostics/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-v03/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-v03/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4704,3 +4704,25 @@ Twelve no-update frozen-parent rollouts collected 10,400 transitions and a seale
 Next proposal: define a consistent buffered longitudinal target with explicit merge exceptions; add separate actor/critic norms, clipping and post-warm-up value diagnostics; compare separate clipping as one controlled change. Preserve current safety and efficiency gates and count native emergency events. No optimizer updates, new training, checkpoint promotion or physical/sensor validation occurred. Raw traces and sealed observations remain local under outputs; compact metrics, source hashes and measured plots are retained on GitHub.
 
 Report, reproduction commands, plots and limitations: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-diagnostics/documentation/population-control-diagnostics-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-diagnostics/documentation/population-control-diagnostics-v01.md>)
+
+<a id="docs-h-wjnk6ea1ulwd"></a>
+
+#### November 4, 2026 — Population v03 control correction prepared; training disabled
+
+Implemented the next correction setup using two implementation agents and independent review. Historical v2 remains selectable. No experiment training or saved policy update occurred.
+
+V3 now tapers acceleration near the speed ceiling even when no local front car is visible. The ramp observation exposes the first shared-entry conflict before the later auxiliary-to-through lane change. A current-map Euler approach target includes SUMO 1.27.1's source-defined 0.1 m stop offset and 0.001 m numerical margin. Supported minor-link visibility is 4.5 m; unsupported visibility/larger lane or edge offsets fail explicitly. The teacher and reward share one pure target based on current actor-visible inputs. Native safety modes, 60 mph ceiling, headway/stopping guards and override thresholds are unchanged.
+
+Matched teacher results: passing 4/600 overrides to zero, single-car merge 13/600 to zero, four-AV/three-lane merge 13/2400 to zero and four-AV/five-lane merge 12/2400 to zero. Passes/merges were retained with similar speeds. Both bounded attempts retain 32,400 decisions over 190.454 seconds, exact repeat traces and no recorded collisions, teleports, overspeed or native emergency warnings. The initial missing stop offset and provenance limitation are preserved. These are training-road development probes, not held-out qualification. The unchanged actor's single-car merge improves 26% to 11.17% overrides and remains unaccepted.
+
+Observation width remains 93, but changed merge meanings are explicitly versioned as highway\_graph\_entry\_and\_lane\_merge\_v3; reward version is highway\_stage1\_shared\_longitudinal\_target\_v3. Old phase-0 weights are initialization transfer, not silently interchangeable deployment. Teacher/reward targets agree within 9.63e-8 m/s² in refined traces, from float32 action encoding.
+
+Separate actor/critic norms and clipping factors are recorded on actual optimizer steps, with weighted component derivatives on the first accepted minibatch per update and fixed-return critic MSE/EV before/after. Critic warm-up has separate phase accounting. Global clipping and optimizer arithmetic remain unchanged; synthetic tests prove diagnostic-enabled/disabled weight, Adam, gradient and RNG equivalence. Native emergency events are counted after logs close and required by the v3 safety gate; legacy gate definitions remain unchanged.
+
+Final preparation: 150 CPU tests passed. The 32.719-second preflight passed multi-agent API/seed checks, exact replay, finite collection, export equivalence and unchanged parameters. It collected 128 frozen-parent diagnostic rows with a fresh critic and zero optimizer steps. This does not measure a trained critic.
+
+Final proposed configuration: headless CPU MAPPO, one worker/thread; frozen Stage 1 v03 phase-0 actor plus fresh population critic; 1/2/4/6/8 AVs in 8/16/24-car cohorts; no/local/local-with-30%-loss communication; cruise/following/passing/merge tasks. Budget 100,000 active-agent decisions or 1,800 seconds, including 4,096 warm-up decisions and a 600-second final-evaluation reserve. Actor/critic learning rates 0.0001/0.0003; four epochs, minibatch 256, PPO/value clip 0.2, KL 0.02, global gradient limit 0.5; value 0.5, entropy 0.001, imitation 0.04, acceleration relative weight 1 and lane-change relative weight 10. Seed 9207. Sixteen matched initial/final validation cases; no held-out selection. The training\_authorized flag is false and a reviewed checksum/readiness check is required.
+
+Configuration SHA-256: a0e05bb0e9c3ae303385e4101b0f1fa0ead07c8a5f6352b59f3e49f4970fe543. Future authorized artifacts save under outputs/highway-population/v03/train-&lt;unique-id&gt;, including policy.pt, last.pt, per-update diagnostics and validation. No assistant monitoring is needed while that bounded job runs. The config is ready for review; training has not started.
+
+Report, final configuration, source-backed control explanation and actual plots: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-v03/documentation/population-control-v03.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/population-control-v03/documentation/population-control-v03.md>)
