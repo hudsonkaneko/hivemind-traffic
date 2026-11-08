@@ -681,3 +681,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ## November 8 - Flow117 v02 prepared for review
 
 [Implementation and configuration](highway-flow-rl-v02.md) separates native visibility behavior from learned speed/route choices. Zero-update runtime checks and 158 tests pass; the frozen policy remains unaccepted and its full-route replay exposes the ending-lane stop. New cruise and detour rewards are ready for a bounded 30,000-decision / 900-second pilot after configuration approval. No training or held-out evaluation occurred; metrics and failures are preserved.
+
+
+## November 8 - Adjacent native traffic comparison
+
+[Saved-replay comparison](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) shows the frozen MAPPO car still has speed oscillations while its native neighbor accelerates steadily. Metrics and unsmoothed plots are retained; different starts and route duties are explicit. No new simulation or learning. Next action remains review of the v02 training configuration.

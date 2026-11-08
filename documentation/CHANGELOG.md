@@ -1062,3 +1062,8 @@ Implemented separately versioned training without unqualified teacher rewards/lo
 - Added a versioned visibility candidate, cruise/detour rewards, full 117-field observation journals, a bounded runner with resume, and a training/preflight contract. Original controls and weights are preserved.
 - 158 tests and zero-update native preflight pass. The matched screen removes empty-approach braking while retaining conflict braking; five development evaluations still fail driving gates. Failed attempts and metrics are retained; preparation CPU cost is 115.734 seconds.
 - Full 54.6-second SimReady replay, configuration and evidence saved. Training is disabled for review; no new actor or promotion. [Details](highway-flow-rl-v02.md). Google guide synchronization pending.
+
+
+## November 8, 2026 - Offline adjacent traffic comparison
+
+Compared frozen MAPPO agent_0 with geometry-selected native IDM main_8 in the saved v02 replay. The native car accelerates more steadily; retained speed/acceleration plots, raw traces, hashes and explicit unequal-start/route limitations. Finite/cadence/kinematic checks passed. No simulator runs, training or parameter changes. See [analysis](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic). Google guide sync remains pending.

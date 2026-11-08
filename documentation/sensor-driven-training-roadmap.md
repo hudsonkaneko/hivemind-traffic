@@ -1,6 +1,6 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v32**, updated **November 8, 2026, America/Los_Angeles**.
+Revision **v33**, updated **November 8, 2026, America/Los_Angeles**.
 Status: **Flow117 v02 preparation tested; resolved configuration ready for review, training disabled. Frozen-parent driving gates still fail.**
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
@@ -13,6 +13,8 @@ localization, map/route guidance and actually delivered V2V messages alongside
 camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
+
+Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
 **Next action:** review the [resolved flow117 v02 configuration and evidence](highway-flow-rl-v02.md). The visibility candidate eliminates empty-approach native braking while retaining occupied-approach braking, but the frozen actor still detours into an ending lane and stops. New cruise/detour rewards, unchanged masks, full observation journals and a bounded runner are implemented. 158 focused tests and zero-update native/export/gradient preflight pass. Five frozen development cases fail at least one driving-quality gate; no held-out evaluation or training ran. The full 54.6-second SimReady replay retains the failure. The initial pilot is 30,000 decisions / 900 seconds; training remains disabled until configuration approval.
 
@@ -542,3 +544,8 @@ Saved [flow117 v02 plan](highway-flow-rl-v02-plan.md). Separates frozen-actor ne
 ### v32 - November 8: v02 implementation and bounded preparation
 
 Implemented the [v02 setup](highway-flow-rl-v02.md) with a versioned 100 m synthetic visibility candidate, bounded cruise reward and one-time optional-detour penalty. Original safety modes, masks and actor ABI remain unchanged. Four initial network allocations include a preserved logging failure; one charged recovery completes the occupied pair. Empty-approach native hard-brake ticks fall from 11 to 0; occupied braking remains, but full-route policy behavior regresses. 158 tests and zero-update native preflight pass. Five additional frozen development cases have zero collisions but fail quality gates. Preparation CPU cost is 115.734 seconds. Seven of eight additional allocations are used; the final slot is reserved for the authorization-refresh preflight. Full 54.6-second SimReady replay verified. Training is disabled for review of the 30,000-decision / 900-second pilot. No promotion or held-out evaluation. Guide synchronization pending.
+
+
+### v33 - November 8: adjacent native-car speed comparison
+
+Analyzed the saved v02 replay without running SUMO or training. Geometry selects native IDM car main_8 alongside agent_0 at 3.7 s. Over 3.7-12.9 s, native speed increases 33.42 to 37.07 mph while MAPPO ends at 26.80 mph after a 20.76 mph dip; mean absolute jerk is 0.045 versus 1.176 m/s3. Saved raw traces, unsmoothed plots, metrics and provenance with finite/cadence/kinematic checks. Different starts, route duties and driver profiles prevent a causal matched-policy claim. [Evidence](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic). Configuration review remains next; training disabled and guide synchronization pending.

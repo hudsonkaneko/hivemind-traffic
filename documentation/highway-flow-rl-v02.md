@@ -140,3 +140,49 @@ The rendering is kinematic visualization, not physics or sensor validation.
 Next: review this resolved configuration before launching learning. No policy is
 promoted. The Google engineering guide has not been updated for this milestone;
 its incremental synchronization remains pending.
+
+
+## November 8 - Speed comparison with adjacent native traffic
+
+Offline analysis of the same v02 development-case-0 replay selects `main_8`,
+the nearest non-policy car in the adjacent through lane at the main car's first
+external highway entry (3.7 s). Its longitudinal offset is only -0.080 m,
+with 3.700 m position separation. Selection uses geometry, not performance.
+They remain in adjacent lanes on the same edge from 3.7 to 12.9 s (93 samples).
+The shaded graph region is this interval; the native car subsequently pulls ahead.
+
+| Measurement, 3.7-12.9 s | MAPPO `agent_0` | Native SUMO IDM `main_8` |
+| --- | ---: | ---: |
+| Start -> end speed (mph) | 30.34 -> 26.80 | 33.42 -> 37.07 |
+| Minimum / maximum speed (mph) | 20.76 / 34.44 | 33.42 / 37.07 |
+| Mean absolute acceleration (m/s2) | 1.163 | 0.180 |
+| Mean absolute jerk (m/s3; lower is smoother) | 1.176 | 0.045 |
+
+The MAPPO car is not yet comparably smooth: it accelerates, brakes and then
+accelerates again, while this native car steadily approaches its target.
+In the shared recording, the native car first reaches 35 mph at 5.7 s and MAPPO
+at 23.9 s. These are simulation timestamps, not matched acceleration-test times.
+The actual highway limit here is 18 m/s (40.3 mph), below the overall 60 mph
+ceiling. Native speedFactor 0.97 gives it a 39.1 mph allowed speed; MAPPO's is 1.0.
+Both have 2 m/s2 acceleration and 4.5 m/s2 routine deceleration limits, but different
+following models/headways and initial speeds. The native car begins on the
+highway; the focal car begins on the ramp. They interact with the same traffic.
+This descriptive single-replay comparison does not isolate policy causality.
+
+The chart retains the later ending-lane stop, through the native car's network
+exit at 35.7 s. The full focal replay continues to 54.6 s and includes recovery.
+Jerk is the change in recorded acceleration divided by the 0.1 s interval,
+excluding differences that begin before each analysis window. Nothing is smoothed.
+Finite values, cadence, control ownership, source hash and speed/acceleration
+consistency were verified. No new simulation, training, configuration or policy
+changes; existing acceptance failures remain.
+
+![Adjacent car speed and acceleration](evidence/highway-flow-rl-v02/neighbor-comparison/speed-comparison.png)
+
+[Metrics and selection](evidence/highway-flow-rl-v02/neighbor-comparison/comparison.json) |
+[Validation and provenance](evidence/highway-flow-rl-v02/neighbor-comparison/validation.json).
+Full numeric traces and analysis snapshot: `outputs/highway-flow-rl/v02/neighbor-comparison-01/`.
+Reproduce with `scripts/compare_replay_neighbor.py` using the command in validation.json
+and a fresh output directory. The JSON window named `first_25_seconds_after_start`
+means entry at 3.7 s through simulation time 25.0 s; explicit bounds are authoritative.
+Next action remains configuration review before learning. Google guide sync pending.
