@@ -1,0 +1,30 @@
+{
+  "seed": 6400019,
+  "policy": "policies\\versions\\highway-stage1-v03\\policy.pt",
+  "checkpoint_sha256": "a6d59d3acf58fcca9d7fc33406cb61ca3863d1a3dffad6dd316b195a66c7166f",
+  "network": "outputs\\i110-merge\\v01\\network\\network.net.xml",
+  "network_sha256": "a216efd0a451845c19147437284fe0014d503c8015aca1d29bb4b4b8e1ac8623",
+  "control_target_version": "v2",
+  "selection": "Lowest pooled merge interventions among retained compatible Stage 1 actors; not universally best or accepted",
+  "training": false,
+  "optimizer_steps": 0,
+  "motion_owner": "SUMO",
+  "focal_vehicle": "agent_2",
+  "source_timestep": 0.1,
+  "horizon_steps": 800,
+  "communication": "local",
+  "packet_loss": 0.0,
+  "git_head": "4f976a1dd8b58ff8106ea3b1520469389eb32e46",
+  "git_status": " M documentation/CHANGELOG.md\n M documentation/hybrid-roadmap.md\n M documentation/learning-guide-sync.md\n M usd/vehicle_sensor_rig.py\n?? configs/perception/dataset_smoke_v01.json\n?? configs/perception/segmentation_pilot_v01.json\n?? documentation/body-camera-v01.md\n?? documentation/evidence/body-camera-v01/\n?? documentation/evidence/i110-merge-visual-v01/\n?? documentation/evidence/perception-preparation-v01/\n?? documentation/evidence/roof-lidar-v01/\n?? documentation/evidence/seven-camera-v01/\n?? documentation/perception-preparation-v01.md\n?? documentation/roof-lidar-v01.md\n?? documentation/seven-camera-v01.md\n?? environments/endurance_loop_hazard_contract.py\n?? environments/endurance_loop_hazard_lab.py\n?? environments/physical_pair_loop_contract.py\n?? environments/physical_pair_loop_lab.py\n?? experiments/prepare_perception_dataset.py\n?? experiments/verify_body_cameras.py\n?? experiments/verify_near_field_sensors.py\n?? experiments/verify_roof_lidar.py\n?? experiments/verify_seven_cameras.py\n?? scripts/capture_perception_scene.py\n?? scripts/probe_body_cameras.py\n?? scripts/probe_near_field_sensors.py\n?? scripts/probe_physical_rl_fleet.py\n?? scripts/probe_roof_lidar.py\n?? scripts/probe_seven_cameras.py\n?? scripts/record_i110_merge_visual.py\n?? scripts/run_physical_pair_loop.py\n?? tests/test_body_camera_rig.py\n?? tests/test_full_perimeter_lidar_rig.py\n?? tests/test_near_field_lidar.py\n?? tests/test_near_field_sensor_rig.py\n?? tests/test_perception_capture_config.py\n?? tests/test_perception_dataset.py\n?? tests/test_perimeter_lidar_rig.py\n?? tests/test_physical_pair_loop.py\n?? tests/test_physical_rl_fleet.py\n?? tests/test_roof_lidar_rig.py\n?? tests/test_seven_camera_rig.py\n?? traffic/endurance_road_hazards.py\n?? traffic/perception_dataset.py\n?? ucode.elf\n?? usd/body_camera_rig.py\n?? usd/full_perimeter_lidar_rig.py\n?? usd/near_field_sensor_rig.py\n?? usd/perimeter_lidar_rig.py\n?? usd/roof_lidar_rig.py\n?? usd/seven_camera_rig.py\n",
+  "python": "3.11.9",
+  "torch": "2.14.0+cpu",
+  "traci": "1.27.1",
+  "source_sha256": {
+    "scripts/record_i110_merge_visual.py": "ff19bfb760c9a8c4ef431d33cf2bed9f1c94eb06b092480732bc9897356d6378",
+    "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+    "environments/i110_merge_env.py": "ec343afd7b35920f4fd6056dcd7b4fe7ee2460a31d95f599e24942290336db76",
+    "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a"
+  }
+}

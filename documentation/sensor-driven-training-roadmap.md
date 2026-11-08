@@ -1,6 +1,6 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v12**, updated **November 5, 2026, America/Los_Angeles**.
+Revision **v13**, updated **November 5, 2026, America/Los_Angeles**.
 Status: **Stage 1 remains unaccepted; population v04 near-limit correction prepared and preflight-verified, training disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
@@ -409,3 +409,9 @@ Implemented opt-in near-limit taper, first minor-entry conflict observations, so
 Three sub-agents implemented/reviewed the localized SI acceleration objective, speed curriculum and frozen diagnostic. Added four episode ceilings (12/18/22.352/26.8224 m/s), exact native lane/connector readback, eight additional lower-limit validation cases and raw-request diagnostics. Lower-limit coverage contributes to the mismatch, but synthetic highway-limit failures and previous-request sensitivity show it is not the sole cause.
 
 171 tests and the final 27.657-second SUMO preflight passed with zero optimizer steps, unchanged weights and exact export/repeat checks. A background emergency in the teacher I-110 case remains in native evidence; no nominal acceptance is implied. [Final disabled configuration, diagnosis and evidence](population-near-limit-v04.md) retain the 100k-decision/30-minute pilot ceiling and unchanged safety gates. Review before learning; then evaluate matched initial/final cases before physical confirmation. The best actor, historical failures and held-out partition remain preserved.
+
+### v13 — November 5: frozen I-110 merge visualization
+
+Selected final Stage 1 v03 by its lowest intervention rate across the three retained matched merge cases (6/6 completed, 3.3194% pooled). This merge-specific choice does not replace the phase-0 overall population reference. One predeclared I-110 test, seed 6400019 with original v2 semantics, completed both merges at 3.0/9.7 seconds and all four controlled trips. Full 80-second accounting records no collisions, teleports, overspeed steps or native emergency warnings. However, 131/1240 active-agent decisions (10.56%) had native realization interventions, above the unchanged 5% target.
+
+[The visual test](i110-merge-visual-v01.md) retains an 11-second Isaac-rendered replay, four screenshots, the complete metrics and provenance. All 110 frames decoded, recorded positions matched exactly and authored USD layers remained unchanged; six geometry/composition tests passed. The failed initial preview export is preserved. This is reconstructed provisional SUMO road geometry and recorded kinematic motion, not a physical merge or sensor-driven validation. No training, actor edits or acceptance promotion occurred. The next action remains review of population v04's disabled final configuration before separately authorized learning. Google guide and generated Markdown mirror were synchronized with verified full native readback.
