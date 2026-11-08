@@ -1,0 +1,65 @@
+{
+  "license": "NVIDIA Isaac Sim Additional Software and Materials License; local research use; no redistribution",
+  "sources": [
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/female_adult_police_02/textures/female_adult_police_02_BaseColor.png",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/female_adult_police_02/textures/female_adult_police_02_BaseColor.png",
+      "sha256": "438ecc21b9a980ce0eaa00c330fd3eafe99eaea0671e8bdfd3dfcf5bf5fe8635"
+    },
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/female_adult_police_02/textures/female_adult_police_02_Normal.png",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/female_adult_police_02/textures/female_adult_police_02_Normal.png",
+      "sha256": "f92deb073fa211aa4b701c23786283dafdf779e0405481e32951f1733a3f16ee"
+    },
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/female_adult_police_02/textures/female_adult_police_02_ORM.png",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/female_adult_police_02/textures/female_adult_police_02_ORM.png",
+      "sha256": "86c278bd7ef9488cd2504e9d5108e334624468057d63a13fcac448207fff2266"
+    },
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/female_adult_police_02/female_adult_police_02.usd",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/female_adult_police_02/female_adult_police_02.usd",
+      "sha256": "4966f0017b7de43ea0802a9a737c4c6b3a97f9333dbf899203554ffce3a41e46"
+    },
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/male_adult_construction_03/textures/male_adult_construction_03_BaseColor.png",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/male_adult_construction_03/textures/male_adult_construction_03_BaseColor.png",
+      "sha256": "1d4fb88081020c553490731afd987a0c3a975f18f277e1fb49896905c5ce913b"
+    },
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/male_adult_construction_03/textures/male_adult_construction_03_Normal.png",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/male_adult_construction_03/textures/male_adult_construction_03_Normal.png",
+      "sha256": "3f3c2115bdffc5e7645b488f210a045ecaa8a1657ed0eb06af4762493af005ac"
+    },
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/male_adult_construction_03/textures/male_adult_construction_03_ORM.png",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/male_adult_construction_03/textures/male_adult_construction_03_ORM.png",
+      "sha256": "68e02450beb4d75b7c930627df88335e8e286a2517bb3f1aa1eb44bf04b475b7"
+    },
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/male_adult_construction_03/male_adult_construction_03.usd",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/male_adult_construction_03/male_adult_construction_03.usd",
+      "sha256": "2e5d7fc72d6e2ed67f0ab86e2f3aaa91066019a4c71266361735956f232ccff0"
+    },
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/male_adult_police_04/textures/male_adult_police_04_BaseColor.png",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/male_adult_police_04/textures/male_adult_police_04_BaseColor.png",
+      "sha256": "7713714d56db66cec13e98cc5197d41bd5008ebe6f43c57bfc0ba0272b55ed88"
+    },
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/male_adult_police_04/textures/male_adult_police_04_Normal.png",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/male_adult_police_04/textures/male_adult_police_04_Normal.png",
+      "sha256": "8e8cd9850a091e961c6f7ee8a5e0ee8d462399c3122014461e218a47e014891e"
+    },
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/male_adult_police_04/textures/male_adult_police_04_ORM.png",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/male_adult_police_04/textures/male_adult_police_04_ORM.png",
+      "sha256": "3251967eb0bf6046afc02da3256baae6349299a710a4c14a5a9a5fa540fef279"
+    },
+    {
+      "path": "runtimes/perception-assets/Isaac/People/Characters/male_adult_police_04/male_adult_police_04.usd",
+      "url": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.0/Isaac/People/Characters/male_adult_police_04/male_adult_police_04.usd",
+      "sha256": "3110909a21152d10bfcdf16d4e49653bae196d3093efe61a2099b4ee1761733b"
+    }
+  ]
+}

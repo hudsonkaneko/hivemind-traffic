@@ -438,3 +438,13 @@ This is exploratory sensing evidence, not policy integration or driving
 acceptance. A disabled [training proposal](segmentation-refinement-training-proposal.md)
 requires varied data, a trainer and CUDA preflight before authorization.
 No new training or simulator runs occurred.
+
+## 2026-10-31 checkpoint — Segmentation training preparation v02
+
+Dataset/trainer/runtime preparation is verified: 3,600 six-class captures, 180 scene
+groups, reviewed split/hash checks, 139 CPU tests and a zero-update CUDA preflight.
+[Final configuration and evidence](segmentation-training-preparation-v02.md) retain
+training disabled. Next gate is user review and explicit supervised-training launch;
+then validation-only checkpoint selection and frozen held-out evaluation. No trained
+six-class quality, new-corpus LiDAR fusion or driving-policy integration is claimed.
+Instance/distance/temporal/calibration gates and broader scene diversity remain open.

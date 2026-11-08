@@ -1,0 +1,16 @@
+{
+  "version": "segmentation-dataset-v02",
+  "training": false,
+  "capture_authorized": true,
+  "seed": 20261101,
+  "frames_per_scene": 20,
+  "split_scene_groups": {"train":144,"validation":18,"test":18},
+  "resolution": [640,360],
+  "vehicle_visual": "vehicles/sim_ready/americano-i7-ev/v14/assets/vehicle-geometry.usda",
+  "human_asset_root": "runtimes/perception-assets/Isaac/People/Characters",
+  "human_source_manifest": "runtimes/perception-assets/source-manifest.json",
+  "license": "Official NVIDIA Isaac assets retained locally; no model assets redistributed",
+  "holdout": "Whole scene seeds, road families, obstacle families and human identities; vehicle base geometry is shared and disclosed",
+  "excluded_prior_data": ["20261030T223941Z-65f18896","earlier 60-frame smoke sample"],
+  "maximum_capture_seconds": 2400
+}
