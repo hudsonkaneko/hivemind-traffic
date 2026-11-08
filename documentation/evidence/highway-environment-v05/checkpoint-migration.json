@@ -1,0 +1,29 @@
+{
+  "reason": "Pre-learning departure precision and interrupted-maneuver lifecycle repair; original checkpoint untouched",
+  "original_checkpoint": "outputs\\highway-environment\\v05\\train-20261106T022222Z-0b8b611a\\last.pt",
+  "original_sha256": "e4769d81655c323dfc6eaa261719704dbc27eeea7feab953b0764d6fcae03b12",
+  "migrated_checkpoint": "outputs\\highway-environment\\v05\\recovery-departure-precision\\last.pt",
+  "migrated_sha256": "1fb5a787e4a00b0fd2b34331edd54107ad1f1848e4c76d63b4d3a935fd5cf7e7",
+  "changed_sources": {
+    "traffic/highway_v05_demand.py": {
+      "before": "b238387c9a606a4d0e521893d924dd4ee8ffcd2d8b62c7d22930b5d94a0cb65c",
+      "after": "48a3bee2cb5aad3ffd1410b12520b09514c8338002020ceaf36b8c66e1141eb3"
+    },
+    "environments/highway_environment_v05.py": {
+      "before": "cfde85c61cd1c48c4a579d0425894e6ae98aefae676930dbceb4a96806334c88",
+      "after": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453"
+    }
+  },
+  "model_optimizer_rng_unchanged": true,
+  "counters_unchanged": true,
+  "charged_seconds": 125.34399999999732,
+  "original_config_sha256": "91eca086d1ccaf8e71eb297b2a6e1bb19e93c83888af13b10cf3cce6db611357",
+  "new_config_sha256": "4ef0c2a39bbd4be5f9af61fa760f4abe55d06c729b96f562f1581fdf72862620",
+  "total_wall_budget_seconds": 3600,
+  "training_decisions": 0,
+  "readiness": {
+    "summary_path": "outputs/highway-environment/v05/preflight-20261106T023149Z-01d0cb44/summary.json",
+    "summary_sha256": "223b685e106558b71e08d8b2522ffb10c49cf085cf7ddb88166ed20150c64566"
+  },
+  "held_out_test_run": false
+}

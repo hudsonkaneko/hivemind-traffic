@@ -1,0 +1,98 @@
+{
+  "schema_version": 2,
+  "status": "provisional_engineering_network",
+  "geometry_version": "i110_lane_foes_v2",
+  "compiled_checks": {
+    "passed": true,
+    "geometry_version": "i110_lane_foes_v2",
+    "junction": "n2",
+    "ramp_internal_lane": ":n2_5_0",
+    "through_lane_count": 4,
+    "connector_crossings": [],
+    "through_lane_foes": [],
+    "auxiliary_merge_foe_retained": true,
+    "auxiliary_merge_yield_retained": true,
+    "scope": "compiled geometry only; no traffic episode run"
+  },
+  "builder_sha256": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+  "input_sha256": {
+    "nodes.nod.xml": "27ddc565e5ac69c5b60607a743e5170efbf3c20d0e0b510cb04c661a604a837d",
+    "edges.edg.xml": "076ec9a793d7944595ba8c78bbe11343cf339bd07686d4070595c197275b3b6f",
+    "connections.con.xml": "55c6cba28cccb5bf19db9f8ecaf3ed4ac1daa8e15604c0cc0b85f44005da7d0c"
+  },
+  "source_profile_sha256": "3f6a8905e22d15083c0e3a78ac5a28443162680b38900431e1e1e80d79c5da48",
+  "source_geometry_sha256": "94652d66929507efa970314bde1bdbf4f5e01469e46bea61bd98480d2413a89b",
+  "coordinates": {
+    "horizontal_crs": "EPSG:6340",
+    "origin_xy_m": [
+      381687.546870016,
+      3764108.929151129
+    ],
+    "axes": "x east, y north, z up",
+    "z_offset_m": 44.0
+  },
+  "sumo_to_usd": "Identity local XYZ in metres; no normalization or rotation",
+  "stations_m": [
+    0.0,
+    55.0,
+    280.0,
+    455.0,
+    650.0,
+    750.0,
+    815.0
+  ],
+  "lane_counts": [
+    4,
+    5,
+    5,
+    5,
+    4,
+    4
+  ],
+  "mainline_speed_cap_m_s": 26.8224,
+  "command": [
+    "C:\\Program Files (x86)\\Eclipse\\Sumo\\bin\\netconvert.exe",
+    "--node-files",
+    "C:\\Users\\hudso\\Documents\\highwaysim\\outputs\\i110-merge-blocking\\v01\\network-v02\\nodes.nod.xml",
+    "--edge-files",
+    "C:\\Users\\hudso\\Documents\\highwaysim\\outputs\\i110-merge-blocking\\v01\\network-v02\\edges.edg.xml",
+    "--connection-files",
+    "C:\\Users\\hudso\\Documents\\highwaysim\\outputs\\i110-merge-blocking\\v01\\network-v02\\connections.con.xml",
+    "--output-file",
+    "C:\\Users\\hudso\\Documents\\highwaysim\\outputs\\i110-merge-blocking\\v01\\network-v02\\network.net.xml",
+    "--offset.disable-normalization",
+    "true",
+    "--no-turnarounds",
+    "true",
+    "--junctions.corner-detail",
+    "0",
+    "--check-lane-foes.all",
+    "true"
+  ],
+  "netconvert_version": "Eclipse SUMO netconvert 1.27.1",
+  "limitations": [
+    "Mainline has four through lanes and a provisional auxiliary lane.",
+    "Auxiliary graph drop at station 650 m lies within interpreted 590\u2013750 m taper; exact stripe endpoint unverified.",
+    "SUMO constant lane widths/junction connectors approximate the continuous pavement taper.",
+    "Virtual junction seams use 2 m longitudinal bands to prevent backwards automatic connectors.",
+    "Ramp ports blended over 30 m; no ramp-meter or arterial signal inferred.",
+    "Upstream/downstream are open crop boundaries; no external network or measured demand.",
+    "No PeMS calibration, empirical site admission, or physical dynamics claim."
+  ],
+  "files": {
+    "connections.con.xml": "55c6cba28cccb5bf19db9f8ecaf3ed4ac1daa8e15604c0cc0b85f44005da7d0c",
+    "edges.edg.xml": "076ec9a793d7944595ba8c78bbe11343cf339bd07686d4070595c197275b3b6f",
+    "netconvert.log": "1ee456262d7aaf011c85ff7c16892a3cc6e545dbe212e9869045160174d5ec42",
+    "network.net.xml": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+    "nodes.nod.xml": "27ddc565e5ac69c5b60607a743e5170efbf3c20d0e0b510cb04c661a604a837d",
+    "network-comparison.json": "ccf9dcbd46d35764d3dfbbd66a82681e68410679a3d135f42d220937e6f540b0"
+  },
+  "baseline_comparison": {
+    "file": "network-comparison.json",
+    "sha256": "ccf9dcbd46d35764d3dfbbd66a82681e68410679a3d135f42d220937e6f540b0",
+    "baseline_network_sha256": "a216efd0a451845c19147437284fe0014d503c8015aca1d29bb4b4b8e1ac8623",
+    "all_source_inputs_byte_identical": true,
+    "all_non_junction_elements_identical": true,
+    "only_n2_conflict_matrix_changed": true
+  }
+}

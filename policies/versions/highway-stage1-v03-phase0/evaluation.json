@@ -1,0 +1,485 @@
+{
+  "candidate": "phase0-parent",
+  "report": "outputs/highway-population/v01/train-20261104T225405Z-302c4943/initial-validation.json",
+  "report_sha256": "3aef44df81e489f71872b0fb0caed1123e5a1c1b57fdaad237df7403c5fbd74a",
+  "summary": {
+    "cases": 16,
+    "pooled_override_fraction": 0.2063928837201253,
+    "worst_override_fraction": 0.44875,
+    "failures": [
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510000,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides",
+          "cruise_speed"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510001,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510002,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510003,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-following",
+        "seed": 6510005,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-passing",
+        "seed": 6510006,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-4-lane-merge",
+        "seed": 6510007,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-cruise",
+        "seed": 6510008,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-following",
+        "seed": 6510009,
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-passing",
+        "seed": 6510010,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-merge",
+        "seed": 6510011,
+        "population": {
+          "controlled_count": 3,
+          "total_vehicles": 16,
+          "communication": "local",
+          "packet_loss": 0.3
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-cruise",
+        "seed": 6510012,
+        "population": {
+          "controlled_count": 5,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-following",
+        "seed": 6510013,
+        "population": {
+          "controlled_count": 7,
+          "total_vehicles": 16,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-passing",
+        "seed": 6510014,
+        "population": {
+          "controlled_count": 8,
+          "total_vehicles": 24,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      },
+      {
+        "case_id": "validation-2-lane-merge",
+        "seed": 6510015,
+        "population": {
+          "controlled_count": 1,
+          "total_vehicles": 8,
+          "communication": "none",
+          "packet_loss": 0.0
+        },
+        "causes": [
+          "overrides"
+        ]
+      }
+    ],
+    "nominal_gates_passed": false,
+    "held_out_test_run": false,
+    "acceptance_status": "experimental; held-out qualification not run"
+  },
+  "cases": [
+    {
+      "case": "validation-2-lane-cruise",
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "seed": 6510000,
+      "overrides": 0.32625,
+      "speed_ratio": 0.8911285825570158,
+      "passes": 0,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-2-lane-following",
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "seed": 6510001,
+      "overrides": 0.3933333333333333,
+      "speed_ratio": 0.7066841337081939,
+      "passes": 0,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-2-lane-passing",
+      "population": {
+        "controlled_count": 5,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "seed": 6510002,
+      "overrides": 0.2274520856820744,
+      "speed_ratio": 0.9191857452971952,
+      "passes": 5,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-2-lane-merge",
+      "population": {
+        "controlled_count": 7,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "seed": 6510003,
+      "overrides": 0.18535714285714286,
+      "speed_ratio": 0.9147101045085285,
+      "passes": 0,
+      "merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-4-lane-cruise",
+      "population": {
+        "controlled_count": 8,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "seed": 6510004,
+      "overrides": 0.01453125,
+      "speed_ratio": 0.9595004618270143,
+      "passes": 0,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-4-lane-following",
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "seed": 6510005,
+      "overrides": 0.44875,
+      "speed_ratio": 0.6649473931090085,
+      "passes": 0,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-4-lane-passing",
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "seed": 6510006,
+      "overrides": 0.06958333333333333,
+      "speed_ratio": 0.8178616321742923,
+      "passes": 3,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-4-lane-merge",
+      "population": {
+        "controlled_count": 5,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.0
+      },
+      "seed": 6510007,
+      "overrides": 0.232,
+      "speed_ratio": 0.88278296094874,
+      "passes": 0,
+      "merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-5-lane-cruise",
+      "population": {
+        "controlled_count": 7,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "seed": 6510008,
+      "overrides": 0.05035714285714286,
+      "speed_ratio": 0.9465310727954241,
+      "passes": 0,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-5-lane-following",
+      "population": {
+        "controlled_count": 8,
+        "total_vehicles": 24,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "seed": 6510009,
+      "overrides": 0.1696875,
+      "speed_ratio": 0.8626984689771153,
+      "passes": 0,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-5-lane-passing",
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "seed": 6510010,
+      "overrides": 0.2425,
+      "speed_ratio": 0.9702716459778626,
+      "passes": 1,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-5-lane-merge",
+      "population": {
+        "controlled_count": 3,
+        "total_vehicles": 16,
+        "communication": "local",
+        "packet_loss": 0.3
+      },
+      "seed": 6510011,
+      "overrides": 0.0925,
+      "speed_ratio": 0.9463791743989145,
+      "passes": 0,
+      "merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-2-lane-cruise",
+      "population": {
+        "controlled_count": 5,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "seed": 6510012,
+      "overrides": 0.316,
+      "speed_ratio": 0.9161597793377665,
+      "passes": 0,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-2-lane-following",
+      "population": {
+        "controlled_count": 7,
+        "total_vehicles": 16,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "seed": 6510013,
+      "overrides": 0.29771407837445574,
+      "speed_ratio": 0.8608629894076317,
+      "passes": 0,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-2-lane-passing",
+      "population": {
+        "controlled_count": 8,
+        "total_vehicles": 24,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "seed": 6510014,
+      "overrides": 0.387025665249567,
+      "speed_ratio": 0.7514420310051241,
+      "passes": 4,
+      "merges": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    },
+    {
+      "case": "validation-2-lane-merge",
+      "population": {
+        "controlled_count": 1,
+        "total_vehicles": 8,
+        "communication": "none",
+        "packet_loss": 0.0
+      },
+      "seed": 6510015,
+      "overrides": 0.23575129533678757,
+      "speed_ratio": 0.9383611183927799,
+      "passes": 0,
+      "merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "overspeed_steps": 0
+    }
+  ]
+}

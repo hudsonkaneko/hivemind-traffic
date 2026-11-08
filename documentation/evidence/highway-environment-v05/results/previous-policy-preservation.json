@@ -1,0 +1,53 @@
+{
+  "baseline_git_head": "02948d76f16f4d2c56d839ad72c1266777b373c6",
+  "policies": [
+    {
+      "source": {
+        "path": "policies/versions/highway-population-v01/policy.pt",
+        "bytes": 108534,
+        "sha256": "8d2e8793072e8a575acba03391da6783705b87521e0848ba14401345d4616e59"
+      },
+      "unchanged_from_run_git_head": true
+    },
+    {
+      "source": {
+        "path": "policies/versions/highway-population-v02/policy.pt",
+        "bytes": 108534,
+        "sha256": "680d50cebf5f943c8d93adb9e1f2dce3da272ee784b7cefc1981083a8e6cebbf"
+      },
+      "unchanged_from_run_git_head": true
+    },
+    {
+      "source": {
+        "path": "policies/versions/highway-stage1-v02/policy.pt",
+        "bytes": 108536,
+        "sha256": "07ef91a2e7591becd235862c9b2ebb0dd5707ef364546ec251f8bf8964e1a6b3"
+      },
+      "unchanged_from_run_git_head": true
+    },
+    {
+      "source": {
+        "path": "policies/versions/highway-stage1-v03-phase0/policy.pt",
+        "bytes": 108536,
+        "sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8"
+      },
+      "unchanged_from_run_git_head": true
+    },
+    {
+      "source": {
+        "path": "policies/versions/highway-stage1-v03/policy.pt",
+        "bytes": 108536,
+        "sha256": "a6d59d3acf58fcca9d7fc33406cb61ca3863d1a3dffad6dd316b195a66c7166f"
+      },
+      "unchanged_from_run_git_head": true
+    },
+    {
+      "source": {
+        "path": "policies/versions/mappo-v04r2/policy.pt",
+        "bytes": 102392,
+        "sha256": "4cf4898df997a444624552515ea987e7e994b1ca40bb002cf91f0647be8a7245"
+      },
+      "unchanged_from_run_git_head": true
+    }
+  ]
+}

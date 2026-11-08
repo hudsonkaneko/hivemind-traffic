@@ -1,0 +1,14 @@
+{
+  "source_repository": "samfrausto/hivemind-traffic",
+  "source_commit": "b4f19e2b450ea585d1b80fa7472a091f928976de",
+  "pull_request": 16,
+  "files": {
+    "scripts/build_i110_sumo.py": "26ab7e55962f4d6e0422f8d0ef944baf337600af32645fb1d6364f0979c37f70",
+    "scenarios/i110/sumo-road-profiles.json": "3f6a8905e22d15083c0e3a78ac5a28443162680b38900431e1e1e80d79c5da48",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+    "tests/test_i110_policy_interface.py": "62ca7342413bda7281b4b07d1e8121f115965cbece6392a3a758166ca4e67c45",
+    "traffic/smooth_acc.py": "85e8f2f663a0ff39d9c429ce02097874683a2699d114cb0aa45483bbb908abca"
+  },
+  "scope": "Selected unchanged source import, not a merge of PR16; provisional geometry, not calibrated I-110 traffic"
+}

@@ -6,6 +6,7 @@ motion compensation or tracking for moving actors. Raw per-ray times are retaine
 """
 import math
 import re
+import uuid
 from numbers import Integral
 import numpy as np
 from traffic.speed_profiles import speed_limit
@@ -14,6 +15,8 @@ from traffic.speed_profiles import speed_limit
 SENSOR_RATE_HZ = 20
 MAX_SCAN_SPAN_S = 1.0 / SENSOR_RATE_HZ + 0.01
 MAX_PACKET_ELEMENTS = 500_000
+NEAR_FIELD_SCAN_PROFILE = 'roof-near-field-v1'
+NEAR_FIELD_ELEVATIONS_DEG = tuple(float(v) for v in np.linspace(-65.0, 10.0, 64))
 
 
 def _integer(value):
@@ -98,19 +101,40 @@ def packet_to_scan(packet, state, *, episode_id, vehicle_id, tick, epoch_s=0.0, 
         delivery_tick=int(delivery), coordinate_reference_tick=int(tick), points=points)
 
 
-def _configure_rotary_profile(prim, speed_profile='low-speed'):
+def _configure_rotary_profile(prim, speed_profile='low-speed', *, scan_profile=None):
     """Author and read back both rates: installed tick_rate does NOT set scan rate."""
     speed_limit(speed_profile)
+    if scan_profile not in (None, NEAR_FIELD_SCAN_PROFILE):
+        raise ValueError('Unknown LiDAR scan profile: '+str(scan_profile))
+    emitters = 64 if scan_profile == NEAR_FIELD_SCAN_PROFILE else 32
     for attr in prim.GetAttributes():
         if attr.GetName().startswith('omni:sensor:Core:emitterState:s001:'):
             value = attr.Get()
             if hasattr(value, '__len__') and len(value) == 128:
-                if not attr.Set(value[:32]):
+                if not attr.Set(value[:emitters]):
                     raise RuntimeError('Cannot configure RTX emitter array '+attr.GetName())
+    if scan_profile == NEAR_FIELD_SCAN_PROFILE:
+        # Generic simulated optics, not a claim about a production LiDAR model.
+        # Expand vertical coverage without changing legacy/default experiments.
+        prefix = 'omni:sensor:Core:emitterState:s001:'
+        for suffix, value in (
+                ('elevationDeg', list(NEAR_FIELD_ELEVATIONS_DEG)),
+                ('azimuthDeg', [0.0]*emitters)):
+            attr = prim.GetAttribute(prefix+suffix)
+            if (not attr.Set(value) or np.shape(attr.Get()) != (emitters,)
+                    or not np.allclose(attr.Get(), value, atol=1e-5, rtol=0)):
+                raise RuntimeError('Cannot configure/read back RTX '+prefix+suffix)
+        # Optional arrays may be empty. Every populated array must align with
+        # numberOfEmitters, including timing/channel/correction arrays.
+        for attr in prim.GetAttributes():
+            value = attr.Get()
+            if attr.GetName().startswith(prefix) and hasattr(value, '__len__'):
+                if len(value) not in (0, emitters):
+                    raise RuntimeError('Misaligned RTX emitter array '+attr.GetName())
     values = {
         'omni:sensor:tickRate': float(SENSOR_RATE_HZ),
         'omni:sensor:Core:scanRateBaseHz': SENSOR_RATE_HZ,
-        'omni:sensor:Core:numberOfEmitters': 32,
+        'omni:sensor:Core:numberOfEmitters': emitters,
         'omni:sensor:Core:patternFiringRateHz': 72000.0 if speed_profile == '35mph' else 7200.0,
         'omni:sensor:Core:elementsCoordsType': 'CARTESIAN',
         'omni:sensor:Core:outputFrameOfReference': 'WORLD',
@@ -130,7 +154,8 @@ def _configure_rotary_profile(prim, speed_profile='low-speed'):
 class PhysicalLidar:
     """Bounded latest-packet sink and switchable RTX debug writer."""
     def __init__(self, vehicle_path, *, episode_id, vehicle_id, tick_source, points=False,
-                 sensor_path=None, speed_profile='low-speed', mount_translation_m=None):
+                 sensor_path=None, speed_profile='low-speed', mount_translation_m=None,
+                 scan_profile=None):
         import omni.replicator.core as rep
         from isaacsim.sensors.experimental.rtx import Lidar, LidarSensor, parse_generic_model_output_data
         from isaacsim.core.experimental.utils.app import enable_extension
@@ -179,11 +204,16 @@ class PhysicalLidar:
                     if len(owner.errors) < 8:
                         owner.errors.append(repr(error))
 
+        # Replicator's registry is global. Each closure owns one sensor's packet
+        # sink, so a shared class name could route later attachments to another
+        # sensor. Keep the registered name unique even across scene resets.
+        self.writer_name = 'PhysicsLidarCapture_'+uuid.uuid4().hex
+        PhysicsLidarCapture.__name__ = self.writer_name
         rep.WriterRegistry.register(PhysicsLidarCapture)
         self.lidar = Lidar.create(self.path, config='Example_Rotary', translations=np.array(self.mount_translation_m),
                                  aux_output_level='FULL', accumulate_outputs=True, tick_rate=SENSOR_RATE_HZ)
         prim = self.lidar.prims[0]
-        frequencies = _configure_rotary_profile(prim, speed_profile)
+        frequencies = _configure_rotary_profile(prim, speed_profile, scan_profile=scan_profile)
         render_dt = float(RenderingManager.get_dt())
         if not math.isfinite(render_dt) or render_dt <= 0:
             raise RuntimeError('Rendering cadence must be configured before the physical LiDAR')
@@ -197,11 +227,16 @@ class PhysicalLidar:
             debug_draw_do_transform=False,
             attributes={a.GetName():str(a.Get()) for a in prim.GetAttributes()
                                           if a.GetName().startswith('omni:sensor')})
+        if scan_profile is not None:
+            self.metadata['scan_profile'] = scan_profile
+            self.metadata['scan_profile_note'] = (
+                'Generic simulated 64-beam optics, -65 to +10 degrees; '
+                'does not remove vehicle-body occlusion or guarantee detection')
         # SensorBase snapshots writer aliases at construction: loading this
         # extension afterward leaves 'draw-point-cloud' unresolved on this sensor.
         enable_extension('isaacsim.sensors.rtx.nodes')
         self.sensor = LidarSensor(self.lidar, annotators=[])
-        self.sensor.attach_writer('PhysicsLidarCapture')
+        self.sensor.attach_writer(self.writer_name)
         self.set_points(points)
 
     def set_points(self, enabled):
@@ -219,5 +254,5 @@ class PhysicalLidar:
 
     def close(self):
         self.set_points(False)
-        self.sensor.detach_writer('PhysicsLidarCapture')
+        self.sensor.detach_writer(self.writer_name)
         self.sensor = self.lidar = None

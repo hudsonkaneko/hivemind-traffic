@@ -1,0 +1,10 @@
+{
+  "recording": "outputs/highway-smooth-control/v02/matrix-02/i110-merge/smooth/recording.json",
+  "recording_sha256": "9015202476e942f2eb03ce91b0a691886a842f957fc9ae9ddba9b868574be8dd",
+  "journal": "outputs/highway-smooth-control/v02/matrix-02/i110-merge/smooth/simulation/episode-6800019-8fa78418/actions.jsonl.gz",
+  "journal_sha256": "955e8ae6a12e6ad7a2c3a6ab19cad3c6d0d094ecc3cc5084ae015ab243853e4c",
+  "vehicle_id": "agent_0",
+  "image_sha256": "e4d06be6f9b4672b1ec401d9e995b8f9d9c9c262f858b7647dafea687b6ef1a7",
+  "source_sha256": "fcf635ad394db11b925442da829e3ab4d9c6fa48c0c48da8fd84b5b7ec58426a",
+  "generated_from": "Actual native samples; no synthetic images or simulator rerun"
+}

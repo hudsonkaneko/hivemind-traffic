@@ -404,3 +404,250 @@ The protected read snapshot stays local in ignored `outputs/doc-sync/`. It is
 not part of the GitHub payload. Repository implementation and evidence remain
 authoritative; older notebook tabs describe their historical findings rather
 than the current state of every subsystem.
+
+
+## October 26: MAPPO v03 communication and wave setup
+
+Appended setup, final proposed pilot, actual preflight and limits to tab41; updated start-tab mirror link to codex/mappo-communication-waves. Before editing, full native source matched the existing local mirror, reconciling prior native guide updates. Revision-guarded append and complete native readback preserved all42 tabs and40 unaffected tab bodies. Regeneration/check succeeded from outputs/doc-sync/mappo-waves-v03/verified-source.json. Native pagination not inspected. No training launched.
+
+## October 29: MAPPO v04 setup and v02 replay/release follow-up
+
+Full native read matched the existing mirror before editing. Appended verified v04 setup, final proposed pilot and actual preflight evidence to tab 41, plus the earlier v02 sensor/release milestones; updated the start-tab mirror URL to codex/mappo-v04-cooperative-passing. Revision-guarded edit and full native readback preserved all 42 tabs and 40 unaffected bodies. Mirror regeneration/check succeeded from outputs/doc-sync/mappo-v04/verified-source.json. Native pagination was not visually inspected. No training launched.
+
+## October 29: completed v04 training pilot
+
+Appended actual training outcome, failed learned acceptance, best-versus-latest checkpoint comparison, scripted baseline, retained metrics and budget status to tab 41. Fresh revision-guarded native editing and full readback preserved all 42 tabs and all 41 unaffected tab bodies. Regenerated and checked the complete mirror from `outputs/doc-sync/mappo-v04-training/verified-source.json`. Native pagination was not inspected. No accepted-checkpoint or physical-transfer claim was added.
+
+## October 29: v04r1 retraining and results
+
+Appended the imitation-assisted training method, exact budget/splits, measured passing and intervention results, one excessive-lane-switching episode and retained evidence to tab 41. Revision-guarded edit and full readback preserved all 42 tabs and all 41 unaffected tab bodies. Regenerated and checked from `outputs/doc-sync/mappo-v04-refinement/verified-source.json`. Native pagination was not inspected. No full acceptance, matched-seed gain or physical-transfer claim was added.
+
+## October 29: v04r2 accepted lane-stability result
+
+Appended the training refinement, exact budget/splits, accepted held-out result, selected-versus-final checkpoint distinction and retained metrics to tab 41. Revision-guarded native edit and full readback preserved all 42 tabs and all 41 unaffected tab bodies. Regenerated and checked from `outputs/doc-sync/mappo-v04-stability/verified-source.json`. Native pagination was not inspected. Simulator acceptance is explicitly separated from physical transfer and communication-benefit claims.
+
+
+## October 30: Semantic mask and LiDAR fusion v01
+
+Appended implementation, actual static/moving results, timing corrections,
+preserved failures and limitations to tab 41. Updated the start-tab mirror link
+to `codex/semantic-lidar-fusion`. Revision-guarded native editing and full readback
+verified the exact addition, existing target history, all 42 tabs and all 40
+unaffected tab bodies. Regenerated and checked the Markdown/manifest against
+`outputs/doc-sync/semantic-lidar-fusion-v01/verified-source.json`. Native pagination
+was not inspected. Actual screenshots and compact metrics are in the
+[fusion evidence note](semantic-lidar-fusion-v01.md).
+
+
+## October 30: Pretrained segmentation preview v01
+
+Appended the frozen model, real prediction results, class mapping/exclusions,
+actual screenshot links and no-training/no-new-simulation scope to tab 41.
+Updated the start-tab link to `codex/pretrained-segmentation-preview`. Guarded
+native editing and full readback preserved all 42 tabs, target history and 40
+unaffected tab bodies. Regenerated and checked the Markdown/manifest from
+`outputs/doc-sync/pretrained-segmentation-preview-v01/verified-source.json`.
+Native pagination was not inspected; the actual four-panel PNGs were inspected.
+
+
+## October 31: Saved-capture segmentation refinement v02
+
+Appended measured preprocessing/boundary/occupancy results, limitations and the
+disabled training proposal to tab 41; updated the start-tab mirror link. Guarded
+native editing and full readback preserved all 42 tabs, existing target history
+and 40 unaffected bodies. Regenerated/checked the mirror from
+`outputs/doc-sync/segmentation-refinement-v02/verified-source.json`. Native
+pagination not inspected; actual comparison/error screenshots were inspected.
+
+## October 31: Segmentation training preparation v02
+
+Appended actual dataset, trainer, no-update GPU results, disabled final configuration
+and explicit limits to tab 41; start-tab link follows
+`codex/segmentation-training-preparation`. Revision-guarded native editing and full
+readback preserved all 42 tabs and 40 unaffected tab bodies. Regeneration/check
+passed from `outputs/doc-sync/segmentation-training-preparation-v02/verified-source.json`.
+Native pagination was not inspected. Actual screenshots remain in the
+[preparation note](segmentation-training-preparation-v02.md).
+
+## November 2: Highway curriculum with I-110
+
+Appended selected Sam-source provenance, the 20-case driving curriculum, new actor
+contract, actual no-learning results, high intervention limitation and disabled
+pilot configuration to tab 41. Updated the start-tab mirror link to
+`codex/i110-merge-training`. Revision-guarded full native readback preserved all
+42 tabs and 40 unaffected tab bodies. Mirror regeneration/check passed from
+`outputs/doc-sync/highway-curriculum-v01/verified-source.json`; native pagination
+was not inspected.
+
+
+## November 2: completed highway curriculum training pilot
+
+Appended the approved run outcome, actual failed quality gates, original versus
+final checkpoint comparison, ranking/recovery revisions and retained artifact
+paths to tab 41. Revision-guarded native editing and full readback preserved all
+42 tabs, all 41 unaffected tab bodies and prior target history. The exact append
+was verified. Full mirror regeneration/check passed from
+`outputs/doc-sync/highway-curriculum-training-v01/verified-source.json`.
+Native pagination was not inspected. No acceptance, held-out adaptation or
+additional training claim was added. See [results](highway-curriculum-training-v01.md).
+
+
+## November 2: persistent sensor-driven training roadmap
+
+Appended the three-stage plan, actual starting limits, proposed budgets, research
+basis, project-memory procedure and low-usage execution rules to tab 41. Guarded
+native editing and exact full readback preserved all 42 tabs, all 41 unaffected
+tab bodies and prior target history. Full mirror regeneration/check used
+`outputs/doc-sync/sensor-driven-roadmap-v01/verified-source.json`.
+Native pagination was not inspected. No new training or simulator capability
+was claimed; proposed budgets remain unapproved.
+See [living roadmap](sensor-driven-training-roadmap.md).
+
+
+## November 2: Stage 1 structured highway preparation v02
+
+Appended the actual intervention diagnosis, 93-field contract, teacher/runner
+preparation, failed first preflight, corrected ramp geometry and final 30-case
+results to tab 41. The learning configuration remains disabled. Updated the
+start-tab mirror link to `codex/highway-stage1-preparation`. Revision-guarded
+native editing and full readback preserved all 42 tabs, all 40 unaffected tab
+bodies and prior target history; exact append and start-link replacement verified.
+Regenerated and checked the complete mirror from
+`outputs/doc-sync/highway-stage1-v02/verified-source.json`. Native pagination
+was not inspected. See [preparation evidence](highway-stage1-preparation-v02.md).
+
+
+## November 3: completed Stage 1 training and versioned policy catalog
+
+Appended the authorized run outcome, actual failed intervention gates, selected
+versus lower-intervention phase comparison, retained weights/metrics and requested
+versioned policy catalog to tab 41. Revision-guarded native editing and full
+readback preserved all 42 tabs, 41 unaffected bodies and prior target history;
+the exact append was verified. Regenerated and checked the complete mirror from
+`outputs/doc-sync/highway-stage1-training-v02/verified-source.json`. Native
+pagination was not inspected. No second training or held-out evaluation ran.
+
+
+## November 3: Stage 1 v03 diagnostics and disabled revision
+
+Appended the saved-journal audit, frozen training-label fit, matched teacher
+comparison and measured speed tradeoff, ranking revision, disabled final config
+and actual 98-test/30-case results to tab 41. Updated the start-tab mirror link
+to `codex/highway-stage1-v03`. Revision-guarded native editing and full readback
+preserved all 42 tabs, 40 unaffected bodies and prior target history; the exact
+append and start-link replacement were verified. Mirror regeneration/check passed
+from `outputs/doc-sync/highway-stage1-v03/verified-source.json`. Native pagination
+was not inspected. No v03 learning or held-out test traffic was run.
+
+
+## November 3: Stage 1 v03 completed training and recovery
+
+Appended the authorized run, retained Windows checkpoint failure/resume, actual
+validation improvements and regressions, intermediate-selection tradeoff and
+experimental policy catalog entry to tab 41. Guarded native editing and exact
+full readback preserved all 42 tabs, 41 unaffected bodies and prior target
+history. Regenerated and checked the complete mirror from
+`outputs/doc-sync/highway-stage1-training-v03/verified-source.json`. Native
+pagination was not inspected. No held-out acceptance or physical transfer
+was claimed, and no further learning attempt was launched.
+
+
+## November 4: Stage 1 v04 improved training plan
+
+Appended the proposed diagnosis, matched correction-memory experiment, budget,
+selection and screening/acceptance distinction to tab 41. Updated the start-tab
+mirror link to `codex/highway-stage1-v04-plan`. Revision-guarded native editing
+and full readback preserved all 42 tabs, 40 unaffected bodies and prior history;
+the exact append and scoped link change were verified. Regeneration/check passed
+from `outputs/doc-sync/highway-stage1-v04-plan/verified-source.json`. Native
+pagination was not inspected. No implementation or training outcome was claimed.
+
+
+## November 4: variable-population MAPPO pilot
+
+Appended the actual population implementation, final reviewed configuration, failed preparation checks, completed training, regressed matched results and native emergency-counter discrepancy to tab 41. Updated the start-tab GitHub link to codex/highway-population-v01. Revision-guarded native editing/readback preserved all 42 tabs, historical target content and the 40 unaffected tabs. The mirror regenerated and checked from `outputs/doc-sync/highway-population-v01/verified-source.json` (2,533 paragraphs, 14 tables, 182 code blocks). Native pagination was not inspected. No held-out, sensor, physical or live-handoff capability is implied.
+
+
+## November 4: baseline review and population v02 catch-up
+
+Appended the v02 failure result and restored-reference/public-AV comparison to tab 41. Revision-guarded native edits/readback preserved all 42 tabs, forty unaffected tab bodies and historical target content. Start link follows codex/policy-baseline-review. Full saved JSON exactly matches native readback; mirror regeneration/check passes (2,548 paragraphs, 14 tables, 182 code blocks). Source: outputs/doc-sync/policy-baseline-review/verified-source.json. Native pagination was not inspected. Earlier pending-sync notes remain historical.
+
+
+## November 4: frozen population control and loss diagnostics
+
+Appended no-learning acceleration measurements, objective-gradient findings, historical native-emergency reconciliation and proposed corrections to tab 41. The start-tab mirror link follows `codex/population-control-diagnostics`. Revision-guarded edits and full native readback preserved all 42 tabs, 40 unaffected tab bodies and the historical target-tab prefix. Corrected the event phase breakdown to 9 training / 1 initial validation / 2 final validation after independent review. Regenerated and checked the mirror from `outputs/doc-sync/population-control-diagnostics-v01/verified-source.json`. Native pagination was not inspected. [Results and measured plots](population-control-diagnostics-v01.md).
+
+
+## November 4: population v03 control correction and final configuration
+
+Appended actual near-limit/merge corrections, versioned observation semantics, shared targets, separate diagnostics, bounded results and the disabled final configuration to tab 41. Revision-guarded full native readback preserved all 42 tabs, 40 unaffected tab bodies and historical target content. Start-tab mirror link follows `codex/population-control-v03`. Saved source `outputs/doc-sync/population-control-v03/verified-source.json` exactly matches native readback; regeneration/check passed (2,565 paragraphs, 14 tables, 182 code blocks). Native pagination was not inspected. [Results and configuration](population-control-v03.md).
+
+## November 5: frozen MAPPO physical adapter calibration
+
+Appended the actual adapter, failed full-range brake fit, corrected calibration,
+scripted physical passes and frozen-actor intervention failures to tab 41.
+Changed the start-tab mirror link to `codex/mappo-physical-adapter-v01`.
+Revision-guarded editing and full native readback preserved all 42 tabs, the
+40 unaffected bodies and all prior content in the milestone tab. Regenerated
+and checked the complete Markdown mirror against
+`outputs/doc-sync/mappo-physical-adapter-v01/verified-source.json`.
+Native pagination was not inspected. No policy training or promotion occurred.
+[Results and actual screenshots](mappo-physical-adapter-v01.md).
+
+
+## November 5: population v04 near-limit preparation
+
+Appended the raw-acceleration diagnosis, localized physical-unit objective, four
+speed ceilings, 171 tests, zero-update preflight, retained background emergency
+and exact disabled training configuration to tab 41. The start-tab GitHub link
+now follows `codex/population-near-limit-v04`. Revision-guarded native editing
+and full readback preserved all 42 tabs, the 40 unaffected tab bodies and the
+historical content of the milestone tab. Regenerated and checked the mirror
+against `outputs/doc-sync/population-near-limit-v04/verified-source.json`. Native
+pagination was not inspected. No experiment training or policy promotion.
+[Final configuration and evidence](population-near-limit-v04.md).
+
+
+## November 5: I-110 frozen-policy merge visual test
+
+Appended the merge-specific policy selection, fixed-seed results, failed intervention gate, completed video/screenshot verification and physical-validation limits to tab 41. The start-tab mirror link follows `codex/i110-merge-visual-v01`. Revision-guarded editing and full native readback preserved all 42 tabs, forty unaffected tab bodies and the milestone tab's historical content. Regenerated and checked the mirror from `outputs/doc-sync/i110-merge-visual-v01/verified-source.json` (2,589 paragraphs, 14 tables, 182 code blocks). Native pagination was not inspected. [Results and actual screenshots](i110-merge-visual-v01.md). No training or policy promotion.
+
+
+## November 5: environment v05 training and SimReady replay
+
+Appended implementation, all preserved failures, budget-preserving recoveries, actual training results, rejected-policy artifacts and both SimReady visual cases to tab 41. The start-tab mirror link now follows `codex/highway-environment-v05`. A revision-guarded edit and full native readback verified all 42 tabs, the exact historical target prefix and 40 unchanged unrelated tab bodies. The generated mirror and its check pass from `outputs/doc-sync/highway-environment-v05/verified-source.json` (2,603 paragraphs, 14 tables, 182 code blocks). Native pagination was not inspected. [Measured results](highway-environment-v05-results.md) explicitly retain the intervention regression and I-110 failure; neither copy claims an accepted policy.
+
+
+## November 6, 2026: I-110 merge blockage correction
+
+Appended the network-conflict diagnosis, matched frozen-policy results, failed probes and getter caveat, SimReady replay, remaining intervention failure and no-training next step to tab 41. The start-tab Markdown link now targets `codex/i110-merge-blocking-fix`.
+
+A revision-guarded native write and complete readback preserved all 42 tabs, the 40 unrelated tab bodies and the historical target prefix. Regeneration/check passed from `outputs/doc-sync/i110-merge-blocking-v01/verified-source.json`: 2,612 paragraphs, 14 tables and 182 code blocks. Native page layout was not inspected. Both copies contain the same verified source; source assets, raw captures and videos remain local.
+
+
+## November 6, 2026: remaining overrides and smooth-reference proposal
+
+Appended the remaining intervention attribution, observed approach slowdown and jerk, train-only teacher comparison, fresh SimReady replay, disabled proposed weights/budget and approval gates to tab 41. The start-tab mirror link follows `codex/highway-smooth-control-v01`.
+
+Revision-guarded native editing and full readback preserved all 42 tabs, the historical target prefix and 40 unaffected tab bodies. Regeneration and check passed from `outputs/doc-sync/highway-smooth-control-v01/verified-source.json`: 2,621 paragraphs, 14 tables and 182 code blocks. Native page layout was not inspected. Both copies clearly retain the 8.52% failure and no-training status. [Evidence](highway-smooth-control-v01.md); [proposal](highway-smooth-training-plan-v01.md).
+
+
+## November 6, 2026 — Smooth-control preparation v01
+
+Appended implemented reference/reward/trainer behavior, 44 preserved full native runs, retained v4 results, rejected v5, four comfort failures, disabled final configuration, test outcomes and SimReady replay limitations to tab `t.k82ts3ro3qz9`. Updated only the start-tab mirror URL to branch `codex/highway-smooth-preparation-v01`.
+
+Revision-guarded native editing and a full readback preserved all 42 tabs, all 40 unaffected tab bodies and the exact historical target-tab elements. The intended target addition and start-tab URL replacement matched exactly. Regenerated and checked the mirror from `outputs/doc-sync/highway-smooth-preparation-v01/verified-source.json`: 2,630 paragraphs, 14 tables and 182 code blocks. Native page layout was not inspected. Raw source reads remain local. [Results and screenshots](highway-smooth-preparation-v01.md).
+
+
+## November 6, 2026 — Highway training rethink v01
+
+Appended the read-only replay/control/reward/weight audit, measured regressions, new proposed sequence/budgets and no-training status to tab `t.k82ts3ro3qz9`. Updated only the start-tab mirror URL to `codex/highway-training-rethink-v01`.
+
+The fresh pre-edit full read matched the previous verified source. Revision-guarded scoped editing and full readback preserved all 42 tabs, the 40 unaffected tab bodies and exact historical target-tab elements. Target addition and start-tab replacement matched exactly. The regenerated mirror passed check from `outputs/doc-sync/highway-training-rethink-v01/verified-source.json`: 2,640 paragraphs, 14 tables, 182 code blocks. Native pagination was not inspected. [New plan and actual saved-sample plot](highway-training-rethink-v01.md).
+
+
+## November 6, 2026 — Highway flow preparation v01
+
+Appended implementation, all preserved failures, the 81-recording evidence allocation, failed reference qualification, unresolved initializer, prepared disabled configuration and actual four-view SimReady replay to tab `t.k82ts3ro3qz9`. Updated only the start-tab mirror URL to `codex/highway-flow-preparation-v01`.
+
+Revision-guarded native editing and full readback preserved all 42 tabs, all 40 unaffected tab bodies and the historical target elements. The intended addition and start-tab URL replacement match exactly. The generated mirror passed its check from `outputs/doc-sync/highway-flow-preparation-v01/verified-source.json`: 2,650 paragraphs, 14 tables and 182 code blocks. Native pagination was not inspected. Both copies explicitly say training is disabled and the reference is not qualified. [Results and screenshots](highway-flow-preparation-v01.md).

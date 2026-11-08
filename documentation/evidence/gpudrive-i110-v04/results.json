@@ -1,0 +1,98 @@
+{
+  "status": "route_repair_verified_merge_completed_policy_not_qualified",
+  "evaluation": {
+    "mode": "gpudrive",
+    "training": false,
+    "optimizer_updates": 0,
+    "seed": 6800019,
+    "requested_horizon_s": 40,
+    "policy_safety_override_fraction": 0.897887323943662,
+    "safety_override_note": "Continuous steering preserved; shared longitudinal bounds, hard speed limits, live minor-link yield checks and 20 ms footprint sampling. Unsafe proposals terminate this test. Not the complete native SUMO/MAPPO safety stack; background prediction is constant velocity.",
+    "contacts": [],
+    "native_collision_events": [],
+    "teleports": [],
+    "completed_trips": 7,
+    "speed_limit_exceedance_steps": 0,
+    "reverse_speed_steps": 0,
+    "pose_readback_max_error_m": 5.684341886080802e-14,
+    "merge_completed": true,
+    "terminal_reason": "goal_reached",
+    "merge_time_s": 8.3,
+    "safety_rejections": [],
+    "geometric_lane_recovery_steps": 0,
+    "destination_edge": "sb5",
+    "route_repairs": [
+      {
+        "time": 1.1,
+        "source_edge": "sb1",
+        "previous_route": [
+          "sb1"
+        ],
+        "restored_route": [
+          "sb1",
+          "sb2",
+          "sb3",
+          "sb4",
+          "sb5"
+        ],
+        "destination_edge": "sb5"
+      }
+    ],
+    "route_repair_failures": [],
+    "move_to_xy_keep_route": 2,
+    "sumo_version": [
+      22,
+      "SUMO 1.27.1"
+    ],
+    "safety_changed_decisions": 255,
+    "accepted_decisions": 284,
+    "steering_reinterpretations": 0,
+    "simulated_duration_s": 28.5,
+    "wall_seconds": 3.8589999999967404,
+    "goal_reached": true,
+    "minimum_speed_m_s": 6.212214045539055,
+    "mean_speed_m_s": 20.337608253659525,
+    "maximum_speed_m_s": 26.82,
+    "distance_m": 577.8656837009322,
+    "stopped_exposure_s": 0.0,
+    "peak_abs_jerk_m_s3": 60.00000000000005,
+    "actor_decisions": 284,
+    "sampling": "deterministic argmax",
+    "collision_geometry": "Full vehicle footprint; GPUDrive training used reduced collision boxes.",
+    "baseline_comparison": "Native traffic baseline; historical eight-controller runs are not paired comparisons."
+  },
+  "override_reasons_nonexclusive": {
+    "acceleration_range": 251,
+    "following": 137,
+    "speed_ceiling": 4
+  },
+  "tests": {
+    "passed": 30,
+    "subtests_passed": 14
+  },
+  "steering_requests_preserved": 284,
+  "provenance": {
+    "git_commit": "a1bdcadd395e003135f8f2969a23cdc4c207e223",
+    "source_sha256": {
+      "scripts/evaluate_gpudrive_i110.py": "a49224937b43571c17a918e9cbdfc425c82f2a792ac30373cd55318cd4de93b8",
+      "traffic/gpudrive_sumo_bridge.py": "ca856e89a763f41d8e061cd631e7ee40bfa00def06eb0956fe65003367e784a3",
+      "traffic/gpudrive_pretrained.py": "f3daae0451c0075d8769e24a466af3e4ae03d6df0619e8ac622f86e83994f938",
+      "traffic/gpudrive_continuous_safety.py": "8946b9f9d14dcdf462f54a3c5e2719dd1fe1f95478168e5cde4a9848b9b7e011",
+      "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+      "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+      "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+      "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076"
+    },
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.6",
+    "checkpoint_sha256": "f3f26475def35f375c6c72d8f8f20b2b091f77175010345dc3fa968a860521b7"
+  },
+  "artifacts": {
+    "evaluation.json": "a1abbb52a428a2a281c3f3146c3b83bd4decc236dcbcf102ca26574318fcca67",
+    "recording.json": "5fc7944678a44a9336526e99a1505e95030800c4eeb784b5c51758842d137ed8",
+    "actions.jsonl.gz": "11baaec28b511f1368cd134a3d1f5a8698b9f6857d4497df47a8e335fdbf9af1",
+    "manifest.json": "a9889dde8878e4df2f91f42a710ac9b9f66bc3908fa0cb252c03630df8bc8228",
+    "resolved-config.json": "9030750814c70e4ebfd1e0d3d6c40f2d7d79031c63db610ec2d89d1e912457d6"
+  }
+}

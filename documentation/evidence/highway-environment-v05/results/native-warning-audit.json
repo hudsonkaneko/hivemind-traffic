@@ -1,0 +1,542 @@
+{
+  "initial": {
+    "logs": [
+      {
+        "case_id": "v05-val-0-cruise",
+        "seed": 6900000,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/0/episode-6900000-1c0011ce/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-0-following",
+        "seed": 6900001,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/1/episode-6900001-f7311f60/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-0-passing",
+        "seed": 6900002,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/2/episode-6900002-67939c45/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-0-merge",
+        "seed": 6900003,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/3/episode-6900003-1a952730/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-1-cruise",
+        "seed": 6900004,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/4/episode-6900004-19d0f3f9/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-1-following",
+        "seed": 6900005,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/5/episode-6900005-527af278/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-1-passing",
+        "seed": 6900006,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/6/episode-6900006-3592ed80/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-1-merge",
+        "seed": 6900007,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/7/episode-6900007-eb522e5e/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-2-cruise",
+        "seed": 6900008,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/8/episode-6900008-b0b6b981/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-2-following",
+        "seed": 6900009,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/9/episode-6900009-9871dde5/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-2-passing",
+        "seed": 6900010,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/10/episode-6900010-c1242d04/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-2-merge",
+        "seed": 6900011,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/11/episode-6900011-ad395163/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-3-cruise",
+        "seed": 6900012,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/12/episode-6900012-89274a2c/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-3-following",
+        "seed": 6900013,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/13/episode-6900013-ce1e5830/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-3-passing",
+        "seed": 6900014,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/14/episode-6900014-4f7ec4fe/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-3-merge",
+        "seed": 6900015,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/15/episode-6900015-6aac166d/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-validation-i110-cruise",
+        "seed": 6900016,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/16/episode-6900016-92470c2e/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "seed": 6900017,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/17/episode-6900017-b5a788f9/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-validation-i110-passing",
+        "seed": 6900018,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/18/episode-6900018-321f35dd/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-validation-i110-merge",
+        "seed": 6900019,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/19/episode-6900019-35a69719/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "validation-5-lane-cruise",
+        "seed": 6900020,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/20/episode-6900020-e7559dbe/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "validation-5-lane-following",
+        "seed": 6900021,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/21/episode-6900021-32cd94eb/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "validation-5-lane-passing",
+        "seed": 6900022,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/22/episode-6900022-6bd0ed0d/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "validation-5-lane-merge",
+        "seed": 6900023,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/initial-validation/23/episode-6900023-70b9b620/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      }
+    ],
+    "total_warning_lines": 0,
+    "other_nonempty_lines": 0
+  },
+  "final": {
+    "logs": [
+      {
+        "case_id": "v05-val-0-cruise",
+        "seed": 6900000,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/0/episode-6900000-1c8fe14d/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-0-following",
+        "seed": 6900001,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/1/episode-6900001-673ca0fc/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-0-passing",
+        "seed": 6900002,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/2/episode-6900002-d1b049da/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-0-merge",
+        "seed": 6900003,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/3/episode-6900003-4796e80d/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-1-cruise",
+        "seed": 6900004,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/4/episode-6900004-2b626e4e/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-1-following",
+        "seed": 6900005,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/5/episode-6900005-c2f76f26/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-1-passing",
+        "seed": 6900006,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/6/episode-6900006-3c9dc189/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-1-merge",
+        "seed": 6900007,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/7/episode-6900007-4466afea/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-2-cruise",
+        "seed": 6900008,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/8/episode-6900008-945bac2d/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-2-following",
+        "seed": 6900009,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/9/episode-6900009-733a763b/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-2-passing",
+        "seed": 6900010,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/10/episode-6900010-fa0d3e14/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-2-merge",
+        "seed": 6900011,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/11/episode-6900011-cc7ae87c/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-3-cruise",
+        "seed": 6900012,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/12/episode-6900012-255cd2f5/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-3-following",
+        "seed": 6900013,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/13/episode-6900013-630dd863/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-3-passing",
+        "seed": 6900014,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/14/episode-6900014-b5b3af25/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-val-3-merge",
+        "seed": 6900015,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/15/episode-6900015-47f6dc10/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-validation-i110-cruise",
+        "seed": 6900016,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/16/episode-6900016-59e13e1b/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "seed": 6900017,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/17/episode-6900017-b18003b3/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-validation-i110-passing",
+        "seed": 6900018,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/18/episode-6900018-7c79340b/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "v05-validation-i110-merge",
+        "seed": 6900019,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/19/episode-6900019-1ea27c5c/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "validation-5-lane-cruise",
+        "seed": 6900020,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/20/episode-6900020-c1f1151b/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "validation-5-lane-following",
+        "seed": 6900021,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/21/episode-6900021-c4d21c85/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "validation-5-lane-passing",
+        "seed": 6900022,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/22/episode-6900022-92347133/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      },
+      {
+        "case_id": "validation-5-lane-merge",
+        "seed": 6900023,
+        "source": {
+          "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/final-validation/23/episode-6900023-71e9e858/sumo-errors.log",
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "warning_lines": [],
+        "other_nonempty_lines": []
+      }
+    ],
+    "total_warning_lines": 0,
+    "other_nonempty_lines": 0
+  }
+}

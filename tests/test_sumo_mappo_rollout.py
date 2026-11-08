@@ -102,6 +102,23 @@ def collector(pool, **kwargs):
     return RolloutCollector(pool, ControlledModel(), config, **kwargs)
 
 
+def test_teacher_labels_are_pre_action_supervision_not_executed_actions():
+    class TeacherPool(FakePool):
+        def request(self, commands):
+            if all(op == 'scripted_action' for op,_ in commands.values()):
+                self.calls.append(copy.deepcopy(commands))
+                return {i:dict(actions={a:np.array([.5],dtype=np.float32) for a in self.live[i]})
+                        for i in commands}
+            return super().request(commands)
+    pool=TeacherPool([[(initial(),[reply()])]])
+    run=collector(pool)
+    run.config['training']['imitation']={'enabled':True}
+    batch,_,count=run.collect(1,4)
+    assert count==4 and torch.all(batch['teacher_actions']==.5)
+    assert torch.all(batch['actions']==0) and torch.all(batch['pre_tanh_actions']==0)
+    assert [list(c.values())[0][0] for c in pool.calls]==['reset','scripted_action','step']
+
+
 def test_budget_selects_only_workers_that_fit_and_counts_live_agents():
     # Four plus one fit; the middle worker's three agents must not be stepped.
     singleton = (AGENTS[2],)

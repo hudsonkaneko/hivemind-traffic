@@ -1,0 +1,594 @@
+{
+  "schema": "highway_smooth_proposal_saved_objective_audit_v01",
+  "training": false,
+  "optimizer_steps": 0,
+  "native_runs": 0,
+  "run": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880",
+  "sources": [
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00001.json",
+      "sha256": "637dacf4d205e9fe622ef8c0c879585b64b7a050c240057f29b6c9348910606c",
+      "critic_only": true,
+      "decisions": 4080,
+      "optimizer_steps": 64
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00002.json",
+      "sha256": "a1fddfed1ecb882f20d7dbe41daa4dd8966245e575effda75f4aba41f4249b36",
+      "critic_only": true,
+      "decisions": 16,
+      "optimizer_steps": 4
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00003.json",
+      "sha256": "50a5853bd00cf39f47481d1cc4f0670367f3f72534e224ac82f5930f73a351f5",
+      "critic_only": false,
+      "decisions": 1600,
+      "optimizer_steps": 5
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00004.json",
+      "sha256": "6f7a42245d9471fdd44be213d567bb93e41bc914ae292473a48a887f61c1bbc0",
+      "critic_only": false,
+      "decisions": 9600,
+      "optimizer_steps": 65
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00005.json",
+      "sha256": "be2666154cb4db4f17d47ba1cba4713ee519063cb64171f889373cd40c9981fb",
+      "critic_only": false,
+      "decisions": 1600,
+      "optimizer_steps": 28
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00006.json",
+      "sha256": "98040cc5ff27c9eb7be7ebfa2ae7a086ab9d5e2005336a9c8d9b39d2f337b6ed",
+      "critic_only": false,
+      "decisions": 9600,
+      "optimizer_steps": 9
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00007.json",
+      "sha256": "4269ef8552554dca305d559346f1d0deeda191d6b0c9324c5f5ce8e7432094c1",
+      "critic_only": false,
+      "decisions": 1600,
+      "optimizer_steps": 28
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00008.json",
+      "sha256": "d5b63ff24996302a4852e050d98578c6717339a60ad5323bc606a44d591948fa",
+      "critic_only": false,
+      "decisions": 6400,
+      "optimizer_steps": 100
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00009.json",
+      "sha256": "2e5db50a88c3c033459e8281dacdcc09cbf0a0213c31ae847ac206be92c25ac8",
+      "critic_only": false,
+      "decisions": 2148,
+      "optimizer_steps": 36
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00010.json",
+      "sha256": "b88c0ff63864c4808dfbf2e1af816f202d2b5322dea494e6bffaf25c5a2dddc4",
+      "critic_only": false,
+      "decisions": 1918,
+      "optimizer_steps": 32
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00011.json",
+      "sha256": "bf0a8dc92d49d9b4e8708c47d22562bdf1d7b201d83b3c55e75b552e23ae046d",
+      "critic_only": false,
+      "decisions": 9600,
+      "optimizer_steps": 121
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00012.json",
+      "sha256": "a9d4e7b5d1d2ba7fe6b7576b56c75ef38cc8a4ad5e7f288852dbb0c2e20566ab",
+      "critic_only": false,
+      "decisions": 401,
+      "optimizer_steps": 8
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00013.json",
+      "sha256": "fc35b29b48f7f810ecc3a6e3dc5f1df0b8680560ce5cd5f497e891d293ea611d",
+      "critic_only": false,
+      "decisions": 4800,
+      "optimizer_steps": 58
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00014.json",
+      "sha256": "7daf20096a06b33a353f188f0bbd4e4bfd47f90948b3ef31adb9cddf310879f5",
+      "critic_only": false,
+      "decisions": 2400,
+      "optimizer_steps": 7
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00015.json",
+      "sha256": "6c053ba0a4b51b6e20081cc22cd056adf8e739641f7846f1deb7fe92174f1cfe",
+      "critic_only": false,
+      "decisions": 1956,
+      "optimizer_steps": 9
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00016.json",
+      "sha256": "f48316775e47c54a59ce4ee14006ff034329b81d51eb8eaa6ad37da741f3fb0f",
+      "critic_only": false,
+      "decisions": 14167,
+      "optimizer_steps": 16
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00017.json",
+      "sha256": "184093372e83aff121a8a64c8f41360b6d3c2b072f5156d00902f6b39f904225",
+      "critic_only": false,
+      "decisions": 1600,
+      "optimizer_steps": 7
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00018.json",
+      "sha256": "3f5617b8a5a83746d7ce860900eb92b4e3e69dfd75edd6f2c1bec51edc46f187",
+      "critic_only": false,
+      "decisions": 3200,
+      "optimizer_steps": 13
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00019.json",
+      "sha256": "d5c6699d043da817590c079cf2a646e46c44724f233b125d5959aa311f2a66bb",
+      "critic_only": false,
+      "decisions": 800,
+      "optimizer_steps": 16
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00020.json",
+      "sha256": "bec31fe2266c941d793aef127d900a42a7224054dcdb8f54b3a7c1d3ce74d5bd",
+      "critic_only": false,
+      "decisions": 9600,
+      "optimizer_steps": 141
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00021.json",
+      "sha256": "975094db9b65606d20fedd67bc63d60ebca04ee3629707ba92feaaa525499f83",
+      "critic_only": false,
+      "decisions": 1743,
+      "optimizer_steps": 28
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00022.json",
+      "sha256": "74f555bfdfbd50899571344a5f237f6153343e44ae11b84ef2798ab11225cb16",
+      "critic_only": false,
+      "decisions": 1600,
+      "optimizer_steps": 20
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00023.json",
+      "sha256": "a70f77ea00ce1d33ff48d67f29fd4778098a4cc50c8270f8e590be0f08122b9f",
+      "critic_only": false,
+      "decisions": 4797,
+      "optimizer_steps": 76
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00024.json",
+      "sha256": "354d624a8528040bd81d65415c52eea257c90abbd1f3a1ef20459f3dfeff550d",
+      "critic_only": false,
+      "decisions": 800,
+      "optimizer_steps": 16
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00025.json",
+      "sha256": "395e9942309538a39a28a671e6be59314e49cb0500c465f8dce6b3a020c2e61e",
+      "critic_only": false,
+      "decisions": 1600,
+      "optimizer_steps": 28
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00026.json",
+      "sha256": "39a5ec0caf5883b0bf7de5fe366f45dc6ecdefea493e07096b62411ef2279a43",
+      "critic_only": false,
+      "decisions": 9257,
+      "optimizer_steps": 148
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00027.json",
+      "sha256": "6efb1e710089935380336d4001166379b7977293d7140f99523c8661936543ee",
+      "critic_only": false,
+      "decisions": 1600,
+      "optimizer_steps": 28
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00028.json",
+      "sha256": "f7b31c622ce3c689d99dde154abc44ccc187b7931a6256ddabbb10892ff4662a",
+      "critic_only": false,
+      "decisions": 19200,
+      "optimizer_steps": 4
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00029.json",
+      "sha256": "56bf0971d5fbbb99d44f5eb0f5c0d3806c7551a5680c4a4ebed307a0f525ae3d",
+      "critic_only": false,
+      "decisions": 1600,
+      "optimizer_steps": 28
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00030.json",
+      "sha256": "65c7439e5c81e7f4b001653b948161f8e136f0fe559940585521bbc0df058f22",
+      "critic_only": false,
+      "decisions": 9600,
+      "optimizer_steps": 98
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00031.json",
+      "sha256": "856448d2e783fb6cfb36b1df98e4c6b8734910a5d6434fa73428d4a67c096e48",
+      "critic_only": false,
+      "decisions": 9600,
+      "optimizer_steps": 12
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00032.json",
+      "sha256": "a8443ce32610075c4e76716ebe73f62451d2b66640642ae9b5e1c78c7263a3dd",
+      "critic_only": false,
+      "decisions": 4800,
+      "optimizer_steps": 76
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00033.json",
+      "sha256": "65e31712866d25a0316a93b96a3e35497079cc5a15d92fff0888647607a5207c",
+      "critic_only": false,
+      "decisions": 907,
+      "optimizer_steps": 16
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00034.json",
+      "sha256": "677d7120ae84d03ea1a5f4eff0609ec44b98767733e2798737e92f4ea9ee07e9",
+      "critic_only": false,
+      "decisions": 1104,
+      "optimizer_steps": 20
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00035.json",
+      "sha256": "5af5891d7f8203b5f8b161152f896187b8d6b13fb5d92c8fd8002e22bf23a5f4",
+      "critic_only": false,
+      "decisions": 4800,
+      "optimizer_steps": 56
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00036.json",
+      "sha256": "48a298f8a5ff6e04abd9a9cd6bdf423bc1b7cfb32f2da2892a3c26813c0f4bd8",
+      "critic_only": false,
+      "decisions": 8146,
+      "optimizer_steps": 31
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00037.json",
+      "sha256": "dfa779d26349b4caa2abf4a5bdc07406dc571ac0e591e2ba56ac1fad10f13862",
+      "critic_only": false,
+      "decisions": 12680,
+      "optimizer_steps": 78
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00038.json",
+      "sha256": "1cc73f8be7102f5756b319c1feb2461df6b3152ad3355da1ba26c07043291aa0",
+      "critic_only": false,
+      "decisions": 19200,
+      "optimizer_steps": 12
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00039.json",
+      "sha256": "46ea3ad278a4b95ac63953e51776f45d8f2360d9ec8d3930a1d2643536585800",
+      "critic_only": false,
+      "decisions": 4800,
+      "optimizer_steps": 76
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00040.json",
+      "sha256": "beb36031e977e9bd72aa414ce41caac4ccc96b12b069ad81969c63729eee052f",
+      "critic_only": false,
+      "decisions": 1929,
+      "optimizer_steps": 32
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00041.json",
+      "sha256": "324e1ec11d6b8f3f797376a8c826ec00638c6984eae7b99bc625d6dd1f73e9e6",
+      "critic_only": false,
+      "decisions": 1600,
+      "optimizer_steps": 28
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00042.json",
+      "sha256": "47d54b55501bc6c2a45830b38c67cbe281f5518e77b97306476a649c46e5740b",
+      "critic_only": false,
+      "decisions": 9600,
+      "optimizer_steps": 152
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00043.json",
+      "sha256": "677b4981dce1482f97d69abe4a25a455cfe08b89c4679e32cbf5738b6ac6c8cd",
+      "critic_only": false,
+      "decisions": 4800,
+      "optimizer_steps": 28
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00044.json",
+      "sha256": "cd449cebb4d67840bfa4ca49257667b18a2af4f82f25b2d2a31fa89d68c808be",
+      "critic_only": false,
+      "decisions": 1600,
+      "optimizer_steps": 28
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00045.json",
+      "sha256": "bd0120a826623e29d9be3045c203d9435efbc42e4be7e3064b053f3a54087030",
+      "critic_only": false,
+      "decisions": 14379,
+      "optimizer_steps": 81
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00046.json",
+      "sha256": "dabe4f17f51748d4a087b7bc1772b474238fca77ea628ef8677b2a56ae157cfb",
+      "critic_only": false,
+      "decisions": 800,
+      "optimizer_steps": 6
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00047.json",
+      "sha256": "fa7600330ccc3b7c4606378c4d8969c1b65e7ffbff7d260fc4308ca3ef646f47",
+      "critic_only": false,
+      "decisions": 3080,
+      "optimizer_steps": 52
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00048.json",
+      "sha256": "f78a1cc0070fc43a700a161107923213b160673ac4b6a501ff14a5493fbe8cc9",
+      "critic_only": false,
+      "decisions": 2267,
+      "optimizer_steps": 36
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00049.json",
+      "sha256": "a759b21c1a5bc68f5d89c41f350134e1b3fe8be5512ce35d6a6d0092886b8566",
+      "critic_only": false,
+      "decisions": 5022,
+      "optimizer_steps": 29
+    },
+    {
+      "path": "outputs/highway-environment/v05/train-20261106T024828Z-90b25880/update-00050.json",
+      "sha256": "9724b4ccf199081ef8d7db64ee8445db42a488a22183ddf6ebba343a38785100",
+      "critic_only": false,
+      "decisions": 2,
+      "optimizer_steps": 3
+    }
+  ],
+  "computation": {
+    "selection": "All update-*.json in saved run; critic_only true excluded from PPO reward/gradient summaries",
+    "reward_mean": "Sum each recorded weighted reward component across PPO reports divided by summed active agent_steps",
+    "gradient_statistics": "Unweighted distribution over every actual optimizer-step record, not weighted by minibatch sample count",
+    "component_statistics": "One first accepted minibatch per PPO update; ratio computed per minibatch then summarized",
+    "cosine_statistics": "Only defined non-null cosine values; undefined zero-gradient pairs counted separately",
+    "limitations": "Gradient norms/clipping are derivatives, not Adam parameter steps. Two partial PPO rollouts are included. Recorded jerk reward includes native dynamics and terminal no-state zeros; no requested/native causal separation."
+  },
+  "ppo": {
+    "rollouts": 48,
+    "decisions": 245903,
+    "optimizer_steps": 2025,
+    "partial_rollouts": 2,
+    "reward_terms": {
+      "arrival": {
+        "sum": 102.0,
+        "per_active_decision": 0.0004147977047860335
+      },
+      "collision": {
+        "sum": 0.0,
+        "per_active_decision": 0.0
+      },
+      "cooperation": {
+        "sum": 0.39999999999999997,
+        "per_active_decision": 1.6266576658275822e-06
+      },
+      "feasible_acceleration": {
+        "sum": -8924.409898267197,
+        "per_active_decision": -0.036292399435009726
+      },
+      "intervention": {
+        "sum": -9214.600000000213,
+        "per_active_decision": -0.03747249931883797
+      },
+      "jerk": {
+        "sum": -6861.383060189174,
+        "per_active_decision": -0.02790280338259059
+      },
+      "lane_change": {
+        "sum": -135.89999999999995,
+        "per_active_decision": -0.0005526569419649209
+      },
+      "lane_oscillation": {
+        "sum": 0.0,
+        "per_active_decision": 0.0
+      },
+      "merge": {
+        "sum": 20.0,
+        "per_active_decision": 8.133288329137913e-05
+      },
+      "passing": {
+        "sum": 20.0,
+        "per_active_decision": 8.133288329137913e-05
+      },
+      "progress": {
+        "sum": 150811.54146536443,
+        "per_active_decision": 0.6132968750497734
+      },
+      "stable_merge": {
+        "sum": 2.0,
+        "per_active_decision": 8.133288329137912e-06
+      },
+      "unsafe_request": {
+        "sum": -357.8831361902951,
+        "per_active_decision": -0.0014553833673859005
+      }
+    },
+    "reward_sum": 125461.76537071755,
+    "jerk_cost_percent_of_progress": 4.549640560344626
+  },
+  "excluded_critic_warmup": {
+    "rollouts": 2,
+    "decisions": 4096,
+    "optimizer_steps": 68
+  },
+  "actual_step_gradients": {
+    "clipped_steps": 2025,
+    "clipped_fraction": 1.0,
+    "global_clip_factor": {
+      "samples": 2025,
+      "mean": 0.14626226678524612,
+      "median": 0.12055693246836634,
+      "minimum": 0.005459531173452524,
+      "maximum": 0.8079365613518548
+    },
+    "before_clip_norms": {
+      "actor": {
+        "samples": 2025,
+        "mean": 4.062760731379191,
+        "median": 3.4846415519714355,
+        "minimum": 0.35550838708877563,
+        "maximum": 79.39611053466797
+      },
+      "critic": {
+        "samples": 2025,
+        "mean": 4.542714305634324,
+        "median": 0.3762175440788269,
+        "minimum": 0.0,
+        "maximum": 91.43798065185547
+      },
+      "joint": {
+        "samples": 2025,
+        "mean": 7.750869215769551,
+        "median": 4.14741700504484,
+        "minimum": 0.6188594492141112,
+        "maximum": 91.58295001574034
+      }
+    },
+    "critic_exceeds_actor_steps": 360
+  },
+  "first_minibatch_components": {
+    "observations": 48,
+    "samples": [
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      256,
+      2
+    ],
+    "weighted_actor_norms": {
+      "ppo": {
+        "samples": 48,
+        "mean": 5.250605519860983,
+        "median": 3.2746167182922363,
+        "minimum": 0.9208036065101624,
+        "maximum": 68.72648620605469
+      },
+      "acceleration": {
+        "samples": 48,
+        "mean": 0.05303414790735891,
+        "median": 0.033294323831796646,
+        "minimum": 0.004942120984196663,
+        "maximum": 0.23552429676055908
+      },
+      "near_limit": {
+        "samples": 48,
+        "mean": 0.38900617184117436,
+        "median": 0.3079151064157486,
+        "minimum": 0.0,
+        "maximum": 2.585270881652832
+      }
+    },
+    "per_minibatch_actor_norm_ratios_to_ppo": {
+      "acceleration": {
+        "samples": 48,
+        "mean": 0.019516080851388458,
+        "median": 0.011405270761495999,
+        "minimum": 0.0006929779342356077,
+        "maximum": 0.11647763125900122
+      },
+      "near_limit": {
+        "samples": 48,
+        "mean": 0.15011790134377867,
+        "median": 0.08154311478050077,
+        "minimum": 0.0,
+        "maximum": 0.968819458423428
+      }
+    },
+    "actor_cosines": {
+      "ppo__acceleration": {
+        "samples": 48,
+        "mean": 0.2232327034468294,
+        "median": 0.3828837759298726,
+        "minimum": -0.9408834412651639,
+        "maximum": 0.9863691872636072,
+        "negative": 15,
+        "undefined": 0
+      },
+      "ppo__near_limit": {
+        "samples": 43,
+        "mean": 0.21854585632443022,
+        "median": 0.39415429957032594,
+        "minimum": -0.9358841897977013,
+        "maximum": 0.989765859155046,
+        "negative": 15,
+        "undefined": 5
+      },
+      "acceleration__near_limit": {
+        "samples": 43,
+        "mean": 0.6462622227255675,
+        "median": 0.8971140522188639,
+        "minimum": -0.9166556852838802,
+        "maximum": 0.9995683741366808,
+        "negative": 4,
+        "undefined": 5
+      }
+    }
+  },
+  "builder": {
+    "path": "documentation/evidence/highway-smooth-training-plan-v01/build_objective_audit.py",
+    "sha256": "09cdfe3576379355fac722bd0465d7731c0792d919e622ff88376dff8e722480"
+  }
+}

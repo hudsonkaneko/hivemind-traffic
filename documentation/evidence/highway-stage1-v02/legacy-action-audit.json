@@ -1,0 +1,316 @@
+{
+  "source_path": "outputs/highway-stage1/v02/legacy-action-audit-v01.json",
+  "source_sha256": "261e965e1a1eb10b6770efbfb89c077f55c32275930f3922bfa0fd0f6bdd696b",
+  "schema": "highway_action_audit_v1",
+  "journals": [
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210000-d974fffc/actions.jsonl.gz",
+      "sha256": "8a7c5c0edcc051079ff1234da8d02497c331ee5b110b5dd9b8dc0549075291b3",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 2994,
+        "requested_filtered_difference": 2994,
+        "filtered_realized_difference": 0,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 0.935625,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.985712837697938,
+        0.12925265459319824,
+        0.12925265459319824
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 1.8564601831047398,
+      "mean_abs_filtered_realized_error_m_s2": 5.3179682879545e-16,
+      "p95_abs_requested_realized_error_m_s2": 1.9876321241259576
+    },
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210001-eee43f75/actions.jsonl.gz",
+      "sha256": "473324e8020e8e9ae865f80c773fdd6f0a570a925f8eb1f8efd6b0b9310f21c7",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 3200,
+        "requested_filtered_difference": 1198,
+        "filtered_realized_difference": 2660,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 1,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.9889301767759024,
+        1.465099354699045,
+        0.10218660353518143
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 0.5238308220768569,
+      "mean_abs_filtered_realized_error_m_s2": 1.3629127511638648,
+      "p95_abs_requested_realized_error_m_s2": 2.143104281682387
+    },
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210002-1fd0a969/actions.jsonl.gz",
+      "sha256": "d613dc0a74154d7a2f13966b6569b171d3666dc424e56089b627a79eb987a6b9",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 3191,
+        "requested_filtered_difference": 1249,
+        "filtered_realized_difference": 2085,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 0.9971875,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.988214937057346,
+        1.2511011228056754,
+        0.062326513885545214
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 0.7371138142516709,
+      "mean_abs_filtered_realized_error_m_s2": 1.1887746089201299,
+      "p95_abs_requested_realized_error_m_s2": 2.284713145418383
+    },
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210003-511f7154/actions.jsonl.gz",
+      "sha256": "9eb75f6911cc5977c97641cdc96076e8158934131ed9755a200905e147ed7e1d",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 2915,
+        "requested_filtered_difference": 2473,
+        "filtered_realized_difference": 446,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 0.9109375,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.9850710959080606,
+        0.3759071000178794,
+        -0.003720757856834894
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 1.609163995890181,
+      "mean_abs_filtered_realized_error_m_s2": 0.379627857874715,
+      "p95_abs_requested_realized_error_m_s2": 2.7407550584256133
+    },
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210004-54989457/actions.jsonl.gz",
+      "sha256": "2e8d6bf0339fffd429d6176f9510c3c105cf0a942536cf5cbc9f76625332183f",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 3061,
+        "requested_filtered_difference": 2950,
+        "filtered_realized_difference": 212,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 0.9565625,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.985577565599233,
+        0.17928226110687231,
+        0.11653720344343205
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 1.8062953044923609,
+      "mean_abs_filtered_realized_error_m_s2": 0.06274505766344046,
+      "p95_abs_requested_realized_error_m_s2": 1.9878415204584599
+    },
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210005-a01811b6/actions.jsonl.gz",
+      "sha256": "cd6584ce441895c344a69128cfe7dd6ce9927e0a5b901c1b478b4fbb53f3bcba",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 3200,
+        "requested_filtered_difference": 1313,
+        "filtered_realized_difference": 2258,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 1,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.9871949555259198,
+        1.3080498977754098,
+        0.06317887442434697
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 0.6791450577505096,
+      "mean_abs_filtered_realized_error_m_s2": 1.2448710233510634,
+      "p95_abs_requested_realized_error_m_s2": 2.084050964769517
+    },
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210006-af5a1fe5/actions.jsonl.gz",
+      "sha256": "95e6d919defe6fa6c38d73a293740ed5d602b5fa0866f98080711990e050ae1d",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 3191,
+        "requested_filtered_difference": 1292,
+        "filtered_realized_difference": 1933,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 0.9971875,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.9865989180887118,
+        1.184667236395561,
+        0.029655399484159618
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 0.8019316816931508,
+      "mean_abs_filtered_realized_error_m_s2": 1.1550118369114015,
+      "p95_abs_requested_realized_error_m_s2": 2.308086340853525
+    },
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210007-06deb158/actions.jsonl.gz",
+      "sha256": "b91020ace6336662da6e8949312ed0243196253706c89cb307c0473772b55783",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 2932,
+        "requested_filtered_difference": 2389,
+        "filtered_realized_difference": 633,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 0.91625,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.9826037660473959,
+        0.4417932977997108,
+        -0.00268303898011315
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 1.5408104682476849,
+      "mean_abs_filtered_realized_error_m_s2": 0.4444763367798245,
+      "p95_abs_requested_realized_error_m_s2": 2.5260046855867913
+    },
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210008-49b9a76e/actions.jsonl.gz",
+      "sha256": "0fcf2fd6f8a096df2c8288d7a97605c0be972b3b0ce54cfc1b444be7155eda08",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 3013,
+        "requested_filtered_difference": 3013,
+        "filtered_realized_difference": 0,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 0.9415625,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.9847551014274358,
+        0.11760118099146209,
+        0.11760118099146208
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 1.8671539204359737,
+      "mean_abs_filtered_realized_error_m_s2": 4.962696920074449e-16,
+      "p95_abs_requested_realized_error_m_s2": 1.9866418622434139
+    },
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210009-4727bbff/actions.jsonl.gz",
+      "sha256": "f19d38684bd1fa505cac8680e28b90071dbb8f122cfca0d6dcad452b52e429f8",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 3200,
+        "requested_filtered_difference": 805,
+        "filtered_realized_difference": 2694,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 1,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.9872538266330957,
+        1.5963293474890805,
+        0.08031772422354123
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 0.3909244791440161,
+      "mean_abs_filtered_realized_error_m_s2": 1.5160116232655383,
+      "p95_abs_requested_realized_error_m_s2": 2.041972687301611
+    },
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210010-1172cc37/actions.jsonl.gz",
+      "sha256": "9bfb2429023ba64da686cdd0c16a63b1229c68d3a3d92d1b06d7a8ac0102acce",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 3200,
+        "requested_filtered_difference": 724,
+        "filtered_realized_difference": 2603,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 1,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.9873893862776457,
+        1.5800293656278535,
+        0.08312413850485836
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 0.4073600206497923,
+      "mean_abs_filtered_realized_error_m_s2": 1.4969052271229952,
+      "p95_abs_requested_realized_error_m_s2": 2.0899503807955453
+    },
+    {
+      "journal": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5/validation/episode-5210011-961ec1f3/actions.jsonl.gz",
+      "sha256": "dd84c524d44339076c3f560e1382ba3e18fd5ca50c64ef46cd3ca91c43105bec",
+      "counts": {
+        "agent_decisions": 3200,
+        "recorded_overrides": 2937,
+        "requested_filtered_difference": 2425,
+        "filtered_realized_difference": 602,
+        "lane_rejected": 0,
+        "near_max_acceleration_requests": 3200,
+        "decisions_without_cause_telemetry": 3200
+      },
+      "cause_decision_counts": {},
+      "override_fraction": 0.9178125,
+      "near_max_request_fraction": 1,
+      "mean_requested_filtered_realized_m_s2": [
+        1.984251792440191,
+        0.4199656849142031,
+        -0.0026869378502839643
+      ],
+      "mean_abs_requested_filtered_error_m_s2": 1.564286107525988,
+      "mean_abs_filtered_realized_error_m_s2": 0.4226526227644875,
+      "p95_abs_requested_realized_error_m_s2": 2.4863489672018737
+    }
+  ],
+  "counts": {
+    "agent_decisions": 38400,
+    "recorded_overrides": 37034,
+    "requested_filtered_difference": 22825,
+    "filtered_realized_difference": 16126,
+    "lane_rejected": 0,
+    "near_max_acceleration_requests": 38400,
+    "decisions_without_cause_telemetry": 38400
+  },
+  "cause_decision_counts": {},
+  "override_fraction": 0.9644270833333334,
+  "near_max_request_fraction": 1,
+  "semantics": {
+    "counts": "Per recorded active-agent decision; repeated episodes remain separate journals.",
+    "causes": "Only explicitly logged causes. Multiple causes may overlap on a decision.",
+    "native": "Filtered/realized difference is not proof of a particular native SUMO safety cause.",
+    "legacy": "Terminal realized values may be synthetic in old journals; original records are preserved."
+  },
+  "optimizer_steps": 0,
+  "simulator_runs": 0,
+  "input_root": "outputs/i110-merge/v01/evaluate-20261103T023055Z-8204e1e5"
+}

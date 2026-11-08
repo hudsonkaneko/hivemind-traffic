@@ -1,0 +1,181 @@
+{
+  "name": "synthetic-success",
+  "validation_case_index": 3,
+  "policy_sha256": "fd639c39f0c514256a458b2b85d35baba242125f44dcc3d9542d767eb2dd46ec",
+  "full_recording_frames": 801,
+  "full_recording_start_s": 0.1,
+  "full_recording_end_s": 80.1,
+  "full_primary_horizon_retained": true,
+  "clip_label": "First observed completed lateral merge; stability is scored separately",
+  "clip_start_s": 3.4000000000000004,
+  "clip_end_s": 28.4,
+  "rendered_frames": 251,
+  "video_duration_s": 25.1,
+  "focal_agent": "agent_0",
+  "focal_asset": "C:\\Users\\hudso\\Documents\\highwaysim\\vehicles\\sim_ready\\americano-i7-ev\\v14\\assets\\vehicle.usda",
+  "focal_asset_version": "v14",
+  "source_asset_unchanged": true,
+  "background": "lightweight referenced procedural vehicles",
+  "intervention_fraction": 0.015,
+  "matches_final_validation": false,
+  "merge_targets": 1,
+  "stable_merges": 1,
+  "native_maneuver_durations_s": [
+    3.1000000000000005
+  ],
+  "native_emergencies": 0,
+  "collisions": 0,
+  "teleports": 0,
+  "pngs_verified": 251,
+  "png_dimensions": [
+    [
+      1280,
+      720
+    ]
+  ],
+  "video_decode_verified": true,
+  "decoded_frames": 251,
+  "max_recorded_pose_error_m": 0.0,
+  "static_layers_unchanged": true,
+  "fresh_process_composition": {
+    "composition_errors": [],
+    "missing_dependencies": [],
+    "active_physics": [],
+    "camera_count": 8,
+    "layer_count": 11,
+    "source_reference_retained": true
+  },
+  "visually_inspected": [
+    "before.png",
+    "merge.png",
+    "after.png",
+    "frames/00030.png",
+    "frames/00040.png"
+  ],
+  "video": "outputs\\highway-environment\\v05\\visuals\\synthetic-success\\render-01\\i110-merge.mp4",
+  "video_sha256": "2ae3095f077bec67b6867a36976da8acdda29f5c268d84d5551728026e9a57d4",
+  "recording_check": "outputs\\highway-environment\\v05\\visuals\\synthetic-success\\recording-check.json",
+  "full_metrics": "outputs\\highway-environment\\v05\\visuals\\synthetic-success\\evaluation.json",
+  "render_report": "outputs\\highway-environment\\v05\\visuals\\synthetic-success\\render-01\\render-report.json",
+  "limitations": "Recorded kinematic replay; no physical driving, live sensor capture or new training. Synthetic success is a light-traffic example; I110 clip shows failure without a completed merge.",
+  "passed": true,
+  "audit_version": 2,
+  "prior_audit": "visual-audit.json",
+  "verification_scope": "Artifact and gate-result verification; raw report equality is reported independently and is not claimed when false",
+  "raw_stable_report_bitwise_equal": false,
+  "exact_gate_counts_and_outcomes_match": true,
+  "raw_stable_report_numerical_differences": [
+    {
+      "field": "stable_merge/per_agent/agent_0/full_route/requested_acceleration_sum",
+      "recorded": 98.70802763849497,
+      "validation": 98.70802773535252,
+      "absolute_difference": 9.685754776000977e-08
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/full_route/filtered_acceleration_sum",
+      "recorded": 98.45338931732374,
+      "validation": 98.45338904359602,
+      "absolute_difference": 2.737277213782363e-07
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/full_route/realized_acceleration_sum",
+      "recorded": 43.16889071575814,
+      "validation": 43.1688906189007,
+      "absolute_difference": 9.68574411785994e-08
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/full_route/minimum_neighbor_acceleration_m_s2",
+      "recorded": -0.08618473806127014,
+      "validation": -0.0861847374218172,
+      "absolute_difference": 6.394529350473022e-10
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/full_route/progress_m",
+      "recorded": 934.9492556112478,
+      "validation": 934.9492551710086,
+      "absolute_difference": 4.402392050906201e-07
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/full_route/progress_ratio",
+      "recorded": 0.9751243800701306,
+      "validation": 0.9751243796109742,
+      "absolute_difference": 4.59156379584158e-10
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/full_route/mean_requested_acceleration",
+      "recorded": 0.12338503454811871,
+      "validation": 0.12338503466919065,
+      "absolute_difference": 1.2107194413690792e-10
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/full_route/mean_filtered_acceleration",
+      "recorded": 0.12306673664665467,
+      "validation": 0.12306673630449502,
+      "absolute_difference": 3.421596478370148e-10
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/full_route/mean_realized_acceleration",
+      "recorded": 0.053961113394697675,
+      "validation": 0.05396111327362587,
+      "absolute_difference": 1.2107180535902984e-10
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/post_window/requested_acceleration_sum",
+      "recorded": 0.21965700387954712,
+      "validation": 0.21965768188238144,
+      "absolute_difference": 6.780028343200684e-07
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/post_window/filtered_acceleration_sum",
+      "recorded": 0.21965700387954712,
+      "validation": 0.21965768188238144,
+      "absolute_difference": 6.780028343200684e-07
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/post_window/realized_acceleration_sum",
+      "recorded": 0.21965700387960752,
+      "validation": 0.2196576818823459,
+      "absolute_difference": 6.78002738396799e-07
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/post_window/minimum_neighbor_acceleration_m_s2",
+      "recorded": -0.05140042495698438,
+      "validation": -0.05140042546180723,
+      "absolute_difference": 5.048228501891572e-10
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/post_window/progress_m",
+      "recorded": 95.32624758683147,
+      "validation": 95.32624757327142,
+      "absolute_difference": 1.3560054412664613e-08
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/post_window/progress_ratio",
+      "recorded": 0.9929817456961626,
+      "validation": 0.992981745554912,
+      "absolute_difference": 1.4125056679858972e-10
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/post_window/mean_requested_acceleration",
+      "recorded": 0.002711814862710458,
+      "validation": 0.0027118232331158204,
+      "absolute_difference": 8.370405362324168e-09
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/post_window/mean_filtered_acceleration",
+      "recorded": 0.002711814862710458,
+      "validation": 0.0027118232331158204,
+      "absolute_difference": 8.370405362324168e-09
+    },
+    {
+      "field": "stable_merge/per_agent/agent_0/post_window/mean_realized_acceleration",
+      "recorded": 0.002711814862711204,
+      "validation": 0.0027118232331153815,
+      "absolute_difference": 8.370404177508034e-09
+    }
+  ],
+  "maximum_raw_numeric_difference": 6.780028343200684e-07,
+  "numeric_difference_note": "Frozen exported actor replay reproduces gate counts and event times. Small floating sums/progress differences from original batched validation are retained, not hidden or treated as bitwise parity.",
+  "render_log": "logs/highway-environment-v05-render-synthetic-success-01.log",
+  "initial_strict_audit_failure_classification": "Verification criterion error in initial audit: artifact verification incorrectly required bitwise equality of every floating stable-merge diagnostic against original batched validation. This was not a failed render or policy evaluation; both original render reports and all frozen driving criteria/results remain unchanged."
+}

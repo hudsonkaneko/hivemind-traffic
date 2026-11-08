@@ -28,17 +28,24 @@ def cube(stage, path, position, scale, color):
     shape.CreateDisplayColorAttr([Gf.Vec3f(*color)])
 
 
-def export_replay(output):
+def export_replay(output, structured=False):
     output = Path(output)
     data = json.loads((output / 'recording.json').read_text())
     # Vehicle origin is the SUMO front bumper, +X forward. Body extends backward.
     asset = stage_file(output, 'vehicle.usda')
     asset.SetDefaultPrim(UsdGeom.Xform.Define(asset, '/Vehicle').GetPrim())
     cube(asset, '/Vehicle/Body', (-0.5, 0, 0.65), (1, 1, 1.1), (0.12, 0.45, 0.85))
+    Usd.ModelAPI(asset.GetDefaultPrim()).SetKind('component')
     asset.GetRootLayer().Save()
     static = stage_file(output, 'road.usda')
-    UsdGeom.Xform.Define(static, '/World')
-    cube(static, '/World/Ground', (450, 110, -0.2), (1100, 500, 0.2), (0.12, 0.2, 0.1))
+    world_root = UsdGeom.Xform.Define(static, '/World').GetPrim()
+    static.SetDefaultPrim(world_root)
+    if structured:
+        Usd.ModelAPI(world_root).SetKind('assembly')
+        UsdGeom.Xform.Define(static, '/World/Environment')
+        UsdGeom.Xform.Define(static, '/World/Environment/Highway')
+        UsdGeom.Scope.Define(static, '/World/Lighting')
+    cube(static, '/World/Environment/Ground' if structured else '/World/Ground', (2500, 0, -0.2) if structured else (450, 110, -0.2), (5100, 100, 0.2) if structured else (1100, 500, 0.2), (0.12, 0.2, 0.1))
     anchors = []
     for index, lane in enumerate(ET.parse(output / 'network.net.xml').findall('.//lane')):
         points = [tuple(map(float, p.split(','))) for p in lane.attrib['shape'].split()]
@@ -50,16 +57,19 @@ def export_replay(output):
                 continue
             anchors.extend([a, b])
             nx, ny = -dy/length*width/2, dx/length*width/2
-            mesh = UsdGeom.Mesh.Define(static, f'/World/Road/l{index}s{segment}')
+            mesh = UsdGeom.Mesh.Define(static, (f'/World/Environment/Highway/Lane_{index:03d}_Segment_{segment:03d}' if structured else f'/World/Road/l{index}s{segment}'))
             mesh.CreatePointsAttr([(a[0]+nx,a[1]+ny,0), (a[0]-nx,a[1]-ny,0),
                                   (b[0]-nx,b[1]-ny,0), (b[0]+nx,b[1]+ny,0)])
             mesh.CreateFaceVertexCountsAttr([4])
             mesh.CreateFaceVertexIndicesAttr([0,1,2,3])
             mesh.CreateSubdivisionSchemeAttr('none')
             mesh.CreateDisplayColorAttr([Gf.Vec3f(.17,.18,.20)])
-    UsdLux.DomeLight.Define(static, '/World/Light').CreateIntensityAttr(1000)
+    UsdLux.DomeLight.Define(static, '/World/Lighting/Sky' if structured else '/World/Light').CreateIntensityAttr(1000)
     static.GetRootLayer().Save()
     dynamic = stage_file(output, 'motion.usda')
+    dynamic.SetDefaultPrim(UsdGeom.Xform.Define(dynamic, '/World').GetPrim())
+    Usd.ModelAPI(dynamic.GetDefaultPrim()).SetKind('assembly')
+    Usd.ModelAPI(UsdGeom.Xform.Define(dynamic, '/World/Vehicles').GetPrim()).SetKind('group')
     frames = data['frames']
     t0 = frames[0]['time']
     ids = sorted({v['id'] for f in frames for v in f['vehicles']})
@@ -69,11 +79,12 @@ def export_replay(output):
         path = vehicle_path(vehicle_id)
         transform = UsdGeom.Xform.Define(dynamic, path)
         transform.GetPrim().SetCustomDataByKey('sumo_id', vehicle_id)
+        Usd.ModelAPI(transform.GetPrim()).SetKind('group')
         ops[vehicle_id] = (transform.AddTranslateOp(), transform.AddRotateZOp(), transform.CreateVisibilityAttr())
         body = UsdGeom.Xform.Define(dynamic, path+'/Model')
         body.GetPrim().GetReferences().AddReference('./vehicle.usda')
         body.AddScaleOp().Set(Gf.Vec3f(first['length'], first['width'], 1))
-        body.GetPrim().SetInstanceable(True)
+        body.GetPrim().SetInstanceable(not structured)
     for frame in frames:
         tc = (frame['time']-t0)*60
         present = {v['id']: v for v in frame['vehicles']}
@@ -87,6 +98,7 @@ def export_replay(output):
     dynamic.GetRootLayer().Save()
     world = stage_file(output, 'world.usda')
     world.GetRootLayer().subLayerPaths = ['./motion.usda', './road.usda']
+    world.SetDefaultPrim(world.GetPrimAtPath('/World'))
     world.SetStartTimeCode(0)
     world.SetEndTimeCode((frames[-1]['time']-t0)*60)
     world.SetTimeCodesPerSecond(60)

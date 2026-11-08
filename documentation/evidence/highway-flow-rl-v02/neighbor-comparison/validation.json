@@ -1,0 +1,33 @@
+{
+  "study": "Offline adjacent-vehicle speed and comfort comparison",
+  "source_commit": "901b37463a330e3d2a95e814c7e9e1b9e0d57638",
+  "source_tree_dirty": true,
+  "python": "3.11.9",
+  "numpy": "1.26.0",
+  "matplotlib": "3.10.0",
+  "input_sha256": "63f873a9294de23cc7cf7a2af383599bb423fbe6e19d3286a0d7463a85bdaea1",
+  "checks": {
+    "agent_0": {
+      "samples": 545,
+      "finite": true,
+      "cadence_s": 0.1,
+      "max_speed_acceleration_identity_error_m_s2": 1.0547118733938987e-13
+    },
+    "main_8": {
+      "samples": 357,
+      "finite": true,
+      "cadence_s": 0.1,
+      "max_speed_acceleration_identity_error_m_s2": 6.078471059822732e-15
+    }
+  },
+  "simulation_runs": 0,
+  "training": false,
+  "files_sha256": {
+    "analysis-source.py": "6320692c8adab92f48f98fd1d77ee787274e4bca3226e4422b0246602cc0a387",
+    "comparison.json": "551c5e35276fe7bde5b77ffb3d69039535fbfd8372e5c9fdf32c2c3e71dee4fb",
+    "speed-comparison.png": "0a819321f11a0b48a895bc0e16483af395a31292fec53f6ee40189322a825abf",
+    "traces.csv": "b89f6f3b9a883648aa1d63091e7d7b61c17d81bdce6f358052e19d4fd048b62f"
+  },
+  "command": "python scripts/compare_replay_neighbor.py --recording outputs/highway-flow-rl/v02/development-case-0/evaluation/case-00/recording.json --output outputs/highway-flow-rl/v02/neighbor-comparison-<new-id>",
+  "limitation": "One interacting replay, different starting speeds and route/driver profiles; not a matched policy ablation. No aggregate significance claim."
+}

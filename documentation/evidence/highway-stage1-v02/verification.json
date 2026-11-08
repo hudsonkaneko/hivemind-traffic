@@ -1,0 +1,64 @@
+{
+  "date_local": "2026-11-02",
+  "unit_regressions": {
+    "passed": 243,
+    "warnings": 21,
+    "seconds": 8.03,
+    "log": "logs/highway-stage1-tests-v02.log",
+    "log_sha256": "df0b2b5885bcc65768c95519e98f2cfa08352d9c69f4a7229c435841cd3c28e5"
+  },
+  "runtime": {
+    "python": "3.11.9",
+    "torch": "2.14.0+cpu",
+    "traci": "1.27.1",
+    "netconvert": "Eclipse SUMO netconvert 1.27.1"
+  },
+  "source_commit_at_execution": "70f36ddb90522ca0831d2fdd1418586970c6dba4",
+  "source_status": "Uncommitted Stage 1 runtime sources were frozen and copied into the preflight run; exact source hashes in preflight-final.json",
+  "final_config_canonical_sha256": "7b53e370d1b3c3a04d0ac2498974662414a7b939a3a740ab3654c5b595125494",
+  "final_config_file_sha256": "28845a6e9f46e738cec3d47c3bb0e11a12f3430396a6cd93f46b497d6743aa44",
+  "readiness_check_passed": true,
+  "training_authorized": false,
+  "preflight_summary": "outputs/highway-stage1/v02/preflight-20261103T040408Z-52a6d162/summary.json",
+  "preflight_summary_sha256": "ffe82726df6f5a4825f23783398b8d211be712bba8bde441d8d06f985e5cbf88",
+  "metrics": {
+    "passed": true,
+    "teacher_ready": true,
+    "cases": 30,
+    "optimizer_steps": 0,
+    "bc_optimizer_steps": 0,
+    "wall_seconds": 412.8430000001099,
+    "source_drift": [],
+    "overrides_total": 1004,
+    "agent_steps_total": 82454,
+    "maximum_case_override": 0.04386241716629852,
+    "minimum_cruise_speed_ratio": 0.9486923056889304,
+    "passes": [
+      {
+        "case": "train-2-lane-passing",
+        "passes": 3
+      },
+      {
+        "case": "train-3-lane-passing",
+        "passes": 2
+      },
+      {
+        "case": "train-4-lane-passing",
+        "passes": 4
+      },
+      {
+        "case": "train-5-lane-passing",
+        "passes": 3
+      },
+      {
+        "case": "i110-passing",
+        "passes": 4
+      }
+    ],
+    "successful_merges": 30,
+    "merge_cases": 15,
+    "collisions": 0,
+    "teleports": 0,
+    "overspeed_steps": 0
+  }
+}
