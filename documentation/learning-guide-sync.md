@@ -1,5 +1,15 @@
 # Engineering guide synchronization
 
+## October 26: Seven-camera source rig
+
+Appended the v09 seven-camera setup, passed native/CPU/USD results, preserved
+failed attempts and explicit no-training/fusion limits to **41 Isaac Lab lane
+task**. Updated the start-tab link to `codex/seven-camera-rig`. Revision-guarded
+editing and full native readback verified the exact addition and all 40
+unaffected tab bodies. All 42 tabs were regenerated and checked from
+`outputs/doc-sync/seven-camera-v01/verified-source.json`. Native document
+pagination was not inspected. See [results and screenshots](seven-camera-v01.md).
+
 ## October 25: sensor prototype checkpoint
 
 Final native result was subsequently appended in place: 8.52 m travel, 2.57 m

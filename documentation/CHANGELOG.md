@@ -13,6 +13,14 @@ authority for historical measurements and failures.
   zero collisions, overspeed or overrides, with 1,445.453 m mean progress per car.
   Preserve the speed/progress tradeoff and different seed-set qualification in
   [the v02 training record](sumo-mappo-v2.md). Google guide sync remains pending.
+## 2026-10-26 - Seven-camera source rig
+
+- Added seven source-authored perspective cameras to local vehicle v09 while
+  preserving v08, the LiDAR path and vehicle dynamics. Fixed RTX mount handling.
+- Passed 44 capture tests, 21 USD tests and a six-second native test: 59 valid
+  frames per camera, all target views, 0.63 m travel, zero contacts, unchanged
+  source and stable mounts. Saved actual screenshots and all failed attempts.
+- No learned surround perception or new training. See [results](seven-camera-v01.md).
 
 ## 2026-10-26 - Repair native SUMO GUI recording
 

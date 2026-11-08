@@ -691,3 +691,7 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ## November 8 - Reward revision plan after native comparison
 
 [Proposed reward revision](highway-flow-rl-reward-revision-plan.md) replaces the ineffective-in-dip cruise addition with a context-valid speed objective, reshapes comfort and strengthens the optional-detour penalty. Saved-state audit and target qualification come before final configuration or training. Research informs the design; candidate weights are not validated. Existing safety gates, policy ABI and study budget are preserved. No new simulation or learning.
+October 26: [seven-camera v09 source](seven-camera-v01.md) passed bounded native
+capture, projected-target visibility, composition and moving-mount checks. This
+is a camera-rig milestone only; learned surround perception, Cosmos, sensor
+fusion and camera-policy training remain open. No new training was launched.
