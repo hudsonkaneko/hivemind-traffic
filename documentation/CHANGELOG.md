@@ -759,3 +759,15 @@ No training or MAPPO observation/policy change. Masks are simulator ground truth
 parked ego and scripted traffic are bounded sensing tests.
 [Results, limitations and actual screenshots](semantic-lidar-fusion-v01.md);
 [draft PR 31](https://github.com/hudsonkaneko/hivemind-traffic/pull/31).
+
+
+## 2026-10-30 — Pretrained segmentation preview v01
+
+Added frozen SegFormer B0 RGB-only inference on all 24 saved fusion captures,
+with RGB/prediction/ground-truth/error panels, explicit unsupported classes and
+retained native masks/metrics. Shared-class accuracy is 86.89%, mean IoU 71.52%;
+vehicle precision 63.36% on the shared region and 59.94% over the full image.
+The model visibly overpredicts drivable space; quality is not accepted for driving.
+26 focused tests and independent artifact/panel audits pass. No training, new
+simulator run, policy change or predicted-mask-to-LiDAR integration occurred.
+[Actual previews, provenance and limitations](pretrained-segmentation-preview-v01.md).

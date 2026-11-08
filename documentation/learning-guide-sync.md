@@ -410,3 +410,14 @@ unaffected tab bodies. Regenerated and checked the Markdown/manifest against
 `outputs/doc-sync/semantic-lidar-fusion-v01/verified-source.json`. Native pagination
 was not inspected. Actual screenshots and compact metrics are in the
 [fusion evidence note](semantic-lidar-fusion-v01.md).
+
+
+## October 30: Pretrained segmentation preview v01
+
+Appended the frozen model, real prediction results, class mapping/exclusions,
+actual screenshot links and no-training/no-new-simulation scope to tab 41.
+Updated the start-tab link to `codex/pretrained-segmentation-preview`. Guarded
+native editing and full readback preserved all 42 tabs, target history and 40
+unaffected tab bodies. Regenerated and checked the Markdown/manifest from
+`outputs/doc-sync/pretrained-segmentation-preview-v01/verified-source.json`.
+Native pagination was not inspected; the actual four-panel PNGs were inspected.

@@ -415,3 +415,14 @@ This adds an evaluated sensor-data product; MAPPO still uses its existing
 observation contract. Learned segmentation, ego-motion compensation, robust
 visibility, lane-marking/pedestrian validation and policy observation adaptation
 remain open. No training was started.
+
+
+## October 30 perception preview — frozen pretrained RGB segmentation
+
+A pinned Cityscapes SegFormer B0 now produces real predictions on the existing
+24 captures, shown alongside RGB, GT and errors. Scores and screenshots are in
+[the preview evidence](pretrained-segmentation-preview-v01.md). Road spillover,
+oversized vehicle masks and unsupported lane/generic-obstacle classes remain
+visible limitations. This is offline inference, not accepted driving perception.
+Predicted-mask-to-LiDAR evaluation, more varied saved-scene comparisons and
+policy adaptation remain separate work; no training or simulator run was started.

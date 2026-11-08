@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/semantic-lidar-fusion/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/semantic-lidar-fusion/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/pretrained-segmentation-preview/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/pretrained-segmentation-preview/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4412,3 +4412,21 @@ Implementation checkpoint 749f4e2 plus exact source snapshots/hashes records the
 Results, screenshots, contracts and reproduction command: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/semantic-lidar-fusion/documentation/semantic-lidar-fusion-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/semantic-lidar-fusion/documentation/semantic-lidar-fusion-v01.md>)
 
 Review: [`https://github.com/hudsonkaneko/hivemind-traffic/pull/31`](<https://github.com/hudsonkaneko/hivemind-traffic/pull/31>)
+
+<a id="docs-h-j7jhh02msuls"></a>
+
+#### Pretrained segmentation preview v01 — October 30, 2026
+
+Added an inference-only preview on all 24 saved static/moving captures from fusion run 20261030T223941Z-65f18896. No training, new simulator capture, policy change or predicted-mask-to-LiDAR integration occurred. Every image has four panels: original RGB, pretrained prediction, simulator ground truth and errors. Green means correct, red means wrong, and amber hatching marks unsupported lane/obstacle ground truth excluded from shared-class scores.
+
+The unchanged NVIDIA SegFormer B0 Cityscapes checkpoint is pinned to revision `21b3847fae21ddee674abd31129307b6a1235bd9`, preserving its trained 19-class head. Restricted tensor-only loading and strict state loading were verified. Only saved RGB enters the model; ground truth is loaded after prediction. The processor’s actual default is 512×512 despite the repository’s 1024 name; output logits are resized to original image size before argmax. Original 19-class predictions and mapped masks are both saved. Road/person/vehicle categories map to the project; other categories collapse to background. The model cannot produce our lane or generic-obstacle classes.
+
+Run 20261031T020708Z-69f78dab completed 24 images in 11.99 seconds using an isolated CPU environment. Shared-class pixel accuracy is 86.89%, mean IoU is 71.52%, road IoU is 81.18% and vehicle IoU is 63.11%. Vehicle pixel recall is 99.39%, but shared-region precision is only 63.36% because the predicted masks extend outside vehicles. Including predictions on excluded regions gives a separate all-image vehicle precision diagnostic of 59.94%. The screenshots show road predictions spilling into background. These prediction scores measure something different from the earlier 99.95% ground-truth-mask/LiDAR projection score.
+
+Exactly 52,586 pixels (0.951%) are unsupported ground truth: 9,362 lane and 43,224 obstacle pixels. Most lane pixels become road; obstacle pixels are predicted as other/background, road or vehicle. Pedestrians are absent and not evaluated. The preview does not establish obstacle detection, real-world driving readiness or model quality acceptance.
+
+Twenty-six focused tests pass. Reviewers recomputed all 24 frame scores, verified all 96 displayed panels, 105 output hashes, 48 input hashes, five source hashes and the three pinned model files. The first prediction repeats identically, gradients remain disabled and weights are unchanged. CPU inference latency is 220 ms median and 246 ms p95, excluding file IO and drawing. Runtime: Python 3.11, Torch 2.9.1+cpu, Transformers 4.57.1, Pillow 11.3.0 and NumPy 2.2.6. Model weights and bulk prediction arrays remain local; source code, selected actual screenshots and compact metrics are on GitHub. The model’s license restricts use to noncommercial research/evaluation.
+
+Results, screenshots, model attribution and reproduction command: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/pretrained-segmentation-preview/documentation/pretrained-segmentation-preview-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/pretrained-segmentation-preview/documentation/pretrained-segmentation-preview-v01.md>)
+
+Local artifacts: outputs/perception-preview/v01/20261031T020708Z-69f78dab/
