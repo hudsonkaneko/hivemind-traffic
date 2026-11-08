@@ -646,3 +646,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ### 2026-11-06 — continuous route repair validated
 
 [GPUDrive v04](gpudrive-i110-v04.md) removes the route-mapping blocker while keeping the fixed destination, continuous steering and safety limits. The short CPU run merges and reaches the goal in 28.5 simulated seconds; acceleration interventions and jerk still fail qualification. Tests and full metrics retained. No training, rendering or policy promotion. See living roadmap v25; incremental guide sync pending.
+
+
+### 2026-11-07 — early crossing found; longitudinal comfort improved
+
+[GPUDrive v05](gpudrive-i110-v05.md) reduces scalar longitudinal jerk with a transparent external filter while retaining all final guards. One short CPU run and saved baseline metrics show continued arrival but an unconnected early ramp exit in both versions. Mainline occupancy was insufficient to certify proper merging. Raw actions are still changed99.29%; no acceptance/promotion/training. Forty tests plus 16 subtests pass. See living roadmap v26; next transfer work is merge-corridor/steering validation. Guide sync pending.

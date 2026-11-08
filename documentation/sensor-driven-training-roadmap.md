@@ -1,6 +1,6 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v25**, updated **November 6, 2026, America/Los_Angeles**.
+Revision **v26**, updated **November 7, 2026, America/Los_Angeles**.
 Status: **Flow preparation implemented and tested; reference qualification failed; training remains disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
@@ -15,6 +15,8 @@ Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
 **Next action:** first inspect one failed gap window and implement longitudinal slot alignment; two focused approach-braking ablations were rejected and baseline restored (see v21 below). Then resolve the failed reference prerequisites recorded in [flow preparation v01](highway-flow-preparation-v01.md): native cut-in comfort, main-car gap/approach flow and full-route qualification. The new 117-input setup and paired imitation-strength runner are implemented. The 81-recording diagnostic bank is complete with explicit cached-evidence compatibility, preserved failures and three frozen event-coverage failures. Reference overrides are low but four nominal comfort gates and six task gates fail; I-110 main-car flow regresses while agent_4 avoids its ending-lane detour. Four 60-second SimReady replays and all-car metrics are saved. Initializer selection remains unresolved; no optimizer updates or training occurred. Requalify the reference before spending on the fixed 48-case initializer comparison and presenting a launch-ready configuration.
+
+Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
@@ -505,3 +507,8 @@ Implemented a checksum-pinned CPU inference port with exact upstream-logit parit
 ### v25 — November 6: continuous route repair completes the short merge test
 
 [GPUDrive v04](gpudrive-i110-v04.md) allows SUMO to associate the actual external pose with another road, then restores a connected route to the unchanged destination. One repair at 1.1 s removes the v03 blocker. The same-seed test meets 3-second mainline occupancy at 8.3 s and reaches its goal at 28.5 s, taking 3.859 s in the SUMO loop. No stops, overspeed, contact or route errors; all 284 steering requests preserved. Thirty tests plus 14 subtests pass. However, 255/284 acceleration requests change (89.79%), jerk peaks at 60 m/s³ and three background emergency-braking warnings remain: this is not policy qualification or promotion. No training or rendering. Next GPUDrive work is acceleration-contract compatibility/smoothness before acceptance; SUMO-native priorities remain unchanged. Metrics, logs, source snapshots and motion recording retained. Guide incremental sync pending.
+
+
+### v26 — November 7: crossing audit and bounded longitudinal comfort filter
+
+[GPUDrive v05](gpudrive-i110-v05.md) implements a network-connection audit, explicit acceleration-stage accounting, anticipatory following/speed targets and 3 m/s³ routine longitudinal jerk limiting before the unchanged final guard. One new same-seed CPU run reaches its goal at28.4 s without stops/contact/overspeed; peak/RMS longitudinal jerk improves60/15.00→3/1.17 m/s³. Forty tests plus16 subtests pass. However, the audit reveals that v04 and v05 leave the ramp early without a graph connection (32.23/33.41 m remaining). Prior occupancy/arrival evidence is not a verified proper merge. Raw command modification rises89.79→99.29% despite zero additional final-guard acceleration changes after conditioning, so this is controller comfort improvement, not policy qualification. All raw evidence/comparison metrics retained. Next action is the intended merge corridor and steering validation before further learning. No training or render. Incremental guide sync pending.
