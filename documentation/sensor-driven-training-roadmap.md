@@ -1,6 +1,6 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v21**, updated **November 6, 2026, America/Los_Angeles**.
+Revision **v22**, updated **November 6, 2026, America/Los_Angeles**.
 Status: **Flow preparation implemented and tested; reference qualification failed; training remains disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
@@ -485,3 +485,8 @@ The final prepared configuration remains disabled, selected initializer/readines
 ### v21 — November 6: bounded approach ablations rejected
 
 Two same-seed 80-second I-110 checks (39.282 seconds combined wall time) removed premature adjacent-lane braking and then recomputed future entry response. Both worsened main-car arrival from 49.3 to 63.2 s and introduced 12.3 s stopped exposure despite zero safety overrides. Original source/test files were restored exactly; 27 tests plus 3 subtests pass. [Failure evidence and speed plot](highway-flow-preparation-v01.md#focused-approach-ablation--november-6-2026) are retained with source hashes. Next action is a focused gap-window/longitudinal slot-alignment correction, not stronger imitation of the current reference. No training, weights, config or 3D render changes. Guide sync for this incremental note is pending.
+
+
+### v22 — November 6: frozen GPUDrive transfer evaluated, rejected
+
+Implemented a checksum-pinned CPU inference port with exact upstream-logit parity and a continuous-control SUMO bridge. One native baseline reached the route goal; the frozen pretrained main car oversped (45.81 m/s peak) and crossed the mapped road boundary at 13.4 s. No stable merge or goal was completed. This is unshielded cross-simulator transfer, not a native GPUDrive or PhysX benchmark. [Metrics, adapter limits and actual SimReady replay](gpudrive-i110-v01.md) preserve all evidence. Thirteen tests and 134-frame replay decode/composition checks pass; 0 optimizer updates. Existing policies remain unchanged. Main-car slot alignment remains open; any further pretrained-policy test first needs a justified speed-limit/map-goal adapter. Incremental guide synchronization pending.
