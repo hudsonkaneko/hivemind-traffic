@@ -26,6 +26,31 @@ def prohibit_optimizer_steps(monkeypatch):
         raise AssertionError('Tests may not execute any optimizer step')
     monkeypatch.setattr(torch.optim.Adam, 'step', forbidden)
     torch.set_num_threads(1)
+    (runner.ROOT / 'outputs').mkdir(exist_ok=True)
+
+
+@pytest.fixture
+def synthetic_initialization(cfg, monkeypatch):
+    """Real, untrained checkpoint/actor pair independent of local run artifacts."""
+    with TemporaryDirectory(dir=runner.ROOT / 'outputs', prefix='smooth-init-test-') as directory:
+        folder = Path(directory).resolve()
+        assert folder.is_relative_to(runner.ROOT / 'outputs')
+        with torch.random.fork_rng(devices=[]):
+            torch.manual_seed(1234)
+            model = runner.old.model_for(cfg['base_config'])
+            saved = deepcopy(model.state_dict())
+            torch.save({'model': saved}, folder / 'checkpoint.pt')
+            runner.export_actor(model, folder / 'actor.pt')
+        expected = {}
+        for key, filename in (('actor', 'actor.pt'), ('checkpoint', 'checkpoint.pt')):
+            path = folder / filename
+            expected[key] = dict(path=path.relative_to(runner.ROOT).as_posix(),
+                                 sha256=contract.file_digest(path))
+            cfg['initialization'][key] = deepcopy(expected[key])
+        # Replace fixture identities only; validation, hashing, real loading and
+        # checkpoint/export parity checks remain active.
+        monkeypatch.setattr(contract, 'FROZEN_INITIALIZATION', expected)
+        yield cfg, saved
 
 
 def test_disabled_config_matches_checked_in_file(cfg):
@@ -186,12 +211,18 @@ def synthetic_batch(model):
         active=torch.ones(24, dtype=torch.bool), teacher_actions=torch.zeros(24, 2))
 
 
-def test_identical_frozen_actor_fresh_critic_rng_and_no_update_diagnostics(cfg):
+def test_identical_frozen_actor_fresh_critic_rng_and_no_update_diagnostics(synthetic_initialization):
+    cfg, saved = synthetic_initialization
     before = runner.capture_rng()
     arms = runner.initialize_arms(cfg)
     assert runner.tree_equal(before, runner.capture_rng())
     left, right = (arms[name] for name in contract.ARMS)
     assert runner.tree_equal(left['model'].state_dict(), right['model'].state_dict())
+    loaded = left['model'].state_dict()
+    assert all(torch.equal(value, loaded[name]) for name, value in saved.items()
+               if name.startswith('actor.') or name == 'log_std')
+    assert any(not torch.equal(value, loaded[name]) for name, value in saved.items()
+               if name.startswith('critic.'))
     assert runner.tree_equal(left['rng'], right['rng'])
     assert not left['trainer'].optimizer.state_dict()['state']
     batch = synthetic_batch(left['model'])
@@ -203,6 +234,15 @@ def test_identical_frozen_actor_fresh_critic_rng_and_no_update_diagnostics(cfg):
     with runner.arm_rng(right):
         assert torch.equal(first, torch.rand(3))
     assert runner.tree_equal(before, runner.capture_rng())
+
+
+@pytest.mark.parametrize('artifact', ['actor', 'checkpoint'])
+def test_initialization_rejects_corrupted_fixture_artifact(synthetic_initialization, artifact):
+    cfg, _ = synthetic_initialization
+    path = runner.ROOT / cfg['initialization'][artifact]['path']
+    path.write_bytes(path.read_bytes() + b'corrupt')
+    with pytest.raises(ValueError, match='Frozen ' + artifact + ' checksum mismatch'):
+        runner.initialize_arms(cfg)
 
 
 def test_train_api_refuses_disabled_before_creating_output(cfg, tmp_path, monkeypatch):
