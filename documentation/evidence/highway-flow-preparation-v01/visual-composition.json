@@ -1,0 +1,14 @@
+{
+  "training": false,
+  "simulation_run": false,
+  "frames": 300,
+  "fps": 5,
+  "start_time": 0.1,
+  "end_time": 59.9,
+  "decoded_frames": 300,
+  "pose_interpolation": false,
+  "annotation_source": "Original measured native frame",
+  "video_sha256": "e5c903fb3dcb72a84ef2316a8467cedd7bceaeddbd250d47f6af58564250da3c",
+  "wall_seconds": 38.687000000005355,
+  "limitation": "Kinematic SimReady replay, illustrative roads; no physics or sensor inference validation"
+}

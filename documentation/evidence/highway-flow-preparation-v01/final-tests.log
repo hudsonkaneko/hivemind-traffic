@@ -1,0 +1,12 @@
+..................................................................... [ 47%]
+.................................................................. [ 93%]
+.........                                                   [100%]
+============================== warnings summary ===============================
+tests/test_highway_flow_training.py::test_frozen_candidates_migrate_without_rng_or_critic_transfer
+tests/test_highway_flow_training.py::test_only_multiplier_differs_and_frozen_gradient_state_unchanged
+tests/test_highway_flow_training.py::test_only_multiplier_differs_and_frozen_gradient_state_unchanged
+  C:\Users\hudso\Documents\highwaysim\.venv-traffic\Lib\site-packages\torch\jit\_serialization.py:176: FutureWarning: `torch.jit.load` is deprecated. Please switch to `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+144 passed, 3 warnings, 22 subtests passed in 15.38s
