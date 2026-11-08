@@ -1,0 +1,513 @@
+{
+  "no_training": true,
+  "optimizer_steps": 0,
+  "runs": [
+    {
+      "passed": false,
+      "checkpoint_sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8",
+      "checkpoint_unchanged": null,
+      "calibration": {
+        "parameters": {
+          "throttle_gain_m_s2": 2.3234250128998304,
+          "brake_gain_m_s2": 6.770597597981387,
+          "coast_m_s2": 0.020982946336777487,
+          "coast_speed_gain_s_inv": 0.014752675394947087
+        },
+        "fit_rmse_m_s2": 0.13308030846232866,
+        "heldout_rmse_m_s2": 0.6669385161089166,
+        "heldout_max_error_m_s2": 1.158454138844149,
+        "provisional_heldout_rmse_m_s2": 1.032542321400009,
+        "fit_window_count": 106,
+        "heldout_window_count": 20,
+        "observed_speed_range_m_s": [
+          2.1624582409880833,
+          19.928217888904243
+        ],
+        "split": "Control-level holdout: throttle .75 and brake .5 excluded from fitting",
+        "model": "a = throttle*gT - brake*gB - coast0 - coastSpeed*v",
+        "measured_max_speed_m_s": 20,
+        "gates": {
+          "heldout_error": false,
+          "speed_coverage": true
+        },
+        "passed": false
+      },
+      "python": "3.12.13",
+      "total_wall_s": 100.93433119999827,
+      "wall_process_s": 103.44552029999613,
+      "gpu_peak_mib": 4218.0,
+      "runtime_error_lines": [
+        "2026-11-05T20:46:23Z [90,046ms] [Error] [omni.kit.app._impl] [py stderr]: Traceback (most recent call last):",
+        "2026-11-05T20:46:23Z [90,047ms] [Error] [omni.kit.app._impl] [py stderr]:   File \"C:\\Users\\hudso\\Documents\\highwaysim\\scripts\\calibrate_mappo_physical.py\", line 503, in main",
+        "2026-11-05T20:46:23Z [90,047ms] [Error] [omni.kit.app._impl] [py stderr]: RuntimeError: Identification holdout gate failed; adapter evaluation skipped"
+      ],
+      "usd_reference_warning_count": 0,
+      "source_changed_during_run": [],
+      "error": "RuntimeError('Identification holdout gate failed; adapter evaluation skipped')",
+      "run_id": "20261105T204440Z-e1a2ab4f",
+      "local_artifact": "outputs/mappo-physical-adapter/v01/20261105T204440Z-e1a2ab4f",
+      "source_commit": "097748d5155f20810b18e9196e950c4d41087c7b",
+      "source_sha256": {
+        "scripts/run_mappo_physical_calibration.py": "9d348cce3ad18d95e55a78befc45c677ff8160b12d1de3cceff059edaa468ed8",
+        "scripts/calibrate_mappo_physical.py": "980b79e1df268ed3f6cbe10f24963c54826ef6a328c7d70b20d9e23a2611b582",
+        "experiments/configs/mappo_physical_adapter_v01.json": "af003168a85ac30aaed6d9886be9d18845b254f5731a7ac0105898a68429a750",
+        "traffic/mappo_physical_adapter.py": "0406244683bc4995ba3112b4b44ff09a1077a39fd70c296ff85e2092f53ac691",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "traffic/driver_control.py": "29755844f3b1df77ac002caba87be3ba22ff9918b0e8a5ba03ff568d2690e18a",
+        "traffic/path_following.py": "c89288bee58812817873203222ecb404f3186bd7735d3c1f23d90770e7ec906b",
+        "traffic/lane_geometry.py": "2b7976bf1e04ae6ae223ea93c3dd18551394a57404e350713e2b42004e8413b0",
+        "traffic/physx_vehicle.py": "167f0e6ce5da581e4520707a71596c9efe7a3dca6b36f466ee5081df210fe8a6",
+        "traffic/wheel_geometry.py": "8d4f23a9e3fdaf7eef41ee0d3be7eae1350e1208a250bb72ad0530ba551082b5",
+        "traffic/physics_session.py": "d0016c776819bdd93ff612d533f6ff4d2b70de9b332e52d81493255419d7c61a",
+        "traffic/rendered_physics_session.py": "2780f1b55b833c2d37fceab2c66b62b2582d1bc96701bd0e523bd8f80652fce9",
+        "traffic/vehicle_contacts.py": "628fbf2c7e1cc735437a6c67b3051f57a604b72bf67227c1d39769ab9488170d",
+        "usd/physical_scene.py": "2f7a0283cf2165538a6d0bf0336e042bf7c46c5110b63a3842fde7435d5e91f9",
+        "usd/scene_validation.py": "fb998a59fb325eed9a258d5441067fa05f832e8b1668be446f2cecc40b678475",
+        "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+        "experiments/verify_physics_vehicle.py": "95b8f97f79a71963812ef0a19e8385381870c07d4fbf28bcd880649eabe9ab8e",
+        "hivemind/launcher.py": "b2ea5e656c887a920ef06b6c70ccdb0830bbba7a097d82ae13187dbb829f23d3",
+        "visualization/preview_timing.py": "593b4a04145930b269cb0b62de2714cb41b1dc01c4ad85d4f34c0ba9ffc4780a",
+        "visualization/physics_road_view.py": "b1f2b0d473a7ae6c6d9a70262f1c2b6c0a0c9fa5528d4f8a7f8995d81bd6c219"
+      },
+      "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+      "gpu": {
+        "wall": 60612.1629333,
+        "name": "NVIDIA GeForce RTX 5070",
+        "total_mib": 12227.0,
+        "used_mib": 2921.0,
+        "utilization_percent": 25.0,
+        "driver": "621.01"
+      },
+      "config_sha256": "5450485e428ef3f351ec1c54f4e903d07171311cc071b1a3b008cda6b6d2cfbd",
+      "cases": [
+        {
+          "name": "identification",
+          "passed": true,
+          "error": null,
+          "gates": null,
+          "metrics": null,
+          "completed_simulation_s": 38.0,
+          "contact_count": 0,
+          "static_files_unchanged": true,
+          "trajectory_sha256": "5f64ba30fb90f6e569d1f2ee99e923437ab0aeece6b0887bfa3b186b19ddd49a",
+          "policy_decisions_sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+        }
+      ]
+    },
+    {
+      "passed": false,
+      "checkpoint_sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8",
+      "checkpoint_unchanged": true,
+      "calibration": {
+        "parameters": {
+          "throttle_gain_m_s2": 2.1528871620736054,
+          "brake_gain_m_s2": 9.282740068959775,
+          "coast_m_s2": 0.0,
+          "coast_speed_gain_s_inv": 0.004620440283561678
+        },
+        "fit_rmse_m_s2": 0.0044982796595822,
+        "heldout_rmse_m_s2": 0.02131491050218539,
+        "heldout_max_error_m_s2": 0.04286056082646539,
+        "provisional_heldout_rmse_m_s2": 1.032542321400009,
+        "confirmation_rmse_m_s2": 0.01633689383340842,
+        "confirmation_window_count": 7,
+        "linear_brake_fit_max": 0.5,
+        "ordinary_prediction_domain": "throttle [0,1], brake [0,.5], never simultaneous; full stop/fallback brake is unmodeled",
+        "saturation_probe": {
+          "window_count": 5,
+          "mean_acceleration_m_s2": -6.848496437252239,
+          "minimum_acceleration_m_s2": -6.8741130830556685,
+          "note": "Full brake retained separately, excluded from unsaturated response fit and ordinary holdout"
+        },
+        "fit_window_count": 95,
+        "heldout_window_count": 20,
+        "observed_speed_range_m_s": [
+          2.1624582409880833,
+          19.928217888904243
+        ],
+        "split": "Diagnostic holdout .75 throttle/.5 brake; fresh .4 brake confirmation; saturated full brake excluded",
+        "model": "a = throttle*gT - brake*gB - coast0 - coastSpeed*v",
+        "measured_max_speed_m_s": 20,
+        "gates": {
+          "heldout_error": true,
+          "fresh_confirmation": true,
+          "speed_coverage": true
+        },
+        "passed": true
+      },
+      "python": "3.12.13",
+      "total_wall_s": 85.44120370000019,
+      "wall_process_s": 86.43005350000021,
+      "gpu_peak_mib": 4152.0,
+      "runtime_error_lines": [],
+      "usd_reference_warning_count": 0,
+      "source_changed_during_run": [],
+      "error": null,
+      "run_id": "20261105T204908Z-32331979",
+      "local_artifact": "outputs/mappo-physical-adapter/v01/20261105T204908Z-32331979",
+      "source_commit": "097748d5155f20810b18e9196e950c4d41087c7b",
+      "source_sha256": {
+        "scripts/run_mappo_physical_calibration.py": "9d348cce3ad18d95e55a78befc45c677ff8160b12d1de3cceff059edaa468ed8",
+        "scripts/calibrate_mappo_physical.py": "2709d07fdae6ec7d465d93374d40315edea9a575dda3a66367bedc4d1d33b93d",
+        "experiments/configs/mappo_physical_adapter_v01.json": "a05ffffa097b9d06961d55f7656aa912833e522e7cab93d96aa489894750162d",
+        "traffic/mappo_physical_adapter.py": "0669827f589be1a08ff940ab12a0fdfa6132c34aefa5aa3f9cea814b0e52df43",
+        "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+        "traffic/driver_control.py": "29755844f3b1df77ac002caba87be3ba22ff9918b0e8a5ba03ff568d2690e18a",
+        "traffic/path_following.py": "c89288bee58812817873203222ecb404f3186bd7735d3c1f23d90770e7ec906b",
+        "traffic/lane_geometry.py": "2b7976bf1e04ae6ae223ea93c3dd18551394a57404e350713e2b42004e8413b0",
+        "traffic/physx_vehicle.py": "167f0e6ce5da581e4520707a71596c9efe7a3dca6b36f466ee5081df210fe8a6",
+        "traffic/wheel_geometry.py": "8d4f23a9e3fdaf7eef41ee0d3be7eae1350e1208a250bb72ad0530ba551082b5",
+        "traffic/physics_session.py": "d0016c776819bdd93ff612d533f6ff4d2b70de9b332e52d81493255419d7c61a",
+        "traffic/rendered_physics_session.py": "2780f1b55b833c2d37fceab2c66b62b2582d1bc96701bd0e523bd8f80652fce9",
+        "traffic/vehicle_contacts.py": "628fbf2c7e1cc735437a6c67b3051f57a604b72bf67227c1d39769ab9488170d",
+        "usd/physical_scene.py": "2f7a0283cf2165538a6d0bf0336e042bf7c46c5110b63a3842fde7435d5e91f9",
+        "usd/scene_validation.py": "fb998a59fb325eed9a258d5441067fa05f832e8b1668be446f2cecc40b678475",
+        "experiments/probe_support.py": "69fa1769350b30138db2d53542433413d5f85674492806b8f0ab46a5be3ad828",
+        "experiments/verify_physics_vehicle.py": "95b8f97f79a71963812ef0a19e8385381870c07d4fbf28bcd880649eabe9ab8e",
+        "hivemind/launcher.py": "b2ea5e656c887a920ef06b6c70ccdb0830bbba7a097d82ae13187dbb829f23d3",
+        "visualization/preview_timing.py": "593b4a04145930b269cb0b62de2714cb41b1dc01c4ad85d4f34c0ba9ffc4780a",
+        "visualization/physics_road_view.py": "b1f2b0d473a7ae6c6d9a70262f1c2b6c0a0c9fa5528d4f8a7f8995d81bd6c219"
+      },
+      "isaac_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+      "gpu": {
+        "wall": 60880.0025525,
+        "name": "NVIDIA GeForce RTX 5070",
+        "total_mib": 12227.0,
+        "used_mib": 2745.0,
+        "utilization_percent": 32.0,
+        "driver": "621.01"
+      },
+      "config_sha256": "789d69c92b9de871ea1ad9d7a05a3e7823fc1a9d499fd985b91a89e5ea5479c4",
+      "cases": [
+        {
+          "name": "identification",
+          "passed": true,
+          "error": null,
+          "gates": null,
+          "metrics": null,
+          "completed_simulation_s": 40.0,
+          "contact_count": 0,
+          "static_files_unchanged": true,
+          "trajectory_sha256": "b54aa69b54452b0700c73fbdcebb5f9564c568b4ee5ec6053451e3e294275817",
+          "policy_decisions_sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+        },
+        {
+          "name": "scripted_6mps",
+          "passed": true,
+          "error": null,
+          "gates": {
+            "runtime_completed": true,
+            "no_contacts": true,
+            "static_files_unchanged": true,
+            "no_adapter_fallback": true,
+            "no_driver_fallback": true,
+            "no_overspeed": true,
+            "left_lane": true,
+            "return_lane": true,
+            "acceleration_tracking": true,
+            "stopped": true,
+            "cruise_speed": true
+          },
+          "metrics": {
+            "adapter_fallback_ticks": 0,
+            "driver_fallback_ticks": 0,
+            "overspeed_ticks": 0,
+            "active_physics_ticks": 4440,
+            "full_throttle_ticks": 0,
+            "full_brake_ticks": 884,
+            "left_lane_settled_max_error_m": 0.06472911834716788,
+            "right_lane_settled_max_error_m": 0.06472155451774597,
+            "mean_cruise_speed_m_s": 6.000318384582605,
+            "acceleration_tracking_rmse_m_s2": 0.011695325250563257
+          },
+          "completed_simulation_s": 39.0,
+          "contact_count": 0,
+          "static_files_unchanged": true,
+          "trajectory_sha256": "7a4b35eb651f58423198ae8ec9acdf4303f568f8a30c6aa5892bcd49c0323376",
+          "policy_decisions_sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+        },
+        {
+          "name": "scripted_12mps",
+          "passed": true,
+          "error": null,
+          "gates": {
+            "runtime_completed": true,
+            "no_contacts": true,
+            "static_files_unchanged": true,
+            "no_adapter_fallback": true,
+            "no_driver_fallback": true,
+            "no_overspeed": true,
+            "left_lane": true,
+            "return_lane": true,
+            "acceleration_tracking": true,
+            "stopped": true,
+            "cruise_speed": true
+          },
+          "metrics": {
+            "adapter_fallback_ticks": 0,
+            "driver_fallback_ticks": 0,
+            "overspeed_ticks": 0,
+            "active_physics_ticks": 4920,
+            "full_throttle_ticks": 0,
+            "full_brake_ticks": 642,
+            "left_lane_settled_max_error_m": 0.009444808959961026,
+            "right_lane_settled_max_error_m": 0.009450866840779781,
+            "mean_cruise_speed_m_s": 12.000391609440763,
+            "acceleration_tracking_rmse_m_s2": 0.014857655328571561
+          },
+          "completed_simulation_s": 43.0,
+          "contact_count": 0,
+          "static_files_unchanged": true,
+          "trajectory_sha256": "48b39138596de5de6aea4ee06f92fc6c49807b3b16a175eba074bdfc8210f451",
+          "policy_decisions_sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+        },
+        {
+          "name": "scripted_18mps",
+          "passed": true,
+          "error": null,
+          "gates": {
+            "runtime_completed": true,
+            "no_contacts": true,
+            "static_files_unchanged": true,
+            "no_adapter_fallback": true,
+            "no_driver_fallback": true,
+            "no_overspeed": true,
+            "left_lane": true,
+            "return_lane": true,
+            "acceleration_tracking": true,
+            "stopped": true,
+            "cruise_speed": true
+          },
+          "metrics": {
+            "adapter_fallback_ticks": 0,
+            "driver_fallback_ticks": 0,
+            "overspeed_ticks": 0,
+            "active_physics_ticks": 5400,
+            "full_throttle_ticks": 0,
+            "full_brake_ticks": 402,
+            "left_lane_settled_max_error_m": 0.009687042236328214,
+            "right_lane_settled_max_error_m": 0.009707151912152767,
+            "mean_cruise_speed_m_s": 18.001211466256017,
+            "acceleration_tracking_rmse_m_s2": 0.027082075219046733
+          },
+          "completed_simulation_s": 47.0,
+          "contact_count": 0,
+          "static_files_unchanged": true,
+          "trajectory_sha256": "f99224026f6ddfad82bd6d8a81cdfaa5282eaea73531074e81da66081f11b0af",
+          "policy_decisions_sha256": "a5338d955b09046ec0b16f3a9625b7955c763aae07dc722e474e6078745f932f"
+        },
+        {
+          "name": "frozen_cruise",
+          "passed": false,
+          "error": null,
+          "gates": {
+            "runtime_completed": true,
+            "no_contacts": true,
+            "static_files_unchanged": true,
+            "no_adapter_fallback": true,
+            "no_driver_fallback": true,
+            "no_overspeed": true,
+            "actor_executed": true,
+            "low_overrides": false,
+            "speed": true
+          },
+          "metrics": {
+            "adapter_fallback_ticks": 0,
+            "driver_fallback_ticks": 0,
+            "overspeed_ticks": 0,
+            "active_physics_ticks": 4560,
+            "full_throttle_ticks": 0,
+            "full_brake_ticks": 0,
+            "policy_decisions": 380,
+            "override_count": 312,
+            "override_fraction": 0.8210526315789474,
+            "nonzero_lane_requests": 0,
+            "final_window_speed_ratio": 1.0000197092692058
+          },
+          "completed_simulation_s": 40.0,
+          "contact_count": 0,
+          "static_files_unchanged": true,
+          "trajectory_sha256": "ad8bf16ec3845b909ee4acc7b022bbf0ef8c29953beadaecdadb2db30d30e06c",
+          "policy_decisions_sha256": "4846ef7d965554ae8d8ee21c9e12f321fe856e04cb9912283a5a2bfcf62049f6",
+          "correction_diagnostics": {
+            "causes": {
+              "speed_ceiling": 312
+            },
+            "median_m_s2": 0.9440823048353195,
+            "maximum_m_s2": 1.1660635471343994,
+            "above_0p05_m_s2": 312
+          }
+        },
+        {
+          "name": "frozen_pass",
+          "passed": false,
+          "error": null,
+          "gates": {
+            "runtime_completed": true,
+            "no_contacts": true,
+            "static_files_unchanged": true,
+            "no_adapter_fallback": true,
+            "no_driver_fallback": true,
+            "no_overspeed": true,
+            "actor_executed": true,
+            "low_overrides": false,
+            "speed": true,
+            "passed_slower_vehicle": true
+          },
+          "metrics": {
+            "adapter_fallback_ticks": 0,
+            "driver_fallback_ticks": 0,
+            "overspeed_ticks": 0,
+            "active_physics_ticks": 6960,
+            "full_throttle_ticks": 0,
+            "full_brake_ticks": 0,
+            "policy_decisions": 580,
+            "override_count": 161,
+            "override_fraction": 0.2775862068965517,
+            "nonzero_lane_requests": 1,
+            "final_window_speed_ratio": 0.9979369104680704,
+            "final_passing_clearance_m": 382.09827067057284
+          },
+          "completed_simulation_s": 60.0,
+          "contact_count": 0,
+          "static_files_unchanged": true,
+          "trajectory_sha256": "32233f1933e90261d4502a52a825b9da27099fb2977a17c7c82592f8bc3f8ea2",
+          "policy_decisions_sha256": "9e45fc3751f9153553b572de690216953df28e31536a2911f8bd7a772dbc8e5b",
+          "correction_diagnostics": {
+            "causes": {
+              "speed_ceiling": 161
+            },
+            "median_m_s2": 0.0,
+            "maximum_m_s2": 0.84436631296429,
+            "above_0p05_m_s2": 146
+          }
+        }
+      ],
+      "fresh_usd_reopen": {
+        "passed": true,
+        "usd_version": [
+          0,
+          26,
+          8
+        ],
+        "scenes": [
+          {
+            "scene": "frozen_cruise\\scene\\world.usda",
+            "passed": true,
+            "errors": [],
+            "prim_count": 79,
+            "layers": [
+              "world.usda",
+              "ground.usda",
+              "road.usda",
+              "vehicle-geometry.usda",
+              "vehicle-physics.usda",
+              "vehicle.usda",
+              "debug.usda",
+              "initial-state.usda",
+              "layout.usda",
+              "physics.usda",
+              "road-layout.usda"
+            ]
+          },
+          {
+            "scene": "frozen_pass\\scene\\world.usda",
+            "passed": true,
+            "errors": [],
+            "prim_count": 82,
+            "layers": [
+              "world.usda",
+              "ground.usda",
+              "road.usda",
+              "traffic-body.usda",
+              "vehicle-geometry.usda",
+              "vehicle-physics.usda",
+              "vehicle.usda",
+              "debug.usda",
+              "initial-state.usda",
+              "layout.usda",
+              "physics.usda",
+              "road-layout.usda"
+            ]
+          },
+          {
+            "scene": "identification\\scene\\world.usda",
+            "passed": true,
+            "errors": [],
+            "prim_count": 79,
+            "layers": [
+              "world.usda",
+              "ground.usda",
+              "road.usda",
+              "vehicle-geometry.usda",
+              "vehicle-physics.usda",
+              "vehicle.usda",
+              "debug.usda",
+              "initial-state.usda",
+              "layout.usda",
+              "physics.usda",
+              "road-layout.usda"
+            ]
+          },
+          {
+            "scene": "scripted_12mps\\scene\\world.usda",
+            "passed": true,
+            "errors": [],
+            "prim_count": 79,
+            "layers": [
+              "world.usda",
+              "ground.usda",
+              "road.usda",
+              "vehicle-geometry.usda",
+              "vehicle-physics.usda",
+              "vehicle.usda",
+              "debug.usda",
+              "initial-state.usda",
+              "layout.usda",
+              "physics.usda",
+              "road-layout.usda"
+            ]
+          },
+          {
+            "scene": "scripted_18mps\\scene\\world.usda",
+            "passed": true,
+            "errors": [],
+            "prim_count": 79,
+            "layers": [
+              "world.usda",
+              "ground.usda",
+              "road.usda",
+              "vehicle-geometry.usda",
+              "vehicle-physics.usda",
+              "vehicle.usda",
+              "debug.usda",
+              "initial-state.usda",
+              "layout.usda",
+              "physics.usda",
+              "road-layout.usda"
+            ]
+          },
+          {
+            "scene": "scripted_6mps\\scene\\world.usda",
+            "passed": true,
+            "errors": [],
+            "prim_count": 79,
+            "layers": [
+              "world.usda",
+              "ground.usda",
+              "road.usda",
+              "vehicle-geometry.usda",
+              "vehicle-physics.usda",
+              "vehicle.usda",
+              "debug.usda",
+              "initial-state.usda",
+              "layout.usda",
+              "physics.usda",
+              "road-layout.usda"
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

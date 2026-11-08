@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v10**, updated **November 4, 2026, America/Los_Angeles**.
-Status: **Stage 1 remains unaccepted; population v03 control corrections and diagnostics prepared, training disabled**.
+Revision **v11**, updated **November 5, 2026, America/Los_Angeles**.
+Status: **Stage 1 remains unaccepted; physical acceleration/lane adapter calibrated and validated in bounded straight-road fixtures, training disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,7 +14,7 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** review the [final population v03 configuration](population-control-v03.md#proposed-pilot-configuration) before authorizing any training. Its near-limit/first-entry/stop-line corrections, shared teacher/reward target, native-event accounting and separate actor/critic diagnostics passed bounded checks. The teacher reaches zero overrides in the tested passing/merge fixtures, while the unchanged actor still has 11.17% merge overrides. Keep the phase-0 reference frozen; a future pilot must report post-warm-up diagnostics and matched per-case results before any promotion. No new training is authorized by this milestone.
+**Next action:** review the [final population v03 configuration](population-control-v03.md#proposed-pilot-configuration) before authorizing any training, retaining the new [physical transfer baseline](mappo-physical-adapter-v01.md). The calibrated adapter passes scripted acceleration/lane changes at 6/12/18 m/s. The unchanged actor cruises and passes, but speed-ceiling corrections affect 82.11%/27.76% of decisions, so it remains unaccepted. Its SUMO merge override rate remains 11.17% in the earlier fixture. Keep the phase-0 weights frozen; target near-limit acceleration behavior through the shared teacher/reward and separate actor/critic diagnostics, then repeat matched SUMO/physical checks. No new training is authorized by this milestone.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
@@ -38,7 +38,7 @@ selected sensor and physical validation, with lightweight background traffic.
 | [Saved-capture prediction](segmentation-refinement-preview-v02.md) | Frozen SegFormer B0 refinement: 86.06% shared-class mIoU, 93.74% projected predicted-label accuracy | Generic obstacle semantic recall is zero. 89.28% geometric obstacle point recall covers eligible returns, not all obstacles or tracked objects |
 | [Ground-truth fusion](semantic-lidar-fusion-v01.md) | Calibrated static and scripted moving fixtures; about 99.95% assigned-label accuracy | Ground-truth projection accuracy is not learned perception accuracy; coverage, ego motion and highway-speed sensing remain separate |
 | [Segmentation preparation](segmentation-training-preparation-v02.md) | 3,600 RGB frames in 180 groups; 2,880/360/360 train/validation/test split; trainer and zero-update CUDA preflight | Six-class head is untrained. New corpus has no LiDAR or motion vectors, shares car geometry and uses static human poses |
-| [Physical vehicle foundation](physics-vehicle-foundation.md) | Bounded low-speed physical-car evidence and sensor assets | No accepted highway-speed sensor-driven MAPPO transfer. Pose playback is not physical closed-loop control |
+| [Physical adapter](mappo-physical-adapter-v01.md) | Calibrated native acceleration/lane execution at 6/12/18 m/s; frozen actor cruises and passes one scripted car | Actor intervention gates fail. Straight road, simulator truth and surrogate dynamics only; no accepted sensor-driven transfer |
 
 The failed pilot and diagnostic candidate remain under
 `outputs/i110-merge/v01/`; their exact hashes and source/runtime provenance are in
@@ -393,3 +393,12 @@ Completed steps 1 and 2 of the comparison using the frozen phase-0 actor, two im
 ### v10 — November 4: population v03 control correction prepared
 
 Implemented opt-in near-limit taper, first minor-entry conflict observations, source-backed stop-line approach calibration and a shared observation-only teacher/reward acceleration target. Explicitly versioned changed 93-field merge semantics; v2 controls remain available. Added separate actual actor/critic gradient and fixed-return value diagnostics without changing optimization, plus complete native-event accounting/gating for v3. Across 32,400 bounded train-fixture decisions, the teacher reached zero overrides in tested passing/merge cases with tasks retained and similar speeds; the frozen actor's merge overrides improved 26%→11.17% but remain unacceptable. Retained both development attempts, including the initial missing stop-offset correction and provenance limits. 150 CPU tests and a 32.719-second zero-update final preflight passed; all existing weights remain unchanged. [Final configuration, results and measured plots](population-control-v03.md). Next: user review of the disabled 100k-decision/30-minute configuration before a new launch. No training, held-out acceptance or physical/sensor transfer occurred.
+
+### v11 — November 5, 2026: calibrated physical execution with frozen MAPPO
+
+- Used Robot Modeling and RL with sub-agents to implement an acceleration/lane-intent adapter, exact 93-field observation bridge and bounded native runner. No training or checkpoint changes.
+- First fit failed: full-brake grip saturation distorted ordinary-brake response (0.66694 m/s² validation RMSE). Preserved the failure; restricted ordinary linear fitting/inversion to brake ≤0.5 and retained full braking separately.
+- Corrected response RMSE 0.02131 m/s²; fresh 0.4-brake confirmation 0.01634. Scripted acceleration, left/return lane changes and stopping pass at 6/12/18 m/s; worst settled lane error 0.06473 m.
+- Frozen reference cruises and passes a scripted slower car, but intervention gates fail at 312/380 (82.11%) and 161/580 (27.76%). All corrections are speed-ceiling related. No contacts, analytic overlaps, overspeed or adapter/driver fallbacks in these nominal cases.
+- 209 targeted CPU tests and six fresh-process composed-scene reopen checks pass. Full traces, screenshots, source/config hashes and both attempts retained; [report and compact evidence](mappo-physical-adapter-v01.md).
+- Next gate remains configuration review before any learning, followed by matched SUMO/physical evaluation. Curves, merges, reactive cooperation, native fault injection and sensor estimates remain unqualified. No real-car dynamics identification or policy promotion claimed.
