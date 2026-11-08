@@ -5,6 +5,10 @@ then adjusting/restarting within a bounded study. This separate experimental
 pilot supersedes the imitation launch for this task; it does not declare the
 failed flow reference qualified or modify its original disabled configuration.
 
+**Completed:** both bounded rounds and their fixed development evaluations ran.
+The round-two actor is published as an experimental candidate; acceptance gates
+still fail. Training was left unattended until each process exited.
+
 ## Revised learning contract
 
 - Shared MAPPO actor:117 inputs; centralized training critic:2,832 inputs.
@@ -56,3 +60,57 @@ source revision requires a refreshed source-bound proof before launch.
 [Round1 config](../configs/training/highway-flow-rl-v01.json).
 Initial state of this note: implementation prepared; results appended only after
 completion/failure. Google engineering-guide incremental sync pending.
+
+## Completed results
+
+| Four matched development cases | Initializer | Round 1 | Round 2 |
+|---|---:|---:|---:|
+| Pooled interventions | 24.94% | 16.44% | 7.61% |
+| I-110 merge-case interventions | 6.87% | 6.70% | 0.67% |
+| Stable merge targets passed | 0/1 | 0/1 | 1/1 |
+| Worst measured longitudinal jerk | 57.94 | 59.60 | 57.38 m/s³ |
+| Collisions / teleports / overspeed | 0 / 0 / 0 | 0 / 0 / 0 | 0 / 0 / 0 |
+
+Round 1 consumed29,998 active decisions, including2,048 critic warmup, with315
+PPO and36 critic optimizer steps. After its terminal evaluation, the measured
+high jerk justified the predeclared .01→.03 penalty change. KL was .00435 and
+interventions improved, so actor learning rate remained1e-4. Round2 loaded the
+exact pinned round1 checkpoint into a fresh optimizer; it collected29,997 PPO
+decisions and389 optimizer steps. This is sequential learning with a revised
+objective, **not an isolated causal test of the jerk coefficient**.
+
+Actual I-110 merge PPO exposure was1,463 decisions in round1 and1,407 in round2;
+both observed entry events. The independent warmup cursor prevents the earlier
+curriculum-skipping problem. Coverage remains incomplete: round2's final I-110
+cruise row had only4 PPO decisions. Planned rows and partial episodes do not
+establish full scenario coverage.
+
+Round2 final interventions by case: cruise14.50%, passing37.38%, I-110
+following5.46%, I-110 merge0.67%. All four still fail the nominal5 m/s³ peak
+comfort gate. In fact, peak jerk worsened in cruise, passing and following versus
+round1 (10.75,39.46,46.06 respectively); the overall maximum alone hides this.
+No policy promotion, held-out test, physical validation or camera/LiDAR claim.
+Long generic cases still have unfinished trips at80s; full-horizon accounting
+is preserved and does not mean every trip completed.
+
+The two training-plus-evaluation jobs took183.609 and183.735 seconds. All new
+runtime including preflights/failure was375.969 seconds; the reconciled study
+total is1,394.654 seconds, below5,400. Exactly one unsupported-population
+preflight failure is retained; no learning job failed. Model reasoning inspected
+results only after each job terminated, not during learning.
+
+Validation:88 focused tests passed, earlier native-environment regression tests
+passed, and final CPU export loading/finite inference matched the checkpoint
+actor exactly. Runtime sources remain those frozen in each manifest. The actor
+SHA-256 is`888a380b7c6741aea623e9b99ad155f7cb9a2ef8fdc2e590823b7e2629031819`.
+
+- [Published actor and contract](../policies/versions/highway-flow-rl-v01/README.md)
+- [Round2 resolved configuration](../configs/training/highway-flow-rl-v01-round2.json)
+- [Complete compact comparison](evidence/highway-flow-rl-v01/results.json)
+- Full local runs/checkpoints/journals: `outputs/highway-flow-rl/v01/round-01`
+  and `outputs/highway-flow-rl/v01/round-02`; launch logs are under `logs/`.
+
+Next work should diagnose the remaining cruise/passing interventions and measured
+jerk spikes using these journals before another revision. Preserve all safety
+thresholds and distinguish peak/typical comfort and unfinished trips. The two
+planned rounds are complete; no third round was started.

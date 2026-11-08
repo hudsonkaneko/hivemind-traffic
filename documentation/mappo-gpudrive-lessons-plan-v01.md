@@ -1,5 +1,12 @@
 # Apply GPUDrive findings to MAPPO — plan v01
 
+**November8 update:** the user authorized revising this plan and training with
+terminal review/restart. A separately versioned [teacher-free MAPPO pilot](highway-flow-rl-v01.md)
+completed two rounds without changing the original failed imitation-study gates.
+It removes all teacher losses/reward alignment and uses native safety/runtime
+preflight instead of claiming the teacher is qualified. The original plan below
+remains historical evidence; its teacher-assisted launch path is still blocked.
+
 November 7, 2026. **Planning only: no runtime, weights or training configuration
 changed; no simulation or training launched.** This supplements the
 [living roadmap](sensor-driven-training-roadmap.md) and

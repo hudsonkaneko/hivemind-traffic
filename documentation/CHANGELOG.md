@@ -1035,3 +1035,8 @@ Implemented network-transition verification, separate range/comfort/guard accoun
 ## 2026-11-07 — GPUDrive lessons applied to a MAPPO plan
 
 Saved a staged [transfer plan](mappo-gpudrive-lessons-plan-v01.md) for the prepared flow117 path: valid merge corridors and stage-wise control metrics, persistent gap alignment/native-response qualification, bounded CPU checks, then the existing initializer and MAPPO comparison gates. Keeps current safety/action limits and budgets, explicitly distinguishes 93/99/117 input generations, and requires actual merge-event exposure rather than scheduled coverage. No implementation, config/weights change, simulation or training. Living roadmap v27 updated; guide incremental sync pending.
+
+
+## 2026-11-08 — Teacher-free flow117 MAPPO pilot, two completed rounds
+
+Implemented separately versioned training without unqualified teacher rewards/losses, preserving native SUMO safety and the original disabled imitation study. Fixed runtime population validation and independent critic/PPO curriculum cursors. User-authorized learning and terminal-only review collected 59,995 decisions in two rounds; round2 increased jerk penalty after measured failure. Pooled development interventions fell 24.94%→16.44%→7.61%; I-110 merge is 0.67% with one stable target passed. Comfort and three per-case intervention gates still fail; no promotion. [Full evidence](highway-flow-rl-v01.md) and [downloadable experimental actor](../policies/versions/highway-flow-rl-v01/README.md). 88 focused tests, source-bound preflight and exact CPU export parity pass. All failed/runtime costs retained; Google guide incremental sync pending.
