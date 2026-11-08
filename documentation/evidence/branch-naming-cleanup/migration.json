@@ -1,0 +1,1056 @@
+{
+  "status": "complete",
+  "renamed_branches": [
+    {
+      "old": "codex/clean-clone-readiness",
+      "new": "clean-clone-readiness",
+      "sha": "e31b34a66db38d98f118108518bbf36f6a3231e3",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/clover-highway-usd-v01",
+      "new": "clover-highway-usd-v01",
+      "sha": "6e160d11926f28fcffdc4515107f8400eb552c74",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/collector-highway-usd-v02",
+      "new": "collector-highway-usd-v02",
+      "sha": "aab4cf1518fefc8903d380227bf1fa395f378c4d",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/consolidate-highwaysim",
+      "new": "consolidate-highwaysim",
+      "sha": "2592888ef399e57f4a0af35755eb09ceeb77d1db",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/demo-readiness",
+      "new": "demo-readiness",
+      "sha": "a2b56dfd395fac79b5eff61624771fd04bb44203",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/lane-training-console",
+      "new": "lane-training-console",
+      "sha": "653af0eebb92eb5430c8fd7c478729b2e27f9473",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/live-lidar-baseline",
+      "new": "live-lidar-baseline",
+      "sha": "1f017d91052cbd57c10b4d7d89b53fa019646905",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/loop-traffic-showcase",
+      "new": "loop-traffic-showcase",
+      "sha": "74a19362f2890af0481cc7e9b55aaae4380b5af0",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/mentor-loop-driving",
+      "new": "mentor-loop-driving",
+      "sha": "1b7efdcb192d5bbf61608cb1c43d47552cf8378f",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/physical-35mph",
+      "new": "physical-35mph",
+      "sha": "7c63f795260fd390903fa43b75cdd435c618ee11",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/physics-vehicle-foundation",
+      "new": "physics-vehicle-foundation",
+      "sha": "f4cf6109765a81b6b5d8628a93bf8664b380410b",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/realtime-preview",
+      "new": "realtime-preview",
+      "sha": "d30ad729384c44c1b3f123d901b23220267c8de9",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/usd-physical-scene",
+      "new": "usd-physical-scene",
+      "sha": "340a96edb1d302d1b15cb4168bb3709a1312fd1a",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/usd-scene-conventions",
+      "new": "usd-scene-conventions",
+      "sha": "eb62c2e7a66e49ed02520c6871de89ca9e61ef57",
+      "open_prs": [],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/body-camera-rig",
+      "new": "body-camera-rig",
+      "sha": "f4f986359e531c6e9246ecdcccbd102601928e54",
+      "open_prs": [
+        26
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/circles-control-smoke",
+      "new": "circles-control-smoke",
+      "sha": "f54941ef20893605e1b28775af2fcb5552d33c92",
+      "open_prs": [
+        18
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/github-engineering-guide",
+      "new": "github-engineering-guide",
+      "sha": "f40afe12657d391fb05c1a9a1369401986da252c",
+      "open_prs": [
+        17
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/gpudrive-continuous-v03",
+      "new": "gpudrive-continuous-v03",
+      "sha": "a1bdcadd395e003135f8f2969a23cdc4c207e223",
+      "open_prs": [
+        55
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/gpudrive-i110-pretrained-v01",
+      "new": "gpudrive-i110-pretrained-v01",
+      "sha": "c1550e2c9042dac6d4286074a68767471582be63",
+      "open_prs": [
+        53
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/gpudrive-i110-shielded-v02",
+      "new": "gpudrive-i110-shielded-v02",
+      "sha": "54cd49831e6c5615efcea155ed7357be2bd33c81",
+      "open_prs": [
+        54
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/gpudrive-route-v04",
+      "new": "gpudrive-route-v04",
+      "sha": "33cb2b63ec6b34a76457c7426faf8d002561c6f7",
+      "open_prs": [
+        56
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/gpudrive-smooth-v05",
+      "new": "gpudrive-smooth-v05",
+      "sha": "1ebbaa313993f9418666940d39afe590a4814ae2",
+      "open_prs": [
+        57
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/highway-60mph-ppo-traffic",
+      "new": "highway-60mph-ppo-traffic",
+      "sha": "ff5aebc72fba6525cf5dafc6e3da3d58abcc8a08",
+      "open_prs": [
+        19
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/highway-environment-v05",
+      "new": "highway-environment-v05",
+      "sha": "c6c4f5db31183bbad641004e26b503dce0587dbe",
+      "open_prs": [
+        47
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/highway-flow-preparation-v01",
+      "new": "highway-flow-preparation-v01",
+      "sha": "73b36275249154559cf6b5ac75a7bf242f8545b9",
+      "open_prs": [
+        52
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/highway-population-v01",
+      "new": "highway-population-v01",
+      "sha": "5813e9f3671a809174fd7bdeb41ab2eda65154c0",
+      "open_prs": [
+        39
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/highway-population-v02",
+      "new": "highway-population-v02",
+      "sha": "a309e5cb02add648a933f4a1fd94784b9ea96ee4",
+      "open_prs": [
+        40
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/highway-smooth-control-v01",
+      "new": "highway-smooth-control-v01",
+      "sha": "69fb36a510d03cce344221c520c3d569eaff4b41",
+      "open_prs": [
+        49
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/highway-smooth-preparation-v01",
+      "new": "highway-smooth-preparation-v01",
+      "sha": "b8848fc31d28b3e043268f0fe07c05dc73d5c2db",
+      "open_prs": [
+        50
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/highway-stage1-preparation",
+      "new": "highway-stage1-preparation",
+      "sha": "c45d9b1fdbc53daa2b96b9761c805a7083fa2a8d",
+      "open_prs": [
+        36
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/highway-stage1-v03",
+      "new": "highway-stage1-v03",
+      "sha": "613edf3bafe4bc2cdc30c36d5d90bba93711641f",
+      "open_prs": [
+        37
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/highway-stage1-v04-plan",
+      "new": "highway-stage1-v04-plan",
+      "sha": "7786cc4e89eca84b82ff2a7ed2528b1934cadd81",
+      "open_prs": [
+        38
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/highway-training-rethink-v01",
+      "new": "highway-training-rethink-v01",
+      "sha": "155bc8e28f847e77997220dbe7d2afe6c217e2c8",
+      "open_prs": [
+        51
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/i110-merge-blocking-fix",
+      "new": "i110-merge-blocking-fix",
+      "sha": "5a424a5852e6f1b03ad0add4a8f38521854b23f9",
+      "open_prs": [
+        48
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/i110-merge-training",
+      "new": "i110-merge-training",
+      "sha": "70f36ddb90522ca0831d2fdd1418586970c6dba4",
+      "open_prs": [
+        35
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/i110-merge-visual-v01",
+      "new": "i110-merge-visual-v01",
+      "sha": "0a1e2471661884586a3fd316448df6806b7a6791",
+      "open_prs": [
+        46
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/lab-lane-following",
+      "new": "lab-lane-following",
+      "sha": "fb6be71741e886bbe1155cbc5c21631c5dd2bccc",
+      "open_prs": [
+        13
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/lab-lane-ppo-pilot",
+      "new": "lab-lane-ppo-pilot",
+      "sha": "03e6c9d64e056ecf2e5641081dcb3580d2a7561e",
+      "open_prs": [
+        14
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/mappo-communication-waves",
+      "new": "mappo-communication-waves",
+      "sha": "d8f2dc8c7bfd1b19176aac145cb33bf987c80583",
+      "open_prs": [
+        28
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/mappo-flow-rl-v01",
+      "new": "mappo-flow-rl-v01",
+      "sha": "41f11fa84c24189c02057417dc4375fc7994b880",
+      "open_prs": [
+        59
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/mappo-flow-rl-v02",
+      "new": "mappo-flow-rl-v02",
+      "sha": "e9b718638c9377b6efe71f7a5d432683bdcf6e6c",
+      "open_prs": [
+        60
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/mappo-gpudrive-plan-v01",
+      "new": "mappo-gpudrive-plan-v01",
+      "sha": "96a18211f090163f1e559f36ed7ec6c06757888a",
+      "open_prs": [
+        58
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/mappo-override-retraining",
+      "new": "mappo-override-retraining",
+      "sha": "d12c168c72c3a7441fb274af3f483de1609dac19",
+      "open_prs": [
+        24
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/mappo-physical-adapter-v01",
+      "new": "mappo-physical-adapter-v01",
+      "sha": "ce074407138add3896f66fa4383924d8274ec2c4",
+      "open_prs": [
+        44
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/mappo-v02-3d-replay",
+      "new": "mappo-v02-3d-replay",
+      "sha": "dd9ccaf26e90a857641281511412719ea84c1783",
+      "open_prs": [
+        29
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/mappo-v04-cooperative-passing",
+      "new": "mappo-v04-cooperative-passing",
+      "sha": "5f2f31a6b747dd35a070ece13d58459b4727d691",
+      "open_prs": [
+        30
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/perception-preparation",
+      "new": "perception-preparation",
+      "sha": "a11fc8de963e8bd311557b7b8ad4336bc3a6c804",
+      "open_prs": [
+        27
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/policy-baseline-review",
+      "new": "policy-baseline-review",
+      "sha": "6bbe5269ec94b08f57e40b724e142c7e1c4232c2",
+      "open_prs": [
+        41
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/population-control-diagnostics",
+      "new": "population-control-diagnostics",
+      "sha": "2eb9ad01dc25070f81925185ad551f359a1ecbd1",
+      "open_prs": [
+        42
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/population-control-v03",
+      "new": "population-control-v03",
+      "sha": "097748d5155f20810b18e9196e950c4d41087c7b",
+      "open_prs": [
+        43
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/population-near-limit-v04",
+      "new": "population-near-limit-v04",
+      "sha": "4f976a1dd8b58ff8106ea3b1520469389eb32e46",
+      "open_prs": [
+        45
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/pretrained-segmentation-preview",
+      "new": "pretrained-segmentation-preview",
+      "sha": "b7288c3b1de5888f7daba3fb993f72bc39d080bd",
+      "open_prs": [
+        32
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/roof-lidar-rig",
+      "new": "roof-lidar-rig",
+      "sha": "2756e672a47c55c7f40b2026ceaf1a01d32f3fbc",
+      "open_prs": [
+        25
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/rsl-road-hazard-integration",
+      "new": "rsl-road-hazard-integration",
+      "sha": "1fb5d1d82e434798ec9996262bf4dd34279da73b",
+      "open_prs": [
+        15
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/segmentation-refinement-preview",
+      "new": "segmentation-refinement-preview",
+      "sha": "5c40bcd199c04c41c3fb3b855c759490995d5d4f",
+      "open_prs": [
+        33
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/segmentation-training-preparation",
+      "new": "segmentation-training-preparation",
+      "sha": "f03f4abc114bf9e078805cde8651e04fef53e82b",
+      "open_prs": [
+        34
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/semantic-lidar-fusion",
+      "new": "semantic-lidar-fusion",
+      "sha": "9641d92f4ba61234b44ca4924bce3bbac7ddcc55",
+      "open_prs": [
+        31
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/sensor-perception-v01",
+      "new": "sensor-perception-v01",
+      "sha": "0d502445395d767fa9aa43dfb2e9e308e0cab3ae",
+      "open_prs": [
+        21
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/seven-camera-rig",
+      "new": "seven-camera-rig",
+      "sha": "b61aef2984ab2a360652b412f3e5434c9c56381f",
+      "open_prs": [
+        23
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/showcase-validation",
+      "new": "showcase-validation",
+      "sha": "07c2898a94ca67a69cb97239195471d47fa54ae4",
+      "open_prs": [
+        12
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/sumo-mappo-setup",
+      "new": "sumo-mappo-setup",
+      "sha": "6b14eb0ccfea1c7970ce920ccc1a5422303a635b",
+      "open_prs": [
+        20
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    },
+    {
+      "old": "codex/sumo-native-capture",
+      "new": "sumo-native-capture",
+      "sha": "cc8eff33c9516a40af296c18efa308cae477f018",
+      "open_prs": [
+        22
+      ],
+      "protected": false,
+      "status": "remote_renamed",
+      "local_renamed": true
+    }
+  ],
+  "replacement_pull_requests": [
+    {
+      "old_number": 12,
+      "new_number": 61,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/61",
+      "head": "showcase-validation",
+      "base": "main",
+      "draft": true
+    },
+    {
+      "old_number": 13,
+      "new_number": 62,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/62",
+      "head": "lab-lane-following",
+      "base": "showcase-validation",
+      "draft": true
+    },
+    {
+      "old_number": 14,
+      "new_number": 63,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/63",
+      "head": "lab-lane-ppo-pilot",
+      "base": "lab-lane-following",
+      "draft": true
+    },
+    {
+      "old_number": 15,
+      "new_number": 64,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/64",
+      "head": "rsl-road-hazard-integration",
+      "base": "lane-training-console",
+      "draft": true
+    },
+    {
+      "old_number": 17,
+      "new_number": 65,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/65",
+      "head": "github-engineering-guide",
+      "base": "rsl-road-hazard-integration",
+      "draft": true
+    },
+    {
+      "old_number": 18,
+      "new_number": 66,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/66",
+      "head": "circles-control-smoke",
+      "base": "github-engineering-guide",
+      "draft": true
+    },
+    {
+      "old_number": 19,
+      "new_number": 67,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/67",
+      "head": "highway-60mph-ppo-traffic",
+      "base": "circles-control-smoke",
+      "draft": true
+    },
+    {
+      "old_number": 20,
+      "new_number": 68,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/68",
+      "head": "sumo-mappo-setup",
+      "base": "highway-60mph-ppo-traffic",
+      "draft": true
+    },
+    {
+      "old_number": 21,
+      "new_number": 69,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/69",
+      "head": "sensor-perception-v01",
+      "base": "sumo-mappo-setup",
+      "draft": true
+    },
+    {
+      "old_number": 22,
+      "new_number": 70,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/70",
+      "head": "sumo-native-capture",
+      "base": "sensor-perception-v01",
+      "draft": true
+    },
+    {
+      "old_number": 23,
+      "new_number": 71,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/71",
+      "head": "seven-camera-rig",
+      "base": "sumo-native-capture",
+      "draft": true
+    },
+    {
+      "old_number": 24,
+      "new_number": 72,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/72",
+      "head": "mappo-override-retraining",
+      "base": "sumo-native-capture",
+      "draft": true
+    },
+    {
+      "old_number": 25,
+      "new_number": 73,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/73",
+      "head": "roof-lidar-rig",
+      "base": "seven-camera-rig",
+      "draft": true
+    },
+    {
+      "old_number": 26,
+      "new_number": 74,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/74",
+      "head": "body-camera-rig",
+      "base": "roof-lidar-rig",
+      "draft": true
+    },
+    {
+      "old_number": 27,
+      "new_number": 75,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/75",
+      "head": "perception-preparation",
+      "base": "body-camera-rig",
+      "draft": true
+    },
+    {
+      "old_number": 28,
+      "new_number": 76,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/76",
+      "head": "mappo-communication-waves",
+      "base": "mappo-override-retraining",
+      "draft": true
+    },
+    {
+      "old_number": 29,
+      "new_number": 77,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/77",
+      "head": "mappo-v02-3d-replay",
+      "base": "mappo-communication-waves",
+      "draft": true
+    },
+    {
+      "old_number": 30,
+      "new_number": 78,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/78",
+      "head": "mappo-v04-cooperative-passing",
+      "base": "mappo-v02-3d-replay",
+      "draft": true
+    },
+    {
+      "old_number": 31,
+      "new_number": 79,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/79",
+      "head": "semantic-lidar-fusion",
+      "base": "mappo-v04-cooperative-passing",
+      "draft": true
+    },
+    {
+      "old_number": 32,
+      "new_number": 80,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/80",
+      "head": "pretrained-segmentation-preview",
+      "base": "semantic-lidar-fusion",
+      "draft": true
+    },
+    {
+      "old_number": 33,
+      "new_number": 81,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/81",
+      "head": "segmentation-refinement-preview",
+      "base": "pretrained-segmentation-preview",
+      "draft": true
+    },
+    {
+      "old_number": 34,
+      "new_number": 82,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/82",
+      "head": "segmentation-training-preparation",
+      "base": "segmentation-refinement-preview",
+      "draft": true
+    },
+    {
+      "old_number": 35,
+      "new_number": 83,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/83",
+      "head": "i110-merge-training",
+      "base": "segmentation-training-preparation",
+      "draft": true
+    },
+    {
+      "old_number": 36,
+      "new_number": 84,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/84",
+      "head": "highway-stage1-preparation",
+      "base": "i110-merge-training",
+      "draft": true
+    },
+    {
+      "old_number": 37,
+      "new_number": 85,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/85",
+      "head": "highway-stage1-v03",
+      "base": "highway-stage1-preparation",
+      "draft": true
+    },
+    {
+      "old_number": 38,
+      "new_number": 86,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/86",
+      "head": "highway-stage1-v04-plan",
+      "base": "highway-stage1-v03",
+      "draft": true
+    },
+    {
+      "old_number": 39,
+      "new_number": 87,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/87",
+      "head": "highway-population-v01",
+      "base": "highway-stage1-v04-plan",
+      "draft": true
+    },
+    {
+      "old_number": 40,
+      "new_number": 88,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/88",
+      "head": "highway-population-v02",
+      "base": "highway-population-v01",
+      "draft": true
+    },
+    {
+      "old_number": 41,
+      "new_number": 89,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/89",
+      "head": "policy-baseline-review",
+      "base": "highway-population-v02",
+      "draft": true
+    },
+    {
+      "old_number": 42,
+      "new_number": 90,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/90",
+      "head": "population-control-diagnostics",
+      "base": "policy-baseline-review",
+      "draft": true
+    },
+    {
+      "old_number": 43,
+      "new_number": 91,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/91",
+      "head": "population-control-v03",
+      "base": "population-control-diagnostics",
+      "draft": true
+    },
+    {
+      "old_number": 44,
+      "new_number": 92,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/92",
+      "head": "mappo-physical-adapter-v01",
+      "base": "population-control-v03",
+      "draft": true
+    },
+    {
+      "old_number": 45,
+      "new_number": 93,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/93",
+      "head": "population-near-limit-v04",
+      "base": "mappo-physical-adapter-v01",
+      "draft": true
+    },
+    {
+      "old_number": 46,
+      "new_number": 94,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/94",
+      "head": "i110-merge-visual-v01",
+      "base": "population-near-limit-v04",
+      "draft": true
+    },
+    {
+      "old_number": 47,
+      "new_number": 95,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/95",
+      "head": "highway-environment-v05",
+      "base": "i110-merge-visual-v01",
+      "draft": true
+    },
+    {
+      "old_number": 48,
+      "new_number": 96,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/96",
+      "head": "i110-merge-blocking-fix",
+      "base": "highway-environment-v05",
+      "draft": true
+    },
+    {
+      "old_number": 49,
+      "new_number": 97,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/97",
+      "head": "highway-smooth-control-v01",
+      "base": "i110-merge-blocking-fix",
+      "draft": true
+    },
+    {
+      "old_number": 50,
+      "new_number": 98,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/98",
+      "head": "highway-smooth-preparation-v01",
+      "base": "highway-smooth-control-v01",
+      "draft": true
+    },
+    {
+      "old_number": 51,
+      "new_number": 99,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/99",
+      "head": "highway-training-rethink-v01",
+      "base": "highway-smooth-preparation-v01",
+      "draft": true
+    },
+    {
+      "old_number": 52,
+      "new_number": 100,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/100",
+      "head": "highway-flow-preparation-v01",
+      "base": "highway-training-rethink-v01",
+      "draft": true
+    },
+    {
+      "old_number": 53,
+      "new_number": 101,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/101",
+      "head": "gpudrive-i110-pretrained-v01",
+      "base": "highway-flow-preparation-v01",
+      "draft": true
+    },
+    {
+      "old_number": 54,
+      "new_number": 102,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/102",
+      "head": "gpudrive-i110-shielded-v02",
+      "base": "gpudrive-i110-pretrained-v01",
+      "draft": true
+    },
+    {
+      "old_number": 55,
+      "new_number": 103,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/103",
+      "head": "gpudrive-continuous-v03",
+      "base": "gpudrive-i110-shielded-v02",
+      "draft": true
+    },
+    {
+      "old_number": 56,
+      "new_number": 104,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/104",
+      "head": "gpudrive-route-v04",
+      "base": "gpudrive-continuous-v03",
+      "draft": true
+    },
+    {
+      "old_number": 57,
+      "new_number": 105,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/105",
+      "head": "gpudrive-smooth-v05",
+      "base": "gpudrive-route-v04",
+      "draft": true
+    },
+    {
+      "old_number": 58,
+      "new_number": 106,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/106",
+      "head": "mappo-gpudrive-plan-v01",
+      "base": "gpudrive-smooth-v05",
+      "draft": true
+    },
+    {
+      "old_number": 59,
+      "new_number": 107,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/107",
+      "head": "mappo-flow-rl-v01",
+      "base": "mappo-gpudrive-plan-v01",
+      "draft": true
+    },
+    {
+      "old_number": 60,
+      "new_number": 108,
+      "url": "https://github.com/hudsonkaneko/hivemind-traffic/pull/108",
+      "head": "mappo-flow-rl-v02",
+      "base": "mappo-flow-rl-v01",
+      "draft": true
+    }
+  ],
+  "unchanged_fork_pr": 16,
+  "default_branch": "main",
+  "default_sha": "edb71259a29741f6ea12e33aedf946b58d876c58",
+  "verification": {
+    "all_62_commit_ids_preserved_at_rename": true,
+    "all_48_replacement_titles_bodies_draft_flags_and_head_base_shas_match": true,
+    "all_original_48_prs_closed_not_merged": true,
+    "remaining_prefixed_remote_branches": 0,
+    "remaining_prefixed_local_branches": 0,
+    "total_open_prs": 49
+  }
+}

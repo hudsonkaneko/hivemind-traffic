@@ -1,0 +1,56 @@
+{
+  "schema": "highway_smooth_frozen_invariance_v01",
+  "training": false,
+  "optimizer_steps": 0,
+  "passed": true,
+  "checks": {
+    "expected_controllers": true,
+    "clean_saved_integrity": true,
+    "matched_case_and_demand": true,
+    "matching_frozen_policy": true,
+    "all_native_frames_equal": true,
+    "all_raw_actions_equal": true,
+    "all_filtered_commands_equal": true
+  },
+  "frames": [
+    801,
+    801
+  ],
+  "action_ticks": [
+    491,
+    491
+  ],
+  "policy_sha256": "fd639c39f0c514256a458b2b85d35baba242125f44dcc3d9542d767eb2dd46ec",
+  "runs": [
+    {
+      "path": "outputs/highway-smooth-control/v02/entry-probe-03/i110-merge/frozen-v05",
+      "input_sha256": {
+        "evaluation.json": "2b878b576cfb86cf6bb2b6ac9ece25c3f7e1727b84ef84b2d53eba9bc2659bf9",
+        "manifest.json": "9c816c124bc0435a6ad793270840fece0e7d5a45726f0a9c3e2020148485e782",
+        "recording-check.json": "a87eeb3f12d63759afb185e762a176b5a1bb0ac81125e1cc9d99a51866e77f30",
+        "recording.json": "74671d53df5f4029e7d05cdd995db397e1005a6ed8bf96de48a92b590c1d6b41"
+      }
+    },
+    {
+      "path": "outputs/highway-smooth-control/v02/entry-probe-03/i110-merge/frozen-smooth",
+      "input_sha256": {
+        "evaluation.json": "70fe342f535eb133f448b0689b572e196e673f5e0b213cb41abba40a9aaa4cd8",
+        "manifest.json": "392dbd912feb6082c34a938f45e4f430160d215d6d50a001c1c5ca455de7fbc5",
+        "recording-check.json": "5c246863ed09a16cbaef2511756cacf557f44d4c22f52212d79e83dfa2b4c2cf",
+        "recording.json": "c429d6365652b7a2eba306d47e856a7e2f6f3510aa2d704741b37c0d91126c65"
+      }
+    }
+  ],
+  "action_journals": [
+    {
+      "path": "outputs/highway-smooth-control/v02/entry-probe-03/i110-merge/frozen-v05/simulation/episode-6800019-2cf7d69e/actions.jsonl.gz",
+      "sha256": "922315a97fdaedcd06cd5900cf463fa43c1ef544c3a16b67679c90d4cdff97b7"
+    },
+    {
+      "path": "outputs/highway-smooth-control/v02/entry-probe-03/i110-merge/frozen-smooth/simulation/episode-6800019-438b7f64/actions.jsonl.gz",
+      "sha256": "0bda44658d16078e53ffa20acada9afe60a1667e396ade3812b08d806871813b"
+    }
+  ],
+  "observations": "No live observation-array trace was recorded; exact observation-array invariance is covered separately by unit tests. This proof compares all native frames and raw/filtered actions.",
+  "helper_source_sha256": "fcf635ad394db11b925442da829e3ab4d9c6fa48c0c48da8fd84b5b7ec58426a"
+}

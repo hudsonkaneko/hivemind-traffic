@@ -1,0 +1,61 @@
+{
+  "date": "2026-11-04 America/Los_Angeles",
+  "tests": {
+    "passed": 157
+  },
+  "config_sha256": {
+    "disabled": "e99060ca8cfee87c6333649f57b61fcef7411d115a5b162a369733b5211d72ef",
+    "authorized": "9917f0b103e97671492fc4dd0e63aaf6b73b0f17cdd2387fce67883ad545033c"
+  },
+  "preflight": {
+    "path": "outputs/highway-population/v01/preflight-20261104T225055Z-5bd2ebdc/summary.json",
+    "sha256": "5fa4e584a90e7fdd7cf3ba3928dc42ef28d54f40a2acd1142e754890426e0bde",
+    "wall_seconds": 27.45300000021234,
+    "source_hashes": {
+      "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+      "environments/highway_stage1_env.py": "c43df31cb5988ebb2faa086323bed24592d7e0c2128208784b91872b8e164f5a",
+      "environments/i110_merge_env.py": "ec343afd7b35920f4fd6056dcd7b4fe7ee2460a31d95f599e24942290336db76",
+      "traffic/highway_merge_context.py": "bbdc04d1cd42418453f8e0f5473729b6290c4b3da68ad92396b2847ced480a4e",
+      "traffic/highway_stage1_teacher.py": "750bbc930c294b0403dfb6841cf123798410e8095397140f90e4ec3ae087c139",
+      "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+      "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+      "policies/mappo.py": "5420640f8847f381efb5ed729a965433c0b6894c447df1c3eb0686c9d94c8748",
+      "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+      "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+      "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+      "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+      "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+      "scripts/build_highway_curriculum_v2.py": "97d80ac2bcd0657eec37a9a863533ad2e51c5c0cdf9fa80c00b1873f71fe0477",
+      "scripts/build_i110_sumo.py": "26ab7e55962f4d6e0422f8d0ef944baf337600af32645fb1d6364f0979c37f70",
+      "experiments/run_highway_population.py": "e777348293259340603e92165d105a00dbb446d09078c0193ef36a9918c241ca",
+      "environments/highway_population_env.py": "437f06a80bb8d07d5bababde7669cc07790f18c60cb7ac5474bf1c5c06e95415"
+    },
+    "passed": true,
+    "training": false,
+    "held_out_test_run": false,
+    "learning": false,
+    "api_passed": true,
+    "seed_test_passed": true,
+    "teacher_repeat_exact": true,
+    "collector_finite": true,
+    "actor_export_passed": true,
+    "nominal_driving_acceptance": false,
+    "optimizer_steps": 0
+  },
+  "failed_preflights": [
+    {
+      "path": "outputs/highway-population/v01/preflight-20261104T224155Z-3ea1a298/summary.json",
+      "sha256": "201241e445d21408d35cc4d57add8be4f85a1f4d3152dbc5c4395728e662bc06",
+      "error": "KeyError('abs_acceleration_sum')",
+      "wall_seconds": 18.20299999997951,
+      "optimizer_steps": 0
+    },
+    {
+      "path": "outputs/highway-population/v01/preflight-20261104T224950Z-4c0a80b3/summary.json",
+      "sha256": "3f64ffa4085111bb526b368b4129e03f3316fd56aeedcb50b2ff284b61d472ca",
+      "error": "ValueError('Population is configured at construction; live slider handoff is not implemented')",
+      "wall_seconds": 21.766000000061467,
+      "optimizer_steps": 0
+    }
+  ]
+}

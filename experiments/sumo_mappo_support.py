@@ -55,13 +55,33 @@ def validate_config(config):
         raise ValueError('Unsupported configuration schema')
     env, model, train = (config[key] for key in ('environment', 'model', 'training'))
     from environments.sumo_mappo_env import SumoMappoEnv
-    SumoMappoEnv(config=env)  # Validate the exact environment contract without starting SUMO.
-    fixed = {'observation_size': 27, 'state_size': 112, 'num_agents': 4,
-             'normalization': 'fixed_environment_feature_scaling', 'communication': 'none',
-             'action': 'tanh_gaussian_normalized_acceleration',
+    contract = SumoMappoEnv(config=env)  # Validate the exact environment contract without starting SUMO.
+    wave = bool((env.get('wave') or {}).get('enabled', False))
+    driving = bool(env.get('driving'))
+    if (contract.observation_size != model['observation_size'] or contract.state_size != model['state_size']):
+        raise ValueError('Environment observation/state dimensions differ from model')
+    fixed = {'observation_size': 81 if driving else (69 if wave else 27), 'state_size': 328 if driving else (280 if wave else 112), 'num_agents': 4,
+             'normalization': 'fixed_environment_feature_scaling', 'communication': (env.get('communication') or {}).get('mode', 'none'),
+             'action': 'hybrid_tanh_gaussian_categorical_lane' if driving else 'tanh_gaussian_normalized_acceleration',
              'critic_input': 'joint_observations_alive_masks_and_agent_one_hot'}
+    if type(model.get('message_encoder', False)) is not bool or model.get('message_encoder', False) != (wave or driving):
+        raise ValueError('Communication study requires the masked message encoder')
     if any(model[key] != value for key, value in fixed.items()):
         raise ValueError('Unsupported actor/critic contract')
+    if driving:
+        targets=config['evaluation'].get('driving_targets',{})
+        if set(targets) != {'minimum_passes_per_episode','maximum_lane_changes_per_vehicle_minute'}:
+            raise ValueError('Driving study requires explicit passing and weaving targets')
+        passes=targets['minimum_passes_per_episode'];changes=targets['maximum_lane_changes_per_vehicle_minute']
+        if type(passes) is not int or not 1<=passes<=100 or isinstance(changes,bool) or not isinstance(changes,(int,float)) or not math.isfinite(changes) or not 0<changes<=12:
+            raise ValueError('Invalid driving acceptance targets')
+    elif 'driving_targets' in config['evaluation']:
+        raise ValueError('Driving targets require the driving environment')
+    if wave:
+        targets = config['evaluation'].get('wave_targets', {})
+        if targets != dict(minimum_variance_reduction=.15, maximum_throughput_loss=.02,
+                           baseline='separately_trained_no_communication_same_scenario', requires_baseline=True):
+            raise ValueError('Wave study requires the declared matched-baseline targets')
     if env['speed_limit_m_s'] != 60 * .44704 or env['dt'] != .1:
         raise ValueError('This study requires a 60 mph ceiling and 0.1 s steps')
     if env['acceleration_min_m_s2'] != -4.5 or env['acceleration_max_m_s2'] != 2.:
@@ -102,8 +122,37 @@ def validate_config(config):
         raise ValueError('Training seeds overlap evaluation/preflight')
     if not 1 <= config['evaluation']['every_updates'] <= 100:
         raise ValueError('Invalid validation interval')
-    if config['evaluation']['selection'] != 'accepted_then_fewer_collisions_then_fewer_overspeed_steps_then_nominal_episodes_then_reward_then_fewer_interventions':
+    selection = config['evaluation']['selection']
+    if selection not in ('accepted_then_fewer_collisions_then_fewer_overspeed_steps_then_nominal_episodes_then_reward_then_fewer_interventions',
+                          'accepted_then_safety_then_driving_targets_then_fewer_interventions_then_reward'):
         raise ValueError('Unsupported checkpoint selection rule')
+    if selection == 'accepted_then_safety_then_driving_targets_then_fewer_interventions_then_reward' and not env.get('driving'):
+        raise ValueError('Driving checkpoint selection requires the driving task')
+    imitation = train.get('imitation')
+    if imitation is not None:
+        expected = {'enabled', 'episodes', 'epochs', 'minibatch_size', 'learning_rate',
+                    'initial_log_std', 'coefficient', 'lane_change_weight'}
+        if (not expected.issubset(imitation) or set(imitation) - expected - {'ppo_lane_change_weight'}
+                or imitation['enabled'] is not True or not env.get('driving')):
+            raise ValueError('Imitation requires the explicit v04 training-only configuration')
+        for key, low, high in [('episodes',1,100),('epochs',1,100),('minibatch_size',1,4096)]:
+            if type(imitation[key]) is not int or not low <= imitation[key] <= high:
+                raise ValueError('Invalid imitation ' + key)
+        for key in ('learning_rate','coefficient','lane_change_weight'):
+            if not math.isfinite(imitation[key]) or imitation[key] <= 0:
+                raise ValueError('Invalid imitation ' + key)
+        if not -5 <= imitation['initial_log_std'] <= 0 or not 1 <= imitation['lane_change_weight'] <= 20:
+            raise ValueError('Invalid imitation exploration or lane weighting')
+        if 'ppo_lane_change_weight' in imitation:
+            value = imitation['ppo_lane_change_weight']
+            if (isinstance(value, bool) or not isinstance(value, (int, float))
+                    or not math.isfinite(value) or not 1 <= value <= 20):
+                raise ValueError('Invalid imitation PPO lane weighting')
+        demo_budget = imitation['episodes'] * env['horizon'] * model['num_agents']
+        if demo_budget + model['num_agents'] > train['max_agent_transitions']:
+            raise ValueError('Demonstrations must leave room inside the total transition budget')
+        if train['episode_seed_start'] + imitation['episodes'] > train['episode_seed_end']:
+            raise ValueError('Imitation leaves no PPO training seed')
     execution = config['execution']
     if (execution['rendering'] is not False or execution['log_mode'] != 'files_only'
             or execution['requires_explicit_train_mode'] is not True):
@@ -118,17 +167,24 @@ def validate_config(config):
 
 def sources():
     names = ['experiments/run_sumo_mappo.py', 'experiments/sumo_mappo_support.py',
-             'experiments/sumo_mappo_rollout.py', 'experiments/configs/sumo_mappo_v1.json',
+             'experiments/sumo_mappo_rollout.py', 'experiments/sumo_mappo_imitation.py',
+             'experiments/configs/sumo_mappo_v1.json',
              'policies/mappo.py', 'environments/sumo_mappo_env.py', 'traffic/mappo_sumo.py',
-             'traffic/sumo_backend.py', 'requirements.txt']
+             'traffic/sumo_backend.py', 'traffic/mappo_communication.py', 'requirements.txt']
     names += [str(path.relative_to(ROOT)).replace('\\', '/')
               for path in sorted((ROOT / 'scenarios/mappo_highway').glob('*')) if path.is_file()]
+    names += [str(path.relative_to(ROOT)).replace('\\', '/')
+              for path in sorted((ROOT / 'experiments/configs').glob('sumo_mappo_v[2-9]*.json'))]
+    names += [str(path.relative_to(ROOT)).replace('\\', '/')
+              for path in sorted((ROOT / 'traffic').glob('mappo_*.py'))]
     return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in names}
 
 
 def create_run(config, mode):
     run_id = mode + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8]
-    output = ROOT / 'outputs/sumo_mappo/v01' / run_id
+    version = ('v04' if config['environment'].get('driving') else
+               ('v03' if (config['environment'].get('wave') or {}).get('enabled', False) else 'v01'))
+    output = ROOT / 'outputs/sumo_mappo' / version / run_id
     logs = ROOT / 'logs/sumo_mappo' / run_id
     output.mkdir(parents=True, exist_ok=False)
     logs.mkdir(parents=True, exist_ok=False)
@@ -156,7 +212,7 @@ def manifest(config, mode):
                               gymnasium=gymnasium.__version__, pettingzoo=pettingzoo.__version__,
                               traci=getattr(traci, '__version__', 'unknown'),
                               sumo=subprocess.check_output([str(find_sumo_binary()), '--version'], text=True).splitlines()[0]),
-                rendering=False, communication='none')
+                rendering=False, communication=config['model']['communication'])
 
 
 def _worker_main(connection, config, run_directory, log_file):
@@ -187,6 +243,9 @@ def _worker_main(connection, config, run_directory, log_file):
                     observations, rewards, terminated, truncated, infos = environment.step(value)
                     response = dict(observations=observations, rewards=rewards,
                                     terminated=terminated, truncated=truncated, infos=infos)
+                elif command == 'scripted_action':
+                    response = dict(actions={agent: environment.scripted_action(agent, cooperative=bool(value))
+                                             for agent in environment.agents})
                 else:
                     raise ValueError('Unknown worker command')
                 response.update(state=environment.state(), agents=list(environment.agents))

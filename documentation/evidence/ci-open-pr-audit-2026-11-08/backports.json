@@ -1,0 +1,123 @@
+[
+  {
+    "pr": 107,
+    "branch": "mappo-flow-rl-v01",
+    "before": "41f11fa84c24189c02057417dc4375fc7994b880",
+    "fix": "fixture",
+    "after": "6692a76b26587c0dc1d285639de63b52a1e23f1e",
+    "files": [
+      "documentation/ci-checkpoint-fixture-backport.md",
+      "tests/test_highway_smooth_training.py"
+    ]
+  },
+  {
+    "pr": 106,
+    "branch": "mappo-gpudrive-plan-v01",
+    "before": "96a18211f090163f1e559f36ed7ec6c06757888a",
+    "fix": "fixture",
+    "after": "bbadbf0d91ce4b7e594316d4e3a2a2ab8caf103c",
+    "files": [
+      "documentation/ci-checkpoint-fixture-backport.md",
+      "tests/test_highway_smooth_training.py"
+    ]
+  },
+  {
+    "pr": 105,
+    "branch": "gpudrive-smooth-v05",
+    "before": "1ebbaa313993f9418666940d39afe590a4814ae2",
+    "fix": "fixture",
+    "after": "1963e83d316633b101a71e4c17e541374aab2fef",
+    "files": [
+      "documentation/ci-checkpoint-fixture-backport.md",
+      "tests/test_highway_smooth_training.py"
+    ]
+  },
+  {
+    "pr": 104,
+    "branch": "gpudrive-route-v04",
+    "before": "33cb2b63ec6b34a76457c7426faf8d002561c6f7",
+    "fix": "fixture",
+    "after": "bc761c765db97df8adbe5c029a5f213d8123066e",
+    "files": [
+      "documentation/ci-checkpoint-fixture-backport.md",
+      "tests/test_highway_smooth_training.py"
+    ]
+  },
+  {
+    "pr": 103,
+    "branch": "gpudrive-continuous-v03",
+    "before": "a1bdcadd395e003135f8f2969a23cdc4c207e223",
+    "fix": "fixture",
+    "after": "9b99da4079591b77d8da1d9381e8ba2c635f058a",
+    "files": [
+      "documentation/ci-checkpoint-fixture-backport.md",
+      "tests/test_highway_smooth_training.py"
+    ]
+  },
+  {
+    "pr": 102,
+    "branch": "gpudrive-i110-shielded-v02",
+    "before": "54cd49831e6c5615efcea155ed7357be2bd33c81",
+    "fix": "fixture",
+    "after": "e2e296477f103bed43edcece36cc3904113caecd",
+    "files": [
+      "documentation/ci-checkpoint-fixture-backport.md",
+      "tests/test_highway_smooth_training.py"
+    ]
+  },
+  {
+    "pr": 101,
+    "branch": "gpudrive-i110-pretrained-v01",
+    "before": "c1550e2c9042dac6d4286074a68767471582be63",
+    "fix": "fixture",
+    "after": "2a3a86aa44a2ab193ddb492f33e860d892c43a52",
+    "files": [
+      "documentation/ci-checkpoint-fixture-backport.md",
+      "tests/test_highway_smooth_training.py"
+    ]
+  },
+  {
+    "pr": 100,
+    "branch": "highway-flow-preparation-v01",
+    "before": "73b36275249154559cf6b5ac75a7bf242f8545b9",
+    "fix": "fixture",
+    "after": "e6504b60798e463c3eaddf4990102771a393a1af",
+    "files": [
+      "documentation/ci-checkpoint-fixture-backport.md",
+      "tests/test_highway_smooth_training.py"
+    ]
+  },
+  {
+    "pr": 99,
+    "branch": "highway-training-rethink-v01",
+    "before": "155bc8e28f847e77997220dbe7d2afe6c217e2c8",
+    "fix": "fixture",
+    "after": "3f82d5c06adf308cca2c1a4914186e7036e6aecb",
+    "files": [
+      "documentation/ci-checkpoint-fixture-backport.md",
+      "tests/test_highway_smooth_training.py"
+    ]
+  },
+  {
+    "pr": 98,
+    "branch": "highway-smooth-preparation-v01",
+    "before": "b8848fc31d28b3e043268f0fe07c05dc73d5c2db",
+    "fix": "fixture",
+    "after": "a81f0b2eef93915e850bffe42534abf0d9b714af",
+    "files": [
+      "documentation/ci-checkpoint-fixture-backport.md",
+      "tests/test_highway_smooth_training.py"
+    ]
+  },
+  {
+    "pr": 79,
+    "branch": "semantic-lidar-fusion",
+    "before": "9641d92f4ba61234b44ca4924bce3bbac7ddcc55",
+    "fix": "pillow",
+    "after": "473af314500b60ede6c885d36aef6baa55120edf",
+    "files": [
+      "documentation/ci-semantic-pillow-fix.md",
+      "requirements-ci.txt"
+    ]
+  }
+]

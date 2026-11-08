@@ -34,6 +34,11 @@ elsewhere, but all prepared assets and project outputs belong under this root.
 
 ## Development continuity
 
+- User preference (2026-11-08): use descriptive branch names without a `codex/`
+  prefix. Rename branches while preserving their commits; this is not permission
+  to delete development work. Check open pull requests first: GitHub closes a
+  pull request when its head branch is renamed. Account for that migration effect
+  and preserve existing review history.
 - Follow `documentation/workflow.md`: feature branches, code/tests/documentation
   together, tested GitHub checkpoints, and pull-request review before merging.
 - The active plan is `documentation/hybrid-roadmap.md`. Older roadmap text is
@@ -49,6 +54,23 @@ elsewhere, but all prepared assets and project outputs belong under this root.
   training budget and evaluation before launching training. Scripted controllers,
   environment plumbing and bounded validation may proceed now; do not interpret
   that authorization as permission to begin unattended training.
+
+## Persistent sensor-driven training plan
+
+User preference (2026-11-02): maintain
+`documentation/sensor-driven-training-roadmap.md` as the living plan for
+structured driving, imperfect observations, and camera/LiDAR policy integration.
+Read it before related planning or implementation. After meaningful progress,
+including failed experiments, update its status, next action, evidence links,
+decisions and append-only progress history alongside the relevant technical note
+and CHANGELOG. Link major milestones from `documentation/hybrid-roadmap.md`,
+which remains the overall project roadmap. Preserve prior results and acceptance
+criteria; distinguish proposed work from verified capability.
+
+This is project memory maintained during project work, not a background watcher.
+Keep the engineering guide synchronized using the procedure below. Record pending
+sync honestly if a service is unavailable. A roadmap or proposed budget does not
+authorize training; present the resolved configuration before a new launch.
 
 ## Connected engineering guide
 

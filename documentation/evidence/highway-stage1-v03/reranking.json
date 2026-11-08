@@ -1,0 +1,505 @@
+{
+  "source_path": "outputs/highway-stage1/v03/reranking-20261103T210039Z-33d8d228/summary.json",
+  "source_sha256": "ff7f842b66955bb3bea3822cd914457fbdef95234a6882cf3e2a71d705145c7a",
+  "mode": "offline_retained_validation_rerank",
+  "ranking_version": 5,
+  "optimizer_steps": 0,
+  "simulator_runs": 0,
+  "source_commit": "c45d9b1fdbc53daa2b96b9761c805a7083fa2a8d",
+  "ranking_source_sha256": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+  "archived_selection": {
+    "generation": "selected-00162-cfaa8b0a"
+  },
+  "proposed_selected_validation": "validation-phase-2",
+  "quality_accepted": false,
+  "prior_run_and_catalog_modified": false,
+  "reports": [
+    {
+      "name": "validation-after-bc",
+      "source": "outputs/highway-stage1/v02/train-20261103T190020Z-8469072d/validation-after-bc.json",
+      "source_sha256": "91bf76bf6a11f836815c20e69721f5e67602969419d370bb51ac46a0aad0f2a1",
+      "diagnostics": {
+        "ranking_version": 5,
+        "rank_fields": [
+          "negative_safety_events",
+          "negative_task_failure_cases",
+          "negative_override_failure_cases",
+          "negative_worst_override_fraction",
+          "negative_pooled_override_fraction",
+          "negative_unfinished_trips",
+          "negative_boundary_time_s",
+          "negative_external_wait_s",
+          "minimum_cruise_speed_fraction",
+          "successful_merges",
+          "passes",
+          "mean_speed_fraction",
+          "reward"
+        ],
+        "rank": [
+          0,
+          0,
+          -8,
+          -0.551875,
+          -0.18011354758060316,
+          -503,
+          -32498.599999999995,
+          -753.3,
+          0.9682000795650488,
+          6,
+          11,
+          0.9085817228416682,
+          29724.34134580699
+        ],
+        "cases": 12,
+        "quality_accepted": false,
+        "safety_events": 0,
+        "task_failure_cases": [],
+        "override_failure_cases": [
+          {
+            "case_id": "validation-5-lane-following",
+            "seed": 5210001,
+            "intervention_fraction": 0.3046875
+          },
+          {
+            "case_id": "validation-5-lane-passing",
+            "seed": 5210002,
+            "intervention_fraction": 0.551875
+          },
+          {
+            "case_id": "validation-5-lane-merge",
+            "seed": 5210003,
+            "intervention_fraction": 0.0615625
+          },
+          {
+            "case_id": "validation-2-lane-cruise",
+            "seed": 5210004,
+            "intervention_fraction": 0.0684375
+          },
+          {
+            "case_id": "validation-2-lane-following",
+            "seed": 5210005,
+            "intervention_fraction": 0.2596875
+          },
+          {
+            "case_id": "validation-2-lane-merge",
+            "seed": 5210007,
+            "intervention_fraction": 0.06660412757973734
+          },
+          {
+            "case_id": "validation-4-lane-following",
+            "seed": 5210009,
+            "intervention_fraction": 0.41125
+          },
+          {
+            "case_id": "validation-4-lane-passing",
+            "seed": 5210010,
+            "intervention_fraction": 0.3378125
+          }
+        ],
+        "worst_override_fraction": 0.551875,
+        "pooled_override_fraction": 0.18011354758060316,
+        "override_decisions": 6916,
+        "agent_decisions": 38398,
+        "unfinished_trips": 503,
+        "boundary_time_s": 32498.599999999995,
+        "external_wait_s": 753.3,
+        "limitation": "Existing task gates retained; following slowdown remains a separate review metric"
+      }
+    },
+    {
+      "name": "validation-phase-0",
+      "source": "outputs/highway-stage1/v02/train-20261103T190020Z-8469072d/validation-phase-0.json",
+      "source_sha256": "4e87e3a2f36bd757f9985ee91a969534e6a673fae8f1d3b070db24c4af5f7bd8",
+      "diagnostics": {
+        "ranking_version": 5,
+        "rank_fields": [
+          "negative_safety_events",
+          "negative_task_failure_cases",
+          "negative_override_failure_cases",
+          "negative_worst_override_fraction",
+          "negative_pooled_override_fraction",
+          "negative_unfinished_trips",
+          "negative_boundary_time_s",
+          "negative_external_wait_s",
+          "minimum_cruise_speed_fraction",
+          "successful_merges",
+          "passes",
+          "mean_speed_fraction",
+          "reward"
+        ],
+        "rank": [
+          0,
+          0,
+          -9,
+          -0.5125,
+          -0.18068649408823376,
+          -503,
+          -32498.599999999995,
+          -753.1999999999999,
+          0.9603265275416268,
+          6,
+          12,
+          0.9409771494129663,
+          31056.71942742865
+        ],
+        "cases": 12,
+        "quality_accepted": false,
+        "safety_events": 0,
+        "task_failure_cases": [],
+        "override_failure_cases": [
+          {
+            "case_id": "validation-5-lane-following",
+            "seed": 5210001,
+            "intervention_fraction": 0.4534375
+          },
+          {
+            "case_id": "validation-5-lane-passing",
+            "seed": 5210002,
+            "intervention_fraction": 0.3034375
+          },
+          {
+            "case_id": "validation-5-lane-merge",
+            "seed": 5210003,
+            "intervention_fraction": 0.0728125
+          },
+          {
+            "case_id": "validation-2-lane-following",
+            "seed": 5210005,
+            "intervention_fraction": 0.1884375
+          },
+          {
+            "case_id": "validation-2-lane-passing",
+            "seed": 5210006,
+            "intervention_fraction": 0.0515625
+          },
+          {
+            "case_id": "validation-2-lane-merge",
+            "seed": 5210007,
+            "intervention_fraction": 0.09036898061288305
+          },
+          {
+            "case_id": "validation-4-lane-following",
+            "seed": 5210009,
+            "intervention_fraction": 0.374375
+          },
+          {
+            "case_id": "validation-4-lane-passing",
+            "seed": 5210010,
+            "intervention_fraction": 0.5125
+          },
+          {
+            "case_id": "validation-4-lane-merge",
+            "seed": 5210011,
+            "intervention_fraction": 0.0978125
+          }
+        ],
+        "worst_override_fraction": 0.5125,
+        "pooled_override_fraction": 0.18068649408823376,
+        "override_decisions": 6938,
+        "agent_decisions": 38398,
+        "unfinished_trips": 503,
+        "boundary_time_s": 32498.599999999995,
+        "external_wait_s": 753.1999999999999,
+        "limitation": "Existing task gates retained; following slowdown remains a separate review metric"
+      }
+    },
+    {
+      "name": "validation-phase-1",
+      "source": "outputs/highway-stage1/v02/train-20261103T190020Z-8469072d/validation-phase-1.json",
+      "source_sha256": "e0fd6d658939ba05895a5e5bec8379cd10f015146211f9b7d97276e6168f396e",
+      "diagnostics": {
+        "ranking_version": 5,
+        "rank_fields": [
+          "negative_safety_events",
+          "negative_task_failure_cases",
+          "negative_override_failure_cases",
+          "negative_worst_override_fraction",
+          "negative_pooled_override_fraction",
+          "negative_unfinished_trips",
+          "negative_boundary_time_s",
+          "negative_external_wait_s",
+          "minimum_cruise_speed_fraction",
+          "successful_merges",
+          "passes",
+          "mean_speed_fraction",
+          "reward"
+        ],
+        "rank": [
+          0,
+          0,
+          -10,
+          -0.501875,
+          -0.15057291666666667,
+          -504,
+          -32498.799999999996,
+          -752.9,
+          0.9359535974849834,
+          6,
+          12,
+          0.9095779073608163,
+          29816.049348577904
+        ],
+        "cases": 12,
+        "quality_accepted": false,
+        "safety_events": 0,
+        "task_failure_cases": [],
+        "override_failure_cases": [
+          {
+            "case_id": "validation-5-lane-following",
+            "seed": 5210001,
+            "intervention_fraction": 0.136875
+          },
+          {
+            "case_id": "validation-5-lane-passing",
+            "seed": 5210002,
+            "intervention_fraction": 0.23125
+          },
+          {
+            "case_id": "validation-5-lane-merge",
+            "seed": 5210003,
+            "intervention_fraction": 0.103125
+          },
+          {
+            "case_id": "validation-2-lane-cruise",
+            "seed": 5210004,
+            "intervention_fraction": 0.0553125
+          },
+          {
+            "case_id": "validation-2-lane-following",
+            "seed": 5210005,
+            "intervention_fraction": 0.501875
+          },
+          {
+            "case_id": "validation-2-lane-passing",
+            "seed": 5210006,
+            "intervention_fraction": 0.2284375
+          },
+          {
+            "case_id": "validation-2-lane-merge",
+            "seed": 5210007,
+            "intervention_fraction": 0.1178125
+          },
+          {
+            "case_id": "validation-4-lane-following",
+            "seed": 5210009,
+            "intervention_fraction": 0.2409375
+          },
+          {
+            "case_id": "validation-4-lane-passing",
+            "seed": 5210010,
+            "intervention_fraction": 0.06125
+          },
+          {
+            "case_id": "validation-4-lane-merge",
+            "seed": 5210011,
+            "intervention_fraction": 0.13
+          }
+        ],
+        "worst_override_fraction": 0.501875,
+        "pooled_override_fraction": 0.15057291666666667,
+        "override_decisions": 5782,
+        "agent_decisions": 38400,
+        "unfinished_trips": 504,
+        "boundary_time_s": 32498.799999999996,
+        "external_wait_s": 752.9,
+        "limitation": "Existing task gates retained; following slowdown remains a separate review metric"
+      }
+    },
+    {
+      "name": "validation-phase-2",
+      "source": "outputs/highway-stage1/v02/train-20261103T190020Z-8469072d/validation-phase-2.json",
+      "source_sha256": "474d8529b78ebbc11b8ab5081f5a80ade2725b65c7ee67fcd00bc3656923ec57",
+      "diagnostics": {
+        "ranking_version": 5,
+        "rank_fields": [
+          "negative_safety_events",
+          "negative_task_failure_cases",
+          "negative_override_failure_cases",
+          "negative_worst_override_fraction",
+          "negative_pooled_override_fraction",
+          "negative_unfinished_trips",
+          "negative_boundary_time_s",
+          "negative_external_wait_s",
+          "minimum_cruise_speed_fraction",
+          "successful_merges",
+          "passes",
+          "mean_speed_fraction",
+          "reward"
+        ],
+        "rank": [
+          0,
+          0,
+          -8,
+          -0.46625,
+          -0.12473297556400771,
+          -503,
+          -32497.399999999998,
+          -752.9,
+          0.9622960574887146,
+          6,
+          12,
+          0.9218725208807271,
+          30682.557283061375
+        ],
+        "cases": 12,
+        "quality_accepted": false,
+        "safety_events": 0,
+        "task_failure_cases": [],
+        "override_failure_cases": [
+          {
+            "case_id": "validation-5-lane-following",
+            "seed": 5210001,
+            "intervention_fraction": 0.0846875
+          },
+          {
+            "case_id": "validation-5-lane-passing",
+            "seed": 5210002,
+            "intervention_fraction": 0.184375
+          },
+          {
+            "case_id": "validation-5-lane-merge",
+            "seed": 5210003,
+            "intervention_fraction": 0.0628125
+          },
+          {
+            "case_id": "validation-2-lane-following",
+            "seed": 5210005,
+            "intervention_fraction": 0.46625
+          },
+          {
+            "case_id": "validation-2-lane-passing",
+            "seed": 5210006,
+            "intervention_fraction": 0.11
+          },
+          {
+            "case_id": "validation-4-lane-following",
+            "seed": 5210009,
+            "intervention_fraction": 0.27875
+          },
+          {
+            "case_id": "validation-4-lane-passing",
+            "seed": 5210010,
+            "intervention_fraction": 0.1984375
+          },
+          {
+            "case_id": "validation-4-lane-merge",
+            "seed": 5210011,
+            "intervention_fraction": 0.0528125
+          }
+        ],
+        "worst_override_fraction": 0.46625,
+        "pooled_override_fraction": 0.12473297556400771,
+        "override_decisions": 4788,
+        "agent_decisions": 38386,
+        "unfinished_trips": 503,
+        "boundary_time_s": 32497.399999999998,
+        "external_wait_s": 752.9,
+        "limitation": "Existing task gates retained; following slowdown remains a separate review metric"
+      }
+    },
+    {
+      "name": "validation-phase-3",
+      "source": "outputs/highway-stage1/v02/train-20261103T190020Z-8469072d/validation-phase-3.json",
+      "source_sha256": "910252bb2ddc56b4e9611d4b8892fa56cd28c4f28b18ed51199029b759387a1e",
+      "diagnostics": {
+        "ranking_version": 5,
+        "rank_fields": [
+          "negative_safety_events",
+          "negative_task_failure_cases",
+          "negative_override_failure_cases",
+          "negative_worst_override_fraction",
+          "negative_pooled_override_fraction",
+          "negative_unfinished_trips",
+          "negative_boundary_time_s",
+          "negative_external_wait_s",
+          "minimum_cruise_speed_fraction",
+          "successful_merges",
+          "passes",
+          "mean_speed_fraction",
+          "reward"
+        ],
+        "rank": [
+          0,
+          0,
+          -8,
+          -0.535625,
+          -0.18147472642001042,
+          -503,
+          -32496.799999999996,
+          -753.3,
+          0.9658944066617826,
+          6,
+          12,
+          0.9334985309087914,
+          30782.689241671033
+        ],
+        "cases": 12,
+        "quality_accepted": false,
+        "safety_events": 0,
+        "task_failure_cases": [],
+        "override_failure_cases": [
+          {
+            "case_id": "validation-5-lane-following",
+            "seed": 5210001,
+            "intervention_fraction": 0.1596875
+          },
+          {
+            "case_id": "validation-5-lane-passing",
+            "seed": 5210002,
+            "intervention_fraction": 0.33875
+          },
+          {
+            "case_id": "validation-5-lane-merge",
+            "seed": 5210003,
+            "intervention_fraction": 0.060625
+          },
+          {
+            "case_id": "validation-2-lane-following",
+            "seed": 5210005,
+            "intervention_fraction": 0.535625
+          },
+          {
+            "case_id": "validation-2-lane-passing",
+            "seed": 5210006,
+            "intervention_fraction": 0.098125
+          },
+          {
+            "case_id": "validation-4-lane-following",
+            "seed": 5210009,
+            "intervention_fraction": 0.5175
+          },
+          {
+            "case_id": "validation-4-lane-passing",
+            "seed": 5210010,
+            "intervention_fraction": 0.355625
+          },
+          {
+            "case_id": "validation-4-lane-merge",
+            "seed": 5210011,
+            "intervention_fraction": 0.0534375
+          }
+        ],
+        "worst_override_fraction": 0.535625,
+        "pooled_override_fraction": 0.18147472642001042,
+        "override_decisions": 6965,
+        "agent_decisions": 38380,
+        "unfinished_trips": 503,
+        "boundary_time_s": 32496.799999999996,
+        "external_wait_s": 753.3,
+        "limitation": "Existing task gates retained; following slowdown remains a separate review metric"
+      }
+    }
+  ],
+  "limits": [
+    "Following-speed acceptance was not added; review following slowdown separately.",
+    "No new evaluation was run and no old selection was rewritten.",
+    "Rank comparison assumes the same frozen scenario/demand matrix; original report paths and hashes are retained."
+  ],
+  "previous_offline_record": "outputs/highway-stage1/v03/reranking-20261103T205946Z-6838142d/summary.json",
+  "tests": {
+    "passed": 22,
+    "command": "python -m pytest -q tests/test_highway_selection.py"
+  },
+  "config_source": "outputs/highway-stage1/v02/train-20261103T190020Z-8469072d/config.json",
+  "config_sha256": "e53d70a2a200eae35934eba7055f49955227c070e37f4c4f4b5c5fb1a2a0b638"
+}

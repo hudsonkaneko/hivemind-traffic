@@ -1,0 +1,78 @@
+[
+  {
+    "seed": 5100000,
+    "steps": 3200,
+    "override_count": 1649,
+    "requested_filtered_difference": 0,
+    "native_filtered_difference": 1649,
+    "near_zero_realized_with_request_above_1p8": 2,
+    "lane_requests": {
+      "-1": 32,
+      "0": 3118,
+      "1": 50
+    },
+    "mean": {
+      "requested_acceleration": -1.2812868909853727,
+      "applied_acceleration": -1.2812868909853727,
+      "realized_acceleration": -0.20293139834068114
+    },
+    "requested_above_1p8_fraction": 0.0375
+  },
+  {
+    "seed": 5100019,
+    "steps": 2930,
+    "override_count": 450,
+    "requested_filtered_difference": 34,
+    "native_filtered_difference": 417,
+    "near_zero_realized_with_request_above_1p8": 23,
+    "lane_requests": {
+      "-1": 17,
+      "0": 2875,
+      "1": 38
+    },
+    "mean": {
+      "requested_acceleration": -0.09161159769922364,
+      "applied_acceleration": -0.11404646083205197,
+      "realized_acceleration": -0.05758785868899113
+    },
+    "requested_above_1p8_fraction": 0.1273037542662116
+  },
+  {
+    "seed": 5100174,
+    "steps": 3200,
+    "override_count": 3013,
+    "requested_filtered_difference": 1802,
+    "native_filtered_difference": 1315,
+    "near_zero_realized_with_request_above_1p8": 1764,
+    "lane_requests": {
+      "-1": 10,
+      "0": 3180,
+      "1": 10
+    },
+    "mean": {
+      "requested_acceleration": 1.916727716428577,
+      "applied_acceleration": 0.8032869939123664,
+      "realized_acceleration": 0.1463751439602734
+    },
+    "requested_above_1p8_fraction": 0.90625
+  },
+  {
+    "seed": 5100175,
+    "steps": 3162,
+    "override_count": 2745,
+    "requested_filtered_difference": 2612,
+    "native_filtered_difference": 186,
+    "near_zero_realized_with_request_above_1p8": 2316,
+    "lane_requests": {
+      "-1": 23,
+      "0": 3104,
+      "1": 35
+    },
+    "mean": {
+      "requested_acceleration": 1.9146703303479964,
+      "applied_acceleration": 0.30948458949065594,
+      "realized_acceleration": 0.19905754451056573
+    },
+    "requested_above_1p8_fraction": 0.9060721062618596
+  }
+]

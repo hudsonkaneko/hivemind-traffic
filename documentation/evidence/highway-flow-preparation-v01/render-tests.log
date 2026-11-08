@@ -1,0 +1,2 @@
+C:/isaacsim/python.bat -m pytest tests/test_i110_merge_render.py -q
+11 passed in0.62s

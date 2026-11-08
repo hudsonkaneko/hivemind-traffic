@@ -1,0 +1,37 @@
+{
+  "version": "pretrained-segmentation-preview-v01",
+  "training": false,
+  "new_simulator_runs": false,
+  "source_capture_run": "outputs/semantic-lidar-fusion/v01/20261030T223941Z-65f18896",
+  "cases": ["static-101", "moving-2mps-201", "moving-10mps-301"],
+  "frames_per_case": 8,
+  "model": {
+    "id": "nvidia/segformer-b0-finetuned-cityscapes-1024-1024",
+    "revision": "21b3847fae21ddee674abd31129307b6a1235bd9",
+    "weights_sha256": "027ed78d8ff9c535df5a66361c92b9673cca3cb923cbeb8c5802385b6b93194c",
+    "weights_bytes": 14957601,
+    "native_classes": 19,
+    "trained_head_replaced": false,
+    "source": "https://huggingface.co/nvidia/segformer-b0-finetuned-cityscapes-1024-1024",
+    "license_reference": "https://github.com/NVlabs/SegFormer/blob/master/LICENSE",
+    "use": "noncommercial research and evaluation; weights remain local"
+  },
+  "inference": {
+    "device": "cpu",
+    "threads": 2,
+    "seed": 20261030,
+    "batch_size": 1,
+    "processor_size": {"height": 512, "width": 512},
+    "resize_policy": "Pinned pretrained processor default; square resize stretches 640x360 RGB",
+    "output_policy": "Bilinear resize logits to original image dimensions with align_corners=false, then argmax"
+  },
+  "comparison": {
+    "road_ids": [0],
+    "person_ids": [11],
+    "vehicle_ids": [13, 14, 15, 16, 17, 18],
+    "remaining_ids": "collapsed other/background, including rider",
+    "unsupported_ground_truth_ids": [2, 5],
+    "unsupported_display": "amber hatch; excluded from shared-class scores and counted explicitly",
+    "quality_gate": "No accuracy acceptance threshold: exploratory frozen-model domain-transfer preview"
+  }
+}

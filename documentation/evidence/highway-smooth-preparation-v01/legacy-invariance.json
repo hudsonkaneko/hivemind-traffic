@@ -1,0 +1,12 @@
+{
+  "schema": "smooth_legacy_trajectory_comparison_v01",
+  "older_recording": "outputs\\highway-smooth-control\\v01\\reference-check-01\\teacher\\recording.json",
+  "older_sha256": "7b8952618b7e52cb4fe595ff665a66ac9add71fd076e0cdfc9fd001285ffb5f1",
+  "new_recording": "outputs\\highway-smooth-control\\v02\\entry-probe-01\\i110-merge\\teacher\\recording.json",
+  "new_sha256": "be59a14f97dc19f1f1277942286447186b0bd2e16b69bb60279e4e53509806dd",
+  "frames_a": 801,
+  "frames_b": 801,
+  "all_native_frames_equal": true,
+  "training": false,
+  "optimizer_steps": 0
+}

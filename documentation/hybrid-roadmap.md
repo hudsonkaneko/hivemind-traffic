@@ -383,6 +383,314 @@ tested single-car task. This scene milestone does not advance highway-speed,
 physical-fleet or hivemind-effectiveness claims.
 
 
+October 26: [MAPPO v03 communication/wave setup](sumo-mappo-v3.md) adds explicit delivered messages and a reproducible SUMO braking pulse. 124 targeted tests and no-learning native preflight pass; policy training awaits reviewed configuration. This advances SUMO communication plumbing only, not physical V2V, merging, shorter headways or learned wave suppression.
+
+### 2026-10-27 checkpoint: frozen v02 in 3D
+
+Completed the bounded recorded-motion gate for v02: four actors, 60 seconds, seed 410001, exact original metrics and visible vehicles in Isaac captures. Evidence: [MAPPO v02 3D validation](mappo-v02-3d.md). Physical closed-loop transfer remains open; no training was started.
+
+### 2026-10-27 checkpoint: prepared-car replay sensing
+
+The v14 main-car sensor replay gate passed for 60 seconds: seven cameras, five LiDARs, 120 saved capture sets. Data and performance are retained in [sensor evidence](mappo-v02-sensors.md). Measured LiDAR lag is 66.7 ms; moving-object deskew and physical closed-loop control remain open.
+
+### 2026-10-29 checkpoint: v04 passing/cooperative-following setup
+
+[MAPPO v04](sumo-mappo-v4.md) now supports acceleration plus masked lane requests, guarded short-headway eligibility and explicit passing metrics. Native no-learning setup gates pass; the pilot config is ready for review. Learned passing/cooperation, achieved short highway gaps, staged curriculum and physical policy transfer remain unverified. The stopping-distance floor dominates the 0.8-second target at highway speeds.
+
+## October 29: v04r1 SUMO passing refinement
+
+Imitation-assisted MAPPO now passes slower cars in all 50 fresh held-out episodes (82 passes), with 4.9583% aggregate safety interventions and zero collisions/overspeed/required-gap deficits. One episode exceeds the lane-change-frequency limit, so full v04 acceptance remains open and accepted v02 is preserved. Training used the declared one-million-transition budget without runtime errors or agent monitoring. Checkpoints, per-seed metrics and optimization curves are retained; see [v04r1 evidence](sumo-mappo-v4-refinement.md). Next behavior gate is unnecessary lane switching. No new 3D, physical-steering or causal communication benefit is established.
+
+## October 29: v04r2 passes declared SUMO checks
+
+The selected v04r2 neural actor passes all acceptance gates on 50 fresh scenarios: 74 passes, at least one per episode; 3.175% aggregate overrides; maximum two lane changes/car/minute; zero collisions, overspeed or required-gap deficits. Use the frozen policy/best checkpoint at update 175; the final checkpoint regressed. The declared one-million-transition run completed without runtime errors or monitoring, and all evidence is retained in [v04r2 results](sumo-mappo-v4-stability.md). Existing v02 integrations remain intact; physical steering, sensor inputs, 3D transfer and causal communication benefits remain separate gates.
+
+
+## October 30 sensor milestone — semantic mask/LiDAR fusion v01
+
+Verified calibrated front-camera semantic projection with all five RTX scanners:
+static then moving 2/10 m/s fixtures pass, with per-actor support and retained
+metrics/screenshots. See [fusion v01 evidence](semantic-lidar-fusion-v01.md).
+This adds an evaluated sensor-data product; MAPPO still uses its existing
+observation contract. Learned segmentation, ego-motion compensation, robust
+visibility, lane-marking/pedestrian validation and policy observation adaptation
+remain open. No training was started.
+
+
+## October 30 perception preview — frozen pretrained RGB segmentation
+
+A pinned Cityscapes SegFormer B0 now produces real predictions on the existing
+24 captures, shown alongside RGB, GT and errors. Scores and screenshots are in
+[the preview evidence](pretrained-segmentation-preview-v01.md). Road spillover,
+oversized vehicle masks and unsupported lane/generic-obstacle classes remain
+visible limitations. This is offline inference, not accepted driving perception.
+Predicted-mask-to-LiDAR evaluation, more varied saved-scene comparisons and
+policy adaptation remain separate work; no training or simulator run was started.
+
+
+## October 31: Frozen perception refinement on saved captures
+
+[Refinement v02](segmentation-refinement-preview-v02.md) compares three input
+transforms and adds boundary metrics plus measured sparse occupancy. The 1024
+variant has 86.06% shared mIoU; geometric generic-obstacle point recall is 89.28%
+among eligible returns, while learned generic-obstacle semantics remain zero.
+This is exploratory sensing evidence, not policy integration or driving
+acceptance. A disabled [training proposal](segmentation-refinement-training-proposal.md)
+requires varied data, a trainer and CUDA preflight before authorization.
+No new training or simulator runs occurred.
+
+## 2026-10-31 checkpoint — Segmentation training preparation v02
+
+Dataset/trainer/runtime preparation is verified: 3,600 six-class captures, 180 scene
+groups, reviewed split/hash checks, 139 CPU tests and a zero-update CUDA preflight.
+[Final configuration and evidence](segmentation-training-preparation-v02.md) retain
+training disabled. Next gate is user review and explicit supervised-training launch;
+then validation-only checkpoint selection and frozen held-out evaluation. No trained
+six-class quality, new-corpus LiDAR fusion or driving-policy integration is claimed.
+Instance/distance/temporal/calibration gates and broader scene diversity remain open.
+
+## 2026-11-02 checkpoint — General highway curriculum, including I-110
+
+[New graph-policy preparation](highway-curriculum-v01.md) now covers cruise, dense
+following, passing and merges across 2–5 through-lane training roads. Six-lane
+and changed-speed/geometry conditions remain held out. Native no-learning
+preflight and 129 CPU tests pass; high scripted dense-traffic intervention rates
+are retained as a limitation. The new 81-field ABI is not compatible with v04r2
+weights. Next gate is final-config review and the bounded MAPPO pilot, followed
+by per-task validation and untouched transfer tests. No learned adaptation,
+physical steering, sensor-policy integration or arbitrary-road competence is claimed.
+
+
+## November 2 follow-up: completed highway curriculum pilot
+
+The [first broad highway pilot](highway-curriculum-training-v01.md) completed its
+approved 500k-transition budget (499,998 usable joint transitions). It is not an
+accepted controller: final validation passes the cruise and passing targets,
+but merges are 0/6 and interventions are 96.44%. Ranking/recovery fixes are tested;
+the final diagnostic export and original selected actor are both preserved.
+No held-out seeds, new training budget or physical transfer were used. Next work
+is a reviewed acceleration-tracking/merge-learning revision with training-only
+demonstrations, retained guards and the same validation gates. Accepted v04r2
+remains separate.
+
+
+## November 2: living plan for sensor-driven training
+
+The [persistent three-stage roadmap](sensor-driven-training-roadmap.md) now tracks
+structured highway competence, robustness to imperfect observations and eventual
+camera/LiDAR-driven physical control. AGENTS.md requires updates after relevant
+progress and failures. The next gate is Stage 1 diagnostics/merge observations/
+teacher preparation, followed by final-config review. All new learning budgets
+are proposals; no training or simulator run started for this planning milestone.
+The overall project roadmap remains this file.
+
+
+## November 2, 2026: sensor-driven roadmap Stage 1 preparation
+
+[Structured highway preparation v02](highway-stage1-preparation-v02.md) adds the
+93-field merge observation contract, feasible teacher, intervention diagnostics,
+BC/MAPPO runner and corrected right-entry generated geometry. Historical failures
+remain evidence. Preparation is distinct from learned driving acceptance: no new
+training has started. The [living sensor-driven plan](sensor-driven-training-roadmap.md)
+tracks exact results and the final configuration review before a launch.
+
+
+## November 3, 2026: Stage 1 learning result
+
+The [authorized Stage 1 run](highway-stage1-training-v02.md) completed 499,992
+transitions in 59m24s. The final actor merges and passes in validation, but the
+18.15% pooled override rate fails driving acceptance. No held-out test or sensor/
+physical transfer was run. The living plan now prioritizes intervention diagnosis
+and a reviewed revision before a second attempt; all metrics and weights are retained.
+
+
+## November 3, 2026: Stage 1 intervention revision prepared
+
+[Stage 1 v03 preparation](highway-stage1-v03-preparation.md) quantifies the
+acceleration-fitting gap, validates the teacher on the same roads and adds
+intervention-aware checkpoint ranking. Teacher conservatism remains a measured
+speed/throughput tradeoff. The new BC/teacher-retention configuration is disabled
+pending review; Stage 1 driving remains unaccepted and sensor uncertainty is next
+only after that gate. The published policy catalog remains frozen.
+
+
+## November 3, 2026: Stage 1 v03 learning result
+
+The [approved v03 attempt](highway-stage1-training-v03.md) completed after one
+checkpoint-file access failure and recovery. Selected validation retains 6/6
+merges and 12 passes, with 14.97% pooled overrides and five failing cases.
+Per-case regressions and lower-intervention intermediate candidates remain in
+the evidence. Stage 1 is still unaccepted; diagnose following/passing errors
+before proposing more training or advancing to sensor uncertainty. The new
+[frozen catalog version](../policies/versions/highway-stage1-v03/README.md) is
+experimental and preserves prior packages.
+
+
+## November 4, 2026: Stage 1 v04 training plan
+
+The [new training plan](highway-stage1-v04-training-plan.md) starts with saved-data
+diagnosis, then proposes a paired comparison of current-only imitation and
+retained acceleration corrections. Each arm is capped at 100k new training
+decisions or 30 minutes, with a shared frozen warm start and fixed evaluation.
+Screening progress is separate from nominal acceptance. Stage 1 remains open;
+implementation, final configuration review and launch authorization are next.
+
+
+## November 4, 2026 — population adaptation pilot
+
+The user requested training for variable autonomous-car allocation. [Population v01](highway-population-training-v01.md) now has tested reset-based cohorts, a shared 93-input actor, masked critic and bounded 100k/30-minute configuration. No live slider handoff or arbitrary fleet-size capability is claimed. The separate v04 correction-memory comparison remains planned. Next action is the authorized pilot and retained per-population comparison.
+
+
+## November 4, 2026 — variable-population result
+
+The [population pilot](highway-population-training-v01.md) completed 99,999 decisions but regressed from 20.64% to 31.70% pooled interventions. It remains unaccepted despite 4/4 controlled merge targets and 14 passes. Save this candidate as evidence, preserve older policies and diagnose lane-end emergency warnings plus acceleration corrections before another proposal. Actual training covered 1/2/4/6/8 AVs, total cohorts 8/16/24 and 0–6 received peers; this does not establish live slider adaptation.
+
+
+### November 4: population v02 retraining completed
+
+[Population v02](highway-population-training-v02.md): 99,998 decisions in 514.516 seconds. Pooled overrides 29.97%, worst 86.75%; twelve failing cases. Rejected for promotion. Metrics, native warnings and experimental weights retained. Next: diagnose acceleration errors before another revision. Google guide sync pending.
+
+
+## November 4: population analysis checkpoint
+
+The [AV comparison](policy-baseline-av-comparison.md) restores the phase-0 reference and prioritizes action-interface calibration and objective diagnostics before more learning. Population v02 remains rejected. Follow the living sensor-driven roadmap; no new learning or physical-transfer capability.
+
+
+## November 4: frozen control and loss diagnosis completed
+
+[Steps 1 and 2](population-control-diagnostics-v01.md) now have training-only acceleration calibration, identical-observation loss gradients, retained metrics/plots and independent review. No timing/duration bug was found; ordinary native following saturation, near-limit/merge response gaps, target disagreement and shared clipping need deliberate correction. Twelve historical native lane-end emergencies were missed by sampled counters. Keep the phase-0 parent frozen and Stage 1 unaccepted. Next: target consistency and post-warm-up actor/critic telemetry, followed by a reviewed configuration before any new training. The Google guide and Markdown mirror are synchronized.
+
+
+## November 4: population v03 control setup ready for configuration review
+
+[Population v03](population-control-v03.md) implements near-limit/first-entry corrections, a shared teacher/reward target, separate actor/critic diagnostics and native emergency accounting. Bounded teacher passing/merge checks reach zero overrides, while the unchanged actor remains unaccepted at 11.17% merge overrides. 150 tests and a zero-update final preflight passed; the 100k-decision/30-minute configuration is prepared with training disabled. Review the configuration before a new launch. No held-out qualification, arbitrary fleet-size guarantee or sensor/physical transfer follows from these development checks.
+
+## November 5, 2026: physical policy execution calibrated
+
+The [frozen MAPPO adapter](mappo-physical-adapter-v01.md) now translates acceleration/lane intent into physical wheel controls. Ordinary actuator calibration and scripted 6/12/18 m/s lane changes/stopping pass. The unchanged actor cruises and passes a scripted car but fails intervention gates (82.11%/27.76%, speed-ceiling corrections). Preserve both attempts and the frozen weights; no training or policy promotion occurred. The living sensor roadmap records the remaining near-limit, curved-road, reactive-traffic and sensor-transfer gates. Physical truth-based execution is demonstrated only in this bounded straight-road surrogate fixture.
+
+
+## November 5, 2026: near-limit learning correction ready for review
+
+[Population v04](population-near-limit-v04.md) adds a localized raw-acceleration objective, four episode speed ceilings and eight lower-limit validation cases. Frozen diagnosis confirms meaningful at-limit acceleration errors and previous-request sensitivity. 171 tests and a zero-update SUMO preflight pass, with the teacher-fixture background emergency retained. Review the disabled 100k-decision/30-minute configuration before learning. Stage 1 and physical transfer remain unaccepted; no policy weights changed or training launched.
+
+
+## November 5, 2026 — I-110 merge visualization checkpoint
+
+[Final Stage 1 v03 replay](i110-merge-visual-v01.md) completes two ramp merges in a predeclared I-110 test and provides an 11-second merge-focused 3D video with actual screenshots. Final v03 was selected for merge-specific performance; the phase-0 population reference remains separate. Full-run interventions are still 10.56%, above the 5% target, despite no recorded collisions, teleports, overspeed or native emergency warnings. SUMO owns motion on provisional reconstructed road geometry; this is not physical or sensor-driven validation. No learning or checkpoint changes. The [living sensor plan v13](sensor-driven-training-roadmap.md) preserves review of the disabled population v04 setup as the next training action.
+
+
+## November 5, 2026 — environment v05 milestone
+
+[Continuous-maneuver environment v05](highway-environment-v05.md) implements the next structured-driving step: continuous native lane changes, observed overlapping traffic, stable-merge/full-route metrics, independent AV participation and traffic density, varied ramp geometry and competence-based task mixtures. 256 targeted checks and final source-matched SUMO readiness pass. The I-110 scripted baseline retains its 5.34% intervention failure; no driving acceptance or physical/sensor transfer is implied. The user-authorized 250k-decision/one-hour pilot is queued after saving this checkpoint. Track results and next actions in the [living sensor-driven roadmap](sensor-driven-training-roadmap.md).
+
+
+## November 5, 2026 — v05 learned candidate remains unaccepted
+
+The [v05 pilot](highway-environment-v05-results.md) completed 249,999 active-agent decisions within the original budget, retaining both failures and consumed time. Stable merging improves 2/9→8/9 but intervention dependence worsens 13.37%→19.83%; I-110 remains unmerged. The separately versioned 99-field actor is rejected, not a replacement for accepted historical fixtures. [Living roadmap v15](sensor-driven-training-roadmap.md) now calls for a train-only native-response/entry diagnostic before another reviewed training configuration. No held-out or physical/sensor acceptance is claimed.
+
+
+## November 6, 2026 checkpoint: I-110 entry blockage corrected
+
+The [matched frozen-policy diagnostic](i110-merge-blocking-v01.md) isolates an overbroad junction conflict matrix: the ramp yielded to four non-crossing through lanes. A versioned lane-specific rebuild retains the actual auxiliary-lane yield and unchanged geometry/demand/guards. The same v05 actor now completes a stable merge, with zero focal stopped samples and all eight controlled routes finished. Fleet interventions improve 30.53% to 8.52% but still fail 5%; the original rejected 24-case results remain intact.
+
+The SimReady main-car visual rerun is complete, with full 80-second metrics and actual screenshots retained. No training or physical/sensor qualification occurred. [Living roadmap v16](sensor-driven-training-roadmap.md) prioritizes remaining acceleration-realization differences on training fixtures before a separately reviewed configuration. Google guide and Markdown mirror are synchronized from verified full readback.
+
+
+## November 6, 2026 checkpoint: control mismatch and smoothness proposal
+
+The [completed control audit](highway-smooth-control-v01.md) attributes the corrected-I-110 case's remaining 244 interventions to ordinary following and entry responses. Current MAPPO remains at 8.52%, above the unchanged 5% gate. A separate training-only reference comparison shows zero interventions from the existing teacher but a 65 m/s³ peak jerk; neither that teacher nor the frozen actor demonstrates the desired smooth motion.
+
+A fresh SimReady main-car replay and full metrics are saved. [Living roadmap v17](sensor-driven-training-roadmap.md) now prioritizes the [disabled smooth-reference and reward proposal](highway-smooth-training-plan-v01.md): prepare and test anticipatory entry and recovery, then present the resolved configuration before explicit training approval. The proposed matched pilot is bounded at 100k total decisions/one hour. No learning, policy acceptance, native safety changes or physical/sensor qualification occurred.
+
+
+## November 6, 2026 — Smooth-control preparation v01
+
+The [implementation and six-fixture results](highway-smooth-preparation-v01.md) complete preparation code and native/visual testing. The retained scripted reference meets every original safety/task/5% intervention check, including a continuous I-110 merge, but four strict comfort gates remain failed. The frozen learned actor is unchanged. No optimizer steps, held-out promotion or training launch occurred.
+
+The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18. Next: diagnose the remaining native-response peaks and establish a reference that meets comfort and progress gates before reviewing/authorizing the disabled matched 100k-decision MAPPO pilot. Metrics, failed revisions and two SimReady replays are retained; selected screenshots and compact evidence are in Git. The Google engineering guide and Markdown mirror were updated together.
+
+
+## November 6, 2026 — Audit replaces the next training recommendation
+
+[Highway training rethink v01](highway-training-rethink-v01.md) explains why fewer overrides and an earlier focal merge did not improve the scripted traffic: early low-speed travel, an unnecessary ending-lane pass, and delayed braking after leader/occupancy changes. Seven actor/checkpoint identities are intact; narrow curriculum exposure and misaligned references matter more than a blanket weight-corruption theory.
+
+[Living roadmap v19](sensor-driven-training-roadmap.md) now prioritizes a reviewed zero-learning roadway/reference diagnostic before a new training contract. Preserve all historical failed results and the disabled smooth bundle. The new proposal separates longitudinal learning, route/merge behavior and communication/population robustness, with every car's progress and full-cohort delay checked. Only documentation and saved-file analysis were produced; no new simulation or training.
+
+
+## November 6 checkpoint: flow preparation tested, training not ready
+
+[Flow preparation v01](highway-flow-preparation-v01.md) implements the new local/map contract, route-aware reference and one-factor paired MAPPO setup. The full diagnostic allocation retains failed attempts, compatibility checks, all-car outcomes and four SimReady replays. Low overrides do not qualify the reference: nominal comfort/task gates and the main-car flow limitation remain unresolved. The [living sensor roadmap](sensor-driven-training-roadmap.md) is v20; no training or policy promotion occurred. Requalify the target before initializer selection and final launch approval.
+
+
+### Flow approach follow-up — November 6, 2026
+
+[Two focused approach ablations](highway-flow-preparation-v01.md#focused-approach-ablation--november-6-2026) were rejected and baseline restored. Main-car slot alignment remains the next prerequisite; training remains disabled. Metrics and failed source snapshots are preserved.
+
+
+### GPUDrive pretrained transfer — November 6, 2026
+
+[One frozen I-110 transfer test](gpudrive-i110-v01.md) failed road-boundary/speed criteria; retained as external-policy evidence, not an accepted replacement. CPU inference and a SimReady replay are verified. No training; map/goal transfer and speed enforcement remain unresolved.
+
+
+### GPUDrive native-safety follow-up — November 6, 2026
+
+[Guarded v02 evaluation](gpudrive-i110-v02.md) applies60mph/lower-road limits and the existing native safety stack. Zero recorded collisions/overspeed, but failed merge/progress and intervention checks. Existing accepted policies unchanged; no training.
+
+
+### 2026-11-06 — bounded continuous GPUDrive repair
+
+[GPUDrive v03](gpudrive-i110-v03.md) fixes the steering-to-lane reinterpretation and retains explicit limits; its 1.1-second diagnostic still ends at an unsupported route association, not a completed merge. 23 tests plus 4 subtests pass. Metrics and initial failure preserved; no training or rendering. SUMO-native MAPPO remains the primary path. See living sensor roadmap v24; guide sync pending.
+
+
+### 2026-11-06 — continuous route repair validated
+
+[GPUDrive v04](gpudrive-i110-v04.md) removes the route-mapping blocker while keeping the fixed destination, continuous steering and safety limits. The short CPU run merges and reaches the goal in 28.5 simulated seconds; acceleration interventions and jerk still fail qualification. Tests and full metrics retained. No training, rendering or policy promotion. See living roadmap v25; incremental guide sync pending.
+
+
+### 2026-11-07 — early crossing found; longitudinal comfort improved
+
+[GPUDrive v05](gpudrive-i110-v05.md) reduces scalar longitudinal jerk with a transparent external filter while retaining all final guards. One short CPU run and saved baseline metrics show continued arrival but an unconnected early ramp exit in both versions. Mainline occupancy was insufficient to certify proper merging. Raw actions are still changed99.29%; no acceptance/promotion/training. Forty tests plus 16 subtests pass. See living roadmap v26; next transfer work is merge-corridor/steering validation. Guide sync pending.
+
+
+### 2026-11-07 — MAPPO plan from GPUDrive findings
+
+[The saved plan](mappo-gpudrive-lessons-plan-v01.md) transfers merge validity audits, transparent control-stage metrics and anticipatory smooth gap alignment to flow117/SUMO MAPPO. Reference qualification remains blocked; training stays disabled and no initializer is selected. Proposed cheap checks precede existing full gates and the paired pilot within its reconciled budget. No runtime changes or runs this milestone. See living roadmap v27; guide sync pending.
+
+
+### 2026-11-08 — Teacher-free MAPPO learning and bounded restart completed
+
+[Flow RL v01](highway-flow-rl-v01.md) is the first trained flow117 experimental actor, with native SUMO motion and no teacher losses/alignment reward. Two sequential rounds with terminal review reduce four-case pooled interventions to 7.61%, including a stable I-110 merge at 0.67%; comfort and broader acceptance remain open. Original teacher-assisted qualification failures are preserved. [Actor/contract](../policies/versions/highway-flow-rl-v01/README.md) published without promotion; living roadmap v28 records next actions. No third run, held-out test or physical validation. Guide incremental sync pending.
+
+
+## November 8 - Recorded flow117 SimReady merge replay
+
+[Final pilot video](highway-flow-rl-v01.md#november-8-frozen-policy-merge-video) shows the round-two actor on its matched I-110 development case, with SimReady main car and lightweight traffic. Exact metric reproduction, 25 seconds at normal speed, verified video/poses/assets. Visualization only; no training, sensors, physical validation or acceptance promotion.
+
+
+## November 8 - MAPPO velocity diagnosis
+
+[Offline speed and command analysis](highway-flow-rl-velocity-analysis.md) separates native entry braking from learned speed/route problems. Next: isolate minor-junction behavior, then ending-lane detours and cruise behavior, retaining full-route/per-car metrics. Saved CSV and charts; no new simulation, training or promotion.
+
+
+## November 8 - Next flow117 improvement plan
+
+[Flow117 v02 proposal](highway-flow-rl-v02-plan.md) separates native junction modeling from learned route/speed behavior. Keep collision/right-of-way protection, test counterexamples and whole-route performance, then present a resolved configuration before learning. Planning only; existing results and actors preserved.
+
+
+## November 8 - Flow117 v02 prepared for review
+
+[Implementation and configuration](highway-flow-rl-v02.md) separates native visibility behavior from learned speed/route choices. Zero-update runtime checks and 158 tests pass; the frozen policy remains unaccepted and its full-route replay exposes the ending-lane stop. New cruise and detour rewards are ready for a bounded 30,000-decision / 900-second pilot after configuration approval. No training or held-out evaluation occurred; metrics and failures are preserved.
+
+
+## November 8 - Adjacent native traffic comparison
+
+[Saved-replay comparison](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) shows the frozen MAPPO car still has speed oscillations while its native neighbor accelerates steadily. Metrics and unsmoothed plots are retained; different starts and route duties are explicit. No new simulation or learning. Next action remains review of the v02 training configuration.
+
+
+## November 8 - Reward revision plan after native comparison
+
+[Proposed reward revision](highway-flow-rl-reward-revision-plan.md) replaces the ineffective-in-dip cruise addition with a context-valid speed objective, reshapes comfort and strengthens the optional-detour penalty. Saved-state audit and target qualification come before final configuration or training. Research informs the design; candidate weights are not validated. Existing safety gates, policy ABI and study budget are preserved. No new simulation or learning.
 October 26: [seven-camera v09 source](seven-camera-v01.md) passed bounded native
 capture, projected-target visibility, composition and moving-mount checks. This
 is a camera-rig milestone only; learned surround perception, Cosmos, sensor

@@ -1,0 +1,535 @@
+{
+  "schema": "population_native_emergency_reconciliation_v01",
+  "prior_run": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b",
+  "warning_events": 12,
+  "controlled_events": 12,
+  "background_events": 0,
+  "controlled_nearby_samples_below_minus4point55": 0,
+  "note": "Native lane-end emergency-stop deceleration/offset events are distinct from the post-step acceleration sample. Retain both; do not interpret zero sampled braking as zero native emergencies.",
+  "events": [
+    {
+      "vehicle_id": "agent_4",
+      "time_s": 55.0,
+      "line": "Warning: Vehicle 'agent_4' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-20.59, offset=0.42), time=55.00.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -20.59,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/final-validation/12/episode-6510012-8cc0b882",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 54.9,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.2013354897499084,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 55.0,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.197441041469574,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 55.1,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -4.193322271108627,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "452ef2fe155fce5e6840d1aceffea9ac658f0c8fb38807cdb7dc99de76b79fba",
+      "journal_sha256": "31ce1b44f09f8e9f8eccac89035e62793e41483f24150126800e7ab655c73f45"
+    },
+    {
+      "vehicle_id": "agent_7",
+      "time_s": 59.2,
+      "line": "Warning: Vehicle 'agent_7' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-12.77, offset=0.43), time=59.20.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -12.77,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/final-validation/14/episode-6510014-ab78dbe1",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 59.1,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -1.8698144033551216,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 59.2,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -3.6385383158922195,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 59.3,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -3.9910023510456085,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "5a2f20dec55826d86484f3f0897b111a9fd05c5e6d5eaaa628e4ccf1f25c196a",
+      "journal_sha256": "4d4c94ca405420dc6becb5a955bfd609b677d502771ccd926ac67dc8e43e4c0d"
+    },
+    {
+      "vehicle_id": "agent_4",
+      "time_s": 54.2,
+      "line": "Warning: Vehicle 'agent_4' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-26.71, offset=0.60), time=54.20.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -26.71,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/initial-validation/12/episode-6510012-24b79c92",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 54.1,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -1.6888351067900658,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 54.2,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -3.9204241931438446,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 54.3,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -4.272141262888908,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "71c31da9aebde748526bccb34e13b2f3507f839dd6341b568036bfbd742b5436",
+      "journal_sha256": "d77901640967f3ef858d34ef143d4bafd7d7bda9417e98263140429893e745bb"
+    },
+    {
+      "vehicle_id": "agent_0",
+      "time_s": 60.0,
+      "line": "Warning: Vehicle 'agent_0' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-23.19, offset=0.87), time=60.00.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -23.19,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/train/1/episode-6500000-eeded87c",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 59.9,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.310432732105255,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 60.0,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.299476787447929,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 60.1,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -4.296319618821144,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "f23f4b9b9dd01e3d18a5dc8a45fcdc7a1088bcdfb2bbceab6e2d5d5404cb68ca",
+      "journal_sha256": "a456e589ccafcf5fa3386c1ad42b2eacfa6311d5c087aa46d6e4e73b6e48b5ed"
+    },
+    {
+      "vehicle_id": "agent_7",
+      "time_s": 39.7,
+      "line": "Warning: Vehicle 'agent_7' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-18.68, offset=1.18), time=39.70.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -18.68,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/train/12/episode-6500011-37260761",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 39.6,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.023312091827393,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 39.7,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -3.913636803627014,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 39.8,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -4.091152474284172,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "9b82395dbcdfed2911182bad5ebdf17988913253efc8dcd4636dbaab9db76688",
+      "journal_sha256": "67b2e81ef7c65d227520b75564e7ba216c76f6cef358028b12b7b6d0dc03f1e2"
+    },
+    {
+      "vehicle_id": "agent_3",
+      "time_s": 26.6,
+      "line": "Warning: Vehicle 'agent_3' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-12.07, offset=0.14), time=26.60.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -12.07,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/train/20/episode-6500019-27dfa6aa",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 26.5,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -3.7076531499624252,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 26.6,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -3.684808135032654,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 26.7,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -3.6494454443454742,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "08d852cea168ccd63f60406ceca685e8b45f6541fb7a70a3351bc024e4101e92",
+      "journal_sha256": "feca33bebeae82634ea7b14ffd2a52d8ccf034467531c2cc116cfb01df027078"
+    },
+    {
+      "vehicle_id": "agent_3",
+      "time_s": 64.4,
+      "line": "Warning: Vehicle 'agent_3' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-6.69, offset=0.13), time=64.40.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -6.69,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/train/21/episode-6500020-304cd60a",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 64.3,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -4.500000000000002,
+          "requested_acceleration": -4.16227613389492,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 64.4,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": -4.500000000000002,
+          "requested_acceleration": -4.142899006605148,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 64.5,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -4.026849329471588,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "886a6d7c73aca4b7ab212f0119a64bfce82aa5f04cd9ffea7fd8b8c7161ff510",
+      "journal_sha256": "db10b82a9a5346f53c23f99dedaccfdcdaa7681346849e346e7dd925fe85c711"
+    },
+    {
+      "vehicle_id": "agent_3",
+      "time_s": 52.1,
+      "line": "Warning: Vehicle 'agent_3' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-28.46, offset=0.05), time=52.10.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -28.46,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/train/22/episode-6500021-39fe2c7d",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 52.0,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -0.036600798368446874,
+          "requested_acceleration": -0.03660079836845398,
+          "filtered_acceleration": -0.03660079836845398,
+          "override_causes": []
+        },
+        {
+          "journal_time_s": 52.1,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": 0.1472449004650045,
+          "requested_acceleration": 0.1472449004650116,
+          "filtered_acceleration": 0.1472449004650116,
+          "override_causes": []
+        },
+        {
+          "journal_time_s": 52.2,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -2.5035299956798553,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "4e8583c845256d1bfb19b7842e012436cfbe7a0808272ac1483805d380cab3a0",
+      "journal_sha256": "a706cf6d47409097b6006c832bf429f7af5478c69c068d7dab4c8679dfe824d0"
+    },
+    {
+      "vehicle_id": "agent_3",
+      "time_s": 51.6,
+      "line": "Warning: Vehicle 'agent_3' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-23.18, offset=1.39), time=51.60.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -23.18,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/train/28/episode-6500027-717a91e1",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 51.5,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.227006033062935,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 51.6,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.20816045999527,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 51.7,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -4.234108403325081,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "12f75b33cd54ea1102c9fb7bf8d7fabf5d16f1b45b00ae82756d4687cb5748a8",
+      "journal_sha256": "854facdf7ffdf7e5586cbaf84413added484b33fbff2cdfea812b44cdbbbac37"
+    },
+    {
+      "vehicle_id": "agent_2",
+      "time_s": 59.2,
+      "line": "Warning: Vehicle 'agent_2' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-20.67, offset=0.20), time=59.20.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -20.67,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/train/32/episode-6500031-bd9f4417",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 59.1,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.22132533788681,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 59.2,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.150403529405594,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 59.3,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -4.31497922539711,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "ffec402ca77f1f6beda93875b1903756e5a4a423c583e6b473622328ca6fd969",
+      "journal_sha256": "b6fe2b1cea0cf3ca52682e50f30902d703c30999670c33aac868561dac92b3b2"
+    },
+    {
+      "vehicle_id": "agent_2",
+      "time_s": 55.7,
+      "line": "Warning: Vehicle 'agent_2' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-26.81, offset=1.44), time=55.70.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -26.81,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/train/34/episode-6500033-edee8e0a",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 55.6,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.047892987728119,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 55.7,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.2265190333127975,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 55.8,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -4.037569135427475,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "5d2c94f923fa7948ded8b3351ff97073da6a3a5c816be60f861d204fc52b4f9a",
+      "journal_sha256": "22769cd198c44f6ce1def2e5c4324eb69803d776b4197e51a402cdc78d6e78bf"
+    },
+    {
+      "vehicle_id": "agent_1",
+      "time_s": 33.0,
+      "line": "Warning: Vehicle 'agent_1' performs emergency stop at the end of lane 'sb3_0' because there is no connection to the next edge (decel=-12.42, offset=0.67), time=33.00.",
+      "kind": "lane_end_emergency_stop",
+      "native_reported_decel": -12.42,
+      "episode": "outputs/highway-population/v01/train-20261105T045039Z-a6db8f1b/train/36/episode-6500035-ba6e8d12",
+      "controlled": true,
+      "nearby_journal_samples": [
+        {
+          "journal_time_s": 32.9,
+          "time_minus_warning_s": -0.1,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.182184621691704,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 33.0,
+          "time_minus_warning_s": 0.0,
+          "realized_acceleration": -4.499999999999993,
+          "requested_acceleration": -4.200154021382332,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end"
+          ]
+        },
+        {
+          "journal_time_s": 33.1,
+          "time_minus_warning_s": 0.1,
+          "realized_acceleration": 0.0,
+          "requested_acceleration": -4.015016436576843,
+          "filtered_acceleration": -4.5,
+          "override_causes": [
+            "lane_end",
+            "native_realization_unattributed"
+          ]
+        }
+      ],
+      "native_log_sha256": "b7ba9a08e79869f6139e428db724f13b5942f17c6615bcc333d7db123e24a3e8",
+      "journal_sha256": "2c301802cf185f51a3e8467b7a056e86502de2f78560e3bef015b5231bad7174"
+    }
+  ]
+}

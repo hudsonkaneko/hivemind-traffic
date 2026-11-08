@@ -1,0 +1,3507 @@
+{
+  "controller": "learned",
+  "episodes": [
+    {
+      "seed": 1210001,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 374.36223696421973,
+      "mean_progress_m": 1100.6287902565577,
+      "progress_by_agent_m": {
+        "agent_0": 1067.3070129175005,
+        "agent_1": 1089.2591430265334,
+        "agent_2": 1111.62320617998,
+        "agent_3": 1134.3257989022165
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 220,
+      "intervention_fraction": 0.09166666666666666,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.178253802284587,
+      "min_ttc_s": 13.73237535813077,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1284,
+        "fallback_following_steps": 1116,
+        "applied_cooperative_steps": 1284,
+        "applied_fallback_steps": 1116,
+        "cooperative_eligible_steps": 1286,
+        "headway_count": 2400,
+        "headway_sum_s": 4735.027433408627,
+        "minimum_headway_s": 1.6216238403146312,
+        "cooperative_headway_count": 1286,
+        "cooperative_headway_sum_s": 2412.6283439476015,
+        "required_gap_deficit_steps": 19,
+        "abs_jerk_sum_m_s3": 5057.886443159099,
+        "max_abs_jerk_m_s3": 39.090814586980116,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 185,
+          "stopping_gap": 46
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9729280972535945,
+        "mean_cooperative_headway_s": 1.8760718071132205,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.1074526846496244,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210002,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 383.25754165955226,
+      "mean_progress_m": 1100.875245649426,
+      "progress_by_agent_m": {
+        "agent_0": 1067.3184427264198,
+        "agent_1": 1089.067671798343,
+        "agent_2": 1112.0087377800655,
+        "agent_3": 1135.1061302928758
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 188,
+      "intervention_fraction": 0.07833333333333334,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.105372535437347,
+      "min_ttc_s": 16.666849676722507,
+      "background_peak": 86,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1262,
+        "fallback_following_steps": 1138,
+        "applied_cooperative_steps": 1262,
+        "applied_fallback_steps": 1138,
+        "cooperative_eligible_steps": 1264,
+        "headway_count": 2400,
+        "headway_sum_s": 4740.061346041077,
+        "minimum_headway_s": 1.6338721221495451,
+        "cooperative_headway_count": 1264,
+        "cooperative_headway_sum_s": 2355.6485446251954,
+        "required_gap_deficit_steps": 11,
+        "abs_jerk_sum_m_s3": 4829.728933183129,
+        "max_abs_jerk_m_s3": 43.82192722536011,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 172,
+          "stopping_gap": 33
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9750255608504488,
+        "mean_cooperative_headway_s": 1.8636460004946167,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.0123870554929706,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210003,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 374.7614356860696,
+      "mean_progress_m": 1099.7208864608763,
+      "progress_by_agent_m": {
+        "agent_0": 1066.2933987059341,
+        "agent_1": 1088.1129107138238,
+        "agent_2": 1110.8492016408375,
+        "agent_3": 1133.6280347829095
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 218,
+      "intervention_fraction": 0.09083333333333334,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.677827767282743,
+      "min_ttc_s": 11.955419974839089,
+      "background_peak": 85,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1313,
+        "fallback_following_steps": 1087,
+        "applied_cooperative_steps": 1313,
+        "applied_fallback_steps": 1087,
+        "cooperative_eligible_steps": 1314,
+        "headway_count": 2400,
+        "headway_sum_s": 4829.499143788724,
+        "minimum_headway_s": 1.6230102951332375,
+        "cooperative_headway_count": 1314,
+        "cooperative_headway_sum_s": 2505.6387718003084,
+        "required_gap_deficit_steps": 6,
+        "abs_jerk_sum_m_s3": 5026.743701538568,
+        "max_abs_jerk_m_s3": 46.30149930715568,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 187,
+          "stopping_gap": 41
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.0122913099119684,
+        "mean_cooperative_headway_s": 1.906878821765836,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.0944765423077367,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210004,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 385.6891839013141,
+      "mean_progress_m": 1096.2405557196018,
+      "progress_by_agent_m": {
+        "agent_0": 1063.8879037059949,
+        "agent_1": 1083.6485871607244,
+        "agent_2": 1106.99764069438,
+        "agent_3": 1130.428091317308
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 165,
+      "intervention_fraction": 0.06875,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.56706213243306,
+      "min_ttc_s": 13.007160448188188,
+      "background_peak": 89,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1273,
+        "fallback_following_steps": 1127,
+        "applied_cooperative_steps": 1273,
+        "applied_fallback_steps": 1127,
+        "cooperative_eligible_steps": 1274,
+        "headway_count": 2400,
+        "headway_sum_s": 4885.036551314922,
+        "minimum_headway_s": 1.6338385261152821,
+        "cooperative_headway_count": 1274,
+        "cooperative_headway_sum_s": 2433.5510829377026,
+        "required_gap_deficit_steps": 2,
+        "abs_jerk_sum_m_s3": 4545.7558809345865,
+        "max_abs_jerk_m_s3": 48.6689418554306,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 150,
+          "stopping_gap": 19
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.0354318963812172,
+        "mean_cooperative_headway_s": 1.910165685194429,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.894064950389411,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210005,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 393.8247671328314,
+      "mean_progress_m": 1099.7952918638987,
+      "progress_by_agent_m": {
+        "agent_0": 1066.4803549473718,
+        "agent_1": 1087.8046029824877,
+        "agent_2": 1110.8306188155627,
+        "agent_3": 1134.0655907101727
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 146,
+      "intervention_fraction": 0.060833333333333336,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.096537210419775,
+      "min_ttc_s": 18.760874772287607,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1294,
+        "fallback_following_steps": 1106,
+        "applied_cooperative_steps": 1294,
+        "applied_fallback_steps": 1106,
+        "cooperative_eligible_steps": 1294,
+        "headway_count": 2400,
+        "headway_sum_s": 4763.636551966107,
+        "minimum_headway_s": 1.6376150211761715,
+        "cooperative_headway_count": 1294,
+        "cooperative_headway_sum_s": 2407.9180862050625,
+        "required_gap_deficit_steps": 4,
+        "abs_jerk_sum_m_s3": 4497.469555222888,
+        "max_abs_jerk_m_s3": 30.512161146477368,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 141,
+          "stopping_gap": 23
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9848485633192112,
+        "mean_cooperative_headway_s": 1.8608331423532167,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.8739456480095364,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210006,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 361.26499226610497,
+      "mean_progress_m": 1099.1885412800243,
+      "progress_by_agent_m": {
+        "agent_0": 1065.9904263138365,
+        "agent_1": 1087.0995640585209,
+        "agent_2": 1110.2063490571418,
+        "agent_3": 1133.457825690598
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 271,
+      "intervention_fraction": 0.11291666666666667,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.53802592977881,
+      "min_ttc_s": 12.645038468948858,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1320,
+        "fallback_following_steps": 1080,
+        "applied_cooperative_steps": 1320,
+        "applied_fallback_steps": 1080,
+        "cooperative_eligible_steps": 1323,
+        "headway_count": 2400,
+        "headway_sum_s": 4753.051587008537,
+        "minimum_headway_s": 1.6408162671787914,
+        "cooperative_headway_count": 1323,
+        "cooperative_headway_sum_s": 2484.8065139557343,
+        "required_gap_deficit_steps": 5,
+        "abs_jerk_sum_m_s3": 4910.574793496685,
+        "max_abs_jerk_m_s3": 45.90575776994221,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "stopping_gap": 42,
+          "sumo_override": 240
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9804381612535573,
+        "mean_cooperative_headway_s": 1.878160630352029,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.046072830623619,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210007,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 358.1348342328759,
+      "mean_progress_m": 1101.6665849015146,
+      "progress_by_agent_m": {
+        "agent_0": 1067.6716389791197,
+        "agent_1": 1090.0421951872604,
+        "agent_2": 1112.9548754456393,
+        "agent_3": 1135.9976299940388
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 291,
+      "intervention_fraction": 0.12125,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.70349320173264,
+      "min_ttc_s": 15.826770990554131,
+      "background_peak": 89,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1305,
+        "fallback_following_steps": 1095,
+        "applied_cooperative_steps": 1305,
+        "applied_fallback_steps": 1095,
+        "cooperative_eligible_steps": 1308,
+        "headway_count": 2400,
+        "headway_sum_s": 4651.553996412307,
+        "minimum_headway_s": 1.6071528217091373,
+        "cooperative_headway_count": 1308,
+        "cooperative_headway_sum_s": 2420.115600414261,
+        "required_gap_deficit_steps": 18,
+        "abs_jerk_sum_m_s3": 5951.123520852219,
+        "max_abs_jerk_m_s3": 46.971673145890236,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 248,
+          "stopping_gap": 66
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.938147498505128,
+        "mean_cooperative_headway_s": 1.8502412847203829,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.4796348003550914,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210008,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 365.7560611816182,
+      "mean_progress_m": 1100.9050767950189,
+      "progress_by_agent_m": {
+        "agent_0": 1067.574257849775,
+        "agent_1": 1089.0477629933462,
+        "agent_2": 1111.9850903861488,
+        "agent_3": 1135.0131959508049
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 257,
+      "intervention_fraction": 0.10708333333333334,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.755082295835006,
+      "min_ttc_s": 12.83724555377015,
+      "background_peak": 88,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1302,
+        "fallback_following_steps": 1098,
+        "applied_cooperative_steps": 1302,
+        "applied_fallback_steps": 1098,
+        "cooperative_eligible_steps": 1304,
+        "headway_count": 2400,
+        "headway_sum_s": 4688.701471328016,
+        "minimum_headway_s": 1.6177892655943342,
+        "cooperative_headway_count": 1304,
+        "cooperative_headway_sum_s": 2422.317998384967,
+        "required_gap_deficit_steps": 18,
+        "abs_jerk_sum_m_s3": 5615.482539438986,
+        "max_abs_jerk_m_s3": 44.25131946802132,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "stopping_gap": 56,
+          "sumo_override": 214
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.95362561305334,
+        "mean_cooperative_headway_s": 1.8576058269823366,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.339784391432911,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210009,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 377.3794332170788,
+      "mean_progress_m": 1098.3864265791499,
+      "progress_by_agent_m": {
+        "agent_0": 1065.3294148886027,
+        "agent_1": 1086.4136897906403,
+        "agent_2": 1109.242117241168,
+        "agent_3": 1132.5604843961878
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 204,
+      "intervention_fraction": 0.085,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.45028873942793,
+      "min_ttc_s": 17.191507314490877,
+      "background_peak": 90,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1341,
+        "fallback_following_steps": 1059,
+        "applied_cooperative_steps": 1341,
+        "applied_fallback_steps": 1059,
+        "cooperative_eligible_steps": 1344,
+        "headway_count": 2400,
+        "headway_sum_s": 4808.845109606758,
+        "minimum_headway_s": 1.6453143222786275,
+        "cooperative_headway_count": 1344,
+        "cooperative_headway_sum_s": 2546.585966425646,
+        "required_gap_deficit_steps": 5,
+        "abs_jerk_sum_m_s3": 4746.158512903267,
+        "max_abs_jerk_m_s3": 47.24401526153095,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 190,
+          "stopping_gap": 18
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.0036854623361493,
+        "mean_cooperative_headway_s": 1.8947812250190819,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.977566047043028,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210010,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 401.8942928329917,
+      "mean_progress_m": 1095.6050630237614,
+      "progress_by_agent_m": {
+        "agent_0": 1063.2260610352,
+        "agent_1": 1083.2735314530744,
+        "agent_2": 1106.3869660792452,
+        "agent_3": 1129.5336935275266
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 93,
+      "intervention_fraction": 0.03875,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.269584250822657,
+      "min_ttc_s": 12.18863332553535,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1263,
+        "fallback_following_steps": 1137,
+        "applied_cooperative_steps": 1263,
+        "applied_fallback_steps": 1137,
+        "cooperative_eligible_steps": 1264,
+        "headway_count": 2400,
+        "headway_sum_s": 4986.8804640039525,
+        "minimum_headway_s": 1.6459778534332317,
+        "cooperative_headway_count": 1264,
+        "cooperative_headway_sum_s": 2433.07616343827,
+        "required_gap_deficit_steps": 2,
+        "abs_jerk_sum_m_s3": 4519.687686282994,
+        "max_abs_jerk_m_s3": 46.898180544376444,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 91,
+          "stopping_gap": 12
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.077866860001647,
+        "mean_cooperative_headway_s": 1.9249020280366063,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.8832032026179142,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210011,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 401.3936813614346,
+      "mean_progress_m": 1096.859555997638,
+      "progress_by_agent_m": {
+        "agent_0": 1063.910800073817,
+        "agent_1": 1084.6583648901317,
+        "agent_2": 1107.799151213205,
+        "agent_3": 1131.0699078133982
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 107,
+      "intervention_fraction": 0.044583333333333336,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 21.91087968256325,
+      "min_ttc_s": 18.984779093087734,
+      "background_peak": 89,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1293,
+        "fallback_following_steps": 1107,
+        "applied_cooperative_steps": 1293,
+        "applied_fallback_steps": 1107,
+        "cooperative_eligible_steps": 1295,
+        "headway_count": 2400,
+        "headway_sum_s": 4871.6176736040115,
+        "minimum_headway_s": 1.6454030976900078,
+        "cooperative_headway_count": 1295,
+        "cooperative_headway_sum_s": 2442.4199418068506,
+        "required_gap_deficit_steps": 0,
+        "abs_jerk_sum_m_s3": 3910.0945538491815,
+        "max_abs_jerk_m_s3": 44.74180565262316,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 106,
+          "stopping_gap": 3
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.029840697335005,
+        "mean_cooperative_headway_s": 1.8860385651018152,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.6292060641038255,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210012,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 365.4816257500052,
+      "mean_progress_m": 1098.3457242731038,
+      "progress_by_agent_m": {
+        "agent_0": 1064.6751323824374,
+        "agent_1": 1086.1843889495176,
+        "agent_2": 1109.5680001419594,
+        "agent_3": 1132.9553756185007
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 252,
+      "intervention_fraction": 0.105,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.117222527787074,
+      "min_ttc_s": 18.452950933130065,
+      "background_peak": 88,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1295,
+        "fallback_following_steps": 1105,
+        "applied_cooperative_steps": 1295,
+        "applied_fallback_steps": 1105,
+        "cooperative_eligible_steps": 1298,
+        "headway_count": 2400,
+        "headway_sum_s": 4816.938977506171,
+        "minimum_headway_s": 1.6201645355307934,
+        "cooperative_headway_count": 1298,
+        "cooperative_headway_sum_s": 2416.302448737652,
+        "required_gap_deficit_steps": 3,
+        "abs_jerk_sum_m_s3": 4813.219125534697,
+        "max_abs_jerk_m_s3": 48.72116163372979,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 222,
+          "stopping_gap": 36
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.007057907294238,
+        "mean_cooperative_headway_s": 1.861558126916527,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.0055079689727906,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210013,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 369.3059798656448,
+      "mean_progress_m": 1099.8929497487507,
+      "progress_by_agent_m": {
+        "agent_0": 1066.06295423336,
+        "agent_1": 1088.1892315145515,
+        "agent_2": 1111.1119778589396,
+        "agent_3": 1134.2076353881512
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 242,
+      "intervention_fraction": 0.10083333333333333,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.45254186540843,
+      "min_ttc_s": 17.727753104114722,
+      "background_peak": 88,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1323,
+        "fallback_following_steps": 1077,
+        "applied_cooperative_steps": 1323,
+        "applied_fallback_steps": 1077,
+        "cooperative_eligible_steps": 1323,
+        "headway_count": 2400,
+        "headway_sum_s": 4754.59214866687,
+        "minimum_headway_s": 1.6249498668241962,
+        "cooperative_headway_count": 1323,
+        "cooperative_headway_sum_s": 2462.397756846672,
+        "required_gap_deficit_steps": 13,
+        "abs_jerk_sum_m_s3": 5199.47041215203,
+        "max_abs_jerk_m_s3": 45.14941170811646,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 217,
+          "stopping_gap": 35
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9810800619445292,
+        "mean_cooperative_headway_s": 1.8612227942907575,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.166446005063346,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210014,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 396.52156758857745,
+      "mean_progress_m": 1098.6530808753948,
+      "progress_by_agent_m": {
+        "agent_0": 1066.2420540716535,
+        "agent_1": 1087.0665127328455,
+        "agent_2": 1109.3253197493514,
+        "agent_3": 1131.9784369477293
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 122,
+      "intervention_fraction": 0.050833333333333335,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.499512405693523,
+      "min_ttc_s": 12.340693432179707,
+      "background_peak": 86,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1250,
+        "fallback_following_steps": 1150,
+        "applied_cooperative_steps": 1250,
+        "applied_fallback_steps": 1150,
+        "cooperative_eligible_steps": 1252,
+        "headway_count": 2400,
+        "headway_sum_s": 5025.360101046813,
+        "minimum_headway_s": 1.6361809186328786,
+        "cooperative_headway_count": 1252,
+        "cooperative_headway_sum_s": 2465.5573721556184,
+        "required_gap_deficit_steps": 1,
+        "abs_jerk_sum_m_s3": 4778.013287944429,
+        "max_abs_jerk_m_s3": 47.11793869733789,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 104,
+          "stopping_gap": 22
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.0939000421028386,
+        "mean_cooperative_headway_s": 1.9692950256834012,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.9908388699768453,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210015,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 373.4788555194071,
+      "mean_progress_m": 1099.7773600558746,
+      "progress_by_agent_m": {
+        "agent_0": 1066.1364697699087,
+        "agent_1": 1087.6350428750716,
+        "agent_2": 1110.9519981597107,
+        "agent_3": 1134.3859294188078
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 226,
+      "intervention_fraction": 0.09416666666666666,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.23682062998415,
+      "min_ttc_s": 12.719616222484216,
+      "background_peak": 90,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1339,
+        "fallback_following_steps": 1061,
+        "applied_cooperative_steps": 1339,
+        "applied_fallback_steps": 1061,
+        "cooperative_eligible_steps": 1341,
+        "headway_count": 2400,
+        "headway_sum_s": 4705.915746211545,
+        "minimum_headway_s": 1.6251654376719218,
+        "cooperative_headway_count": 1341,
+        "cooperative_headway_sum_s": 2503.1517306763344,
+        "required_gap_deficit_steps": 8,
+        "abs_jerk_sum_m_s3": 5121.162120751856,
+        "max_abs_jerk_m_s3": 45.273687690496445,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 217,
+          "stopping_gap": 23
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.960798227588144,
+        "mean_cooperative_headway_s": 1.8666306716452903,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.1338175503132732,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210016,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 382.72341231849174,
+      "mean_progress_m": 1101.7171634409722,
+      "progress_by_agent_m": {
+        "agent_0": 1068.3819920554351,
+        "agent_1": 1089.74503893043,
+        "agent_2": 1112.7479676953506,
+        "agent_3": 1135.993655082673
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 192,
+      "intervention_fraction": 0.08,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.218570282496508,
+      "min_ttc_s": 15.329566983852924,
+      "background_peak": 89,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1306,
+        "fallback_following_steps": 1094,
+        "applied_cooperative_steps": 1306,
+        "applied_fallback_steps": 1094,
+        "cooperative_eligible_steps": 1308,
+        "headway_count": 2400,
+        "headway_sum_s": 4779.8479882495285,
+        "minimum_headway_s": 1.6228511182073426,
+        "cooperative_headway_count": 1308,
+        "cooperative_headway_sum_s": 2466.2158644366273,
+        "required_gap_deficit_steps": 15,
+        "abs_jerk_sum_m_s3": 5272.790759414005,
+        "max_abs_jerk_m_s3": 44.89474125206456,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 177,
+          "stopping_gap": 29
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9916033284373036,
+        "mean_cooperative_headway_s": 1.8854861348903877,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.1969961497558357,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210017,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 384.42470810181334,
+      "mean_progress_m": 1097.375038225536,
+      "progress_by_agent_m": {
+        "agent_0": 1064.358175080399,
+        "agent_1": 1085.2974863125314,
+        "agent_2": 1108.2500492070249,
+        "agent_3": 1131.594442302188
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 172,
+      "intervention_fraction": 0.07166666666666667,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.46064764559271,
+      "min_ttc_s": 13.4629357065858,
+      "background_peak": 90,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1281,
+        "fallback_following_steps": 1119,
+        "applied_cooperative_steps": 1281,
+        "applied_fallback_steps": 1119,
+        "cooperative_eligible_steps": 1283,
+        "headway_count": 2400,
+        "headway_sum_s": 4872.748531788324,
+        "minimum_headway_s": 1.652058715245673,
+        "cooperative_headway_count": 1283,
+        "cooperative_headway_sum_s": 2447.0033132491935,
+        "required_gap_deficit_steps": 1,
+        "abs_jerk_sum_m_s3": 4587.810377258682,
+        "max_abs_jerk_m_s3": 45.085752084851194,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 155,
+          "stopping_gap": 19
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.030311888245135,
+        "mean_cooperative_headway_s": 1.9072512184327308,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.9115876571911175,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210018,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 377.43301722636306,
+      "mean_progress_m": 1098.5911854152976,
+      "progress_by_agent_m": {
+        "agent_0": 1065.151495592895,
+        "agent_1": 1086.401702169201,
+        "agent_2": 1109.6886892686166,
+        "agent_3": 1133.1228546304778
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 204,
+      "intervention_fraction": 0.085,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.3188209358603,
+      "min_ttc_s": 15.452446157154908,
+      "background_peak": 88,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1273,
+        "fallback_following_steps": 1127,
+        "applied_cooperative_steps": 1273,
+        "applied_fallback_steps": 1127,
+        "cooperative_eligible_steps": 1276,
+        "headway_count": 2400,
+        "headway_sum_s": 4786.6430564518805,
+        "minimum_headway_s": 1.6295528918461968,
+        "cooperative_headway_count": 1276,
+        "cooperative_headway_sum_s": 2396.3626606786192,
+        "required_gap_deficit_steps": 4,
+        "abs_jerk_sum_m_s3": 4993.406098558619,
+        "max_abs_jerk_m_s3": 50.56270450353608,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 198,
+          "stopping_gap": 15
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.99443460685495,
+        "mean_cooperative_headway_s": 1.8780271635412376,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.0805858743994246,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210019,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 396.1674217957855,
+      "mean_progress_m": 1099.5530480500418,
+      "progress_by_agent_m": {
+        "agent_0": 1066.2265267979742,
+        "agent_1": 1087.7548423623646,
+        "agent_2": 1110.6524366618432,
+        "agent_3": 1133.5783863779855
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 136,
+      "intervention_fraction": 0.056666666666666664,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 21.857665844634173,
+      "min_ttc_s": 16.21722022266334,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1312,
+        "fallback_following_steps": 1088,
+        "applied_cooperative_steps": 1312,
+        "applied_fallback_steps": 1088,
+        "cooperative_eligible_steps": 1315,
+        "headway_count": 2400,
+        "headway_sum_s": 4936.384155790515,
+        "minimum_headway_s": 1.6341180212887936,
+        "cooperative_headway_count": 1315,
+        "cooperative_headway_sum_s": 2509.354416672783,
+        "required_gap_deficit_steps": 11,
+        "abs_jerk_sum_m_s3": 4047.193590740816,
+        "max_abs_jerk_m_s3": 40.3785727382445,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 124,
+          "stopping_gap": 30
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.0568267315793816,
+        "mean_cooperative_headway_s": 1.9082543092568691,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.6863306628086734,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210020,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 407.78983243523874,
+      "mean_progress_m": 1098.6157192591927,
+      "progress_by_agent_m": {
+        "agent_0": 1065.6575645922862,
+        "agent_1": 1086.8761707413742,
+        "agent_2": 1109.443168502832,
+        "agent_3": 1132.485973200279
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 87,
+      "intervention_fraction": 0.03625,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 21.64035755749793,
+      "min_ttc_s": 17.268400960769597,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1293,
+        "fallback_following_steps": 1107,
+        "applied_cooperative_steps": 1293,
+        "applied_fallback_steps": 1107,
+        "cooperative_eligible_steps": 1296,
+        "headway_count": 2400,
+        "headway_sum_s": 4959.591600171463,
+        "minimum_headway_s": 1.6424685840051076,
+        "cooperative_headway_count": 1296,
+        "cooperative_headway_sum_s": 2453.0327684393505,
+        "required_gap_deficit_steps": 3,
+        "abs_jerk_sum_m_s3": 3819.9297460951657,
+        "max_abs_jerk_m_s3": 42.01032059844145,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 86,
+          "stopping_gap": 7
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.066496500071443,
+        "mean_cooperative_headway_s": 1.8927721978698693,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.5916373942063191,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210021,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 375.54902831043626,
+      "mean_progress_m": 1098.69825412855,
+      "progress_by_agent_m": {
+        "agent_0": 1065.3741461386114,
+        "agent_1": 1086.4668423113671,
+        "agent_2": 1109.7248193394055,
+        "agent_3": 1133.2272087248157
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 212,
+      "intervention_fraction": 0.08833333333333333,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.16200139839202,
+      "min_ttc_s": 18.22260036821529,
+      "background_peak": 85,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1264,
+        "fallback_following_steps": 1136,
+        "applied_cooperative_steps": 1264,
+        "applied_fallback_steps": 1136,
+        "cooperative_eligible_steps": 1267,
+        "headway_count": 2400,
+        "headway_sum_s": 4790.445394825774,
+        "minimum_headway_s": 1.6360765240630448,
+        "cooperative_headway_count": 1267,
+        "cooperative_headway_sum_s": 2370.1875064329192,
+        "required_gap_deficit_steps": 4,
+        "abs_jerk_sum_m_s3": 5263.437322794756,
+        "max_abs_jerk_m_s3": 45.963752390413504,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 204,
+          "stopping_gap": 18
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9960189145107392,
+        "mean_cooperative_headway_s": 1.8707083712967003,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.193098884497815,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210022,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 377.6435627029106,
+      "mean_progress_m": 1100.5915622161501,
+      "progress_by_agent_m": {
+        "agent_0": 1067.303752065471,
+        "agent_1": 1088.602200904941,
+        "agent_2": 1111.6314445212636,
+        "agent_3": 1134.8288513729249
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 209,
+      "intervention_fraction": 0.08708333333333333,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.483501281961807,
+      "min_ttc_s": 13.906226979407656,
+      "background_peak": 88,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1291,
+        "fallback_following_steps": 1109,
+        "applied_cooperative_steps": 1291,
+        "applied_fallback_steps": 1109,
+        "cooperative_eligible_steps": 1292,
+        "headway_count": 2400,
+        "headway_sum_s": 4766.573633158945,
+        "minimum_headway_s": 1.623415594508297,
+        "cooperative_headway_count": 1292,
+        "cooperative_headway_sum_s": 2424.5473279958187,
+        "required_gap_deficit_steps": 8,
+        "abs_jerk_sum_m_s3": 5508.7462631542785,
+        "max_abs_jerk_m_s3": 49.460846153342075,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 187,
+          "stopping_gap": 34
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9860723471495605,
+        "mean_cooperative_headway_s": 1.87658461919181,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.2953109429809495,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210023,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 375.1720587029335,
+      "mean_progress_m": 1099.5898768945112,
+      "progress_by_agent_m": {
+        "agent_0": 1066.2978908477687,
+        "agent_1": 1087.7045891115208,
+        "agent_2": 1110.587262960001,
+        "agent_3": 1133.7697646587546
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 215,
+      "intervention_fraction": 0.08958333333333333,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.834860219433896,
+      "min_ttc_s": 12.855225852192431,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1293,
+        "fallback_following_steps": 1107,
+        "applied_cooperative_steps": 1293,
+        "applied_fallback_steps": 1107,
+        "cooperative_eligible_steps": 1296,
+        "headway_count": 2400,
+        "headway_sum_s": 4801.481999154824,
+        "minimum_headway_s": 1.6230541116175374,
+        "cooperative_headway_count": 1296,
+        "cooperative_headway_sum_s": 2465.4012391077677,
+        "required_gap_deficit_steps": 6,
+        "abs_jerk_sum_m_s3": 5543.919438589983,
+        "max_abs_jerk_m_s3": 46.50049798190601,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 193,
+          "stopping_gap": 34
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.000617499647843,
+        "mean_cooperative_headway_s": 1.9023157709164873,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.309966432745826,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210024,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 397.00461497899846,
+      "mean_progress_m": 1099.9373956550385,
+      "progress_by_agent_m": {
+        "agent_0": 1066.8689721862606,
+        "agent_1": 1088.2159426162777,
+        "agent_2": 1110.8626137631134,
+        "agent_3": 1133.8020540545022
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 130,
+      "intervention_fraction": 0.05416666666666667,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 21.834149489738053,
+      "min_ttc_s": 18.031575073139127,
+      "background_peak": 86,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1284,
+        "fallback_following_steps": 1116,
+        "applied_cooperative_steps": 1284,
+        "applied_fallback_steps": 1116,
+        "cooperative_eligible_steps": 1287,
+        "headway_count": 2400,
+        "headway_sum_s": 4919.580374844549,
+        "minimum_headway_s": 1.630150600206539,
+        "cooperative_headway_count": 1287,
+        "cooperative_headway_sum_s": 2466.091864863026,
+        "required_gap_deficit_steps": 7,
+        "abs_jerk_sum_m_s3": 4000.8878914058205,
+        "max_abs_jerk_m_s3": 35.207567756947356,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 122,
+          "stopping_gap": 23
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.0498251561852285,
+        "mean_cooperative_headway_s": 1.9161552951538663,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.667036621419092,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210025,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 401.53484371616577,
+      "mean_progress_m": 1094.2713940765686,
+      "progress_by_agent_m": {
+        "agent_0": 1062.930568088605,
+        "agent_1": 1082.5160326453374,
+        "agent_2": 1104.5865715075904,
+        "agent_3": 1127.0524040647417
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 91,
+      "intervention_fraction": 0.03791666666666667,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 21.953205275535566,
+      "min_ttc_s": 13.043522583179364,
+      "background_peak": 86,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1256,
+        "fallback_following_steps": 1144,
+        "applied_cooperative_steps": 1256,
+        "applied_fallback_steps": 1144,
+        "cooperative_eligible_steps": 1258,
+        "headway_count": 2400,
+        "headway_sum_s": 5146.178291666813,
+        "minimum_headway_s": 1.6357673579132486,
+        "cooperative_headway_count": 1258,
+        "cooperative_headway_sum_s": 2522.242186573422,
+        "required_gap_deficit_steps": 1,
+        "abs_jerk_sum_m_s3": 4001.6810610867174,
+        "max_abs_jerk_m_s3": 46.1195524036885,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 86,
+          "stopping_gap": 11
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.144240954861172,
+        "mean_cooperative_headway_s": 2.0049619925066944,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.6673671087861321,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210026,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 387.2792091992791,
+      "mean_progress_m": 1100.8424818981687,
+      "progress_by_agent_m": {
+        "agent_0": 1067.1263902385406,
+        "agent_1": 1088.870198117622,
+        "agent_2": 1111.9801164247845,
+        "agent_3": 1135.3932228117274
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 173,
+      "intervention_fraction": 0.07208333333333333,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.1782891329378,
+      "min_ttc_s": 17.733540609808404,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1297,
+        "fallback_following_steps": 1103,
+        "applied_cooperative_steps": 1297,
+        "applied_fallback_steps": 1103,
+        "cooperative_eligible_steps": 1298,
+        "headway_count": 2400,
+        "headway_sum_s": 4706.858664892374,
+        "minimum_headway_s": 1.633833290793367,
+        "cooperative_headway_count": 1298,
+        "cooperative_headway_sum_s": 2403.884394557783,
+        "required_gap_deficit_steps": 6,
+        "abs_jerk_sum_m_s3": 4780.83987747394,
+        "max_abs_jerk_m_s3": 36.16439309668671,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 171,
+          "stopping_gap": 13
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9611911103718225,
+        "mean_cooperative_headway_s": 1.8519910589813426,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.9920166156141417,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210027,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 390.6227236686373,
+      "mean_progress_m": 1099.3920235030237,
+      "progress_by_agent_m": {
+        "agent_0": 1065.7680360714962,
+        "agent_1": 1087.2975833163932,
+        "agent_2": 1110.4902918486478,
+        "agent_3": 1134.0121827755572
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 154,
+      "intervention_fraction": 0.06416666666666666,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.04333227444441,
+      "min_ttc_s": 17.555519423675573,
+      "background_peak": 92,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1299,
+        "fallback_following_steps": 1101,
+        "applied_cooperative_steps": 1299,
+        "applied_fallback_steps": 1101,
+        "cooperative_eligible_steps": 1301,
+        "headway_count": 2400,
+        "headway_sum_s": 4763.032113837456,
+        "minimum_headway_s": 1.6075808527245374,
+        "cooperative_headway_count": 1301,
+        "cooperative_headway_sum_s": 2437.4558787468154,
+        "required_gap_deficit_steps": 10,
+        "abs_jerk_sum_m_s3": 4851.401115235107,
+        "max_abs_jerk_m_s3": 47.32039615511887,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 147,
+          "stopping_gap": 19
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9845967140989398,
+        "mean_cooperative_headway_s": 1.8735248875840242,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.021417131347961,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210028,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 364.44558503125,
+      "mean_progress_m": 1099.3509316347422,
+      "progress_by_agent_m": {
+        "agent_0": 1065.8116891173413,
+        "agent_1": 1087.405670614188,
+        "agent_2": 1110.471177350557,
+        "agent_3": 1133.7151894568829
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 258,
+      "intervention_fraction": 0.1075,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.804902557283636,
+      "min_ttc_s": 14.296999407977982,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1289,
+        "fallback_following_steps": 1111,
+        "applied_cooperative_steps": 1289,
+        "applied_fallback_steps": 1111,
+        "cooperative_eligible_steps": 1292,
+        "headway_count": 2400,
+        "headway_sum_s": 4683.056875556985,
+        "minimum_headway_s": 1.6142251707995932,
+        "cooperative_headway_count": 1292,
+        "cooperative_headway_sum_s": 2395.3347714980305,
+        "required_gap_deficit_steps": 10,
+        "abs_jerk_sum_m_s3": 5394.47301605999,
+        "max_abs_jerk_m_s3": 46.179576963186264,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "stopping_gap": 48,
+          "sumo_override": 232
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9512736981487437,
+        "mean_cooperative_headway_s": 1.853974281345225,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.247697090024996,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210029,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 393.2694730093054,
+      "mean_progress_m": 1101.054607951617,
+      "progress_by_agent_m": {
+        "agent_0": 1067.1587036406256,
+        "agent_1": 1089.0987705151815,
+        "agent_2": 1112.3372298090005,
+        "agent_3": 1135.6237278416606
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 150,
+      "intervention_fraction": 0.0625,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 21.92236158065497,
+      "min_ttc_s": 18.71094812777059,
+      "background_peak": 89,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1305,
+        "fallback_following_steps": 1095,
+        "applied_cooperative_steps": 1305,
+        "applied_fallback_steps": 1095,
+        "cooperative_eligible_steps": 1307,
+        "headway_count": 2400,
+        "headway_sum_s": 4776.4468601617355,
+        "minimum_headway_s": 1.6178589332506277,
+        "cooperative_headway_count": 1307,
+        "cooperative_headway_sum_s": 2448.5566471590255,
+        "required_gap_deficit_steps": 15,
+        "abs_jerk_sum_m_s3": 5040.495082225613,
+        "max_abs_jerk_m_s3": 45.30479736626134,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 133,
+          "stopping_gap": 33
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9901861917340564,
+        "mean_cooperative_headway_s": 1.873417480611343,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.1002062842606724,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210030,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 401.0943559261366,
+      "mean_progress_m": 1101.618592735739,
+      "progress_by_agent_m": {
+        "agent_0": 1068.4517875603583,
+        "agent_1": 1089.990153126892,
+        "agent_2": 1112.6887311529197,
+        "agent_3": 1135.3436991027856
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 121,
+      "intervention_fraction": 0.050416666666666665,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 21.98959044702351,
+      "min_ttc_s": 19.46754426288144,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1310,
+        "fallback_following_steps": 1090,
+        "applied_cooperative_steps": 1310,
+        "applied_fallback_steps": 1090,
+        "cooperative_eligible_steps": 1311,
+        "headway_count": 2400,
+        "headway_sum_s": 4845.672503980588,
+        "minimum_headway_s": 1.6009880453070284,
+        "cooperative_headway_count": 1311,
+        "cooperative_headway_sum_s": 2482.283817570599,
+        "required_gap_deficit_steps": 16,
+        "abs_jerk_sum_m_s3": 4438.856910964404,
+        "max_abs_jerk_m_s3": 45.26200570166097,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 107,
+          "stopping_gap": 29
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.0190302099919117,
+        "mean_cooperative_headway_s": 1.893427778467276,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.849523712901835,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210031,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 377.2584561817542,
+      "mean_progress_m": 1101.00223840915,
+      "progress_by_agent_m": {
+        "agent_0": 1067.1348160553098,
+        "agent_1": 1089.1668817172713,
+        "agent_2": 1112.256738369163,
+        "agent_3": 1135.4505174948565
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 214,
+      "intervention_fraction": 0.08916666666666667,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.180463648028667,
+      "min_ttc_s": 15.607578390034806,
+      "background_peak": 85,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1311,
+        "fallback_following_steps": 1089,
+        "applied_cooperative_steps": 1311,
+        "applied_fallback_steps": 1089,
+        "cooperative_eligible_steps": 1314,
+        "headway_count": 2400,
+        "headway_sum_s": 4688.916653565662,
+        "minimum_headway_s": 1.6147739633022737,
+        "cooperative_headway_count": 1314,
+        "cooperative_headway_sum_s": 2428.2580132446287,
+        "required_gap_deficit_steps": 22,
+        "abs_jerk_sum_m_s3": 5411.632751552381,
+        "max_abs_jerk_m_s3": 45.2502830326555,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 181,
+          "stopping_gap": 58
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9537152723190259,
+        "mean_cooperative_headway_s": 1.8479893555895195,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.254846979813492,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210032,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 384.9689051881295,
+      "mean_progress_m": 1100.6266200278983,
+      "progress_by_agent_m": {
+        "agent_0": 1067.2564331299889,
+        "agent_1": 1088.6293830967118,
+        "agent_2": 1111.7214734067288,
+        "agent_3": 1134.8991904781633
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 178,
+      "intervention_fraction": 0.07416666666666667,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.139868478663253,
+      "min_ttc_s": 16.215847937604472,
+      "background_peak": 89,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1271,
+        "fallback_following_steps": 1129,
+        "applied_cooperative_steps": 1271,
+        "applied_fallback_steps": 1129,
+        "cooperative_eligible_steps": 1274,
+        "headway_count": 2400,
+        "headway_sum_s": 4807.403432806318,
+        "minimum_headway_s": 1.6326202178591707,
+        "cooperative_headway_count": 1274,
+        "cooperative_headway_sum_s": 2407.6942763990623,
+        "required_gap_deficit_steps": 6,
+        "abs_jerk_sum_m_s3": 4677.4900221271155,
+        "max_abs_jerk_m_s3": 36.20124197980985,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 171,
+          "stopping_gap": 18
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.003084763669299,
+        "mean_cooperative_headway_s": 1.8898699186805827,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.948954175886298,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210033,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 366.71075681113484,
+      "mean_progress_m": 1099.1786340424896,
+      "progress_by_agent_m": {
+        "agent_0": 1065.592193149031,
+        "agent_1": 1087.2319747067784,
+        "agent_2": 1110.3250039932002,
+        "agent_3": 1133.5653643209484
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 250,
+      "intervention_fraction": 0.10416666666666667,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.56602180525661,
+      "min_ttc_s": 13.55878922487439,
+      "background_peak": 86,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1300,
+        "fallback_following_steps": 1100,
+        "applied_cooperative_steps": 1300,
+        "applied_fallback_steps": 1100,
+        "cooperative_eligible_steps": 1301,
+        "headway_count": 2400,
+        "headway_sum_s": 4715.381474780152,
+        "minimum_headway_s": 1.6224215246933233,
+        "cooperative_headway_count": 1301,
+        "cooperative_headway_sum_s": 2419.4719268755384,
+        "required_gap_deficit_steps": 11,
+        "abs_jerk_sum_m_s3": 5490.434710493103,
+        "max_abs_jerk_m_s3": 41.63439693277304,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 215,
+          "stopping_gap": 54
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9647422811583966,
+        "mean_cooperative_headway_s": 1.8597017116645185,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.2876811293721264,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210034,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 380.5255033325928,
+      "mean_progress_m": 1098.4542269923954,
+      "progress_by_agent_m": {
+        "agent_0": 1065.692003861065,
+        "agent_1": 1086.3491980113515,
+        "agent_2": 1109.2189434042186,
+        "agent_3": 1132.5567626929471
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 190,
+      "intervention_fraction": 0.07916666666666666,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.78262474648653,
+      "min_ttc_s": 13.888816144451747,
+      "background_peak": 89,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1272,
+        "fallback_following_steps": 1128,
+        "applied_cooperative_steps": 1272,
+        "applied_fallback_steps": 1128,
+        "cooperative_eligible_steps": 1273,
+        "headway_count": 2400,
+        "headway_sum_s": 4778.0082022300685,
+        "minimum_headway_s": 1.6134594691141184,
+        "cooperative_headway_count": 1273,
+        "cooperative_headway_sum_s": 2395.750772995664,
+        "required_gap_deficit_steps": 6,
+        "abs_jerk_sum_m_s3": 5341.855757639108,
+        "max_abs_jerk_m_s3": 46.20208375155919,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 174,
+          "stopping_gap": 21
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.990836750929195,
+        "mean_cooperative_headway_s": 1.881972327569257,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.225773232349628,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210035,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 376.0342542032282,
+      "mean_progress_m": 1099.9608776033529,
+      "progress_by_agent_m": {
+        "agent_0": 1066.367539909855,
+        "agent_1": 1087.8207163200661,
+        "agent_2": 1111.1341868142108,
+        "agent_3": 1134.5210673692795
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 218,
+      "intervention_fraction": 0.09083333333333334,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.562288505956523,
+      "min_ttc_s": 15.109335993715632,
+      "background_peak": 90,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1328,
+        "fallback_following_steps": 1072,
+        "applied_cooperative_steps": 1328,
+        "applied_fallback_steps": 1072,
+        "cooperative_eligible_steps": 1331,
+        "headway_count": 2400,
+        "headway_sum_s": 4645.595101024649,
+        "minimum_headway_s": 1.622915756202631,
+        "cooperative_headway_count": 1331,
+        "cooperative_headway_sum_s": 2455.1371992281565,
+        "required_gap_deficit_steps": 16,
+        "abs_jerk_sum_m_s3": 5638.419700768668,
+        "max_abs_jerk_m_s3": 42.60205227303757,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 205,
+          "stopping_gap": 48
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9356646254269372,
+        "mean_cooperative_headway_s": 1.8445809160241597,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.349341541986945,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210036,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 362.27090961971544,
+      "mean_progress_m": 1099.0180292875748,
+      "progress_by_agent_m": {
+        "agent_0": 1065.2831052102736,
+        "agent_1": 1086.9299063099015,
+        "agent_2": 1110.269764804356,
+        "agent_3": 1133.5893408257684
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 269,
+      "intervention_fraction": 0.11208333333333333,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.620897315032156,
+      "min_ttc_s": 12.442305128994468,
+      "background_peak": 89,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1334,
+        "fallback_following_steps": 1066,
+        "applied_cooperative_steps": 1334,
+        "applied_fallback_steps": 1066,
+        "cooperative_eligible_steps": 1336,
+        "headway_count": 2400,
+        "headway_sum_s": 4697.90670885509,
+        "minimum_headway_s": 1.6165871731198613,
+        "cooperative_headway_count": 1336,
+        "cooperative_headway_sum_s": 2476.174678149701,
+        "required_gap_deficit_steps": 11,
+        "abs_jerk_sum_m_s3": 5569.149902469192,
+        "max_abs_jerk_m_s3": 46.70493230223656,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 224,
+          "stopping_gap": 61
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9574611286896209,
+        "mean_cooperative_headway_s": 1.8534241602916923,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.32047912602883,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210037,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 377.5259779969982,
+      "mean_progress_m": 1099.1018528958382,
+      "progress_by_agent_m": {
+        "agent_0": 1065.5159614208455,
+        "agent_1": 1086.8366408094828,
+        "agent_2": 1110.2886605640113,
+        "agent_3": 1133.766148789013
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 208,
+      "intervention_fraction": 0.08666666666666667,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.26740986332299,
+      "min_ttc_s": 15.378267715471582,
+      "background_peak": 89,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1328,
+        "fallback_following_steps": 1072,
+        "applied_cooperative_steps": 1328,
+        "applied_fallback_steps": 1072,
+        "cooperative_eligible_steps": 1330,
+        "headway_count": 2400,
+        "headway_sum_s": 4707.6395323847055,
+        "minimum_headway_s": 1.6371852062618575,
+        "cooperative_headway_count": 1330,
+        "cooperative_headway_sum_s": 2484.0543475649993,
+        "required_gap_deficit_steps": 9,
+        "abs_jerk_sum_m_s3": 5059.818465179479,
+        "max_abs_jerk_m_s3": 31.813273312502943,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 207,
+          "stopping_gap": 20
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9615164718269607,
+        "mean_cooperative_headway_s": 1.8677100357631573,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.108257693824783,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210038,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 377.27214093170056,
+      "mean_progress_m": 1096.875140043734,
+      "progress_by_agent_m": {
+        "agent_0": 1064.287512296276,
+        "agent_1": 1084.6917572835807,
+        "agent_2": 1107.5919319419504,
+        "agent_3": 1130.929358653129
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 198,
+      "intervention_fraction": 0.0825,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.506356139108547,
+      "min_ttc_s": 12.403807674925487,
+      "background_peak": 85,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1248,
+        "fallback_following_steps": 1152,
+        "applied_cooperative_steps": 1248,
+        "applied_fallback_steps": 1152,
+        "cooperative_eligible_steps": 1250,
+        "headway_count": 2400,
+        "headway_sum_s": 4888.634554770958,
+        "minimum_headway_s": 1.6344569391847363,
+        "cooperative_headway_count": 1250,
+        "cooperative_headway_sum_s": 2407.8338414336195,
+        "required_gap_deficit_steps": 1,
+        "abs_jerk_sum_m_s3": 4992.668470166286,
+        "max_abs_jerk_m_s3": 45.71804775855455,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 176,
+          "stopping_gap": 23
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.036931064487899,
+        "mean_cooperative_headway_s": 1.9262670731468956,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.0802785292359527,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210039,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 370.0400079849265,
+      "mean_progress_m": 1098.8437208169776,
+      "progress_by_agent_m": {
+        "agent_0": 1064.9305221897735,
+        "agent_1": 1087.0216980064406,
+        "agent_2": 1110.11493434307,
+        "agent_3": 1133.3077287286262
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 236,
+      "intervention_fraction": 0.09833333333333333,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.150120699219407,
+      "min_ttc_s": 17.48910029660175,
+      "background_peak": 85,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1317,
+        "fallback_following_steps": 1083,
+        "applied_cooperative_steps": 1317,
+        "applied_fallback_steps": 1083,
+        "cooperative_eligible_steps": 1320,
+        "headway_count": 2400,
+        "headway_sum_s": 4726.117287164218,
+        "minimum_headway_s": 1.608018275825465,
+        "cooperative_headway_count": 1320,
+        "cooperative_headway_sum_s": 2449.617139251756,
+        "required_gap_deficit_steps": 11,
+        "abs_jerk_sum_m_s3": 5247.201916247976,
+        "max_abs_jerk_m_s3": 46.16851292550557,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 207,
+          "stopping_gap": 46
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9692155363184243,
+        "mean_cooperative_headway_s": 1.855770560039209,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.18633413176999,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210040,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 391.09792137821694,
+      "mean_progress_m": 1099.6018255085714,
+      "progress_by_agent_m": {
+        "agent_0": 1066.6258880848054,
+        "agent_1": 1087.7541352601297,
+        "agent_2": 1110.4087571459206,
+        "agent_3": 1133.6185215434296
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 152,
+      "intervention_fraction": 0.06333333333333334,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.021335802040994,
+      "min_ttc_s": 19.236934357389448,
+      "background_peak": 90,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1249,
+        "fallback_following_steps": 1151,
+        "applied_cooperative_steps": 1249,
+        "applied_fallback_steps": 1151,
+        "cooperative_eligible_steps": 1252,
+        "headway_count": 2400,
+        "headway_sum_s": 4826.994788396849,
+        "minimum_headway_s": 1.6385618831665498,
+        "cooperative_headway_count": 1252,
+        "cooperative_headway_sum_s": 2364.5549952398997,
+        "required_gap_deficit_steps": 3,
+        "abs_jerk_sum_m_s3": 4461.17624245849,
+        "max_abs_jerk_m_s3": 33.13171293863917,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 150,
+          "stopping_gap": 10
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.011247828498687,
+        "mean_cooperative_headway_s": 1.8886222006708464,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.8588234343577044,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210041,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 388.0705308673843,
+      "mean_progress_m": 1096.5760998652117,
+      "progress_by_agent_m": {
+        "agent_0": 1064.1033827960978,
+        "agent_1": 1084.5575202323696,
+        "agent_2": 1107.310743530038,
+        "agent_3": 1130.3327529023422
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 154,
+      "intervention_fraction": 0.06416666666666666,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.585681280493738,
+      "min_ttc_s": 11.949007233516303,
+      "background_peak": 89,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1328,
+        "fallback_following_steps": 1072,
+        "applied_cooperative_steps": 1328,
+        "applied_fallback_steps": 1072,
+        "cooperative_eligible_steps": 1329,
+        "headway_count": 2400,
+        "headway_sum_s": 4903.185576645214,
+        "minimum_headway_s": 1.6363807013058544,
+        "cooperative_headway_count": 1329,
+        "cooperative_headway_sum_s": 2585.8703843535927,
+        "required_gap_deficit_steps": 2,
+        "abs_jerk_sum_m_s3": 4797.291314414899,
+        "max_abs_jerk_m_s3": 47.448393404483724,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 123,
+          "stopping_gap": 38
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.042993990268839,
+        "mean_cooperative_headway_s": 1.9457263990621465,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.9988713810062078,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210042,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 394.96178747816,
+      "mean_progress_m": 1098.7394044009845,
+      "progress_by_agent_m": {
+        "agent_0": 1065.2648621700898,
+        "agent_1": 1086.4715735376833,
+        "agent_2": 1109.915060937507,
+        "agent_3": 1133.306120958658
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 138,
+      "intervention_fraction": 0.0575,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.13180022612214,
+      "min_ttc_s": 18.117240865442504,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1309,
+        "fallback_following_steps": 1091,
+        "applied_cooperative_steps": 1309,
+        "applied_fallback_steps": 1091,
+        "cooperative_eligible_steps": 1309,
+        "headway_count": 2400,
+        "headway_sum_s": 4754.868955101397,
+        "minimum_headway_s": 1.6396522492235963,
+        "cooperative_headway_count": 1309,
+        "cooperative_headway_sum_s": 2439.6145818754576,
+        "required_gap_deficit_steps": 13,
+        "abs_jerk_sum_m_s3": 4747.742470727512,
+        "max_abs_jerk_m_s3": 39.86432078730111,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 135,
+          "stopping_gap": 29
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9811953979589154,
+        "mean_cooperative_headway_s": 1.8637238975366368,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.9782260294697969,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210043,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 393.5655492369647,
+      "mean_progress_m": 1098.8108588680639,
+      "progress_by_agent_m": {
+        "agent_0": 1065.5380997083334,
+        "agent_1": 1086.7830946070494,
+        "agent_2": 1109.9005669026865,
+        "agent_3": 1133.0216742541857
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 144,
+      "intervention_fraction": 0.06,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 21.92938488982619,
+      "min_ttc_s": 19.57528610253555,
+      "background_peak": 88,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1304,
+        "fallback_following_steps": 1096,
+        "applied_cooperative_steps": 1304,
+        "applied_fallback_steps": 1096,
+        "cooperative_eligible_steps": 1307,
+        "headway_count": 2400,
+        "headway_sum_s": 4886.457136859115,
+        "minimum_headway_s": 1.643517119201792,
+        "cooperative_headway_count": 1307,
+        "cooperative_headway_sum_s": 2483.454403228798,
+        "required_gap_deficit_steps": 2,
+        "abs_jerk_sum_m_s3": 3957.624909746834,
+        "max_abs_jerk_m_s3": 25.16359367486878,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 144,
+          "stopping_gap": 5
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.0360238070246313,
+        "mean_cooperative_headway_s": 1.9001181355996926,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.6490103790611808,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210044,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 378.2796809740896,
+      "mean_progress_m": 1099.1977683069706,
+      "progress_by_agent_m": {
+        "agent_0": 1065.7620094509325,
+        "agent_1": 1087.1539877695118,
+        "agent_2": 1110.2741835412653,
+        "agent_3": 1133.6008924661728
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 203,
+      "intervention_fraction": 0.08458333333333333,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.30178521014751,
+      "min_ttc_s": 17.709221302058445,
+      "background_peak": 85,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1294,
+        "fallback_following_steps": 1106,
+        "applied_cooperative_steps": 1294,
+        "applied_fallback_steps": 1106,
+        "cooperative_eligible_steps": 1296,
+        "headway_count": 2400,
+        "headway_sum_s": 4819.206520064123,
+        "minimum_headway_s": 1.6345970470772566,
+        "cooperative_headway_count": 1296,
+        "cooperative_headway_sum_s": 2437.7245557192423,
+        "required_gap_deficit_steps": 5,
+        "abs_jerk_sum_m_s3": 5018.145203979315,
+        "max_abs_jerk_m_s3": 46.93530119955547,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 189,
+          "stopping_gap": 30
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.0080027166933845,
+        "mean_cooperative_headway_s": 1.8809603053389214,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.0908938349913813,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210045,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 370.4566396522351,
+      "mean_progress_m": 1099.029144066345,
+      "progress_by_agent_m": {
+        "agent_0": 1065.834039944852,
+        "agent_1": 1086.7888222686674,
+        "agent_2": 1110.013474382249,
+        "agent_3": 1133.4802396696111
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 235,
+      "intervention_fraction": 0.09791666666666667,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.62610895931721,
+      "min_ttc_s": 13.556037126020955,
+      "background_peak": 86,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1311,
+        "fallback_following_steps": 1089,
+        "applied_cooperative_steps": 1311,
+        "applied_fallback_steps": 1089,
+        "cooperative_eligible_steps": 1314,
+        "headway_count": 2400,
+        "headway_sum_s": 4693.535016747958,
+        "minimum_headway_s": 1.6275100539144554,
+        "cooperative_headway_count": 1314,
+        "cooperative_headway_sum_s": 2442.9012560221736,
+        "required_gap_deficit_steps": 7,
+        "abs_jerk_sum_m_s3": 5587.363894057112,
+        "max_abs_jerk_m_s3": 44.700294882058955,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 222,
+          "stopping_gap": 28
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9556395903116492,
+        "mean_cooperative_headway_s": 1.8591333759681685,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.328068289190463,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210046,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 394.57760360235756,
+      "mean_progress_m": 1098.9275434330184,
+      "progress_by_agent_m": {
+        "agent_0": 1065.5449647686462,
+        "agent_1": 1086.8765342850716,
+        "agent_2": 1110.0724828123234,
+        "agent_3": 1133.2161918660324
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 138,
+      "intervention_fraction": 0.0575,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 21.989220480993385,
+      "min_ttc_s": 19.776938495131297,
+      "background_peak": 86,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1285,
+        "fallback_following_steps": 1115,
+        "applied_cooperative_steps": 1285,
+        "applied_fallback_steps": 1115,
+        "cooperative_eligible_steps": 1287,
+        "headway_count": 2400,
+        "headway_sum_s": 4856.284672280998,
+        "minimum_headway_s": 1.6093407023109108,
+        "cooperative_headway_count": 1287,
+        "cooperative_headway_sum_s": 2433.029135492538,
+        "required_gap_deficit_steps": 4,
+        "abs_jerk_sum_m_s3": 4212.480881778109,
+        "max_abs_jerk_m_s3": 44.915965646505285,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 137,
+          "stopping_gap": 9
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.0234519467837493,
+        "mean_cooperative_headway_s": 1.8904655287432308,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.7552003674075451,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210047,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 370.2971347021601,
+      "mean_progress_m": 1098.2208771489848,
+      "progress_by_agent_m": {
+        "agent_0": 1064.8304618045,
+        "agent_1": 1086.2718462466714,
+        "agent_2": 1109.3544285346657,
+        "agent_3": 1132.4267720101018
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 231,
+      "intervention_fraction": 0.09625,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.64118043631315,
+      "min_ttc_s": 15.31035955344218,
+      "background_peak": 88,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1294,
+        "fallback_following_steps": 1106,
+        "applied_cooperative_steps": 1294,
+        "applied_fallback_steps": 1106,
+        "cooperative_eligible_steps": 1296,
+        "headway_count": 2400,
+        "headway_sum_s": 4759.653993847018,
+        "minimum_headway_s": 1.6376445174740153,
+        "cooperative_headway_count": 1296,
+        "cooperative_headway_sum_s": 2430.027079741064,
+        "required_gap_deficit_steps": 8,
+        "abs_jerk_sum_m_s3": 4966.644836597074,
+        "max_abs_jerk_m_s3": 47.005683705210544,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 204,
+          "stopping_gap": 35
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.983189164102924,
+        "mean_cooperative_headway_s": 1.875020894861932,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 2.069435348582114,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210048,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 393.606433101816,
+      "mean_progress_m": 1098.5170292329271,
+      "progress_by_agent_m": {
+        "agent_0": 1065.1534402611098,
+        "agent_1": 1086.330363684122,
+        "agent_2": 1109.5507864366125,
+        "agent_3": 1133.0335265498645
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 142,
+      "intervention_fraction": 0.059166666666666666,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.036715254932645,
+      "min_ttc_s": 18.547695879690295,
+      "background_peak": 89,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1308,
+        "fallback_following_steps": 1092,
+        "applied_cooperative_steps": 1308,
+        "applied_fallback_steps": 1092,
+        "cooperative_eligible_steps": 1309,
+        "headway_count": 2400,
+        "headway_sum_s": 4771.762460536271,
+        "minimum_headway_s": 1.6293584825300491,
+        "cooperative_headway_count": 1309,
+        "cooperative_headway_sum_s": 2450.629202455526,
+        "required_gap_deficit_steps": 7,
+        "abs_jerk_sum_m_s3": 4536.478930649511,
+        "max_abs_jerk_m_s3": 36.71170463152578,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 141,
+          "stopping_gap": 12
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 1.9882343585567794,
+        "mean_cooperative_headway_s": 1.872138428155482,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.8901995544372965,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210049,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 400.9778427919317,
+      "mean_progress_m": 1099.5082016451101,
+      "progress_by_agent_m": {
+        "agent_0": 1066.1146228975053,
+        "agent_1": 1087.4449817225704,
+        "agent_2": 1110.6124223061888,
+        "agent_3": 1133.8607796541758
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 117,
+      "intervention_fraction": 0.04875,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.02813059259205,
+      "min_ttc_s": 19.000142170378574,
+      "background_peak": 87,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1305,
+        "fallback_following_steps": 1095,
+        "applied_cooperative_steps": 1305,
+        "applied_fallback_steps": 1095,
+        "cooperative_eligible_steps": 1307,
+        "headway_count": 2400,
+        "headway_sum_s": 4825.700868355689,
+        "minimum_headway_s": 1.6415531269391246,
+        "cooperative_headway_count": 1307,
+        "cooperative_headway_sum_s": 2458.84032214605,
+        "required_gap_deficit_steps": 1,
+        "abs_jerk_sum_m_s3": 4254.4766593441345,
+        "max_abs_jerk_m_s3": 34.349018489247385,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 117,
+          "stopping_gap": 13
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.0107086951482036,
+        "mean_cooperative_headway_s": 1.8812856328584926,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.772698608060056,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    },
+    {
+      "seed": 1210050,
+      "steps": 600,
+      "agent_transitions": 2400,
+      "team_reward": 386.12865620873566,
+      "mean_progress_m": 1093.507819373884,
+      "progress_by_agent_m": {
+        "agent_0": 1062.0807281979858,
+        "agent_1": 1081.4596725012645,
+        "agent_2": 1103.6916860438891,
+        "agent_3": 1126.7991907523972
+      },
+      "collision_vehicles": 0,
+      "collision_ids": [],
+      "interventions": 152,
+      "intervention_fraction": 0.06333333333333334,
+      "overspeed_steps": 0,
+      "peak_speed_m_s": 22.47557255513967,
+      "min_ttc_s": 11.803246605914689,
+      "background_peak": 88,
+      "end_causes": {
+        "agent_0": "time_limit",
+        "agent_1": "time_limit",
+        "agent_2": "time_limit",
+        "agent_3": "time_limit"
+      },
+      "nominal_end": true,
+      "driving": {
+        "lane_change_requested": 0,
+        "lane_change_applied": 0,
+        "lane_change_rejected": 0,
+        "pass_completed": 0,
+        "cooperative_steps": 1291,
+        "fallback_following_steps": 1109,
+        "applied_cooperative_steps": 1291,
+        "applied_fallback_steps": 1109,
+        "cooperative_eligible_steps": 1293,
+        "headway_count": 2400,
+        "headway_sum_s": 5038.671716379783,
+        "minimum_headway_s": 1.6490183395852303,
+        "cooperative_headway_count": 1293,
+        "cooperative_headway_sum_s": 2551.853261792043,
+        "required_gap_deficit_steps": 0,
+        "abs_jerk_sum_m_s3": 4093.7106036165123,
+        "max_abs_jerk_m_s3": 45.056544674299914,
+        "measured_agent_steps": 2400,
+        "shield_reason_counts": {
+          "sumo_override": 105,
+          "stopping_gap": 50
+        },
+        "lane_changes_by_agent": {
+          "agent_0": 0,
+          "agent_1": 0,
+          "agent_2": 0,
+          "agent_3": 0
+        },
+        "steps_by_agent": {
+          "agent_0": 600,
+          "agent_1": 600,
+          "agent_2": 600,
+          "agent_3": 600
+        },
+        "mean_headway_s": 2.099446548491576,
+        "mean_cooperative_headway_s": 1.9735910764052924,
+        "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+        "mean_abs_jerk_m_s3": 1.7057127515068802,
+        "maximum_lane_changes_per_vehicle_minute": 0.0
+      }
+    }
+  ],
+  "summary": {
+    "episodes": 50,
+    "collision_vehicles": 0,
+    "overspeed_steps": 0,
+    "intervention_fraction": 0.077275,
+    "mean_team_reward": 382.58574057055404,
+    "std_team_reward": 12.477758535221868,
+    "mean_progress_m": 1099.0287664107045,
+    "nominal_episodes": 50,
+    "peak_speed_m_s": 22.834860219433896,
+    "accepted": false,
+    "driving": {
+      "lane_change_requested": 0,
+      "lane_change_applied": 0,
+      "lane_change_rejected": 0,
+      "pass_completed": 0,
+      "cooperative_steps": 64797,
+      "fallback_following_steps": 55203,
+      "applied_cooperative_steps": 64797,
+      "applied_fallback_steps": 55203,
+      "cooperative_eligible_steps": 64899,
+      "headway_count": 120000,
+      "headway_sum_s": 240343.1849992424,
+      "cooperative_headway_count": 64899,
+      "cooperative_headway_sum_s": 122402.56235354919,
+      "required_gap_deficit_steps": 377,
+      "abs_jerk_sum_m_s3": 243130.24726231536,
+      "measured_agent_steps": 120000,
+      "shield_reason_counts": {
+        "sumo_override": 8433,
+        "stopping_gap": 1445
+      },
+      "minimum_headway_s": 1.6009880453070284,
+      "mean_headway_s": 2.002859874993687,
+      "mean_cooperative_headway_s": 1.8860469707322023,
+      "cooperative_headway_measurement_scope": "post-step eligible leader; applied command counts are separate",
+      "mean_abs_jerk_m_s3": 2.026085393852628,
+      "max_abs_jerk_m_s3": 50.56270450353608,
+      "minimum_passes_per_episode": 0,
+      "maximum_lane_changes_per_vehicle_minute": 0.0
+    },
+    "driving_targets_met": false,
+    "basic_driving_accepted": false,
+    "selection_score": [
+      0,
+      0,
+      0,
+      50,
+      382.58574057055404,
+      -0.077275
+    ]
+  }
+}

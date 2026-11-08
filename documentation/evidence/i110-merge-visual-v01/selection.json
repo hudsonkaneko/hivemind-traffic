@@ -1,0 +1,306 @@
+{
+  "schema": "i110_merge_visual_selection_v1",
+  "date": "2026-11-05",
+  "timezone": "America/Los_Angeles",
+  "activity": "Read-only selection from retained results and checksums; no new simulation or learning in this record",
+  "criterion": "Among the three retained, matching 93-field Stage 1 actors, preserve 6/6 validated merge completions then minimize pooled merge interventions; three matched merge scenarios and seeds, not aggregate all-task ranking.",
+  "selected_version": "highway-stage1-v03",
+  "selected_policy": "policies/versions/highway-stage1-v03/policy.pt",
+  "selected_policy_sha256": "a6d59d3acf58fcca9d7fc33406cb61ca3863d1a3dffad6dd316b195a66c7166f",
+  "selected_checkpoint": "outputs/highway-stage1/v03/train-20261103T230506Z-04ba1761/selected-00162-80ce2ebf/best.pt",
+  "selected_checkpoint_sha256": "b20cf417f79fd500e524bf6d92ef668eed142f94cbffcc36fc1c6efa79ed43e6",
+  "candidates": [
+    {
+      "version": "highway-stage1-v02",
+      "policy_path": "policies/versions/highway-stage1-v02/policy.pt",
+      "policy_sha256": "07ef91a2e7591becd235862c9b2ebb0dd5707ef364546ec251f8bf8964e1a6b3",
+      "evaluation_source": "policies/versions/highway-stage1-v02/evaluation.json",
+      "evaluation_sha256": "74dad5f0c15785ff76003a90483ed3da20b5e5e93e2da53cf7986dd7ce462bbb",
+      "manifest_source": "policies/versions/highway-stage1-v02/manifest.json",
+      "manifest_sha256": "d88d7218b8ebf7ff82040c4673386002fb83a540471e9f3c42542609cb107224",
+      "contract_source": "policies/versions/highway-stage1-v02/contract.json",
+      "contract_sha256": "82d9c20bfe26ce1acee02fcc6c1e2f7780891bd98c47c36d32ceb12d1853d51b",
+      "training_runtime": {
+        "python": "3.11.9",
+        "torch": "2.14.0+cpu",
+        "traci": "1.27.1"
+      },
+      "training_source_commit": "38c3b41b1dbc6a5a6d4417e8a5f60a958d193bd9",
+      "summary": {
+        "cases": 3,
+        "successful_merges": 6,
+        "controlled_merge_targets": 6,
+        "overrides": 505,
+        "agent_decisions": 9580,
+        "pooled_override_fraction": 0.05271398747390397,
+        "worst_case_override_fraction": 0.060625,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0
+      },
+      "cases": [
+        {
+          "case_id": "validation-5-lane-merge",
+          "seed": 5210003,
+          "successful_merges": 2,
+          "overrides": 194,
+          "agent_steps": 3200,
+          "intervention_fraction": 0.060625,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 5210007,
+          "successful_merges": 2,
+          "overrides": 140,
+          "agent_steps": 3180,
+          "intervention_fraction": 0.0440251572327044,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        },
+        {
+          "case_id": "validation-4-lane-merge",
+          "seed": 5210011,
+          "successful_merges": 2,
+          "overrides": 171,
+          "agent_steps": 3200,
+          "intervention_fraction": 0.0534375,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      ],
+      "observation_contract": {
+        "schema": "highway_stage1_graph_messages_v2",
+        "reward_version": "highway_stage1_feasible_acceleration_v2",
+        "observation_size": 93,
+        "state_size": 376,
+        "action_size": 2,
+        "normalization": "fixed analytic scaling; no running statistics",
+        "acceleration_m_s2": [
+          -4.5,
+          2.0
+        ],
+        "lane_delta": [
+          -1,
+          0,
+          1
+        ],
+        "information_source": "current exact SUMO state/map plus delivered delayed messages; not camera/LiDAR"
+      }
+    },
+    {
+      "version": "highway-stage1-v03-phase0",
+      "policy_path": "policies/versions/highway-stage1-v03-phase0/policy.pt",
+      "policy_sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8",
+      "evaluation_source": "outputs/highway-stage1/v03/train-20261103T230506Z-04ba1761/validation-phase-0.json",
+      "evaluation_sha256": "f06a005166c157dd928bd4460655deed398e0b4458692a6ec02fabd0f9c947e2",
+      "manifest_source": "policies/versions/highway-stage1-v03-phase0/manifest.json",
+      "manifest_sha256": "6ff9d725270d0f8657648c82140e1cb1ef81c8a255ccb47ac5e9e56e37b8c4f4",
+      "contract_source": "policies/versions/highway-stage1-v03-phase0/contract.json",
+      "contract_sha256": "8fbf5b6990aef032e234e492dd42ae58c06930b1279ab56125311030a7f05204",
+      "training_runtime": {
+        "python": "3.11.9",
+        "torch": "2.14.0+cpu",
+        "traci": "1.27.1"
+      },
+      "training_source_commit": "cf6ae5096ebac9f165e9811ed3916195227f3146",
+      "summary": {
+        "cases": 3,
+        "successful_merges": 6,
+        "controlled_merge_targets": 6,
+        "overrides": 514,
+        "agent_decisions": 9563,
+        "pooled_override_fraction": 0.05374882359092335,
+        "worst_case_override_fraction": 0.06734113183686374,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0
+      },
+      "cases": [
+        {
+          "case_id": "validation-5-lane-merge",
+          "seed": 5210003,
+          "successful_merges": 2,
+          "overrides": 155,
+          "agent_steps": 3200,
+          "intervention_fraction": 0.0484375,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 5210007,
+          "successful_merges": 2,
+          "overrides": 213,
+          "agent_steps": 3163,
+          "intervention_fraction": 0.06734113183686374,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        },
+        {
+          "case_id": "validation-4-lane-merge",
+          "seed": 5210011,
+          "successful_merges": 2,
+          "overrides": 146,
+          "agent_steps": 3200,
+          "intervention_fraction": 0.045625,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      ],
+      "observation_contract": {
+        "schema": "highway_stage1_graph_messages_v2",
+        "reward_version": "highway_stage1_feasible_acceleration_v2",
+        "observation_size": 93,
+        "state_size": 376,
+        "action_size": 2,
+        "normalization": "fixed analytic scaling; no running statistics",
+        "acceleration_m_s2": [
+          -4.5,
+          2.0
+        ],
+        "lane_delta": [
+          -1,
+          0,
+          1
+        ],
+        "information_source": "current exact SUMO state/map plus delivered delayed messages; not camera/LiDAR"
+      },
+      "training_provenance_source": "outputs/highway-stage1/v03/train-20261103T230506Z-04ba1761/provenance.json",
+      "training_provenance_sha256": "255a6109a0811d5e1c3813d42a78610fd04e870d5bc3b7ab4838ee011be6a754"
+    },
+    {
+      "version": "highway-stage1-v03",
+      "policy_path": "policies/versions/highway-stage1-v03/policy.pt",
+      "policy_sha256": "a6d59d3acf58fcca9d7fc33406cb61ca3863d1a3dffad6dd316b195a66c7166f",
+      "evaluation_source": "policies/versions/highway-stage1-v03/evaluation.json",
+      "evaluation_sha256": "d0c6454edbb16bc4f3db18f8f3d8f51351994d7df8b06ce3be7c9b01fc92befc",
+      "manifest_source": "policies/versions/highway-stage1-v03/manifest.json",
+      "manifest_sha256": "18f9a0c405e9be9f55c52f582e96f5b319eb180793a2d89f08d61b0da1741200",
+      "contract_source": "policies/versions/highway-stage1-v03/contract.json",
+      "contract_sha256": "109cdd6dc651cfe2455ef13d608b791a8c05055d240e7e65ef8b7e52575ed248",
+      "training_runtime": {
+        "python": "3.11.9",
+        "torch": "2.14.0+cpu",
+        "traci": "1.27.1"
+      },
+      "training_source_commit": "cf6ae5096ebac9f165e9811ed3916195227f3146",
+      "summary": {
+        "cases": 3,
+        "successful_merges": 6,
+        "controlled_merge_targets": 6,
+        "overrides": 318,
+        "agent_decisions": 9580,
+        "pooled_override_fraction": 0.033194154488517744,
+        "worst_case_override_fraction": 0.0390625,
+        "collisions": 0,
+        "teleports": 0,
+        "overspeed_steps": 0
+      },
+      "cases": [
+        {
+          "case_id": "validation-5-lane-merge",
+          "seed": 5210003,
+          "successful_merges": 2,
+          "overrides": 125,
+          "agent_steps": 3200,
+          "intervention_fraction": 0.0390625,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        },
+        {
+          "case_id": "validation-2-lane-merge",
+          "seed": 5210007,
+          "successful_merges": 2,
+          "overrides": 97,
+          "agent_steps": 3180,
+          "intervention_fraction": 0.03050314465408805,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        },
+        {
+          "case_id": "validation-4-lane-merge",
+          "seed": 5210011,
+          "successful_merges": 2,
+          "overrides": 96,
+          "agent_steps": 3200,
+          "intervention_fraction": 0.03,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      ],
+      "observation_contract": {
+        "schema": "highway_stage1_graph_messages_v2",
+        "reward_version": "highway_stage1_feasible_acceleration_v2",
+        "observation_size": 93,
+        "state_size": 376,
+        "action_size": 2,
+        "normalization": "fixed analytic scaling; no running statistics",
+        "acceleration_m_s2": [
+          -4.5,
+          2.0
+        ],
+        "lane_delta": [
+          -1,
+          0,
+          1
+        ],
+        "information_source": "current exact SUMO state/map plus delivered delayed messages; not camera/LiDAR"
+      }
+    }
+  ],
+  "frozen_visual_fixture": {
+    "network": "outputs/i110-merge/v01/network/network.net.xml",
+    "network_sha256": "a216efd0a451845c19147437284fe0014d503c8015aca1d29bb4b4b8e1ac8623",
+    "case_id": "i110-merge",
+    "seed": 6400019,
+    "task": "merge",
+    "density": "medium",
+    "through_lanes": 4,
+    "horizon_steps": 800,
+    "step_seconds": 0.1,
+    "controlled_agents": [
+      "agent_0",
+      "agent_1",
+      "agent_2",
+      "agent_3"
+    ],
+    "mainline_agents": [
+      "agent_0",
+      "agent_1"
+    ],
+    "ramp_agents": [
+      "agent_2",
+      "agent_3"
+    ],
+    "environment": "environments.highway_stage1_env.HighwayStage1Env",
+    "control_target_version": "v2",
+    "communication": "local",
+    "packet_loss": 0.0,
+    "speed_ceiling_m_s": 26.8224,
+    "actor_mode": "deterministic inference; no optimizer; original v2 observation meanings",
+    "seed_basis": "Pre-existing Stage 1 preflight seed 6400019 selects training-bank index19, i110-merge; fixed before visual outcome and not rerolled.",
+    "existing_teacher_fixture_report": "outputs/highway-stage1/v03/preflight-20261103T210301Z-7c9a12cd/teacher-6400019.json",
+    "existing_teacher_fixture_sha256": "3c2aca181c75b8fb8dadb8ec290fd411916721148dc6a2c714f465b722a9b644"
+  },
+  "limitations": [
+    "Selected for merge-specific validation, not universally best policy: phase0 has lower overall population interventions.",
+    "Final Stage1v03 remains unaccepted overall: five of twelve original validation cases fail interventions; no held-out qualification.",
+    "Phase1 reports have slightly better merge rates, but no corresponding retained selected checkpoint or actor export was present in the v03 run; cannot replay missing weights.",
+    "Populationv03/v04 directories contain preflight setups, not newer trained actors.",
+    "Matching width is insufficient: v3 merge-field meanings are an explicit transfer treatment and are not selected here.",
+    "I-110 network is provisional engineering geometry; saved merge validation is on generated roads, so this visual I-110 run is new validation evidence.",
+    "SUMO owns motion and lane centering; actor outputs acceleration and lane intent, not physical steering or camera/LiDAR commands.",
+    "No visual result, success claim or outcome-based seed selection is recorded by this read-only selection step."
+  ]
+}

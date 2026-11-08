@@ -1,0 +1,253 @@
+{
+  "acceleration-lifetime-01": {
+    "source": {
+      "path": "outputs/i110-merge-blocking/v01/acceleration-lifetime-01/summary.json",
+      "sha256": "7109c512c31459c69bf5c7e1af39256228f47ffaf8ceb1382e94fd0225dd5977"
+    },
+    "wall_seconds": 46.328999999997905,
+    "policy_unchanged": true,
+    "variants": [
+      {
+        "duration_s": 0.1,
+        "first_ramp_exit_s": null,
+        "stopped_samples": 752,
+        "error": null,
+        "network_sha256": null,
+        "demand_sha256": null,
+        "native_emergencies": null,
+        "report": {
+          "overrides": 1007,
+          "agent_steps": 3298,
+          "intervention_fraction": 0.30533656761673744,
+          "successful_merges": 0,
+          "completed_trips": 30,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      },
+      {
+        "duration_s": 1.0,
+        "first_ramp_exit_s": null,
+        "stopped_samples": 752,
+        "error": null,
+        "network_sha256": null,
+        "demand_sha256": null,
+        "native_emergencies": null,
+        "report": {
+          "overrides": 1007,
+          "agent_steps": 3298,
+          "intervention_fraction": 0.30533656761673744,
+          "successful_merges": 0,
+          "completed_trips": 30,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      },
+      {
+        "duration_s": 5.0,
+        "first_ramp_exit_s": null,
+        "stopped_samples": 752,
+        "error": null,
+        "network_sha256": null,
+        "demand_sha256": null,
+        "native_emergencies": null,
+        "report": {
+          "overrides": 1007,
+          "agent_steps": 3298,
+          "intervention_fraction": 0.30533656761673744,
+          "successful_merges": 0,
+          "completed_trips": 30,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      }
+    ]
+  },
+  "native-handoff-01": {
+    "source": {
+      "path": "outputs/i110-merge-blocking/v01/native-handoff-01/summary.json",
+      "sha256": "1e4d3b52094d685ec1b0c08926e52333067ea73dc36ce75bd34e7dd8dfd68589"
+    },
+    "wall_seconds": 33.546999999991385,
+    "policy_unchanged": true,
+    "variants": [
+      {
+        "duration_s": 0.1,
+        "first_ramp_exit_s": null,
+        "stopped_samples": 752,
+        "error": null,
+        "network_sha256": null,
+        "demand_sha256": null,
+        "native_emergencies": null,
+        "report": {
+          "overrides": 1007,
+          "agent_steps": 3298,
+          "intervention_fraction": 0.30533656761673744,
+          "successful_merges": 0,
+          "completed_trips": 30,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      },
+      {
+        "duration_s": null,
+        "first_ramp_exit_s": null,
+        "stopped_samples": 753,
+        "error": null,
+        "network_sha256": null,
+        "demand_sha256": null,
+        "native_emergencies": null,
+        "report": {
+          "overrides": 1029,
+          "agent_steps": 3298,
+          "intervention_fraction": 0.3120072771376592,
+          "successful_merges": 0,
+          "completed_trips": 30,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      }
+    ]
+  },
+  "network-ab-01": {
+    "source": {
+      "path": "outputs/i110-merge-blocking/v01/network-ab-01/summary.json",
+      "sha256": "1eb4ea2b325793e65945f73bee72376534966601bf7e179ba8b69fda9a88f8b6"
+    },
+    "wall_seconds": 29.64100000000326,
+    "policy_unchanged": true,
+    "variants": [
+      {
+        "duration_s": 0.1,
+        "first_ramp_exit_s": null,
+        "stopped_samples": 752,
+        "error": null,
+        "network_sha256": "a216efd0a451845c19147437284fe0014d503c8015aca1d29bb4b4b8e1ac8623",
+        "demand_sha256": "fbde2a92e5a8b5ea73aea7c8fc2cae02d4fbeec4be281c2ae88f0be5cf4897ce",
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        },
+        "report": {
+          "overrides": 1007,
+          "agent_steps": 3298,
+          "intervention_fraction": 0.30533656761673744,
+          "successful_merges": 0,
+          "completed_trips": 30,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      },
+      {
+        "duration_s": 0.1,
+        "first_ramp_exit_s": 4.2,
+        "stopped_samples": 0,
+        "error": null,
+        "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+        "demand_sha256": "fbde2a92e5a8b5ea73aea7c8fc2cae02d4fbeec4be281c2ae88f0be5cf4897ce",
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        },
+        "report": {
+          "overrides": 244,
+          "agent_steps": 2864,
+          "intervention_fraction": 0.08519553072625698,
+          "successful_merges": 1,
+          "completed_trips": 32,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      }
+    ]
+  },
+  "network-ab-02": {
+    "source": {
+      "path": "outputs/i110-merge-blocking/v01/network-ab-02/summary.json",
+      "sha256": "732da3af185854c1bdef6f26ff4450ab628c2637ea9782eb25a77071346b447a"
+    },
+    "wall_seconds": 31.42200000002049,
+    "policy_unchanged": true,
+    "variants": [
+      {
+        "duration_s": 0.1,
+        "first_ramp_exit_s": null,
+        "stopped_samples": 752,
+        "error": null,
+        "network_sha256": "a216efd0a451845c19147437284fe0014d503c8015aca1d29bb4b4b8e1ac8623",
+        "demand_sha256": "fbde2a92e5a8b5ea73aea7c8fc2cae02d4fbeec4be281c2ae88f0be5cf4897ce",
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        },
+        "report": {
+          "overrides": 1007,
+          "agent_steps": 3298,
+          "intervention_fraction": 0.30533656761673744,
+          "successful_merges": 0,
+          "completed_trips": 30,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      },
+      {
+        "duration_s": 0.1,
+        "first_ramp_exit_s": 4.2,
+        "stopped_samples": 0,
+        "error": null,
+        "network_sha256": "ae829282ad98cfaeeba806fba30e44536361ccabf4d0861708c5638fff512836",
+        "demand_sha256": "fbde2a92e5a8b5ea73aea7c8fc2cae02d4fbeec4be281c2ae88f0be5cf4897ce",
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        },
+        "report": {
+          "overrides": 244,
+          "agent_steps": 2864,
+          "intervention_fraction": 0.08519553072625698,
+          "successful_merges": 1,
+          "completed_trips": 32,
+          "collisions": 0,
+          "teleports": 0,
+          "overspeed_steps": 0
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,4666 @@
+{
+  "run_id": "20261031T020708Z-69f78dab",
+  "execution_passed": true,
+  "quality_accepted": false,
+  "training": false,
+  "new_simulator_runs": false,
+  "source_capture_run": "outputs/semantic-lidar-fusion/v01/20261030T223941Z-65f18896",
+  "config": {
+    "version": "pretrained-segmentation-preview-v01",
+    "training": false,
+    "new_simulator_runs": false,
+    "source_capture_run": "outputs/semantic-lidar-fusion/v01/20261030T223941Z-65f18896",
+    "cases": [
+      "static-101",
+      "moving-2mps-201",
+      "moving-10mps-301"
+    ],
+    "frames_per_case": 8,
+    "model": {
+      "id": "nvidia/segformer-b0-finetuned-cityscapes-1024-1024",
+      "revision": "21b3847fae21ddee674abd31129307b6a1235bd9",
+      "weights_sha256": "027ed78d8ff9c535df5a66361c92b9673cca3cb923cbeb8c5802385b6b93194c",
+      "weights_bytes": 14957601,
+      "native_classes": 19,
+      "trained_head_replaced": false,
+      "source": "https://huggingface.co/nvidia/segformer-b0-finetuned-cityscapes-1024-1024",
+      "license_reference": "https://github.com/NVlabs/SegFormer/blob/master/LICENSE",
+      "use": "noncommercial research and evaluation; weights remain local"
+    },
+    "inference": {
+      "device": "cpu",
+      "threads": 2,
+      "seed": 20261030,
+      "batch_size": 1,
+      "processor_size": {
+        "height": 512,
+        "width": 512
+      },
+      "resize_policy": "Pinned pretrained processor default; square resize stretches 640x360 RGB",
+      "output_policy": "Bilinear resize logits to original image dimensions with align_corners=false, then argmax"
+    },
+    "comparison": {
+      "road_ids": [
+        0
+      ],
+      "person_ids": [
+        11
+      ],
+      "vehicle_ids": [
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ],
+      "remaining_ids": "collapsed other/background, including rider",
+      "unsupported_ground_truth_ids": [
+        2,
+        5
+      ],
+      "unsupported_display": "amber hatch; excluded from shared-class scores and counted explicitly",
+      "quality_gate": "No accuracy acceptance threshold: exploratory frozen-model domain-transfer preview"
+    }
+  },
+  "git_commit_at_run": "9641d92f4ba61234b44ca4924bce3bbac7ddcc55",
+  "source_hashes": {
+    "experiments/preview_pretrained_segmentation.py": "f6dc33cfc4386ebe0b40293c687fde1d65e1df7c74d9d9458a32ad4af2591da5",
+    "scripts/fetch_segmentation_preview_model.py": "dcdf5365ffc22f6c16e4f0219051b468671b3e4e0a5ee406a533417d3a7b156e",
+    "traffic/segmentation_preview.py": "6eedfcacf68a80b62c1b742413ef8599b6b9f54118f390be6b2214a396095b9a",
+    "environments/requirements-perception-preview.txt": "fd01e58d468b60a10775f9961a220fb728c9c7211149709dd7583bc64a5c3b79",
+    "configs/perception/pretrained_segmentation_preview_v01.json": "3ec1b5f5b94ba178ef38710009079cfb4bab0d66ad9b2d3dd65a4a8c326edb15"
+  },
+  "input_hashes": {
+    "static-101/0000-rgb.png": "c49c3c38bf1ebb6ad7e0a09d57db0e2bf6062532d6359f1d9fe7091e72425b27",
+    "static-101/0000-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0001-rgb.png": "be103e2717c423617e87e8c779884e522396534c4c375246416acd5ebff77b95",
+    "static-101/0001-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0002-rgb.png": "e6a3084ee20e1c5bf8d66ccb3662642f4f656f39f070c6507423d7a3bbb28463",
+    "static-101/0002-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0003-rgb.png": "1fa0bf3c3c10d241932ef43b701732406115ef25cd29723227a32fafd4c2a1aa",
+    "static-101/0003-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0004-rgb.png": "14e68a3cbd7e70859716fb0dc55a84070cc43852dce2c3313bb803ceefd27e82",
+    "static-101/0004-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0005-rgb.png": "2f9a40ec0eaf3660b62a77d79c8dd0bc3eb5e54b8e11a33f91b6bc71be934635",
+    "static-101/0005-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0006-rgb.png": "a99cf94a7060353cae8398eb6d52af315fdd8c0ebdf0e82e8be9e8051d10cde8",
+    "static-101/0006-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "static-101/0007-rgb.png": "95edd029ced451d47bc31997614a21d4d77bdf31117c2706c37552fccaf4832d",
+    "static-101/0007-semantic.npy": "60c2a79c03949f5a76fcebfc44bf46243f86f4405b5ecdfd35e717efe634331a",
+    "moving-2mps-201/0000-rgb.png": "8a019a8aa1866da7eb6bd0e2be26d429528ba7cb508ee8d388ca764be5b8929d",
+    "moving-2mps-201/0000-semantic.npy": "4a6bd964639faf24998614c5ff8069717bf630e2397f7540ab0076cf783f343b",
+    "moving-2mps-201/0001-rgb.png": "2046042238ca8dfee935f4da1d1ad833ef913c041e65ae45cdee96cad2227372",
+    "moving-2mps-201/0001-semantic.npy": "43a32c4b02d497c6bb05329d694daede9505f3fc24cb63db372be1eb7bad1643",
+    "moving-2mps-201/0002-rgb.png": "22902ef046364b224287e29326f56d6712b0f5ff0cefebc354a665041cc462fa",
+    "moving-2mps-201/0002-semantic.npy": "e679e428b003416ecbe4ff94c8dba13931073c92e23d626c60ce2c03d49934fb",
+    "moving-2mps-201/0003-rgb.png": "40cf32352e6c309840c447be6d13fc2643247875a4a481db85c43eb7a9c7e16f",
+    "moving-2mps-201/0003-semantic.npy": "8f9f4eb89f38348de97136400de046b1d0829fe7e9b69a7c2f31552ddb815da2",
+    "moving-2mps-201/0004-rgb.png": "0727208570ed78e2d8a011ea35e8455eddaff25b4f752b4856ead9d583b21126",
+    "moving-2mps-201/0004-semantic.npy": "938afdb8582529387895bdf7cee788b8a217178227de8e175ed4c823479b39fd",
+    "moving-2mps-201/0005-rgb.png": "2505a8f9f0d008c3d0a3c6a45e2809de397538898929940e7f1ec0bc581e638b",
+    "moving-2mps-201/0005-semantic.npy": "9f3f94f0dd6a96dbd4add5883f77c3ff7498cb5fddd9187b5c58e5bb9c69b176",
+    "moving-2mps-201/0006-rgb.png": "fc583ad4173942542de1c5e4ba66e51dd21d6054b41df97850ff4c721dc88997",
+    "moving-2mps-201/0006-semantic.npy": "878de098bf90ac17ed9f80a079814f3eef340ef90dad606e978aa63a9555352c",
+    "moving-2mps-201/0007-rgb.png": "91beb6b58a8eed69a9a01eb9c0852e7e85af51555bbcc69a6d70476ab61ee3aa",
+    "moving-2mps-201/0007-semantic.npy": "9b716fed0dcd93ff07c8a5647a6b45a5552dd58e81d21ad2fb5dbb6e01ded335",
+    "moving-10mps-301/0000-rgb.png": "f3831ceac92107fe39ce4a987f430733f91dd162f07d2385c394c9aee1cff757",
+    "moving-10mps-301/0000-semantic.npy": "a27d6e1a57f6eb0efa7d25734ffcb3817efb0a95a254bcef4cffcb73d0d4f882",
+    "moving-10mps-301/0001-rgb.png": "b7f65122042a47fc9c3a511f1904b846eee29e5b3d965b05b1f0bc14d0fdde96",
+    "moving-10mps-301/0001-semantic.npy": "9657af7fa0806841e4256d7870a0cce9823233385437e87cf1db315acbb61e1b",
+    "moving-10mps-301/0002-rgb.png": "04754b130a35b5563c30fbf03aca9518edd1860c7bfaf0ec8323e020d68d0f29",
+    "moving-10mps-301/0002-semantic.npy": "0c79e57ffe1ad9b5cd284666ef29eea79d39b92c1b35ad8aecb0d86024d8b659",
+    "moving-10mps-301/0003-rgb.png": "cedc24dcebfe6d2e4af770bd8ead28dac47cc3111fe6141a815bb800343f1cf7",
+    "moving-10mps-301/0003-semantic.npy": "43a32c4b02d497c6bb05329d694daede9505f3fc24cb63db372be1eb7bad1643",
+    "moving-10mps-301/0004-rgb.png": "d3eb1094989e1f1cbf2ae3e683eab3192129c8d70b7a6d4044bc7d6ac0bef387",
+    "moving-10mps-301/0004-semantic.npy": "878de098bf90ac17ed9f80a079814f3eef340ef90dad606e978aa63a9555352c",
+    "moving-10mps-301/0005-rgb.png": "e8d8229c8918ef795780442c1b2c99ca2c8e040c447ffc68ce638f1d7b37a5da",
+    "moving-10mps-301/0005-semantic.npy": "e23b666bb545e15376f5ae55618c436a1af269611780e212f5863f6b4c7b293b",
+    "moving-10mps-301/0006-rgb.png": "ebf8bf9f5b55a93ffc54051d80244d7716e378340ab82b8acedf9312c544effc",
+    "moving-10mps-301/0006-semantic.npy": "f0d4e4d596883f88ae7ee26fcdf21ebcddd2bb2231f0f64cb5d8a38055e28984",
+    "moving-10mps-301/0007-rgb.png": "673f82376afcb158a090755f1e8ca496d2fe039a92e9de5de6a8ff5f158219b8",
+    "moving-10mps-301/0007-semantic.npy": "e09db8b7afbd2983c9d7e82b8ca5272eb75946bdc9324166c425027c1bc0a2d8"
+  },
+  "model": {
+    "schema_version": 1,
+    "model_id": "nvidia/segformer-b0-finetuned-cityscapes-1024-1024",
+    "revision": "21b3847fae21ddee674abd31129307b6a1235bd9",
+    "downloaded_utc": "2026-10-31T02:06:29.573477+00:00",
+    "files": {
+      "config.json": {
+        "url": "https://huggingface.co/nvidia/segformer-b0-finetuned-cityscapes-1024-1024/resolve/21b3847fae21ddee674abd31129307b6a1235bd9/config.json",
+        "sha256": "649ba4afbaa11ee730b14ad5e31bd50f2e2d5be661a291e31a91512510dba8d9",
+        "bytes": 1680
+      },
+      "preprocessor_config.json": {
+        "url": "https://huggingface.co/nvidia/segformer-b0-finetuned-cityscapes-1024-1024/resolve/21b3847fae21ddee674abd31129307b6a1235bd9/preprocessor_config.json",
+        "sha256": "d96ab2cb112985c19d5ea32f1d1f2369104fc78b1379f5ce26e33ca8646202a7",
+        "bytes": 272
+      },
+      "pytorch_model.bin": {
+        "url": "https://huggingface.co/nvidia/segformer-b0-finetuned-cityscapes-1024-1024/resolve/21b3847fae21ddee674abd31129307b6a1235bd9/pytorch_model.bin",
+        "sha256": "027ed78d8ff9c535df5a66361c92b9673cca3cb923cbeb8c5802385b6b93194c",
+        "bytes": 14957601
+      }
+    },
+    "training": false,
+    "new_simulator_runs": false,
+    "weights_executed": false,
+    "source_model_card": "https://huggingface.co/nvidia/segformer-b0-finetuned-cityscapes-1024-1024/blob/21b3847fae21ddee674abd31129307b6a1235bd9/README.md",
+    "license_name": "NVIDIA Source Code License for SegFormer; noncommercial research/evaluation",
+    "license_url": "https://github.com/NVlabs/SegFormer/blob/master/LICENSE"
+  },
+  "runtime": {
+    "torch": "2.9.1+cpu",
+    "transformers": "4.57.1",
+    "Pillow": "11.3.0",
+    "numpy": "2.2.6",
+    "device": "cpu",
+    "threads": 2,
+    "interop_threads": 1
+  },
+  "processor": {
+    "_processor_class": null,
+    "do_resize": true,
+    "size": {
+      "height": 512,
+      "width": 512
+    },
+    "resample": 2,
+    "do_rescale": true,
+    "rescale_factor": 0.00392156862745098,
+    "do_normalize": true,
+    "image_mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "image_std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "do_reduce_labels": false,
+    "image_processor_type": "SegformerImageProcessor"
+  },
+  "weight_loading": {
+    "weights_only": true,
+    "strict": true,
+    "missing": [],
+    "unexpected": [],
+    "native_classes": 19
+  },
+  "wall_seconds": 11.988707199925557,
+  "latency_seconds": {
+    "first": 0.25161530007608235,
+    "median": 0.22028369992040098,
+    "p95": 0.2459955400088802,
+    "scope": "CPU preprocessing + forward + logits resize/argmax, excludes rendering and file IO; first includes warmup"
+  },
+  "aggregate": {
+    "total_pixels": 5529600,
+    "evaluated_pixels": 5477014,
+    "unsupported_gt_pixels": 52586,
+    "unsupported_gt_by_class": {
+      "lane": 9362,
+      "obstacle": 43224
+    },
+    "evaluated_fraction": 0.990490089699074,
+    "correct_pixels": 4759221,
+    "accuracy": 0.8689444649949772,
+    "mean_iou_present_union": 0.7152041811368287,
+    "mean_iou_class_count": 3,
+    "confusion_matrix": [
+      [
+        1676350,
+        696122,
+        0,
+        10367,
+        0,
+        0
+      ],
+      [
+        2291,
+        3049719,
+        0,
+        8808,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        192,
+        13,
+        0,
+        33152,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    ],
+    "confusion_order": [
+      "background",
+      "drivable",
+      "lane",
+      "vehicle",
+      "pedestrian",
+      "obstacle"
+    ],
+    "per_class": {
+      "background": {
+        "supported": true,
+        "gt_pixels": 2382839,
+        "predicted_pixels": 1678833,
+        "true_positive": 1676350,
+        "false_positive": 2483,
+        "false_negative": 706489,
+        "iou": 0.7027772351070422,
+        "recall": 0.7035095531003144,
+        "precision": 0.9985209964302584
+      },
+      "drivable": {
+        "supported": true,
+        "gt_pixels": 3060818,
+        "predicted_pixels": 3745854,
+        "true_positive": 3049719,
+        "false_positive": 696135,
+        "false_negative": 11099,
+        "iou": 0.811753301145902,
+        "recall": 0.9963738451616528,
+        "precision": 0.8141585336748309
+      },
+      "lane": {
+        "supported": false,
+        "gt_pixels": 9362,
+        "predicted_pixels": null,
+        "true_positive": null,
+        "false_positive": null,
+        "false_negative": null,
+        "iou": null,
+        "recall": null,
+        "precision": null
+      },
+      "vehicle": {
+        "supported": true,
+        "gt_pixels": 33357,
+        "predicted_pixels": 52327,
+        "true_positive": 33152,
+        "false_positive": 19175,
+        "false_negative": 205,
+        "iou": 0.631082007157542,
+        "recall": 0.9938543634019846,
+        "precision": 0.6335543791923863
+      },
+      "pedestrian": {
+        "supported": true,
+        "gt_pixels": 0,
+        "predicted_pixels": 0,
+        "true_positive": 0,
+        "false_positive": 0,
+        "false_negative": 0,
+        "iou": null,
+        "recall": null,
+        "precision": null
+      },
+      "obstacle": {
+        "supported": false,
+        "gt_pixels": 43224,
+        "predicted_pixels": null,
+        "true_positive": null,
+        "false_positive": null,
+        "false_negative": null,
+        "iou": null,
+        "recall": null,
+        "precision": null
+      }
+    },
+    "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+    "frames": 24,
+    "prediction_pixels_all_image": {
+      "background": 1714870,
+      "drivable": 3759425,
+      "vehicle": 55305,
+      "pedestrian": 0
+    }
+  },
+  "by_case": {
+    "static-101": {
+      "total_pixels": 1843200,
+      "evaluated_pixels": 1825672,
+      "unsupported_gt_pixels": 17528,
+      "unsupported_gt_by_class": {
+        "lane": 3120,
+        "obstacle": 14408
+      },
+      "evaluated_fraction": 0.9904904513888889,
+      "correct_pixels": 1593547,
+      "accuracy": 0.8728550363920792,
+      "mean_iou_present_union": 0.7177354008785374,
+      "mean_iou_class_count": 3,
+      "confusion_matrix": [
+        [
+          565639,
+          225240,
+          0,
+          3545,
+          0,
+          0
+        ],
+        [
+          343,
+          1017004,
+          0,
+          2997,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          10904,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "confusion_order": [
+        "background",
+        "drivable",
+        "lane",
+        "vehicle",
+        "pedestrian",
+        "obstacle"
+      ],
+      "per_class": {
+        "background": {
+          "supported": true,
+          "gt_pixels": 794424,
+          "predicted_pixels": 565982,
+          "true_positive": 565639,
+          "false_positive": 343,
+          "false_negative": 228785,
+          "iou": 0.7117041850001321,
+          "recall": 0.7120114699455202,
+          "precision": 0.9993939736599398
+        },
+        "drivable": {
+          "supported": true,
+          "gt_pixels": 1020344,
+          "predicted_pixels": 1242244,
+          "true_positive": 1017004,
+          "false_positive": 225240,
+          "false_negative": 3340,
+          "iou": 0.8164876877031175,
+          "recall": 0.9967265941682413,
+          "precision": 0.8186829640553708
+        },
+        "lane": {
+          "supported": false,
+          "gt_pixels": 3120,
+          "predicted_pixels": null,
+          "true_positive": null,
+          "false_positive": null,
+          "false_negative": null,
+          "iou": null,
+          "recall": null,
+          "precision": null
+        },
+        "vehicle": {
+          "supported": true,
+          "gt_pixels": 10904,
+          "predicted_pixels": 17446,
+          "true_positive": 10904,
+          "false_positive": 6542,
+          "false_negative": 0,
+          "iou": 0.6250143299323627,
+          "recall": 1.0,
+          "precision": 0.6250143299323627
+        },
+        "pedestrian": {
+          "supported": true,
+          "gt_pixels": 0,
+          "predicted_pixels": 0,
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "iou": null,
+          "recall": null,
+          "precision": null
+        },
+        "obstacle": {
+          "supported": false,
+          "gt_pixels": 14408,
+          "predicted_pixels": null,
+          "true_positive": null,
+          "false_positive": null,
+          "false_negative": null,
+          "iou": null,
+          "recall": null,
+          "precision": null
+        }
+      },
+      "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+      "frames": 8,
+      "prediction_pixels_all_image": {
+        "background": 578776,
+        "drivable": 1246792,
+        "vehicle": 17632,
+        "pedestrian": 0
+      }
+    },
+    "moving-2mps-201": {
+      "total_pixels": 1843200,
+      "evaluated_pixels": 1825670,
+      "unsupported_gt_pixels": 17530,
+      "unsupported_gt_by_class": {
+        "lane": 3122,
+        "obstacle": 14408
+      },
+      "evaluated_fraction": 0.9904893663194444,
+      "correct_pixels": 1579365,
+      "accuracy": 0.8650878855433896,
+      "mean_iou_present_union": 0.7024682105659603,
+      "mean_iou_class_count": 3,
+      "confusion_matrix": [
+        [
+          551529,
+          238906,
+          0,
+          3996,
+          0,
+          0
+        ],
+        [
+          347,
+          1016995,
+          0,
+          3052,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          3,
+          1,
+          0,
+          10841,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "confusion_order": [
+        "background",
+        "drivable",
+        "lane",
+        "vehicle",
+        "pedestrian",
+        "obstacle"
+      ],
+      "per_class": {
+        "background": {
+          "supported": true,
+          "gt_pixels": 794431,
+          "predicted_pixels": 551879,
+          "true_positive": 551529,
+          "false_positive": 350,
+          "false_negative": 242902,
+          "iou": 0.6939383301815217,
+          "recall": 0.6942440564378782,
+          "precision": 0.9993658030111673
+        },
+        "drivable": {
+          "supported": true,
+          "gt_pixels": 1020394,
+          "predicted_pixels": 1255902,
+          "true_positive": 1016995,
+          "false_positive": 238907,
+          "false_negative": 3399,
+          "iou": 0.8075869073398655,
+          "recall": 0.9966689337648007,
+          "precision": 0.8097725777966752
+        },
+        "lane": {
+          "supported": false,
+          "gt_pixels": 3122,
+          "predicted_pixels": null,
+          "true_positive": null,
+          "false_positive": null,
+          "false_negative": null,
+          "iou": null,
+          "recall": null,
+          "precision": null
+        },
+        "vehicle": {
+          "supported": true,
+          "gt_pixels": 10845,
+          "predicted_pixels": 17889,
+          "true_positive": 10841,
+          "false_positive": 7048,
+          "false_negative": 4,
+          "iou": 0.6058793941764936,
+          "recall": 0.9996311664361457,
+          "precision": 0.6060148694728604
+        },
+        "pedestrian": {
+          "supported": true,
+          "gt_pixels": 0,
+          "predicted_pixels": 0,
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "iou": null,
+          "recall": null,
+          "precision": null
+        },
+        "obstacle": {
+          "supported": false,
+          "gt_pixels": 14408,
+          "predicted_pixels": null,
+          "true_positive": null,
+          "false_positive": null,
+          "false_negative": null,
+          "iou": null,
+          "recall": null,
+          "precision": null
+        }
+      },
+      "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+      "frames": 8,
+      "prediction_pixels_all_image": {
+        "background": 564236,
+        "drivable": 1260471,
+        "vehicle": 18493,
+        "pedestrian": 0
+      }
+    },
+    "moving-10mps-301": {
+      "total_pixels": 1843200,
+      "evaluated_pixels": 1825672,
+      "unsupported_gt_pixels": 17528,
+      "unsupported_gt_by_class": {
+        "lane": 3120,
+        "obstacle": 14408
+      },
+      "evaluated_fraction": 0.9904904513888889,
+      "correct_pixels": 1586309,
+      "accuracy": 0.8688904688246301,
+      "mean_iou_present_union": 0.7257970140135649,
+      "mean_iou_class_count": 3,
+      "confusion_matrix": [
+        [
+          559182,
+          231976,
+          0,
+          2826,
+          0,
+          0
+        ],
+        [
+          1601,
+          1015720,
+          0,
+          2759,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          189,
+          12,
+          0,
+          11407,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      ],
+      "confusion_order": [
+        "background",
+        "drivable",
+        "lane",
+        "vehicle",
+        "pedestrian",
+        "obstacle"
+      ],
+      "per_class": {
+        "background": {
+          "supported": true,
+          "gt_pixels": 793984,
+          "predicted_pixels": 560972,
+          "true_positive": 559182,
+          "false_positive": 1790,
+          "false_negative": 234802,
+          "iou": 0.7026894570569031,
+          "recall": 0.7042736377559246,
+          "precision": 0.9968091099020985
+        },
+        "drivable": {
+          "supported": true,
+          "gt_pixels": 1020080,
+          "predicted_pixels": 1247708,
+          "true_positive": 1015720,
+          "false_positive": 231988,
+          "false_negative": 4360,
+          "iou": 0.8112338946446999,
+          "recall": 0.9957258254254568,
+          "precision": 0.8140686763249093
+        },
+        "lane": {
+          "supported": false,
+          "gt_pixels": 3120,
+          "predicted_pixels": null,
+          "true_positive": null,
+          "false_positive": null,
+          "false_negative": null,
+          "iou": null,
+          "recall": null,
+          "precision": null
+        },
+        "vehicle": {
+          "supported": true,
+          "gt_pixels": 11608,
+          "predicted_pixels": 16992,
+          "true_positive": 11407,
+          "false_positive": 5585,
+          "false_negative": 201,
+          "iou": 0.6634676903390915,
+          "recall": 0.982684355616816,
+          "precision": 0.6713159133709982
+        },
+        "pedestrian": {
+          "supported": true,
+          "gt_pixels": 0,
+          "predicted_pixels": 0,
+          "true_positive": 0,
+          "false_positive": 0,
+          "false_negative": 0,
+          "iou": null,
+          "recall": null,
+          "precision": null
+        },
+        "obstacle": {
+          "supported": false,
+          "gt_pixels": 14408,
+          "predicted_pixels": null,
+          "true_positive": null,
+          "false_positive": null,
+          "false_negative": null,
+          "iou": null,
+          "recall": null,
+          "precision": null
+        }
+      },
+      "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+      "frames": 8,
+      "prediction_pixels_all_image": {
+        "background": 571858,
+        "drivable": 1252162,
+        "vehicle": 19180,
+        "pedestrian": 0
+      }
+    }
+  },
+  "checks": {
+    "repeat_first_prediction_identical": true,
+    "model_eval_mode": true,
+    "all_gradients_disabled": true,
+    "weights_unchanged": true,
+    "source_changed_during_run": [],
+    "inputs_changed_during_run": []
+  },
+  "per_frame": [
+    {
+      "case": "static-101",
+      "frame": "0000",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 197399,
+        "accuracy": 0.8649921782225942,
+        "mean_iou_present_union": 0.7098395793843993,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            68943,
+            29933,
+            0,
+            427,
+            0,
+            0
+          ],
+          [
+            72,
+            127093,
+            0,
+            378,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1363,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99303,
+            "predicted_pixels": 69015,
+            "true_positive": 68943,
+            "false_positive": 72,
+            "false_negative": 30360,
+            "iou": 0.6937660377358491,
+            "recall": 0.6942690553155494,
+            "precision": 0.9989567485329276
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127543,
+            "predicted_pixels": 157026,
+            "true_positive": 127093,
+            "false_positive": 29933,
+            "false_negative": 450,
+            "iou": 0.8070626635169804,
+            "recall": 0.9964717781454098,
+            "precision": 0.8093755174302345
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1363,
+            "predicted_pixels": 2168,
+            "true_positive": 1363,
+            "false_positive": 805,
+            "false_negative": 0,
+            "iou": 0.628690036900369,
+            "recall": 1.0,
+            "precision": 0.628690036900369
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 70687,
+          "drivable": 157543,
+          "vehicle": 2170,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 157543,
+        "sidewalk": 20,
+        "building": 17716,
+        "wall": 335,
+        "fence": 283,
+        "sky": 52333,
+        "car": 2170
+      }
+    },
+    {
+      "case": "static-101",
+      "frame": "0001",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 199515,
+        "accuracy": 0.8742643804582642,
+        "mean_iou_present_union": 0.7200281479784439,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            71045,
+            27829,
+            0,
+            429,
+            0,
+            0
+          ],
+          [
+            54,
+            127107,
+            0,
+            382,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1363,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99303,
+            "predicted_pixels": 71099,
+            "true_positive": 71045,
+            "false_positive": 54,
+            "false_negative": 28258,
+            "iou": 0.7150477570780116,
+            "recall": 0.7154365930535834,
+            "precision": 0.9992404956469149
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127543,
+            "predicted_pixels": 154936,
+            "true_positive": 127107,
+            "false_positive": 27829,
+            "false_negative": 436,
+            "iou": 0.8180817650541925,
+            "recall": 0.9965815450475526,
+            "precision": 0.8203839004492177
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1363,
+            "predicted_pixels": 2174,
+            "true_positive": 1363,
+            "false_positive": 811,
+            "false_negative": 0,
+            "iou": 0.6269549218031278,
+            "recall": 1.0,
+            "precision": 0.6269549218031278
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 72728,
+          "drivable": 155492,
+          "vehicle": 2180,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 155492,
+        "sidewalk": 69,
+        "building": 20139,
+        "wall": 326,
+        "fence": 463,
+        "sky": 51731,
+        "car": 2176,
+        "bus": 4
+      }
+    },
+    {
+      "case": "static-101",
+      "frame": "0002",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 200008,
+        "accuracy": 0.8764246808846277,
+        "mean_iou_present_union": 0.7203903758426264,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            71520,
+            27327,
+            0,
+            456,
+            0,
+            0
+          ],
+          [
+            40,
+            127125,
+            0,
+            378,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1363,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99303,
+            "predicted_pixels": 71560,
+            "true_positive": 71520,
+            "false_positive": 40,
+            "false_negative": 27783,
+            "iou": 0.7199299397038543,
+            "recall": 0.7202199329325398,
+            "precision": 0.9994410285075461
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127543,
+            "predicted_pixels": 154452,
+            "true_positive": 127125,
+            "false_positive": 27327,
+            "false_negative": 418,
+            "iou": 0.8208497449473752,
+            "recall": 0.9967226739217362,
+            "precision": 0.823071245435475
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1363,
+            "predicted_pixels": 2197,
+            "true_positive": 1363,
+            "false_positive": 834,
+            "false_negative": 0,
+            "iou": 0.6203914428766499,
+            "recall": 1.0,
+            "precision": 0.6203914428766499
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 73171,
+          "drivable": 155022,
+          "vehicle": 2207,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 155022,
+        "sidewalk": 41,
+        "building": 19438,
+        "wall": 319,
+        "fence": 427,
+        "sky": 52946,
+        "car": 2199,
+        "bus": 8
+      }
+    },
+    {
+      "case": "static-101",
+      "frame": "0003",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 201130,
+        "accuracy": 0.8813412266825585,
+        "mean_iou_present_union": 0.7272695020901319,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            72651,
+            26206,
+            0,
+            446,
+            0,
+            0
+          ],
+          [
+            51,
+            127116,
+            0,
+            376,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1363,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99303,
+            "predicted_pixels": 72702,
+            "true_positive": 72651,
+            "false_positive": 51,
+            "false_negative": 26652,
+            "iou": 0.7312337701552026,
+            "recall": 0.7316093169390653,
+            "precision": 0.9992985062309152
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127543,
+            "predicted_pixels": 153322,
+            "true_positive": 127116,
+            "false_positive": 26206,
+            "false_negative": 427,
+            "iou": 0.8267761091129048,
+            "recall": 0.9966521094846444,
+            "precision": 0.8290786710322068
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1363,
+            "predicted_pixels": 2185,
+            "true_positive": 1363,
+            "false_positive": 822,
+            "false_negative": 0,
+            "iou": 0.6237986270022883,
+            "recall": 1.0,
+            "precision": 0.6237986270022883
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 74358,
+          "drivable": 153849,
+          "vehicle": 2193,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 153849,
+        "sidewalk": 62,
+        "building": 21726,
+        "wall": 378,
+        "fence": 464,
+        "sky": 51728,
+        "car": 2187,
+        "bus": 6
+      }
+    },
+    {
+      "case": "static-101",
+      "frame": "0004",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 200369,
+        "accuracy": 0.8780065641582935,
+        "mean_iou_present_union": 0.7241937668641065,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            71879,
+            26982,
+            0,
+            442,
+            0,
+            0
+          ],
+          [
+            45,
+            127127,
+            0,
+            371,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1363,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99303,
+            "predicted_pixels": 71924,
+            "true_positive": 71879,
+            "false_positive": 45,
+            "false_negative": 27424,
+            "iou": 0.7235072673833394,
+            "recall": 0.7238351308621089,
+            "precision": 0.9993743395806685
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127543,
+            "predicted_pixels": 154109,
+            "true_positive": 127127,
+            "false_positive": 26982,
+            "false_negative": 416,
+            "iou": 0.8226953567383919,
+            "recall": 0.9967383549077566,
+            "precision": 0.8249161307905444
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1363,
+            "predicted_pixels": 2176,
+            "true_positive": 1363,
+            "false_positive": 813,
+            "false_negative": 0,
+            "iou": 0.6263786764705882,
+            "recall": 1.0,
+            "precision": 0.6263786764705882
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 73546,
+          "drivable": 154660,
+          "vehicle": 2194,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 154660,
+        "sidewalk": 35,
+        "building": 20657,
+        "wall": 285,
+        "fence": 457,
+        "sky": 52112,
+        "car": 2178,
+        "bus": 16
+      }
+    },
+    {
+      "case": "static-101",
+      "frame": "0005",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 199339,
+        "accuracy": 0.8734931575880005,
+        "mean_iou_present_union": 0.716954486995982,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            70835,
+            28004,
+            0,
+            464,
+            0,
+            0
+          ],
+          [
+            32,
+            127141,
+            0,
+            370,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1363,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99303,
+            "predicted_pixels": 70867,
+            "true_positive": 70835,
+            "false_positive": 32,
+            "false_negative": 28468,
+            "iou": 0.7130920622137212,
+            "recall": 0.7133218533176239,
+            "precision": 0.9995484499132177
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127543,
+            "predicted_pixels": 155145,
+            "true_positive": 127141,
+            "false_positive": 28004,
+            "false_negative": 402,
+            "iou": 0.8173799558975744,
+            "recall": 0.9968481218098995,
+            "precision": 0.8194978890715138
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1363,
+            "predicted_pixels": 2197,
+            "true_positive": 1363,
+            "false_positive": 834,
+            "false_negative": 0,
+            "iou": 0.6203914428766499,
+            "recall": 1.0,
+            "precision": 0.6203914428766499
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 72429,
+          "drivable": 155737,
+          "vehicle": 2234,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 155737,
+        "building": 19108,
+        "wall": 330,
+        "fence": 638,
+        "sky": 52353,
+        "car": 2199,
+        "bus": 35
+      }
+    },
+    {
+      "case": "static-101",
+      "frame": "0006",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 198032,
+        "accuracy": 0.8677659513866675,
+        "mean_iou_present_union": 0.7128224466068214,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            69526,
+            29338,
+            0,
+            439,
+            0,
+            0
+          ],
+          [
+            32,
+            127143,
+            0,
+            368,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1363,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99303,
+            "predicted_pixels": 69558,
+            "true_positive": 69526,
+            "false_positive": 32,
+            "false_negative": 29777,
+            "iou": 0.6999144309659234,
+            "recall": 0.7001399756301421,
+            "precision": 0.999539952270048
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127543,
+            "predicted_pixels": 156481,
+            "true_positive": 127143,
+            "false_positive": 29338,
+            "false_negative": 400,
+            "iou": 0.8104423097761998,
+            "recall": 0.9968638027959198,
+            "precision": 0.8125139793329541
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1363,
+            "predicted_pixels": 2170,
+            "true_positive": 1363,
+            "false_positive": 807,
+            "false_negative": 0,
+            "iou": 0.628110599078341,
+            "recall": 1.0,
+            "precision": 0.628110599078341
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 71096,
+          "drivable": 157086,
+          "vehicle": 2218,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 157086,
+        "building": 18802,
+        "wall": 426,
+        "fence": 647,
+        "sky": 51221,
+        "car": 2172,
+        "bus": 46
+      }
+    },
+    {
+      "case": "static-101",
+      "frame": "0007",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 197755,
+        "accuracy": 0.8665521517556275,
+        "mean_iou_present_union": 0.7105656952929335,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            69240,
+            29621,
+            0,
+            442,
+            0,
+            0
+          ],
+          [
+            17,
+            127152,
+            0,
+            374,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1363,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99303,
+            "predicted_pixels": 69257,
+            "true_positive": 69240,
+            "false_positive": 17,
+            "false_negative": 30063,
+            "iou": 0.6971405557792992,
+            "recall": 0.6972599015135494,
+            "precision": 0.9997545374474782
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127543,
+            "predicted_pixels": 156773,
+            "true_positive": 127152,
+            "false_positive": 29621,
+            "false_negative": 391,
+            "iou": 0.8090402382224937,
+            "recall": 0.9969343672330117,
+            "precision": 0.8110580265734534
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1363,
+            "predicted_pixels": 2179,
+            "true_positive": 1363,
+            "false_positive": 816,
+            "false_negative": 0,
+            "iou": 0.6255162918770077,
+            "recall": 1.0,
+            "precision": 0.6255162918770077
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 70761,
+          "drivable": 157403,
+          "vehicle": 2236,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 157403,
+        "building": 18124,
+        "wall": 555,
+        "fence": 767,
+        "sky": 51315,
+        "car": 2181,
+        "bus": 55
+      }
+    },
+    {
+      "case": "moving-2mps-201",
+      "frame": "0000",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 198048,
+        "accuracy": 0.8678360625566914,
+        "mean_iou_present_union": 0.7127295017087265,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            69551,
+            29225,
+            0,
+            492,
+            0,
+            0
+          ],
+          [
+            90,
+            127072,
+            0,
+            351,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            3,
+            0,
+            0,
+            1425,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99268,
+            "predicted_pixels": 69644,
+            "true_positive": 69551,
+            "false_positive": 93,
+            "false_negative": 29717,
+            "iou": 0.6999828906713902,
+            "recall": 0.7006386751017448,
+            "precision": 0.9986646372982597
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127513,
+            "predicted_pixels": 156297,
+            "true_positive": 127072,
+            "false_positive": 29225,
+            "false_negative": 441,
+            "iou": 0.8107287320241422,
+            "recall": 0.9965415290989939,
+            "precision": 0.8130162447135901
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1428,
+            "predicted_pixels": 2268,
+            "true_positive": 1425,
+            "false_positive": 843,
+            "false_negative": 3,
+            "iou": 0.6274768824306473,
+            "recall": 0.9978991596638656,
+            "precision": 0.6283068783068783
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 71305,
+          "drivable": 156787,
+          "vehicle": 2308,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 156787,
+        "sidewalk": 54,
+        "building": 16547,
+        "wall": 537,
+        "fence": 87,
+        "sky": 54080,
+        "car": 2306,
+        "bus": 2
+      }
+    },
+    {
+      "case": "moving-2mps-201",
+      "frame": "0001",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 198204,
+        "accuracy": 0.8685196464644251,
+        "mean_iou_present_union": 0.7057541701356854,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            69724,
+            29047,
+            0,
+            510,
+            0,
+            0
+          ],
+          [
+            38,
+            127079,
+            0,
+            410,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1401,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99281,
+            "predicted_pixels": 69762,
+            "true_positive": 69724,
+            "false_positive": 38,
+            "false_negative": 29557,
+            "iou": 0.7020207613850321,
+            "recall": 0.7022894612262165,
+            "precision": 0.9994552908460194
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127527,
+            "predicted_pixels": 156126,
+            "true_positive": 127079,
+            "false_positive": 29047,
+            "false_negative": 448,
+            "iou": 0.8116226193365438,
+            "recall": 0.9964870184353117,
+            "precision": 0.8139515519516288
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1401,
+            "predicted_pixels": 2321,
+            "true_positive": 1401,
+            "false_positive": 920,
+            "false_negative": 0,
+            "iou": 0.6036191296854804,
+            "recall": 1.0,
+            "precision": 0.6036191296854804
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 71317,
+          "drivable": 156677,
+          "vehicle": 2406,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 156677,
+        "sidewalk": 30,
+        "building": 17697,
+        "wall": 186,
+        "fence": 275,
+        "sky": 53129,
+        "car": 2346,
+        "bus": 60
+      }
+    },
+    {
+      "case": "moving-2mps-201",
+      "frame": "0002",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 198099,
+        "accuracy": 0.8680595419111429,
+        "mean_iou_present_union": 0.7049902828094917,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            69611,
+            29172,
+            0,
+            506,
+            0,
+            0
+          ],
+          [
+            20,
+            127094,
+            0,
+            412,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1394,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99289,
+            "predicted_pixels": 69631,
+            "true_positive": 69611,
+            "false_positive": 20,
+            "false_negative": 29678,
+            "iou": 0.7009535893020774,
+            "recall": 0.7010947839136259,
+            "precision": 0.999712771610346
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127526,
+            "predicted_pixels": 156266,
+            "true_positive": 127094,
+            "false_positive": 29172,
+            "false_negative": 432,
+            "iou": 0.8110760826558092,
+            "recall": 0.9966124554992707,
+            "precision": 0.8133183162044206
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1394,
+            "predicted_pixels": 2312,
+            "true_positive": 1394,
+            "false_positive": 918,
+            "false_negative": 0,
+            "iou": 0.6029411764705882,
+            "recall": 1.0,
+            "precision": 0.6029411764705882
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 71103,
+          "drivable": 156859,
+          "vehicle": 2438,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 156859,
+        "building": 17145,
+        "wall": 77,
+        "fence": 356,
+        "sky": 53525,
+        "car": 2330,
+        "bus": 108
+      }
+    },
+    {
+      "case": "moving-2mps-201",
+      "frame": "0003",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 197057,
+        "accuracy": 0.8634935519633319,
+        "mean_iou_present_union": 0.6993198011293283,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            68558,
+            30217,
+            0,
+            520,
+            0,
+            0
+          ],
+          [
+            18,
+            127113,
+            0,
+            397,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1386,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99295,
+            "predicted_pixels": 68576,
+            "true_positive": 68558,
+            "false_positive": 18,
+            "false_negative": 30737,
+            "iou": 0.6903225156827404,
+            "recall": 0.6904476559746211,
+            "precision": 0.9997375174988334
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127528,
+            "predicted_pixels": 157330,
+            "true_positive": 127113,
+            "false_positive": 30217,
+            "false_negative": 415,
+            "iou": 0.8058131794985578,
+            "recall": 0.9967458126842732,
+            "precision": 0.8079387275154135
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1386,
+            "predicted_pixels": 2303,
+            "true_positive": 1386,
+            "false_positive": 917,
+            "false_negative": 0,
+            "iou": 0.601823708206687,
+            "recall": 1.0,
+            "precision": 0.601823708206687
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 70068,
+          "drivable": 157917,
+          "vehicle": 2415,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 157917,
+        "sidewalk": 9,
+        "building": 15595,
+        "fence": 405,
+        "sky": 54059,
+        "car": 2325,
+        "bus": 90
+      }
+    },
+    {
+      "case": "moving-2mps-201",
+      "frame": "0004",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 198084,
+        "accuracy": 0.8679938126892454,
+        "mean_iou_present_union": 0.700332843866626,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            69620,
+            29166,
+            0,
+            530,
+            0,
+            0
+          ],
+          [
+            29,
+            127131,
+            0,
+            400,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1333,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99316,
+            "predicted_pixels": 69649,
+            "true_positive": 69620,
+            "false_positive": 29,
+            "false_negative": 29696,
+            "iou": 0.7007901756505108,
+            "recall": 0.7009948044625237,
+            "precision": 0.9995836264698703
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127560,
+            "predicted_pixels": 156297,
+            "true_positive": 127131,
+            "false_positive": 29166,
+            "false_negative": 429,
+            "iou": 0.8111672600589563,
+            "recall": 0.9966368767638758,
+            "precision": 0.8133937311656654
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1333,
+            "predicted_pixels": 2263,
+            "true_positive": 1333,
+            "false_positive": 930,
+            "false_negative": 0,
+            "iou": 0.589041095890411,
+            "recall": 1.0,
+            "precision": 0.589041095890411
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 71204,
+          "drivable": 156861,
+          "vehicle": 2335,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 156861,
+        "sidewalk": 37,
+        "building": 17183,
+        "fence": 301,
+        "sky": 53683,
+        "car": 2282,
+        "bus": 53
+      }
+    },
+    {
+      "case": "moving-2mps-201",
+      "frame": "0005",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 197569,
+        "accuracy": 0.8657371094040989,
+        "mean_iou_present_union": 0.7004163913906555,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            69121,
+            29707,
+            0,
+            495,
+            0,
+            0
+          ],
+          [
+            52,
+            127141,
+            0,
+            386,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1307,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99323,
+            "predicted_pixels": 69173,
+            "true_positive": 69121,
+            "false_positive": 52,
+            "false_negative": 30202,
+            "iou": 0.6955572327044025,
+            "recall": 0.6959213877953747,
+            "precision": 0.9992482616049615
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127579,
+            "predicted_pixels": 156848,
+            "true_positive": 127141,
+            "false_positive": 29707,
+            "false_negative": 438,
+            "iou": 0.8083427641366683,
+            "recall": 0.9965668330994913,
+            "precision": 0.8106000714067122
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1307,
+            "predicted_pixels": 2188,
+            "true_positive": 1307,
+            "false_positive": 881,
+            "false_negative": 0,
+            "iou": 0.5973491773308958,
+            "recall": 1.0,
+            "precision": 0.5973491773308958
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 70713,
+          "drivable": 157446,
+          "vehicle": 2241,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 157446,
+        "building": 16785,
+        "fence": 592,
+        "sky": 53336,
+        "car": 2189,
+        "bus": 52
+      }
+    },
+    {
+      "case": "moving-2mps-201",
+      "frame": "0006",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228208,
+        "unsupported_gt_pixels": 2192,
+        "unsupported_gt_by_class": {
+          "lane": 391,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904861111111111,
+        "correct_pixels": 196622,
+        "accuracy": 0.8615911799761621,
+        "mean_iou_present_union": 0.699066793635485,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            68152,
+            30701,
+            0,
+            475,
+            0,
+            0
+          ],
+          [
+            46,
+            127169,
+            0,
+            364,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            1301,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99328,
+            "predicted_pixels": 68198,
+            "true_positive": 68152,
+            "false_positive": 46,
+            "false_negative": 31176,
+            "iou": 0.685813190572987,
+            "recall": 0.6861307989690721,
+            "precision": 0.9993254934162292
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127579,
+            "predicted_pixels": 157870,
+            "true_positive": 127169,
+            "false_positive": 30701,
+            "false_negative": 410,
+            "iou": 0.8034432650998231,
+            "recall": 0.9967863049561448,
+            "precision": 0.8055298663457275
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 391,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1301,
+            "predicted_pixels": 2140,
+            "true_positive": 1301,
+            "false_positive": 839,
+            "false_negative": 0,
+            "iou": 0.6079439252336448,
+            "recall": 1.0,
+            "precision": 0.6079439252336448
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 69712,
+          "drivable": 158471,
+          "vehicle": 2217,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 158471,
+        "building": 18151,
+        "wall": 314,
+        "fence": 819,
+        "sky": 50428,
+        "car": 2138,
+        "bus": 79
+      }
+    },
+    {
+      "case": "moving-2mps-201",
+      "frame": "0007",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228208,
+        "unsupported_gt_pixels": 2192,
+        "unsupported_gt_by_class": {
+          "lane": 391,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904861111111111,
+        "correct_pixels": 195682,
+        "accuracy": 0.8574721306877936,
+        "mean_iou_present_union": 0.697479303528783,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            67192,
+            31671,
+            0,
+            468,
+            0,
+            0
+          ],
+          [
+            54,
+            127196,
+            0,
+            332,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            1294,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99331,
+            "predicted_pixels": 67246,
+            "true_positive": 67192,
+            "false_positive": 54,
+            "false_negative": 32139,
+            "iou": 0.6760778789555768,
+            "recall": 0.6764454198588558,
+            "precision": 0.99919697825893
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127582,
+            "predicted_pixels": 158868,
+            "true_positive": 127196,
+            "false_positive": 31672,
+            "false_negative": 386,
+            "iou": 0.7986989337787433,
+            "recall": 0.9969744948346946,
+            "precision": 0.8006395246368054
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 391,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1295,
+            "predicted_pixels": 2094,
+            "true_positive": 1294,
+            "false_positive": 800,
+            "false_negative": 1,
+            "iou": 0.6176610978520286,
+            "recall": 0.9992277992277993,
+            "precision": 0.6179560649474689
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 68814,
+          "drivable": 159453,
+          "vehicle": 2133,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 159453,
+        "building": 17665,
+        "wall": 525,
+        "fence": 904,
+        "sky": 49720,
+        "car": 2096,
+        "bus": 37
+      }
+    },
+    {
+      "case": "moving-10mps-301",
+      "frame": "0000",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228210,
+        "unsupported_gt_pixels": 2190,
+        "unsupported_gt_by_class": {
+          "lane": 389,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904947916666667,
+        "correct_pixels": 190607,
+        "accuracy": 0.8352263266289821,
+        "mean_iou_present_union": 0.6938993342464478,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            61778,
+            36670,
+            0,
+            515,
+            0,
+            0
+          ],
+          [
+            0,
+            126812,
+            0,
+            417,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0,
+            2017,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 98963,
+            "predicted_pixels": 61778,
+            "true_positive": 61778,
+            "false_positive": 0,
+            "false_negative": 37185,
+            "iou": 0.6242535088871598,
+            "recall": 0.6242535088871598,
+            "precision": 1.0
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127229,
+            "predicted_pixels": 163483,
+            "true_positive": 126812,
+            "false_positive": 36671,
+            "false_negative": 417,
+            "iou": 0.7737156802928615,
+            "recall": 0.9967224453544397,
+            "precision": 0.7756892153924261
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 389,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 2018,
+            "predicted_pixels": 2949,
+            "true_positive": 2017,
+            "false_positive": 932,
+            "false_negative": 1,
+            "iou": 0.683728813559322,
+            "recall": 0.9995044598612488,
+            "precision": 0.6839606646320787
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 62054,
+          "drivable": 164214,
+          "vehicle": 4132,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 164214,
+        "sidewalk": 8,
+        "building": 4513,
+        "sky": 57533,
+        "car": 4102,
+        "bus": 30
+      }
+    },
+    {
+      "case": "moving-10mps-301",
+      "frame": "0001",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228208,
+        "unsupported_gt_pixels": 2192,
+        "unsupported_gt_by_class": {
+          "lane": 391,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904861111111111,
+        "correct_pixels": 194731,
+        "accuracy": 0.8533048797588165,
+        "mean_iou_present_union": 0.7074925148285773,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            66050,
+            32580,
+            0,
+            486,
+            0,
+            0
+          ],
+          [
+            13,
+            126946,
+            0,
+            386,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            10,
+            2,
+            0,
+            1735,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99116,
+            "predicted_pixels": 66073,
+            "true_positive": 66050,
+            "false_positive": 23,
+            "false_negative": 33066,
+            "iou": 0.6662362944956072,
+            "recall": 0.6663908955163647,
+            "precision": 0.999651900171023
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127345,
+            "predicted_pixels": 159528,
+            "true_positive": 126946,
+            "false_positive": 32582,
+            "false_negative": 399,
+            "iou": 0.7937746596884828,
+            "recall": 0.996866779221799,
+            "precision": 0.7957599919763302
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 391,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1747,
+            "predicted_pixels": 2607,
+            "true_positive": 1735,
+            "false_positive": 872,
+            "false_negative": 12,
+            "iou": 0.6624665903016419,
+            "recall": 0.9931310818546079,
+            "precision": 0.6655159186804757
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 66846,
+          "drivable": 160158,
+          "vehicle": 3396,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 160158,
+        "sidewalk": 123,
+        "building": 10388,
+        "wall": 319,
+        "fence": 249,
+        "sky": 55767,
+        "car": 3324,
+        "bus": 72
+      }
+    },
+    {
+      "case": "moving-10mps-301",
+      "frame": "0002",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 198096,
+        "accuracy": 0.8680463960667634,
+        "mean_iou_present_union": 0.7291332883659368,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            69445,
+            29323,
+            0,
+            433,
+            0,
+            0
+          ],
+          [
+            56,
+            127112,
+            0,
+            281,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            17,
+            3,
+            0,
+            1539,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99201,
+            "predicted_pixels": 69518,
+            "true_positive": 69445,
+            "false_positive": 73,
+            "false_negative": 29756,
+            "iou": 0.69952857747245,
+            "recall": 0.7000433463372345,
+            "precision": 0.9989499122529417
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127449,
+            "predicted_pixels": 156438,
+            "true_positive": 127112,
+            "false_positive": 29326,
+            "false_negative": 337,
+            "iou": 0.8107925370754265,
+            "recall": 0.9973558050671248,
+            "precision": 0.8125391528912412
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1559,
+            "predicted_pixels": 2253,
+            "true_positive": 1539,
+            "false_positive": 714,
+            "false_negative": 20,
+            "iou": 0.677078750549934,
+            "recall": 0.9871712636305324,
+            "precision": 0.6830892143808256
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 70961,
+          "drivable": 156992,
+          "vehicle": 2447,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 156992,
+        "sidewalk": 148,
+        "building": 14938,
+        "wall": 401,
+        "fence": 797,
+        "sky": 54677,
+        "car": 2399,
+        "bus": 48
+      }
+    },
+    {
+      "case": "moving-10mps-301",
+      "frame": "0003",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 201380,
+        "accuracy": 0.8824367137141831,
+        "mean_iou_present_union": 0.7363456202635561,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            73015,
+            25943,
+            0,
+            323,
+            0,
+            0
+          ],
+          [
+            133,
+            126983,
+            0,
+            411,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            17,
+            2,
+            0,
+            1382,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99281,
+            "predicted_pixels": 73165,
+            "true_positive": 73015,
+            "false_positive": 150,
+            "false_negative": 26266,
+            "iou": 0.7343283281873862,
+            "recall": 0.7354377977659371,
+            "precision": 0.9979498394040867
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127527,
+            "predicted_pixels": 152928,
+            "true_positive": 126983,
+            "false_positive": 25945,
+            "false_negative": 544,
+            "iou": 0.8274017410341952,
+            "recall": 0.99573423667145,
+            "precision": 0.830344998953756
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1401,
+            "predicted_pixels": 2116,
+            "true_positive": 1382,
+            "false_positive": 734,
+            "false_negative": 19,
+            "iou": 0.6473067915690867,
+            "recall": 0.9864382583868665,
+            "precision": 0.6531190926275993
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 74847,
+          "drivable": 153423,
+          "vehicle": 2130,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 153423,
+        "sidewalk": 250,
+        "building": 21915,
+        "wall": 73,
+        "fence": 978,
+        "sky": 51631,
+        "car": 2122,
+        "bus": 8
+      }
+    },
+    {
+      "case": "moving-10mps-301",
+      "frame": "0004",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228208,
+        "unsupported_gt_pixels": 2192,
+        "unsupported_gt_by_class": {
+          "lane": 391,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904861111111111,
+        "correct_pixels": 204141,
+        "accuracy": 0.894539192315782,
+        "mean_iou_present_union": 0.7447568369814106,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            75874,
+            23139,
+            0,
+            315,
+            0,
+            0
+          ],
+          [
+            179,
+            126995,
+            0,
+            405,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            28,
+            1,
+            0,
+            1272,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99328,
+            "predicted_pixels": 76081,
+            "true_positive": 75874,
+            "false_positive": 207,
+            "false_negative": 23454,
+            "iou": 0.7622846234992716,
+            "recall": 0.7638732280927835,
+            "precision": 0.9972792155728762
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127579,
+            "predicted_pixels": 150135,
+            "true_positive": 126995,
+            "false_positive": 23140,
+            "false_negative": 584,
+            "iou": 0.8425944970441683,
+            "recall": 0.995422444132655,
+            "precision": 0.8458720484896927
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 391,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1301,
+            "predicted_pixels": 1992,
+            "true_positive": 1272,
+            "false_positive": 720,
+            "false_negative": 29,
+            "iou": 0.6293913904007917,
+            "recall": 0.9777094542659492,
+            "precision": 0.6385542168674698
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 77756,
+          "drivable": 150649,
+          "vehicle": 1995,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 150649,
+        "sidewalk": 104,
+        "building": 25109,
+        "wall": 9,
+        "fence": 1100,
+        "sky": 51434,
+        "car": 1995
+      }
+    },
+    {
+      "case": "moving-10mps-301",
+      "frame": "0005",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 201601,
+        "accuracy": 0.8834051242501392,
+        "mean_iou_present_union": 0.7524776933309418,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            73795,
+            25416,
+            0,
+            138,
+            0,
+            0
+          ],
+          [
+            676,
+            126643,
+            0,
+            313,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            65,
+            0,
+            0,
+            1163,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99349,
+            "predicted_pixels": 74536,
+            "true_positive": 73795,
+            "false_positive": 741,
+            "false_negative": 25554,
+            "iou": 0.7372864422020182,
+            "recall": 0.7427855338252021,
+            "precision": 0.9900584952237845
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127632,
+            "predicted_pixels": 152059,
+            "true_positive": 126643,
+            "false_positive": 25416,
+            "false_negative": 989,
+            "iou": 0.8274724269510219,
+            "recall": 0.9922511595838034,
+            "precision": 0.8328543525868248
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1228,
+            "predicted_pixels": 1614,
+            "true_positive": 1163,
+            "false_positive": 451,
+            "false_negative": 65,
+            "iou": 0.6926742108397855,
+            "recall": 0.9470684039087948,
+            "precision": 0.7205700123915737
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 76251,
+          "drivable": 152533,
+          "vehicle": 1616,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 152533,
+        "building": 27571,
+        "fence": 891,
+        "sky": 47789,
+        "car": 1616
+      }
+    },
+    {
+      "case": "moving-10mps-301",
+      "frame": "0006",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228209,
+        "unsupported_gt_pixels": 2191,
+        "unsupported_gt_by_class": {
+          "lane": 390,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904904513888889,
+        "correct_pixels": 197469,
+        "accuracy": 0.865298914591449,
+        "mean_iou_present_union": 0.7194309067113603,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            69107,
+            29951,
+            0,
+            309,
+            0,
+            0
+          ],
+          [
+            176,
+            127187,
+            0,
+            279,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            22,
+            3,
+            0,
+            1175,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99367,
+            "predicted_pixels": 69305,
+            "true_positive": 69107,
+            "false_positive": 198,
+            "false_negative": 30260,
+            "iou": 0.6940892884045599,
+            "recall": 0.6954723399116407,
+            "precision": 0.9971430632710483
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127642,
+            "predicted_pixels": 157141,
+            "true_positive": 127187,
+            "false_positive": 29954,
+            "false_negative": 455,
+            "iou": 0.8070445950404833,
+            "recall": 0.9964353425988312,
+            "precision": 0.8093813835981698
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 390,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1200,
+            "predicted_pixels": 1763,
+            "true_positive": 1175,
+            "false_positive": 588,
+            "false_negative": 25,
+            "iou": 0.6571588366890381,
+            "recall": 0.9791666666666666,
+            "precision": 0.6664775950085082
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 70972,
+          "drivable": 157663,
+          "vehicle": 1765,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 157663,
+        "building": 25030,
+        "fence": 1187,
+        "sky": 44755,
+        "car": 1765
+      }
+    },
+    {
+      "case": "moving-10mps-301",
+      "frame": "0007",
+      "metrics": {
+        "total_pixels": 230400,
+        "evaluated_pixels": 228210,
+        "unsupported_gt_pixels": 2190,
+        "unsupported_gt_by_class": {
+          "lane": 389,
+          "obstacle": 1801
+        },
+        "evaluated_fraction": 0.9904947916666667,
+        "correct_pixels": 198284,
+        "accuracy": 0.8688663949870733,
+        "mean_iou_present_union": 0.7214337082242978,
+        "mean_iou_class_count": 3,
+        "confusion_matrix": [
+          [
+            70118,
+            28954,
+            0,
+            307,
+            0,
+            0
+          ],
+          [
+            368,
+            127042,
+            0,
+            267,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            30,
+            0,
+            0,
+            1124,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "confusion_order": [
+          "background",
+          "drivable",
+          "lane",
+          "vehicle",
+          "pedestrian",
+          "obstacle"
+        ],
+        "per_class": {
+          "background": {
+            "supported": true,
+            "gt_pixels": 99379,
+            "predicted_pixels": 70516,
+            "true_positive": 70118,
+            "false_positive": 398,
+            "false_negative": 29261,
+            "iou": 0.7027471260911834,
+            "recall": 0.7055615371456746,
+            "precision": 0.9943558908616484
+          },
+          "drivable": {
+            "supported": true,
+            "gt_pixels": 127677,
+            "predicted_pixels": 155996,
+            "true_positive": 127042,
+            "false_positive": 28954,
+            "false_negative": 635,
+            "iou": 0.8110910356187473,
+            "recall": 0.9950265122144161,
+            "precision": 0.8143926767353009
+          },
+          "lane": {
+            "supported": false,
+            "gt_pixels": 389,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "vehicle": {
+            "supported": true,
+            "gt_pixels": 1154,
+            "predicted_pixels": 1698,
+            "true_positive": 1124,
+            "false_positive": 574,
+            "false_negative": 30,
+            "iou": 0.6504629629629629,
+            "recall": 0.9740034662045061,
+            "precision": 0.6619552414605419
+          },
+          "pedestrian": {
+            "supported": true,
+            "gt_pixels": 0,
+            "predicted_pixels": 0,
+            "true_positive": 0,
+            "false_positive": 0,
+            "false_negative": 0,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          },
+          "obstacle": {
+            "supported": false,
+            "gt_pixels": 1801,
+            "predicted_pixels": null,
+            "true_positive": null,
+            "false_positive": null,
+            "false_negative": null,
+            "iou": null,
+            "recall": null,
+            "precision": null
+          }
+        },
+        "metric_scope": "Pixel metrics on GT background/drivable/vehicle/pedestrian only; GT lane and generic-obstacle pixels are unsupported and excluded. Background is a coarse aggregation of other Cityscapes categories, including rider. This is saved-frame domain-transfer preview, not driving acceptance.",
+        "prediction_pixels_all_image": {
+          "background": 72171,
+          "drivable": 156530,
+          "vehicle": 1699,
+          "pedestrian": 0
+        }
+      },
+      "native_counts": {
+        "road": 156530,
+        "building": 23429,
+        "fence": 1117,
+        "sky": 47625,
+        "car": 1699
+      }
+    }
+  ],
+  "unsupported_region_diagnostic": {
+    "lane": {
+      "total_pixels": 9362,
+      "native_predictions": {
+        "road": 9163,
+        "building": 154,
+        "car": 45
+      }
+    },
+    "obstacle": {
+      "total_pixels": 43224,
+      "native_predictions": {
+        "road": 4408,
+        "building": 21789,
+        "fence": 14094,
+        "car": 2181,
+        "bus": 752
+      }
+    },
+    "vehicle_precision_all_image_diagnostic": 0.5994394720188048
+  }
+}
