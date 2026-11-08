@@ -1,0 +1,238 @@
+{
+  "schema": "highway_environment_v05",
+  "observation_size": 99,
+  "action_size": 2,
+  "model": "shared hybrid MAPPO actor; acceleration and masked lane intent",
+  "source_hashes": {
+    "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+    "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+    "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+    "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+    "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+    "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+    "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+    "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+    "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+    "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+    "scripts/build_i110_sumo.py": "26ab7e55962f4d6e0422f8d0ef944baf337600af32645fb1d6364f0979c37f70",
+    "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+    "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+    "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+    "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+    "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+    "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+    "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+    "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+    "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+    "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+    "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+    "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+    "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+    "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+    "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5"
+  },
+  "config_sha256": "a9db9895d18a9b3760977603a152cd5d4c52ad82d7e3a0dd8e4d9b9628855f78",
+  "parent": {
+    "path": "outputs/highway-stage1/v03/train-20261103T230506Z-04ba1761/selected-00036-d97376b9/best.pt",
+    "sha256": "b77f55ae7262178ce0fa15729fe844e18693cd168905eea8b1bbd579c6913ab1",
+    "actor_sha256": "8526f6134b7eae90d3370bd12cc0487926a6ec4356c6c6ea2dd231e8aa8b1bb8",
+    "migration": {
+      "old_observation_size": 93,
+      "new_observation_size": 99,
+      "inserted_local_indices": [
+        45,
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "initialization": "zero input weights",
+      "critic": "fresh masked 24-slot critic",
+      "optimizer": "fresh"
+    },
+    "parent_config_sha256": "4df2efa0955d84de1bca101b1dd45d5e72e4a8709a4596165f0f36e6281ea5a8",
+    "semantic_transfer": true,
+    "observation_semantics": "highway_environment_v05_actor_99"
+  },
+  "policy_sha256": "fd639c39f0c514256a458b2b85d35baba242125f44dcc3d9542d767eb2dd46ec",
+  "checkpoint_sha256": "9279b6103d13d2be3fd18fe05e9bae72462e581a16d881fc9e4ff87b0b2ac02d",
+  "validation": {
+    "cases": 24,
+    "failures": [
+      {
+        "case_id": "v05-val-0-passing",
+        "seed": 6900002,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-val-1-cruise",
+        "seed": 6900004,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-val-1-following",
+        "seed": 6900005,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-val-1-passing",
+        "seed": 6900006,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-val-1-merge",
+        "seed": 6900007,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-val-2-cruise",
+        "seed": 6900008,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-val-2-following",
+        "seed": 6900009,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-val-2-passing",
+        "seed": 6900010,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-val-2-merge",
+        "seed": 6900011,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-val-3-following",
+        "seed": 6900013,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-val-3-passing",
+        "seed": 6900014,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-validation-i110-cruise",
+        "seed": 6900016,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "seed": 6900017,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-validation-i110-passing",
+        "seed": 6900018,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "v05-validation-i110-merge",
+        "seed": 6900019,
+        "reasons": [
+          "interventions",
+          "stable_merge"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-cruise",
+        "seed": 6900020,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-following",
+        "seed": 6900021,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-passing",
+        "seed": 6900022,
+        "reasons": [
+          "interventions"
+        ]
+      },
+      {
+        "case_id": "validation-5-lane-merge",
+        "seed": 6900023,
+        "reasons": [
+          "interventions"
+        ]
+      }
+    ],
+    "all_gates_passed": false,
+    "pooled_intervention_fraction": 0.198287213302167,
+    "worst_intervention_fraction": 0.6933392936969155,
+    "merges": 8,
+    "stable_merges": 8,
+    "passes": 59,
+    "held_out_test_run": false,
+    "acceptance_status": "development validation only; no held-out promotion"
+  },
+  "accepted": false,
+  "tested_population_counts": [
+    1,
+    4,
+    8,
+    12,
+    18,
+    23,
+    24
+  ],
+  "no_live_handoff": true,
+  "held_out_test_run": false,
+  "control_target_version": "v3",
+  "observation_semantics": "highway_environment_v05_actor_99",
+  "warm_start_semantic_transfer": true,
+  "objective_version": "shared_v3_near_limit_and_stable_maneuver_v05",
+  "speed_curriculum": {
+    "ceilings_m_s": [
+      12.0,
+      18.0,
+      22.352,
+      26.8224
+    ],
+    "application": "min(native lane limit, episode ceiling) on every lane/connector before first simulation step; never raises a native limit",
+    "source": "Training-only generated road bank; no saved physical validation trajectories enter fitting",
+    "schedule": "Each four successive episodes cover all four ceilings; no guarantee of full population/task/speed factorial within pilot budget"
+  }
+}

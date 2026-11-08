@@ -1,0 +1,25 @@
+{
+  "reason": "Pre-learning native ACC spawn clearance repair; both failed checkpoints and consumed budget preserved",
+  "original_checkpoint": "outputs\\highway-environment\\v05\\train-20261106T023346Z-75467609\\last.pt",
+  "original_sha256": "a8bd968c2e49ed83ed16777b09e46d190090c6918bc6495fab02eef98db0e19a",
+  "migrated_checkpoint": "outputs\\highway-environment\\v05\\recovery-native-spawn\\last.pt",
+  "migrated_sha256": "3571cf29d82581c86d56edd62aee83acd70242e2206390f097dac1c25b386fea",
+  "changed_sources": {
+    "traffic/highway_v05_demand.py": {
+      "before": "48a3bee2cb5aad3ffd1410b12520b09514c8338002020ceaf36b8c66e1141eb3",
+      "after": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7"
+    }
+  },
+  "model_optimizer_rng_unchanged": true,
+  "counters_unchanged": true,
+  "charged_seconds": 512.0479999999952,
+  "original_config_sha256": "4ef0c2a39bbd4be5f9af61fa760f4abe55d06c729b96f562f1581fdf72862620",
+  "new_config_sha256": "a9db9895d18a9b3760977603a152cd5d4c52ad82d7e3a0dd8e4d9b9628855f78",
+  "total_wall_budget_seconds": 3600,
+  "training_decisions": 0,
+  "readiness": {
+    "summary_path": "outputs/highway-environment/v05/preflight-20261106T024625Z-e4211b81/summary.json",
+    "summary_sha256": "3cd0785f4960c5558e2f73a16bbc911e24935886651981ea1ed34d32a914287e"
+  },
+  "held_out_test_run": false
+}

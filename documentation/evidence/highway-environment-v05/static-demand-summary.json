@@ -1,0 +1,60 @@
+{
+  "source": {
+    "path": "outputs/highway-environment/v05/demand-static-be7db167/summary.json",
+    "sha256": "a1253f94077548a0bc2d64e6b1d2d3f411cd507e0446a6972dc9a73de990d6a5",
+    "bytes": 1177460
+  },
+  "scope": "Static demand generation and graph clearance only; no native SUMO steps or learning",
+  "cases": 504,
+  "passed": 504,
+  "failures": [],
+  "networks": [
+    "outputs/highway-environment/v05/network-bank/train-2-lane-ramp120/network.net.xml",
+    "outputs/highway-environment/v05/network-bank/train-3-lane-ramp240/network.net.xml",
+    "outputs/highway-environment/v05/network-bank/train-4-lane-ramp120/network.net.xml",
+    "outputs/highway-environment/v05/network-bank/train-5-lane-ramp240/network.net.xml",
+    "outputs/highway-environment/v05/network-bank/validation-2-lane-ramp180/network.net.xml",
+    "outputs/highway-environment/v05/network-bank/validation-4-lane-ramp180/network.net.xml",
+    "outputs/i110-merge/v01/network/network.net.xml"
+  ],
+  "coverage": {
+    "physical_seed": [
+      7100001,
+      7100002
+    ],
+    "difficulty": [
+      0,
+      1,
+      2
+    ],
+    "controlled_count": [
+      15,
+      16,
+      23,
+      24,
+      7,
+      8
+    ],
+    "initial_vehicle_count": [
+      16,
+      24,
+      8
+    ],
+    "traffic_mode": [
+      "initial"
+    ],
+    "through_lanes": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "requested_av_fraction": [
+      0.875,
+      0.9375,
+      0.9583333333333334,
+      1.0
+    ]
+  },
+  "limitation": "Authored initial demand and graph clearance only; no native steps, no throughput or learned-policy result"
+}

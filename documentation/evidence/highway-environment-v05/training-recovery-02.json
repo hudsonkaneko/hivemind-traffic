@@ -1,0 +1,10 @@
+{
+  "failed_attempt": "outputs/highway-environment/v05/train-20261106T023346Z-75467609",
+  "error": "RuntimeError('Population fixture did not spawn the entire fixed cohort at reset')",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\experiments\\run_highway_environment_v05.py\", line 626, in main\n    result.update(train(cfg, run, started, hashes, args.resume))\n                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\experiments\\run_highway_environment_v05.py\", line 389, in train\n    evaluate(cfg, run, model, label='initial-validation', deadline=learning_deadline)\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\experiments\\run_highway_environment_v05.py\", line 255, in evaluate\n    report, _ = episode(env_for(cfg, run / label / str(index), row), row,\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\experiments\\run_highway_environment_v05.py\", line 153, in episode\n    obs, _ = env.reset(seed=row['seed'])\n             ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\environments\\highway_environment_v05.py\", line 192, in reset\n    super().reset(seed=seed, options=options)\n  File \"C:\\Users\\hudso\\Documents\\highwaysim\\environments\\highway_population_env.py\", line 186, in reset\n    raise RuntimeError('Population fixture did not spawn the entire fixed cohort at reset')\nRuntimeError: Population fixture did not spawn the entire fixed cohort at reset\n",
+  "attempt_wall_seconds": 386.7039999999979,
+  "total_charged_seconds": 512.0479999999952,
+  "collected_training_decisions": 0,
+  "optimizer_steps": 0,
+  "checkpoint_sha256": "a8bd968c2e49ed83ed16777b09e46d190090c6918bc6495fab02eef98db0e19a"
+}
