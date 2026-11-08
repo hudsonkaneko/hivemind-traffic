@@ -1,0 +1,73 @@
+{
+  "passed": true,
+  "training": false,
+  "physical_control": false,
+  "runtime": {
+    "core_physx_enabled": true,
+    "authoring_tools_enabled": false,
+    "factory_path": "c:/isaacsim/extscache/omni.physx.vehicle-110.1.13+110.1.2.wx64.r.cp312.u7f4/omni/physxvehicle/scripts/helpers/Factory.py"
+  },
+  "startup_seconds": 15.047319800127298,
+  "replay_clock_origin_s": 1.05,
+  "steps": 600,
+  "capture_sets": 120,
+  "camera_frames": 840,
+  "saved_scans": 600,
+  "position_error_m": 0.0,
+  "wall_seconds": 96.94408640009351,
+  "step_ms": {
+    "mean": 161.57151400150423,
+    "p95": 288.503920158837,
+    "max": 327.175899874419
+  },
+  "lidar_packets": {
+    "LidarRoof": 1221,
+    "LidarLeftNear": 1221,
+    "LidarRightNear": 1221,
+    "LidarFrontNear": 1221,
+    "LidarRearNear": 1221
+  },
+  "clock": {
+    "physics_steps": 7326,
+    "render_count": 1224,
+    "time_s": 61.050000000000004,
+    "absolute_time_s": 61.06666666666667,
+    "native_physics_steps": 7328,
+    "physics_hz": 120,
+    "render_hz": 20,
+    "origin_time_s": 0.016666666666666666,
+    "origin_physics_steps": 2
+  },
+  "static_layers_unchanged": true,
+  "source_unchanged": true,
+  "capture_audit": {
+    "passed": true,
+    "camera_images": 840,
+    "saved_lidar_scans": 600,
+    "capture_sets": 120,
+    "unique_camera_frames": {
+      "CameraFront": 120,
+      "CameraFrontTele": 120,
+      "CameraCrossLeft": 120,
+      "CameraCrossRight": 120,
+      "CameraRearLeft": 120,
+      "CameraRearRight": 120,
+      "CameraRearTele": 120
+    },
+    "minimum_valid_hits": {
+      "LidarRoof": 7781,
+      "LidarLeftNear": 10538,
+      "LidarRightNear": 10589,
+      "LidarFrontNear": 4982,
+      "LidarRearNear": 10862
+    },
+    "lidar_age_s": [
+      0.06666666666666288,
+      0.06666666666666998
+    ]
+  },
+  "artifact_directory": "outputs\\sumo_recordings\\mappo-v02-sensors-20261027",
+  "sensor_source": "americano-i7-ev/v14",
+  "storage_bytes": 133425437,
+  "manual_visual_review": "Main car and background proxies visible; seven real RGB views and RTX point cloud inspected. Simple road geometry, no lane markings; no perception validation."
+}

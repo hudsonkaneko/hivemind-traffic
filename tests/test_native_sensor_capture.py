@@ -43,6 +43,19 @@ def test_camera_resolution_rgb_only_and_depth_separate(camera):
     assert sensor.detached
 
 
+def test_multiple_cameras_keep_distinct_sensor_and_calibration_identity(camera):
+    rear = NativeCamera('/World/Car/Rear', (64,32), episode_id='rig-test',
+                        sensor_id='rear', frame_id='rear_optical', calibration_id='rig/rear')
+    front_frame, _ = camera.read(.1)
+    rear_frame, _ = rear.read(.1)
+    assert rear_frame.header.sensor_id == 'rear'
+    assert rear_frame.header.frame_id == 'rear_optical'
+    assert rear_frame.header.calibration_id == 'rig/rear'
+    assert rear_frame.header.episode_id == 'rig-test'
+    assert front_frame.header.sensor_id != rear_frame.header.sensor_id
+    rear.close()
+
+
 @pytest.mark.parametrize('kind',['missing','shape','nan_depth','negative_depth'])
 def test_bad_camera_payload_rejected(camera,kind):
     if kind=='missing': camera.sensor.rgb=None

@@ -1,0 +1,119 @@
+{
+  "passed": true,
+  "training": false,
+  "optimizer_steps": 0,
+  "motion_owner": "SUMO recorded policy rollout",
+  "mode": "kinematic 3D replay; not physical policy validation",
+  "seed": 410001,
+  "policy_sha256": "6ec2167aa2c769ec41c9221b77382fe74658430ce852703ce32568d089e591fd",
+  "samples": 600,
+  "vehicle_count": 87,
+  "position_checks": 29097,
+  "maximum_position_error_m": 0.0,
+  "endpoint_checks": 174,
+  "static_and_motion_layers_unchanged": true,
+  "layer_sha256": {
+    "world.usda": "e322da0da2f13d36b3ab01fdc477938ba858dc2845064b8fa0874c9ab0389080",
+    "road.usda": "74eab047d1687d809ce6f03ef5999eae47589cdace232207c187a7b73f67eb8c",
+    "motion.usda": "8b6412c3a0a35e659827860f5a3c451ed24c0c474d92f47dc4844d858ecdcde0",
+    "vehicle.usda": "cf28680da6c5f659c8a6d5c9d748d7ced6fcf4c49375fa5f4b20087c2352e5ee"
+  },
+  "simulation_seconds": 59.9,
+  "source_timestep": 0.1,
+  "startup_seconds": 11.325731899938546,
+  "playback_wall_seconds": 8.708114700042643,
+  "playback_real_time_factor": 6.8786415961777205,
+  "paced_frame_ms": {
+    "mean": 14.314245000908462,
+    "p95": 18.364670017035678,
+    "maximum": 217.94020000379533
+  },
+  "geometry_diagnostics": [
+    {
+      "index": 0,
+      "camera_position": [
+        192.72229629838802,
+        -45.25,
+        29.999999999999986
+      ],
+      "ego_bounds_min": [
+        212.92229610765318,
+        -10.199999988079071,
+        0.09999998807907107
+      ],
+      "ego_bounds_max": [
+        217.72229629838804,
+        -8.300000011920929,
+        1.2000000119209289
+      ],
+      "active_camera": "/World/Cameras/Follow"
+    },
+    {
+      "index": 300,
+      "camera_position": [
+        913.7793723365702,
+        -45.24999999999997,
+        30.000000000000064
+      ],
+      "ego_bounds_min": [
+        933.9793721458353,
+        -10.199999988079071,
+        0.09999998807907107
+      ],
+      "ego_bounds_max": [
+        938.7793723365702,
+        -8.300000011920929,
+        1.2000000119209289
+      ],
+      "active_camera": "/World/Cameras/Follow"
+    },
+    {
+      "index": 599,
+      "camera_position": [
+        1638.021810396974,
+        -45.249999999999915,
+        29.99999999999998
+      ],
+      "ego_bounds_min": [
+        1658.2218102062393,
+        -10.199999988079071,
+        0.09999998807907107
+      ],
+      "ego_bounds_max": [
+        1663.0218103969742,
+        -8.300000011920929,
+        1.2000000119209289
+      ],
+      "active_camera": "/World/Cameras/Follow"
+    }
+  ],
+  "screenshots": [
+    "preview-0000.png",
+    "preview-0300.png",
+    "preview-0599.png"
+  ],
+  "root_children": [
+    "/World/Environment",
+    "/World/Lighting",
+    "/World/Vehicles",
+    "/World/Cameras"
+  ],
+  "runtime_owned_namespaces": [
+    "/Render",
+    "/OmniverseKit_Persp"
+  ],
+  "layers": [
+    "world.usda",
+    "motion.usda",
+    "road.usda"
+  ],
+  "manual_visual_review": {
+    "passed": true,
+    "images": [
+      "preview-0300.png",
+      "preview-0599.png"
+    ],
+    "finding": "Cars visible on highway; proxy geometry, recorded kinematic motion only."
+  },
+  "timing_caveat": "Not an isolated GPU benchmark; other Isaac jobs used workstation during session."
+}

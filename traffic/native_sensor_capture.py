@@ -20,7 +20,8 @@ def _finite(value):
 
 
 class NativeCamera:
-    def __init__(self, path, resolution=(1280,720), episode_id='sensor-v01'):
+    def __init__(self, path, resolution=(1280,720), episode_id='sensor-v01', *,
+                 sensor_id='front_camera', frame_id='camera_optical', calibration_id='front-camera-v1'):
         if len(resolution) != 2 or any(not isinstance(v,Integral) or isinstance(v,bool) or v < 32 for v in resolution):
             raise ValueError('Resolution must be (width,height), each at least 32')
         from isaacsim.sensors.experimental.rtx import RtxCamera, CameraSensor
@@ -30,6 +31,7 @@ class NativeCamera:
         self.path = path
         self.resolution = tuple(resolution)
         self.episode_id = episode_id
+        self.sensor_id, self.frame_id, self.calibration_id = sensor_id, frame_id, calibration_id
         self._last_time_s = -1.
 
     def read(self, time_s):
@@ -58,8 +60,8 @@ class NativeCamera:
         if np.isnan(depth).any() or np.any(depth < 0):
             raise RuntimeError('Camera depth contains invalid negative/NaN values')
         # Synchronous render barrier: no physics advances between render and read.
-        frame = CameraFrame(SensorHeader('front_camera','camera_optical',time_s,time_s,
-                                        'front-camera-v1',episode_id=self.episode_id),rgb[:,:,:3])
+        frame = CameraFrame(SensorHeader(self.sensor_id,self.frame_id,time_s,time_s,
+                                        self.calibration_id,episode_id=self.episode_id),rgb[:,:,:3])
         self._last_time_s = time_s
         return frame, depth
 

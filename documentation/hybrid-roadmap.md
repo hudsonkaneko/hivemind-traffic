@@ -384,3 +384,11 @@ physical-fleet or hivemind-effectiveness claims.
 
 
 October 26: [MAPPO v03 communication/wave setup](sumo-mappo-v3.md) adds explicit delivered messages and a reproducible SUMO braking pulse. 124 targeted tests and no-learning native preflight pass; policy training awaits reviewed configuration. This advances SUMO communication plumbing only, not physical V2V, merging, shorter headways or learned wave suppression.
+
+### 2026-10-27 checkpoint: frozen v02 in 3D
+
+Completed the bounded recorded-motion gate for v02: four actors, 60 seconds, seed 410001, exact original metrics and visible vehicles in Isaac captures. Evidence: [MAPPO v02 3D validation](mappo-v02-3d.md). Physical closed-loop transfer remains open; no training was started.
+
+### 2026-10-27 checkpoint: prepared-car replay sensing
+
+The v14 main-car sensor replay gate passed for 60 seconds: seven cameras, five LiDARs, 120 saved capture sets. Data and performance are retained in [sensor evidence](mappo-v02-sensors.md). Measured LiDAR lag is 66.7 ms; moving-object deskew and physical closed-loop control remain open.
