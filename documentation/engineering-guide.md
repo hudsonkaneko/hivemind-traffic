@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4588,3 +4588,41 @@ The new highway actor is a deterministic shared MAPPO TorchScript export with 93
 Policy catalog: [`https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-preparation/policies/versions`](<https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-preparation/policies/versions>)
 
 Training results: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/highway-stage1-training-v02.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/highway-stage1-training-v02.md>)
+
+<a id="docs-h-t3md3u3uz3tk"></a>
+
+#### November 3, 2026 — Stage 1 v03 acceleration diagnosis and disabled revision
+
+Implemented the next preparation milestone using sub-agents. The retained final-policy audit reconciles 6,965 overrides, of which 6,962 are measured native acceleration reductions. On those decisions, 94.90% of realized accelerations match the existing feasible target within 0.05 m/s². Median reduction is 0.175 m/s², p95 0.767 m/s²; disagreement can persist for 79.5 seconds. 6,072 changes still realize nonbraking acceleration and 890 realize braking. Native internal causes and near-collision status remain unlogged; merge changes have lower target agreement and remain separately unresolved.
+
+The frozen after-BC actor matches 99.886% of lane labels but has 0.2013 m/s² acceleration RMSE on its 49,998 retained training demonstrations; 47.17% of labels differ by more than 0.05 m/s². This offline fit check performs no learning and is not a driving override measurement.
+
+A matched 152.891-second teacher run on the same twelve validation cases passes all unchanged gates: 448/38,353 overrides (1.168%), worst case 4.156%, 6/6 merges, 10 passes and zero collisions/teleports/overspeed. However, two-lane following/passing speed ratios are 69.51%/67.10%, versus the final actor's 81.02%/94.95%. Retaining more teacher guidance may trade efficiency for feasibility; speed and full cohort burden remain review metrics. No validation trajectory is used for learning, and no held-out test traffic ran.
+
+New ranking v5 requires complete fixed validation and valid cohort accounting. It ranks safety and existing task gates first, then override-failing case count, worst and pooled overrides, then throughput/speed/pass/reward tie-breaks. Offline reranking favors retained phase 2 (12.473% pooled overrides) over final (18.147%); both remain unaccepted. Original run selections and published policy packages are preserved.
+
+The disabled v03 proposal keeps the 93-field actor, rewards, protection thresholds, paired seeds and 500k-decision/two-hour budget. Changes are twelve BC epochs, four-times acceleration loss during BC, and PPO teacher assistance decaying from 0.05 to 0.01 over 400k PPO decisions, retaining that floor. PPO learning rates/batch/epochs and the mixed curriculum remain as reviewed. These are combined pilot changes, not separately proven causal ablations.
+
+Verification: 98 regression tests pass. The frozen full preflight passes all 30 cases in 380.265 seconds with zero BC/PPO optimizer steps, no source drift, worst case 4.386% overrides, and successful API/seed/repeat/collector/export/geometry checks. Readiness passes, but training\_authorized remains false. Canonical disabled config SHA-256: 7c6cb1922727f73b62c502deeb8c1417f769ad7ec3aca6363ad782b8c884428b. There are no v03 learned weights; the next gate is review of the configuration before a new bounded attempt.
+
+Configuration, evidence and commands: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/highway-stage1-v03-preparation.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/highway-stage1-v03-preparation.md>)
+
+<a id="docs-h-x5si1i69sfxl"></a>
+
+#### November 3, 2026 — Stage 1 v03 training completed after checkpoint recovery
+
+The user approved the reviewed v03 configuration. Only its authorization flag changed in the retained launch copy; its canonical SHA-256 is 4df2efa0955d84de1bca101b1dd45d5e72e4a8709a4596165f0f36e6281ea5a8. Runtime source commit `cf6ae5096ebac9f165e9811ed3916195227f3146` remained unchanged. The chat waited for process completion/failure without monitoring progress; scheduled metrics, validation and checkpoints were collected automatically.
+
+Initial run train-20261103T230113Z-dbea1564 stopped after a Windows checkpoint replacement access denial. The external lock owner is unknown. Its valid closed last.pt resumed as train-20261103T230506Z-04ba1761 using identical sources/configuration and the remaining budget. One uncommitted BC update was discarded; both logs, failure evidence and source snapshots are retained. No checkpoint was patched or runtime code changed, and the resumed process completed without another error.
+
+The aggregate attempt consumed 499,990 active-agent transitions (49,998 demonstrations plus 449,992 PPO), 162 PPO updates and 3,544.125 seconds (59m04s) charged runtime. It stopped at the transition allocation, below the two-hour cap. The selected final actor completes 6/6 merges and 12 passes with zero collisions, teleports or overspeed under protections; cruise speed is 96.44–96.97% of limit.
+
+Quality remains unaccepted: 5,745/38,380 decisions require overrides (14.97% pooled, 51.47% worst), and five of twelve cases exceed the unchanged 5% gate. Compared with selected v02, failures fall from eight to five and pooled overrides fall by 3.18 percentage points. However, four-lane passing regresses from 35.56% to 51.47%. No held-out test or physical transfer was run.
+
+The retained phase-0 v03 actor has lower pooled/worst overrides (11.34%/32.63%) but six failing cases; ranking v5 correctly selects final because it prioritizes failing-case count. Better BC training-label fit (acceleration RMSE 0.20134 to 0.14399 m/s²) did not itself yield better driving: after-BC overrides were 29.02%, with two cruise task failures. These are one-seed combined-pilot results, not independently attributed effects.
+
+The frozen experimental actor is now in policies/versions/highway-stage1-v03 with exact config/contract, measured evaluation and checksums. SHA-256: a6d59d3acf58fcca9d7fc33406cb61ca3863d1a3dffad6dd316b195a66c7166f. CPU TorchScript loading, shape and finite-output checks pass; earlier packages are unchanged. Inputs remain exact SUMO/map state plus delivered messages, not cameras/LiDAR. Next: diagnose actor-visited following/passing acceleration errors and per-case regressions before reviewing another configuration. No further training is authorized by this completed attempt.
+
+Training evidence: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/highway-stage1-training-v03.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-v03/documentation/highway-stage1-training-v03.md>)
+
+Frozen policy: [`https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-v03/policies/versions/highway-stage1-v03`](<https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-v03/policies/versions/highway-stage1-v03>)
