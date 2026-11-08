@@ -1,6 +1,6 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v29**, updated **November 8, 2026, America/Los_Angeles**.
+Revision **v30**, updated **November 8, 2026, America/Los_Angeles**.
 Status: **Teacher-free flow117 pilot trained in two bounded rounds; improved but not accepted. Original imitation study remains disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
@@ -14,7 +14,7 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** inspect the remaining cruise/passing interventions and per-case measured jerk in the [completed teacher-free flow117 pilot](highway-flow-rl-v01.md) before proposing another revision. Two authorized rounds are complete: four matched development cases improved from 24.94% to 16.44% to 7.61% pooled interventions; the I-110 case passes one stable merge target at 0.67% interventions, but three cases exceed 5% and all four fail nominal peak comfort. The original teacher-assisted flow117 study still has failed reference qualification and null readiness/initializer selection; it was not silently unlocked. Preserve both learning rounds, the failed preflight, checkpoint/export provenance and the existing accepted baseline. No third round or held-out/physical claim.
+**Next action:** isolate the native ramp-junction slowdown, then address learned speed dips and optional detours into ending lanes identified in the [offline velocity analysis](highway-flow-rl-velocity-analysis.md). The first sharp drop is native braking despite positive policy commands, strongly consistent with a 4.5 m minor-link visibility rule. Later dips, including a 39.9-to-27.8 mph drop after the video ends, are policy-requested. Score full-route and per-car smoothness; the 0.67% pooled I-110 override figure and successful initial merge do not establish driving quality. This episode uses a 40.3 mph cap, not a 60 mph target. Preserve both completed rounds and the accepted baseline. No new simulation, training or acceptance promotion is authorized by this diagnosis.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -527,3 +527,8 @@ User authorized revising and launching training, checking only terminal results,
 ### v29 - November 8: SimReady video of final flow117 pilot
 
 Recorded and rendered the same frozen round-two I-110 merge development case. All ten compared evaluation metrics exactly reproduce, including stable-merge details. The 25-second, normal-speed clip uses the SimReady main car with lightweight backgrounds. Decode, pose and immutable-source checks passed. No new training, sensors or physical validation; acceptance status and next diagnostic action are unchanged. [Video and evidence](highway-flow-rl-v01.md#november-8-frozen-policy-merge-video). Guide incremental sync pending.
+
+
+### v30 - November 8: offline velocity and policy-command diagnosis
+
+Analyzed all 399 measured focal steps from the saved video replay. Exact speed/acceleration identity and command-stage decomposition pass; policy/realized correlation is 0.6745 overall and 1.0 without interventions. Initial 25.2-to-14.1 mph drop comes from SUMO while the actor requests acceleration; 4.5 m minor-junction visibility is strongly indicated. Later policy braking accompanies growing leader gaps and a detour into an ending lane, including a 39.9-to-27.8 mph drop outside the 25-second clip. Corrected plots use the actual 18 m/s episode cap. Saved CSV, plots, hashes and source diagnosis. No simulator, learning or parameter changes. [Analysis](highway-flow-rl-velocity-analysis.md). Guide sync pending.

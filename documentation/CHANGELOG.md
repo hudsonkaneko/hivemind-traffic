@@ -1045,3 +1045,8 @@ Implemented separately versioned training without unqualified teacher rewards/lo
 ## 2026-11-08 - Final flow117 merge video
 
 - Added frozen117 recorder and saved a 25-second I-110 replay using the SimReady main car. Same seed and ten compared metrics match the completed evaluation exactly; 250-frame encode/decode and unchanged asset/pose checks pass. No training or promotion. [Evidence](highway-flow-rl-v01.md#november-8-frozen-policy-merge-video). Guide sync pending.
+
+
+## 2026-11-08 - Offline MAPPO slowdown diagnosis
+
+- Saved speed/velocity/command traces and graphs from the existing SimReady replay. Identified native junction braking despite positive policy acceleration, later policy-requested speed dips and an ending-lane detour. Verified exact speed-change decomposition across 399 steps; actual episode cap is 18 m/s. [Analysis](highway-flow-rl-velocity-analysis.md). No simulation/training or control changes. Guide sync pending.

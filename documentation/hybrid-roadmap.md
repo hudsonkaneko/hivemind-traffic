@@ -666,3 +666,8 @@ The [living sensor-driven roadmap](sensor-driven-training-roadmap.md) is now v18
 ## November 8 - Recorded flow117 SimReady merge replay
 
 [Final pilot video](highway-flow-rl-v01.md#november-8-frozen-policy-merge-video) shows the round-two actor on its matched I-110 development case, with SimReady main car and lightweight traffic. Exact metric reproduction, 25 seconds at normal speed, verified video/poses/assets. Visualization only; no training, sensors, physical validation or acceptance promotion.
+
+
+## November 8 - MAPPO velocity diagnosis
+
+[Offline speed and command analysis](highway-flow-rl-velocity-analysis.md) separates native entry braking from learned speed/route problems. Next: isolate minor-junction behavior, then ending-lane detours and cruise behavior, retaining full-route/per-car metrics. Saved CSV and charts; no new simulation, training or promotion.

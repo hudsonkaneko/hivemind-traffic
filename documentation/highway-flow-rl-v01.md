@@ -149,3 +149,8 @@ Use `scripts/render_i110_merge_replay.py` with `--simready-main`,
 `--focal-agent agent_0`, `--camera-mode follow`, `--fps 10`, and the 0.1-25.0 s
 window. Exact render inputs/source/asset hashes are retained locally. Google
 engineering-guide synchronization of this incremental video note remains pending.
+
+
+## November 8: velocity diagnosis of the video
+
+[Full offline analysis](highway-flow-rl-velocity-analysis.md) distinguishes native junction braking from later learned braking and an optional detour into an ending lane. It also reveals a larger slowdown after the 25-second clip. The successful initial merge does not establish full-route smoothness. CSV, charts and command-stage attribution are saved; no new simulation or training.
