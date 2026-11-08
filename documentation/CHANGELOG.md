@@ -4,6 +4,18 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-22 - Google engineering guide mirrored on GitHub
+
+- Converted the complete 42-tab Google guide to `engineering-guide.md`, preserving
+  14 tables, 182 command blocks, screenshot hyperlinks and historical wording.
+- Added a document/revision/tab/hash manifest, conflict-safe refresh script,
+  README links and persistent instructions to synchronize future chat-driven
+  guide updates with the existing native document. Added a reciprocal GitHub link
+  in its start tab; no background watcher or external-edit auto-sync is claimed.
+- Verified exact native note text and preservation of the other 41 tab bodies.
+  Ten targeted tests pass; GitHub-rendered output retains all 1,742 nonempty source
+  paragraphs and all tab anchors. See `learning-guide-sync.md` for the procedure.
+
 ## 2026-10-22 - Hazard training recovery and full-scene integration (v02/v03)
 
 - Fixed the native inference-tensor reset boundary and resumed the saved RSL

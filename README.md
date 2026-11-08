@@ -1,5 +1,10 @@
 # Hivemind Traffic
 
+Read the complete [Engineering & Learning Guide](documentation/engineering-guide.md)
+directly on GitHub. All Google guide tabs are mirrored in one searchable Markdown
+file, including tables and copyable commands. Guide updates from the project chat
+refresh both copies through the [documented sync workflow](documentation/learning-guide-sync.md#chat-managed-markdown-mirror).
+
 ## Start from a fresh clone
 
 See [clean-clone setup and validation](documentation/clean-clone.md). The supported

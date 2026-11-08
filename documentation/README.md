@@ -26,6 +26,7 @@ mixed-traffic, statistics, and visualization goals.
 
 | Read this | Purpose |
 | --- | --- |
+| [Engineering & Learning Guide](engineering-guide.md) | Complete Google guide mirrored as GitHub-readable Markdown; all tabs, tables and command examples |
 | [Active 20-step roadmap](hybrid-roadmap.md) | Development order, acceptance gates, and what is not validated yet |
 | [Physics-vehicle foundation](physics-vehicle-foundation.md) | First low-speed physical-car fixture, verified subset, and remaining gates |
 | [Dynamics, resets and Isaac Lab](physics-validation.md) | Expanded physical checks, real Lab reset/step compatibility, and retained warning investigation |
