@@ -709,3 +709,7 @@ The [consolidation record](consolidation-2026-10-02.md) and
 Consult the [documentation index](README.md), original experiment reports, and
 Git history. This new log does not invent missing historical entries or recast
 earlier SUMO-motion results as evidence for the new physical-vehicle architecture.
+
+## 2026-10-26 — MAPPO v03 communication and wave setup
+
+Added explicit seeded V2V transport, a masked shared message encoder, fixed-lane braking-pulse scenario, affected-lane rewards/metrics and matched no-communication config. 124 targeted tests and native no-learning preflight pass; zero optimizer steps and unchanged actor weights. No communication-benefit or trained-wave claim. See [configuration and evidence](sumo-mappo-v3.md). Google guide append/native readback and all42-tab Markdown regeneration verified; prior native guide updates reconciled without changing unrelated source work.

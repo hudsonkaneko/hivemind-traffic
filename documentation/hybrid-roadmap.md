@@ -381,3 +381,6 @@ and reuse of the scene/control boundary for a two-car/hybrid fixture. Library
 promotion and cloning/reset validation are required before expanding beyond the
 tested single-car task. This scene milestone does not advance highway-speed,
 physical-fleet or hivemind-effectiveness claims.
+
+
+October 26: [MAPPO v03 communication/wave setup](sumo-mappo-v3.md) adds explicit delivered messages and a reproducible SUMO braking pulse. 124 targeted tests and no-learning native preflight pass; policy training awaits reviewed configuration. This advances SUMO communication plumbing only, not physical V2V, merging, shorter headways or learned wave suppression.

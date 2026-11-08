@@ -1,0 +1,865 @@
+{
+  "version": "v03",
+  "training": false,
+  "optimizer_steps": 0,
+  "tests_passed": 124,
+  "run_id": "preflight-20261026T230647Z-60ff04c7",
+  "config_sha256": "8440a70c6ac0043c1b6d8a39c5ce7888f9255568bcd4bce730d734fd8b59b07f",
+  "source_sha256": {
+    "experiments/run_sumo_mappo.py": "0334d853845fec4d1f3374ac113ff5d0271171f7228cc62b2da4b7aadad515b6",
+    "experiments/sumo_mappo_support.py": "da889dfe2efcb7cf2200ec9f4b0c5a3199c94d1532ba929a2e62cc2476687999",
+    "experiments/sumo_mappo_rollout.py": "3b1461d61fb3d626e9fa70a3cecba415b48f292619ea1c563c9b19ca5617dbed",
+    "experiments/configs/sumo_mappo_v1.json": "53aa3ad5425c7fc3db1970643436fd3d0789a9e1a4da6db59c3711ed894ae288",
+    "policies/mappo.py": "dc14e7aeefe87c57d9ac6b71cee29db596bc4a7557c37e4fc717e83e809f1c65",
+    "environments/sumo_mappo_env.py": "595998966aaddf7d2a5beba1cd017be1c73bc3f34d165562645d25db6c0ee738",
+    "traffic/mappo_sumo.py": "c0eb8e06a0e6d94c7a18a83a86a83c4ae01694452627f6fe56894d0cb529c796",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "traffic/mappo_communication.py": "9ad6f5851a403af301f1321a7f8c137eb59acdd1cbdc1a12aa8d46f7434a88eb",
+    "requirements.txt": "a057af83cf9f81ac9306afa68b62f340373a764090d7f14c4feed0438be059fc",
+    "scenarios/mappo_highway/edges.edg.xml": "e90fa974eabb39dbe74c2df963b260548aa68eeec33ab59411049bca256321f7",
+    "scenarios/mappo_highway/network.net.xml": "67aa49629d3bfe7316067adbc2d25b17eecd57ff3a81f627de50f45809508202",
+    "scenarios/mappo_highway/nodes.nod.xml": "80aa41e9d79fe3c39b92c1c9056d1ea683cb7f9bd5b165caa2114d639c567888",
+    "scenarios/mappo_highway/README.md": "e8bfa5420895bab93dd0c0102b5c56000db1779f71a31556cc4646ad1e9487fd",
+    "experiments/configs/sumo_mappo_v2.json": "6c0f81463d87b1c5c7115bf11005080bfd94978d15f82f3fe38a2c2c757e55c8",
+    "experiments/configs/sumo_mappo_v3.json": "b7ac0ad8e01de18bfb27a9edf1ceab04131999bd95c75635bbcd85f001e31d5a",
+    "experiments/configs/sumo_mappo_v3_no_comm.json": "0ba718a3529de59ee1f0eb6582523ecee04b8050dc801d0e524c76a5fb082561"
+  },
+  "result": {
+    "training": false,
+    "optimizer_steps": 0,
+    "evaluations": {
+      "native": {
+        "controller": "native",
+        "episodes": [
+          {
+            "seed": 920001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 197.77545894352087,
+            "mean_progress_m": 1571.4529790556435,
+            "progress_by_agent_m": {
+              "agent_0": 1560.2046368985866,
+              "agent_1": 1567.6966820736634,
+              "agent_2": 1575.2000702025728,
+              "agent_3": 1582.7105270477518
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 0,
+            "intervention_fraction": 0.0,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 26.8224,
+            "min_ttc_s": 10.116148422544855,
+            "background_peak": 87,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 288807.82803197484,
+              "downstream_speed_squared_sum": 7529311.681988881,
+              "downstream_speed_count": 11168.0,
+              "throughput_count": 16.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 31959.6366020976,
+              "downstream_speed_variance_m2_s2": 5.4311128197924745,
+              "throughput_vehicles_per_hour": 959.9999999999907
+            }
+          },
+          {
+            "seed": 920002,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 195.74467711165482,
+            "mean_progress_m": 1568.343022187954,
+            "progress_by_agent_m": {
+              "agent_0": 1557.094479783491,
+              "agent_1": 1564.588435955055,
+              "agent_2": 1572.0958994216103,
+              "agent_3": 1579.5932735916597
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 0,
+            "intervention_fraction": 0.0,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 26.8224,
+            "min_ttc_s": 9.782277766753886,
+            "background_peak": 89,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 282472.96321345406,
+              "downstream_speed_squared_sum": 7332239.245664541,
+              "downstream_speed_count": 10965.0,
+              "throughput_count": 17.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 31334.87824374549,
+              "downstream_speed_variance_m2_s2": 5.048841364814507,
+              "throughput_vehicles_per_hour": 1019.9999999999901
+            }
+          }
+        ],
+        "summary": {
+          "episodes": 2,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.0,
+          "mean_team_reward": 196.76006802758786,
+          "std_team_reward": 1.0153909159330254,
+          "mean_progress_m": 1569.8980006217987,
+          "nominal_episodes": 2,
+          "peak_speed_m_s": 26.8224,
+          "accepted": true,
+          "wave": {
+            "valid": true,
+            "mean_downstream_speed_variance_m2_s2": 5.239977092303491,
+            "mean_throughput_vehicles_per_hour": 989.9999999999905,
+            "mean_traffic_progress_m": 31647.257422921546
+          },
+          "selection_score": [
+            1,
+            0,
+            0,
+            2,
+            196.76006802758786,
+            -0.0
+          ]
+        }
+      },
+      "scripted": {
+        "controller": "scripted",
+        "episodes": [
+          {
+            "seed": 920001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 1125.6157367856686,
+            "mean_progress_m": 1489.5578925738612,
+            "progress_by_agent_m": {
+              "agent_0": 1482.7795158570973,
+              "agent_1": 1490.3320527975582,
+              "agent_2": 1492.5600008203946,
+              "agent_3": 1492.5600008203949
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 71,
+            "intervention_fraction": 0.029583333333333333,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 25.0000001326209,
+            "min_ttc_s": 10.116148422544855,
+            "background_peak": 87,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 281350.12115568237,
+              "downstream_speed_squared_sum": 7141622.338253874,
+              "downstream_speed_count": 11168.0,
+              "throughput_count": 16.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 31213.865914468264,
+              "downstream_speed_variance_m2_s2": 4.808589543135781,
+              "throughput_vehicles_per_hour": 959.9999999999907
+            }
+          },
+          {
+            "seed": 920002,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 1114.5857466770142,
+            "mean_progress_m": 1488.5717428442156,
+            "progress_by_agent_m": {
+              "agent_0": 1480.3143065100342,
+              "agent_1": 1488.8526632260387,
+              "agent_2": 1492.5600008203946,
+              "agent_3": 1492.5600008203949
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 94,
+            "intervention_fraction": 0.03916666666666667,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 25.0000001326209,
+            "min_ttc_s": 9.782277766753886,
+            "background_peak": 89,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 277502.68714783626,
+              "downstream_speed_squared_sum": 7073307.3365181945,
+              "downstream_speed_count": 10965.0,
+              "throughput_count": 17.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 30837.850637183674,
+              "downstream_speed_variance_m2_s2": 4.583448024022914,
+              "throughput_vehicles_per_hour": 1019.9999999999901
+            }
+          }
+        ],
+        "summary": {
+          "episodes": 2,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.034375,
+          "mean_team_reward": 1120.1007417313413,
+          "std_team_reward": 5.514995054327187,
+          "mean_progress_m": 1489.0648177090384,
+          "nominal_episodes": 2,
+          "peak_speed_m_s": 25.0000001326209,
+          "accepted": true,
+          "wave": {
+            "valid": true,
+            "mean_downstream_speed_variance_m2_s2": 4.696018783579348,
+            "mean_throughput_vehicles_per_hour": 989.9999999999905,
+            "mean_traffic_progress_m": 31025.85827582597
+          },
+          "selection_score": [
+            1,
+            0,
+            0,
+            2,
+            1120.1007417313413,
+            -0.034375
+          ]
+        }
+      },
+      "random": {
+        "controller": "random",
+        "episodes": [
+          {
+            "seed": 920001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": -76.59315020196935,
+            "mean_progress_m": 154.13306311116506,
+            "progress_by_agent_m": {
+              "agent_0": 136.92253058615682,
+              "agent_1": 157.3228009140953,
+              "agent_2": 145.06539144769079,
+              "agent_3": 177.2215294967173
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 1064,
+            "intervention_fraction": 0.44333333333333336,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 19.82714463248849,
+            "min_ttc_s": 7.877390896359602,
+            "background_peak": 81,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 39505.47111816117,
+              "downstream_speed_squared_sum": 475026.6075109397,
+              "downstream_speed_count": 10029.0,
+              "throughput_count": 2.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 7039.20330071617,
+              "downstream_speed_variance_m2_s2": 31.848606221729128,
+              "throughput_vehicles_per_hour": 119.99999999999883
+            }
+          },
+          {
+            "seed": 920002,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": -84.21388247047771,
+            "mean_progress_m": 156.976430240257,
+            "progress_by_agent_m": {
+              "agent_0": 159.63907197122387,
+              "agent_1": 171.52884644880533,
+              "agent_2": 167.83039894939895,
+              "agent_3": 128.90740359159983
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 1040,
+            "intervention_fraction": 0.43333333333333335,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 20.189723840355875,
+            "min_ttc_s": 15.271972345073149,
+            "background_peak": 80,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 27637.91049136571,
+              "downstream_speed_squared_sum": 343720.09447994904,
+              "downstream_speed_count": 8555.0,
+              "throughput_count": 2.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 5867.309313036626,
+              "downstream_speed_variance_m2_s2": 29.740812270138743,
+              "throughput_vehicles_per_hour": 119.99999999999883
+            }
+          }
+        ],
+        "summary": {
+          "episodes": 2,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.43833333333333335,
+          "mean_team_reward": -80.40351633622353,
+          "std_team_reward": 3.8103661342541812,
+          "mean_progress_m": 155.55474667571104,
+          "nominal_episodes": 2,
+          "peak_speed_m_s": 20.189723840355875,
+          "accepted": false,
+          "wave": {
+            "valid": true,
+            "mean_downstream_speed_variance_m2_s2": 30.794709245933937,
+            "mean_throughput_vehicles_per_hour": 119.99999999999883,
+            "mean_traffic_progress_m": 6453.2563068763975
+          },
+          "selection_score": [
+            0,
+            0,
+            0,
+            2,
+            -80.40351633622353,
+            -0.43833333333333335
+          ]
+        }
+      },
+      "untrained": {
+        "controller": "untrained",
+        "episodes": [
+          {
+            "seed": 920001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": -234.03762102493533,
+            "mean_progress_m": 160.36988872401355,
+            "progress_by_agent_m": {
+              "agent_0": 159.92501527788426,
+              "agent_1": 159.99775408501074,
+              "agent_2": 160.59395785446424,
+              "agent_3": 160.96282767869494
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 1758,
+            "intervention_fraction": 0.7325,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 19.877222460147458,
+            "min_ttc_s": 27.907334171158222,
+            "background_peak": 79,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 36308.120224657454,
+              "downstream_speed_squared_sum": 435701.9837701764,
+              "downstream_speed_count": 9858.0,
+              "throughput_count": 2.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 6722.949468765791,
+              "downstream_speed_variance_m2_s2": 30.632491644675753,
+              "throughput_vehicles_per_hour": 119.99999999999883
+            }
+          },
+          {
+            "seed": 920002,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": -231.10575430337977,
+            "mean_progress_m": 160.42782602652125,
+            "progress_by_agent_m": {
+              "agent_0": 159.9143392386331,
+              "agent_1": 160.00803876958287,
+              "agent_2": 160.62830851899167,
+              "agent_3": 161.16061757887738
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 1757,
+            "intervention_fraction": 0.7320833333333333,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 19.87723408729071,
+            "min_ttc_s": 27.91213971311388,
+            "background_peak": 83,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 36296.77328711439,
+              "downstream_speed_squared_sum": 455869.35100145184,
+              "downstream_speed_count": 9471.0,
+              "throughput_count": 2.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 6728.466114611482,
+              "downstream_speed_variance_m2_s2": 33.445799221411875,
+              "throughput_vehicles_per_hour": 119.99999999999883
+            }
+          }
+        ],
+        "summary": {
+          "episodes": 2,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.7322916666666667,
+          "mean_team_reward": -232.57168766415754,
+          "std_team_reward": 1.4659333607777825,
+          "mean_progress_m": 160.3988573752674,
+          "nominal_episodes": 2,
+          "peak_speed_m_s": 19.87723408729071,
+          "accepted": false,
+          "wave": {
+            "valid": true,
+            "mean_downstream_speed_variance_m2_s2": 32.039145433043814,
+            "mean_throughput_vehicles_per_hour": 119.99999999999883,
+            "mean_traffic_progress_m": 6725.7077916886365
+          },
+          "selection_score": [
+            0,
+            0,
+            0,
+            2,
+            -232.57168766415754,
+            -0.7322916666666667
+          ]
+        }
+      },
+      "cooperative_scripted": {
+        "controller": "cooperative_scripted",
+        "episodes": [
+          {
+            "seed": 920001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 1125.6157367856686,
+            "mean_progress_m": 1489.5578925738612,
+            "progress_by_agent_m": {
+              "agent_0": 1482.7795158570973,
+              "agent_1": 1490.3320527975582,
+              "agent_2": 1492.5600008203946,
+              "agent_3": 1492.5600008203949
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 71,
+            "intervention_fraction": 0.029583333333333333,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 25.0000001326209,
+            "min_ttc_s": 10.116148422544855,
+            "background_peak": 87,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 281350.12115568237,
+              "downstream_speed_squared_sum": 7141622.338253874,
+              "downstream_speed_count": 11168.0,
+              "throughput_count": 16.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 31213.865914468264,
+              "downstream_speed_variance_m2_s2": 4.808589543135781,
+              "throughput_vehicles_per_hour": 959.9999999999907
+            }
+          },
+          {
+            "seed": 920002,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 1114.5857466770142,
+            "mean_progress_m": 1488.5717428442156,
+            "progress_by_agent_m": {
+              "agent_0": 1480.3143065100342,
+              "agent_1": 1488.8526632260387,
+              "agent_2": 1492.5600008203946,
+              "agent_3": 1492.5600008203949
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 94,
+            "intervention_fraction": 0.03916666666666667,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 25.0000001326209,
+            "min_ttc_s": 9.782277766753886,
+            "background_peak": 89,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 277502.68714783626,
+              "downstream_speed_squared_sum": 7073307.3365181945,
+              "downstream_speed_count": 10965.0,
+              "throughput_count": 17.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 30837.850637183674,
+              "downstream_speed_variance_m2_s2": 4.583448024022914,
+              "throughput_vehicles_per_hour": 1019.9999999999901
+            }
+          }
+        ],
+        "summary": {
+          "episodes": 2,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.034375,
+          "mean_team_reward": 1120.1007417313413,
+          "std_team_reward": 5.514995054327187,
+          "mean_progress_m": 1489.0648177090384,
+          "nominal_episodes": 2,
+          "peak_speed_m_s": 25.0000001326209,
+          "accepted": true,
+          "wave": {
+            "valid": true,
+            "mean_downstream_speed_variance_m2_s2": 4.696018783579348,
+            "mean_throughput_vehicles_per_hour": 989.9999999999905,
+            "mean_traffic_progress_m": 31025.85827582597
+          },
+          "selection_score": [
+            1,
+            0,
+            0,
+            2,
+            1120.1007417313413,
+            -0.034375
+          ]
+        }
+      }
+    },
+    "scripted_repeat_equal": true,
+    "rollout": {
+      "agent_transitions": 512,
+      "environment_steps": 128,
+      "likelihood_max_error": 4.76837158203125e-07,
+      "finite": true,
+      "optimizer_steps": 0
+    },
+    "forced_worker_cleanup": [],
+    "actor_export_equal": true,
+    "channel_checks": {
+      "none": {
+        "controller": "cooperative_scripted",
+        "episodes": [
+          {
+            "seed": 920001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 1125.6157367856686,
+            "mean_progress_m": 1489.5578925738612,
+            "progress_by_agent_m": {
+              "agent_0": 1482.7795158570973,
+              "agent_1": 1490.3320527975582,
+              "agent_2": 1492.5600008203946,
+              "agent_3": 1492.5600008203949
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 71,
+            "intervention_fraction": 0.029583333333333333,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 25.0000001326209,
+            "min_ttc_s": 10.116148422544855,
+            "background_peak": 87,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 281350.12115568237,
+              "downstream_speed_squared_sum": 7141622.338253874,
+              "downstream_speed_count": 11168.0,
+              "throughput_count": 16.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 31213.865914468264,
+              "downstream_speed_variance_m2_s2": 4.808589543135781,
+              "throughput_vehicles_per_hour": 959.9999999999907
+            }
+          }
+        ],
+        "summary": {
+          "episodes": 1,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.029583333333333333,
+          "mean_team_reward": 1125.6157367856686,
+          "std_team_reward": 0.0,
+          "mean_progress_m": 1489.5578925738612,
+          "nominal_episodes": 1,
+          "peak_speed_m_s": 25.0000001326209,
+          "accepted": true,
+          "wave": {
+            "valid": true,
+            "mean_downstream_speed_variance_m2_s2": 4.808589543135781,
+            "mean_throughput_vehicles_per_hour": 959.9999999999907,
+            "mean_traffic_progress_m": 31213.865914468264
+          },
+          "selection_score": [
+            1,
+            0,
+            0,
+            1,
+            1125.6157367856686,
+            -0.029583333333333333
+          ]
+        }
+      },
+      "full": {
+        "controller": "cooperative_scripted",
+        "episodes": [
+          {
+            "seed": 920001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 1125.6157367856686,
+            "mean_progress_m": 1489.5578925738612,
+            "progress_by_agent_m": {
+              "agent_0": 1482.7795158570973,
+              "agent_1": 1490.3320527975582,
+              "agent_2": 1492.5600008203946,
+              "agent_3": 1492.5600008203949
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 71,
+            "intervention_fraction": 0.029583333333333333,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 25.0000001326209,
+            "min_ttc_s": 10.116148422544855,
+            "background_peak": 87,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 281350.12115568237,
+              "downstream_speed_squared_sum": 7141622.338253874,
+              "downstream_speed_count": 11168.0,
+              "throughput_count": 16.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 31213.865914468264,
+              "downstream_speed_variance_m2_s2": 4.808589543135781,
+              "throughput_vehicles_per_hour": 959.9999999999907
+            }
+          }
+        ],
+        "summary": {
+          "episodes": 1,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.029583333333333333,
+          "mean_team_reward": 1125.6157367856686,
+          "std_team_reward": 0.0,
+          "mean_progress_m": 1489.5578925738612,
+          "nominal_episodes": 1,
+          "peak_speed_m_s": 25.0000001326209,
+          "accepted": true,
+          "wave": {
+            "valid": true,
+            "mean_downstream_speed_variance_m2_s2": 4.808589543135781,
+            "mean_throughput_vehicles_per_hour": 959.9999999999907,
+            "mean_traffic_progress_m": 31213.865914468264
+          },
+          "selection_score": [
+            1,
+            0,
+            0,
+            1,
+            1125.6157367856686,
+            -0.029583333333333333
+          ]
+        }
+      },
+      "nominal": {
+        "controller": "cooperative_scripted",
+        "episodes": [
+          {
+            "seed": 920001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 1125.6157367856686,
+            "mean_progress_m": 1489.5578925738612,
+            "progress_by_agent_m": {
+              "agent_0": 1482.7795158570973,
+              "agent_1": 1490.3320527975582,
+              "agent_2": 1492.5600008203946,
+              "agent_3": 1492.5600008203949
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 71,
+            "intervention_fraction": 0.029583333333333333,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 25.0000001326209,
+            "min_ttc_s": 10.116148422544855,
+            "background_peak": 87,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 281350.12115568237,
+              "downstream_speed_squared_sum": 7141622.338253874,
+              "downstream_speed_count": 11168.0,
+              "throughput_count": 16.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 31213.865914468264,
+              "downstream_speed_variance_m2_s2": 4.808589543135781,
+              "throughput_vehicles_per_hour": 959.9999999999907
+            }
+          }
+        ],
+        "summary": {
+          "episodes": 1,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.029583333333333333,
+          "mean_team_reward": 1125.6157367856686,
+          "std_team_reward": 0.0,
+          "mean_progress_m": 1489.5578925738612,
+          "nominal_episodes": 1,
+          "peak_speed_m_s": 25.0000001326209,
+          "accepted": true,
+          "wave": {
+            "valid": true,
+            "mean_downstream_speed_variance_m2_s2": 4.808589543135781,
+            "mean_throughput_vehicles_per_hour": 959.9999999999907,
+            "mean_traffic_progress_m": 31213.865914468264
+          },
+          "selection_score": [
+            1,
+            0,
+            0,
+            1,
+            1125.6157367856686,
+            -0.029583333333333333
+          ]
+        }
+      },
+      "outage": {
+        "controller": "cooperative_scripted",
+        "episodes": [
+          {
+            "seed": 920001,
+            "steps": 600,
+            "agent_transitions": 2400,
+            "team_reward": 1125.6157367856686,
+            "mean_progress_m": 1489.5578925738612,
+            "progress_by_agent_m": {
+              "agent_0": 1482.7795158570973,
+              "agent_1": 1490.3320527975582,
+              "agent_2": 1492.5600008203946,
+              "agent_3": 1492.5600008203949
+            },
+            "collision_vehicles": 0,
+            "collision_ids": [],
+            "interventions": 71,
+            "intervention_fraction": 0.029583333333333333,
+            "overspeed_steps": 0,
+            "peak_speed_m_s": 25.0000001326209,
+            "min_ttc_s": 10.116148422544855,
+            "background_peak": 87,
+            "end_causes": {
+              "agent_0": "time_limit",
+              "agent_1": "time_limit",
+              "agent_2": "time_limit",
+              "agent_3": "time_limit"
+            },
+            "nominal_end": true,
+            "wave": {
+              "downstream_speed_sum": 281350.12115568237,
+              "downstream_speed_squared_sum": 7141622.338253874,
+              "downstream_speed_count": 11168.0,
+              "throughput_count": 16.0,
+              "elapsed_s": 60.00000000000058,
+              "traffic_progress_m": 31213.865914468264,
+              "downstream_speed_variance_m2_s2": 4.808589543135781,
+              "throughput_vehicles_per_hour": 959.9999999999907
+            }
+          }
+        ],
+        "summary": {
+          "episodes": 1,
+          "collision_vehicles": 0,
+          "overspeed_steps": 0,
+          "intervention_fraction": 0.029583333333333333,
+          "mean_team_reward": 1125.6157367856686,
+          "std_team_reward": 0.0,
+          "mean_progress_m": 1489.5578925738612,
+          "nominal_episodes": 1,
+          "peak_speed_m_s": 25.0000001326209,
+          "accepted": true,
+          "wave": {
+            "valid": true,
+            "mean_downstream_speed_variance_m2_s2": 4.808589543135781,
+            "mean_throughput_vehicles_per_hour": 959.9999999999907,
+            "mean_traffic_progress_m": 31213.865914468264
+          },
+          "selection_score": [
+            1,
+            0,
+            0,
+            1,
+            1125.6157367856686,
+            -0.029583333333333333
+          ]
+        }
+      }
+    },
+    "wave_benefit_verified": false,
+    "wave_benefit_status": "setup only; requires separately trained matched no-communication baseline",
+    "parameters_unchanged": true,
+    "passed": true,
+    "status": "completed",
+    "wall_seconds": 35.84299999999348,
+    "source_unchanged": true
+  },
+  "prior_preflight": "preflight-20261026T230536Z-d277cd48",
+  "prior_note": "Initial scripted reference targeted the ceiling and over-intervened; v3 reference now uses25m/s and braking-only feedforward. v1/v2 reference preserved."
+}

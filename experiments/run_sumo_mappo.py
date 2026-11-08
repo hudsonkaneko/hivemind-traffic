@@ -7,6 +7,7 @@ explicit mode, pinned to the SHA-256 of the configuration approved by the user.
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 from contextlib import redirect_stderr, redirect_stdout
 import gzip
 import hashlib
@@ -32,7 +33,8 @@ from experiments.sumo_mappo_support import (
 def make_model(config):
     from policies.mappo import MappoActorCritic
     keys = ('observation_size', 'state_size', 'num_agents', 'actor_hidden_sizes', 'critic_hidden_sizes')
-    return MappoActorCritic(**{key: config['model'][key] for key in keys})
+    return MappoActorCritic(**{key: config['model'][key] for key in keys},
+                            message_encoder=config['model'].get('message_encoder', False))
 
 
 def seed_runtime(config):
@@ -70,15 +72,23 @@ def baseline_actions(kind, observations, rng, model=None):
             actions[agent] = np.asarray([rng.uniform(-1., 1.)], dtype=np.float32)
             continue
         acceleration = 0.
-        if kind == 'scripted':
+        if kind in ('scripted', 'cooperative_scripted'):
             obs = observations[agent]
             speed = obs[0] * 26.8224
-            target = 26.8224
+            target = 25.0 if len(obs) == 69 else 26.8224
             if obs[8] > .5:
                 gap = obs[6] * 120.
                 leader_speed = speed + obs[7] * 26.8224
                 target = min(target, leader_speed + .5 * (gap - 2.5 - 1.5 * speed))
             acceleration = float(np.clip(.8 * (target - speed), -4.5, 2.))
+            if kind == 'cooperative_scripted' and len(obs) == 69:
+                slots = obs[27:].reshape(6, 7)
+                ahead = [slot for slot in slots if slot[6] > .5 and slot[0] > 0 and abs(slot[1]) < .1]
+                if ahead:
+                    leader = min(ahead, key=lambda slot: slot[0])
+                    # Conservative braking anticipation; never accelerate solely on peer intent.
+                    if leader[4] < 0:
+                        acceleration = min(acceleration, float(.5 * leader[4] * 4.5))
         elif kind != 'native':
             raise ValueError('Unknown controller: ' + kind)
         actions[agent] = np.asarray([physical_acceleration_to_action(acceleration)], dtype=np.float32)
@@ -162,7 +172,10 @@ def preflight(config, output, logs, deadline):
     before = model_hash(model)
     result = dict(training=False, optimizer_steps=0, evaluations={})
     with gzip.open(output / 'preflight-actions.jsonl.gz', 'wt', encoding='utf-8') as journal:
-        for kind in ('native', 'scripted', 'random', 'untrained'):
+        kinds = ('native', 'scripted', 'random', 'untrained')
+        if config['model'].get('message_encoder', False):
+            kinds += ('cooperative_scripted',)
+        for kind in kinds:
             result['evaluations'][kind] = evaluate(config, kind, config['preflight']['seeds'], output, logs,
                                                    kind, model=model, deadline=deadline, journal=journal)
         repeat = evaluate(config, 'scripted', config['preflight']['seeds'][:1], output, logs,
@@ -194,6 +207,19 @@ def preflight(config, output, logs, deadline):
     with torch.no_grad():
         test_obs = batch['local_obs'][batch['active']][:8]
         result['actor_export_equal'] = bool(torch.allclose(actor(test_obs), model.actor(test_obs)))
+    if config['model'].get('message_encoder', False):
+        result['channel_checks'] = {}
+        cases = dict(none=dict(mode='none'), full=dict(mode='full', latency_s=[0., 0.], packet_loss=0.),
+                     nominal=dict(mode='local', latency_s=[.1, .1], packet_loss=0.),
+                     outage=dict(mode='local', latency_s=[0., .3], packet_loss=.2, outages_s=[[12., 15.]]))
+        for name, channel in cases.items():
+            variant = deepcopy(config)
+            variant['environment']['communication'].update(channel)
+            variant['model']['communication'] = channel['mode']
+            result['channel_checks'][name] = evaluate(variant, 'cooperative_scripted',
+                config['preflight']['seeds'][:1], output, logs, 'channel-' + name, deadline=deadline)
+        result['wave_benefit_verified'] = False
+        result['wave_benefit_status'] = 'setup only; requires separately trained matched no-communication baseline'
     result['parameters_unchanged'] = before == model_hash(model)
     result['passed'] = bool(result['scripted_repeat_equal'] and result['actor_export_equal']
                             and result['parameters_unchanged'] and not result['forced_worker_cleanup'])
@@ -274,7 +300,10 @@ def train(config, output, logs, deadline, resume=None):
                 unused_transition_budget=settings['max_agent_transitions'] - count,
                 updates=update, held_out=held_out, best_validation_score=best_score,
                 policy='policy.pt', checkpoint='checkpoints/best.pt', latest_checkpoint='checkpoints/latest.pt',
-                passed=True, learned_acceptance=held_out['learned']['summary']['accepted'])
+                passed=True, learned_acceptance=held_out['learned']['summary']['accepted'],
+                **(dict(wave_benefit_verified=False,
+                        wave_benefit_status='requires separately trained matched no-communication baseline')
+                   if config['model'].get('message_encoder', False) else {}))
 
 
 def execute(config, mode, resume=None):

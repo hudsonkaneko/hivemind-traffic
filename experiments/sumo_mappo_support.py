@@ -55,13 +55,23 @@ def validate_config(config):
         raise ValueError('Unsupported configuration schema')
     env, model, train = (config[key] for key in ('environment', 'model', 'training'))
     from environments.sumo_mappo_env import SumoMappoEnv
-    SumoMappoEnv(config=env)  # Validate the exact environment contract without starting SUMO.
-    fixed = {'observation_size': 27, 'state_size': 112, 'num_agents': 4,
-             'normalization': 'fixed_environment_feature_scaling', 'communication': 'none',
+    contract = SumoMappoEnv(config=env)  # Validate the exact environment contract without starting SUMO.
+    wave = bool((env.get('wave') or {}).get('enabled', False))
+    if (contract.observation_size != model['observation_size'] or contract.state_size != model['state_size']):
+        raise ValueError('Environment observation/state dimensions differ from model')
+    fixed = {'observation_size': 69 if wave else 27, 'state_size': 280 if wave else 112, 'num_agents': 4,
+             'normalization': 'fixed_environment_feature_scaling', 'communication': (env.get('communication') or {}).get('mode', 'none'),
              'action': 'tanh_gaussian_normalized_acceleration',
              'critic_input': 'joint_observations_alive_masks_and_agent_one_hot'}
+    if type(model.get('message_encoder', False)) is not bool or model.get('message_encoder', False) != wave:
+        raise ValueError('Wave study requires the masked message encoder')
     if any(model[key] != value for key, value in fixed.items()):
         raise ValueError('Unsupported actor/critic contract')
+    if wave:
+        targets = config['evaluation'].get('wave_targets', {})
+        if targets != dict(minimum_variance_reduction=.15, maximum_throughput_loss=.02,
+                           baseline='separately_trained_no_communication_same_scenario', requires_baseline=True):
+            raise ValueError('Wave study requires the declared matched-baseline targets')
     if env['speed_limit_m_s'] != 60 * .44704 or env['dt'] != .1:
         raise ValueError('This study requires a 60 mph ceiling and 0.1 s steps')
     if env['acceleration_min_m_s2'] != -4.5 or env['acceleration_max_m_s2'] != 2.:
@@ -120,7 +130,7 @@ def sources():
     names = ['experiments/run_sumo_mappo.py', 'experiments/sumo_mappo_support.py',
              'experiments/sumo_mappo_rollout.py', 'experiments/configs/sumo_mappo_v1.json',
              'policies/mappo.py', 'environments/sumo_mappo_env.py', 'traffic/mappo_sumo.py',
-             'traffic/sumo_backend.py', 'requirements.txt']
+             'traffic/sumo_backend.py', 'traffic/mappo_communication.py', 'requirements.txt']
     names += [str(path.relative_to(ROOT)).replace('\\', '/')
               for path in sorted((ROOT / 'scenarios/mappo_highway').glob('*')) if path.is_file()]
     names += [str(path.relative_to(ROOT)).replace('\\', '/')
@@ -130,7 +140,8 @@ def sources():
 
 def create_run(config, mode):
     run_id = mode + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ') + '-' + uuid.uuid4().hex[:8]
-    output = ROOT / 'outputs/sumo_mappo/v01' / run_id
+    version = 'v03' if (config['environment'].get('wave') or {}).get('enabled', False) else 'v01'
+    output = ROOT / 'outputs/sumo_mappo' / version / run_id
     logs = ROOT / 'logs/sumo_mappo' / run_id
     output.mkdir(parents=True, exist_ok=False)
     logs.mkdir(parents=True, exist_ok=False)
@@ -158,7 +169,7 @@ def manifest(config, mode):
                               gymnasium=gymnasium.__version__, pettingzoo=pettingzoo.__version__,
                               traci=getattr(traci, '__version__', 'unknown'),
                               sumo=subprocess.check_output([str(find_sumo_binary()), '--version'], text=True).splitlines()[0]),
-                rendering=False, communication='none')
+                rendering=False, communication=config['model']['communication'])
 
 
 def _worker_main(connection, config, run_directory, log_file):

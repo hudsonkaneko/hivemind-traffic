@@ -377,3 +377,8 @@ The protected read snapshot stays local in ignored `outputs/doc-sync/`. It is
 not part of the GitHub payload. Repository implementation and evidence remain
 authoritative; older notebook tabs describe their historical findings rather
 than the current state of every subsystem.
+
+
+## October 26: MAPPO v03 communication and wave setup
+
+Appended setup, final proposed pilot, actual preflight and limits to tab41; updated start-tab mirror link to codex/mappo-communication-waves. Before editing, full native source matched the existing local mirror, reconciling prior native guide updates. Revision-guarded append and complete native readback preserved all42 tabs and40 unaffected tab bodies. Regeneration/check succeeded from outputs/doc-sync/mappo-waves-v03/verified-source.json. Native pagination not inspected. No training launched.
