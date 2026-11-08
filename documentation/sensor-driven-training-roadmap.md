@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v07**, updated **November 4, 2026, America/Los_Angeles**.
-Status: **Stage 1 remains unaccepted; variable-population pilot completed with regression**.
+Revision **v08**, updated **November 4, 2026, America/Los_Angeles**.
+Status: **Stage 1 remains unaccepted; phase-0 reference restored for control diagnosis**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,11 +14,11 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** diagnose the failed [population pilot](highway-population-training-v01.md) using saved journals: interventions increased from 20.64% to 31.70%, and native lane-end emergency warnings escaped the sampled counter. Prepare a matched scripted baseline and a targeted correction before any new training proposal. The v04 correction-memory comparison remains separate and unimplemented; no further learning is authorized by this completed pilot.
+**Next action:** follow the [restored baseline and AV comparison](policy-baseline-av-comparison.md): calibrate requested/filtered/realized acceleration and native warning accounting, then diagnose objective balance on identical training states. Preserve the phase-0 parent as the lowest-intervention population-tested reference; v02 has fewer failing cases but worse worst-case behavior. Consider a bounded hybrid-controller experiment only after those diagnostics. No new training is authorized by this analysis.
 
 | Stage | Current status | Exit evidence needed |
 | --- | --- | --- |
-| 1. Learn driving with structured observations | Population v01 completed; 4/4 merge targets and 14 passes, 15/16 cases fail; interventions regressed | Per-task driving gates with low intervention and a frozen held-out evaluation |
+| 1. Learn driving with structured observations | Population v02 completed; 4/4 merge targets and 13 passes, 12/16 cases fail; phase-0 analysis reference restored | Per-task driving gates with low intervention and a frozen held-out evaluation |
 | 2. Learn with imperfect observations | Planned; existing message delay is only part of the problem | Paired clean/noisy results, leakage audit and reliable stale/missing-data behavior |
 | 3. Replace ideal fields with sensor estimates | Frozen segmentation/fusion previews and dataset/trainer preparation exist; policy integration open | Perception/tracking accuracy and latency, then physical closed-loop validation |
 
@@ -380,3 +380,8 @@ Matched scripted baseline measured 1.51% pooled overrides; prepare acceleration-
 ### November 4: population v02 retraining completed
 
 [Population v02](highway-population-training-v02.md): 99,998 decisions in 514.516 seconds. Pooled overrides 29.97%, worst 86.75%; twelve failing cases. Rejected for promotion. Metrics, native warnings and experimental weights retained. Next: diagnose acceleration errors before another revision. Google guide sync pending.
+
+
+### v08 — November 4: checkpoint review and published AV comparison
+
+Verified and preserved the exact Stage 1 v03 phase-0 actor as a reference, not accepted deployment. Same-population overrides 20.64% pooled/44.875% worst outperform both retrains, while v02 passes more individual cases. Offline journals reveal over-requesting without extra progress and sparse-case underexposure. [Comparison](policy-baseline-av-comparison.md) distinguishes PDM/PlanT planning, Wayformer forecasting, SMART sim agents, GPUDrive infrastructure and TransFuser perception. Prioritize control calibration/objective diagnosis before controller, history or attention ablations. No simulator or training ran. Google guide and Markdown mirror synchronized with verified full readback.
