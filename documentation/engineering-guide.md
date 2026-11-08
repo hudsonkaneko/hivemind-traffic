@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-v04-cooperative-passing/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/mappo-v04-cooperative-passing/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/semantic-lidar-fusion/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/semantic-lidar-fusion/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4394,3 +4394,21 @@ Use policy.pt or checkpoints/best.pt: selected update 175 at 764,800 total trans
 The scripted reference also passed the same 50 tests with 84 passes, 176 lane changes, 0.2367% interventions and mean progress 1,487.60 m; the neural actor had 212 lane changes. The baseline still performs better on interventions and average progress. Test seeds differ across refinements, so improvements across versions are descriptive rather than paired causal estimates. This acceptance applies to the declared SUMO passing/following fixtures with active safety filters; it does not establish physical steering, sensor inputs, 3D transfer, achieved 0.8 s following or causal communication benefit. Existing v02 integrations are preserved because their contract differs.
 
 Accepted policy SHA256: 4cf4898df997a444624552515ea987e7e994b1ca40bb002cf91f0647be8a7245. Source commit: `bd59d2f008c4c59615276c759377562fc339e826`. Config SHA256: 8d926dc86f53473ef64fcb5f7f36bfec5801554fe26e1773ecfb803c882485e9. Full checkpoints, demonstrations, action journals, source/runtime identity and metrics remain locally in outputs/sumo\_mappo/v04/train-20261029T235954Z-cc89b964/. Versioned documentation/evidence/sumo-mappo-v4-stability/ contains exact learned evaluation, all-controller per-seed CSV, optimization curves and summary/provenance. Detailed interpretation is in documentation/sumo-mappo-v4-stability.md. Bulk weights and journals are not in Git.
+
+<a id="docs-h-1xx7ncv8h9t1"></a>
+
+#### Semantic mask and LiDAR fusion v01 — October 30, 2026
+
+Implemented calibrated front-camera semantic-mask projection onto returns from the prepared v14 vehicle’s five RTX LiDARs. Static captures run first, followed by scripted moving traffic. No training ran; the MAPPO actor and its observation contract are unchanged. Masks currently come from simulator ground truth, not a learned segmentation model. Object IDs and rendered depth are reserved for independent evaluation and never determine fused labels.
+
+Verified run 20261030T223941Z-65f18896 passed all three fixtures. Static: 99.9545% assigned-point accuracy, 93.1699% in-image return coverage. Lead at 2 m/s: 99.9544% accuracy, 92.9647% coverage. Lead at 10 m/s: 99.9525% accuracy, 92.5769% coverage. Both moving actors have correctly labeled returns in all eight frames. The adjacent fixture moves oppositely at 0.8 or 4 m/s. These are scripted sensing fixtures, not policy-controlled traffic.
+
+Captures align to the absolute sensor clock after warm-up and use a render-only synchronization barrier. All 24 captures retain native point timestamps; accepted returns are 0.128–50 ms old. The unchanged 50 ms freshness gate rejects every return in the +250 ms stale-image control. A 3 m calibration error lowers first-frame accuracy to 75–79%. Forty-four focused offline tests pass. Independent review verified 238 artifact hashes, 13 source hashes and 10 unchanged source-vehicle hashes.
+
+Scope and limits: eight frames over 0.7 seconds per fixture, parked physical ego, front pinhole camera, no moving-object deskew, no learned perception and no highway-speed ego validation. Coverage is separate from accuracy: the fast lead car has 57% assignment coverage. Thin lane markings are mostly rejected and pedestrians are untested. The independent depth diagnostic flags about 1.7% of assigned points behind the rendered visible surface; this is not complete visibility or object-recall validation. Camera timestamps are render-barrier caller stamps, not independently measured acquisition timestamps.
+
+Implementation checkpoint 749f4e2 plus exact source snapshots/hashes records the tested version; all five failed development attempts remain preserved. Runtime: Isaac 6.0.1-rc.7, experimental RTX 1.4.6, RTX 5070, driver 621.01. Full raw captures and metrics remain locally in outputs/semantic-lidar-fusion/v01/20261030T223941Z-65f18896/. GitHub contains compact metrics and actual sensor screenshots, not the bulk scans or source vehicle assets.
+
+Results, screenshots, contracts and reproduction command: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/semantic-lidar-fusion/documentation/semantic-lidar-fusion-v01.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/semantic-lidar-fusion/documentation/semantic-lidar-fusion-v01.md>)
+
+Review: [`https://github.com/hudsonkaneko/hivemind-traffic/pull/31`](<https://github.com/hudsonkaneko/hivemind-traffic/pull/31>)

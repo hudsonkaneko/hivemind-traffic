@@ -745,3 +745,17 @@ Prepared the authorized retraining with a stronger applied-lane-change cost, str
 ## 2026-10-29 — MAPPO v04r2 accepted SUMO passing actor
 
 Authorized retraining completed in 21 min 31 s without runtime errors or agent monitoring. Selected update 175 passes all declared gates across 50 fresh test scenarios: 74 passes, 3.175% aggregate interventions, at most two lane changes/car/minute and zero collisions/overspeed/gap deficits. Latest update 233 regressed and is not the accepted actor. All metrics/checkpoints retained, independently audited, and [documented](sumo-mappo-v4-stability.md). Google guide and Markdown mirror synchronized. This is SUMO acceptance, not physical or sensor-driven validation.
+
+
+## 2026-10-30 — Semantic mask and LiDAR fusion v01
+
+Implemented calibrated front-camera mask projection onto five native RTX LiDARs,
+with explicit time/geometry rejection and independent per-actor evaluation.
+Static, 2 m/s and 10 m/s fixtures pass in run `20261030T223941Z-65f18896`:
+99.95% assigned-label accuracy and 92.58–93.17% in-image return coverage.
+Absolute-clock scheduling and render-only barriers preserve the 50 ms freshness
+limit. All 44 focused tests pass; raw captures, failures and metrics are retained.
+No training or MAPPO observation/policy change. Masks are simulator ground truth;
+parked ego and scripted traffic are bounded sensing tests.
+[Results, limitations and actual screenshots](semantic-lidar-fusion-v01.md);
+[draft PR 31](https://github.com/hudsonkaneko/hivemind-traffic/pull/31).

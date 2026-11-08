@@ -398,3 +398,15 @@ Appended the imitation-assisted training method, exact budget/splits, measured p
 ## October 29: v04r2 accepted lane-stability result
 
 Appended the training refinement, exact budget/splits, accepted held-out result, selected-versus-final checkpoint distinction and retained metrics to tab 41. Revision-guarded native edit and full readback preserved all 42 tabs and all 41 unaffected tab bodies. Regenerated and checked from `outputs/doc-sync/mappo-v04-stability/verified-source.json`. Native pagination was not inspected. Simulator acceptance is explicitly separated from physical transfer and communication-benefit claims.
+
+
+## October 30: Semantic mask and LiDAR fusion v01
+
+Appended implementation, actual static/moving results, timing corrections,
+preserved failures and limitations to tab 41. Updated the start-tab mirror link
+to `codex/semantic-lidar-fusion`. Revision-guarded native editing and full readback
+verified the exact addition, existing target history, all 42 tabs and all 40
+unaffected tab bodies. Regenerated and checked the Markdown/manifest against
+`outputs/doc-sync/semantic-lidar-fusion-v01/verified-source.json`. Native pagination
+was not inspected. Actual screenshots and compact metrics are in the
+[fusion evidence note](semantic-lidar-fusion-v01.md).
