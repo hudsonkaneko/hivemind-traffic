@@ -26,5 +26,10 @@ JUnit reports: `outputs/ci-pr60-fixture-fix-02/tests.xml` and
 The first local invocation had seven setup errors because its custom temporary
 parent was missing; that harness error and log are retained separately.
 
-GitHub's full-suite result for the pushed repair must be checked separately;
-focused local passes alone are not a claim that remote CI is green.
+GitHub verified repair commit `e9b718638c9377b6efe71f7a5d432683bdcf6e6c`:
+[PR run](https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42527724702)
+and [push run](https://github.com/hudsonkaneko/hivemind-traffic/actions/runs/42527721537)
+both succeeded. The PR run reports 4,105 passed, 237 skipped, 162 passing subtests
+and 65 deprecation warnings, with no failures (382.81 s for the full CPU suite).
+This result applies to that exact repair commit; later metadata or workflow edits
+have their own CI status.
