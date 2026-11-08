@@ -524,3 +524,13 @@ the evidence. Stage 1 is still unaccepted; diagnose following/passing errors
 before proposing more training or advancing to sensor uncertainty. The new
 [frozen catalog version](../policies/versions/highway-stage1-v03/README.md) is
 experimental and preserves prior packages.
+
+
+## November 4, 2026: Stage 1 v04 training plan
+
+The [new training plan](highway-stage1-v04-training-plan.md) starts with saved-data
+diagnosis, then proposes a paired comparison of current-only imitation and
+retained acceleration corrections. Each arm is capped at 100k new training
+decisions or 30 minutes, with a shared frozen warm start and fixed evaluation.
+Screening progress is separate from nominal acceptance. Stage 1 remains open;
+implementation, final configuration review and launch authorization are next.
