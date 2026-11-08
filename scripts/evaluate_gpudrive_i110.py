@@ -34,7 +34,7 @@ def states(conn):
         cx,cy,yaw=center_from_front(x,y,api.getAngle(identity),length)
         result.append(dict(id=identity,x=cx,y=cy,z=z,yaw=yaw,speed=api.getSpeed(identity),
             acceleration=api.getAcceleration(identity),length=length,width=api.getWidth(identity),
-            lane_id=api.getLaneID(identity),distance_m=api.getDistance(identity),
+            lane_id=api.getLaneID(identity),edge_id=api.getRoadID(identity),distance_m=api.getDistance(identity),
             lane_position=api.getLanePosition(identity),route=api.getRoute(identity),
             allowed_speed=api.getAllowedSpeed(identity)))
     return result
@@ -64,11 +64,16 @@ def run(config, output, mode):
     shutil.copyfile(network,output/'network.net.xml');shutil.copyfile(routes,output/'routes.rou.xml')
     road=RoadMap(network,config['road_segment_length_m'])
     guarded=config.get('continuous_safety',False) and mode=='gpudrive'
+    repair_route=config.get('repair_destination_route',False) and mode=='gpudrive'
+    if repair_route and not guarded:
+        raise ValueError('Continuous route repair requires the explicit safety guards')
     if guarded:
-        from traffic.gpudrive_continuous_safety import guarded_step, current_constraints, recover_lane_state
+        from traffic.gpudrive_continuous_safety import (guarded_step, current_constraints,
+            recover_lane_state, restore_destination_route)
         from traffic.highway_merge_context import Stage1LaneGraph
         graph=Stage1LaneGraph(network)
     goal=tuple(road.lanes[config['goal_lane']]['points'][-1])
+    destination_edge=road.lanes[config['goal_lane']]['edge']
     policy=None
     if mode=='gpudrive':
         from traffic.gpudrive_pretrained import FrozenGPUDrivePolicy, encode_observation
@@ -98,9 +103,13 @@ def run(config, output, mode):
             'live minor-link yield checks and 20 ms footprint sampling. Unsafe proposals terminate this test. '
             'Not the complete native SUMO/MAPPO safety stack; background prediction is constant velocity.')
     source_hashes={p:sha(ROOT/p) for p in source_names}
+    if repair_route:
+        evaluation.update(destination_edge=destination_edge,route_repairs=[],route_repair_failures=[],
+                          move_to_xy_keep_route=2)
     try:
         traci.start(command,label=output.name)
         conn=traci.getConnection(output.name)
+        evaluation['sumo_version']=conn.getVersion()
         for lane in conn.lane.getIDList():
             conn.lane.setMaxSpeed(lane,min(conn.lane.getMaxSpeed(lane),config['scenario_speed_ceiling_m_s']))
         conn.simulationStep();cars=states(conn);ego=deepcopy(next(c for c in cars if c['id']=='agent_0'))
@@ -132,7 +141,8 @@ def run(config, output, mode):
                 traveled+=math.hypot(next_ego['x']-ego['x'],next_ego['y']-ego['y'])
                 fx,fy,heading=front_from_center(next_ego)
                 conn.vehicle.setSpeed('agent_0',max(0.,next_ego['speed']))
-                conn.vehicle.moveToXY('agent_0','',-1,fx,fy,angle=heading,keepRoute=3,matchThreshold=100.)
+                conn.vehicle.moveToXY('agent_0','',-1,fx,fy,angle=heading,
+                    keepRoute=2 if repair_route else 3,matchThreshold=100.)
                 ego=next_ego
             conn.simulationStep();stamp=conn.simulation.getTime();cars=states(conn)
             evaluation['completed_trips']+=len(conn.simulation.getArrivedIDList())
@@ -141,12 +151,27 @@ def run(config, output, mode):
             actual=next((c for c in cars if c['id']=='agent_0'),None)
             if actual is None:
                 evaluation['terminal_reason']='native_arrival' if 'agent_0' in conn.simulation.getArrivedIDList() else 'ego_missing'
+                if repair_route and evaluation['terminal_reason']=='native_arrival' and (
+                    math.hypot(ego['x']-goal[0],ego['y']-goal[1])>=config['goal_tolerance_m']):
+                    evaluation['terminal_reason']='premature_native_arrival'
                 break
             if policy:
                 err=math.hypot(actual['x']-ego['x'],actual['y']-ego['y'])
                 evaluation['pose_readback_max_error_m']=max(evaluation['pose_readback_max_error_m'],err)
                 if err>1e-3: raise RuntimeError('SUMO moved or snapped externally owned ego pose')
-                for key in ('lane_id','lane_position','route','allowed_speed'):
+                if repair_route:
+                    try:
+                        repaired,event=restore_destination_route(conn,actual,destination_edge)
+                        actual.update(repaired)
+                        if event:
+                            evaluation['route_repairs'].append(dict(time=stamp,**event))
+                    except ValueError as exc:
+                        evaluation['route_repair_failures'].append(dict(time=stamp,error=str(exc),
+                            edge=actual['edge_id'],lane=actual['lane_id'],route=list(actual['route'])))
+                        evaluation['terminal_reason']='destination_route_unavailable'
+                        frames.append(frame(cars,stamp,ego,traveled,evaluation['merge_completed']))
+                        break
+                for key in ('lane_id','edge_id','lane_position','route','allowed_speed'):
                     ego[key]=actual[key]
                 if guarded and (ego['lane_id'] not in graph.lanes or ego['lane_position']<0):
                     try:
