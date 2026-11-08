@@ -1082,3 +1082,8 @@ Saved a [reward revision plan](highway-flow-rl-reward-revision-plan.md) and sour
 ## November 8, 2026 - Remove branch prefixes without losing work
 
 [Branch naming cleanup](branch-naming-cleanup.md): renamed all 62 repository branches locally and on GitHub, preserving their commits. Recreated 48 affected PRs with original metadata and historical-discussion links; teammate fork PR #16 remains open. Active work is mappo-flow-rl-v02 / PR #108. Future names omit codex/ and push CI covers all branch names. The earlier checkpoint-fixture repair passed GitHub full CI (4,105 tests). No policy or training changes.
+
+
+## November 8, 2026 - Repair CI across historical open PRs
+
+[Open-PR audit](ci-open-pr-audit-2026-11-08.md): inspected all failure groups and backported the portable checkpoint fixture to ten historical branches; added the missing Pillow CI dependency to semantic-lidar-fusion. Local oldest-branch module: 67 passed. Semantic tests: seven passed; full collection: 3,169 tests. Exact repair commits and logs retained; per-head GitHub checks remain the remote acceptance evidence. No policy or training changes.
