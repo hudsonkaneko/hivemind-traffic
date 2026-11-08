@@ -52,6 +52,18 @@ Google webhook, or automatic bidirectional GitHub integration.
    has not changed since the last read. Edits made outside this chat are imported
    at the next requested synchronization, not continuously monitored.
 
+## October 22: CIRCLES control smoke
+
+Appended the bounded seven-export physical-car result to **41 Isaac Lab lane
+task** and changed the start-tab Markdown link to `codex/circles-control-smoke`.
+The note distinguishes six limited actuation passes from zero strict stopping
+successes and preserves the interpolated controller's obstacle collision.
+Native readback verified the exact appended text, the start-tab link replacement,
+and all 40 unaffected tab bodies/metadata. The 42-tab mirror was regenerated and
+checked from `outputs/doc-sync/circles-20261022/verified-source.json`.
+The manifest records the verified revision; native pagination was not inspected.
+See [the experiment record](circles-control-smoke.md) for the measured scope.
+
 ## October 22: initial complete conversion
 
 Converted all 42 existing tabs and 14 native tables with 182 monospace command

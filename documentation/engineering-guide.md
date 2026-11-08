@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/github-engineering-guide/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/github-engineering-guide/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/circles-control-smoke/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/circles-control-smoke/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4152,3 +4152,21 @@ python -m experiments.verify_lane_following_lab --route left_r60 --profile visib
 ```
 
 Source and evidence: [task report](<https://github.com/hudsonkaneko/hivemind-traffic/blob/4166234197000459f9fa9b961c46117aa5281ddf/documentation/lab-lane-following.md>), [compact evidence](<https://github.com/hudsonkaneko/hivemind-traffic/blob/4166234197000459f9fa9b961c46117aa5281ddf/documentation/evidence/lab-lane-following-20261019.json>), [training proposal](<https://github.com/hudsonkaneko/hivemind-traffic/blob/4166234197000459f9fa9b961c46117aa5281ddf/documentation/lab-lane-following-training-proposal.md>), [resolved proposal](<https://github.com/hudsonkaneko/hivemind-traffic/blob/4166234197000459f9fa9b961c46117aa5281ddf/experiments/lane-follow-ppo-proposal.json>) and [validation protocol](<https://github.com/hudsonkaneko/hivemind-traffic/blob/4166234197000459f9fa9b961c46117aa5281ddf/experiments/lab-lane-following-validation.json>). Raw trajectories/logs remain ignored under outputs; published compact hashes do not replace raw data for independent numerical reconstruction.
+
+<a id="docs-h-vrbl26s62aqt"></a>
+
+### CIRCLES controller smoke — October 22, 2026
+
+Seven pinned public ONNX exports were tested without training on our existing one-car PhysX loop task against a stationary native obstacle. All seven supplied throttle/brake through a small adapter; our existing PathFollower supplied steering. This was an isolated physical-car test, not the full background-traffic showcase.
+
+Six models moved 9.14–11.73 m without contact, with peak speeds of 0.59–0.77 m/s. They timed out well short of the task's required stopping window. The cra\_interp export reached 2.99 m/s and contacted the obstacle after 22.51 m. Strict stopping-task success: 0/7. Basic non-contact actuation smoke: 6/7. Low final speed alone is not a successful policy stop.
+
+Inputs were measured native ego speed, stationary leader speed and chassis-frame bumper gap, in m/s, m/s and metres. ONNX inference ran at 20 Hz, pedal/steering commands at 60 Hz and physics at 120 Hz. The adapter used desired\_speed = clamp(speed + 0.6 \* output, 0, 3), throttle gain 0.7 and brake gain 0.35. Two seconds of reset settling used full brakes; no obstacle safety shield supplied the driving controls.
+
+Only controllers/cra/README.md explicitly documents acceleration units and the Time-Headway Follower-Stopper contract. Other exports use an experimental acceleration interpretation consistent with their graphs and common wrapper; they are not established as the exact final field-trial policy. These inference exports are not resumable RSL-RL checkpoints.
+
+Confirmed run: outputs/circles\_control/v01-20261023T021853Z-3dd776cb. All seven cases completed; cleanup, source identity and runtime checks passed. The earlier run is retained because separate log streams caused known startup errors to be misclassified. No training or external Isaac runtime changes occurred. Small ONNX dependencies and raw evidence remain in ignored project folders.
+
+Next implementation need: calibrate acceleration tracking and the observation/output contract before evaluating a moving leader or full traffic. This smoke does not establish LiDAR perception, merging, sudden-object avoidance or highway-speed control.
+
+Report and rerun instructions: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/circles-control-smoke/documentation/circles-control-smoke.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/circles-control-smoke/documentation/circles-control-smoke.md>)
