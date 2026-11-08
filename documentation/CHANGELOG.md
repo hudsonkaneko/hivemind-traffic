@@ -1072,3 +1072,8 @@ Compared frozen MAPPO agent_0 with geometry-selected native IDM main_8 in the sa
 ## November 8, 2026 - Research-backed reward revision proposal
 
 Saved a [reward revision plan](highway-flow-rl-reward-revision-plan.md) and source-hashed offline audit. The v02 cruise addition pays zero during both focal speed dips; proposed changes prioritize target/eligibility design, normalized Huber comfort and optional-ending-lane cost. Two sub-agents supplied research and code review. Candidate weights and reserve reallocation require review; runtime configuration, weights and training remain unchanged. No simulator runs. Google guide synchronization pending.
+
+
+## November 8, 2026 - Repair clean-clone initialization test
+
+[CI diagnosis and repair](ci-clean-clone-checkpoint-fixture-fix.md): replace an ignored local checkpoint dependency with real deterministic test artifacts, retain production checks and add corruption/fresh-critic assertions. All 67 module tests pass locally and in a clean checkout. No training, policy, runtime or workflow changes. Remote full-suite verification remains separate.
