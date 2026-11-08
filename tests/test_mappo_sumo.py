@@ -22,6 +22,34 @@ def require_sumo():
         pytest.skip("SUMO is not installed")
 
 
+def test_gui_cleanup_bounds_owned_process_wait(project_tmp_path):
+    import subprocess
+    import traci
+    events = []
+
+    class Process:
+        def wait(self, timeout):
+            events.append(('wait', timeout))
+            if len(events) == 2:
+                raise subprocess.TimeoutExpired('owned-sumo', timeout)
+
+        def kill(self):
+            events.append(('kill',))
+
+    class Connection:
+        _process = Process()
+
+        def close(self, wait):
+            events.append(('close', wait))
+            raise traci.exceptions.FatalTraCIError('simulated GUI socket timeout')
+
+    backend = MappoSumoBackend(DEFAULT_CONFIG, project_tmp_path, sumo_binary='unused', gui=True)
+    backend.connection = Connection()
+    backend.close()
+    assert events == [('close', False), ('wait', 5), ('kill',), ('wait', 5)]
+    assert backend.connection is None
+
+
 @pytest.fixture
 def project_tmp_path(request):
     """Keep runtime artifacts inside the checkout even with pytest's default OS temp settings."""
