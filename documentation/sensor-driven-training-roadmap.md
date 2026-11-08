@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v26**, updated **November 7, 2026, America/Los_Angeles**.
-Status: **Flow preparation implemented and tested; reference qualification failed; training remains disabled**.
+Revision **v27**, updated **November 7, 2026, America/Los_Angeles**.
+Status: **GPUDrive-to-MAPPO transfer plan saved; flow reference qualification failed; training remains disabled**.
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -14,7 +14,7 @@ camera/LiDAR perception. Do not require every useful input to come from pixels.
 Privileged simulator state can supervise a teacher, train the centralized critic
 and score evaluation; it must not silently enter the deployed actor or its masks.
 
-**Next action:** first inspect one failed gap window and implement longitudinal slot alignment; two focused approach-braking ablations were rejected and baseline restored (see v21 below). Then resolve the failed reference prerequisites recorded in [flow preparation v01](highway-flow-preparation-v01.md): native cut-in comfort, main-car gap/approach flow and full-route qualification. The new 117-input setup and paired imitation-strength runner are implemented. The 81-recording diagnostic bank is complete with explicit cached-evidence compatibility, preserved failures and three frozen event-coverage failures. Reference overrides are low but four nominal comfort gates and six task gates fail; I-110 main-car flow regresses while agent_4 avoids its ending-lane detour. Four 60-second SimReady replays and all-car metrics are saved. Initializer selection remains unresolved; no optimizer updates or training occurred. Requalify the reference before spending on the fixed 48-case initializer comparison and presenting a launch-ready configuration.
+**Next action:** follow the [GPUDrive-to-MAPPO lessons plan](mappo-gpudrive-lessons-plan-v01.md): inspect one saved failed gap window; add strict merge/control-stage audits, persistent pre-maneuver gap identity and longitudinal slot alignment to the prepared flow117 reference. Start with saved evidence and at most two bounded CPU checks; this plan has not been implemented or run. Preserve native safety and the failed ablation evidence. Reference qualification remains 17/27; initializer selection and readiness remain null. The original 48-case initializer comparison and paired 30k-decision pilot follow only after the full prerequisite gates, with the existing ledger/budget reconciled and exact configuration reviewed before launch.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -512,3 +512,8 @@ Implemented a checksum-pinned CPU inference port with exact upstream-logit parit
 ### v26 — November 7: crossing audit and bounded longitudinal comfort filter
 
 [GPUDrive v05](gpudrive-i110-v05.md) implements a network-connection audit, explicit acceleration-stage accounting, anticipatory following/speed targets and 3 m/s³ routine longitudinal jerk limiting before the unchanged final guard. One new same-seed CPU run reaches its goal at28.4 s without stops/contact/overspeed; peak/RMS longitudinal jerk improves60/15.00→3/1.17 m/s³. Forty tests plus16 subtests pass. However, the audit reveals that v04 and v05 leave the ramp early without a graph connection (32.23/33.41 m remaining). Prior occupancy/arrival evidence is not a verified proper merge. Raw command modification rises89.79→99.29% despite zero additional final-guard acceleration changes after conditioning, so this is controller comfort improvement, not policy qualification. All raw evidence/comparison metrics retained. Next action is the intended merge corridor and steering validation before further learning. No training or render. Incremental guide sync pending.
+
+
+### v27 — November 7: plan to apply GPUDrive lessons to MAPPO
+
+Saved [plan v01](mappo-gpudrive-lessons-plan-v01.md), anchored to the current flow117 preparation rather than reverting to the 93-field Stage1 actor. Transfer strict merge verification, command-stage accounting, anticipatory gap/speed alignment and measured comfort; do not transplant GPUDrive weights, steering or its heavy external filter. Keep native SUMO motion, current vehicle/safety limits, reference qualification, explicit ABI migration, paired initializer selection and the existing reviewed-training boundary. Proposed first screen is at most two 80-second CPU episodes with a shared 180-second wall ceiling, charged to the existing ledger. Preserve the planned two 30k-decision arms and 5,400-second shared ceiling; no fresh budget or readiness claim. Include actual curriculum-event coverage, communication/participation limits and quiet script-managed training after a future approved launch. Documentation-only milestone: no config/code/weights changes or simulator/training runs. Google guide incremental sync pending.
