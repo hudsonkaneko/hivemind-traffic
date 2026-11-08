@@ -53,7 +53,7 @@ This is the complete GitHub-readable copy of the Google guide. Milestone entries
 
 ## 00 Start here
 
-GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/i110-merge-training/documentation/engineering-guide.md>)
+GitHub Markdown copy: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/engineering-guide.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/engineering-guide.md>)
 
 Updates requested through the Highway Sim project chat keep this Google guide and its GitHub Markdown copy aligned. Changes made directly outside the chat are reconciled on the next requested sync; this is not a background watcher. Historical milestone entries keep their recorded dates and results.
 
@@ -4546,3 +4546,45 @@ Waymo imitation-plus-RL and its Driver/Simulator/Critic approach motivate warm-s
 Low-usage execution: put checkpointing, failure detection, scheduled validation and completion reports in scripts. Proposed sentinel every 50k transitions and full validation at stage boundaries/completion, deduplicated and included in the budget. The agent waits without progress polling or analysis while training runs, then checks results on completion/failure. Compatible mechanical recovery uses the remaining aggregate budget; material reward/observation changes get new versions. Preserve every attempt, raw metrics and checkpoint hashes locally, with compact results in GitHub; ignored weights are not automatically uploaded.
 
 Next gate: prepare Stage 1 diagnostics, merge contract and teacher, then present the final resolved configuration for review. No training authorization is implied by this plan.
+
+<a id="docs-h-cw17bfvrbtxk"></a>
+
+#### November 2, 2026 — Stage 1 structured highway preparation v02
+
+Implemented the first stage of the sensor-driven roadmap with sub-agents: intervention diagnostics; a separate 93-field actor/376-field centralized critic contract; graph-connected merge gap observations; an observation-only feasible scripted teacher; and a bounded BC/MAPPO runner with immutable selected actors, saved metrics and resumable optimizer/RNG/budget state. Current actor inputs remain exact SUMO state, route/map information and delivered messages. Cameras/LiDAR and physical steering remain later stages.
+
+The prior final actor requested over 1.8 m/s² on all 38,400 validation decisions and needed 96.44% overrides. The new diagnostic journal separates requested, filtered and measured acceleration. The teacher predicts the configured SUMO ACC response using its declared observations; this is simulator calibration, not proof of physical transfer.
+
+The first complete preflight passed 27 of 30 teacher cases. Its failures exposed generated ramps crossing through lanes before reaching the rightmost auxiliary lane. A separate right-entry v02 generator fixes that geometry and lane-level foe classification while preserving real merge yielding. Ten layouts passed structural checks and independent repeat builds. Original networks, imported I-110 and all failed results are preserved. Corrected geometry results are not controller-only comparisons on identical scenarios.
+
+The final complete preflight passed all 30 scripted cases in 412.84 seconds, with zero BC/PPO optimizer steps and no source drift: zero collisions, teleports or overspeed; 30/30 ramp merges; 16 passes across five passing cases; lowest cruise speed ratio 94.87%; 1,004 overrides in 82,454 vehicle decisions (1.22% pooled), worst case 4.39% against the unchanged 5% gate. Parallel API, seed/repeat, finite collector and actor-only export checks passed. The regression suite passed 243 tests. Held-out traffic was not evaluated; no learned policy was trained or accepted.
+
+Final disabled proposal: CPU, one worker; four agents; acceleration −4.5 to +2 m/s² and masked lane choices; existing 60 mph ceiling and 1.5-second following/stopping guards. Budget: 500,000 active-agent transitions or two hours, whichever comes first, including up to 50,000 teacher transitions and evaluation/recovery time. BC: four epochs, batch 512, learning rate 0.0003. MAPPO: actor/critic learning rates 0.0001/0.0003, four epochs, batch 256, clip 0.2, KL 0.02. Mixed phases: 100k foundation, 100k passing, 125k easy merging and 125k dense merging. Four-case sentinel every 50k; full 12-case validation after BC and phase boundaries. No automatic second attempt.
+
+Preparation readiness is verified, but training\_authorized remains false pending configuration review. Canonical disabled config SHA-256: 7b53e370d1b3c3a04d0ac2498974662414a7b939a3a740ab3654c5b595125494. Future training performs its own checkpointing/evaluation while the chat waits for completion or failure. A good scripted teacher does not establish learned driving, communication gains, sensor robustness or physical transfer.
+
+Review command from the project root: .\\.venv-traffic\\Scripts\\python.exe -m experiments.run\_highway\_stage1 --mode config
+
+Source and final config: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/highway-stage1-preparation-v02.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/highway-stage1-preparation-v02.md>)
+
+Final local evidence: outputs/highway-stage1/v02/preflight-20261103T040408Z-52a6d162/. Compact per-case results and provenance are published with the note; full source snapshots/journals remain local. Future last.pt and selection.json belong under outputs/highway-stage1/v02/train-&lt;timestamp&gt;-&lt;id&gt;/; selection.json identifies the immutable generation containing policy.pt. No trained weights exist for this milestone.
+
+The living sensor-driven roadmap now records preparation as verified, preserves the failed pilot and preflight history, and identifies final configuration approval as the next gate. Stage 1 remains incomplete until the learned policy passes its independent driving checks.
+
+<a id="docs-h-s596sqg1plj2"></a>
+
+#### November 3, 2026 — Stage 1 training completed and versioned policy catalog
+
+The user approved the prepared configuration. Run train-20261103T190020Z-8469072d completed without runtime errors or source drift: 499,992 active-agent transitions (49,998 teacher demonstrations plus 449,994 PPO), 162 updates, 59 minutes 24 seconds. The chat waited for exit without inspecting progress or analyzing training while it ran. Automated metrics, scheduled validation and checkpoints were retained. Source commit: `38c3b41b1dbc6a5a6d4417e8a5f60a958d193bd9`.
+
+Final twelve-case validation achieved 6/6 merges, four passes per passing case (12 total), cruise speed 96.59–97.42% of the limit, and zero collisions, teleports or overspeed under protections. It is not quality-accepted: 6,965/38,380 decisions needed overrides (18.15% pooled), worst case 53.56%; eight cases fail the unchanged 5% limit. Phase 2 had lower pooled overrides (12.47%) but also failed. The final actor was selected by the frozen competence-first ranking; it is not the lowest-intervention checkpoint. No held-out traffic test or second attempt was launched.
+
+The next diagnosis is native acceleration realization in following/passing cases and feasibility learning/ranking. Journals label 6,962 overrides as native realization differences and three as analytical speed-ceiling interventions; the underlying native causes are not inferred. No safety guard or acceptance threshold was weakened. The living plan now records completed but unaccepted learning.
+
+At the user's request, policies/versions provides a GitHub-readable catalog with frozen policy.pt weights, a short README per version, exact training configuration, observation/action contract, measured evaluation and checksums/provenance. The accepted v04r2 straight-road baseline and experimental highway-stage1-v02 have separate folders and compatibility/status labels. New versions must preserve earlier packages, describe intended versus verified behavior, and never silently replace an accepted actor. The source Python files under policies remain in place.
+
+The new highway actor is a deterministic shared MAPPO TorchScript export with 93 inputs and two outputs: normalized acceleration and masked lane intent. The environment converts acceleration with -4.5 + (a + 1) \* 3.25 m/s² and applies safety protections. It still uses exact SUMO/map state plus delivered messages, not camera/LiDAR perception or physical steering. SHA-256: 07ef91a2e7591becd235862c9b2ebb0dd5707ef364546ec251f8bf8964e1a6b3. Bulk journals and resume state remain local; the selected inference weights are intentionally included in the catalog, not published as a release asset.
+
+Policy catalog: [`https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-preparation/policies/versions`](<https://github.com/hudsonkaneko/hivemind-traffic/tree/codex/highway-stage1-preparation/policies/versions>)
+
+Training results: [`https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/highway-stage1-training-v02.md`](<https://github.com/hudsonkaneko/hivemind-traffic/blob/codex/highway-stage1-preparation/documentation/highway-stage1-training-v02.md>)

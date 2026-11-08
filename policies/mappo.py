@@ -86,15 +86,19 @@ class LocalDrivingActor(nn.Module):
     left, mapped to -1, 0, +1. An empty malformed mask conservatively permits
     staying only; it never invents permission to cross a lane boundary.
     """
-    def __init__(self, observation_size: int, hidden_sizes: Sequence[int]):
+    def __init__(self, observation_size: int, hidden_sizes: Sequence[int], *,
+                 local_size: int = 33, message_size: int = 8, mask_start: int = 30):
         super().__init__()
-        if observation_size != 81:
-            raise ValueError('Driving actor requires 33 local plus six 8-feature messages')
+        if (local_size not in (33, 45) or message_size != 8 or mask_start != 30
+                or observation_size != local_size + 6 * message_size):
+            raise ValueError('Driving actor requires an explicit supported local/message contract')
         self.observation_size = observation_size
-        self.mean_net = nn.Sequential(MessageObservationEncoder(33, 8), _mlp(50, hidden_sizes, 4, .01))
+        self.mask_start = mask_start
+        self.mean_net = nn.Sequential(MessageObservationEncoder(local_size, message_size),
+                                      _mlp(local_size + 17, hidden_sizes, 4, .01))
 
     def lane_logits(self, local_obs: torch.Tensor, raw: torch.Tensor) -> torch.Tensor:
-        mask = local_obs[..., 30:33] > .5
+        mask = local_obs[..., self.mask_start:self.mask_start + 3] > .5
         fallback = torch.zeros_like(mask)
         fallback[..., 1] = True
         mask = torch.where(mask.any(dim=-1, keepdim=True), mask, fallback)
@@ -125,6 +129,9 @@ class MappoActorCritic(nn.Module):
         critic_hidden_sizes: Sequence[int] = (256, 256),
         message_encoder: bool = False,
         hybrid_actions: bool = False,
+        driving_local_size: int = 33,
+        driving_message_size: int = 8,
+        driving_mask_start: int = 30,
     ):
         super().__init__()
         if num_agents <= 0 or state_size <= 0:
@@ -134,9 +141,11 @@ class MappoActorCritic(nn.Module):
         self.num_agents = num_agents
         self.hybrid_actions = bool(hybrid_actions)
         self.action_size = 2 if self.hybrid_actions else 1
-        if self.hybrid_actions and (not message_encoder or state_size != 328 or num_agents != 4):
-            raise ValueError('Driving actor requires the v04 message/state contract')
-        self.actor = (LocalDrivingActor(observation_size, actor_hidden_sizes) if self.hybrid_actions
+        if self.hybrid_actions and (not message_encoder or state_size != 4 * (observation_size + 1) or num_agents != 4):
+            raise ValueError('Driving actor requires the declared message/state contract')
+        self.actor = (LocalDrivingActor(observation_size, actor_hidden_sizes,
+                        local_size=driving_local_size, message_size=driving_message_size,
+                        mask_start=driving_mask_start) if self.hybrid_actions
                       else LocalAccelerationActor(observation_size, actor_hidden_sizes, message_encoder))
         self.log_std = nn.Parameter(torch.zeros(1))
         self.critic = _mlp(state_size + num_agents, critic_hidden_sizes, 1, 1.0)
@@ -407,7 +416,7 @@ class MappoTrainer:
                     imitation_loss=float(means[0]), imitation_acceleration_loss=float(means[1]),
                     imitation_lane_loss=float(means[2]), initial_log_std=initial_log_std, seed=seed)
 
-    def update(self, batch: Mapping[str, torch.Tensor]) -> dict:
+    def update(self, batch: Mapping[str, torch.Tensor], *, deadline: float | None = None) -> dict:
         widths = {
             "local_obs": self.model.observation_size,
             "global_states": self.model.state_size,
@@ -439,9 +448,13 @@ class MappoTrainer:
         early_stopped = False
         last_kl = 0.0
         completed_epochs = 0
+        budget_exhausted = False
         for _epoch in range(self.epochs):
             permutation = torch.randperm(samples, device=active.device)
             for start in range(0, samples, self.minibatch_size):
+                if deadline is not None and time.monotonic() >= deadline:
+                    budget_exhausted = True
+                    break
                 indices = permutation[start:start + self.minibatch_size]
                 part = {name: value[indices] for name, value in data.items()}
                 log_probs, entropy = self.model.evaluate_actions(part["local_obs"], part["actions"], part["pre_tanh_actions"])
@@ -489,12 +502,13 @@ class MappoTrainer:
                     "grad_norm_before_clip": float(grad_norm),
                     **imitation_stats,
                 })
-            if early_stopped:
+            if early_stopped or budget_exhausted:
                 break
             completed_epochs += 1
         result = {name: sum(item[name] for item in stats) / len(stats) for name in stats[0]} if stats else {}
         return dict(result, optimizer_steps=len(stats), completed_epochs=completed_epochs,
-                    early_stopped=early_stopped, last_kl=last_kl, active_samples=samples)
+                    early_stopped=early_stopped, last_kl=last_kl, active_samples=samples,
+                    budget_exhausted=budget_exhausted)
 
 
 def export_actor(model: MappoActorCritic, path: str | Path) -> Path:

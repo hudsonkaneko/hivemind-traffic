@@ -1,0 +1,4 @@
+# Preserve archived artifact bytes, including original JSON line endings.
+**/*.pt binary
+**/*.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+*.md text eol=lf
