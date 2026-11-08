@@ -1,8 +1,9 @@
 # Active roadmap: physical research cars, economical background traffic
 
-Updated: October 4, 2026. Status: physical lane following and bounded visible
-LiDAR-braking subset verified;
-scene-lifecycle reliability and full shared-map integration **in progress**.
+Updated: October 19, 2026. Status: physical lane following, the bounded visible
+LiDAR-braking subset and a separate one-car Isaac Lab lane task are verified
+within their stated fixtures. Broader lifecycle/endurance, shared-map and hybrid
+integration remain **in progress**. New Isaac Lab training remains **unapproved**.
 This is the active development order, replacing the old immediate-next-step
 sections in the preserved [implementation roadmap](../experiments/ROADMAP.md)
 and [capacity study](scaling-foundations.md). Historical evidence is unchanged.
@@ -24,6 +25,15 @@ preserving the 3 m/s baseline. Validation is in progress; this does not advance
 mixed-traffic, physical-fleet, new-training or real-time GUI acceptance gates.
 
 ## Destination and boundaries
+
+October 19 Lab task increment: [the one-car lane task](lab-lane-following.md)
+passed 12 native packages covering 16 episodes: 13 successful 60 m drive-and-stop
+episodes plus contact, departure and timeout controls. Three fresh-process
+nominal repeat pairs passed; bounded signed reset corners, native terminal-state
+handling and composed scene exports were checked. This advances the task/reset
+plumbing part of step 19. It does not complete the 100 m step-7 protocol, authorize
+training, validate cloning or add a physical fleet. The
+[training proposal](lab-lane-following-training-proposal.md) awaits user review.
 
 October 19 validation continuation: [native results and screenshots](showcase-validation-20261019.md)
 record three startup passes, a verified remote-admission repair and the first
@@ -166,7 +176,9 @@ vehicle's gains.
 
 Step 6's analytic geometry and step 7's nominal 3 m/s lane-following subset now
 have [recorded evidence](lane-following-results.json). SUMO route correspondence,
-physical perturbed-start robustness and lane changes remain unverified. The
+general perturbed-start robustness and lane changes remain unverified. The later
+[60 m Lab task](lab-lane-following.md) checks only its declared ±0.15 m/±0.035 rad
+reset corners; it does not replace the historical 100 m route gate. The
 [visible physical-car fixture](physics-lidar-view.md) advances a bounded subset
 of step 8: known-map steering plus RTX-return emergency braking, an explicit
 physics/render clock and sensor-loss testing. Overview/follow cameras and planned
@@ -215,6 +227,13 @@ the user to explain and agree on observations, actions, rewards, algorithm,
 training budget and held-out evaluation. Scripted plumbing/validation may proceed;
 do not launch unattended training under the current authorization. Existing
 single-environment Lab compatibility evidence is not a trained driving policy.
+
+The October 19 lane-task matrix now closes the bounded single-environment
+scripted task/space/reset/termination prerequisite, with actual terminal metadata
+checked through the local SB3 wrapper. There are no optimizer steps, trained
+checkpoints or learned-policy outcomes in that milestone. The proposal's
+algorithm, reward, observations, training budget and held-out evaluation must be
+agreed before proceeding; vectorized cloning remains a separate validation gate.
 
 | Step | Deliverable | Measurable exit gate |
 | ---: | --- | --- |
@@ -290,13 +309,22 @@ relationships and timing after restructuring.
 
 October 8: the [one-car bypass migration](physical-scene-composition.md) now has
 referenced assets, a versioned path interface, exact pre-runtime preservation
-checks and bounded physical/sensor evidence. Other physical/Lab fixtures retain
-their legacy contracts; historical results are untouched. Interactive Stage/layer
-inspection and camera/point controls remain to be checked in the editor.
+checks and bounded physical/sensor evidence. Other physical/Lab fixtures retained
+their legacy contracts at that checkpoint; historical results are untouched.
+Interactive Stage/layer inspection and camera/point controls remained open at
+that checkpoint.
 
-Next: finish that interactive inspection, profile live-window timing under matched
-desktop load, then reuse the validated scene/control boundary for the next
-two-car/hybrid gate. Library promotion and Lab cloning/reset tests must precede
-learned control; agree on observations/actions/rewards and budget with the user
-before launching new Isaac Lab training. This scene milestone does not advance
-highway-speed, physical-fleet or hivemind-effectiveness claims.
+October 19: the new Lab lane task uses the same stable composed vehicle paths,
+one Lab-owned `/World/Physics/Scene`, reusable asset references and separate
+runtime opinions. Actual exported ordinary/contact scenes pass fresh-process
+portability and static-hash checks; original screenshots show the native hierarchy
+and layer stack. The legacy compatibility probe is preserved separately.
+Plain OpenUSD audits through the installed runtime still use a `kit.exe` Python
+process and must run outside native process-isolation measurement windows.
+
+For the Lab task, next review the unapproved training proposal with the user.
+Broader scene work still includes live-window timing under matched desktop load
+and reuse of the scene/control boundary for a two-car/hybrid fixture. Library
+promotion and cloning/reset validation are required before expanding beyond the
+tested single-car task. This scene milestone does not advance highway-speed,
+physical-fleet or hivemind-effectiveness claims.

@@ -4,6 +4,41 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-10-19 - Lane-task guide synchronization
+
+- Added the lane task, original screenshot links and unapproved training proposal
+  to a new engineering-guide tab. All 191 native verification checks passed;
+  the 41 existing tabs remain unchanged. The [sync record](lab-lane-following.md#engineering-guide-synchronization-and-github-checkpoint)
+  includes source checkpoint, readback hashes and scope.
+- Implementation checkpoint `4166234` passed both Windows CPU/SUMO GitHub jobs.
+  Training remains unapproved with zero optimizer steps.
+
+## 2026-10-19 - Native Isaac Lab lane-following task
+
+- Added a separate one-car DirectRLEnv with seeded native resets, 22 privileged
+  observations, steering/throttle/brake actions, time-scaled rewards and explicit
+  failure/success/timeout behavior. Existing SUMO and compatibility demos remain
+  available. The task cruises at 3 m/s and stops at station 60 m.
+- Preserved referenced vehicle/road assets and named scene layers. Fixed the
+  installed Lab configuration boundary, enabled and verified native contact
+  reporting with cleanup, and corrected the project-local SB3 terminal snapshot
+  before automatic reset. Installed runtimes were not modified.
+- The frozen 12-package matrix passed: 13 successful drive/stop episodes and
+  three expected collision, departure and timeout diagnostics. All three fresh
+  process repeats had zero measured position/speed/yaw differences. Worst driving
+  lateral RMS was 0.043482 m; every successful stop held for a measured second.
+- Preserved construction, contact-reporting and process-isolation failures,
+  superseded attempts and serial reruns. Independent raw-trace/hash checks and
+  original viewport/hierarchy/layer screenshots are linked in the
+  [implementation and evidence note](lab-lane-following.md).
+- Full CPU regression passed 2,037 tests and 116 subtests, with 187 optional
+  runtime skips. Native validation and scene portability are recorded separately.
+- Prepared a concrete [PPO training proposal](lab-lane-following-training-proposal.md):
+  one route/environment, 65,536 control transitions, fixed selection and paired
+  held-out evaluation. It remains UNAPPROVED; no policy or optimizer was created
+  and no training was launched. Measured scripted throughput is not training
+  throughput or highway/sensor validation.
+
 ## 2026-10-19 - Engineering-guide synchronization
 
 - Appended the validated native results, six screenshot links and matched

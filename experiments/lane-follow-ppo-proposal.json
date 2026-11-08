@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "status": "UNAPPROVED_PROPOSAL_NOT_LAUNCHED",
+  "launch_enabled": false,
+  "training_started": false,
+  "optimizer_steps_executed": 0,
+  "trainer_entrypoint": null,
+  "authorization_required": "Direct user agreement on observations, actions, rewards, algorithm, budget, checkpoint selection and held-out evaluation before any optimizer step. Passing validation does not approve training.",
+  "scope": "A first low-speed physical-control pilot on one known curved route; not sensor autonomy, highway validation, traffic coordination or an accepted trained policy.",
+  "task": {
+    "contract": "environments/lane_following_contract.py",
+    "num_envs": 1,
+    "physics_device": "cpu",
+    "use_fabric": false,
+    "physics_hz": 120,
+    "control_hz": 60,
+    "training_route": "left_r60",
+    "route_file": "scenarios/physics-road/routes.json",
+    "road_length_m": 100,
+    "stop_s_m": 60,
+    "target_speed_m_s": 3,
+    "episode_s": 35,
+    "settle_s": 2,
+    "success_hold_s": 1,
+    "reset_lateral_uniform_m": [
+      -0.15,
+      0.15
+    ],
+    "reset_yaw_uniform_rad": [
+      -0.035,
+      0.035
+    ],
+    "reset_velocity": "zero; native wheel/rest state reset",
+    "route_scope": "Train left_r60 only. Straight/right held-out outcomes are transfer checks, not trained-route interpolation."
+  },
+  "observation": {
+    "source": "privileged_simulator_state_and_known_map",
+    "shape": [
+      1,
+      22
+    ],
+    "dtype": "float32",
+    "names": [
+      "progress_m",
+      "remaining_m",
+      "lateral_error_m",
+      "sin_heading_error",
+      "cos_heading_error",
+      "forward_speed_m_s",
+      "lateral_speed_m_s",
+      "planar_speed_m_s",
+      "vertical_speed_m_s",
+      "height_m",
+      "upright_z",
+      "curvature_rad_m",
+      "curvature_3m_ahead_rad_m",
+      "curvature_6m_ahead_rad_m",
+      "target_cruise_speed_m_s",
+      "target_speed_m_s",
+      "applied_steering_rad",
+      "applied_throttle",
+      "applied_brake",
+      "elapsed_fraction",
+      "settling",
+      "hold_fraction"
+    ],
+    "actor_and_critic": "same 22 fields",
+    "limitations": "No sensors; suspension, wheel dynamics and angular velocity are not observed. Do not claim a fully observed vehicle MDP."
+  },
+  "action": {
+    "shape": [
+      1,
+      3
+    ],
+    "names": [
+      "steering_rad",
+      "throttle",
+      "brake"
+    ],
+    "low": [
+      -0.5,
+      0,
+      0
+    ],
+    "high": [
+      0.5,
+      1,
+      1
+    ],
+    "steering_slew_max_rad_s": 0.5,
+    "command_ttl_physics_ticks": 12,
+    "finite_out_of_bounds": "clip",
+    "nonfinite_or_malformed": "abort before physics advances",
+    "priority": "Any positive brake suppresses throttle.",
+    "settling": "Forced brake for 2 s; requested policy actions have no actuation effect. Zero-running-reward settling transitions remain explicit in rollout.",
+    "exploration_limit": "Independent Gaussian throttle/brake outputs are redundant under brake priority; record clipping and overrides."
+  },
+  "reward": {
+    "status": "PROPOSED_WEIGHTS_REQUIRE_USER_AGREEMENT",
+    "dt_s": 0.016666666666666666,
+    "terms": {
+      "progress": "delta_route_station_m / 3.0 once; zero on impossible state jumps",
+      "lateral": "-dt * (lateral_error_m / 0.5)^2",
+      "heading": "-0.25 * dt * (heading_error_rad / 0.25)^2",
+      "speed": "-0.25 * dt * ((forward_speed_m_s - target_speed_m_s) / 3.0)^2",
+      "steering_rate": "-0.01 * dt * ((applied_steering_rad - previous_applied_steering_rad) / (dt * 0.5))^2",
+      "time": "-0.05 * dt",
+      "terminal": "+10 success; -10 task/physical failure; 0 timeout"
+    },
+    "settling": "Running components zero; an early safety failure still receives -10.",
+    "reward_not_acceptance": true
+  },
+  "terminal": {
+    "success": "Net progress >=59.5 m, station 60 +/-0.5 m and speed <=0.05 m/s for one continuous measured second, with no failure.",
+    "failure": "Declared contact, footprint, tilt/height, unsupported-duration, speed/reverse, heading, endpoint overshoot, command fallback or discontinuity guard. Malformed/nonfinite telemetry aborts.",
+    "timeout": "External 35 s cap truncates only if neither failure nor success occurred.",
+    "precedence": [
+      "failure",
+      "success",
+      "timeout"
+    ],
+    "bootstrap": "Only timeout-only truncations bootstrap from pre-reset final observation; success/failure do not."
+  },
+  "trainer": {
+    "library": "stable-baselines3",
+    "version": "2.9.0",
+    "algorithm": "PPO",
+    "policy": "MlpPolicy",
+    "device": "cpu",
+    "torch_num_threads": 4,
+    "policy_kwargs": {
+      "net_arch": {
+        "pi": [
+          64,
+          64
+        ],
+        "vf": [
+          64,
+          64
+        ]
+      },
+      "activation_fn": "torch.nn.Tanh",
+      "ortho_init": true,
+      "log_std_init": -1
+    },
+    "learning_rate": 0.0003,
+    "n_steps": 2048,
+    "batch_size": 128,
+    "n_epochs": 10,
+    "gamma": 0.999,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "clip_range_vf": null,
+    "ent_coef": 0,
+    "vf_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "normalize_advantage": true,
+    "target_kl": 0.02,
+    "use_sde": false
+  },
+  "normalization": {
+    "method": "SB3 VecNormalize",
+    "wrapper_order": [
+      "native lane task",
+      "make_lane_follow_sb3_wrapper",
+      "VecNormalize"
+    ],
+    "norm_obs": true,
+    "norm_reward": false,
+    "clip_obs": 10,
+    "epsilon": 1e-08,
+    "training_statistics_update": true,
+    "evaluation_statistics_update": false,
+    "save_with_checkpoint": true,
+    "terminal_rule": "Normalize corrected terminal observation exactly once. Prelaunch synthetic no-optimizer integration check required."
+  },
+  "budget": {
+    "training_seed": 2101,
+    "total_control_transitions": 65536,
+    "completed_rollout_updates": 32,
+    "max_minibatch_optimizer_steps": 5120,
+    "training_simulated_s": 1092.2666666666667,
+    "training_wall_cap_s": 3600,
+    "whole_gpu_memory_fraction_stop": 0.9,
+    "training_runs": 1,
+    "serial_only": true,
+    "no_automatic_extension_or_resume": true,
+    "early_stop": "Nonfinite observation/reward/loss, contract violation, resource/time guard or user request; retain actual counts and partial evidence, never replace an unsuccessful seed.",
+    "wall_estimate": "Before approval report measured one-env control steps/wall second and 65536/rate. Excludes optimizer, startup, checkpoints and evaluation. No GUI-RTF or vectorization extrapolation."
+  },
+  "checkpoints": {
+    "after_completed_updates": [
+      8,
+      16,
+      24,
+      32
+    ],
+    "control_steps": [
+      16384,
+      32768,
+      49152,
+      65536
+    ],
+    "save_after_optimizer_update": true,
+    "atomic": true,
+    "contents": [
+      "actor",
+      "critic",
+      "optimizer",
+      "VecNormalize statistics",
+      "resolved configs",
+      "environment/update counters",
+      "Python/NumPy/Torch RNG state",
+      "reset seed and episode index",
+      "source/runtime/asset hashes"
+    ],
+    "exact_native_mid_episode_resume_claim": false,
+    "selection_timing": "After training ends, use separate no-update evaluation jobs; no validation transitions contaminate training rollouts.",
+    "selection_routes": [
+      "left_r60"
+    ],
+    "selection_seeds": [
+      3101,
+      3102,
+      3103
+    ],
+    "selection_order": [
+      "most successes",
+      "fewest physical/task failures",
+      "highest mean net progress",
+      "lowest driving lateral RMS"
+    ],
+    "tie_break": "earliest saved update",
+    "reward_selection": false,
+    "held_out_selection": false,
+    "if_no_success": "Retain every checkpoint and report no learned completion; a relative best-validation label is not acceptance."
+  },
+  "evaluation": {
+    "held_out_seeds": [
+      4101,
+      4102,
+      4103,
+      4104,
+      4105
+    ],
+    "routes": [
+      "straight100",
+      "left_r60",
+      "right_r60"
+    ],
+    "episodes_per_controller": 15,
+    "controllers": [
+      "selected frozen PPO, deterministic actions",
+      "unchanged scripted lane follower"
+    ],
+    "matched_reset_specs": true,
+    "normalization_frozen": true,
+    "optimizer_steps": 0,
+    "exploration_noise": false,
+    "no_seed_replacement": true,
+    "max_process_s_per_job": 600,
+    "maximum_selection_transitions": 25200,
+    "maximum_final_evaluation_transitions": 63000,
+    "metrics": [
+      "success numerator/denominator by route",
+      "failures by reason",
+      "timeouts/censored exposure",
+      "net progress",
+      "driving lateral RMS/max",
+      "footprint/contact",
+      "endpoint/hold drift",
+      "support/tilt",
+      "clipping/brake overrides",
+      "scalar-speed acceleration/jerk",
+      "control steps/wall second and resources"
+    ],
+    "interpretation": "Publish every paired seed/route record, including failures. Five seeds per route is a descriptive pilot; reward alone proves no driving improvement."
+  },
+  "read_only_runtime_inventory": {
+    "python": "3.12.13",
+    "isaaclab": "6.1.18",
+    "isaaclab_rl": "0.5.7",
+    "isaaclab_git": "0603cb1710dcda13087665f63abf9ac483b63c05",
+    "stable_baselines3": "2.9.0",
+    "gymnasium": "1.2.1",
+    "torch": "2.10.0+cu128",
+    "numpy": "2.3.1",
+    "cloudpickle": "3.1.2",
+    "method": "Distribution metadata and installed source read only; no Kit/trainer imports or optimizer execution. Metadata presence does not complete native wrapper compatibility."
+  },
+  "prelaunch_gates": [
+    "Explicit user agreement on this proposal.",
+    "Frozen-source scripted baseline, perturbed resets, contact detector, lifecycle and same-seed repeat pass.",
+    "Native no-optimizer wrapper check separates terminal/reset observations on timeout and true termination.",
+    "Hand-computed bootstrap and terminal VecNormalize integration checks pass without optimizer steps.",
+    "Measured one-env throughput/resource envelope reviewed; no cloning or unattended runtime installation.",
+    "A separately reviewed trainer entrypoint enforces exact budget, post-update atomic checkpoints and no default training launch."
+  ],
+  "measured_validation_throughput": {
+    "status": "OBSERVED_SCRIPTED_NATIVE_THROUGHPUT_NOT_TRAINING",
+    "matrix_index": "outputs/lab_lane_following/review/matrix.json",
+    "matrix_index_sha256": "8a457cd8a3900e226f9510e36ea0e5295b99e635d39265aa9873bae560f8f353",
+    "scope": "Nine final successful headless driving packages; nominal, fresh-process repeat and two-corner perturbations on three routes. Excludes deliberate failure/timeout and visible capture runs.",
+    "packages": 9,
+    "control_transitions": 17588,
+    "step_call_rate_range": [
+      258.04784976358815,
+      318.24285457579685
+    ],
+    "episode_loop_rate_range": [
+      203.41298121603867,
+      247.94219192967773
+    ],
+    "pooled_episode_loop_rate": 226.37134737040438,
+    "rollout_only_estimate": {
+      "budget_control_transitions": 65536,
+      "reference_label": "left_r60-nominal",
+      "reference_steps_per_episode_loop_wall_second": 203.41298121603867,
+      "seconds": 322.18199452274007,
+      "minutes": 5.3696999087123345,
+      "interpretation": "Slowest observed package loop rate is a conservative reference within this measured scripted sample, not a training runtime guarantee. Excludes process startup, PPO policy/value inference, optimizer work, checkpointing and evaluation; learned failure/reset behavior may differ."
+    },
+    "rates_are_control_transitions_not_render_fps": true,
+    "training_approval_granted": false,
+    "sources": [
+      {
+        "label": "straight100-nominal",
+        "run": "outputs/lab_lane_following/20261019T185927Z-55ca0a2b",
+        "summary_sha256": "026ee09eb1333a9903b64cd3e40a226b2aaa4e98bb9c7d36723c2eaf50f26d4b",
+        "control_transitions": 1465,
+        "step_wall_seconds": 5.548244800243992,
+        "episode_loop_wall_seconds": 6.960000200022478,
+        "steps_per_step_wall_second": 264.0474695593054,
+        "steps_per_episode_loop_wall_second": 210.48849969792656
+      },
+      {
+        "label": "left_r60-nominal",
+        "run": "outputs/lab_lane_following/20261019T185944Z-6fe028fb",
+        "summary_sha256": "e47c7e507a205717bb0af7808f65e663bd03faeae114688dc1dd8670ebb145d8",
+        "control_transitions": 1466,
+        "step_wall_seconds": 5.681116898835171,
+        "episode_loop_wall_seconds": 7.2070130000356585,
+        "steps_per_step_wall_second": 258.04784976358815,
+        "steps_per_episode_loop_wall_second": 203.41298121603867
+      },
+      {
+        "label": "right_r60-nominal",
+        "run": "outputs/lab_lane_following/20261019T190001Z-69e5cfb2",
+        "summary_sha256": "a74f41ca75bcc052c2e3de7891a7c3d7cc95ca543eddeb84f24f9e9408ac0cd7",
+        "control_transitions": 1466,
+        "step_wall_seconds": 5.2877637998899445,
+        "episode_loop_wall_seconds": 6.75591439998243,
+        "steps_per_step_wall_second": 277.2438511777913,
+        "steps_per_episode_loop_wall_second": 216.99505251336703
+      },
+      {
+        "label": "straight100-repeat",
+        "run": "outputs/lab_lane_following/20261019T190017Z-e121f7b3",
+        "summary_sha256": "40d20d779c9cb12b0f738e3eb793ba84278e407ece3b001bf4ed16baaa8de6c3",
+        "control_transitions": 1465,
+        "step_wall_seconds": 5.396894897450693,
+        "episode_loop_wall_seconds": 6.778144900046755,
+        "steps_per_step_wall_second": 271.4523865736232,
+        "steps_per_episode_loop_wall_second": 216.1358338606622
+      },
+      {
+        "label": "left_r60-repeat",
+        "run": "outputs/lab_lane_following/20261019T190033Z-29dd0af5",
+        "summary_sha256": "8ef2284c9219a6074e8879397e61de5f5e1ddf074641b3ccabb302ff3b17109f",
+        "control_transitions": 1466,
+        "step_wall_seconds": 5.291037398215849,
+        "episode_loop_wall_seconds": 6.792164199985564,
+        "steps_per_step_wall_second": 277.07231865235707,
+        "steps_per_episode_loop_wall_second": 215.8369492897589
+      },
+      {
+        "label": "right_r60-repeat",
+        "run": "outputs/lab_lane_following/20261019T190049Z-71be4337",
+        "summary_sha256": "9d38a21d2175c8f07c93d72a857163f1dbbfd10828193452acc8916a5fb51353",
+        "control_transitions": 1466,
+        "step_wall_seconds": 5.5990960003691725,
+        "episode_loop_wall_seconds": 7.094312299974263,
+        "steps_per_step_wall_second": 261.8279807853518,
+        "steps_per_episode_loop_wall_second": 206.64441287780895
+      },
+      {
+        "label": "straight100-perturbed",
+        "run": "outputs/lab_lane_following/20261019T190105Z-212c63ee",
+        "summary_sha256": "f74abe702814cb4c1a71720a1ed654203f28929043dc6be532dd894b20f2e0df",
+        "control_transitions": 2930,
+        "step_wall_seconds": 9.20680529938545,
+        "episode_loop_wall_seconds": 11.81727070006309,
+        "steps_per_step_wall_second": 318.24285457579685,
+        "steps_per_episode_loop_wall_second": 247.94219192967773
+      },
+      {
+        "label": "left_r60-perturbed",
+        "run": "outputs/lab_lane_following/20261019T190230Z-06a430fb",
+        "summary_sha256": "0335790fe770282efdba3c9f9b3222699aedb7d8d3c505e823e933e795510575",
+        "control_transitions": 2932,
+        "step_wall_seconds": 9.236325501929969,
+        "episode_loop_wall_seconds": 11.978163800027687,
+        "steps_per_step_wall_second": 317.4422555146358,
+        "steps_per_episode_loop_wall_second": 244.77875315023016
+      },
+      {
+        "label": "right_r60-perturbed",
+        "run": "outputs/lab_lane_following/20261019T190251Z-d4ca90d2",
+        "summary_sha256": "fe9c9a746682639a94bbc9a4f04ecebf34fdf256cf7990478567718d0b67813c",
+        "control_transitions": 2932,
+        "step_wall_seconds": 9.522378201363608,
+        "episode_loop_wall_seconds": 12.312361799995415,
+        "steps_per_step_wall_second": 307.9062748820601,
+        "steps_per_episode_loop_wall_second": 238.13465260589498
+      }
+    ],
+    "official_report": "outputs/lab_lane_following/review/matrix-report.json",
+    "official_report_sha256": "ed8640266b89d852b1e5b12409248ef6cc11716eb7668a36c7824985d89dfe0d",
+    "native_acceptance": {
+      "packages_passed": 12,
+      "packages_total": 12,
+      "declared_episodes": 16,
+      "successful_stops": 13,
+      "expected_diagnostic_endings": [
+        "rigid_contact",
+        "time_limit",
+        "lane_departure"
+      ],
+      "fresh_process_repeat_pairs_passed": 3,
+      "training_started": false,
+      "optimizer_steps": 0
+    }
+  }
+}
