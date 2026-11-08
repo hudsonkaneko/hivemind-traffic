@@ -1,3 +1,6 @@
 # CPU/SUMO clean-install profile; never install into Isaac's bundled Python.
 -r requirements.txt
 eclipse-sumo==1.27.1
+
+# Offline sensor/segmentation evidence rendering tests; no model download.
+Pillow==11.3.0
