@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v34**, updated **November 8, 2026, America/Los_Angeles**.
-Status: **Research-backed reward revision proposed after offline audit; implementation/configuration review next, training disabled. Frozen-parent driving gates still fail.**
+Revision **v35**, updated **November 9, 2026, America/Los_Angeles**.
+Status: **Review-ready highway reward weights proposed; offline target qualification and resolved configuration next. Training remains disabled; frozen-parent driving gates still fail.**
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** review the [reward revision plan](highway-flow-rl-reward-revision-plan.md), then implement its saved-state audit and present a revised resolved configuration before learning. The current cruise addition pays nothing in either recorded focal dip; simply raising its weight misses the relevant states. Proposed candidates replace it with context-valid speed-target error (0.30), normalized Huber comfort (0.09, jerk scale 2 m/s3), and a one-time optional-detour penalty of 2.0. Exact target construction remains to be qualified. The prepared v02 configuration and frozen weights are unchanged. Preserve the 30,000-decision / 900-second pilot, existing cost ledger and all driving gates; no training or new simulator run is authorized by planning.
+**Next action:** review the [smooth reward plan v03](highway-smooth-reward-plan-v03.md), then qualify its safe speed target and reward behavior offline before implementing a separate configuration. Candidate terms are safe-target error 0.30, Huber comfort 0.09 with 2 m/s3 scale, and optional-ending-lane detour -2.0. The latest actor uses uncapped -0.03 absolute jerk, unlike the older accepted v04r2. Preserve native safety and route constraints, qualify avoidable-braking diagnostics and retain per-car/full-route gates. The existing 30,000-decision / 900-second pilot and cost ledger remain; this request authorizes planning only, not training.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -554,3 +554,8 @@ Analyzed the saved v02 replay without running SUMO or training. Geometry selects
 ### v34 - November 8: researched reward revision and scale audit
 
 Two sub-agents reviewed primary AV-RL sources and actual reward code/journals. [Plan](highway-flow-rl-reward-revision-plan.md) addresses cruise eligibility before coefficients, a context-dependent speed target, normalized Huber jerk and a stronger optional-ending-lane penalty. The saved focal audit finds zero cruise payment in both speed dips, including nine rows excluded solely by its own braking; 69/545 decisions receive the existing addition. One-time merge/pass guards are present; the asymmetric action mapping is preserved, not declared causal. Candidate coefficients are unvalidated and the exact target helper needs counterexample qualification. No implementation, configuration, policy, simulator or training changes. Existing budget retained with an explicit evaluation-reserve reallocation proposal; terminal-only review remains the preference. Guide synchronization pending.
+
+
+### v35 - November 9: review-ready highway reward weights
+
+[Plan v03](highway-smooth-reward-plan-v03.md) records the actual flow117 baseline, signed candidate reward scales, Huber examples and pre-action safe-target eligibility. It adds sequence-level reward qualification and a proposed avoidable-braking classifier whose coverage must be validated. Safety constraints, held-out separation, complete-route metrics and the existing ledger remain. No code/configuration/actor changes, simulator runs or training. Next: user review, offline target/reward qualification and presentation of the resolved configuration before learning. Google guide incremental sync pending.

@@ -1129,3 +1129,8 @@ Saved a [reward revision plan](highway-flow-rl-reward-revision-plan.md) and sour
 ## November 8, 2026 - Integrate passing PRs in dependency order
 
 [Ordered integration](pr-integration-2026-11-08.md) records the 44-PR main chain and four sensor PRs, preservation of all original heads, documentation conflict resolutions, local validation and its corrected output-directory setup. Preserve the newer verified engineering-guide pair and all historical sensor evidence. GitHub checks on the revised heads and final main remain the remote acceptance record. No training or policy acceptance changes.
+
+
+## November 9, 2026 - Review-ready highway reward plan
+
+[Reward plan v03](highway-smooth-reward-plan-v03.md) specifies candidate safe-target error (0.30), Huber comfort (0.09 at 2 m/s3 scale) and optional-detour (-2.0) terms for the latest flow117 actor. Target qualification, command-stage braking diagnosis, unchanged safety gates and a bounded pilot precede learning. Updates living roadmap v35; planning only, no runnable config or training changes. Existing cost ledger retained; Google guide incremental sync pending.

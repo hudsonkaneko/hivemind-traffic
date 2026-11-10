@@ -715,3 +715,8 @@ missed; near-field sensing remains open. No new training or actor change.
 October 26: [v11 body-mounted cameras](body-camera-v01.md) removes camera roof
 stalks, seats compact housings against measured body geometry and retains roof
 LiDAR. Combined capture passes; near-field LiDAR and learned fusion remain open.
+
+
+## November 9 - Smooth speed recovery reward plan
+
+[Review-ready reward plan v03](highway-smooth-reward-plan-v03.md) targets the latest highway actor, distinguishes its uncapped absolute jerk from the older v04r2 reward, and defines safe-target-speed/Huber-comfort/detour coefficients plus qualification and evaluation gates. Living roadmap v35 records the next action. These are unvalidated proposed weights; implementation and a resolved configuration come before training approval. No new simulation or learning; guide sync pending.
