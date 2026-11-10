@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v35**, updated **November 9, 2026, America/Los_Angeles**.
-Status: **Review-ready highway reward weights proposed; offline target qualification and resolved configuration next. Training remains disabled; frozen-parent driving gates still fail.**
+Revision **v36**, updated **November 9, 2026, America/Los_Angeles**.
+Status: **V03 reward implementation and saved-trace checks complete; final config review and fresh native preflight next. Training remains disabled; frozen-parent driving gates still fail.**
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** review the [smooth reward plan v03](highway-smooth-reward-plan-v03.md), then qualify its safe speed target and reward behavior offline before implementing a separate configuration. Candidate terms are safe-target error 0.30, Huber comfort 0.09 with 2 m/s3 scale, and optional-ending-lane detour -2.0. The latest actor uses uncapped -0.03 absolute jerk, unlike the older accepted v04r2. Preserve native safety and route constraints, qualify avoidable-braking diagnostics and retain per-car/full-route gates. The existing 30,000-decision / 900-second pilot and cost ledger remain; this request authorizes planning only, not training.
+**Next action:** review the [final v03 configuration and offline results](highway-flow-rl-v03.md). The reward implementation passes 89 focused CPU tests and rescored 18,492 saved decisions without a new simulator run. The later I-110 slowdown flags 14 avoidable-braking decisions; the first tight-gap slowdown does not. Target coverage is 95.55% overall and 72.66% for the focal car, so exclusions remain explicit. Training is disabled; a fresh native zero-update preflight is required after authorization. The existing 30,000-decision / 900-second pilot and shared study ledger remain, now with 121.328 seconds charged. No improved driving or new accepted actor is claimed.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -559,3 +559,17 @@ Two sub-agents reviewed primary AV-RL sources and actual reward code/journals. [
 ### v35 - November 9: review-ready highway reward weights
 
 [Plan v03](highway-smooth-reward-plan-v03.md) records the actual flow117 baseline, signed candidate reward scales, Huber examples and pre-action safe-target eligibility. It adds sequence-level reward qualification and a proposed avoidable-braking classifier whose coverage must be validated. Safety constraints, held-out separation, complete-route metrics and the existing ledger remain. No code/configuration/actor changes, simulator runs or training. Next: user review, offline target/reward qualification and presentation of the resolved configuration before learning. Google guide incremental sync pending.
+
+
+### v36 - November 9: implemented rewards and offline trace checks
+
+[Flow RL v03](highway-flow-rl-v03.md) implements the reviewed pre-action target,
+speed-error 0.30, Huber jerk 0.09 (2 m/s3 scale), and detour -2.0. The legacy
+jerk coefficient is zero to prevent double charging. 89 focused tests pass;
+18,492 saved development decisions rescored with 95.55% qualified target
+coverage (72.66% for the I-110 focal car). Later focal dip: 14 flagged
+avoidable-braking decisions, one persistent event; first tight-gap dip: none.
+Both audits, per-car CSVs and hashes retained. No new simulator run, training,
+held-out evaluation or performance promotion. Shared costs total 121.328 s.
+Next: final config review, then fresh exact-source native preflight before any
+authorized pilot. Google guide incremental sync remains pending.

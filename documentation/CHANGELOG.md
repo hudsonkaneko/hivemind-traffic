@@ -1134,3 +1134,17 @@ Saved a [reward revision plan](highway-flow-rl-reward-revision-plan.md) and sour
 ## November 9, 2026 - Review-ready highway reward plan
 
 [Reward plan v03](highway-smooth-reward-plan-v03.md) specifies candidate safe-target error (0.30), Huber comfort (0.09 at 2 m/s3 scale) and optional-detour (-2.0) terms for the latest flow117 actor. Target qualification, command-stage braking diagnosis, unchanged safety gates and a bounded pilot precede learning. Updates living roadmap v35; planning only, no runnable config or training changes. Existing cost ledger retained; Google guide incremental sync pending.
+
+
+## November 9, 2026 - v03 reward implementation and saved-trace qualification
+
+Implemented a separate MAPPO v03 objective: pre-action safe-target error (0.30),
+uncapped Huber jerk (0.09, 2 m/s3 scale), and first-motion optional ending-lane
+detour cost (2.0). Native safety, controls, masks and actor ABI remain unchanged.
+89 focused CPU tests pass. Rescored 18,492 saved development decisions; 17,669
+have qualified target evidence. The later focal I-110 dip flags 14 avoidable
+braking decisions; the tight-gap first dip flags none. Raw CSVs, hashes and
+component metrics retained; no new simulator runs or learning. v03 training
+remains disabled pending final configuration review and fresh native preflight.
+The existing ledger now totals 121.328 seconds; no budget reset.
+[Implementation and final config](highway-flow-rl-v03.md). Guide sync pending.

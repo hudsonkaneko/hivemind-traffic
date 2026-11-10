@@ -1,5 +1,7 @@
 # Highway reward revision v03: smooth speed recovery
 
+Implementation follow-up: [v03 code, saved-trace results and final configuration](highway-flow-rl-v03.md). The proposal below is retained as the pre-implementation record. Training remains disabled.
+
 November 9, 2026, America/Los_Angeles. **Proposal for review only.** No reward
 implementation, executable training configuration, actor, simulator run or
 training authorization changes in this milestone. This is a version of the

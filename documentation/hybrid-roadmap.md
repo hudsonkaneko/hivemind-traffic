@@ -720,3 +720,17 @@ LiDAR. Combined capture passes; near-field LiDAR and learned fusion remain open.
 ## November 9 - Smooth speed recovery reward plan
 
 [Review-ready reward plan v03](highway-smooth-reward-plan-v03.md) targets the latest highway actor, distinguishes its uncapped absolute jerk from the older v04r2 reward, and defines safe-target-speed/Huber-comfort/detour coefficients plus qualification and evaluation gates. Living roadmap v35 records the next action. These are unvalidated proposed weights; implementation and a resolved configuration come before training approval. No new simulation or learning; guide sync pending.
+
+
+## November 9, 2026 - v03 reward implementation and saved-trace qualification
+
+Implemented a separate MAPPO v03 objective: pre-action safe-target error (0.30),
+uncapped Huber jerk (0.09, 2 m/s3 scale), and first-motion optional ending-lane
+detour cost (2.0). Native safety, controls, masks and actor ABI remain unchanged.
+89 focused CPU tests pass. Rescored 18,492 saved development decisions; 17,669
+have qualified target evidence. The later focal I-110 dip flags 14 avoidable
+braking decisions; the tight-gap first dip flags none. Raw CSVs, hashes and
+component metrics retained; no new simulator runs or learning. v03 training
+remains disabled pending final configuration review and fresh native preflight.
+The existing ledger now totals 121.328 seconds; no budget reset.
+[Implementation and final config](highway-flow-rl-v03.md). Guide sync pending.

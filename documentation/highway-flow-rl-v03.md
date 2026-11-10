@@ -1,0 +1,131 @@
+# Highway Flow RL v03: pre-action speed recovery and smoothness rewards
+
+November 9, 2026. Implemented and checked offline, **not trained**. No new SUMO,
+Isaac or rendering runs. This implements the approved
+[reward plan](highway-smooth-reward-plan-v03.md); it does not promote a new actor.
+
+## Final review configuration
+
+The executable [configuration](../configs/training/highway-flow-rl-v03.json) has
+`training_authorized: false`, held-out evaluation disabled and the second round
+unauthorized. The [runner](../experiments/run_highway_flow_rl_v03.py) requires
+explicit training authorization plus a fresh native, zero-update preflight tied
+to the exact configuration and source hashes. Offline rescoring is not that proof.
+
+| Item | Resolved value |
+| --- | --- |
+| Algorithm | Shared actor MAPPO, centralized critic; no imitation |
+| Initialization | Frozen flow117 v01 round-two actor and critic; fresh optimizer |
+| Inputs/actions | Actor 117, critic 2,832, maximum 24 agents; unchanged normalized acceleration and discrete lane intent |
+| Control interval | 0.1 seconds |
+| Speed ceiling | 26.8224 m/s (60 mph), subject to lower local/scenario limits |
+| Training coverage | 12 rows, 2–5 through lanes; cruise, following, passing and I-110 merging; existing AV mixes and communication variants |
+| Scenario speed caps | 18, 22.352 and 26.8224 m/s |
+| Learning rates | Actor 0.0001; critic 0.0003 |
+| PPO | Clip 0.2; four epochs; minibatch 256; target KL 0.02; entropy 0.001; max gradient norm 0.5 |
+| Returns | Existing GAE defaults: gamma 0.99, lambda 0.95 |
+| Pilot | At most 30,000 active-agent decisions and 900 seconds, including development evaluations |
+| Rollout | Default 2,048 decisions; existing per-case limits retained |
+| Seed | 9708; existing disjoint training/development/held-out demand seeds |
+| Safety | Native speed mode 31, lane-change mode 512, analytical guards and action masks unchanged |
+
+The shared study budget remains 2,760 seconds. **121.328 seconds** are now charged
+in the existing `outputs/highway-flow-rl/v02/cost-ledger.json`, including both
+offline audit revisions (about 5.594 seconds total). No reset/refund. Seven of
+eight native diagnostic allocations remain used; offline audits add zero native
+episodes. The final allocation is still reserved for the new preflight.
+The 600-second final evaluation reserve and separately unauthorized second pilot
+remain as before. No automatic loop of additional training is enabled.
+
+## Reward calculation
+
+| Component | Signed contribution |
+| --- | --- |
+| Route progress | `+1.0 * distance_this_step / 2.68224` |
+| Safe-target speed error | `-0.30 * min(1, max(0, abs(next_speed - target) - 0.5) / max(target, 5))` |
+| Smoothness | `-0.09 * Huber(jerk / 2)`; quadratic below magnitude one, linear above; uncapped |
+| Optional ending-lane detour | `-2.0` once, on first measured lateral motion |
+| Merge / stable merge / pass / arrival | Existing `+5 / +2 / +2 / +2` event terms |
+| Collision / intervention / unsafe request | Existing `-20 / -0.2 / -0.5 * normalized excess` |
+| Lane change / reversal / cooperation | Existing `-0.1 / -0.5 / +0.1 * team merge signal` |
+
+The old absolute-jerk coefficient is **zero** in v03 to prevent double charging.
+The v02 positive cruise bonus is removed. There is no generic penalty on all
+acceleration/braking and no action smoother. Actual arithmetic lives in
+[pure reward helpers](../traffic/highway_flow_rl_v03_rewards.py), with per-step
+accounting in the [environment](../environments/highway_flow_rl_v03_env.py).
+
+Huber examples: magnitude 1 / 2 / 5 / 10 / 20 m/s3 costs
+0.01125 / 0.045 / 0.18 / 0.405 / 0.855. This penalizes abrupt changes more than
+the old `0.03 * abs(jerk)`, while tolerating small smooth adjustments. It is
+deliberately **not a larger penalty at every jerk magnitude**. The persistent
+speed-error term addresses gradual unnecessary slowing.
+
+The target is frozen before the action and is independent of requested or
+previous acceleration. It considers occupied lanes, current leaders, lower
+upcoming speed limits, required merge front/rear gaps, yield visibility and
+ending-lane runway. It uses a 1.5 s headway floor, 2.5 m minimum gap, 0.3 s
+reaction allowance, follower/leader braking estimates 4.5/9 m/s2, 2 m/s2 preview
+deceleration and a three-second constant-speed merge projection. These are
+explicit reward assumptions, not a future-state oracle or a safety certificate.
+They are not fed to the actor as additional observations or used to change masks.
+
+Unknown evidence, unresolved neighboring lateral motion and incompatible merge
+intervals abstain from the speed-error term and retain all other reward/safety
+terms. A required slowdown therefore does not automatically target highway speed.
+Large errors saturate at -0.30; safety still comes from the unchanged guards and
+safety costs. The reward alone is not a collision-avoidance guarantee.
+
+## Saved-trace results
+
+[Metrics and hashes](evidence/highway-flow-rl-v03/saved-trace-metrics.json) retain
+the five frozen development cases. Bulk per-car CSVs and the resolved configuration
+are in `outputs/highway-flow-rl/v03/offline-reward-audit-02/`. The first audit is
+also retained. The [offline audit script](../scripts/audit_highway_flow_rl_v03_rewards.py)
+never calls the simulator or optimizer and never consumes held-out data.
+
+- **18,492 decisions** rescored; target evidence qualifies for **17,669 (95.55%)**.
+- **18,466** measured post-speed linkages checked against recorded acceleration;
+  maximum discrepancy below 1.4e-17 m/s. Missing final/arrived post-states are
+  explicitly excluded from the speed term, not reconstructed as successful motion.
+- The I-110 focal car has **396/545 qualified targets (72.66%)**. Its 149 excluded
+  decisions include 147 incompatible current merge intervals and two unknown
+  required targets. This limits coverage; it is not a driving pass.
+- First dip, 6.6–10.2 s: **zero flagged avoidable-braking decisions**. A tight
+  target-lane gap makes blanket punishment of that deceleration inappropriate.
+- Later dip, 17.4–21.1 s: **14 flagged decisions, one persistent event**. The speed
+  term costs **2.223** across the window; the old cruise addition was zero.
+  The optional ending-lane move now costs **2.0**, previously 0.5.
+- Across the full focal route: speed-error cost **26.948**; Huber jerk cost
+  **11.384**, versus old jerk cost **12.224**. Total reward changes from
+  **185.225 to 155.682** on exactly the same trajectory. Lower revised reward is
+  an accounting change, not a performance decline or improvement.
+
+The avoidable-braking diagnostic requires three consecutive 0.1 s requests below
+-0.2 m/s2 with a qualified pre-action target at least 0.5 m/s above current speed,
+safe ceiling at least +0.2 m/s2, and no yield/ending-lane obligation. Discontinuous
+samples or new obligations break the episode of evidence. It reports exclusions,
+coverage and subsequent reacceleration without altering vehicle commands.
+
+## Validation and next gate
+
+**89 focused CPU tests pass**, including existing v02 regressions. Tests cover
+the Huber scale, acceleration-independent targets, recovery versus stalling,
+equal-progress oscillation cost, close leaders, required merges and rear gaps,
+yielding, lower limits, ending lanes, missing evidence, first-motion accounting,
+unchanged native commands/actor shapes/masks, reward/journal sums, launch denial,
+stale-proof rejection, exact-resume provenance and retained ledger charges.
+[Validation record](evidence/highway-flow-rl-v03/validation.json).
+
+Keep the existing per-car/full-route collision, overspeed, intervention <=5%,
+uncensored peak jerk <=5 m/s3, headway >=1.5 s, closing TTC >=3 s, merge and passing
+gates. Cruise cases additionally require measured clear-road coverage, >=90%
+legal-speed utilization there, and no flagged persistent avoidable braking.
+Missing coverage cannot pass. Emergency safety interventions remain enabled.
+
+Next: review this final configuration. After authorization, run the fresh native
+zero-update preflight before the bounded pilot. Save checkpoints and metrics
+automatically; inspect only completion or failure while training runs. No driving
+improvement, accepted checkpoint, held-out result or native v03 validation is
+claimed here. Google guide incremental synchronization remains pending; its
+generated Markdown mirror was not edited.
