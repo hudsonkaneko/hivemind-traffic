@@ -749,3 +749,13 @@ but worsens interventions and jerk. No promotion, held-out run or second round.
 Actor, full checkpoint, traces and per-car metrics are preserved locally; compact
 comparison and checksums are committed. Study costs total 418.687 seconds.
 [Results](highway-flow-rl-v03.md#round-one-training-result). Guide sync pending.
+
+
+## November 9, 2026 - authorized extended v03 continuation
+
+Prepared the user-requested longer continuation: 300,000 additional decisions,
+up to eight PPO epochs, 90-minute round cap. Same rewards/safety/scenarios;
+warm-start round-one actor/critic, fresh optimizer. The explicit budget profile
+preserves all prior ledger costs and adds one required native preflight.
+95 CPU tests and fresh zero-update native preflight pass. No third round or
+held-out evaluation. [Configuration](highway-flow-rl-v03.md#authorized-longer-continuation).

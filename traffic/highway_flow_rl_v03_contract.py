@@ -39,7 +39,12 @@ def validate_config(cfg, require_training=False):
     if cfg.get('safety') != dict(speed_mode=31, lane_change_mode=512, native_guards_unchanged=True,
                                 safety_shield_unchanged=True, global_speed_ceiling_m_s=26.8224):
         raise ValueError('Native or explicit safety settings changed')
-    if cfg.get('optimizer') != OPTIMIZER:
+    extended = cfg.get('learning_profile') == 'extended_300k_8epochs'
+    if cfg.get('learning_profile') not in (None, 'extended_300k_8epochs'):
+        raise ValueError('Unknown learning profile')
+    if extended and cfg.get('round_index') != 2:
+        raise ValueError('Extended learning is authorized only as round two')
+    if cfg.get('optimizer') != dict(OPTIMIZER, epochs=8 if extended else 4):
         raise ValueError('Declared MAPPO optimizer changed')
     if cfg.get('reward_weights') != dict(REWARD_WEIGHTS, jerk=0.):
         raise ValueError('Base physical reward changed')
@@ -61,6 +66,11 @@ def validate_config(cfg, require_training=False):
     expected = dict(per_round_decisions=30000, total_decisions=60000, per_round_wall_seconds=900,
         total_wall_seconds=2760, final_reserve_seconds=600, inherited_spent_seconds=0,
         preparation_wall_seconds=360, rollout_decisions=2048)
+    if extended:
+        expected.update(per_round_decisions=300000, total_decisions=330000,
+            per_round_wall_seconds=5400, total_wall_seconds=6600, max_diagnostic_episodes=9)
+    elif 'max_diagnostic_episodes' in budget and budget['max_diagnostic_episodes'] != 8:
+        raise ValueError('Original pilot has eight diagnostic allocations')
     for key, value in expected.items():
         if number(budget.get(key),key) != value:
             raise ValueError('Declared v03 budget changed: '+key)
@@ -76,6 +86,9 @@ def validate_config(cfg, require_training=False):
         raise ValueError('Initial round must start from the frozen round-two checkpoint')
     if cfg['round_index']==1 and warm.get('policy_sha256') != PINNED_ACTOR:
         raise ValueError('Actor provenance differs from the reviewed checkpoint')
+    if extended and (warm['sha256'] != '1befdc65f80da3c9c2170ae522d17df73e91226988f6cc54433878c2d4e9719c'
+            or warm.get('policy_sha256') != '828bc0eddc710ceb0d50ed8d5da56a94cbea454446b47ddb9283b3494642b0f5'):
+        raise ValueError('Extended continuation must use the recorded v03 round-one weights')
     split_seeds = {}
     for split in ('training_rows','validation_rows','held_out_rows'):
         rows = cfg.get(split)

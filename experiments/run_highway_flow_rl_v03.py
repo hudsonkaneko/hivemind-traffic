@@ -127,8 +127,9 @@ class LedgerSession:
             allowed = available_seconds(self.cfg, self.totals, self.category)
             if self.max_wall_seconds is not None:
                 allowed = min(allowed, finite(self.max_wall_seconds, 'requested wall bound', minimum=.001))
-            if self.category == 'preparation' and self.totals['diagnostic_episodes'] + self.episodes > 8:
-                raise ValueError('Additional preparation is capped at eight diagnostic episodes')
+            episode_cap = self.cfg['budget'].get('max_diagnostic_episodes', 8)
+            if self.category == 'preparation' and self.totals['diagnostic_episodes'] + self.episodes > episode_cap:
+                raise ValueError(f'Preparation exceeds the {episode_cap} authorized diagnostic episodes')
             if allowed <= self.elapsed():
                 raise ValueError('No charged wall-time budget remains')
             self.deadline = self.started + allowed

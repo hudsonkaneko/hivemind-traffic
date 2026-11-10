@@ -175,3 +175,26 @@ saved per-car command/override traces and the failed short-ramp merge before
 proposing another reward or training change. The authorization flag records
 this completed round; the ledger prevents silently starting it again. Google
 guide incremental synchronization remains pending.
+
+
+## Authorized longer continuation
+
+The user requested longer learning and more epochs after the rejected pilot.
+[Separate resolved configuration](../configs/training/highway-flow-rl-v03-long.json):
+**300,000 additional active-agent decisions, up to eight PPO epochs per update,
+5,400 seconds (90 minutes) including development evaluation**. The KL limit
+remains 0.02, so updates can stop before all eight epochs. Actor/critic learning
+rates, minibatch size, rewards, safety, masks, observations and scenario rows
+are unchanged. Continue from the saved v03 round-one actor and critic with a
+fresh optimizer; this is a new configured round, not an exact optimizer resume.
+
+95 focused tests and a fresh zero-update native preflight pass.
+[Launch evidence](evidence/highway-flow-rl-v03/long-launch.json). The budget
+contract now explicitly recognizes this one authorized extended profile; the
+original pilot's limits still apply to its original configuration. One new
+native preflight allocation was added, with all previous time and decisions
+retained in the same ledger. The study total cap is now 6,600 seconds (including
+prior work and the unchanged 600-second evaluation reserve), and total learning
+is capped at 330,000 decisions across both rounds. No third round or held-out
+evaluation is authorized. Save checkpoints automatically and inspect results
+only at completion/failure. Existing accepted actors remain unchanged.

@@ -16,13 +16,16 @@ def cfg():
     return json.loads((runner.ROOT/'configs/training/highway-flow-rl-v03.json').read_text())
 
 
-def test_review_config_and_disabled_training_fail_before_work(cfg,monkeypatch):
+def test_review_config_and_disabled_training_fail_before_work(cfg,monkeypatch,tmp_path):
+    cfg['training_authorized']=False
     assert validate_config(cfg) is cfg
     with pytest.raises(ValueError,match='disabled'):
         runner.train(cfg,None,None,None,None,None,'config',{})
     no_model=Mock(side_effect=AssertionError('Must reject before loading model'))
     monkeypatch.setattr(runner,'build_model',no_model)
-    args=SimpleNamespace(config='configs/training/highway-flow-rl-v03.json',command='train')
+    (tmp_path/'disabled.json').write_text(json.dumps(cfg))
+    monkeypatch.setattr(runner,'project_path',lambda value:tmp_path/'disabled.json')
+    args=SimpleNamespace(config='disabled.json',command='train')
     with pytest.raises(ValueError,match='disabled'): runner.run(args)
     no_model.assert_not_called()
 
@@ -84,3 +87,37 @@ def test_missing_shared_ledger_cannot_silently_reset_budget(cfg,tmp_path,monkeyp
     with pytest.raises(ValueError,match='never reset'):
         with runner.LedgerSession(cfg,'preflight',tmp_path/'out','cfg',started=runner.time.monotonic()):
             pytest.fail('Missing ledger admitted')
+
+
+def long_cfg():
+    return json.loads((runner.ROOT/'configs/training/highway-flow-rl-v03-long.json').read_text())
+
+
+def test_extended_profile_only_expands_learning_and_retains_costs(cfg):
+    long=long_cfg()
+    validate_config(long,require_training=True)
+    for key in ('reward_weights','v03_reward_weights','safety','target_settings','training_rows','validation_rows','held_out_rows'):
+        assert long[key]==cfg[key]
+    assert long['optimizer']==dict(cfg['optimizer'],epochs=8)
+    totals=dict(total=418.687,training=294.859,preparation=123.828,final_evaluation=0.,
+        diagnostic_seconds=89.125,round_seconds=0.,round_decisions=0,total_decisions=29999)
+    assert runner.available_seconds(long,totals,'training')==5400.
+    assert long['budget']['total_decisions']-totals['total_decisions']==300001
+    assert not long['held_out_authorized']
+
+
+@pytest.mark.parametrize('change',[dict(round_index=1),dict(learning_profile='anything')])
+def test_extended_profile_rejects_unreviewed_rounds(change):
+    cfg=long_cfg();cfg.update(change)
+    with pytest.raises(ValueError):validate_config(cfg)
+
+
+@pytest.mark.parametrize('key,value',[('epochs',9),('target_kl',.2)])
+def test_extended_profile_keeps_optimizer_boundaries(key,value):
+    cfg=long_cfg();cfg['optimizer'][key]=value
+    with pytest.raises(ValueError):validate_config(cfg)
+
+
+def test_extended_profile_cannot_restart_from_other_weights():
+    cfg=long_cfg();cfg['warm_start']['sha256']='0'*64
+    with pytest.raises(ValueError,match='round-one weights'):validate_config(cfg)
