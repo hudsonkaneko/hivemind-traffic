@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v39**, updated **November 9, 2026, America/Los_Angeles**.
-Status: **Extended v03 completed after spawn repair: fleet overrides 4.33%, stable merges 2/2; all six case gates still fail. Main-car diagnosis next, no promotion.**
+Revision **v40**, updated **November 9, 2026, America/Los_Angeles**.
+Status: **Offline v03 audit complete: gap-formation reward coverage, lane-end fallback and truncated experience are the priorities. Candidate remains rejected; no new training.**
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** diagnose the I-110 focal car's saved intervention and speed traces. [Extended v03 results](highway-flow-rl-v03.md#longer-continuation-result-and-spawn-repair): 298,400 actual learning decisions (300,000 charged), 177 updates, up to eight epochs, about 29 minutes of training runtime. Spawn repair retained optimizer/RNG and re-baselined the one changed development fixture. Fleet overrides improve to 4.33% and stable merges to 2/2, but the focal car has 32.79% overrides and all six case gates fail. Candidate and metrics retained; no promotion, third round or held-out test.
+**Next action:** correct the gap-formation objective, preserve complete episode experience, and align action-mask/native maneuver feasibility before another weight sweep. [Full offline audit](highway-policy-audit-v01.md): 173/180 focal overrides involve the lane-end guard; 344/549 decisions lack a speed target; no left merge is permitted before 26.4 s, followed by a 13.6 s stop. Only 10.51% of learned samples belong to merging cars; 103/177 rollouts truncate and reset. Exported and full actors replay all 17,230 recorded actions consistently. Proposed fixes require matched validation and a resolved training configuration before launch; no runtime change, training, promotion or held-out test in this audit.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -611,3 +611,17 @@ with zero collisions/teleports; all six per-case gates still fail and focal
 interventions remain 32.79%. Source/metric/checkpoint history preserved. Study
 costs total 2,169.579 s. No promotion, held-out run or third round. Next: saved
 focal override/speed diagnosis. [Evidence](highway-flow-rl-v03.md#longer-continuation-result-and-spawn-repair). Guide sync pending.
+
+
+### v40 - November 9: comprehensive saved-trace policy audit
+
+Audited rewards and their actual contributions, target coverage, masks, native
+execution, rollout population/time coupling, observations/messages, PPO/GAE,
+gradients, checkpoint identity and acceptance metrics. The focal car attempts
+every permitted left merge but receives no such permission until near-stop;
+most speed-target reward is absent during gap formation. Retained full traces,
+source/input hashes and compact audit evidence. Actor replay and arithmetic
+consistency checks pass; about 2.9 s offline computation, zero new simulator
+episodes or optimizer steps. Prioritize gap-formation guidance and complete
+merge experience, then controlled weight/credit-horizon comparisons. Candidate
+remains rejected. [Audit](highway-policy-audit-v01.md). Guide sync pending.

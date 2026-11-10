@@ -271,3 +271,13 @@ Full checkpoint: `last.pt` in the same folder. Retain both `long-round-02/` and
 `logs/`. All costs remain in the shared ledger, now totaling **2,169.579 seconds**.
 The next useful diagnosis is the focal car's intervention causes and speed
 recovery, using saved traces before another learning change. Guide sync pending.
+
+
+## November 9 - completed offline policy audit
+
+The [full audit](highway-policy-audit-v01.md) replaces the pending main-car
+diagnosis above. Its dominant override is the lane-end guard (173 decisions),
+while the speed-target term abstains on 344/549 focal decisions and no left
+merge is allowed until near-stop. Training coverage and maneuver-feasibility
+mismatches are documented with actual rewards, gradients and verified actor
+replay. No reward/configuration/runtime changes or further training were made.

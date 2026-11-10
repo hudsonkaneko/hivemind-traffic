@@ -775,3 +775,18 @@ overrides remain 32.79%. Candidate retained, not promoted. 127 focused tests
 pass; raw journals, checkpoints, costs and compact evidence saved. No third
 round or held-out run. Study total: 2,169.579 seconds.
 [Results and repair](highway-flow-rl-v03.md#longer-continuation-result-and-spawn-repair).
+
+
+## November 9, 2026 - offline audit of the long v03 policy
+
+Replayed 17,230 saved decisions through the full and exported actors; actions
+match, observations are finite and runtime/input hashes verify. The focal
+car's 180/549 overrides include 173 lane-end guard decisions. Its speed target
+is ineligible on 344 decisions, and no left merge is permitted until 26.4 s;
+it requests all four permitted opportunities but stops for 13.6 s. Only 10.51%
+of learning samples belong to merging cars; 103/177 rollouts truncate and reset.
+Recorded actual reward contributions, optimizer/credit-horizon diagnostics,
+mask/native timing differences and evaluation limits. Proposed fixes prioritize
+gap formation, full episode coverage and compatible maneuver feasibility before
+scalar weight tuning. No runtime changes, training, simulator run or promotion.
+[Full audit and metrics](highway-policy-audit-v01.md). Guide sync remains pending.
