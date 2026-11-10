@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v40**, updated **November 9, 2026, America/Los_Angeles**.
-Status: **Offline v03 audit complete: gap-formation reward coverage, lane-end fallback and truncated experience are the priorities. Candidate remains rejected; no new training.**
+Revision **v41**, updated **November 10, 2026, America/Los_Angeles**.
+Status: **V04 merge rewards, projected mask and full-episode collection implemented and preflighted. Long training authorized; results pending.**
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** correct the gap-formation objective, preserve complete episode experience, and align action-mask/native maneuver feasibility before another weight sweep. [Full offline audit](highway-policy-audit-v01.md): 173/180 focal overrides involve the lane-end guard; 344/549 decisions lack a speed target; no left merge is permitted before 26.4 s, followed by a 13.6 s stop. Only 10.51% of learned samples belong to merging cars; 103/177 rollouts truncate and reset. Exported and full actors replay all 17,230 recorded actions consistently. Proposed fixes require matched validation and a resolved training configuration before launch; no runtime change, training, promotion or held-out test in this audit.
+**Next action:** launch the authorized [v04 long run](highway-merge-rewards-v04.md), then review terminal results without assistant monitoring during training. The resolved configuration uses 4M additional decisions, an eight-hour run cap, up to 20 epochs and automatic matched validation every 500k decisions. Preparation: 116 tests, zero-update native preflight and repeatable journals pass. Full-episode collection and projected lane gaps are implemented; saved-state target coverage is 545/549. The frozen starting actor still stops 11.7 s before merging, so no improvement or acceptance is claimed. Preserve all metrics/checkpoints and inspect completion/failure before any further changes.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -625,3 +625,16 @@ consistency checks pass; about 2.9 s offline computation, zero new simulator
 episodes or optimizer steps. Prioritize gap-formation guidance and complete
 merge experience, then controlled weight/credit-horizon comparisons. Candidate
 remains rejected. [Audit](highway-policy-audit-v01.md). Guide sync pending.
+
+
+### v41 - November 10: implemented merge-focused v04 and authorized long run
+
+Added gap preparation potential/speed targets, +5 gated rolling-quality bonus,
+full-maneuver projected masks, complete physical-time rollout reservations and
+merge-focused curriculum rows. Native guards remain enabled. 116 tests pass;
+zero-update preflight and seeded trace repeatability pass after a recorded
+serialization fix. Full frozen-actor merge completes but still stops 11.7 s;
+quality gate rejects it. User authorized long training: 4M additional decisions,
+eight-hour cap, 20 maximum epochs, automatic evaluation/checkpoint retention.
+[Resolved configuration, evidence and unattended command](highway-merge-rewards-v04.md).
+Training result pending; no promotion or held-out run. Guide sync pending.

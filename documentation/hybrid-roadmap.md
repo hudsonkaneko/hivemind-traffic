@@ -790,3 +790,18 @@ mask/native timing differences and evaluation limits. Proposed fixes prioritize
 gap formation, full episode coverage and compatible maneuver feasibility before
 scalar weight tuning. No runtime changes, training, simulator run or promotion.
 [Full audit and metrics](highway-policy-audit-v01.md). Guide sync remains pending.
+
+
+## November 10, 2026 - v04 merge rewards and full-episode training setup
+
+Implemented current-evidence gap preparation and speed targets, potential
+shaping, stricter rolling-merge quality, and projected 3.1 s lane-gap masks.
+Training now reserves full physical-time episodes and interleaves focused merge
+rows. User authorized a 4M-decision / eight-hour run with up to 20 epochs per
+update; KL safeguard retained. 116 focused tests and final zero-update native
+preflight pass; repeated smoke journals match. Saved-state target coverage rises
+205/549 to 545/549, but the frozen-policy full merge still stops 11.7 s and fails
+quality. Corrected and retained an initial reporting serialization failure.
+Prepared unattended launch, automatic validation and best/latest snapshots;
+training results pending, no promotion. [Configuration and evidence](highway-merge-rewards-v04.md).
+Google engineering-guide sync remains pending.

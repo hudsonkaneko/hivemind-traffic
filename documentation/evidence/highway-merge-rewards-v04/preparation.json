@@ -1,0 +1,339 @@
+{
+  "schema": "highway_merge_rewards_v04_preparation_v1",
+  "date": "2026-11-10",
+  "training_started": false,
+  "training_authorized": true,
+  "tests": {
+    "passed": 116,
+    "command": "python -m pytest -q tests/test_highway_flow_rl_v04.py tests/test_highway_flow_rl_v03_rewards.py tests/test_highway_flow_rl_v03_runner.py tests/test_highway_v05_demand.py"
+  },
+  "preflight": {
+    "passed": true,
+    "training": false,
+    "optimizer_steps": 0,
+    "checks": {
+      "api": true,
+      "shapes": true,
+      "native_guards": true,
+      "finite_gradient": true,
+      "export": true,
+      "reward_version": true,
+      "mask_version": true
+    },
+    "source_hashes": {
+      "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+      "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+      "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+      "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+      "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+      "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+      "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+      "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+      "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+      "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+      "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+      "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+      "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+      "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+      "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+      "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+      "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+      "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+      "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+      "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+      "traffic/highway_v05_demand.py": "17734c8ebead6ed14f7da0ec58acf25940a0214bc0c939ed4593ec2d56c30705",
+      "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+      "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+      "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+      "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+      "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+      "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+      "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+      "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+      "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+      "experiments/run_highway_flow.py": "06dfbb9d3c1e5002ff9c8845c599a93476717345a367ef9d413e90de4b3d5c94",
+      "policies/highway_flow.py": "c30bb7ea38df192a70427a0da6f31e62665beb8570cec2e1c3eb6c3da91e0083",
+      "traffic/highway_flow_contract.py": "8b99bf044533f603d5b18f93a32caad7828819d95da105ad587fc2ef49065965",
+      "traffic/highway_flow_schedule.py": "b5c5b04f804a88345650f848fb8e5ead009b7803a36bba2bb383dfe4934ec6bf",
+      "traffic/highway_flow_context.py": "a0bf261cc6b632e1382843f328c749e0b52506544d11ce6161186132b1e7f339",
+      "traffic/highway_flow_reference.py": "2b47951afd23806f435dd88febb0173364f8f120c4b191fd500f289ea1668319",
+      "environments/highway_flow_env.py": "6ee87ded7e1aae9097a2e93e041f0bec87827509d55f4e0679f94b64ff4f5cbb",
+      "traffic/highway_smooth_contract.py": "bbe158f7ba3928a948aa2822a16978d92fbacd0399ae7bc340dc40c434e45b77",
+      "traffic/highway_smooth_schedule.py": "6e6cd00cb79e1807f6acf7097e4b640803382c9a78186707279864c986d382ae",
+      "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98",
+      "scripts/build_highway_flow_bank.py": "639b16b06cb45987978cc3a3ee5df471740282b7b3895755ec882a1e007e00bc",
+      "scripts/prepare_highway_flow.py": "b5cea1f16ef585418dc84ec0d72a3f6ec4e1dcb93ea373312f413e98714e932c",
+      "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+      "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+      "scripts/check_highway_flow_gradients.py": "70c948b8f4603652b1f7754b34169d1fbe48791baee98604bd63f80e3bc02731",
+      "experiments/run_highway_flow_rl_v04.py": "a17d1117f2b11cfdbfb789b9dab118be064ce152ed34079be7b19e45add81ddd",
+      "experiments/run_highway_flow_rl.py": "33fff50e4ab008c1cf3ee3ecb54dfd2ad22fe34ab4dbf5ed21ff1899f2072a2d",
+      "environments/highway_flow_rl_env.py": "bfdfc0902d800345014705c95f8d20e9093e39ac90d98d869c361c60b3e9a60b",
+      "environments/highway_flow_rl_v04_env.py": "2290a635bdb6e3c7442e002433919dee204805ff9652015ef40711a156e57289",
+      "traffic/highway_flow_rl_v02_rewards.py": "5604c6b74d92709a3a5581c60106e46985b779467188f4f3a22f38b7981f4cbc",
+      "environments/highway_flow_rl_v02_env.py": "35ec86fdeed1ecf33527fad2bb7032ce88dd924490b94dfe0dd3b0a12dbf8b9c",
+      "traffic/highway_flow_rl_v04_contract.py": "5562765fb82a8beb1ac23b46877410507271c7c5036e156f17357b1a08a5dab0",
+      "traffic/highway_flow_rl_v04_rewards.py": "093e60b2849d5d75dff16b04b39724d6100b13ceb806feab07f90fc9f60248c5",
+      "traffic/highway_flow_rl_v03_rewards.py": "8136949675e464bcc1a68ae5f2c8631ef4cda822fbea44dfc2058aee31e88d66",
+      "scripts/screen_flow_rl_v02_network.py": "ecab8a644d7fa19aed6f1a6130816d5f9b29d959c710cf30d95347d92ba4f68e"
+    },
+    "config_sha256": "3eb223ea69b50dbf5cfa929572b99b1945446baa494fef3cc59c1c4b78afe2f2"
+  },
+  "offline_coverage": {
+    "rows": 549,
+    "old_eligible": 205,
+    "new_eligible": 545,
+    "training": false,
+    "simulation": false,
+    "raw_trace_sha256": "37aceb465fd1c9b125bf715e94e5657449ff5b7f9818f3ab237aba20cbd4afee",
+    "limits": "Same states only; reward coverage, not improved driving"
+  },
+  "repeatability": {
+    "journal_sha256": "ed17a2b417b0224bc1fc8b700ff3841068ed029a15cfa25875e39bb717bb9621",
+    "equal": true,
+    "runs": [
+      "preflight-03",
+      "preflight-04"
+    ]
+  },
+  "complete_episode": {
+    "agent_transitions": 2961,
+    "partial_control_horizon": false,
+    "primary_horizon_complete": true,
+    "collisions": 0,
+    "teleports": 0,
+    "quality_merges": {
+      "agent_0": {
+        "qualified": false,
+        "samples": 160,
+        "stop_seconds": 6.4,
+        "full_approach_stop_seconds": 11.699999999999974,
+        "speed_match_fraction": 0.475,
+        "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+      }
+    },
+    "pre_merge_stop_seconds": {
+      "agent_0": 11.699999999999974
+    },
+    "native_emergencies": {
+      "available": true,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+      "warning_lines": 0,
+      "unique_events": 0,
+      "controlled_events": 0,
+      "background_events": 0,
+      "unclassified_events": 0,
+      "events": []
+    }
+  },
+  "frozen_baseline_summary": {
+    "cases": 1,
+    "decisions": 2961,
+    "pooled_intervention_fraction": 0.05538669368456602,
+    "max_peak_jerk_m_s3": 40.72141987817942,
+    "collisions": 0,
+    "teleports": 0,
+    "stable_merges": 1,
+    "merge_targets": 1,
+    "merge_entries": 1,
+    "lateral_merges": 1,
+    "full_horizon_cases": 1,
+    "quality_accepted": false,
+    "held_out": false,
+    "development_gates_passed": false,
+    "case_gates": [
+      {
+        "case_id": "v05-validation-i110-merge",
+        "seed": 6900019,
+        "passed": false,
+        "failures": [
+          "per_car_route_comfort_or_control",
+          "rolling_merge_quality"
+        ],
+        "per_car": {
+          "agent_0": {
+            "checks": {
+              "measured": true,
+              "completed_route": true,
+              "peak_jerk": false,
+              "interventions": false,
+              "headway_ttc_coverage": true,
+              "headway": true,
+              "ttc": true
+            },
+            "passed": false,
+            "decisions": 525,
+            "intervention_fraction": 0.31238095238095237,
+            "peak_abs_jerk_m_s3": 40.72141987817942,
+            "mean_legal_speed_fraction": 0.6168072910344095,
+            "minimum_headway_s": 6.966108802773158,
+            "minimum_ttc_s": null,
+            "leader_samples": 99,
+            "missing_headway_samples": 0,
+            "missing_ttc_samples": 0
+          },
+          "agent_1": {
+            "checks": {
+              "measured": true,
+              "completed_route": true,
+              "peak_jerk": true,
+              "interventions": true,
+              "headway_ttc_coverage": true,
+              "headway": true,
+              "ttc": true
+            },
+            "passed": true,
+            "decisions": 352,
+            "intervention_fraction": 0.0,
+            "peak_abs_jerk_m_s3": 1.1448310315607557,
+            "mean_legal_speed_fraction": 0.9584828911586627,
+            "minimum_headway_s": 2.9735558333317345,
+            "minimum_ttc_s": 60.33497346017711,
+            "leader_samples": 318,
+            "missing_headway_samples": 0,
+            "missing_ttc_samples": 0
+          },
+          "agent_2": {
+            "checks": {
+              "measured": true,
+              "completed_route": true,
+              "peak_jerk": false,
+              "interventions": true,
+              "headway_ttc_coverage": true,
+              "headway": true,
+              "ttc": true
+            },
+            "passed": false,
+            "decisions": 319,
+            "intervention_fraction": 0.0,
+            "peak_abs_jerk_m_s3": 5.401000827550817,
+            "mean_legal_speed_fraction": 0.9594392647127243,
+            "minimum_headway_s": null,
+            "minimum_ttc_s": null,
+            "leader_samples": 0,
+            "missing_headway_samples": 0,
+            "missing_ttc_samples": 0
+          },
+          "agent_3": {
+            "checks": {
+              "measured": true,
+              "completed_route": true,
+              "peak_jerk": false,
+              "interventions": true,
+              "headway_ttc_coverage": true,
+              "headway": true,
+              "ttc": true
+            },
+            "passed": false,
+            "decisions": 303,
+            "intervention_fraction": 0.0,
+            "peak_abs_jerk_m_s3": 6.552712619304657,
+            "mean_legal_speed_fraction": 0.9632625593508535,
+            "minimum_headway_s": null,
+            "minimum_ttc_s": null,
+            "leader_samples": 0,
+            "missing_headway_samples": 0,
+            "missing_ttc_samples": 0
+          },
+          "agent_4": {
+            "checks": {
+              "measured": true,
+              "completed_route": true,
+              "peak_jerk": true,
+              "interventions": true,
+              "headway_ttc_coverage": true,
+              "headway": true,
+              "ttc": true
+            },
+            "passed": true,
+            "decisions": 408,
+            "intervention_fraction": 0.0,
+            "peak_abs_jerk_m_s3": 2.8945858776570077,
+            "mean_legal_speed_fraction": 0.928963806186011,
+            "minimum_headway_s": 2.550067702386386,
+            "minimum_ttc_s": null,
+            "leader_samples": 366,
+            "missing_headway_samples": 0,
+            "missing_ttc_samples": 0
+          },
+          "agent_5": {
+            "checks": {
+              "measured": true,
+              "completed_route": true,
+              "peak_jerk": true,
+              "interventions": true,
+              "headway_ttc_coverage": true,
+              "headway": true,
+              "ttc": true
+            },
+            "passed": true,
+            "decisions": 367,
+            "intervention_fraction": 0.0,
+            "peak_abs_jerk_m_s3": 4.318199306726456,
+            "mean_legal_speed_fraction": 0.9748254799310381,
+            "minimum_headway_s": null,
+            "minimum_ttc_s": null,
+            "leader_samples": 0,
+            "missing_headway_samples": 0,
+            "missing_ttc_samples": 0
+          },
+          "agent_6": {
+            "checks": {
+              "measured": true,
+              "completed_route": true,
+              "peak_jerk": false,
+              "interventions": true,
+              "headway_ttc_coverage": true,
+              "headway": true,
+              "ttc": true
+            },
+            "passed": false,
+            "decisions": 301,
+            "intervention_fraction": 0.0,
+            "peak_abs_jerk_m_s3": 5.879856795072591,
+            "mean_legal_speed_fraction": 0.9693027006241502,
+            "minimum_headway_s": null,
+            "minimum_ttc_s": null,
+            "leader_samples": 0,
+            "missing_headway_samples": 0,
+            "missing_ttc_samples": 0
+          },
+          "agent_7": {
+            "checks": {
+              "measured": true,
+              "completed_route": true,
+              "peak_jerk": true,
+              "interventions": true,
+              "headway_ttc_coverage": true,
+              "headway": true,
+              "ttc": true
+            },
+            "passed": true,
+            "decisions": 386,
+            "intervention_fraction": 0.0,
+            "peak_abs_jerk_m_s3": 0.7187934219837544,
+            "mean_legal_speed_fraction": 0.9277198224599824,
+            "minimum_headway_s": 2.757387657898342,
+            "minimum_ttc_s": 44.74140525608166,
+            "leader_samples": 355,
+            "missing_headway_samples": 0,
+            "missing_ttc_samples": 0
+          }
+        }
+      }
+    ],
+    "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+    "evaluation_split": "development"
+  },
+  "failed_preparation": "preflight-01: NumPy integer serialization; fixed, failed evidence retained",
+  "hashes": {
+    "outputs/highway-flow-rl/v04/preflight-05/preflight.json": "755cc4f80b21c4f56ac78fbbe72e26e1924073f4dca5da509e28b3e79a1b948c",
+    "outputs/highway-flow-rl/v04/full-merge-baseline-01/summary.json": "ecb18a037be238f2f775a7597b420a21adc16f4095079ea53cb1fcb95dd2d39a",
+    "outputs/highway-flow-rl/v04/offline-check-01/summary.json": "373836cfbb77bde8e0e92c2f4f237fc70998e27b4717adab0bbcf8544088a8d6",
+    "configs/training/highway-flow-rl-v04-long.json": "3eb223ea69b50dbf5cfa929572b99b1945446baa494fef3cc59c1c4b78afe2f2",
+    "outputs/highway-flow-rl/v04/preflight-03/smoke/episode-9200000-d75d304c/actions.jsonl.gz": "a061389d3d5b80b87d28c6ea80379067fa5d527d59ac0acb5792926917cadf24",
+    "outputs/highway-flow-rl/v04/preflight-04/smoke/episode-9200000-2b34e805/actions.jsonl.gz": "cfafa90cfe02476fae894d013d93b0331d3ddd562a8be253e128e68d55d17766"
+  },
+  "scope": "Preparation only, no improved driving or training acceptance claim"
+}
