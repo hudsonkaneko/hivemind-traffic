@@ -13,7 +13,7 @@ import xml.etree.ElementTree as ET
 import numpy as np
 
 
-SCHEMA = 'highway_v05_varied_demand_v1'
+SCHEMA = 'highway_v05_varied_demand_v2'
 CAP = 26.8224
 MAX_AGENTS = 24
 MAIN_ROUTE = ('sb1', 'sb2', 'sb3', 'sb4', 'sb5')
@@ -117,6 +117,20 @@ def _safe_gap(rear_speed, front_speed):
     return MIN_GAP + max(safety, acc_insertion)
 
 
+def _ramp_insertion_speed(speed, remaining):
+    """Allow native stopping at the yield line before assigning controllers.
+
+    Use the most cautious profile's reaction time, normal braking, one SUMO
+    tick and minimum gap. Apply one common speed to the whole ramp platoon so
+    a capped front vehicle cannot create an unsafe closing-speed spawn.
+    """
+    tau = max(p['tau'] for p in PROFILES.values()) + .1
+    decel = min(p['decel'] for p in PROFILES.values())
+    usable = max(0., remaining - MIN_GAP)
+    ceiling = math.sqrt((decel * tau) ** 2 + 2. * decel * usable) - decel * tau
+    return min(speed, max(0., ceiling))
+
+
 def validate_initial_spawns(graph, rows, *, ceiling=CAP):
     """Reject invalid positions/limits and connected-lane overlap or short gaps.
 
@@ -215,6 +229,9 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
         if capacity < 1:
             raise ValueError('Ramp too short for a feasible initial merge vehicle')
         ramp_count = int(rng.integers(1, capacity + 1))
+        # Preserve every random draw, count, position and spacing. Only fix an
+        # infeasible departure speed, identically for every AV assignment.
+        ramp_speed = _ramp_insertion_speed(ramp_speed, ramp_length - front_position)
         for i in range(ramp_count):
             ramps.append(physical(f'ramp_{i}', 'ramp', 0, 0, front_position - spacing * i, ramp_speed, lid))
     main_count = total_vehicles - len(ramps) - leader_count
@@ -299,6 +316,7 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
         physical_matching='Positions, speeds, native driver profiles and departure times unchanged across AV counts',
         spawn_validation='Static connected-lane clearance plus required native reset verification',
         spawn_gap_rule='Maximum of cautious native headway/braking floor and stationary ACC insertion clearance, before AV assignment',
+        ramp_insertion_rule='Common ramp speed capped by cautious reaction plus braking distance to yield line; positions and population unchanged',
         sustained_arrival_interval_s=settings['arrival_interval_s'] if traffic_mode == 'sustained' else None)
     ET.ElementTree(root).write(path, encoding='utf-8', xml_declaration=True)
     return DemandManifest(rows, scenario)

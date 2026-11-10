@@ -1173,3 +1173,19 @@ warm-start round-one actor/critic, fresh optimizer. The explicit budget profile
 preserves all prior ledger costs and adds one required native preflight.
 95 CPU tests and fresh zero-update native preflight pass. No third round or
 held-out evaluation. [Configuration](highway-flow-rl-v03.md#authorized-longer-continuation).
+
+
+## November 9, 2026 - extended v03 completed after spawn repair
+
+The longer eight-epoch continuation completed 298,400 actual learning decisions
+(300,000 charged including a 1,600-decision interrupted rollout), 177 updates and
+7,130 optimizer steps in 1,738.281 seconds across two training processes. A
+short-ramp departure failed after 115 updates; fixed reaction-plus-braking
+insertion feasibility, preserved model/optimizer/RNG through an explicitly
+recorded checkpoint migration and resumed. The one changed development spawn
+was re-baselined. Fleet overrides improve 10.50% to 4.33%; stable merges 1/2 to
+2/2; zero collisions/teleports. All six case gates still fail; I-110 focal
+overrides remain 32.79%. Candidate retained, not promoted. 127 focused tests
+pass; raw journals, checkpoints, costs and compact evidence saved. No third
+round or held-out run. Study total: 2,169.579 seconds.
+[Results and repair](highway-flow-rl-v03.md#longer-continuation-result-and-spawn-repair).

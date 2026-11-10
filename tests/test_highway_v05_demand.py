@@ -285,3 +285,12 @@ def test_optional_ramp_distance_preserves_legacy_geometry_and_varies_only_ramp()
     for invalid in (float('nan'), 0., -1., 500., True):
         with pytest.raises(ValueError, match='Ramp upstream distance'):
             source_geometry(**options, ramp_upstream_distance=invalid)
+
+
+@pytest.mark.parametrize('speed,remaining', [(9.70,26.),(10.,100.),(7.,25.),(20.,30.)])
+def test_ramp_departure_can_stop_for_yield_before_assignment(speed,remaining):
+    from traffic.highway_v05_demand import _ramp_insertion_speed
+    actual=_ramp_insertion_speed(speed,remaining)
+    assert 0. <= actual <= speed
+    assert 2.1*actual+actual**2/9.+2.5 <= remaining+1e-9
+    if remaining>=100.: assert actual==speed

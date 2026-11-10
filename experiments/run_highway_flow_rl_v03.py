@@ -448,7 +448,8 @@ def update_pending(state, model, trainer, checkpoint, output, deadline):
 
 
 def run_preflight(cfg, output, model, trainer, fingerprint, sources, deadline):
-    report, batch = episode(cfg, cfg['training_rows'][0], output / 'smoke', model, collect=True, limit=64, deadline=deadline)
+    row = cfg.get('recovery_preflight_row', cfg['training_rows'][0])
+    report, batch = episode(cfg, row, output / 'smoke', model, collect=True, limit=64, deadline=deadline)
     save(output / 'smoke-report.json', report)
     flow.old.save_checkpoint(output / 'preflight-batch.pt', batch)
     return finish_preflight(cfg, output, model, trainer, report, batch, fingerprint, sources, deadline)

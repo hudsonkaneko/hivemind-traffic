@@ -64,7 +64,7 @@
     "preparation_wall_seconds": 360,
     "rollout_decisions": 2048,
     "conditional_second_round_authorized": true,
-    "max_diagnostic_episodes": 9
+    "max_diagnostic_episodes": 11
   },
   "critic_warmup_decisions": 0,
   "training_rows": [
@@ -756,5 +756,34 @@
     "merge_horizon_s": 3.0
   },
   "shared_cost_ledger": "outputs/highway-flow-rl/v02/cost-ledger.json",
-  "learning_profile": "extended_300k_8epochs"
+  "learning_profile": "extended_300k_8epochs",
+  "recovery_preflight_row": {
+    "case": {
+      "bend_m": 0,
+      "compiled_ramp_length_m": 104.66,
+      "geometry_manifest": "outputs/highway-environment/v05/network-bank/train-2-lane-ramp120/geometry-manifest.json",
+      "geometry_manifest_sha256": "1269b8e32baa8f0c3b9b7fc66cad24501afe1ff743efc0229e015324214edcfb",
+      "geometry_version": "highway_right_entry_v2",
+      "id": "train-2-lane-ramp120-merge",
+      "length_m": 2000,
+      "network": "outputs/highway-environment/v05/network-bank/train-2-lane-ramp120/network.net.xml",
+      "network_sha256": "d3b67073b0782ca3612ce017e4162bd9e824b27cccb533ffc6f33a99b1380167",
+      "ramp_upstream_distance_m": 120.0,
+      "speed_limit_mph": 50,
+      "split": "train",
+      "through_lanes": 2,
+      "task": "merge",
+      "density": "medium"
+    },
+    "controlled_count": 1,
+    "total_vehicles": 8,
+    "seed": 8319007,
+    "speed_limit_m_s": 22.352,
+    "communication": "local",
+    "packet_loss": 0.1,
+    "difficulty": 1,
+    "traffic_mode": "initial",
+    "horizon_steps": 1600,
+    "rollout_decisions": 2048
+  }
 }

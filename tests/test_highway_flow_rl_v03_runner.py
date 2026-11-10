@@ -121,3 +121,10 @@ def test_extended_profile_keeps_optimizer_boundaries(key,value):
 def test_extended_profile_cannot_restart_from_other_weights():
     cfg=long_cfg();cfg['warm_start']['sha256']='0'*64
     with pytest.raises(ValueError,match='round-one weights'):validate_config(cfg)
+
+
+@pytest.mark.parametrize('field,value',[('seed',123),('controlled_count',24)])
+def test_spawn_recovery_preflight_cannot_change_the_recorded_case(field,value):
+    cfg=long_cfg();cfg['recovery_preflight_row'][field]=value
+    with pytest.raises(ValueError,match='recorded failed training scenario'):
+        validate_config(cfg)

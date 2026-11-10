@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v38**, updated **November 9, 2026, America/Los_Angeles**.
-Status: **Longer v03 continuation authorized and preflighted: 300,000 additional decisions, eight PPO epochs. Existing accepted policy retained.**
+Revision **v39**, updated **November 9, 2026, America/Los_Angeles**.
+Status: **Extended v03 completed after spawn repair: fleet overrides 4.33%, stable merges 2/2; all six case gates still fail. Main-car diagnosis next, no promotion.**
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** run the [authorized extended v03 continuation](highway-flow-rl-v03.md#authorized-longer-continuation), then inspect saved terminal results. The separate config permits 300,000 additional decisions, up to eight PPO epochs and a 90-minute cap. Rewards/safety/scenarios stay fixed. 95 CPU tests and fresh zero-update native preflight pass. Preserve the rejected pilot and the existing accepted policy; no third round or held-out evaluation.
+**Next action:** diagnose the I-110 focal car's saved intervention and speed traces. [Extended v03 results](highway-flow-rl-v03.md#longer-continuation-result-and-spawn-repair): 298,400 actual learning decisions (300,000 charged), 177 updates, up to eight epochs, about 29 minutes of training runtime. Spawn repair retained optimizer/RNG and re-baselined the one changed development fixture. Fleet overrides improve to 4.33% and stable merges to 2/2, but the focal car has 32.79% overrides and all six case gates fail. Candidate and metrics retained; no promotion, third round or held-out test.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -597,3 +597,17 @@ pilot weights with a fresh optimizer. Same rewards and safety. 95 tests plus
 fresh native zero-update preflight pass. Shared ledger retained; old pilot
 limits preserved; extended study cap explicitly raised to 6,600 s. Review only
 terminal results; no third round or held-out test. Guide sync remains pending.
+
+
+### v39 - November 9: extended training completed after spawn repair
+
+The longer continuation finished 298,400 actual learning decisions and 177
+updates (7,130 optimizer steps); 1,600 failed reserved decisions remain charged.
+A ramp insertion failure was corrected with an assignment-independent stopping
+bound. Explicit migration preserved model, optimizer and RNG; native failing-seed
+preflight passed and the one changed development baseline was rerun. 127 CPU
+tests pass. Fleet interventions improve 10.50% to 4.33%, stable merges 1/2 to 2/2,
+with zero collisions/teleports; all six per-case gates still fail and focal
+interventions remain 32.79%. Source/metric/checkpoint history preserved. Study
+costs total 2,169.579 s. No promotion, held-out run or third round. Next: saved
+focal override/speed diagnosis. [Evidence](highway-flow-rl-v03.md#longer-continuation-result-and-spawn-repair). Guide sync pending.

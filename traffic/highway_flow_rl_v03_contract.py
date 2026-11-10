@@ -68,7 +68,7 @@ def validate_config(cfg, require_training=False):
         preparation_wall_seconds=360, rollout_decisions=2048)
     if extended:
         expected.update(per_round_decisions=300000, total_decisions=330000,
-            per_round_wall_seconds=5400, total_wall_seconds=6600, max_diagnostic_episodes=9)
+            per_round_wall_seconds=5400, total_wall_seconds=6600, max_diagnostic_episodes=11 if 'recovery_preflight_row' in cfg else 9)
     elif 'max_diagnostic_episodes' in budget and budget['max_diagnostic_episodes'] != 8:
         raise ValueError('Original pilot has eight diagnostic allocations')
     for key, value in expected.items():
@@ -131,6 +131,12 @@ def validate_config(cfg, require_training=False):
             raise ValueError('Seeds overlap between '+a+' and '+b)
     if not any(r['case']['task']=='merge' and 'i110' in r['case']['id'].lower() for r in cfg['training_rows']):
         raise ValueError('I-110 merge must receive learning exposure')
+    if 'recovery_preflight_row' in cfg:
+        row = cfg['recovery_preflight_row']
+        comparable = lambda r: {k:v for k,v in r.items() if k != 'seed'}
+        if (not extended or row.get('seed') != 8319007
+                or not any(comparable(row) == comparable(r) for r in cfg['training_rows'])):
+            raise ValueError('Recovery preflight must reproduce the recorded failed training scenario')
     for flag in ('held_out_authorized','development_gates_passed'):
         if type(cfg.get(flag)) is not bool:
             raise ValueError('Missing final-evaluation gate: '+flag)

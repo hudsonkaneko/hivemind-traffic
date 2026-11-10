@@ -1,6 +1,6 @@
 # Highway Flow RL v03: pre-action speed recovery and smoothness rewards
 
-**Current status:** authorized round one completed; candidate rejected on development metrics. [Training result](#round-one-training-result). The preparation record below is historical.
+**Current status:** the longer continuation is complete. Fleet metrics improved, but all six case acceptance gates still fail; no promotion. [Latest results](#longer-continuation-result-and-spawn-repair). Earlier preparation and pilot sections are historical.
 
 November 9, 2026. Implemented and checked offline, **not trained**. No new SUMO,
 Isaac or rendering runs. This implements the approved
@@ -198,3 +198,76 @@ prior work and the unchanged 600-second evaluation reserve), and total learning
 is capped at 330,000 decisions across both rounds. No third round or held-out
 evaluation is authorized. Save checkpoints automatically and inspect results
 only at completion/failure. Existing accepted actors remain unchanged.
+
+
+## Longer continuation result and spawn repair
+
+The extended run completed **298,400 actual learning decisions**, with **300,000
+charged decisions** including the 1,600-decision failed-rollout reservation.
+177 successful updates performed 7,130 optimizer steps. Of those updates, 106
+completed all eight epochs; the remainder ended earlier under the retained KL
+guard (zero completed epochs can include a partial first epoch). Training runtime
+was **1,738.281 seconds, about 29 minutes**, across the failed and resumed segments.
+No intermediate metrics were inspected while either training process ran.
+
+At seed 8319007, SUMO rejected native `ramp_0` at 9.697 m/s because the short ramp
+lacked stopping room before the unprioritized junction. The old placement rule
+considered braking distance but omitted cautious-driver reaction distance.
+[SUMO's insertion rules](https://sumo.dlr.de/docs/Simulation/VehicleInsertion.html)
+require the departing vehicle to be able to brake for an upcoming yield junction.
+
+Demand schema v2 now caps the common ramp-platoon departure speed using 2.0 s
+reaction time plus one 0.1 s tick, 4.5 m/s2 normal braking and a 2.5 m margin.
+The failed fixture's speed becomes 8.422 m/s. Random draws, counts, positions,
+spacing and profiles are preserved. The cap precedes controller assignment,
+so changing the AV fraction does not change physical demand. No vehicle is
+discarded and no safety or reward rule is relaxed.
+
+127 focused regression tests pass. A fresh native preflight on the actual failed
+seed passes with the saved learned weights and zero optimizer updates. The
+checkpoint migration explicitly records old/new source/config hashes and
+preserves actor, critic, optimizer, RNG and learning counters. It is a documented
+source-compatible recovery, not a claim of bitwise exact replay across a code
+change. The original checkpoint and failure remain immutable. The failed rollout
+is discarded on recovery and its full reservation remains charged.
+[Migration provenance](evidence/highway-flow-rl-v03/spawn-repair-migration.json).
+
+Offline old/new demand comparison found five development fixtures physically
+unchanged. The short-ramp development fixture alone changed its starting speed
+from 8.924 to 8.315 m/s, so that baseline case was rerun using the same frozen
+round-one actor. The migrated initial evaluation replaces only that case,
+retaining the original result in the failed-run evidence. This explains why the
+corrected pooled baseline is 10.50%, versus 10.21% in the earlier pilot report.
+Two additional native preparation allocations (baseline repair and failing-seed
+preflight) were recorded, raising the explicit allocation cap to 11 while
+retaining the same 6,600-second study and 90-minute round limits.
+
+| Matched development metric | Corrected starting baseline | Longer-trained actor |
+| --- | ---: | ---: |
+| Pooled interventions | 10.50% | 4.33% |
+| Stable merges | 1 / 2 | 2 / 2 |
+| Collisions / teleports | 0 / 0 | 0 / 0 |
+| Maximum uncensored jerk, m/s3 | 59.74 | 55.61 |
+| Cases passing every gate | 0 / 6 | 0 / 6 |
+| I-110 focal interventions | 31.37% | 32.79% |
+| I-110 focal mean absolute jerk, m/s3 | 1.216 | 0.547 |
+| I-110 focal p95 absolute jerk, m/s3 | 4.989 | 1.613 |
+| I-110 focal peak jerk, m/s3 | 40.57 | 40.71 |
+| I-110 focal mean legal-speed fraction | 61.65% | 58.98% |
+| I-110 focal avoidable-braking events | 0 | 1 |
+| I-110 focal optional ending-lane detours | 0 | 0 |
+
+The longer run helps fleet averages and restores the second merge, but the
+main car still relies heavily on interventions and is slower. Its typical jerk
+improves, while the peak remains unacceptable. Passing a pooled 5% threshold
+does not satisfy the per-car gate. **Do not promote this candidate.** Existing
+accepted policies are unchanged; no held-out evaluation or third round ran.
+[Per-case/per-car metrics, epoch counts, provenance and hashes](evidence/highway-flow-rl-v03/long-round-02-results.json).
+
+Final experimental actor: `outputs/highway-flow-rl/v03/long-round-02-resumed/policy.pt`.
+Full checkpoint: `last.pt` in the same folder. Retain both `long-round-02/` and
+`long-round-02-resumed/` for the complete learning history, plus `spawn-repair/`,
+`short-ramp-baseline-repair/` and `repaired-preflight-01/`. Runtime logs are under
+`logs/`. All costs remain in the shared ledger, now totaling **2,169.579 seconds**.
+The next useful diagnosis is the focal car's intervention causes and speed
+recovery, using saved traces before another learning change. Guide sync pending.
