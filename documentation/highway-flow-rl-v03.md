@@ -1,5 +1,7 @@
 # Highway Flow RL v03: pre-action speed recovery and smoothness rewards
 
+**Current status:** authorized round one completed; candidate rejected on development metrics. [Training result](#round-one-training-result). The preparation record below is historical.
+
 November 9, 2026. Implemented and checked offline, **not trained**. No new SUMO,
 Isaac or rendering runs. This implements the approved
 [reward plan](highway-smooth-reward-plan-v03.md); it does not promote a new actor.
@@ -129,3 +131,47 @@ automatically; inspect only completion or failure while training runs. No drivin
 improvement, accepted checkpoint, held-out result or native v03 validation is
 claimed here. Google guide incremental synchronization remains pending; its
 generated Markdown mirror was not edited.
+
+
+## Round-one training result
+
+The user authorized the presented v03 configuration on November 9. Only its
+authorization flag and authorization provenance changed. Native zero-update
+preflight passed against the exact launch config/source hashes before training.
+No language-model analysis or metric inspection occurred during the run.
+
+The pilot completed **29,999 active-agent decisions**, 18 rollout updates and
+444 optimizer steps in **294.859 seconds** including initial/final development
+evaluation. The runner stopped below the 30,000-decision ceiling with no error.
+Both six-case evaluation sets covered their declared horizons.
+
+| Development metric | Before | After |
+| --- | ---: | ---: |
+| Pooled safety overrides | 4.74% | 10.21% |
+| Maximum uncensored jerk, m/s3 | 57.10 | 59.73 |
+| Collisions / teleports | 0 / 0 | 0 / 0 |
+| Stable merges | 2 / 2 | 1 / 2 |
+| Cases passing every acceptance check | 0 / 6 | 0 / 6 |
+| I-110 focal avoidable-braking events | 1 | 0 |
+| I-110 focal optional ending-lane detours | 1 | 0 |
+| I-110 focal intervention fraction | 21.47% | 31.37% |
+| I-110 focal peak jerk, m/s3 | 27.86 | 40.57 |
+
+The targeted focal behaviors improve, but **overall driving acceptance regresses**.
+Do not promote this actor. The existing accepted actor remains untouched.
+There was no held-out test, automatic second round or parameter revision.
+[Compact per-case/per-car comparison and hashes](evidence/highway-flow-rl-v03/round-01-results.json).
+
+Local artifacts under `outputs/highway-flow-rl/v03/round-01/` include `policy.pt`,
+`last.pt` (full model/optimizer/RNG/training state), `summary.json`, complete
+initial/final validation, source snapshots, resolved configuration and raw
+action journals. Console output is `logs/highway-flow-rl-v03-round-01.log`.
+Weights are saved locally, not uploaded as release assets in this milestone.
+
+The shared ledger now retains **418.687 seconds** including preflight and both
+offline audits. All eight native preparation allocations are consumed. The
+second round and held-out evaluation remain unauthorized. Next: inspect the
+saved per-car command/override traces and the failed short-ramp merge before
+proposing another reward or training change. The authorization flag records
+this completed round; the ledger prevents silently starting it again. Google
+guide incremental synchronization remains pending.

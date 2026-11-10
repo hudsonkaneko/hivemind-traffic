@@ -1,6 +1,6 @@
 {
   "schema": "highway_flow_rl_v03",
-  "training_authorized": false,
+  "training_authorized": true,
   "round_index": 1,
   "seed": 9708,
   "observation_size": 117,
@@ -546,7 +546,7 @@
   "provenance": {
     "parent_plan": "documentation/highway-smooth-reward-plan-v03.md",
     "diagnosis": "documentation/highway-flow-rl-velocity-analysis.md",
-    "authorization": "Reward implementation and saved-trace tests only; training disabled pending final configuration review and fresh native preflight"
+    "authorization": "User authorized v03 round-one training on 2026-11-09 after final configuration review; native preflight required; second round and held-out evaluation remain disabled"
   },
   "restart_policy": {
     "max_rounds": 2,

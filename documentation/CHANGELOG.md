@@ -1148,3 +1148,18 @@ component metrics retained; no new simulator runs or learning. v03 training
 remains disabled pending final configuration review and fresh native preflight.
 The existing ledger now totals 121.328 seconds; no budget reset.
 [Implementation and final config](highway-flow-rl-v03.md). Guide sync pending.
+
+
+## November 9, 2026 - v03 round-one training completed, candidate rejected
+
+User authorized the final configuration. A fresh native zero-update preflight
+passed; the pilot completed 29,999 active-agent decisions in 294.859 seconds
+(18 updates, 444 optimizer steps) without a runtime error. Six matched
+development cases retain zero collisions/teleports but fail all case-level
+acceptance checks: pooled overrides rise from 4.74% to 10.21%, maximum
+uncensored jerk rises from 57.10 to 59.73 m/s3, and stable merges fall from 2/2
+to 1/2. The I-110 focal car removes its flagged braking event and optional detour
+but worsens interventions and jerk. No promotion, held-out run or second round.
+Actor, full checkpoint, traces and per-car metrics are preserved locally; compact
+comparison and checksums are committed. Study costs total 418.687 seconds.
+[Results](highway-flow-rl-v03.md#round-one-training-result). Guide sync pending.

@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v36**, updated **November 9, 2026, America/Los_Angeles**.
-Status: **V03 reward implementation and saved-trace checks complete; final config review and fresh native preflight next. Training remains disabled; frozen-parent driving gates still fail.**
+Revision **v37**, updated **November 9, 2026, America/Los_Angeles**.
+Status: **V03 round one completed; candidate rejected after development regressions. Existing accepted policy retained; no second round or held-out run.**
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** review the [final v03 configuration and offline results](highway-flow-rl-v03.md). The reward implementation passes 89 focused CPU tests and rescored 18,492 saved decisions without a new simulator run. The later I-110 slowdown flags 14 avoidable-braking decisions; the first tight-gap slowdown does not. Target coverage is 95.55% overall and 72.66% for the focal car, so exclusions remain explicit. Training is disabled; a fresh native zero-update preflight is required after authorization. The existing 30,000-decision / 900-second pilot and shared study ledger remain, now with 121.328 seconds charged. No improved driving or new accepted actor is claimed.
+**Next action:** diagnose saved v03 command/override traces and the failed short-ramp merge before proposing another training revision. [Round-one results](highway-flow-rl-v03.md#round-one-training-result): 29,999 learning decisions in 294.859 seconds; pooled overrides worsen from 4.74% to 10.21%, stable merges fall from 2/2 to 1/2, and all six case gates fail. The focal I-110 avoidable-braking event and optional detour disappear, but its comfort/control metrics regress. No promotion or additional learning. Checkpoints and per-car metrics retained; total charged study time is 418.687 seconds.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -573,3 +573,17 @@ Both audits, per-car CSVs and hashes retained. No new simulator run, training,
 held-out evaluation or performance promotion. Shared costs total 121.328 s.
 Next: final config review, then fresh exact-source native preflight before any
 authorized pilot. Google guide incremental sync remains pending.
+
+
+### v37 - November 9: authorized v03 pilot completed and rejected
+
+Fresh native zero-update preflight passed, then 29,999 decisions / 18 updates /
+444 optimizer steps completed without a runtime error in 294.859 seconds.
+No analysis or metric inspection while learning ran. Six matched development
+cases retain zero collisions/teleports; pooled interventions worsen to 10.21%,
+peak jerk to 59.73 m/s3, stable merges to 1/2. All six case gates fail. Focal
+I-110 avoidable braking and optional detour disappear, but interventions rise.
+Actor/checkpoint/raw metrics saved, candidate not promoted, held-out and second
+round untouched. Shared costs total 418.687 s. Next: saved-trace failure analysis
+before a new proposal. [Evidence](highway-flow-rl-v03.md#round-one-training-result).
+Guide synchronization pending.

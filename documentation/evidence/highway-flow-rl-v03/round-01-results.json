@@ -1,0 +1,775 @@
+{
+  "schema": "highway_flow_rl_v03_round_one_evidence_v1",
+  "completed": true,
+  "failed": false,
+  "training": true,
+  "learning": {
+    "phase": "complete",
+    "decisions": 29999,
+    "updates": 18,
+    "optimizer_steps": 444,
+    "ppo_episodes": 18,
+    "coverage": {
+      "i110-merge": {
+        "ppo_decisions": 2989,
+        "critic_decisions": 0,
+        "episodes": 2
+      },
+      "train-3-lane-cruise": {
+        "ppo_decisions": 1910,
+        "critic_decisions": 0,
+        "episodes": 2
+      },
+      "i110-following": {
+        "ppo_decisions": 2385,
+        "critic_decisions": 0,
+        "episodes": 2
+      },
+      "train-2-lane-passing": {
+        "ppo_decisions": 4096,
+        "critic_decisions": 0,
+        "episodes": 2
+      },
+      "train-4-lane-ramp120-merge": {
+        "ppo_decisions": 4096,
+        "critic_decisions": 0,
+        "episodes": 2
+      },
+      "train-5-lane-following": {
+        "ppo_decisions": 4056,
+        "critic_decisions": 0,
+        "episodes": 2
+      },
+      "i110-passing": {
+        "ppo_decisions": 1456,
+        "critic_decisions": 0,
+        "episodes": 1
+      },
+      "train-2-lane-ramp120-merge": {
+        "ppo_decisions": 827,
+        "critic_decisions": 0,
+        "episodes": 1
+      },
+      "train-4-lane-cruise": {
+        "ppo_decisions": 2040,
+        "critic_decisions": 0,
+        "episodes": 1
+      },
+      "train-3-lane-ramp240-merge": {
+        "ppo_decisions": 2048,
+        "critic_decisions": 0,
+        "episodes": 1
+      },
+      "train-5-lane-passing": {
+        "ppo_decisions": 2048,
+        "critic_decisions": 0,
+        "episodes": 1
+      },
+      "i110-cruise": {
+        "ppo_decisions": 2048,
+        "critic_decisions": 0,
+        "episodes": 1
+      }
+    }
+  },
+  "elapsed_seconds": 294.85899999999674,
+  "total_charged_seconds": 418.68700000003446,
+  "acceptance": "Rejected development candidate; existing accepted policy unchanged",
+  "held_out_run": false,
+  "second_round_started": false,
+  "phases": {
+    "initial": {
+      "summary": {
+        "cases": 6,
+        "decisions": 19334,
+        "pooled_intervention_fraction": 0.04742939898624186,
+        "max_peak_jerk_m_s3": 57.09708984714332,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 2,
+        "merge_targets": 2,
+        "full_horizon_cases": 6,
+        "development_gates_passed": false,
+        "quality_accepted": false
+      },
+      "cases": [
+        {
+          "case_id": "v05-validation-i110-merge",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "optional_ending_lane_detour_or_missing_audit"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.21467889908256882,
+              "peak_abs_jerk_m_s3": 27.85864031636441
+            },
+            "agent_1": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.0024813895781637717,
+              "peak_abs_jerk_m_s3": 47.88135826587663
+            },
+            "agent_2": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.3670184761286137
+            },
+            "agent_3": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.8951023519038444
+            },
+            "agent_4": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0020833333333333333,
+              "peak_abs_jerk_m_s3": 3.4938677400349505
+            },
+            "agent_5": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.0025380710659898475,
+              "peak_abs_jerk_m_s3": 7.709818517399114
+            },
+            "agent_6": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.006600660066006601,
+              "peak_abs_jerk_m_s3": 4.408086985349691
+            },
+            "agent_7": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.7693559080361965
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-cruise",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.1424968474148802,
+              "peak_abs_jerk_m_s3": 11.903066886588931
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-passing",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.1864406779661017,
+              "peak_abs_jerk_m_s3": 39.45989985384397
+            }
+          }
+        },
+        {
+          "case_id": "v05-validation-i110-following",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.6370785236357932
+            },
+            "agent_1": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.3776058107614517
+            },
+            "agent_2": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.09814323607427056,
+              "peak_abs_jerk_m_s3": 15.256605496195874
+            },
+            "agent_3": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.058712121212121215,
+              "peak_abs_jerk_m_s3": 46.05675287544724
+            },
+            "agent_4": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.012448132780082987,
+              "peak_abs_jerk_m_s3": 3.3939097821711783
+            },
+            "agent_5": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.001996007984031936,
+              "peak_abs_jerk_m_s3": 7.461037635803258
+            },
+            "agent_6": {
+              "passed": false,
+              "failed_checks": [
+                "interventions"
+              ],
+              "intervention_fraction": 0.26905829596412556,
+              "peak_abs_jerk_m_s3": 3.4808634221555224
+            },
+            "agent_7": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.5520782768724928
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-train-2-lane-ramp120-merge",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.014251781472684086,
+              "peak_abs_jerk_m_s3": 57.09708984714332
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-60mph-cruise",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "optional_ending_lane_detour_or_missing_audit"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "cruise_speed",
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.9179566353562336
+            },
+            "agent_1": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "cruise_speed",
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.007830853563038372,
+              "peak_abs_jerk_m_s3": 27.727439264131938
+            },
+            "agent_2": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 9.099048655480146
+            },
+            "agent_3": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.1920664608479967
+            },
+            "agent_4": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "cruise_speed",
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 10.528955906629633
+            },
+            "agent_5": {
+              "passed": false,
+              "failed_checks": [
+                "cruise_speed",
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.349294714629437
+            },
+            "agent_6": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.2761186361312866
+            },
+            "agent_7": {
+              "passed": false,
+              "failed_checks": [
+                "cruise_speed",
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.041742742061615
+            }
+          }
+        }
+      ],
+      "i110_focal": {
+        "decisions": 545,
+        "interventions": 117,
+        "jerk": {
+          "samples": 544,
+          "eligible_samples": 544,
+          "missing_samples": 0,
+          "mean_abs": 0.7490192649238767,
+          "rms": 2.3131303868045143,
+          "p95_abs": 3.254133831709503,
+          "peak_abs": 27.85864031636441
+        },
+        "mean_legal_speed_fraction": 0.5951989787648978,
+        "avoidable_braking_events": 1,
+        "detour_motion_events": 1
+      }
+    },
+    "final": {
+      "summary": {
+        "cases": 6,
+        "decisions": 17377,
+        "pooled_intervention_fraction": 0.10214651550900616,
+        "max_peak_jerk_m_s3": 59.72766399383546,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 1,
+        "merge_targets": 2,
+        "full_horizon_cases": 6,
+        "development_gates_passed": false,
+        "quality_accepted": false
+      },
+      "cases": [
+        {
+          "case_id": "v05-validation-i110-merge",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.31368821292775667,
+              "peak_abs_jerk_m_s3": 40.56557881797251
+            },
+            "agent_1": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.9323422014712932
+            },
+            "agent_2": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.408205151557887
+            },
+            "agent_3": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.995121210813558
+            },
+            "agent_4": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.786182105541158
+            },
+            "agent_5": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.1542224436998723
+            },
+            "agent_6": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.1709079742432
+            },
+            "agent_7": {
+              "passed": false,
+              "failed_checks": [
+                "interventions"
+              ],
+              "intervention_fraction": 0.1278772378516624,
+              "peak_abs_jerk_m_s3": 2.1984203159810534
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-cruise",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.22586872586872586,
+              "peak_abs_jerk_m_s3": 10.026933103799784
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-passing",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.3577512776831346,
+              "peak_abs_jerk_m_s3": 7.007626266340239
+            }
+          }
+        },
+        {
+          "case_id": "v05-validation-i110-following",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.7757516354322433
+            },
+            "agent_1": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.150048792362249
+            },
+            "agent_2": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.13812154696132597,
+              "peak_abs_jerk_m_s3": 10.314090161553224
+            },
+            "agent_3": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.11928934010152284,
+              "peak_abs_jerk_m_s3": 23.75230117335576
+            },
+            "agent_4": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.6282722513089005,
+              "peak_abs_jerk_m_s3": 9.050032566188193
+            },
+            "agent_5": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.17534246575342466,
+              "peak_abs_jerk_m_s3": 7.454753042820883
+            },
+            "agent_6": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.0765661252900232,
+              "peak_abs_jerk_m_s3": 7.785137593746683
+            },
+            "agent_7": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.747528031468427
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-train-2-lane-ramp120-merge",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "stable_merge"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.18012422360248448,
+              "peak_abs_jerk_m_s3": 59.72766399383546
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-60mph-cruise",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.022869020700526
+            },
+            "agent_1": {
+              "passed": false,
+              "failed_checks": [
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.008088394999575
+            },
+            "agent_2": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.6923571676016564
+            },
+            "agent_3": {
+              "passed": false,
+              "failed_checks": [
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.6059838011860847
+            },
+            "agent_4": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.379800707101822
+            },
+            "agent_5": {
+              "passed": false,
+              "failed_checks": [
+                "cruise_speed",
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.9538114219901814
+            },
+            "agent_6": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.019872248172618
+            },
+            "agent_7": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.494173914194178
+            }
+          }
+        }
+      ],
+      "i110_focal": {
+        "decisions": 526,
+        "interventions": 165,
+        "jerk": {
+          "samples": 525,
+          "eligible_samples": 525,
+          "missing_samples": 0,
+          "mean_abs": 1.216278142414343,
+          "rms": 3.4142572373854065,
+          "p95_abs": 4.989259429276189,
+          "peak_abs": 40.56557881797251
+        },
+        "mean_legal_speed_fraction": 0.6164968483298233,
+        "avoidable_braking_events": 0,
+        "detour_motion_events": 0
+      }
+    }
+  },
+  "preflight": {
+    "schema": "highway_flow_rl_preflight_v03",
+    "passed": true,
+    "training": false,
+    "optimizer_steps": 0,
+    "config_sha256": "0e4dbe4a730718757471c3a1f6af09e8739d819a3a9157aa2ad962ea48cf8489",
+    "checks": {
+      "api": true,
+      "shapes": true,
+      "native_guards": true,
+      "finite_gradient": true,
+      "export": true,
+      "reward_version": true,
+      "mask_version": true
+    }
+  },
+  "provenance": {
+    "config_sha256": "0e4dbe4a730718757471c3a1f6af09e8739d819a3a9157aa2ad962ea48cf8489",
+    "source_hashes": {
+      "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+      "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+      "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+      "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+      "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+      "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+      "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+      "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+      "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+      "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+      "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+      "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+      "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+      "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+      "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+      "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+      "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+      "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+      "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+      "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+      "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+      "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+      "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+      "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+      "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+      "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+      "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+      "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+      "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+      "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+      "experiments/run_highway_flow.py": "06dfbb9d3c1e5002ff9c8845c599a93476717345a367ef9d413e90de4b3d5c94",
+      "policies/highway_flow.py": "c30bb7ea38df192a70427a0da6f31e62665beb8570cec2e1c3eb6c3da91e0083",
+      "traffic/highway_flow_contract.py": "8b99bf044533f603d5b18f93a32caad7828819d95da105ad587fc2ef49065965",
+      "traffic/highway_flow_schedule.py": "b5c5b04f804a88345650f848fb8e5ead009b7803a36bba2bb383dfe4934ec6bf",
+      "traffic/highway_flow_context.py": "a0bf261cc6b632e1382843f328c749e0b52506544d11ce6161186132b1e7f339",
+      "traffic/highway_flow_reference.py": "2b47951afd23806f435dd88febb0173364f8f120c4b191fd500f289ea1668319",
+      "environments/highway_flow_env.py": "6ee87ded7e1aae9097a2e93e041f0bec87827509d55f4e0679f94b64ff4f5cbb",
+      "traffic/highway_smooth_contract.py": "bbe158f7ba3928a948aa2822a16978d92fbacd0399ae7bc340dc40c434e45b77",
+      "traffic/highway_smooth_schedule.py": "6e6cd00cb79e1807f6acf7097e4b640803382c9a78186707279864c986d382ae",
+      "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98",
+      "scripts/build_highway_flow_bank.py": "639b16b06cb45987978cc3a3ee5df471740282b7b3895755ec882a1e007e00bc",
+      "scripts/prepare_highway_flow.py": "b5cea1f16ef585418dc84ec0d72a3f6ec4e1dcb93ea373312f413e98714e932c",
+      "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+      "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+      "scripts/check_highway_flow_gradients.py": "70c948b8f4603652b1f7754b34169d1fbe48791baee98604bd63f80e3bc02731",
+      "experiments/run_highway_flow_rl_v03.py": "43edeee9c2796ca56776617ca412477809dad6978dbcceb4435e05520352d9c1",
+      "experiments/run_highway_flow_rl.py": "33fff50e4ab008c1cf3ee3ecb54dfd2ad22fe34ab4dbf5ed21ff1899f2072a2d",
+      "environments/highway_flow_rl_env.py": "bfdfc0902d800345014705c95f8d20e9093e39ac90d98d869c361c60b3e9a60b",
+      "environments/highway_flow_rl_v03_env.py": "18803034183d7c541224b842cef1596c675860940eab4bfa5d8e6228a17400c6",
+      "traffic/highway_flow_rl_v02_rewards.py": "5604c6b74d92709a3a5581c60106e46985b779467188f4f3a22f38b7981f4cbc",
+      "environments/highway_flow_rl_v02_env.py": "35ec86fdeed1ecf33527fad2bb7032ce88dd924490b94dfe0dd3b0a12dbf8b9c",
+      "traffic/highway_flow_rl_v03_contract.py": "f08435e8bc96b5fa41487b54060c6acb804de9a69b1568e635759c11489b8acb",
+      "traffic/highway_flow_rl_v03_rewards.py": "8136949675e464bcc1a68ae5f2c8631ef4cda822fbea44dfc2058aee31e88d66",
+      "scripts/screen_flow_rl_v02_network.py": "ecab8a644d7fa19aed6f1a6130816d5f9b29d959c710cf30d95347d92ba4f68e"
+    },
+    "git_commit": "7367b802e0354c4ac7f70f8388c960f44d5d5767",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.6"
+  },
+  "artifacts": {
+    "outputs/highway-flow-rl/v03/round-01/policy.pt": "828bc0eddc710ceb0d50ed8d5da56a94cbea454446b47ddb9283b3494642b0f5",
+    "outputs/highway-flow-rl/v03/round-01/last.pt": "1befdc65f80da3c9c2170ae522d17df73e91226988f6cc54433878c2d4e9719c",
+    "outputs/highway-flow-rl/v03/round-01/summary.json": "0b0628239f51682fc66ddbc79bb5684b09b7df7bcf669458c23cc0640cb226be",
+    "outputs/highway-flow-rl/v03/round-01/resolved-config.json": "0e4dbe4a730718757471c3a1f6af09e8739d819a3a9157aa2ad962ea48cf8489",
+    "outputs/highway-flow-rl/v03/round-01/manifest.json": "c29f0a99e5c165ec0c014387d78890cc4f085b7c079e4986f55a6871eda987c8",
+    "outputs/highway-flow-rl/v03/round-01/initial-validation.json": "982395dd2db40dea5a333d3cc0ec32003e6285868c467ea6af28ce0ac10c7c2c",
+    "outputs/highway-flow-rl/v03/round-01/final-validation.json": "c3fb1b1bc0f3a65c5627a1943fd22e6d6151b8d4d03e1d5109ecd9ad9e954572",
+    "outputs/highway-flow-rl/v03/authorized-preflight-01/preflight.json": "2a8d852f4c2ffb5f04718100dff8e0e32a37623aceb0d36f370ef0867c0a9534"
+  }
+}
