@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v34**, updated **November 8, 2026, America/Los_Angeles**.
-Status: **Research-backed reward revision proposed after offline audit; implementation/configuration review next, training disabled. Frozen-parent driving gates still fail.**
+Revision **v40**, updated **November 9, 2026, America/Los_Angeles**.
+Status: **Offline v03 audit complete: gap-formation reward coverage, lane-end fallback and truncated experience are the priorities. Candidate remains rejected; no new training.**
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** review the [reward revision plan](highway-flow-rl-reward-revision-plan.md), then implement its saved-state audit and present a revised resolved configuration before learning. The current cruise addition pays nothing in either recorded focal dip; simply raising its weight misses the relevant states. Proposed candidates replace it with context-valid speed-target error (0.30), normalized Huber comfort (0.09, jerk scale 2 m/s3), and a one-time optional-detour penalty of 2.0. Exact target construction remains to be qualified. The prepared v02 configuration and frozen weights are unchanged. Preserve the 30,000-decision / 900-second pilot, existing cost ledger and all driving gates; no training or new simulator run is authorized by planning.
+**Next action:** correct the gap-formation objective, preserve complete episode experience, and align action-mask/native maneuver feasibility before another weight sweep. [Full offline audit](highway-policy-audit-v01.md): 173/180 focal overrides involve the lane-end guard; 344/549 decisions lack a speed target; no left merge is permitted before 26.4 s, followed by a 13.6 s stop. Only 10.51% of learned samples belong to merging cars; 103/177 rollouts truncate and reset. Exported and full actors replay all 17,230 recorded actions consistently. Proposed fixes require matched validation and a resolved training configuration before launch; no runtime change, training, promotion or held-out test in this audit.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -554,3 +554,74 @@ Analyzed the saved v02 replay without running SUMO or training. Geometry selects
 ### v34 - November 8: researched reward revision and scale audit
 
 Two sub-agents reviewed primary AV-RL sources and actual reward code/journals. [Plan](highway-flow-rl-reward-revision-plan.md) addresses cruise eligibility before coefficients, a context-dependent speed target, normalized Huber jerk and a stronger optional-ending-lane penalty. The saved focal audit finds zero cruise payment in both speed dips, including nine rows excluded solely by its own braking; 69/545 decisions receive the existing addition. One-time merge/pass guards are present; the asymmetric action mapping is preserved, not declared causal. Candidate coefficients are unvalidated and the exact target helper needs counterexample qualification. No implementation, configuration, policy, simulator or training changes. Existing budget retained with an explicit evaluation-reserve reallocation proposal; terminal-only review remains the preference. Guide synchronization pending.
+
+
+### v35 - November 9: review-ready highway reward weights
+
+[Plan v03](highway-smooth-reward-plan-v03.md) records the actual flow117 baseline, signed candidate reward scales, Huber examples and pre-action safe-target eligibility. It adds sequence-level reward qualification and a proposed avoidable-braking classifier whose coverage must be validated. Safety constraints, held-out separation, complete-route metrics and the existing ledger remain. No code/configuration/actor changes, simulator runs or training. Next: user review, offline target/reward qualification and presentation of the resolved configuration before learning. Google guide incremental sync pending.
+
+
+### v36 - November 9: implemented rewards and offline trace checks
+
+[Flow RL v03](highway-flow-rl-v03.md) implements the reviewed pre-action target,
+speed-error 0.30, Huber jerk 0.09 (2 m/s3 scale), and detour -2.0. The legacy
+jerk coefficient is zero to prevent double charging. 89 focused tests pass;
+18,492 saved development decisions rescored with 95.55% qualified target
+coverage (72.66% for the I-110 focal car). Later focal dip: 14 flagged
+avoidable-braking decisions, one persistent event; first tight-gap dip: none.
+Both audits, per-car CSVs and hashes retained. No new simulator run, training,
+held-out evaluation or performance promotion. Shared costs total 121.328 s.
+Next: final config review, then fresh exact-source native preflight before any
+authorized pilot. Google guide incremental sync remains pending.
+
+
+### v37 - November 9: authorized v03 pilot completed and rejected
+
+Fresh native zero-update preflight passed, then 29,999 decisions / 18 updates /
+444 optimizer steps completed without a runtime error in 294.859 seconds.
+No analysis or metric inspection while learning ran. Six matched development
+cases retain zero collisions/teleports; pooled interventions worsen to 10.21%,
+peak jerk to 59.73 m/s3, stable merges to 1/2. All six case gates fail. Focal
+I-110 avoidable braking and optional detour disappear, but interventions rise.
+Actor/checkpoint/raw metrics saved, candidate not promoted, held-out and second
+round untouched. Shared costs total 418.687 s. Next: saved-trace failure analysis
+before a new proposal. [Evidence](highway-flow-rl-v03.md#round-one-training-result).
+Guide synchronization pending.
+
+
+### v38 - November 9: longer continuation authorized and preflighted
+
+User requested more learning and epochs. Prepared a separate strict extended
+profile (300,000 decisions, eight epochs, 90 minutes) starting from the rejected
+pilot weights with a fresh optimizer. Same rewards and safety. 95 tests plus
+fresh native zero-update preflight pass. Shared ledger retained; old pilot
+limits preserved; extended study cap explicitly raised to 6,600 s. Review only
+terminal results; no third round or held-out test. Guide sync remains pending.
+
+
+### v39 - November 9: extended training completed after spawn repair
+
+The longer continuation finished 298,400 actual learning decisions and 177
+updates (7,130 optimizer steps); 1,600 failed reserved decisions remain charged.
+A ramp insertion failure was corrected with an assignment-independent stopping
+bound. Explicit migration preserved model, optimizer and RNG; native failing-seed
+preflight passed and the one changed development baseline was rerun. 127 CPU
+tests pass. Fleet interventions improve 10.50% to 4.33%, stable merges 1/2 to 2/2,
+with zero collisions/teleports; all six per-case gates still fail and focal
+interventions remain 32.79%. Source/metric/checkpoint history preserved. Study
+costs total 2,169.579 s. No promotion, held-out run or third round. Next: saved
+focal override/speed diagnosis. [Evidence](highway-flow-rl-v03.md#longer-continuation-result-and-spawn-repair). Guide sync pending.
+
+
+### v40 - November 9: comprehensive saved-trace policy audit
+
+Audited rewards and their actual contributions, target coverage, masks, native
+execution, rollout population/time coupling, observations/messages, PPO/GAE,
+gradients, checkpoint identity and acceptance metrics. The focal car attempts
+every permitted left merge but receives no such permission until near-stop;
+most speed-target reward is absent during gap formation. Retained full traces,
+source/input hashes and compact audit evidence. Actor replay and arithmetic
+consistency checks pass; about 2.9 s offline computation, zero new simulator
+episodes or optimizer steps. Prioritize gap-formation guidance and complete
+merge experience, then controlled weight/credit-horizon comparisons. Candidate
+remains rejected. [Audit](highway-policy-audit-v01.md). Guide sync pending.

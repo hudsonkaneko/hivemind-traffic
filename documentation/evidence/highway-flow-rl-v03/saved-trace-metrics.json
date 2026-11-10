@@ -1,0 +1,1132 @@
+{
+  "schema": "highway_flow_rl_v03_saved_trace_audit_v1",
+  "training": false,
+  "optimizer_steps": 0,
+  "new_simulator_runs": 0,
+  "native_preflight_passed": false,
+  "driving_improvement_measured": false,
+  "scope": "Offline reward rescore of frozen development actor; rewards cannot change these trajectories",
+  "terminal_speed_note": "No invented post-state: final unobserved/disappeared samples receive no speed error; coverage reported",
+  "config_sha256": "8912c783a1710959a067d0ed433a3274ca2f9fe55ec10821be2b4c32129fe9bf",
+  "source_hashes": {
+    "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+    "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+    "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+    "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+    "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+    "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+    "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+    "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+    "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+    "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+    "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+    "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+    "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+    "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+    "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+    "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+    "traffic/highway_v05_demand.py": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+    "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+    "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+    "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+    "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+    "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+    "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+    "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+    "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+    "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+    "experiments/run_highway_flow.py": "06dfbb9d3c1e5002ff9c8845c599a93476717345a367ef9d413e90de4b3d5c94",
+    "policies/highway_flow.py": "c30bb7ea38df192a70427a0da6f31e62665beb8570cec2e1c3eb6c3da91e0083",
+    "traffic/highway_flow_contract.py": "8b99bf044533f603d5b18f93a32caad7828819d95da105ad587fc2ef49065965",
+    "traffic/highway_flow_schedule.py": "b5c5b04f804a88345650f848fb8e5ead009b7803a36bba2bb383dfe4934ec6bf",
+    "traffic/highway_flow_context.py": "a0bf261cc6b632e1382843f328c749e0b52506544d11ce6161186132b1e7f339",
+    "traffic/highway_flow_reference.py": "2b47951afd23806f435dd88febb0173364f8f120c4b191fd500f289ea1668319",
+    "environments/highway_flow_env.py": "6ee87ded7e1aae9097a2e93e041f0bec87827509d55f4e0679f94b64ff4f5cbb",
+    "traffic/highway_smooth_contract.py": "bbe158f7ba3928a948aa2822a16978d92fbacd0399ae7bc340dc40c434e45b77",
+    "traffic/highway_smooth_schedule.py": "6e6cd00cb79e1807f6acf7097e4b640803382c9a78186707279864c986d382ae",
+    "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98",
+    "scripts/build_highway_flow_bank.py": "639b16b06cb45987978cc3a3ee5df471740282b7b3895755ec882a1e007e00bc",
+    "scripts/prepare_highway_flow.py": "b5cea1f16ef585418dc84ec0d72a3f6ec4e1dcb93ea373312f413e98714e932c",
+    "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+    "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+    "scripts/check_highway_flow_gradients.py": "70c948b8f4603652b1f7754b34169d1fbe48791baee98604bd63f80e3bc02731",
+    "experiments/run_highway_flow_rl_v03.py": "43edeee9c2796ca56776617ca412477809dad6978dbcceb4435e05520352d9c1",
+    "experiments/run_highway_flow_rl.py": "33fff50e4ab008c1cf3ee3ecb54dfd2ad22fe34ab4dbf5ed21ff1899f2072a2d",
+    "environments/highway_flow_rl_env.py": "bfdfc0902d800345014705c95f8d20e9093e39ac90d98d869c361c60b3e9a60b",
+    "environments/highway_flow_rl_v03_env.py": "18803034183d7c541224b842cef1596c675860940eab4bfa5d8e6228a17400c6",
+    "traffic/highway_flow_rl_v02_rewards.py": "5604c6b74d92709a3a5581c60106e46985b779467188f4f3a22f38b7981f4cbc",
+    "environments/highway_flow_rl_v02_env.py": "35ec86fdeed1ecf33527fad2bb7032ce88dd924490b94dfe0dd3b0a12dbf8b9c",
+    "traffic/highway_flow_rl_v03_contract.py": "f08435e8bc96b5fa41487b54060c6acb804de9a69b1568e635759c11489b8acb",
+    "traffic/highway_flow_rl_v03_rewards.py": "8136949675e464bcc1a68ae5f2c8631ef4cda822fbea44dfc2058aee31e88d66",
+    "scripts/screen_flow_rl_v02_network.py": "ecab8a644d7fa19aed6f1a6130816d5f9b29d959c710cf30d95347d92ba4f68e",
+    "scripts/audit_highway_flow_rl_v03_rewards.py": "9f8104245b436b2aceb8068c6847f47636600b5b635d32dd6c8755037b34dde4"
+  },
+  "cases": [
+    {
+      "case_id": "v05-validation-i110-merge",
+      "seed": 6900019,
+      "task": "merge",
+      "aggregate": {
+        "decisions": 3282,
+        "target_eligible": 2981,
+        "measured_post_speed": 3274,
+        "original_reward": 1827.5328518816234,
+        "revised_reward": 1620.4412708427292,
+        "original_jerk_cost": -30.32403546403332,
+        "huber_jerk_cost": -19.422232499770146,
+        "original_cruise_reward": 91.4522275157374,
+        "speed_error_cost": -125.04115648742379,
+        "original_detour_cost": -0.5,
+        "revised_detour_cost": -2.0,
+        "avoidable_braking_decisions": 243,
+        "avoidable_braking_events": 11,
+        "exclusions": {
+          "unresolved_neighbor_lateral_motion": 152,
+          "required_merge_target_unknown": 2,
+          "no_current_admissible_merge_gap": 147
+        }
+      },
+      "focal": {
+        "decisions": 545,
+        "target_eligible": 396,
+        "measured_post_speed": 544,
+        "original_reward": 185.2253295117653,
+        "revised_reward": 155.68176543758307,
+        "original_jerk_cost": -12.22399440355767,
+        "huber_jerk_cost": -11.384240175028365,
+        "original_cruise_reward": 1.9351847322922047,
+        "speed_error_cost": -26.94813357041871,
+        "original_detour_cost": -0.5,
+        "revised_detour_cost": -2.0,
+        "avoidable_braking_decisions": 14,
+        "avoidable_braking_events": 1,
+        "exclusions": {
+          "required_merge_target_unknown": 2,
+          "no_current_admissible_merge_gap": 147
+        }
+      },
+      "per_car": {
+        "agent_0": {
+          "decisions": 545,
+          "target_eligible": 396,
+          "measured_post_speed": 544,
+          "original_reward": 185.2253295117653,
+          "revised_reward": 155.68176543758307,
+          "original_jerk_cost": -12.22399440355767,
+          "huber_jerk_cost": -11.384240175028365,
+          "original_cruise_reward": 1.9351847322922047,
+          "speed_error_cost": -26.94813357041871,
+          "original_detour_cost": -0.5,
+          "revised_detour_cost": -2.0,
+          "avoidable_braking_decisions": 14,
+          "avoidable_braking_events": 1,
+          "exclusions": {
+            "required_merge_target_unknown": 2,
+            "no_current_admissible_merge_gap": 147
+          }
+        },
+        "agent_1": {
+          "decisions": 403,
+          "target_eligible": 374,
+          "measured_post_speed": 402,
+          "original_reward": 234.74708407110285,
+          "revised_reward": 208.91368317436394,
+          "original_jerk_cost": -4.304150028526749,
+          "huber_jerk_cost": -3.830077260138801,
+          "original_cruise_reward": 11.132397036292556,
+          "speed_error_cost": -15.17507662883447,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 14,
+          "avoidable_braking_events": 1,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 29
+          }
+        },
+        "agent_2": {
+          "decisions": 329,
+          "target_eligible": 329,
+          "measured_post_speed": 328,
+          "original_reward": 224.46411143715372,
+          "revised_reward": 202.43879343597948,
+          "original_jerk_cost": -1.0623849928379485,
+          "huber_jerk_cost": -0.2518178645504806,
+          "original_cruise_reward": 18.132422579653735,
+          "speed_error_cost": -4.70346254980788,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 0,
+          "avoidable_braking_events": 0,
+          "exclusions": {}
+        },
+        "agent_3": {
+          "decisions": 367,
+          "target_eligible": 367,
+          "measured_post_speed": 366,
+          "original_reward": 206.52435896796186,
+          "revised_reward": 177.7507019661771,
+          "original_jerk_cost": -2.3732510555069766,
+          "huber_jerk_cost": -0.6283716894428447,
+          "original_cruise_reward": 11.065076476453175,
+          "speed_error_cost": -19.453459891395493,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 83,
+          "avoidable_braking_events": 3,
+          "exclusions": {}
+        },
+        "agent_4": {
+          "decisions": 480,
+          "target_eligible": 447,
+          "measured_post_speed": 479,
+          "original_reward": 263.0853207040289,
+          "revised_reward": 232.1218495112527,
+          "original_jerk_cost": -2.911553438007836,
+          "huber_jerk_cost": -0.8346075641189771,
+          "original_cruise_reward": 9.725584654716638,
+          "speed_error_cost": -23.314832411948522,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 52,
+          "avoidable_braking_events": 3,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 33
+          }
+        },
+        "agent_5": {
+          "decisions": 394,
+          "target_eligible": 326,
+          "measured_post_speed": 393,
+          "original_reward": 244.4414147265854,
+          "revised_reward": 233.2445694554585,
+          "original_jerk_cost": -2.96209968253968,
+          "huber_jerk_cost": -1.2707538243977086,
+          "original_cruise_reward": 5.287228512890722,
+          "speed_error_cost": -7.600962616377937,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 23,
+          "avoidable_braking_events": 1,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 68
+          }
+        },
+        "agent_6": {
+          "decisions": 303,
+          "target_eligible": 303,
+          "measured_post_speed": 302,
+          "original_reward": 211.94720876386427,
+          "revised_reward": 193.75639062337913,
+          "original_jerk_cost": -2.6199716940522,
+          "huber_jerk_cost": -0.9064169053394102,
+          "original_cruise_reward": 17.434707957104685,
+          "speed_error_cost": -2.4696649720931263,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 0,
+          "avoidable_braking_events": 0,
+          "exclusions": {}
+        },
+        "agent_7": {
+          "decisions": 461,
+          "target_eligible": 439,
+          "measured_post_speed": 460,
+          "original_reward": 257.0980236991642,
+          "revised_reward": 216.53351723853342,
+          "original_jerk_cost": -1.8666301690041998,
+          "huber_jerk_cost": -0.31594721675358756,
+          "original_cruise_reward": 16.73962556633362,
+          "speed_error_cost": -25.375563846547777,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 57,
+          "avoidable_braking_events": 2,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 22
+          }
+        }
+      },
+      "avoidable_braking": {
+        "agent_0": {
+          "decisions": 545,
+          "target_eligible": 396,
+          "clear_cruise_decisions": 60,
+          "streak": 0,
+          "events": 1,
+          "reaccelerations": 0,
+          "clear_cruise_speed_fraction_sum": 58.23197306233148,
+          "awaiting_reacceleration": false,
+          "last_time": 54.5
+        },
+        "agent_1": {
+          "decisions": 403,
+          "target_eligible": 374,
+          "clear_cruise_decisions": 191,
+          "streak": 0,
+          "events": 1,
+          "reaccelerations": 1,
+          "clear_cruise_speed_fraction_sum": 161.27497859622022,
+          "awaiting_reacceleration": false,
+          "last_time": 40.3
+        },
+        "agent_2": {
+          "decisions": 329,
+          "target_eligible": 329,
+          "clear_cruise_decisions": 329,
+          "streak": 0,
+          "events": 0,
+          "reaccelerations": 0,
+          "clear_cruise_speed_fraction_sum": 305.722608052524,
+          "awaiting_reacceleration": false,
+          "last_time": 32.9
+        },
+        "agent_3": {
+          "decisions": 367,
+          "target_eligible": 367,
+          "clear_cruise_decisions": 367,
+          "streak": 0,
+          "events": 3,
+          "reaccelerations": 2,
+          "clear_cruise_speed_fraction_sum": 291.6394443701319,
+          "awaiting_reacceleration": false,
+          "last_time": 36.7
+        },
+        "agent_4": {
+          "decisions": 480,
+          "target_eligible": 447,
+          "clear_cruise_decisions": 77,
+          "streak": 0,
+          "events": 3,
+          "reaccelerations": 2,
+          "clear_cruise_speed_fraction_sum": 64.72328974430863,
+          "awaiting_reacceleration": false,
+          "last_time": 48.0
+        },
+        "agent_5": {
+          "decisions": 394,
+          "target_eligible": 326,
+          "clear_cruise_decisions": 66,
+          "streak": 0,
+          "events": 1,
+          "reaccelerations": 1,
+          "clear_cruise_speed_fraction_sum": 63.96334774119315,
+          "awaiting_reacceleration": false,
+          "last_time": 39.4
+        },
+        "agent_6": {
+          "decisions": 303,
+          "target_eligible": 303,
+          "clear_cruise_decisions": 303,
+          "streak": 0,
+          "events": 0,
+          "reaccelerations": 0,
+          "clear_cruise_speed_fraction_sum": 291.08038567408516,
+          "awaiting_reacceleration": false,
+          "last_time": 30.3
+        },
+        "agent_7": {
+          "decisions": 461,
+          "target_eligible": 439,
+          "clear_cruise_decisions": 243,
+          "streak": 0,
+          "events": 2,
+          "reaccelerations": 1,
+          "clear_cruise_speed_fraction_sum": 188.77854511728594,
+          "awaiting_reacceleration": false,
+          "last_time": 46.1
+        }
+      },
+      "focal_windows": {
+        "first_dip": {
+          "decisions": 37,
+          "target_eligible": 37,
+          "measured_post_speed": 37,
+          "original_reward": 15.686516658920564,
+          "revised_reward": 13.31819723227494,
+          "original_jerk_cost": -1.7412593834102132,
+          "huber_jerk_cost": -1.332527889625745,
+          "original_cruise_reward": 0.0,
+          "speed_error_cost": -2.7770509204300966,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 0,
+          "avoidable_braking_events": 0,
+          "exclusions": {}
+        },
+        "second_dip": {
+          "decisions": 38,
+          "target_eligible": 38,
+          "measured_post_speed": 38,
+          "original_reward": 19.024932968272836,
+          "revised_reward": 15.551938917812532,
+          "original_jerk_cost": -0.29582250639795404,
+          "huber_jerk_cost": -0.04615375092176075,
+          "original_cruise_reward": 0.0,
+          "speed_error_cost": -2.2226628059364977,
+          "original_detour_cost": -0.5,
+          "revised_detour_cost": -2.0,
+          "avoidable_braking_decisions": 14,
+          "avoidable_braking_events": 1,
+          "exclusions": {}
+        }
+      },
+      "linkage_checks": 3274,
+      "max_speed_identity_error_m_s": 0.0,
+      "inputs": {
+        "outputs/highway-flow-rl/v02/development-case-0/evaluation/case-00/episode-6900019-8e19cbbc/actions.jsonl.gz": "418c6b57f3bbe1dcc005a2d99ac57e2152a2383e88b42c121a11c2316caf8544",
+        "outputs/highway-flow-rl/v02/development-case-0/evaluation/case-00/episode-6900019-8e19cbbc/network.net.xml": "f8c72a4bdd9698493085b83d6c8ad42955960e8da2da2a1e987d4907035ffadb",
+        "outputs/highway-flow-rl/v02/development-case-0/evaluation/00.json": "e64037d3abb300ad2e0dd2e405a12a65ca4a601761957b9ba7bba6a52f13303f",
+        "outputs/highway-flow-rl/v02/development-case-0/resolved-config.json": "cc22dc9994961d1e2720e86c5351bed021be1601b55b125693f8a473c4e0353f",
+        "outputs/highway-flow-rl/v02/network-screen-01/candidate/network.net.xml": "f8c72a4bdd9698493085b83d6c8ad42955960e8da2da2a1e987d4907035ffadb",
+        "outputs/highway-flow-rl/v02/development-case-0/evaluation/case-00/recording.json": "63f873a9294de23cc7cf7a2af383599bb423fbe6e19d3286a0d7463a85bdaea1"
+      },
+      "raw_csv": "outputs/highway-flow-rl/v03/offline-reward-audit-02/development-case-0.csv",
+      "raw_csv_sha256": "0d0f144b14a87802229eb15399ce163fca230d370bc40518d4366d5b1fdb68ad"
+    },
+    {
+      "case_id": "v05-val-0-cruise",
+      "seed": 6900000,
+      "task": "cruise",
+      "aggregate": {
+        "decisions": 1586,
+        "target_eligible": 1557,
+        "measured_post_speed": 1585,
+        "original_reward": 590.9641115943457,
+        "revised_reward": 520.8937600128374,
+        "original_jerk_cost": -109.14504522853527,
+        "huber_jerk_cost": -107.58548798543951,
+        "original_cruise_reward": 66.67334725175438,
+        "speed_error_cost": -4.956561572848961,
+        "original_detour_cost": 0.0,
+        "revised_detour_cost": 0.0,
+        "avoidable_braking_decisions": 143,
+        "avoidable_braking_events": 18,
+        "exclusions": {
+          "unresolved_neighbor_lateral_motion": 29
+        }
+      },
+      "focal": {
+        "decisions": 1586,
+        "target_eligible": 1557,
+        "measured_post_speed": 1585,
+        "original_reward": 590.9641115943457,
+        "revised_reward": 520.8937600128374,
+        "original_jerk_cost": -109.14504522853527,
+        "huber_jerk_cost": -107.58548798543951,
+        "original_cruise_reward": 66.67334725175438,
+        "speed_error_cost": -4.956561572848961,
+        "original_detour_cost": 0.0,
+        "revised_detour_cost": 0.0,
+        "avoidable_braking_decisions": 143,
+        "avoidable_braking_events": 18,
+        "exclusions": {
+          "unresolved_neighbor_lateral_motion": 29
+        }
+      },
+      "per_car": {
+        "agent_0": {
+          "decisions": 1586,
+          "target_eligible": 1557,
+          "measured_post_speed": 1585,
+          "original_reward": 590.9641115943457,
+          "revised_reward": 520.8937600128374,
+          "original_jerk_cost": -109.14504522853527,
+          "huber_jerk_cost": -107.58548798543951,
+          "original_cruise_reward": 66.67334725175438,
+          "speed_error_cost": -4.956561572848961,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 143,
+          "avoidable_braking_events": 18,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 29
+          }
+        }
+      },
+      "avoidable_braking": {
+        "agent_0": {
+          "decisions": 1586,
+          "target_eligible": 1557,
+          "clear_cruise_decisions": 1557,
+          "streak": 0,
+          "events": 18,
+          "reaccelerations": 18,
+          "clear_cruise_speed_fraction_sum": 1507.01707403642,
+          "awaiting_reacceleration": false,
+          "last_time": 158.6
+        }
+      },
+      "focal_windows": {},
+      "linkage_checks": 1585,
+      "max_speed_identity_error_m_s": 0.0,
+      "inputs": {
+        "outputs/highway-flow-rl/v02/development-case-1/evaluation/case-00/episode-6900000-ec75c31a/actions.jsonl.gz": "b95fee5b785f32439ec8d0f9aa8dbfccd2042c63a796c401a67253494a67a6c6",
+        "outputs/highway-flow-rl/v02/development-case-1/evaluation/case-00/episode-6900000-ec75c31a/network.net.xml": "374fb9ee0c1b87a011d6a050d08166e8df29b6f54a249e70c1518a71f234b470",
+        "outputs/highway-flow-rl/v02/development-case-1/evaluation/00.json": "3b0da80d4b19577b7e2e183b2ccc2063f83beea8d811e47e3d4639eee882980b",
+        "outputs/highway-flow-rl/v02/development-case-1/resolved-config.json": "cc22dc9994961d1e2720e86c5351bed021be1601b55b125693f8a473c4e0353f",
+        "outputs/highway-environment/v05/network-bank/validation-2-lane-ramp180/network.net.xml": "374fb9ee0c1b87a011d6a050d08166e8df29b6f54a249e70c1518a71f234b470"
+      },
+      "raw_csv": "outputs/highway-flow-rl/v03/offline-reward-audit-02/development-case-1.csv",
+      "raw_csv_sha256": "d472a8704547f63885830dc415fa1933b48e4ad74a7ab11f0bd3371225615318"
+    },
+    {
+      "case_id": "v05-val-0-passing",
+      "seed": 6900002,
+      "task": "passing",
+      "aggregate": {
+        "decisions": 1888,
+        "target_eligible": 1742,
+        "measured_post_speed": 1887,
+        "original_reward": 672.9849513464716,
+        "revised_reward": 644.2147046073719,
+        "original_jerk_cost": -40.56406570140542,
+        "huber_jerk_cost": -25.06287571853516,
+        "original_cruise_reward": 12.637385558903038,
+        "speed_error_cost": -31.63405116306469,
+        "original_detour_cost": 0.0,
+        "revised_detour_cost": 0.0,
+        "avoidable_braking_decisions": 336,
+        "avoidable_braking_events": 23,
+        "exclusions": {
+          "unresolved_neighbor_lateral_motion": 146
+        }
+      },
+      "focal": {
+        "decisions": 1888,
+        "target_eligible": 1742,
+        "measured_post_speed": 1887,
+        "original_reward": 672.9849513464716,
+        "revised_reward": 644.2147046073719,
+        "original_jerk_cost": -40.56406570140542,
+        "huber_jerk_cost": -25.06287571853516,
+        "original_cruise_reward": 12.637385558903038,
+        "speed_error_cost": -31.63405116306469,
+        "original_detour_cost": 0.0,
+        "revised_detour_cost": 0.0,
+        "avoidable_braking_decisions": 336,
+        "avoidable_braking_events": 23,
+        "exclusions": {
+          "unresolved_neighbor_lateral_motion": 146
+        }
+      },
+      "per_car": {
+        "agent_0": {
+          "decisions": 1888,
+          "target_eligible": 1742,
+          "measured_post_speed": 1887,
+          "original_reward": 672.9849513464716,
+          "revised_reward": 644.2147046073719,
+          "original_jerk_cost": -40.56406570140542,
+          "huber_jerk_cost": -25.06287571853516,
+          "original_cruise_reward": 12.637385558903038,
+          "speed_error_cost": -31.63405116306469,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 336,
+          "avoidable_braking_events": 23,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 146
+          }
+        }
+      },
+      "avoidable_braking": {
+        "agent_0": {
+          "decisions": 1888,
+          "target_eligible": 1742,
+          "clear_cruise_decisions": 160,
+          "streak": 14,
+          "events": 23,
+          "reaccelerations": 21,
+          "clear_cruise_speed_fraction_sum": 105.64979805768708,
+          "awaiting_reacceleration": true,
+          "last_time": 188.8
+        }
+      },
+      "focal_windows": {},
+      "linkage_checks": 1887,
+      "max_speed_identity_error_m_s": 0.0,
+      "inputs": {
+        "outputs/highway-flow-rl/v02/development-case-2/evaluation/case-00/episode-6900002-907634d4/actions.jsonl.gz": "fa5dffdd224c614126732f662bcaa99e42142ad98a3dc49e0841dfa68c1f6946",
+        "outputs/highway-flow-rl/v02/development-case-2/evaluation/case-00/episode-6900002-907634d4/network.net.xml": "374fb9ee0c1b87a011d6a050d08166e8df29b6f54a249e70c1518a71f234b470",
+        "outputs/highway-flow-rl/v02/development-case-2/evaluation/00.json": "61ebb3449d925557cca556c9ffb048e16d0ee2fc4da2c55e7549843bac5b716f",
+        "outputs/highway-flow-rl/v02/development-case-2/resolved-config.json": "cc22dc9994961d1e2720e86c5351bed021be1601b55b125693f8a473c4e0353f",
+        "outputs/highway-environment/v05/network-bank/validation-2-lane-ramp180/network.net.xml": "374fb9ee0c1b87a011d6a050d08166e8df29b6f54a249e70c1518a71f234b470"
+      },
+      "raw_csv": "outputs/highway-flow-rl/v03/offline-reward-audit-02/development-case-2.csv",
+      "raw_csv_sha256": "6be6904b6f0ad07876cc73b5f08b81e548d228faecd3cddcd22be6074ec4e194"
+    },
+    {
+      "case_id": "v05-validation-i110-following",
+      "seed": 6900017,
+      "task": "following",
+      "aggregate": {
+        "decisions": 3574,
+        "target_eligible": 3324,
+        "measured_post_speed": 3566,
+        "original_reward": 1794.8735455499527,
+        "revised_reward": 1545.1757438114864,
+        "original_jerk_cost": -38.65484622631165,
+        "huber_jerk_cost": -19.488756247798463,
+        "original_cruise_reward": 54.039558241390615,
+        "speed_error_cost": -214.82433347558484,
+        "original_detour_cost": 0.0,
+        "revised_detour_cost": 0.0,
+        "avoidable_braking_decisions": 630,
+        "avoidable_braking_events": 25,
+        "exclusions": {
+          "unresolved_neighbor_lateral_motion": 248,
+          "required_merge_target_unknown": 2
+        }
+      },
+      "focal": {
+        "decisions": 399,
+        "target_eligible": 356,
+        "measured_post_speed": 398,
+        "original_reward": 243.71085000445436,
+        "revised_reward": 215.1525986749971,
+        "original_jerk_cost": -1.7580482572317102,
+        "huber_jerk_cost": -0.3751393763903146,
+        "original_cruise_reward": 16.68947149295649,
+        "speed_error_cost": -13.251688717342018,
+        "original_detour_cost": 0.0,
+        "revised_detour_cost": 0.0,
+        "avoidable_braking_decisions": 35,
+        "avoidable_braking_events": 1,
+        "exclusions": {
+          "unresolved_neighbor_lateral_motion": 43
+        }
+      },
+      "per_car": {
+        "agent_0": {
+          "decisions": 399,
+          "target_eligible": 356,
+          "measured_post_speed": 398,
+          "original_reward": 243.71085000445436,
+          "revised_reward": 215.1525986749971,
+          "original_jerk_cost": -1.7580482572317102,
+          "huber_jerk_cost": -0.3751393763903146,
+          "original_cruise_reward": 16.68947149295649,
+          "speed_error_cost": -13.251688717342018,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 35,
+          "avoidable_braking_events": 1,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 43
+          }
+        },
+        "agent_1": {
+          "decisions": 423,
+          "target_eligible": 393,
+          "measured_post_speed": 422,
+          "original_reward": 213.5163995184829,
+          "revised_reward": 179.53827248910164,
+          "original_jerk_cost": -3.678859707433725,
+          "huber_jerk_cost": -1.244805886547156,
+          "original_cruise_reward": 7.54964089676578,
+          "speed_error_cost": -28.862539953502136,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 114,
+          "avoidable_braking_events": 4,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 30
+          }
+        },
+        "agent_2": {
+          "decisions": 377,
+          "target_eligible": 360,
+          "measured_post_speed": 376,
+          "original_reward": 200.34155064643627,
+          "revised_reward": 186.0829017861169,
+          "original_jerk_cost": -5.771593927271596,
+          "huber_jerk_cost": -3.879574304962869,
+          "original_cruise_reward": 1.2783319590543718,
+          "speed_error_cost": -14.872336523573582,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 15,
+          "avoidable_braking_events": 2,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 15,
+            "required_merge_target_unknown": 2
+          }
+        },
+        "agent_3": {
+          "decisions": 528,
+          "target_eligible": 528,
+          "measured_post_speed": 527,
+          "original_reward": 238.12345323729863,
+          "revised_reward": 196.75092219548975,
+          "original_jerk_cost": -9.299584971125345,
+          "huber_jerk_cost": -6.995752867407264,
+          "original_cruise_reward": 3.878641762917252,
+          "speed_error_cost": -39.79772138260936,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 122,
+          "avoidable_braking_events": 5,
+          "exclusions": {}
+        },
+        "agent_4": {
+          "decisions": 482,
+          "target_eligible": 423,
+          "measured_post_speed": 481,
+          "original_reward": 227.23675319810306,
+          "revised_reward": 187.17555159426968,
+          "original_jerk_cost": -4.257312068298489,
+          "huber_jerk_cost": -1.448886368283817,
+          "original_cruise_reward": 6.380736807676875,
+          "speed_error_cost": -36.48889049617127,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 76,
+          "avoidable_braking_events": 4,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 59
+          }
+        },
+        "agent_5": {
+          "decisions": 501,
+          "target_eligible": 428,
+          "measured_post_speed": 500,
+          "original_reward": 224.38215300085946,
+          "revised_reward": 186.1419408365007,
+          "original_jerk_cost": -5.084693136066175,
+          "huber_jerk_cost": -1.937847763111773,
+          "original_cruise_reward": 4.324292803378354,
+          "speed_error_cost": -37.06276473393448,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 86,
+          "avoidable_braking_events": 4,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 73
+          }
+        },
+        "agent_6": {
+          "decisions": 446,
+          "target_eligible": 418,
+          "measured_post_speed": 445,
+          "original_reward": 244.36549622861685,
+          "revised_reward": 232.1691405698065,
+          "original_jerk_cost": -6.722241316765853,
+          "huber_jerk_cost": -3.2307471325058295,
+          "original_cruise_reward": 5.798333840437564,
+          "speed_error_cost": -9.889516002632668,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 33,
+          "avoidable_braking_events": 2,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 28
+          }
+        },
+        "agent_7": {
+          "decisions": 418,
+          "target_eligible": 418,
+          "measured_post_speed": 417,
+          "original_reward": 203.19688971569462,
+          "revised_reward": 162.16441566520075,
+          "original_jerk_cost": -2.0825128421187316,
+          "huber_jerk_cost": -0.3760025485894285,
+          "original_cruise_reward": 8.14010867820395,
+          "speed_error_cost": -34.59887566581937,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 149,
+          "avoidable_braking_events": 3,
+          "exclusions": {}
+        }
+      },
+      "avoidable_braking": {
+        "agent_0": {
+          "decisions": 399,
+          "target_eligible": 356,
+          "clear_cruise_decisions": 75,
+          "streak": 0,
+          "events": 1,
+          "reaccelerations": 1,
+          "clear_cruise_speed_fraction_sum": 60.808915820500985,
+          "awaiting_reacceleration": false,
+          "last_time": 39.9
+        },
+        "agent_1": {
+          "decisions": 423,
+          "target_eligible": 393,
+          "clear_cruise_decisions": 393,
+          "streak": 11,
+          "events": 4,
+          "reaccelerations": 2,
+          "clear_cruise_speed_fraction_sum": 285.6155024797643,
+          "awaiting_reacceleration": true,
+          "last_time": 42.3
+        },
+        "agent_2": {
+          "decisions": 377,
+          "target_eligible": 360,
+          "clear_cruise_decisions": 48,
+          "streak": 0,
+          "events": 2,
+          "reaccelerations": 2,
+          "clear_cruise_speed_fraction_sum": 47.68811311006157,
+          "awaiting_reacceleration": false,
+          "last_time": 37.7
+        },
+        "agent_3": {
+          "decisions": 528,
+          "target_eligible": 528,
+          "clear_cruise_decisions": 27,
+          "streak": 0,
+          "events": 5,
+          "reaccelerations": 5,
+          "clear_cruise_speed_fraction_sum": 25.660607890462163,
+          "awaiting_reacceleration": false,
+          "last_time": 52.8
+        },
+        "agent_4": {
+          "decisions": 482,
+          "target_eligible": 423,
+          "clear_cruise_decisions": 116,
+          "streak": 0,
+          "events": 4,
+          "reaccelerations": 2,
+          "clear_cruise_speed_fraction_sum": 94.84253009319077,
+          "awaiting_reacceleration": false,
+          "last_time": 48.2
+        },
+        "agent_5": {
+          "decisions": 501,
+          "target_eligible": 428,
+          "clear_cruise_decisions": 29,
+          "streak": 0,
+          "events": 4,
+          "reaccelerations": 2,
+          "clear_cruise_speed_fraction_sum": 26.937079963496497,
+          "awaiting_reacceleration": false,
+          "last_time": 50.1
+        },
+        "agent_6": {
+          "decisions": 446,
+          "target_eligible": 418,
+          "clear_cruise_decisions": 136,
+          "streak": 0,
+          "events": 2,
+          "reaccelerations": 1,
+          "clear_cruise_speed_fraction_sum": 127.67138801688728,
+          "awaiting_reacceleration": false,
+          "last_time": 44.6
+        },
+        "agent_7": {
+          "decisions": 418,
+          "target_eligible": 418,
+          "clear_cruise_decisions": 388,
+          "streak": 0,
+          "events": 3,
+          "reaccelerations": 2,
+          "clear_cruise_speed_fraction_sum": 266.73800216857427,
+          "awaiting_reacceleration": false,
+          "last_time": 41.8
+        }
+      },
+      "focal_windows": {},
+      "linkage_checks": 3566,
+      "max_speed_identity_error_m_s": 0.0,
+      "inputs": {
+        "outputs/highway-flow-rl/v02/development-case-3/evaluation/case-00/episode-6900017-09d38101/actions.jsonl.gz": "9345e7f893c992bd1d6fa237aa5b64e8ddea427d8faac9e4d26ac3af45056175",
+        "outputs/highway-flow-rl/v02/development-case-3/evaluation/case-00/episode-6900017-09d38101/network.net.xml": "f8c72a4bdd9698493085b83d6c8ad42955960e8da2da2a1e987d4907035ffadb",
+        "outputs/highway-flow-rl/v02/development-case-3/evaluation/00.json": "07a8bcad42ebede9a5a8a52d68099665a56a36bd67c3afc8cf1f9878684e7ebb",
+        "outputs/highway-flow-rl/v02/development-case-3/resolved-config.json": "cc22dc9994961d1e2720e86c5351bed021be1601b55b125693f8a473c4e0353f",
+        "outputs/highway-flow-rl/v02/network-screen-01/candidate/network.net.xml": "f8c72a4bdd9698493085b83d6c8ad42955960e8da2da2a1e987d4907035ffadb"
+      },
+      "raw_csv": "outputs/highway-flow-rl/v03/offline-reward-audit-02/development-case-3.csv",
+      "raw_csv_sha256": "f353bef6be5e4065e3e361f18df8466c8c62f2021b97ad9bce817a8382992efe"
+    },
+    {
+      "case_id": "v02-development-60mph-cruise",
+      "seed": 8400005,
+      "task": "cruise",
+      "aggregate": {
+        "decisions": 8162,
+        "target_eligible": 8065,
+        "measured_post_speed": 8154,
+        "original_reward": 6814.31803797724,
+        "revised_reward": 6256.068868260363,
+        "original_jerk_cost": -37.87392966169851,
+        "huber_jerk_cost": -13.67744348092488,
+        "original_cruise_reward": 188.60238692281212,
+        "speed_error_cost": -392.34326897484766,
+        "original_detour_cost": -0.5,
+        "revised_detour_cost": -2.0,
+        "avoidable_braking_decisions": 920,
+        "avoidable_braking_events": 29,
+        "exclusions": {
+          "unresolved_neighbor_lateral_motion": 97
+        }
+      },
+      "focal": {
+        "decisions": 1052,
+        "target_eligible": 1052,
+        "measured_post_speed": 1051,
+        "original_reward": 838.4182609642462,
+        "revised_reward": 758.0219712157632,
+        "original_jerk_cost": -3.2080691853538923,
+        "huber_jerk_cost": -0.5385260559110252,
+        "original_cruise_reward": 20.48339780076154,
+        "speed_error_cost": -62.582435077163964,
+        "original_detour_cost": 0.0,
+        "revised_detour_cost": 0.0,
+        "avoidable_braking_decisions": 80,
+        "avoidable_braking_events": 4,
+        "exclusions": {}
+      },
+      "per_car": {
+        "agent_0": {
+          "decisions": 1052,
+          "target_eligible": 1052,
+          "measured_post_speed": 1051,
+          "original_reward": 838.4182609642462,
+          "revised_reward": 758.0219712157632,
+          "original_jerk_cost": -3.2080691853538923,
+          "huber_jerk_cost": -0.5385260559110252,
+          "original_cruise_reward": 20.48339780076154,
+          "speed_error_cost": -62.582435077163964,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 80,
+          "avoidable_braking_events": 4,
+          "exclusions": {}
+        },
+        "agent_1": {
+          "decisions": 1277,
+          "target_eligible": 1274,
+          "measured_post_speed": 1276,
+          "original_reward": 851.6238032100113,
+          "revised_reward": 728.4188161574153,
+          "original_jerk_cost": -10.269163970276646,
+          "huber_jerk_cost": -4.372833863455012,
+          "original_cruise_reward": 13.80256762264635,
+          "speed_error_cost": -115.2987495367728,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 273,
+          "avoidable_braking_events": 8,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 3
+          }
+        },
+        "agent_2": {
+          "decisions": 936,
+          "target_eligible": 900,
+          "measured_post_speed": 935,
+          "original_reward": 853.6063589557835,
+          "revised_reward": 827.8132737146827,
+          "original_jerk_cost": -5.00508233271545,
+          "huber_jerk_cost": -2.030021179555112,
+          "original_cruise_reward": 9.166927431225877,
+          "speed_error_cost": -19.60121896303604,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 128,
+          "avoidable_braking_events": 4,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 36
+          }
+        },
+        "agent_3": {
+          "decisions": 890,
+          "target_eligible": 861,
+          "measured_post_speed": 889,
+          "original_reward": 852.60895281551,
+          "revised_reward": 832.3504704519434,
+          "original_jerk_cost": -2.2812704952433407,
+          "huber_jerk_cost": -0.48500439533385703,
+          "original_cruise_reward": 12.181153951936178,
+          "speed_error_cost": -9.873594511540281,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 20,
+          "avoidable_braking_events": 1,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 29
+          }
+        },
+        "agent_4": {
+          "decisions": 1010,
+          "target_eligible": 1010,
+          "measured_post_speed": 1009,
+          "original_reward": 868.3437029990691,
+          "revised_reward": 791.7119668734828,
+          "original_jerk_cost": -7.493957450240821,
+          "huber_jerk_cost": -4.091483545021265,
+          "original_cruise_reward": 33.39557878174532,
+          "speed_error_cost": -45.138631249058236,
+          "original_detour_cost": -0.5,
+          "revised_detour_cost": -2.0,
+          "avoidable_braking_decisions": 113,
+          "avoidable_braking_events": 2,
+          "exclusions": {}
+        },
+        "agent_5": {
+          "decisions": 1145,
+          "target_eligible": 1116,
+          "measured_post_speed": 1144,
+          "original_reward": 837.3918779889785,
+          "revised_reward": 747.0229339551138,
+          "original_jerk_cost": -4.93096312936399,
+          "huber_jerk_cost": -1.3602850282618628,
+          "original_cruise_reward": 12.09161746327304,
+          "speed_error_cost": -81.84800467169568,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 171,
+          "avoidable_braking_events": 6,
+          "exclusions": {
+            "unresolved_neighbor_lateral_motion": 29
+          }
+        },
+        "agent_6": {
+          "decisions": 853,
+          "target_eligible": 853,
+          "measured_post_speed": 852,
+          "original_reward": 866.5011524075779,
+          "revised_reward": 811.6627056424861,
+          "original_jerk_cost": -2.0661268405615623,
+          "huber_jerk_cost": -0.45826105295587727,
+          "original_cruise_reward": 49.84270737240166,
+          "speed_error_cost": -6.603605180295722,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 0,
+          "avoidable_braking_events": 0,
+          "exclusions": {}
+        },
+        "agent_7": {
+          "decisions": 999,
+          "target_eligible": 999,
+          "measured_post_speed": 998,
+          "original_reward": 845.8239286360674,
+          "revised_reward": 759.0667302494716,
+          "original_jerk_cost": -2.619296257942821,
+          "huber_jerk_cost": -0.34102836043079804,
+          "original_cruise_reward": 37.63843649882206,
+          "speed_error_cost": -51.39702978528399,
+          "original_detour_cost": 0.0,
+          "revised_detour_cost": 0.0,
+          "avoidable_braking_decisions": 135,
+          "avoidable_braking_events": 4,
+          "exclusions": {}
+        }
+      },
+      "avoidable_braking": {
+        "agent_0": {
+          "decisions": 1052,
+          "target_eligible": 1052,
+          "clear_cruise_decisions": 310,
+          "streak": 0,
+          "events": 4,
+          "reaccelerations": 3,
+          "clear_cruise_speed_fraction_sum": 248.72533486426417,
+          "awaiting_reacceleration": false,
+          "last_time": 105.2
+        },
+        "agent_1": {
+          "decisions": 1277,
+          "target_eligible": 1274,
+          "clear_cruise_decisions": 203,
+          "streak": 0,
+          "events": 8,
+          "reaccelerations": 4,
+          "clear_cruise_speed_fraction_sum": 92.3543214480651,
+          "awaiting_reacceleration": false,
+          "last_time": 127.7
+        },
+        "agent_2": {
+          "decisions": 936,
+          "target_eligible": 900,
+          "clear_cruise_decisions": 217,
+          "streak": 45,
+          "events": 4,
+          "reaccelerations": 2,
+          "clear_cruise_speed_fraction_sum": 174.70875555581208,
+          "awaiting_reacceleration": true,
+          "last_time": 93.6
+        },
+        "agent_3": {
+          "decisions": 890,
+          "target_eligible": 861,
+          "clear_cruise_decisions": 37,
+          "streak": 0,
+          "events": 1,
+          "reaccelerations": 1,
+          "clear_cruise_speed_fraction_sum": 35.81801022391504,
+          "awaiting_reacceleration": false,
+          "last_time": 89.0
+        },
+        "agent_4": {
+          "decisions": 1010,
+          "target_eligible": 1010,
+          "clear_cruise_decisions": 828,
+          "streak": 0,
+          "events": 2,
+          "reaccelerations": 1,
+          "clear_cruise_speed_fraction_sum": 739.7023677028059,
+          "awaiting_reacceleration": false,
+          "last_time": 101.0
+        },
+        "agent_5": {
+          "decisions": 1145,
+          "target_eligible": 1116,
+          "clear_cruise_decisions": 93,
+          "streak": 92,
+          "events": 6,
+          "reaccelerations": 3,
+          "clear_cruise_speed_fraction_sum": 42.01297011803579,
+          "awaiting_reacceleration": true,
+          "last_time": 114.5
+        },
+        "agent_6": {
+          "decisions": 853,
+          "target_eligible": 853,
+          "clear_cruise_decisions": 853,
+          "streak": 0,
+          "events": 0,
+          "reaccelerations": 0,
+          "clear_cruise_speed_fraction_sum": 816.549683650817,
+          "awaiting_reacceleration": false,
+          "last_time": 85.3
+        },
+        "agent_7": {
+          "decisions": 999,
+          "target_eligible": 999,
+          "clear_cruise_decisions": 999,
+          "streak": 0,
+          "events": 4,
+          "reaccelerations": 3,
+          "clear_cruise_speed_fraction_sum": 808.808324545573,
+          "awaiting_reacceleration": false,
+          "last_time": 99.9
+        }
+      },
+      "focal_windows": {},
+      "linkage_checks": 8154,
+      "max_speed_identity_error_m_s": 1.3877787807814457e-17,
+      "inputs": {
+        "outputs/highway-flow-rl/v02/development-case-5/evaluation/case-00/episode-8400005-4993e352/actions.jsonl.gz": "00ff8c33a59386205869414adcc8efdf1d31e43e83cc7891116997dab1eb1c6f",
+        "outputs/highway-flow-rl/v02/development-case-5/evaluation/case-00/episode-8400005-4993e352/network.net.xml": "df75952e18844d4d3c498e7238d8021f8ee2e479b51a22fdef54ed526461b8fa",
+        "outputs/highway-flow-rl/v02/development-case-5/evaluation/00.json": "65fc368c5ee852255355cfa292c9ac5575ed52ed3f18a483ee6134b038bff741",
+        "outputs/highway-flow-rl/v02/development-case-5/resolved-config.json": "cc22dc9994961d1e2720e86c5351bed021be1601b55b125693f8a473c4e0353f",
+        "outputs/highway-curriculum/v02/train-5-lane/network.net.xml": "df75952e18844d4d3c498e7238d8021f8ee2e479b51a22fdef54ed526461b8fa"
+      },
+      "raw_csv": "outputs/highway-flow-rl/v03/offline-reward-audit-02/development-case-5.csv",
+      "raw_csv_sha256": "72cf9efc348a571387160d91787086edca34bcd1c24dbdd104ebca6fd80fb566"
+    }
+  ],
+  "previous_charged_seconds": 118.70300000003772,
+  "elapsed_seconds": 2.625,
+  "total_charged_seconds": 121.32800000003772
+}

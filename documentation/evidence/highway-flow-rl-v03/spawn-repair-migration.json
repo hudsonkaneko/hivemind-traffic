@@ -1,0 +1,34 @@
+{
+  "kind": "explicit_spawn_repair_migration_not_bitwise_exact_resume",
+  "source_checkpoint": "outputs/highway-flow-rl/v03/long-round-02/last.pt",
+  "source_sha256": "d372b81c72364dbe587ee6ac40870bd6171ca1465c8359be2ef99bbfe03caaad",
+  "old_config_sha256": "1984f919274348d081fe108e3b94e47765958ac62d80f2ccf2daa6747019908a",
+  "new_config_sha256": "a89a94e0e1784da39fbe06f604ab30d05f6b062badafce423f86287d2baa1d38",
+  "changed_sources": {
+    "traffic/highway_v05_demand.py": {
+      "before": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+      "after": "17734c8ebead6ed14f7da0ec58acf25940a0214bc0c939ed4593ec2d56c30705"
+    },
+    "experiments/run_highway_flow_rl_v03.py": {
+      "before": "b5366c9a27ab8af57d8999934804c4ae9a5552a11c0c78e8e8cd5e876112b156",
+      "after": "652b424b35ed45d97ca145828efdef02584ce434f1e04ef556d62d1dbb739551"
+    },
+    "traffic/highway_flow_rl_v03_contract.py": {
+      "before": "9aac1bfdfb0c379d84690983f8ae69d09af24420eed5efa1cc8e0ddc6f6870cc",
+      "after": "89e73d471e19467fc8a68cf25153d4f21439e94c7a8f3e7a58e053fc614feae0"
+    }
+  },
+  "preserved": [
+    "actor",
+    "critic",
+    "optimizer",
+    "RNG",
+    "learning counters",
+    "charged failed rollout"
+  ],
+  "failed_reserved_decisions": 1600,
+  "replaced_baseline": "outputs/highway-flow-rl/v03/short-ramp-baseline-repair/evaluation/00.json",
+  "replacement_sha256": "2551ffbda47d699c76eefd9cefd63a32084942fb41756c19392c95a44e3d0b01",
+  "reason": "Bound ramp departure speed by reaction plus braking room; same reward/algorithm; remeasure the one changed development spawn",
+  "destination_sha256": "e23845175bdd69e1a528cd031ab790878e9effe6b8de2479e46a525ae9d4c971"
+}

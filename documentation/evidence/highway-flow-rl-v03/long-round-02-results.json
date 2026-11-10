@@ -1,0 +1,2510 @@
+{
+  "schema": "highway_flow_rl_v03_long_result_v1",
+  "completed": true,
+  "accepted": false,
+  "held_out_run": false,
+  "third_round_started": false,
+  "learning": {
+    "charged_decisions": 300000,
+    "actual_rollout_decisions": 298400,
+    "failed_rollout_reservation": 1600,
+    "updates": 177,
+    "optimizer_steps": 7130,
+    "completed_epochs_distribution": {
+      "0": 11,
+      "8": 106,
+      "2": 11,
+      "3": 8,
+      "4": 9,
+      "1": 14,
+      "7": 4,
+      "5": 9,
+      "6": 5
+    },
+    "coverage": {
+      "i110-merge": {
+        "ppo_decisions": 22936,
+        "critic_decisions": 0,
+        "episodes": 15
+      },
+      "train-3-lane-cruise": {
+        "ppo_decisions": 14160,
+        "critic_decisions": 0,
+        "episodes": 15
+      },
+      "i110-following": {
+        "ppo_decisions": 16383,
+        "critic_decisions": 0,
+        "episodes": 15
+      },
+      "train-2-lane-passing": {
+        "ppo_decisions": 30720,
+        "critic_decisions": 0,
+        "episodes": 15
+      },
+      "train-4-lane-ramp120-merge": {
+        "ppo_decisions": 30720,
+        "critic_decisions": 0,
+        "episodes": 15
+      },
+      "train-5-lane-following": {
+        "ppo_decisions": 30720,
+        "critic_decisions": 0,
+        "episodes": 15
+      },
+      "i110-passing": {
+        "ppo_decisions": 21734,
+        "critic_decisions": 0,
+        "episodes": 15
+      },
+      "train-2-lane-ramp120-merge": {
+        "ppo_decisions": 12799,
+        "critic_decisions": 0,
+        "episodes": 14
+      },
+      "train-4-lane-cruise": {
+        "ppo_decisions": 30600,
+        "critic_decisions": 0,
+        "episodes": 15
+      },
+      "train-3-lane-ramp240-merge": {
+        "ppo_decisions": 30284,
+        "critic_decisions": 0,
+        "episodes": 15
+      },
+      "train-5-lane-passing": {
+        "ppo_decisions": 28672,
+        "critic_decisions": 0,
+        "episodes": 14
+      },
+      "i110-cruise": {
+        "ppo_decisions": 28672,
+        "critic_decisions": 0,
+        "episodes": 14
+      }
+    },
+    "updates_index": [
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00001.json",
+        "case_id": "i110-merge",
+        "decisions": 1741,
+        "optimizer_steps": 5,
+        "completed_epochs": 0,
+        "approx_kl": 0.00673509668558836,
+        "last_kl": 0.024992704391479492
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00002.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 979,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.005193455570406513,
+        "last_kl": 0.0051260171458125114
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00003.json",
+        "case_id": "i110-following",
+        "decisions": 1190,
+        "optimizer_steps": 11,
+        "completed_epochs": 2,
+        "approx_kl": 0.0033532197862355547,
+        "last_kl": 0.021300267428159714
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00004.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.005620164345600642,
+        "last_kl": 0.008872216567397118
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00005.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 26,
+        "completed_epochs": 3,
+        "approx_kl": 0.005574217554217635,
+        "last_kl": 0.020416047424077988
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00006.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 4,
+        "completed_epochs": 0,
+        "approx_kl": 0.005547339911572635,
+        "last_kl": 0.026826219633221626
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00007.json",
+        "case_id": "i110-passing",
+        "decisions": 1288,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.0045157450780000845,
+        "last_kl": 0.004027433693408966
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00008.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 1071,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.00451678492827341,
+        "last_kl": 0.005643797572702169
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00009.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.005965893831671565,
+        "last_kl": 0.006594582460820675
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00010.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006737516563589452,
+        "last_kl": 0.004364321008324623
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00011.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 33,
+        "completed_epochs": 4,
+        "approx_kl": 0.004478717102866733,
+        "last_kl": 0.020255152136087418
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00012.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.005365990344216698,
+        "last_kl": 0.009268558584153652
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00013.json",
+        "case_id": "i110-merge",
+        "decisions": 1324,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.0054475145886196214,
+        "last_kl": 0.008022713474929333
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00014.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 945,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.003761407040656195,
+        "last_kl": 0.005483023356646299
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00015.json",
+        "case_id": "i110-following",
+        "decisions": 965,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.0055620910216021,
+        "last_kl": 0.009732170030474663
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00016.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.007992482214831398,
+        "last_kl": 0.007483373861759901
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00017.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.00819185846739856,
+        "last_kl": 0.012045820243656635
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00018.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 22,
+        "completed_epochs": 2,
+        "approx_kl": 0.005338670008561828,
+        "last_kl": 0.023237664252519608
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00019.json",
+        "case_id": "i110-passing",
+        "decisions": 1764,
+        "optimizer_steps": 56,
+        "completed_epochs": 8,
+        "approx_kl": 0.004466159749426879,
+        "last_kl": 0.007140396628528833
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00020.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 819,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.006678293062122975,
+        "last_kl": 0.005966247525066137
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00021.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.0038018794721210725,
+        "last_kl": 0.005564397666603327
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00022.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 9,
+        "completed_epochs": 1,
+        "approx_kl": 0.004925012756656442,
+        "last_kl": 0.021966151893138885
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00023.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.005779457285825629,
+        "last_kl": 0.009087990038096905
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00024.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006033283887518337,
+        "last_kl": 0.006329142022877932
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00025.json",
+        "case_id": "i110-merge",
+        "decisions": 1485,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.0032602185941262483,
+        "last_kl": 0.003537254873663187
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00026.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 1007,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.004171872627011908,
+        "last_kl": 0.003639472648501396
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00027.json",
+        "case_id": "i110-following",
+        "decisions": 979,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.003270129253905907,
+        "last_kl": 0.0054837800562381744
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00028.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.00595933543627325,
+        "last_kl": 0.005437315441668034
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00029.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006275247093071812,
+        "last_kl": 0.01085665076971054
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00030.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.0046683529908477794,
+        "last_kl": 0.010998934507369995
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00031.json",
+        "case_id": "i110-passing",
+        "decisions": 1584,
+        "optimizer_steps": 11,
+        "completed_epochs": 1,
+        "approx_kl": 0.003968777859964493,
+        "last_kl": 0.020558839663863182
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00032.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 1040,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.0051852099102688955,
+        "last_kl": 0.017637498676776886
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00033.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 34,
+        "completed_epochs": 4,
+        "approx_kl": 0.0036874522924977902,
+        "last_kl": 0.02199450321495533
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00034.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006419987656045123,
+        "last_kl": 0.005070086568593979
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00035.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.005007851110349293,
+        "last_kl": 0.004637588746845722
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00036.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.0053995494527043775,
+        "last_kl": 0.00880360882729292
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00037.json",
+        "case_id": "i110-merge",
+        "decisions": 1453,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.004253251645423006,
+        "last_kl": 0.0030385651625692844
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00038.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 984,
+        "optimizer_steps": 11,
+        "completed_epochs": 2,
+        "approx_kl": 0.003639152514965231,
+        "last_kl": 0.022342784330248833
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00039.json",
+        "case_id": "i110-following",
+        "decisions": 1243,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.003889910416910425,
+        "last_kl": 0.008517719805240631
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00040.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.004854135046116426,
+        "last_kl": 0.003844496328383684
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00041.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006040822985596606,
+        "last_kl": 0.007945350371301174
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00042.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.007047052889902261,
+        "last_kl": 0.007754115387797356
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00043.json",
+        "case_id": "i110-passing",
+        "decisions": 1417,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.00456531824117216,
+        "last_kl": 0.0013710390776395798
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00044.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 827,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.0028336431860225275,
+        "last_kl": 0.003174779238179326
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00045.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 57,
+        "completed_epochs": 7,
+        "approx_kl": 0.006660603775168981,
+        "last_kl": 0.024094760417938232
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00046.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 6,
+        "completed_epochs": 0,
+        "approx_kl": 0.002886459871660918,
+        "last_kl": 0.022481214255094528
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00047.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 11,
+        "completed_epochs": 1,
+        "approx_kl": 0.004741952405311167,
+        "last_kl": 0.025374017655849457
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00048.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.004745819163872511,
+        "last_kl": 0.009015213698148727
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00049.json",
+        "case_id": "i110-merge",
+        "decisions": 1539,
+        "optimizer_steps": 12,
+        "completed_epochs": 1,
+        "approx_kl": 0.005442464006288598,
+        "last_kl": 0.023577896878123283
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00050.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 913,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.002635520448166062,
+        "last_kl": 0.0032048369757831097
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00051.json",
+        "case_id": "i110-following",
+        "decisions": 1204,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.004521369472786319,
+        "last_kl": 0.0038685305044054985
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00052.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 40,
+        "completed_epochs": 5,
+        "approx_kl": 0.0065090627846075225,
+        "last_kl": 0.02192215621471405
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00053.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.0057725621372810565,
+        "last_kl": 0.006387602537870407
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00054.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 11,
+        "completed_epochs": 1,
+        "approx_kl": 0.00766790589444678,
+        "last_kl": 0.02039986662566662
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00055.json",
+        "case_id": "i110-passing",
+        "decisions": 1512,
+        "optimizer_steps": 5,
+        "completed_epochs": 0,
+        "approx_kl": 0.006129602552391589,
+        "last_kl": 0.020157473161816597
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00056.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 803,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.003902588607161306,
+        "last_kl": 0.006762025877833366
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00057.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.003986172398072085,
+        "last_kl": 0.003603883320465684
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00058.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 19,
+        "completed_epochs": 2,
+        "approx_kl": 0.004622176301812655,
+        "last_kl": 0.023839261382818222
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00059.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 31,
+        "completed_epochs": 3,
+        "approx_kl": 0.005031258123175752,
+        "last_kl": 0.029189324006438255
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00060.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 32,
+        "completed_epochs": 4,
+        "approx_kl": 0.00504618091872544,
+        "last_kl": 0.021135902032256126
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00061.json",
+        "case_id": "i110-merge",
+        "decisions": 1429,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.004125245524240502,
+        "last_kl": 0.004276535008102655
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00062.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 918,
+        "optimizer_steps": 9,
+        "completed_epochs": 2,
+        "approx_kl": 0.004373926755458039,
+        "last_kl": 0.02272101677954197
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00063.json",
+        "case_id": "i110-following",
+        "decisions": 1061,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.0038499009548104367,
+        "last_kl": 0.006159171927720308
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00064.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 32,
+        "completed_epochs": 4,
+        "approx_kl": 0.006218088463356253,
+        "last_kl": 0.020876839756965637
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00065.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006232723075299873,
+        "last_kl": 0.0049675581976771355
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00066.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 11,
+        "completed_epochs": 1,
+        "approx_kl": 0.0083933970679275,
+        "last_kl": 0.021499957889318466
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00067.json",
+        "case_id": "i110-passing",
+        "decisions": 1368,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.004166096576227574,
+        "last_kl": 0.006647897884249687
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00068.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 1111,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.0028964940152945927,
+        "last_kl": 0.0013972979504615068
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00069.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.003879053544778799,
+        "last_kl": 0.004264851566404104
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00070.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.009166677577013616,
+        "last_kl": 0.007015857845544815
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00071.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 19,
+        "completed_epochs": 2,
+        "approx_kl": 0.0060047292101540065,
+        "last_kl": 0.020627111196517944
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00072.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 8,
+        "completed_epochs": 1,
+        "approx_kl": 0.0033827914885478094,
+        "last_kl": 0.029479194432497025
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00073.json",
+        "case_id": "i110-merge",
+        "decisions": 1569,
+        "optimizer_steps": 56,
+        "completed_epochs": 8,
+        "approx_kl": 0.004241472861654724,
+        "last_kl": 0.017120737582445145
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00074.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 899,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.004397708094984409,
+        "last_kl": 0.004888587165623903
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00075.json",
+        "case_id": "i110-following",
+        "decisions": 1277,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.005439250938252371,
+        "last_kl": 0.004596930928528309
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00076.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 57,
+        "completed_epochs": 7,
+        "approx_kl": 0.006175184277245742,
+        "last_kl": 0.020105239003896713
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00077.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.005431863335616072,
+        "last_kl": 0.013504020869731903
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00078.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 29,
+        "completed_epochs": 3,
+        "approx_kl": 0.005759242095117425,
+        "last_kl": 0.02782217226922512
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00079.json",
+        "case_id": "i110-passing",
+        "decisions": 1473,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.006118992119202933,
+        "last_kl": 0.0035069789737462997
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00080.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 1030,
+        "optimizer_steps": 19,
+        "completed_epochs": 3,
+        "approx_kl": 0.005923569756161764,
+        "last_kl": 0.07322347909212112
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00081.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.004932092342642136,
+        "last_kl": 0.0024599111638963223
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00082.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006614601867113379,
+        "last_kl": 0.008042446337640285
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00083.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 7,
+        "completed_epochs": 0,
+        "approx_kl": 0.002730422037919717,
+        "last_kl": 0.0214912761002779
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00084.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 4,
+        "completed_epochs": 0,
+        "approx_kl": 0.005407494434621185,
+        "last_kl": 0.023994844406843185
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00085.json",
+        "case_id": "i110-merge",
+        "decisions": 1478,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.0048069049686697935,
+        "last_kl": 0.0064465939067304134
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00086.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 894,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.0050601807597558945,
+        "last_kl": 0.012304705567657948
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00087.json",
+        "case_id": "i110-following",
+        "decisions": 1125,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.006139951449586079,
+        "last_kl": 0.002125775208696723
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00088.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 62,
+        "completed_epochs": 7,
+        "approx_kl": 0.007319914107586468,
+        "last_kl": 0.023971371352672577
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00089.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 35,
+        "completed_epochs": 4,
+        "approx_kl": 0.007266291902799691,
+        "last_kl": 0.021462343633174896
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00090.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 49,
+        "completed_epochs": 6,
+        "approx_kl": 0.006728943529994968,
+        "last_kl": 0.024669745936989784
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00091.json",
+        "case_id": "i110-passing",
+        "decisions": 1329,
+        "optimizer_steps": 14,
+        "completed_epochs": 2,
+        "approx_kl": 0.002606406915999417,
+        "last_kl": 0.020235881209373474
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00092.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 841,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.006203620549058542,
+        "last_kl": 0.01363418810069561
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00093.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 9,
+        "completed_epochs": 1,
+        "approx_kl": 0.004114413038930959,
+        "last_kl": 0.021042197942733765
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00094.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.00570515422259632,
+        "last_kl": 0.0026056061033159494
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00095.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006278343775193207,
+        "last_kl": 0.005742106586694717
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00096.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 50,
+        "completed_epochs": 6,
+        "approx_kl": 0.006526626565027982,
+        "last_kl": 0.022859634831547737
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00097.json",
+        "case_id": "i110-merge",
+        "decisions": 1621,
+        "optimizer_steps": 56,
+        "completed_epochs": 8,
+        "approx_kl": 0.005841304635396227,
+        "last_kl": 0.005041894502937794
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00098.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 951,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.007891232547081017,
+        "last_kl": 0.009851918555796146
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00099.json",
+        "case_id": "i110-following",
+        "decisions": 1153,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.0021168883111386096,
+        "last_kl": 0.002878838684409857
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00100.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006025007018251927,
+        "last_kl": 0.008567593060433865
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00101.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 33,
+        "completed_epochs": 4,
+        "approx_kl": 0.003375256448193933,
+        "last_kl": 0.020762281492352486
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00102.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 18,
+        "completed_epochs": 2,
+        "approx_kl": 0.004771728411368612,
+        "last_kl": 0.025672540068626404
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00103.json",
+        "case_id": "i110-passing",
+        "decisions": 1547,
+        "optimizer_steps": 9,
+        "completed_epochs": 1,
+        "approx_kl": 0.00415202781247596,
+        "last_kl": 0.023270364850759506
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00104.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 827,
+        "optimizer_steps": 17,
+        "completed_epochs": 4,
+        "approx_kl": 0.005143238909487777,
+        "last_kl": 0.026666797697544098
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00105.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.004476288409932749,
+        "last_kl": 0.011713243089616299
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00106.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006534782238304615,
+        "last_kl": 0.005370125640183687
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00107.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.005124111276018084,
+        "last_kl": 0.0060578458942472935
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00108.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 5,
+        "completed_epochs": 0,
+        "approx_kl": 0.0022750096628442406,
+        "last_kl": 0.021251516416668892
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00109.json",
+        "case_id": "i110-merge",
+        "decisions": 1648,
+        "optimizer_steps": 56,
+        "completed_epochs": 8,
+        "approx_kl": 0.006428380347123104,
+        "last_kl": 0.0019428171217441559
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00110.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 931,
+        "optimizer_steps": 7,
+        "completed_epochs": 1,
+        "approx_kl": 0.0031850698422723716,
+        "last_kl": 0.021979110315442085
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00111.json",
+        "case_id": "i110-following",
+        "decisions": 971,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.0024680292112861935,
+        "last_kl": 0.005162538029253483
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00112.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006192360760906013,
+        "last_kl": 0.01630421355366707
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00113.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006372707804985112,
+        "last_kl": 0.006025679409503937
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00114.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.004859951408434426,
+        "last_kl": 0.005958267953246832
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02/updates/00115.json",
+        "case_id": "i110-passing",
+        "decisions": 1531,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.0037894862374135605,
+        "last_kl": 0.0036082083825021982
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00116.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.004668823183237691,
+        "last_kl": 0.003268615109845996
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00117.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.007130824636988109,
+        "last_kl": 0.0035171702038496733
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00118.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 5,
+        "completed_epochs": 0,
+        "approx_kl": 0.005590436514467001,
+        "last_kl": 0.020269233733415604
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00119.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 8,
+        "completed_epochs": 1,
+        "approx_kl": 0.005260562218609266,
+        "last_kl": 0.022756487131118774
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00120.json",
+        "case_id": "i110-merge",
+        "decisions": 1646,
+        "optimizer_steps": 56,
+        "completed_epochs": 8,
+        "approx_kl": 0.004043177409974825,
+        "last_kl": 0.013608596287667751
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00121.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 918,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.00263291144528921,
+        "last_kl": 0.0027934995014220476
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00122.json",
+        "case_id": "i110-following",
+        "decisions": 1062,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.004849810458836146,
+        "last_kl": 0.0017816111212596297
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00123.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 3,
+        "completed_epochs": 0,
+        "approx_kl": 0.002599114590945343,
+        "last_kl": 0.020820511505007744
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00124.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.005131766378326574,
+        "last_kl": 0.00837356224656105
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00125.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 6,
+        "completed_epochs": 0,
+        "approx_kl": 0.004515273729339242,
+        "last_kl": 0.02498331107199192
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00126.json",
+        "case_id": "i110-passing",
+        "decisions": 1257,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.002361280885816086,
+        "last_kl": 0.002021840075030923
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00127.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 996,
+        "optimizer_steps": 22,
+        "completed_epochs": 5,
+        "approx_kl": 0.005573491147846322,
+        "last_kl": 0.021674076095223427
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00128.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 22,
+        "completed_epochs": 2,
+        "approx_kl": 0.00474215687294914,
+        "last_kl": 0.022238289937376976
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00129.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 52,
+        "completed_epochs": 6,
+        "approx_kl": 0.006292810907605319,
+        "last_kl": 0.02610190026462078
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00130.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 9,
+        "completed_epochs": 1,
+        "approx_kl": 0.004446964413445029,
+        "last_kl": 0.02433101087808609
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00131.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 19,
+        "completed_epochs": 2,
+        "approx_kl": 0.005868592164724281,
+        "last_kl": 0.026620585471391678
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00132.json",
+        "case_id": "i110-merge",
+        "decisions": 1413,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.0039006548516529924,
+        "last_kl": 0.0034335225354880095
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00133.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 860,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.007067084412483382,
+        "last_kl": 0.007955338805913925
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00134.json",
+        "case_id": "i110-following",
+        "decisions": 1078,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.005035024697235713,
+        "last_kl": 0.0024760530795902014
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00135.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.00583536008343799,
+        "last_kl": 0.004655847791582346
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00136.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 4,
+        "completed_epochs": 0,
+        "approx_kl": 0.006699501711409539,
+        "last_kl": 0.03061620332300663
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00137.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 47,
+        "completed_epochs": 5,
+        "approx_kl": 0.005817245612753198,
+        "last_kl": 0.024579904973506927
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00138.json",
+        "case_id": "i110-passing",
+        "decisions": 1544,
+        "optimizer_steps": 56,
+        "completed_epochs": 8,
+        "approx_kl": 0.005916954502546494,
+        "last_kl": 0.0010447800159454346
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00139.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 931,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.0019331583634993876,
+        "last_kl": 0.003111082362011075
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00140.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 37,
+        "completed_epochs": 4,
+        "approx_kl": 0.0063255197035048056,
+        "last_kl": 0.024650294333696365
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00141.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.004497947036725236,
+        "last_kl": 0.005622980650514364
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00142.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 58,
+        "completed_epochs": 7,
+        "approx_kl": 0.008193190980317264,
+        "last_kl": 0.024787520989775658
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00143.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 35,
+        "completed_epochs": 4,
+        "approx_kl": 0.005683040382739688,
+        "last_kl": 0.02249070443212986
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00144.json",
+        "case_id": "i110-merge",
+        "decisions": 1372,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.004178259826706683,
+        "last_kl": 0.004162266850471497
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00145.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 1022,
+        "optimizer_steps": 21,
+        "completed_epochs": 5,
+        "approx_kl": 0.007299521876986893,
+        "last_kl": 0.020012304186820984
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00146.json",
+        "case_id": "i110-following",
+        "decisions": 1123,
+        "optimizer_steps": 40,
+        "completed_epochs": 8,
+        "approx_kl": 0.004335022642044351,
+        "last_kl": 0.004556091967970133
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00147.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006090299251809483,
+        "last_kl": 0.004493250977247953
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00148.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 17,
+        "completed_epochs": 2,
+        "approx_kl": 0.009582953726160614,
+        "last_kl": 0.022617757320404053
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00149.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006313268528174376,
+        "last_kl": 0.005003361962735653
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00150.json",
+        "case_id": "i110-passing",
+        "decisions": 1443,
+        "optimizer_steps": 30,
+        "completed_epochs": 5,
+        "approx_kl": 0.005594111462657262,
+        "last_kl": 0.02000638097524643
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00151.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 877,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.0069481268619711045,
+        "last_kl": 0.008537140674889088
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00152.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.0066287775844102725,
+        "last_kl": 0.005668125580996275
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00153.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 47,
+        "completed_epochs": 5,
+        "approx_kl": 0.005605217948694654,
+        "last_kl": 0.02236364223062992
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00154.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 10,
+        "completed_epochs": 1,
+        "approx_kl": 0.006209006521385163,
+        "last_kl": 0.023168284446001053
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00155.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006351207774059731,
+        "last_kl": 0.005646042060106993
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00156.json",
+        "case_id": "i110-merge",
+        "decisions": 1477,
+        "optimizer_steps": 48,
+        "completed_epochs": 8,
+        "approx_kl": 0.005014507038140437,
+        "last_kl": 0.003069572849199176
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00157.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 991,
+        "optimizer_steps": 27,
+        "completed_epochs": 6,
+        "approx_kl": 0.006468134917129107,
+        "last_kl": 0.021278465166687965
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00158.json",
+        "case_id": "i110-following",
+        "decisions": 1000,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.003751845452825364,
+        "last_kl": 0.008040990680456161
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00159.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006875055296404753,
+        "last_kl": 0.017406662926077843
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00160.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 24,
+        "completed_epochs": 3,
+        "approx_kl": 0.005183205003656137,
+        "last_kl": 0.024085093289613724
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00161.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.006052247083061957,
+        "last_kl": 0.006192093249410391
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00162.json",
+        "case_id": "i110-passing",
+        "decisions": 1443,
+        "optimizer_steps": 20,
+        "completed_epochs": 3,
+        "approx_kl": 0.005253032257314771,
+        "last_kl": 0.02187197469174862
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00163.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 825,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.005742308156186482,
+        "last_kl": 0.008448964916169643
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00164.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 44,
+        "completed_epochs": 5,
+        "approx_kl": 0.005342267257881097,
+        "last_kl": 0.02109280787408352
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00165.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 2048,
+        "optimizer_steps": 42,
+        "completed_epochs": 5,
+        "approx_kl": 0.005446231677307792,
+        "last_kl": 0.02619740180671215
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00166.json",
+        "case_id": "train-5-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.005836521753735724,
+        "last_kl": 0.005413480568677187
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00167.json",
+        "case_id": "i110-cruise",
+        "decisions": 2048,
+        "optimizer_steps": 27,
+        "completed_epochs": 3,
+        "approx_kl": 0.002640060726898136,
+        "last_kl": 0.020056240260601044
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00168.json",
+        "case_id": "i110-merge",
+        "decisions": 1741,
+        "optimizer_steps": 56,
+        "completed_epochs": 8,
+        "approx_kl": 0.004541771546688064,
+        "last_kl": 0.007151217665523291
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00169.json",
+        "case_id": "train-3-lane-cruise",
+        "decisions": 948,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.006810814786149422,
+        "last_kl": 0.004946930333971977
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00170.json",
+        "case_id": "i110-following",
+        "decisions": 952,
+        "optimizer_steps": 32,
+        "completed_epochs": 8,
+        "approx_kl": 0.004182789340120507,
+        "last_kl": 0.004196424037218094
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00171.json",
+        "case_id": "train-2-lane-passing",
+        "decisions": 2048,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.005743181020079646,
+        "last_kl": 0.009418249130249023
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00172.json",
+        "case_id": "train-4-lane-ramp120-merge",
+        "decisions": 2048,
+        "optimizer_steps": 41,
+        "completed_epochs": 5,
+        "approx_kl": 0.005649671256655782,
+        "last_kl": 0.02474464476108551
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00173.json",
+        "case_id": "train-5-lane-following",
+        "decisions": 2048,
+        "optimizer_steps": 29,
+        "completed_epochs": 3,
+        "approx_kl": 0.0057198330318426775,
+        "last_kl": 0.027263056486845016
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00174.json",
+        "case_id": "i110-passing",
+        "decisions": 1234,
+        "optimizer_steps": 9,
+        "completed_epochs": 1,
+        "approx_kl": 0.00418084928403712,
+        "last_kl": 0.020588519051671028
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00175.json",
+        "case_id": "train-2-lane-ramp120-merge",
+        "decisions": 801,
+        "optimizer_steps": 26,
+        "completed_epochs": 6,
+        "approx_kl": 0.007890026452234732,
+        "last_kl": 0.02600666880607605
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00176.json",
+        "case_id": "train-4-lane-cruise",
+        "decisions": 2040,
+        "optimizer_steps": 64,
+        "completed_epochs": 8,
+        "approx_kl": 0.004563737805256096,
+        "last_kl": 0.009887468069791794
+      },
+      {
+        "path": "outputs/highway-flow-rl/v03/long-round-02-resumed/updates/00177.json",
+        "case_id": "train-3-lane-ramp240-merge",
+        "decisions": 1612,
+        "optimizer_steps": 56,
+        "completed_epochs": 8,
+        "approx_kl": 0.005803384824373227,
+        "last_kl": 0.013599969446659088
+      }
+    ]
+  },
+  "runtime": {
+    "first_segment_seconds": 1107.828,
+    "resumed_seconds": 630.4530000000377,
+    "training_process_seconds": 1738.2810000000377,
+    "study_total_seconds": 2169.579000000085,
+    "ledger_training_segments": [
+      {
+        "command": "train",
+        "category": "training",
+        "round_index": 2,
+        "output": "outputs/highway-flow-rl/v03/long-round-02",
+        "status": "failed",
+        "charged_seconds": 1107.8279999999795,
+        "reserved_seconds": 5400.0,
+        "decisions": 195754,
+        "episodes": 0,
+        "config_sha256": "1984f919274348d081fe108e3b94e47765958ac62d80f2ccf2daa6747019908a",
+        "started_at_unix": 1794276177.3239355,
+        "checkpoint": "outputs/highway-flow-rl/v03/long-round-02/last.pt"
+      },
+      {
+        "command": "checkpoint_migration",
+        "category": "training",
+        "round_index": 2,
+        "status": "complete",
+        "charged_seconds": 0.11000000004423782,
+        "decisions": 0,
+        "episodes": 0,
+        "checkpoint": "outputs/highway-flow-rl/v03/spawn-repair/last.pt",
+        "output": "outputs/highway-flow-rl/v03/spawn-repair",
+        "source_checkpoint": "outputs/highway-flow-rl/v03/long-round-02/last.pt",
+        "config_sha256": "a89a94e0e1784da39fbe06f604ab30d05f6b062badafce423f86287d2baa1d38"
+      },
+      {
+        "command": "train",
+        "category": "training",
+        "round_index": 2,
+        "output": "outputs/highway-flow-rl/v03/long-round-02-resumed",
+        "status": "complete",
+        "charged_seconds": 630.75,
+        "reserved_seconds": 4292.061999999976,
+        "decisions": 104246,
+        "episodes": 0,
+        "config_sha256": "a89a94e0e1784da39fbe06f604ab30d05f6b062badafce423f86287d2baa1d38",
+        "started_at_unix": 1794277646.5289643,
+        "checkpoint": "outputs/highway-flow-rl/v03/long-round-02-resumed/last.pt"
+      }
+    ]
+  },
+  "phases": {
+    "initial": {
+      "summary": {
+        "cases": 6,
+        "decisions": 17415,
+        "pooled_intervention_fraction": 0.10496698248636233,
+        "max_peak_jerk_m_s3": 59.73848298192026,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 1,
+        "merge_targets": 2,
+        "full_horizon_cases": 6,
+        "development_gates_passed": false,
+        "quality_accepted": false
+      },
+      "cases": [
+        {
+          "case_id": "v05-validation-i110-merge",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.31368821292775667,
+              "peak_abs_jerk_m_s3": 40.56557881797251
+            },
+            "agent_1": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.9323422014712932
+            },
+            "agent_2": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.408205151557887
+            },
+            "agent_3": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.995121210813558
+            },
+            "agent_4": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.786182105541158
+            },
+            "agent_5": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.1542224436998723
+            },
+            "agent_6": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.1709079742432
+            },
+            "agent_7": {
+              "passed": false,
+              "failed_checks": [
+                "interventions"
+              ],
+              "intervention_fraction": 0.1278772378516624,
+              "peak_abs_jerk_m_s3": 2.1984203159810534
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-cruise",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.22586872586872586,
+              "peak_abs_jerk_m_s3": 10.026933103799784
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-passing",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.3577512776831346,
+              "peak_abs_jerk_m_s3": 7.007626266340239
+            }
+          }
+        },
+        {
+          "case_id": "v05-validation-i110-following",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.7757516354322433
+            },
+            "agent_1": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.150048792362249
+            },
+            "agent_2": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.13812154696132597,
+              "peak_abs_jerk_m_s3": 10.314090161553224
+            },
+            "agent_3": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.11928934010152284,
+              "peak_abs_jerk_m_s3": 23.75230117335576
+            },
+            "agent_4": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.6282722513089005,
+              "peak_abs_jerk_m_s3": 9.050032566188193
+            },
+            "agent_5": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.17534246575342466,
+              "peak_abs_jerk_m_s3": 7.454753042820883
+            },
+            "agent_6": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.0765661252900232,
+              "peak_abs_jerk_m_s3": 7.785137593746683
+            },
+            "agent_7": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.747528031468427
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-train-2-lane-ramp120-merge",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "stable_merge"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.23487544483985764,
+              "peak_abs_jerk_m_s3": 59.73848298192026
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-60mph-cruise",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.022869020700526
+            },
+            "agent_1": {
+              "passed": false,
+              "failed_checks": [
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.008088394999575
+            },
+            "agent_2": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.6923571676016564
+            },
+            "agent_3": {
+              "passed": false,
+              "failed_checks": [
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.6059838011860847
+            },
+            "agent_4": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.379800707101822
+            },
+            "agent_5": {
+              "passed": false,
+              "failed_checks": [
+                "cruise_speed",
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.9538114219901814
+            },
+            "agent_6": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.019872248172618
+            },
+            "agent_7": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.494173914194178
+            }
+          }
+        }
+      ],
+      "i110_focal": {
+        "decisions": 526,
+        "interventions": 165,
+        "jerk": {
+          "samples": 525,
+          "eligible_samples": 525,
+          "missing_samples": 0,
+          "mean_abs": 1.216278142414343,
+          "rms": 3.4142572373854065,
+          "p95_abs": 4.989259429276189,
+          "peak_abs": 40.56557881797251
+        },
+        "mean_legal_speed_fraction": 0.6164968483298233,
+        "avoidable_braking_events": 0,
+        "detour_motion_events": 0
+      }
+    },
+    "final": {
+      "summary": {
+        "cases": 6,
+        "decisions": 17230,
+        "pooled_intervention_fraction": 0.043296575739988394,
+        "max_peak_jerk_m_s3": 55.60766160488129,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 2,
+        "merge_targets": 2,
+        "full_horizon_cases": 6,
+        "development_gates_passed": false,
+        "quality_accepted": false
+      },
+      "cases": [
+        {
+          "case_id": "v05-validation-i110-merge",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.32786885245901637,
+              "peak_abs_jerk_m_s3": 40.71151844206929
+            },
+            "agent_1": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.1448310315607557
+            },
+            "agent_2": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.401000827550817
+            },
+            "agent_3": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 6.552712619304657
+            },
+            "agent_4": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.1656911820173264
+            },
+            "agent_5": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.318199306726456
+            },
+            "agent_6": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.879856795072591
+            },
+            "agent_7": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 0.7187934219837544
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-cruise",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.06825499034127495,
+              "peak_abs_jerk_m_s3": 6.261839754879439
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-passing",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.10633839706652698,
+              "peak_abs_jerk_m_s3": 14.410346666926444
+            }
+          }
+        },
+        {
+          "case_id": "v05-validation-i110-following",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 0.9027280658482795
+            },
+            "agent_1": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.814867436885905
+            },
+            "agent_2": {
+              "passed": false,
+              "failed_checks": [
+                "interventions"
+              ],
+              "intervention_fraction": 0.21122994652406418,
+              "peak_abs_jerk_m_s3": 3.995039910078013
+            },
+            "agent_3": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.0636372864244237
+            },
+            "agent_4": {
+              "passed": false,
+              "failed_checks": [
+                "interventions"
+              ],
+              "intervention_fraction": 0.1306532663316583,
+              "peak_abs_jerk_m_s3": 2.4249701201915386
+            },
+            "agent_5": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.677279353141749
+            },
+            "agent_6": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.0022727272727272726,
+              "peak_abs_jerk_m_s3": 5.507123737886133
+            },
+            "agent_7": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "interventions"
+              ],
+              "intervention_fraction": 0.24786324786324787,
+              "peak_abs_jerk_m_s3": 5.021805777447774
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-train-2-lane-ramp120-merge",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.045346062052505964,
+              "peak_abs_jerk_m_s3": 55.60766160488129
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-60mph-cruise",
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.304077476263046
+            },
+            "agent_1": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk",
+                "cruise_speed",
+                "clear_cruise_speed",
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.176571272313524
+            },
+            "agent_2": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.5639559626579285
+            },
+            "agent_3": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 0.9711034595966339
+            },
+            "agent_4": {
+              "passed": true,
+              "failed_checks": [],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.3909994959829817
+            },
+            "agent_5": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.425638720393252
+            },
+            "agent_6": {
+              "passed": false,
+              "failed_checks": [
+                "avoidable_braking"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.687619805336141
+            },
+            "agent_7": {
+              "passed": false,
+              "failed_checks": [
+                "peak_jerk"
+              ],
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.257665216922902
+            }
+          }
+        }
+      ],
+      "i110_focal": {
+        "decisions": 549,
+        "interventions": 180,
+        "jerk": {
+          "samples": 548,
+          "eligible_samples": 548,
+          "missing_samples": 0,
+          "mean_abs": 0.5473785102653544,
+          "rms": 2.7107605386665363,
+          "p95_abs": 1.6127374954523053,
+          "peak_abs": 40.71151844206929
+        },
+        "mean_legal_speed_fraction": 0.589808894063205,
+        "avoidable_braking_events": 1,
+        "detour_motion_events": 0
+      }
+    }
+  },
+  "spawn_repair": {
+    "migration": {
+      "kind": "explicit_spawn_repair_migration_not_bitwise_exact_resume",
+      "source_checkpoint": "outputs/highway-flow-rl/v03/long-round-02/last.pt",
+      "source_sha256": "d372b81c72364dbe587ee6ac40870bd6171ca1465c8359be2ef99bbfe03caaad",
+      "old_config_sha256": "1984f919274348d081fe108e3b94e47765958ac62d80f2ccf2daa6747019908a",
+      "new_config_sha256": "a89a94e0e1784da39fbe06f604ab30d05f6b062badafce423f86287d2baa1d38",
+      "changed_sources": {
+        "traffic/highway_v05_demand.py": {
+          "before": "27736a39df537bd15864024afd03932688a3a1778a271d2b42dbaec83cdbfbf7",
+          "after": "17734c8ebead6ed14f7da0ec58acf25940a0214bc0c939ed4593ec2d56c30705"
+        },
+        "experiments/run_highway_flow_rl_v03.py": {
+          "before": "b5366c9a27ab8af57d8999934804c4ae9a5552a11c0c78e8e8cd5e876112b156",
+          "after": "652b424b35ed45d97ca145828efdef02584ce434f1e04ef556d62d1dbb739551"
+        },
+        "traffic/highway_flow_rl_v03_contract.py": {
+          "before": "9aac1bfdfb0c379d84690983f8ae69d09af24420eed5efa1cc8e0ddc6f6870cc",
+          "after": "89e73d471e19467fc8a68cf25153d4f21439e94c7a8f3e7a58e053fc614feae0"
+        }
+      },
+      "preserved": [
+        "actor",
+        "critic",
+        "optimizer",
+        "RNG",
+        "learning counters",
+        "charged failed rollout"
+      ],
+      "failed_reserved_decisions": 1600,
+      "replaced_baseline": "outputs/highway-flow-rl/v03/short-ramp-baseline-repair/evaluation/00.json",
+      "replacement_sha256": "2551ffbda47d699c76eefd9cefd63a32084942fb41756c19392c95a44e3d0b01",
+      "reason": "Bound ramp departure speed by reaction plus braking room; same reward/algorithm; remeasure the one changed development spawn",
+      "destination_sha256": "e23845175bdd69e1a528cd031ab790878e9effe6b8de2479e46a525ae9d4c971"
+    },
+    "demand_comparison": [
+      {
+        "case_id": "v05-validation-i110-merge",
+        "seed": 6900019,
+        "changes": []
+      },
+      {
+        "case_id": "v05-val-0-cruise",
+        "seed": 6900000,
+        "changes": []
+      },
+      {
+        "case_id": "v05-val-0-passing",
+        "seed": 6900002,
+        "changes": []
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "seed": 6900017,
+        "changes": []
+      },
+      {
+        "case_id": "v02-development-train-2-lane-ramp120-merge",
+        "seed": 8400004,
+        "changes": [
+          {
+            "id": "agent_0",
+            "slot": "ramp_0",
+            "old_speed": 8.923524908117246,
+            "new_speed": 8.315066709529122
+          }
+        ]
+      },
+      {
+        "case_id": "v02-development-60mph-cruise",
+        "seed": 8400005,
+        "changes": []
+      },
+      {
+        "case_id": "train-2-lane-ramp120-merge",
+        "seed": 8319007,
+        "changes": [
+          {
+            "id": "ramp_0",
+            "slot": "ramp_0",
+            "old_speed": 9.697028627748654,
+            "new_speed": 8.421940291373032
+          },
+          {
+            "id": "agent_0",
+            "slot": "ramp_1",
+            "old_speed": 9.697028627748654,
+            "new_speed": 8.421940291373032
+          }
+        ]
+      }
+    ],
+    "tests_passed": 125,
+    "post_allocation_tests_passed": 79,
+    "preflight": {
+      "passed": true,
+      "optimizer_steps": 0,
+      "config_sha256": "a89a94e0e1784da39fbe06f604ab30d05f6b062badafce423f86287d2baa1d38",
+      "checks": {
+        "api": true,
+        "shapes": true,
+        "native_guards": true,
+        "finite_gradient": true,
+        "export": true,
+        "reward_version": true,
+        "mask_version": true
+      }
+    },
+    "final_regression_tests_passed": 127
+  },
+  "provenance": {
+    "config_sha256": "a89a94e0e1784da39fbe06f604ab30d05f6b062badafce423f86287d2baa1d38",
+    "source_hashes": {
+      "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+      "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+      "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+      "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+      "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+      "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+      "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+      "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+      "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+      "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+      "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+      "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+      "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+      "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+      "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+      "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+      "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+      "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+      "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+      "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+      "traffic/highway_v05_demand.py": "17734c8ebead6ed14f7da0ec58acf25940a0214bc0c939ed4593ec2d56c30705",
+      "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+      "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+      "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+      "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+      "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+      "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+      "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+      "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+      "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+      "experiments/run_highway_flow.py": "06dfbb9d3c1e5002ff9c8845c599a93476717345a367ef9d413e90de4b3d5c94",
+      "policies/highway_flow.py": "c30bb7ea38df192a70427a0da6f31e62665beb8570cec2e1c3eb6c3da91e0083",
+      "traffic/highway_flow_contract.py": "8b99bf044533f603d5b18f93a32caad7828819d95da105ad587fc2ef49065965",
+      "traffic/highway_flow_schedule.py": "b5c5b04f804a88345650f848fb8e5ead009b7803a36bba2bb383dfe4934ec6bf",
+      "traffic/highway_flow_context.py": "a0bf261cc6b632e1382843f328c749e0b52506544d11ce6161186132b1e7f339",
+      "traffic/highway_flow_reference.py": "2b47951afd23806f435dd88febb0173364f8f120c4b191fd500f289ea1668319",
+      "environments/highway_flow_env.py": "6ee87ded7e1aae9097a2e93e041f0bec87827509d55f4e0679f94b64ff4f5cbb",
+      "traffic/highway_smooth_contract.py": "bbe158f7ba3928a948aa2822a16978d92fbacd0399ae7bc340dc40c434e45b77",
+      "traffic/highway_smooth_schedule.py": "6e6cd00cb79e1807f6acf7097e4b640803382c9a78186707279864c986d382ae",
+      "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98",
+      "scripts/build_highway_flow_bank.py": "639b16b06cb45987978cc3a3ee5df471740282b7b3895755ec882a1e007e00bc",
+      "scripts/prepare_highway_flow.py": "b5cea1f16ef585418dc84ec0d72a3f6ec4e1dcb93ea373312f413e98714e932c",
+      "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+      "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+      "scripts/check_highway_flow_gradients.py": "70c948b8f4603652b1f7754b34169d1fbe48791baee98604bd63f80e3bc02731",
+      "experiments/run_highway_flow_rl_v03.py": "652b424b35ed45d97ca145828efdef02584ce434f1e04ef556d62d1dbb739551",
+      "experiments/run_highway_flow_rl.py": "33fff50e4ab008c1cf3ee3ecb54dfd2ad22fe34ab4dbf5ed21ff1899f2072a2d",
+      "environments/highway_flow_rl_env.py": "bfdfc0902d800345014705c95f8d20e9093e39ac90d98d869c361c60b3e9a60b",
+      "environments/highway_flow_rl_v03_env.py": "18803034183d7c541224b842cef1596c675860940eab4bfa5d8e6228a17400c6",
+      "traffic/highway_flow_rl_v02_rewards.py": "5604c6b74d92709a3a5581c60106e46985b779467188f4f3a22f38b7981f4cbc",
+      "environments/highway_flow_rl_v02_env.py": "35ec86fdeed1ecf33527fad2bb7032ce88dd924490b94dfe0dd3b0a12dbf8b9c",
+      "traffic/highway_flow_rl_v03_contract.py": "89e73d471e19467fc8a68cf25153d4f21439e94c7a8f3e7a58e053fc614feae0",
+      "traffic/highway_flow_rl_v03_rewards.py": "8136949675e464bcc1a68ae5f2c8631ef4cda822fbea44dfc2058aee31e88d66",
+      "scripts/screen_flow_rl_v02_network.py": "ecab8a644d7fa19aed6f1a6130816d5f9b29d959c710cf30d95347d92ba4f68e"
+    },
+    "git_commit": "7367b802e0354c4ac7f70f8388c960f44d5d5767",
+    "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+    "torch": "2.14.0+cpu",
+    "numpy": "2.4.6"
+  },
+  "artifacts": {
+    "outputs/highway-flow-rl/v03/long-round-02-resumed/policy.pt": "fab5d93e462251be0e21085198aab92c471a812910c0000c1ddea78df93f0c6d",
+    "outputs/highway-flow-rl/v03/long-round-02-resumed/last.pt": "5713af867781527b7694abec8a202c68bb0ed17a12d0710f65709b8e607d25ce",
+    "outputs/highway-flow-rl/v03/long-round-02-resumed/summary.json": "ab463aa546e1c269965fd5a2112d6b800490ac44ded7fafb21d26dff47034ec5",
+    "outputs/highway-flow-rl/v03/long-round-02-resumed/resolved-config.json": "a89a94e0e1784da39fbe06f604ab30d05f6b062badafce423f86287d2baa1d38",
+    "outputs/highway-flow-rl/v03/long-round-02-resumed/manifest.json": "69b8dfe58721f17b6e6f0740d893096dabb6d6f34aa82f52484f61b03bbd01ed",
+    "outputs/highway-flow-rl/v03/long-round-02-resumed/final-validation.json": "4a066604a610fb5690d8dd694e0a17f27d2b2af96a91d5bf4b12e5731c3e307b",
+    "outputs/highway-flow-rl/v03/long-round-02/last.pt": "d372b81c72364dbe587ee6ac40870bd6171ca1465c8359be2ef99bbfe03caaad",
+    "outputs/highway-flow-rl/v03/long-round-02/failure.json": "38254adcad4234c7a56aea1bcede0d9d38efb49184a64fedbb0df70a01bfde49",
+    "outputs/highway-flow-rl/v03/spawn-repair/migration.json": "f0dbd4b55dcde33a2348cc18da5d67165603d5960275143cd565609472281208",
+    "outputs/highway-flow-rl/v03/repaired-preflight-01/preflight.json": "ebe0d147d06bd5bbae98f8e303f6d2bf8f2278a9f772e58ceb978b5dadae5ec0",
+    "outputs/highway-flow-rl/v03/short-ramp-baseline-repair/evaluation/00.json": "2551ffbda47d699c76eefd9cefd63a32084942fb41756c19392c95a44e3d0b01"
+  }
+}

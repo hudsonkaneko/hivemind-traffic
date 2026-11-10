@@ -715,3 +715,78 @@ missed; near-field sensing remains open. No new training or actor change.
 October 26: [v11 body-mounted cameras](body-camera-v01.md) removes camera roof
 stalks, seats compact housings against measured body geometry and retains roof
 LiDAR. Combined capture passes; near-field LiDAR and learned fusion remain open.
+
+
+## November 9 - Smooth speed recovery reward plan
+
+[Review-ready reward plan v03](highway-smooth-reward-plan-v03.md) targets the latest highway actor, distinguishes its uncapped absolute jerk from the older v04r2 reward, and defines safe-target-speed/Huber-comfort/detour coefficients plus qualification and evaluation gates. Living roadmap v35 records the next action. These are unvalidated proposed weights; implementation and a resolved configuration come before training approval. No new simulation or learning; guide sync pending.
+
+
+## November 9, 2026 - v03 reward implementation and saved-trace qualification
+
+Implemented a separate MAPPO v03 objective: pre-action safe-target error (0.30),
+uncapped Huber jerk (0.09, 2 m/s3 scale), and first-motion optional ending-lane
+detour cost (2.0). Native safety, controls, masks and actor ABI remain unchanged.
+89 focused CPU tests pass. Rescored 18,492 saved development decisions; 17,669
+have qualified target evidence. The later focal I-110 dip flags 14 avoidable
+braking decisions; the tight-gap first dip flags none. Raw CSVs, hashes and
+component metrics retained; no new simulator runs or learning. v03 training
+remains disabled pending final configuration review and fresh native preflight.
+The existing ledger now totals 121.328 seconds; no budget reset.
+[Implementation and final config](highway-flow-rl-v03.md). Guide sync pending.
+
+
+## November 9, 2026 - v03 round-one training completed, candidate rejected
+
+User authorized the final configuration. A fresh native zero-update preflight
+passed; the pilot completed 29,999 active-agent decisions in 294.859 seconds
+(18 updates, 444 optimizer steps) without a runtime error. Six matched
+development cases retain zero collisions/teleports but fail all case-level
+acceptance checks: pooled overrides rise from 4.74% to 10.21%, maximum
+uncensored jerk rises from 57.10 to 59.73 m/s3, and stable merges fall from 2/2
+to 1/2. The I-110 focal car removes its flagged braking event and optional detour
+but worsens interventions and jerk. No promotion, held-out run or second round.
+Actor, full checkpoint, traces and per-car metrics are preserved locally; compact
+comparison and checksums are committed. Study costs total 418.687 seconds.
+[Results](highway-flow-rl-v03.md#round-one-training-result). Guide sync pending.
+
+
+## November 9, 2026 - authorized extended v03 continuation
+
+Prepared the user-requested longer continuation: 300,000 additional decisions,
+up to eight PPO epochs, 90-minute round cap. Same rewards/safety/scenarios;
+warm-start round-one actor/critic, fresh optimizer. The explicit budget profile
+preserves all prior ledger costs and adds one required native preflight.
+95 CPU tests and fresh zero-update native preflight pass. No third round or
+held-out evaluation. [Configuration](highway-flow-rl-v03.md#authorized-longer-continuation).
+
+
+## November 9, 2026 - extended v03 completed after spawn repair
+
+The longer eight-epoch continuation completed 298,400 actual learning decisions
+(300,000 charged including a 1,600-decision interrupted rollout), 177 updates and
+7,130 optimizer steps in 1,738.281 seconds across two training processes. A
+short-ramp departure failed after 115 updates; fixed reaction-plus-braking
+insertion feasibility, preserved model/optimizer/RNG through an explicitly
+recorded checkpoint migration and resumed. The one changed development spawn
+was re-baselined. Fleet overrides improve 10.50% to 4.33%; stable merges 1/2 to
+2/2; zero collisions/teleports. All six case gates still fail; I-110 focal
+overrides remain 32.79%. Candidate retained, not promoted. 127 focused tests
+pass; raw journals, checkpoints, costs and compact evidence saved. No third
+round or held-out run. Study total: 2,169.579 seconds.
+[Results and repair](highway-flow-rl-v03.md#longer-continuation-result-and-spawn-repair).
+
+
+## November 9, 2026 - offline audit of the long v03 policy
+
+Replayed 17,230 saved decisions through the full and exported actors; actions
+match, observations are finite and runtime/input hashes verify. The focal
+car's 180/549 overrides include 173 lane-end guard decisions. Its speed target
+is ineligible on 344 decisions, and no left merge is permitted until 26.4 s;
+it requests all four permitted opportunities but stops for 13.6 s. Only 10.51%
+of learning samples belong to merging cars; 103/177 rollouts truncate and reset.
+Recorded actual reward contributions, optimizer/credit-horizon diagnostics,
+mask/native timing differences and evaluation limits. Proposed fixes prioritize
+gap formation, full episode coverage and compatible maneuver feasibility before
+scalar weight tuning. No runtime changes, training, simulator run or promotion.
+[Full audit and metrics](highway-policy-audit-v01.md). Guide sync remains pending.
