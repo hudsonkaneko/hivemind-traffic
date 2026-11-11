@@ -1204,3 +1204,30 @@ mask/native timing differences and evaluation limits. Proposed fixes prioritize
 gap formation, full episode coverage and compatible maneuver feasibility before
 scalar weight tuning. No runtime changes, training, simulator run or promotion.
 [Full audit and metrics](highway-policy-audit-v01.md). Guide sync remains pending.
+
+
+## November 10, 2026 - v04 merge rewards and full-episode training setup
+
+Implemented current-evidence gap preparation and speed targets, potential
+shaping, stricter rolling-merge quality, and projected 3.1 s lane-gap masks.
+Training now reserves full physical-time episodes and interleaves focused merge
+rows. User authorized a 4M-decision / eight-hour run with up to 20 epochs per
+update; KL safeguard retained. 116 focused tests and final zero-update native
+preflight pass; repeated smoke journals match. Saved-state target coverage rises
+205/549 to 545/549, but the frozen-policy full merge still stops 11.7 s and fails
+quality. Corrected and retained an initial reporting serialization failure.
+Prepared unattended launch, automatic validation and best/latest snapshots;
+training results pending, no promotion. [Configuration and evidence](highway-merge-rewards-v04.md).
+Google engineering-guide sync remains pending.
+
+
+## November 10, 2026 - v04 long training completed
+
+Completed normally at the declared wall limit after about 7h47m: 3,643,488
+learned decisions, 1,298 updates and 34,192 optimizer steps. The final partial
+1,600-decision reservation remains charged. Final development results: fleet
+overrides 0.42%, I-110 focal overrides/stopped time both zero, stable merges
+2/2, zero collisions/teleports. All six final case gates still fail, primarily
+jerk; the retained best candidate (update 1078) passes 1/6. Final and best
+actors/checkpoints, raw metrics and source hashes preserved; no promotion,
+held-out test or additional training. [Results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026). Guide sync pending.
