@@ -1,7 +1,7 @@
 # V04 merge preparation and complete-episode training
 
 November 10, 2026. User authorized implementation and long, high-epoch training.
-Preparation passed; training results are pending. This is a separate experimental
+Preparation and the long run completed; results are below. This is a separate experimental
 candidate, not an accepted replacement for a published policy.
 
 ## Why this version exists
@@ -157,5 +157,56 @@ actor if learning degrades; it does not mean accepted. Logs and terminal status:
 
 Branch: `highway-merge-rewards-v04`, based on the v03 audit checkpoint. Historical
 code/checkpoints remain untouched. Google engineering-guide synchronization is
-pending; its generated Markdown mirror was not edited. No improved policy
-performance is claimed until terminal evaluation results are reviewed.
+pending; its generated Markdown mirror was not edited. Terminal evaluation below records the measured improvement and remaining failures.
+
+
+## Completed long run - November 10, 2026
+
+The unattended run completed normally (exit code 0) after **27,986 seconds, about
+7 hours 47 minutes**, reaching its learning wall limit and retaining time for
+final evaluation. It learned from **3,643,488 decisions**, with **1,298 PPO
+updates and 34,192 optimizer steps**. Charged decisions are 3,645,088: the final
+1,600-decision episode reservation was interrupted by the declared wall limit,
+discarded and retained in recovery accounting. This was a normal budget stop,
+not a crash, and no further training was started.
+
+| Same development cases | Initial actor under v04 | Final actor |
+| --- | ---: | ---: |
+| Fleet safety interventions | 3.99% | 0.42% |
+| I-110 focal interventions | 31.24% | 0.00% |
+| I-110 focal pre-merge stopped time | 11.7 s | 0.0 s |
+| I-110 focal mean absolute jerk | 0.631 m/s3 | 0.291 m/s3 |
+| I-110 focal peak absolute jerk | 40.72 m/s3 | 12.11 m/s3 |
+| I-110 focal mean legal-speed fraction | 61.68% | 87.13% |
+| Stable merges | 2 / 2 | 2 / 2 |
+| Collisions / teleports | 0 / 0 | 0 / 0 |
+| Rolling-quality merges | 0 / 2 | 0 / 2 |
+| Cases passing every gate | 0 / 6 | 0 / 6 |
+
+The final main car merges without the previous stop or interventions. This is
+a measured improvement on the saved development case, not evidence of universal
+safety or sensor/physical transfer. Final acceptance still fails: peak jerk
+exceeds 5 m/s3 for several cars (fleet maximum **50.76 m/s3**), one following
+car exceeds the intervention threshold, and one cruise car records avoidable
+braking. Both merge cases fail the stricter rolling-quality gate.
+
+The predeclared ranking retained **update 1078** (`periodic-validation-01078`)
+as the best candidate because it passes **1/6** whole-case checks, compared with
+0/6 for the final actor. Its fleet interventions are 0.63%, focal interventions
+1.10%, focal stopped time zero and focal mean absolute jerk 0.273 m/s3. Best
+does not mean best on every metric or accepted: its peak jerk and quality gates
+still fail. Both checkpoints remain available; no historical accepted policy
+was replaced.
+
+- Final actor: `outputs/highway-flow-rl/v04/long-round-03/policy.pt`.
+- Selected candidate: `best-policy.pt` in the same directory; full checkpoint
+  `best.pt` is byte-identical to retained `candidates/checkpoint-01078.pt`.
+- Latest/full final checkpoint: `last.pt`; per-update metrics, periodic matched
+  evaluations, source/config snapshots, raw traces and failure/budget evidence
+  remain in the run directory. These bulk artifacts are local, not release assets.
+- [Compact final/best metrics, provenance and checksums](evidence/highway-merge-rewards-v04/long-round-03-results.json).
+
+Next: diagnose the remaining uncensored jerk peaks and specific failed cars
+from saved traces before another training or integration change. No held-out
+evaluation or new simulator run was performed for this terminal review.
+Google engineering-guide synchronization remains pending.

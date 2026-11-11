@@ -805,3 +805,15 @@ quality. Corrected and retained an initial reporting serialization failure.
 Prepared unattended launch, automatic validation and best/latest snapshots;
 training results pending, no promotion. [Configuration and evidence](highway-merge-rewards-v04.md).
 Google engineering-guide sync remains pending.
+
+
+## November 10, 2026 - v04 long training completed
+
+Completed normally at the declared wall limit after about 7h47m: 3,643,488
+learned decisions, 1,298 updates and 34,192 optimizer steps. The final partial
+1,600-decision reservation remains charged. Final development results: fleet
+overrides 0.42%, I-110 focal overrides/stopped time both zero, stable merges
+2/2, zero collisions/teleports. All six final case gates still fail, primarily
+jerk; the retained best candidate (update 1078) passes 1/6. Final and best
+actors/checkpoints, raw metrics and source hashes preserved; no promotion,
+held-out test or additional training. [Results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026). Guide sync pending.

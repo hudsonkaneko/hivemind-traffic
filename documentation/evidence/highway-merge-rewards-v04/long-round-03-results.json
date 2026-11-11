@@ -1,0 +1,2751 @@
+{
+  "schema": "highway_merge_rewards_v04_terminal_result_v1",
+  "date": "2026-11-10",
+  "completed": true,
+  "failed": false,
+  "training_source_commit": "a1155964c6f398c6fffd521fcf8b3183aece2928",
+  "source_hashes": {
+    "experiments/run_highway_stage1.py": "31dac709e933456c0660856a892da1089a7bd1717bcaa04f03fc8d088ad34114",
+    "environments/highway_stage1_env.py": "da92aa1ee67a6b229c2462fec6f261eca7b24ce231c70cbb9af8dd7d04112076",
+    "environments/i110_merge_env.py": "4cd14fba360ca241ed1779c35c6f43422629bcfddf8436c2b95f82c4a619be23",
+    "traffic/highway_merge_context.py": "e4144cda5e3a5a9424f19ebca517c838a7b850f8006046b4e51cf52483a30659",
+    "traffic/highway_stage1_teacher.py": "7db2ab0a8081dd576131570fdda219463da11740cf2366b1574669162f2b8374",
+    "traffic/i110_policy_interface.py": "545768e83d73a2c960d61b04fd21203bf5b084973dea4eb004d2538a95a5aac7",
+    "traffic/trip_accounting.py": "4652fedd77e6642805ab883f52d18d580bd503246ee527ad2da4933f865c2445",
+    "policies/mappo.py": "76a63715ba46b87e023e5e5d0bea7b328d154b2c044e27d086aa446b9f741c5a",
+    "environments/sumo_mappo_env.py": "b1e87822241be8e50f4bef9ae25702555de7410f3da8831a420171fcb3044233",
+    "traffic/highway_selection.py": "250ea2982a360804bdcd222fb1e80593034d80a89d6b062fd27caaed767927dc",
+    "traffic/sumo_backend.py": "564966d5b1687ff5a2df9ffd059921dbf7c4fbdc5921074fcde47620c38fe82c",
+    "experiments/run_i110_merge.py": "84d4b601b8a994d68b0b894682099a31fe38c8d06f751cccac3d7544d7730a04",
+    "experiments/sumo_mappo_support.py": "1ec0b3c8897c244be7174091f3a8e924862eb17917bda2f96ac150a71f28a172",
+    "scripts/build_highway_curriculum_v2.py": "a2590bc030d1b7c6bd7eef7a4709b67c4ec6f080c1c8d8be9f2b645b34cdd567",
+    "scripts/build_i110_sumo.py": "c3ae330fe6810472af8b7d07b5673d99b8a88f16baa7dbf4daffccd9d50fd842",
+    "experiments/run_highway_population.py": "c5943ef528946091ab039a54f1fedf2296387d5a55382ab844e795f4e9c4817d",
+    "experiments/run_highway_environment_v05.py": "483bb28a6360e6b55e1e56dfcc270499a83f09777cbcbe4157e627d2419383ce",
+    "experiments/highway_v05_support.py": "7f95204d3132cf2ce0476582007a7edbd6e43a683b2bb2161c9ba4fe6ea33d48",
+    "experiments/highway_v05_curriculum.py": "0946d6f8b4dba54810058852e96b10a11fca78099679fc0992449d303982debb",
+    "environments/highway_environment_v05.py": "ef2175752c880ae120da38349da4c2df0138e5e69705997581d45e7ab3703453",
+    "traffic/highway_v05_demand.py": "17734c8ebead6ed14f7da0ec58acf25940a0214bc0c939ed4593ec2d56c30705",
+    "traffic/highway_v05_metrics.py": "2c7dd60e5249b1bed0b7d3ca4eb6da55aebc0f0805939076b2d40bfbcf10cc19",
+    "experiments/prepare_highway_environment_v05.py": "8f399a0845beb1f8895369a3a52399e99922840eff79994488dcafd7feac0a10",
+    "scripts/build_highway_environment_v05_bank.py": "2af615ab0b461ae5611ca3047cd1d18a84495509aec603b533ee8a814b20c02c",
+    "environments/highway_population_env.py": "49b78e0774223d7559b9d8bb2335159cf93c91c691c637fb2b3d2a81658aee23",
+    "traffic/sumo_warnings.py": "01b841b672693cb1e58d226e242b7cb911193721a7221a84ad3a7a8650ce842a",
+    "policies/mappo_diagnostics.py": "f4d146964f9879292befa3b8082383cebb0248c62cf290f2b7d404b156ad71fc",
+    "experiments/near_limit_support.py": "96ad81bbac8f5baad2b7b7ff08366c03576c7d75b29353df7ae364c0d194747f",
+    "experiments/diagnose_near_limit.py": "a15e4e8f96004cff224a93aaa51639dba04d1ec77d4d52a71878e663b589d881",
+    "traffic/mappo_physical_policy.py": "17b1fc0dc989db19fffccb5f9f254227104d8e346b01acc4226d6bb159f6ecd5",
+    "experiments/run_highway_flow.py": "06dfbb9d3c1e5002ff9c8845c599a93476717345a367ef9d413e90de4b3d5c94",
+    "policies/highway_flow.py": "c30bb7ea38df192a70427a0da6f31e62665beb8570cec2e1c3eb6c3da91e0083",
+    "traffic/highway_flow_contract.py": "8b99bf044533f603d5b18f93a32caad7828819d95da105ad587fc2ef49065965",
+    "traffic/highway_flow_schedule.py": "b5c5b04f804a88345650f848fb8e5ead009b7803a36bba2bb383dfe4934ec6bf",
+    "traffic/highway_flow_context.py": "a0bf261cc6b632e1382843f328c749e0b52506544d11ce6161186132b1e7f339",
+    "traffic/highway_flow_reference.py": "2b47951afd23806f435dd88febb0173364f8f120c4b191fd500f289ea1668319",
+    "environments/highway_flow_env.py": "6ee87ded7e1aae9097a2e93e041f0bec87827509d55f4e0679f94b64ff4f5cbb",
+    "traffic/highway_smooth_contract.py": "bbe158f7ba3928a948aa2822a16978d92fbacd0399ae7bc340dc40c434e45b77",
+    "traffic/highway_smooth_schedule.py": "6e6cd00cb79e1807f6acf7097e4b640803382c9a78186707279864c986d382ae",
+    "traffic/highway_smooth_metrics.py": "a7c887b17f35c4ded5a80ba1946d41cecc06cf02203a7b25827b9a8fad285b98",
+    "scripts/build_highway_flow_bank.py": "639b16b06cb45987978cc3a3ee5df471740282b7b3895755ec882a1e007e00bc",
+    "scripts/prepare_highway_flow.py": "b5cea1f16ef585418dc84ec0d72a3f6ec4e1dcb93ea373312f413e98714e932c",
+    "scripts/record_highway_environment_v05.py": "6498b365c18f21214b9ccab7de080ee385c5228241034104e295b4b9aef67e2b",
+    "traffic/highway_smooth_reference.py": "ed3780f990e0751bb5e8f23b491c918e8a84162402a0fb352a5b71b966b8fc6c",
+    "scripts/check_highway_flow_gradients.py": "70c948b8f4603652b1f7754b34169d1fbe48791baee98604bd63f80e3bc02731",
+    "experiments/run_highway_flow_rl_v04.py": "a17d1117f2b11cfdbfb789b9dab118be064ce152ed34079be7b19e45add81ddd",
+    "experiments/run_highway_flow_rl.py": "33fff50e4ab008c1cf3ee3ecb54dfd2ad22fe34ab4dbf5ed21ff1899f2072a2d",
+    "environments/highway_flow_rl_env.py": "bfdfc0902d800345014705c95f8d20e9093e39ac90d98d869c361c60b3e9a60b",
+    "environments/highway_flow_rl_v04_env.py": "2290a635bdb6e3c7442e002433919dee204805ff9652015ef40711a156e57289",
+    "traffic/highway_flow_rl_v02_rewards.py": "5604c6b74d92709a3a5581c60106e46985b779467188f4f3a22f38b7981f4cbc",
+    "environments/highway_flow_rl_v02_env.py": "35ec86fdeed1ecf33527fad2bb7032ce88dd924490b94dfe0dd3b0a12dbf8b9c",
+    "traffic/highway_flow_rl_v04_contract.py": "5562765fb82a8beb1ac23b46877410507271c7c5036e156f17357b1a08a5dab0",
+    "traffic/highway_flow_rl_v04_rewards.py": "093e60b2849d5d75dff16b04b39724d6100b13ceb806feab07f90fc9f60248c5",
+    "traffic/highway_flow_rl_v03_rewards.py": "8136949675e464bcc1a68ae5f2c8631ef4cda822fbea44dfc2058aee31e88d66",
+    "scripts/screen_flow_rl_v02_network.py": "ecab8a644d7fa19aed6f1a6130816d5f9b29d959c710cf30d95347d92ba4f68e"
+  },
+  "learning": {
+    "actual_decisions": 3643488,
+    "charged_decisions": 3645088,
+    "updates": 1298,
+    "optimizer_steps": 34192,
+    "elapsed_seconds": 27986.17200000002,
+    "stop": "charged_wall_limit",
+    "recoveries": [
+      {
+        "kind": "discarded_interrupted_rollout",
+        "reserved_decisions": 1600,
+        "output": "outputs/highway-flow-rl/v04/long-round-03/train/episode-1298",
+        "reason": "SUMO state cannot be resumed; full reservation remains charged"
+      }
+    ],
+    "coverage": {
+      "i110-merge": {
+        "ppo_decisions": 97575,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-4-lane-ramp120-merge-focused-1": {
+        "ppo_decisions": 67375,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-3-lane-cruise": {
+        "ppo_decisions": 59909,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-2-lane-ramp120-merge-focused-2": {
+        "ppo_decisions": 58032,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "i110-following": {
+        "ppo_decisions": 65539,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-3-lane-ramp240-merge-focused-3": {
+        "ppo_decisions": 77749,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-2-lane-passing": {
+        "ppo_decisions": 261615,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-4-lane-ramp120-merge": {
+        "ppo_decisions": 493882,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-4-lane-ramp120-merge-focused-5": {
+        "ppo_decisions": 68978,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-5-lane-following": {
+        "ppo_decisions": 223730,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-2-lane-ramp120-merge-focused-6": {
+        "ppo_decisions": 58129,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "i110-passing": {
+        "ppo_decisions": 90619,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-2-lane-ramp120-merge": {
+        "ppo_decisions": 59332,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "i110-merge-focused-8": {
+        "ppo_decisions": 27419,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-4-lane-cruise": {
+        "ppo_decisions": 744850,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-3-lane-ramp240-merge": {
+        "ppo_decisions": 286445,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-2-lane-ramp120-merge-focused-10": {
+        "ppo_decisions": 58616,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-5-lane-passing": {
+        "ppo_decisions": 528914,
+        "critic_decisions": 0,
+        "episodes": 65
+      },
+      "train-3-lane-ramp240-merge-focused-11": {
+        "ppo_decisions": 74422,
+        "critic_decisions": 0,
+        "episodes": 64
+      },
+      "i110-cruise": {
+        "ppo_decisions": 240358,
+        "critic_decisions": 0,
+        "episodes": 64
+      }
+    }
+  },
+  "initial": {
+    "label": "initial-validation",
+    "summary": {
+      "cases": 6,
+      "decisions": 17238,
+      "pooled_intervention_fraction": 0.03991182271725258,
+      "max_peak_jerk_m_s3": 55.60766160488129,
+      "collisions": 0,
+      "teleports": 0,
+      "stable_merges": 2,
+      "merge_targets": 2,
+      "merge_entries": 2,
+      "lateral_merges": 2,
+      "full_horizon_cases": 6,
+      "quality_accepted": false,
+      "held_out": false,
+      "development_gates_passed": false,
+      "case_gates": [
+        {
+          "case_id": "v05-validation-i110-merge",
+          "seed": 6900019,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "rolling_merge_quality"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": false,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 525,
+              "intervention_fraction": 0.31238095238095237,
+              "peak_abs_jerk_m_s3": 40.72141987817942,
+              "mean_legal_speed_fraction": 0.6168072910344095,
+              "minimum_headway_s": 6.966108802773158,
+              "minimum_ttc_s": null,
+              "leader_samples": 99,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_1": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 352,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.1448310315607557,
+              "mean_legal_speed_fraction": 0.9584828911586627,
+              "minimum_headway_s": 2.9735558333317345,
+              "minimum_ttc_s": 60.33497346017711,
+              "leader_samples": 318,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_2": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 319,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.401000827550817,
+              "mean_legal_speed_fraction": 0.9594392647127243,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_3": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 303,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 6.552712619304657,
+              "mean_legal_speed_fraction": 0.9632625593508535,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_4": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 408,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.8945858776570077,
+              "mean_legal_speed_fraction": 0.928963806186011,
+              "minimum_headway_s": 2.550067702386386,
+              "minimum_ttc_s": null,
+              "leader_samples": 366,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_5": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 367,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.318199306726456,
+              "mean_legal_speed_fraction": 0.9748254799310381,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_6": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 301,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.879856795072591,
+              "mean_legal_speed_fraction": 0.9693027006241502,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_7": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 386,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 0.7187934219837544,
+              "mean_legal_speed_fraction": 0.9277198224599824,
+              "minimum_headway_s": 2.757387657898342,
+              "minimum_ttc_s": 44.74140525608166,
+              "leader_samples": 355,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-cruise",
+          "seed": 6900000,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": false,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 1553,
+              "intervention_fraction": 0.0695428203477141,
+              "peak_abs_jerk_m_s3": 6.245548799634193,
+              "mean_legal_speed_fraction": 0.9891804507138655,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-passing",
+          "seed": 6900002,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": false,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 1908,
+              "intervention_fraction": 0.09224318658280922,
+              "peak_abs_jerk_m_s3": 14.410346666926444,
+              "mean_legal_speed_fraction": 0.8999907652246328,
+              "minimum_headway_s": 4.1461491751309785,
+              "minimum_ttc_s": 14.312628370911398,
+              "leader_samples": 1114,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v05-validation-i110-following",
+          "seed": 6900017,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 355,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 0.9027280658482795,
+              "mean_legal_speed_fraction": 0.9512365546136002,
+              "minimum_headway_s": 2.553879327939628,
+              "minimum_ttc_s": null,
+              "leader_samples": 323,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_1": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 314,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.814867436885905,
+              "mean_legal_speed_fraction": 0.9861007489050603,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_2": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": false,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 373,
+              "intervention_fraction": 0.2359249329758713,
+              "peak_abs_jerk_m_s3": 3.995039910078013,
+              "mean_legal_speed_fraction": 0.8414251509718841,
+              "minimum_headway_s": 2.0600970675711134,
+              "minimum_ttc_s": 63.39954941343915,
+              "leader_samples": 350,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_3": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 387,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.0515998303890939,
+              "mean_legal_speed_fraction": 0.9567857543250768,
+              "minimum_headway_s": 3.272774015170984,
+              "minimum_ttc_s": 43.23382063146548,
+              "leader_samples": 349,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_4": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": false,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 397,
+              "intervention_fraction": 0.08060453400503778,
+              "peak_abs_jerk_m_s3": 2.4249701201915386,
+              "mean_legal_speed_fraction": 0.8426623267991511,
+              "minimum_headway_s": 2.13648615990832,
+              "minimum_ttc_s": 66.79755064449496,
+              "leader_samples": 372,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_5": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 350,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.429216518998146,
+              "mean_legal_speed_fraction": 0.9521893597180138,
+              "minimum_headway_s": 2.7199498121605092,
+              "minimum_ttc_s": null,
+              "leader_samples": 313,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_6": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 439,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.700986348092485,
+              "mean_legal_speed_fraction": 0.9075309522302618,
+              "minimum_headway_s": 3.884208481786382,
+              "minimum_ttc_s": 28.27590195345441,
+              "leader_samples": 396,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_7": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": false,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 351,
+              "intervention_fraction": 0.2336182336182336,
+              "peak_abs_jerk_m_s3": 4.921952055868317,
+              "mean_legal_speed_fraction": 0.8293617070666002,
+              "minimum_headway_s": 2.0259726704631467,
+              "minimum_ttc_s": 52.76620304266477,
+              "leader_samples": 328,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-train-2-lane-ramp120-merge",
+          "seed": 8400004,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "rolling_merge_quality"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 838,
+              "intervention_fraction": 0.045346062052505964,
+              "peak_abs_jerk_m_s3": 55.60766160488129,
+              "mean_legal_speed_fraction": 0.8948513782765983,
+              "minimum_headway_s": 1.7700131427269588,
+              "minimum_ttc_s": null,
+              "leader_samples": 282,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-60mph-cruise",
+          "seed": 8400005,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": true,
+              "decisions": 858,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.304077476263046,
+              "mean_legal_speed_fraction": 0.9554364743257533,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_1": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": false
+              },
+              "passed": false,
+              "decisions": 902,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 3.2742100954056497,
+              "mean_legal_speed_fraction": 0.9404676989627656,
+              "minimum_headway_s": 3.007772018479775,
+              "minimum_ttc_s": 49.673027594117684,
+              "leader_samples": 857,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_2": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": false,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": false,
+                "avoidable_braking": false
+              },
+              "passed": false,
+              "decisions": 960,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.5639559626579285,
+              "mean_legal_speed_fraction": 0.8828522223896915,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_3": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": false
+              },
+              "passed": false,
+              "decisions": 885,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.4058078825474496,
+              "mean_legal_speed_fraction": 0.9500433735622569,
+              "minimum_headway_s": 2.2837703924559043,
+              "minimum_ttc_s": 76.25399422769844,
+              "leader_samples": 857,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_4": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": true,
+              "decisions": 862,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.3909994959829817,
+              "mean_legal_speed_fraction": 0.9754195220668603,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_5": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": true,
+              "decisions": 860,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.425638720393252,
+              "mean_legal_speed_fraction": 0.963275942486953,
+              "minimum_headway_s": 2.2965339365846322,
+              "minimum_ttc_s": null,
+              "leader_samples": 826,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_6": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": false
+              },
+              "passed": false,
+              "decisions": 858,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.687619805336141,
+              "mean_legal_speed_fraction": 0.9520223527348294,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_7": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 827,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.257665216922902,
+              "mean_legal_speed_fraction": 0.9777721505705042,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        }
+      ],
+      "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+    },
+    "focal": {
+      "stop_seconds": 11.699999999999974,
+      "intervention_fraction": 0.31238095238095237,
+      "legal_speed_fraction": 0.6168072910344095,
+      "jerk": {
+        "samples": 524,
+        "eligible_samples": 524,
+        "missing_samples": 0,
+        "mean_abs": 0.6310447927507578,
+        "rms": 2.8446675749213717,
+        "p95_abs": 2.0505269281568053,
+        "peak_abs": 40.72141987817942
+      }
+    },
+    "cases": [
+      {
+        "case_id": "v05-validation-i110-merge",
+        "seed": 6900019,
+        "agent_transitions": 2961,
+        "intervention_fraction": 0.05538669368456602,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {
+          "agent_0": 11.699999999999974
+        },
+        "quality_merges": {
+          "agent_0": {
+            "qualified": false,
+            "samples": 160,
+            "stop_seconds": 6.4,
+            "full_approach_stop_seconds": 11.699999999999974,
+            "speed_match_fraction": 0.475,
+            "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+          }
+        },
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v05-val-0-cruise",
+        "seed": 6900000,
+        "agent_transitions": 1553,
+        "intervention_fraction": 0.0695428203477141,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v05-val-0-passing",
+        "seed": 6900002,
+        "agent_transitions": 1908,
+        "intervention_fraction": 0.09224318658280922,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "seed": 6900017,
+        "agent_transitions": 2966,
+        "intervention_fraction": 0.06810519217801753,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v02-development-train-2-lane-ramp120-merge",
+        "seed": 8400004,
+        "agent_transitions": 838,
+        "intervention_fraction": 0.045346062052505964,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {
+          "agent_0": 0.0
+        },
+        "quality_merges": {
+          "agent_0": {
+            "qualified": false,
+            "samples": 161,
+            "stop_seconds": 0.0,
+            "full_approach_stop_seconds": 0.0,
+            "speed_match_fraction": 0.062111801242236024,
+            "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+          }
+        },
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v02-development-60mph-cruise",
+        "seed": 8400005,
+        "agent_transitions": 7012,
+        "intervention_fraction": 0.0,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      }
+    ]
+  },
+  "best": {
+    "label": "periodic-validation-01078",
+    "summary": {
+      "cases": 6,
+      "decisions": 16578,
+      "pooled_intervention_fraction": 0.006273374351550247,
+      "max_peak_jerk_m_s3": 54.51851010322572,
+      "collisions": 0,
+      "teleports": 0,
+      "stable_merges": 2,
+      "merge_targets": 2,
+      "merge_entries": 2,
+      "lateral_merges": 2,
+      "full_horizon_cases": 6,
+      "quality_accepted": false,
+      "held_out": false,
+      "development_gates_passed": false,
+      "case_gates": [
+        {
+          "case_id": "v05-validation-i110-merge",
+          "seed": 6900019,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "rolling_merge_quality"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 365,
+              "intervention_fraction": 0.010958904109589041,
+              "peak_abs_jerk_m_s3": 13.915426284074783,
+              "mean_legal_speed_fraction": 0.8895230272208096,
+              "minimum_headway_s": 1.7073791930198483,
+              "minimum_ttc_s": 110.80399035532676,
+              "leader_samples": 110,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_1": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 356,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.4890596627578105,
+              "mean_legal_speed_fraction": 0.9472124401995452,
+              "minimum_headway_s": 3.286370265810156,
+              "minimum_ttc_s": 50.858560002414364,
+              "leader_samples": 298,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_2": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 326,
+              "intervention_fraction": 0.018404907975460124,
+              "peak_abs_jerk_m_s3": 13.079528405636864,
+              "mean_legal_speed_fraction": 0.9377776074972463,
+              "minimum_headway_s": 1.6963806235369243,
+              "minimum_ttc_s": null,
+              "leader_samples": 248,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_3": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 302,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 8.423616886138952,
+              "mean_legal_speed_fraction": 0.966931717202167,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_4": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 417,
+              "intervention_fraction": 0.002398081534772182,
+              "peak_abs_jerk_m_s3": 2.9440735718253563,
+              "mean_legal_speed_fraction": 0.9094382157153049,
+              "minimum_headway_s": 1.9586743488018963,
+              "minimum_ttc_s": 47.75399109203708,
+              "leader_samples": 393,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_5": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 386,
+              "intervention_fraction": 0.012953367875647668,
+              "peak_abs_jerk_m_s3": 12.097530838356718,
+              "mean_legal_speed_fraction": 0.9264667247132631,
+              "minimum_headway_s": 2.240590687260898,
+              "minimum_ttc_s": 25.818787113227387,
+              "leader_samples": 355,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_6": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 299,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 10.642979741096426,
+              "mean_legal_speed_fraction": 0.974232963043859,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_7": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 394,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.5498466789722443,
+              "mean_legal_speed_fraction": 0.9085830936482393,
+              "minimum_headway_s": 2.3660050360838767,
+              "minimum_ttc_s": 36.409667528142016,
+              "leader_samples": 367,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-cruise",
+          "seed": 6900000,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 1551,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 6.187133491039276,
+              "mean_legal_speed_fraction": 0.9905231677672974,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-passing",
+          "seed": 6900002,
+          "passed": true,
+          "failures": [],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 1741,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.575600177049566,
+              "mean_legal_speed_fraction": 0.9861220510711013,
+              "minimum_headway_s": 2.8578644983523414,
+              "minimum_ttc_s": 55.772919129972834,
+              "leader_samples": 1089,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v05-validation-i110-following",
+          "seed": 6900017,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 350,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.636843159794843,
+              "mean_legal_speed_fraction": 0.9641624845009732,
+              "minimum_headway_s": 2.35207256295603,
+              "minimum_ttc_s": 302.8977374840967,
+              "leader_samples": 323,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_1": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 314,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.77577760815624,
+              "mean_legal_speed_fraction": 0.9871731742803411,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_2": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": false,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 357,
+              "intervention_fraction": 0.07563025210084033,
+              "peak_abs_jerk_m_s3": 6.371793773226919,
+              "mean_legal_speed_fraction": 0.8784619143818588,
+              "minimum_headway_s": 2.4711542161160382,
+              "minimum_ttc_s": 35.69330774934563,
+              "leader_samples": 328,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_3": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 380,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 0.6936356425285339,
+              "mean_legal_speed_fraction": 0.9736607581521373,
+              "minimum_headway_s": 3.2751424581661106,
+              "minimum_ttc_s": 43.571362285027206,
+              "leader_samples": 343,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_4": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 383,
+              "intervention_fraction": 0.0391644908616188,
+              "peak_abs_jerk_m_s3": 6.758261770010066,
+              "mean_legal_speed_fraction": 0.872109781618372,
+              "minimum_headway_s": 2.0553412211456825,
+              "minimum_ttc_s": 314.1479829192826,
+              "leader_samples": 359,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_5": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 344,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.904908090829885,
+              "mean_legal_speed_fraction": 0.9667858368346837,
+              "minimum_headway_s": 2.6862218499829598,
+              "minimum_ttc_s": null,
+              "leader_samples": 313,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_6": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 407,
+              "intervention_fraction": 0.036855036855036855,
+              "peak_abs_jerk_m_s3": 2.1208817511798372,
+              "mean_legal_speed_fraction": 0.9798601894391046,
+              "minimum_headway_s": 4.684175225664038,
+              "minimum_ttc_s": 28.62132665078271,
+              "leader_samples": 204,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_7": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": false,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 300,
+              "intervention_fraction": 0.06666666666666667,
+              "peak_abs_jerk_m_s3": 3.2753435522316465,
+              "mean_legal_speed_fraction": 0.971242484603104,
+              "minimum_headway_s": 2.7529375850082243,
+              "minimum_ttc_s": 38.3813645993528,
+              "leader_samples": 29,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-train-2-lane-ramp120-merge",
+          "seed": 8400004,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "rolling_merge_quality"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 812,
+              "intervention_fraction": 0.013546798029556651,
+              "peak_abs_jerk_m_s3": 54.51851010322572,
+              "mean_legal_speed_fraction": 0.9226602746718133,
+              "minimum_headway_s": 1.977383563326081,
+              "minimum_ttc_s": null,
+              "leader_samples": 210,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-60mph-cruise",
+          "seed": 8400005,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 838,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.871649086475372,
+              "mean_legal_speed_fraction": 0.9780114566482244,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_1": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": true,
+              "decisions": 876,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.193470895290517,
+              "mean_legal_speed_fraction": 0.9682487514092599,
+              "minimum_headway_s": 1.8113323507081547,
+              "minimum_ttc_s": 49.59279217268604,
+              "leader_samples": 849,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_2": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 869,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 7.119637280702662,
+              "mean_legal_speed_fraction": 0.975886247860629,
+              "minimum_headway_s": 2.870114465815077,
+              "minimum_ttc_s": 292.4515878498912,
+              "leader_samples": 837,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_3": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": true,
+              "decisions": 858,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.6993472725150838,
+              "mean_legal_speed_fraction": 0.9797942687159354,
+              "minimum_headway_s": 2.761189131374252,
+              "minimum_ttc_s": 80.27077278032172,
+              "leader_samples": 29,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_4": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": true,
+              "decisions": 850,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.625524431467198,
+              "mean_legal_speed_fraction": 0.9889842814003319,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_5": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": true,
+              "decisions": 850,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.811482384800911,
+              "mean_legal_speed_fraction": 0.9751577411292781,
+              "minimum_headway_s": 2.3446214643016168,
+              "minimum_ttc_s": null,
+              "leader_samples": 820,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_6": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 832,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 9.061696976423406,
+              "mean_legal_speed_fraction": 0.981893611437092,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_7": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 821,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 7.858172208070613,
+              "mean_legal_speed_fraction": 0.9846926670815548,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        }
+      ],
+      "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+    },
+    "focal": {
+      "stop_seconds": 0.0,
+      "intervention_fraction": 0.010958904109589041,
+      "legal_speed_fraction": 0.8895230272208096,
+      "jerk": {
+        "samples": 364,
+        "eligible_samples": 364,
+        "missing_samples": 0,
+        "mean_abs": 0.273391972244766,
+        "rms": 1.0813404756976466,
+        "p95_abs": 0.8423554195765686,
+        "peak_abs": 13.915426284074783
+      }
+    },
+    "cases": [
+      {
+        "case_id": "v05-validation-i110-merge",
+        "seed": 6900019,
+        "agent_transitions": 2845,
+        "intervention_fraction": 0.00562390158172232,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {
+          "agent_0": 0.0
+        },
+        "quality_merges": {
+          "agent_0": {
+            "qualified": false,
+            "samples": 161,
+            "stop_seconds": 0.0,
+            "full_approach_stop_seconds": 0.0,
+            "speed_match_fraction": 0.5527950310559007,
+            "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+          }
+        },
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v05-val-0-cruise",
+        "seed": 6900000,
+        "agent_transitions": 1551,
+        "intervention_fraction": 0.0,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v05-val-0-passing",
+        "seed": 6900002,
+        "agent_transitions": 1741,
+        "intervention_fraction": 0.0,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "seed": 6900017,
+        "agent_transitions": 2835,
+        "intervention_fraction": 0.027160493827160494,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v02-development-train-2-lane-ramp120-merge",
+        "seed": 8400004,
+        "agent_transitions": 812,
+        "intervention_fraction": 0.013546798029556651,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {
+          "agent_0": 0.0
+        },
+        "quality_merges": {
+          "agent_0": {
+            "qualified": false,
+            "samples": 161,
+            "stop_seconds": 0.0,
+            "full_approach_stop_seconds": 0.0,
+            "speed_match_fraction": 0.37267080745341613,
+            "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+          }
+        },
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v02-development-60mph-cruise",
+        "seed": 8400005,
+        "agent_transitions": 6794,
+        "intervention_fraction": 0.0,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      }
+    ]
+  },
+  "final": {
+    "label": "final-validation",
+    "summary": {
+      "cases": 6,
+      "decisions": 16979,
+      "pooled_intervention_fraction": 0.004181636138759644,
+      "max_peak_jerk_m_s3": 50.760946720838525,
+      "collisions": 0,
+      "teleports": 0,
+      "stable_merges": 2,
+      "merge_targets": 2,
+      "merge_entries": 2,
+      "lateral_merges": 2,
+      "full_horizon_cases": 6,
+      "quality_accepted": false,
+      "held_out": false,
+      "development_gates_passed": false,
+      "case_gates": [
+        {
+          "case_id": "v05-validation-i110-merge",
+          "seed": 6900019,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "rolling_merge_quality"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 372,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 12.109468877315521,
+              "mean_legal_speed_fraction": 0.8712548172422186,
+              "minimum_headway_s": 1.7214524429334326,
+              "minimum_ttc_s": null,
+              "leader_samples": 111,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_1": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 360,
+              "intervention_fraction": 0.002777777777777778,
+              "peak_abs_jerk_m_s3": 4.4890596627578105,
+              "mean_legal_speed_fraction": 0.9362542723101475,
+              "minimum_headway_s": 3.3317307272689773,
+              "minimum_ttc_s": 52.30410104252113,
+              "leader_samples": 302,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_2": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 344,
+              "intervention_fraction": 0.00872093023255814,
+              "peak_abs_jerk_m_s3": 13.339847712514086,
+              "mean_legal_speed_fraction": 0.8893940531151802,
+              "minimum_headway_s": 1.6493155956583125,
+              "minimum_ttc_s": null,
+              "leader_samples": 263,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_3": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 317,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 8.680729120969843,
+              "mean_legal_speed_fraction": 0.9194042315933705,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_4": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 428,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.5796256959438324,
+              "mean_legal_speed_fraction": 0.8855561325368257,
+              "minimum_headway_s": 2.3801346440808664,
+              "minimum_ttc_s": 1127.7342247981117,
+              "leader_samples": 396,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_5": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 397,
+              "intervention_fraction": 0.005037783375314861,
+              "peak_abs_jerk_m_s3": 12.068794213728395,
+              "mean_legal_speed_fraction": 0.9004568299171193,
+              "minimum_headway_s": 2.2499702390518403,
+              "minimum_ttc_s": 25.824278172513132,
+              "leader_samples": 359,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_6": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 303,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 11.165669560432434,
+              "mean_legal_speed_fraction": 0.9632201400465257,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_7": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 412,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.278234869241679,
+              "mean_legal_speed_fraction": 0.8679403258808938,
+              "minimum_headway_s": 3.0622319016486728,
+              "minimum_ttc_s": 44.73294760531217,
+              "leader_samples": 377,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-cruise",
+          "seed": 6900000,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 1556,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.6852273643016815,
+              "mean_legal_speed_fraction": 0.9872920314475016,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v05-val-0-passing",
+          "seed": 6900002,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 1746,
+              "intervention_fraction": 0.010309278350515464,
+              "peak_abs_jerk_m_s3": 7.105716913938487,
+              "mean_legal_speed_fraction": 0.9837092445150089,
+              "minimum_headway_s": 2.6774335686722597,
+              "minimum_ttc_s": 56.965405369547945,
+              "leader_samples": 1091,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v05-validation-i110-following",
+          "seed": 6900017,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 365,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.504331603646314,
+              "mean_legal_speed_fraction": 0.9264587760016421,
+              "minimum_headway_s": 2.5985920159633586,
+              "minimum_ttc_s": null,
+              "leader_samples": 323,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_1": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 327,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 4.856481254100764,
+              "mean_legal_speed_fraction": 0.9461637775863292,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_2": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 358,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.928320437669754,
+              "mean_legal_speed_fraction": 0.8764040305661506,
+              "minimum_headway_s": 2.4691246729554006,
+              "minimum_ttc_s": 35.58342751438489,
+              "leader_samples": 328,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_3": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 398,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 0.705963671207499,
+              "mean_legal_speed_fraction": 0.9287137122021851,
+              "minimum_headway_s": 3.5422128360640053,
+              "minimum_ttc_s": 43.81022117196553,
+              "leader_samples": 359,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_4": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 390,
+              "intervention_fraction": 0.038461538461538464,
+              "peak_abs_jerk_m_s3": 8.190788775682378,
+              "mean_legal_speed_fraction": 0.856668397415182,
+              "minimum_headway_s": 2.0525016980686335,
+              "minimum_ttc_s": null,
+              "leader_samples": 362,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_5": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 360,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.946093797683716,
+              "mean_legal_speed_fraction": 0.9263447851242085,
+              "minimum_headway_s": 2.6349752031677416,
+              "minimum_ttc_s": null,
+              "leader_samples": 326,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_6": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": true,
+              "decisions": 412,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.0330668836832757,
+              "mean_legal_speed_fraction": 0.9681457257808131,
+              "minimum_headway_s": 5.09285869487031,
+              "minimum_ttc_s": 28.646962899808596,
+              "leader_samples": 182,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_7": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": false,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 307,
+              "intervention_fraction": 0.06840390879478828,
+              "peak_abs_jerk_m_s3": 3.121768753493903,
+              "mean_legal_speed_fraction": 0.9472293354094243,
+              "minimum_headway_s": 2.7745655189694043,
+              "minimum_ttc_s": 42.44179954952471,
+              "leader_samples": 29,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-train-2-lane-ramp120-merge",
+          "seed": 8400004,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "rolling_merge_quality"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true
+              },
+              "passed": false,
+              "decisions": 831,
+              "intervention_fraction": 0.013237063778580024,
+              "peak_abs_jerk_m_s3": 50.760946720838525,
+              "mean_legal_speed_fraction": 0.9029134510247938,
+              "minimum_headway_s": 1.7847088437916039,
+              "minimum_ttc_s": null,
+              "leader_samples": 114,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        },
+        {
+          "case_id": "v02-development-60mph-cruise",
+          "seed": 8400005,
+          "passed": false,
+          "failures": [
+            "per_car_route_comfort_or_control"
+          ],
+          "per_car": {
+            "agent_0": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 873,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 6.557927429675914,
+              "mean_legal_speed_fraction": 0.9386034796988014,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_1": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": true,
+              "decisions": 901,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.3565625995397568,
+              "mean_legal_speed_fraction": 0.9417146005223999,
+              "minimum_headway_s": 2.5906377314764377,
+              "minimum_ttc_s": 49.53934284222417,
+              "leader_samples": 872,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_2": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 885,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 8.129326850176,
+              "mean_legal_speed_fraction": 0.9582246157939818,
+              "minimum_headway_s": 2.722086309428539,
+              "minimum_ttc_s": 297.2399482274543,
+              "leader_samples": 855,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_3": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": true,
+              "decisions": 878,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 1.5811965614560108,
+              "mean_legal_speed_fraction": 0.9571386871097628,
+              "minimum_headway_s": 1.7421348237368235,
+              "minimum_ttc_s": 80.21632317260818,
+              "leader_samples": 124,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_4": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 857,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 5.836801677942205,
+              "mean_legal_speed_fraction": 0.9811883313315217,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_5": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": true,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": false
+              },
+              "passed": false,
+              "decisions": 890,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 2.1742478013038635,
+              "mean_legal_speed_fraction": 0.9314830480544488,
+              "minimum_headway_s": 2.3261682193664384,
+              "minimum_ttc_s": null,
+              "leader_samples": 855,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_6": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 856,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 9.952054172754288,
+              "mean_legal_speed_fraction": 0.9549063832171992,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            },
+            "agent_7": {
+              "checks": {
+                "measured": true,
+                "completed_route": true,
+                "peak_jerk": false,
+                "interventions": true,
+                "headway_ttc_coverage": true,
+                "headway": true,
+                "ttc": true,
+                "cruise_speed": true,
+                "clear_cruise_coverage": true,
+                "clear_cruise_speed": true,
+                "avoidable_braking": true
+              },
+              "passed": false,
+              "decisions": 856,
+              "intervention_fraction": 0.0,
+              "peak_abs_jerk_m_s3": 8.148971498012614,
+              "mean_legal_speed_fraction": 0.9449439761102141,
+              "minimum_headway_s": null,
+              "minimum_ttc_s": null,
+              "leader_samples": 0,
+              "missing_headway_samples": 0,
+              "missing_ttc_samples": 0
+            }
+          }
+        }
+      ],
+      "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+    },
+    "focal": {
+      "stop_seconds": 0.0,
+      "intervention_fraction": 0.0,
+      "legal_speed_fraction": 0.8712548172422186,
+      "jerk": {
+        "samples": 371,
+        "eligible_samples": 371,
+        "missing_samples": 0,
+        "mean_abs": 0.29097839346472126,
+        "rms": 1.0300985326860874,
+        "p95_abs": 1.0226471722127428,
+        "peak_abs": 12.109468877315521
+      }
+    },
+    "cases": [
+      {
+        "case_id": "v05-validation-i110-merge",
+        "seed": 6900019,
+        "agent_transitions": 2933,
+        "intervention_fraction": 0.002045687009887487,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {
+          "agent_0": 0.0
+        },
+        "quality_merges": {
+          "agent_0": {
+            "qualified": false,
+            "samples": 161,
+            "stop_seconds": 0.0,
+            "full_approach_stop_seconds": 0.0,
+            "speed_match_fraction": 0.484472049689441,
+            "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+          }
+        },
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v05-val-0-cruise",
+        "seed": 6900000,
+        "agent_transitions": 1556,
+        "intervention_fraction": 0.0,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v05-val-0-passing",
+        "seed": 6900002,
+        "agent_transitions": 1746,
+        "intervention_fraction": 0.010309278350515464,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "seed": 6900017,
+        "agent_transitions": 2917,
+        "intervention_fraction": 0.012341446691806651,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v02-development-train-2-lane-ramp120-merge",
+        "seed": 8400004,
+        "agent_transitions": 831,
+        "intervention_fraction": 0.013237063778580024,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {
+          "agent_0": 0.0
+        },
+        "quality_merges": {
+          "agent_0": {
+            "qualified": false,
+            "samples": 161,
+            "stop_seconds": 0.0,
+            "full_approach_stop_seconds": 0.0,
+            "speed_match_fraction": 0.422360248447205,
+            "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+          }
+        },
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      },
+      {
+        "case_id": "v02-development-60mph-cruise",
+        "seed": 8400005,
+        "agent_transitions": 6996,
+        "intervention_fraction": 0.0,
+        "collisions": 0,
+        "teleports": 0,
+        "pre_merge_stop_seconds": {},
+        "quality_merges": {},
+        "native_emergencies": {
+          "available": true,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "metric": "Native warning events per episode; not sampled acceleration threshold crossings",
+          "warning_lines": 0,
+          "unique_events": 0,
+          "controlled_events": 0,
+          "background_events": 0,
+          "unclassified_events": 0,
+          "events": []
+        }
+      }
+    ]
+  },
+  "accepted": false,
+  "held_out": false,
+  "new_training": false,
+  "hashes": {
+    "outputs/highway-flow-rl/v04/long-round-03/summary.json": "719aafb205b4677b3d796d9b655af9807921fcdae6d91222c1bd6e18bd9a54f9",
+    "outputs/highway-flow-rl/v04/long-round-03/manifest.json": "63ab04f2e691a84970b60812fdda270a055cd5ada6f2f39dc71be98bd5fa4fe4",
+    "outputs/highway-flow-rl/v04/long-round-03/resolved-config.json": "3eb223ea69b50dbf5cfa929572b99b1945446baa494fef3cc59c1c4b78afe2f2",
+    "outputs/highway-flow-rl/v04/long-round-03/initial-validation.json": "391f53c15b2c650dde35933f6a91441a5da1da936ba0c231d50527c3679263c4",
+    "outputs/highway-flow-rl/v04/long-round-03/final-validation.json": "15c07338953f4696d1c0acac7b42a805bb72ad201b8369ad8a82a03e4fae6cf3",
+    "outputs/highway-flow-rl/v04/long-round-03/periodic-validation-01078.json": "6a09e708bf08bdc27cafd60f62e873267ecb2c6bd7444d6982e2b534bae2065b",
+    "outputs/highway-flow-rl/v04/long-round-03/policy.pt": "b6251fe821685a9662b36a6320f04ba1ba81ea59d0b6b4bd7d267ced01d81ab2",
+    "outputs/highway-flow-rl/v04/long-round-03/best-policy.pt": "7054cfdae360d9786811914d14cf9cb395bad850be0f9bb8cf17d32e333e3f96",
+    "outputs/highway-flow-rl/v04/long-round-03/last.pt": "20777e239d5c5461046ace6308fa7ebd7aa28644fe3f810635a0634e5bbdfc7c",
+    "outputs/highway-flow-rl/v04/long-round-03/best.pt": "79e36b5425fa8a37f02ca990af23854f2cc5d73d6e62d27738ea767a55c25f0f",
+    "outputs/highway-flow-rl/v04/long-round-03/candidates/checkpoint-01078.pt": "79e36b5425fa8a37f02ca990af23854f2cc5d73d6e62d27738ea767a55c25f0f"
+  },
+  "best_full_checkpoint_matches_retained_candidate": true,
+  "limits": "Six development cases only. Best and final both retained; no deployment or held-out qualification."
+}

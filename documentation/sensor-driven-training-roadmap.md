@@ -1,7 +1,7 @@
 # Living roadmap: from structured traffic learning to sensor-driven cars
 
-Revision **v41**, updated **November 10, 2026, America/Los_Angeles**.
-Status: **V04 merge rewards, projected mask and full-episode collection implemented and preflighted. Long training authorized; results pending.**
+Revision **v42**, updated **November 10, 2026, America/Los_Angeles**.
+Status: **V04 long run completed: final I-110 focal car has zero stops/overrides; fleet overrides 0.42%. Comfort/quality gates still fail; no promotion.**
 Parent: [hybrid roadmap](hybrid-roadmap.md). Persistent update instruction:
 [AGENTS.md](../AGENTS.md#persistent-sensor-driven-training-plan).
 
@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** launch the authorized [v04 long run](highway-merge-rewards-v04.md), then review terminal results without assistant monitoring during training. The resolved configuration uses 4M additional decisions, an eight-hour run cap, up to 20 epochs and automatic matched validation every 500k decisions. Preparation: 116 tests, zero-update native preflight and repeatable journals pass. Full-episode collection and projected lane gaps are implemented; saved-state target coverage is 545/549. The frozen starting actor still stops 11.7 s before merging, so no improvement or acceptance is claimed. Preserve all metrics/checkpoints and inspect completion/failure before any further changes.
+**Next action:** inspect remaining jerk peaks and the specific failed following/cruise cars using saved traces before more training or integration. [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -638,3 +638,15 @@ quality gate rejects it. User authorized long training: 4M additional decisions,
 eight-hour cap, 20 maximum epochs, automatic evaluation/checkpoint retention.
 [Resolved configuration, evidence and unattended command](highway-merge-rewards-v04.md).
 Training result pending; no promotion or held-out run. Guide sync pending.
+
+
+### v42 - November 10: v04 training completed and terminal metrics reviewed
+
+Normal wall-budget completion; final interrupted reservation preserved and
+charged. Main-car merge stopping/interventions are eliminated on the development
+case, with improved average smoothness and speed. Strict peak-jerk, rolling
+quality and a few per-car checks still fail. Saved final and selected-best
+checkpoint metrics/checksums and confirmed the best full checkpoint matches its
+retained candidate. No automatic acceptance, deployment or further training.
+[Terminal evidence](highway-merge-rewards-v04.md#completed-long-run---november-10-2026).
+Next: saved-trace comfort/failure diagnosis. Guide sync pending.
