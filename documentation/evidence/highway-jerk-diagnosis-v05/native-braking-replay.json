@@ -1,0 +1,3148 @@
+{
+  "schema": "highway_flow_rl_v05_native_braking_replay",
+  "training": false,
+  "policy_used": false,
+  "episode": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v04/long-round-03/final-validation/case-04/episode-8400004-67e660a5",
+  "agent": "agent_0",
+  "seed": 8400004,
+  "reproduction": {
+    "samples": 39,
+    "matched_within_1e3": 39,
+    "first_mismatch_s": null
+  },
+  "baseline_speed_mode_31": [
+    {
+      "time_s": 0.2,
+      "applied": 1.2049535363912582,
+      "saved_realized": 1.2049535363912511,
+      "replay_realized": 1.2049535363912511,
+      "speed_m_s": 8.435562063168247,
+      "lane": "mlk_on_0",
+      "lane_position_m": 77.8596567403146,
+      "distance_to_lane_end_m": 26.80034325968539,
+      "stopping_distance_m": 7.906523035729259
+    },
+    {
+      "time_s": 0.3,
+      "applied": 1.6032437831163406,
+      "saved_realized": 1.603243783116337,
+      "replay_realized": 1.603243783116337,
+      "speed_m_s": 8.59588644147988,
+      "lane": "mlk_on_0",
+      "lane_position_m": 78.7192453844626,
+      "distance_to_lane_end_m": 25.9407546155374,
+      "stopping_distance_m": 8.209918190535294
+    },
+    {
+      "time_s": 0.4,
+      "applied": 1.6715118885040283,
+      "saved_realized": 1.6715118885040248,
+      "replay_realized": 1.6715118885040248,
+      "speed_m_s": 8.763037630330283,
+      "lane": "mlk_on_0",
+      "lane_position_m": 79.59554914749562,
+      "distance_to_lane_end_m": 25.06445085250438,
+      "stopping_distance_m": 8.53231427895384
+    },
+    {
+      "time_s": 0.5,
+      "applied": 1.6772646456956863,
+      "saved_realized": 1.6772646456956863,
+      "replay_realized": 1.6772646456956863,
+      "speed_m_s": 8.930764094899851,
+      "lane": "mlk_on_0",
+      "lane_position_m": 80.4886255569856,
+      "distance_to_lane_end_m": 24.1713744430144,
+      "stopping_distance_m": 8.862060813194708
+    },
+    {
+      "time_s": 0.6,
+      "applied": 1.6730437874794006,
+      "saved_realized": 1.6730437874793935,
+      "replay_realized": 1.6730437874793935,
+      "speed_m_s": 9.09806847364779,
+      "lane": "mlk_on_0",
+      "lane_position_m": 81.39843240435037,
+      "distance_to_lane_end_m": 23.261567595649623,
+      "stopping_distance_m": 9.197205550131537
+    },
+    {
+      "time_s": 0.7,
+      "applied": 1.6670889854431152,
+      "saved_realized": 1.6670889854431081,
+      "replay_realized": 1.6670889854431081,
+      "speed_m_s": 9.264777372192102,
+      "lane": "mlk_on_0",
+      "lane_position_m": 82.32491014156959,
+      "distance_to_lane_end_m": 22.335089858430408,
+      "stopping_distance_m": 9.537344417364753
+    },
+    {
+      "time_s": 0.8,
+      "applied": 1.6606673300266266,
+      "saved_realized": 1.6606673300266195,
+      "replay_realized": 1.6606673300266195,
+      "speed_m_s": 9.430844105194764,
+      "lane": "mlk_on_0",
+      "lane_position_m": 83.26799455208906,
+      "distance_to_lane_end_m": 21.392005447910933,
+      "stopping_distance_m": 9.882313392942981
+    },
+    {
+      "time_s": 0.9,
+      "applied": 1.6539717614650726,
+      "saved_realized": 1.6539717614650762,
+      "replay_realized": 1.6539717614650762,
+      "speed_m_s": 9.596241281341271,
+      "lane": "mlk_on_0",
+      "lane_position_m": 84.22761868022319,
+      "distance_to_lane_end_m": 20.43238131977681,
+      "stopping_distance_m": 10.231982969968707
+    },
+    {
+      "time_s": 1.0,
+      "applied": 1.6470253318548203,
+      "saved_realized": 1.6470253318548167,
+      "replay_realized": 1.6470253318548167,
+      "speed_m_s": 9.760943814526753,
+      "lane": "mlk_on_0",
+      "lane_position_m": 85.20371306167586,
+      "distance_to_lane_end_m": 19.45628693832414,
+      "stopping_distance_m": 10.58622490559423
+    },
+    {
+      "time_s": 1.1,
+      "applied": 1.639823392033577,
+      "saved_realized": 1.639823392033577,
+      "replay_realized": 1.639823392033577,
+      "speed_m_s": 9.92492615373011,
+      "lane": "mlk_on_0",
+      "lane_position_m": 86.19620567704887,
+      "distance_to_lane_end_m": 18.46379432295113,
+      "stopping_distance_m": 10.944906572999551
+    },
+    {
+      "time_s": 1.2,
+      "applied": 1.6323564499616623,
+      "saved_realized": 1.6323564499616694,
+      "replay_realized": 1.6323564499616694,
+      "speed_m_s": 10.088161798726277,
+      "lane": "mlk_on_0",
+      "lane_position_m": 87.20502185692149,
+      "distance_to_lane_end_m": 17.454978143078506,
+      "stopping_distance_m": 11.30788983080891
+    },
+    {
+      "time_s": 1.3,
+      "applied": 1.6246136575937271,
+      "saved_realized": 1.6246136575937342,
+      "replay_realized": 1.6246136575937342,
+      "speed_m_s": 10.250623164485651,
+      "lane": "mlk_on_0",
+      "lane_position_m": 88.23008417337006,
+      "distance_to_lane_end_m": 16.429915826629937,
+      "stopping_distance_m": 11.675030584476646
+    },
+    {
+      "time_s": 1.4,
+      "applied": 1.6165835857391357,
+      "saved_realized": 1.6165835857391286,
+      "replay_realized": 1.6165835857391286,
+      "speed_m_s": 10.412281523059564,
+      "lane": "mlk_on_0",
+      "lane_position_m": 89.27131232567602,
+      "distance_to_lane_end_m": 15.388687674323975,
+      "stopping_distance_m": 12.0461785017164,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 294.6,
+          "speed_m_s": 18.97
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 216.2,
+          "speed_m_s": 18.53
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 207.2,
+          "speed_m_s": 19.18
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 138.3,
+          "speed_m_s": 19.2
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 120.3,
+          "speed_m_s": 19.76
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 63.8,
+          "speed_m_s": 19.64
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 56.8,
+          "speed_m_s": 19.54
+        }
+      ]
+    },
+    {
+      "time_s": 1.5,
+      "applied": 1.608253836631775,
+      "saved_realized": 1.6082538366317678,
+      "replay_realized": 1.6082538366317678,
+      "speed_m_s": 10.57310690672274,
+      "lane": "mlk_on_0",
+      "lane_position_m": 90.32862301634829,
+      "distance_to_lane_end_m": 14.331376983651708,
+      "stopping_distance_m": 12.42117662899868,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 296.5,
+          "speed_m_s": 19.07
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 218.1,
+          "speed_m_s": 18.55
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 209.1,
+          "speed_m_s": 19.26
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 140.2,
+          "speed_m_s": 19.18
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 122.3,
+          "speed_m_s": 19.77
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 65.7,
+          "speed_m_s": 19.65
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 58.8,
+          "speed_m_s": 19.53
+        }
+      ]
+    },
+    {
+      "time_s": 1.6,
+      "applied": 1.5996120125055313,
+      "saved_realized": 1.5996120125055313,
+      "replay_realized": 1.5996120125055313,
+      "speed_m_s": 10.733068107973294,
+      "lane": "mlk_on_0",
+      "lane_position_m": 91.40192982714562,
+      "distance_to_lane_end_m": 13.258070172854374,
+      "stopping_distance_m": 12.799861223377047,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 298.4,
+          "speed_m_s": 19.18
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 219.9,
+          "speed_m_s": 18.57
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 211.1,
+          "speed_m_s": 19.34
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 142.1,
+          "speed_m_s": 19.18
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 124.3,
+          "speed_m_s": 19.79
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 67.7,
+          "speed_m_s": 19.65
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 60.7,
+          "speed_m_s": 19.52
+        }
+      ]
+    },
+    {
+      "time_s": 1.7,
+      "applied": 1.5906445533037186,
+      "saved_realized": -0.7595553595063897,
+      "replay_realized": -0.7595553595063897,
+      "speed_m_s": 10.657112572022655,
+      "lane": "mlk_on_0",
+      "lane_position_m": 92.46764108434789,
+      "distance_to_lane_end_m": 12.192358915652107,
+      "stopping_distance_m": 12.619338708084815,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 300.3,
+          "speed_m_s": 19.28
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 221.8,
+          "speed_m_s": 18.59
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 213.0,
+          "speed_m_s": 19.41
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 144.0,
+          "speed_m_s": 19.17
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 126.2,
+          "speed_m_s": 19.81
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 69.7,
+          "speed_m_s": 19.65
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 62.7,
+          "speed_m_s": 19.52
+        }
+      ]
+    },
+    {
+      "time_s": 1.8,
+      "applied": 1.3729161471128464,
+      "saved_realized": -4.499999999999993,
+      "replay_realized": -4.499999999999993,
+      "speed_m_s": 10.207112572022655,
+      "lane": "mlk_on_0",
+      "lane_position_m": 93.48835234155015,
+      "distance_to_lane_end_m": 11.171647658449842,
+      "stopping_distance_m": 11.576127450882549,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 302.3,
+          "speed_m_s": 19.38
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 223.7,
+          "speed_m_s": 18.61
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 215.0,
+          "speed_m_s": 19.48
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 145.9,
+          "speed_m_s": 19.16
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 128.2,
+          "speed_m_s": 19.82
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 71.6,
+          "speed_m_s": 19.66
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 64.6,
+          "speed_m_s": 19.51
+        }
+      ]
+    },
+    {
+      "time_s": 1.9,
+      "applied": 0.678405299782753,
+      "saved_realized": -4.499999999999993,
+      "replay_realized": -4.499999999999993,
+      "speed_m_s": 9.757112572022656,
+      "lane": "mlk_on_0",
+      "lane_position_m": 94.46406359875242,
+      "distance_to_lane_end_m": 10.195936401247579,
+      "stopping_distance_m": 10.577916193680286,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 304.2,
+          "speed_m_s": 19.47
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 225.5,
+          "speed_m_s": 18.63
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 216.9,
+          "speed_m_s": 19.55
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 147.8,
+          "speed_m_s": 19.16
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 130.2,
+          "speed_m_s": 19.84
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 73.6,
+          "speed_m_s": 19.66
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 66.6,
+          "speed_m_s": 19.51
+        }
+      ]
+    },
+    {
+      "time_s": 2.0,
+      "applied": 0.4000963717699051,
+      "saved_realized": -4.499999999999993,
+      "replay_realized": -4.499999999999993,
+      "speed_m_s": 9.307112572022657,
+      "lane": "mlk_on_0",
+      "lane_position_m": 95.39477485595468,
+      "distance_to_lane_end_m": 9.265225144045317,
+      "stopping_distance_m": 9.624704936478022,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 306.2,
+          "speed_m_s": 19.56
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 227.4,
+          "speed_m_s": 18.65
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 218.9,
+          "speed_m_s": 19.62
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 149.8,
+          "speed_m_s": 19.15
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 132.2,
+          "speed_m_s": 19.86
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 75.6,
+          "speed_m_s": 19.66
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 68.5,
+          "speed_m_s": 19.5
+        }
+      ]
+    },
+    {
+      "time_s": 2.1,
+      "applied": 0.32609885185956955,
+      "saved_realized": -4.499999999999975,
+      "replay_realized": -4.499999999999975,
+      "speed_m_s": 8.85711257202266,
+      "lane": "mlk_on_0",
+      "lane_position_m": 96.28048611315694,
+      "distance_to_lane_end_m": 8.379513886843057,
+      "stopping_distance_m": 8.71649367927576,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 308.2,
+          "speed_m_s": 19.66
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 229.2,
+          "speed_m_s": 18.68
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 220.8,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 151.7,
+          "speed_m_s": 19.15
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 134.2,
+          "speed_m_s": 19.87
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 77.5,
+          "speed_m_s": 19.67
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 70.5,
+          "speed_m_s": 19.5
+        }
+      ]
+    },
+    {
+      "time_s": 2.2,
+      "applied": 0.3618277609348297,
+      "saved_realized": -4.499999999999993,
+      "replay_realized": -4.499999999999993,
+      "speed_m_s": 8.40711257202266,
+      "lane": "mlk_on_0",
+      "lane_position_m": 97.12119737035921,
+      "distance_to_lane_end_m": 7.538802629640784,
+      "stopping_distance_m": 7.853282422073495,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 310.1,
+          "speed_m_s": 19.74
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 231.1,
+          "speed_m_s": 18.7
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 222.8,
+          "speed_m_s": 19.75
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 153.6,
+          "speed_m_s": 19.14
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 136.2,
+          "speed_m_s": 19.89
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 79.5,
+          "speed_m_s": 19.67
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 72.4,
+          "speed_m_s": 19.5
+        }
+      ]
+    },
+    {
+      "time_s": 2.3,
+      "applied": 0.4537486732006073,
+      "saved_realized": -4.500000000000002,
+      "replay_realized": -4.500000000000002,
+      "speed_m_s": 7.95711257202266,
+      "lane": "mlk_on_0",
+      "lane_position_m": 97.91690862756148,
+      "distance_to_lane_end_m": 6.7430913724385135,
+      "stopping_distance_m": 7.03507116487123,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 312.1,
+          "speed_m_s": 19.83
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 233.0,
+          "speed_m_s": 18.72
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 224.8,
+          "speed_m_s": 19.81
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 155.5,
+          "speed_m_s": 19.14
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 138.2,
+          "speed_m_s": 19.9
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 81.5,
+          "speed_m_s": 19.67
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 74.4,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.4,
+      "applied": 0.5048861652612686,
+      "saved_realized": -4.500000000000002,
+      "replay_realized": -4.500000000000002,
+      "speed_m_s": 7.50711257202266,
+      "lane": "mlk_on_0",
+      "lane_position_m": 98.66761988476375,
+      "distance_to_lane_end_m": 5.992380115236244,
+      "stopping_distance_m": 6.261859907668963,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 314.1,
+          "speed_m_s": 19.91
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 234.9,
+          "speed_m_s": 18.74
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 226.8,
+          "speed_m_s": 19.87
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 157.4,
+          "speed_m_s": 19.13
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 140.2,
+          "speed_m_s": 19.92
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 83.4,
+          "speed_m_s": 19.67
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 76.3,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.5,
+      "applied": 0.5345606058835983,
+      "saved_realized": -4.500000000000002,
+      "replay_realized": -4.500000000000002,
+      "speed_m_s": 7.0571125720226595,
+      "lane": "mlk_on_0",
+      "lane_position_m": 99.37333114196602,
+      "distance_to_lane_end_m": 5.286668858033977,
+      "stopping_distance_m": 5.533648650466698,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 316.1,
+          "speed_m_s": 19.99
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 236.7,
+          "speed_m_s": 18.76
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 228.8,
+          "speed_m_s": 19.93
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 159.3,
+          "speed_m_s": 19.13
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 142.1,
+          "speed_m_s": 19.93
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 85.4,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 78.3,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.6,
+      "applied": 0.5531595796346664,
+      "saved_realized": -4.500000000000002,
+      "replay_realized": -4.500000000000002,
+      "speed_m_s": 6.607112572022659,
+      "lane": "mlk_on_0",
+      "lane_position_m": 100.03404239916829,
+      "distance_to_lane_end_m": 4.625957600831711,
+      "stopping_distance_m": 4.850437393264431,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 318.1,
+          "speed_m_s": 20.07
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 238.6,
+          "speed_m_s": 18.78
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 230.8,
+          "speed_m_s": 19.99
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 161.2,
+          "speed_m_s": 19.13
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 144.1,
+          "speed_m_s": 19.95
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 87.4,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 80.2,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.7,
+      "applied": 0.5660854130983353,
+      "saved_realized": -4.500000000000002,
+      "replay_realized": -4.500000000000002,
+      "speed_m_s": 6.157112572022659,
+      "lane": "mlk_on_0",
+      "lane_position_m": 100.64975365637055,
+      "distance_to_lane_end_m": 4.010246343629447,
+      "stopping_distance_m": 4.212226136062165,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 320.1,
+          "speed_m_s": 20.15
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 240.5,
+          "speed_m_s": 18.8
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 232.8,
+          "speed_m_s": 20.04
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 163.1,
+          "speed_m_s": 19.12
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 146.1,
+          "speed_m_s": 19.97
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 89.3,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 82.2,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.8,
+      "applied": 0.5760946720838547,
+      "saved_realized": 0.5760946720838511,
+      "replay_realized": 0.5760946720838511,
+      "speed_m_s": 6.214722039231044,
+      "lane": "mlk_on_0",
+      "lane_position_m": 101.27122586029365,
+      "distance_to_lane_end_m": 3.3887741397063422,
+      "stopping_distance_m": 4.291418891656008,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 322.1,
+          "speed_m_s": 20.23
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 242.4,
+          "speed_m_s": 18.83
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 234.8,
+          "speed_m_s": 20.1
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 165.1,
+          "speed_m_s": 19.12
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 148.1,
+          "speed_m_s": 19.98
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 91.3,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 84.1,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.9,
+      "applied": 1.4221866130828857,
+      "saved_realized": 1.4221866130828875,
+      "replay_realized": 1.4221866130828875,
+      "speed_m_s": 6.356940700539333,
+      "lane": "mlk_on_0",
+      "lane_position_m": 101.90691993034758,
+      "distance_to_lane_end_m": 2.7530800696524125,
+      "stopping_distance_m": 4.490077230019278,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 324.2,
+          "speed_m_s": 20.3
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 244.3,
+          "speed_m_s": 18.85
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 236.8,
+          "speed_m_s": 20.15
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 167.0,
+          "speed_m_s": 19.12
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 150.1,
+          "speed_m_s": 19.99
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 93.3,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 86.1,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 3.0,
+      "applied": 1.6329246163368225,
+      "saved_realized": 1.632924616336826,
+      "replay_realized": 1.632924616336826,
+      "speed_m_s": 6.520233162173016,
+      "lane": "mlk_on_0",
+      "lane_position_m": 102.55894324656488,
+      "distance_to_lane_end_m": 2.1010567534351168,
+      "stopping_distance_m": 4.72371560990008,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 326.2,
+          "speed_m_s": 20.37
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 246.2,
+          "speed_m_s": 18.87
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 238.8,
+          "speed_m_s": 20.2
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 168.9,
+          "speed_m_s": 19.11
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 152.1,
+          "speed_m_s": 20.01
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 95.2,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 88.0,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 3.1,
+      "applied": 1.6684010177850723,
+      "saved_realized": 1.6684010177850706,
+      "replay_realized": 1.6684010177850706,
+      "speed_m_s": 6.687073263951523,
+      "lane": "mlk_on_0",
+      "lane_position_m": 103.22765057296003,
+      "distance_to_lane_end_m": 1.4323494270399664,
+      "stopping_distance_m": 4.9685498708283635
+    },
+    {
+      "time_s": 3.2,
+      "applied": 1.6739248037338257,
+      "saved_realized": 1.673924803733824,
+      "replay_realized": 1.673924803733824,
+      "speed_m_s": 6.854465744324905,
+      "lane": "mlk_on_0",
+      "lane_position_m": 103.91309714739252,
+      "distance_to_lane_end_m": 0.7469028526074766,
+      "stopping_distance_m": 5.220411182235953
+    },
+    {
+      "time_s": 3.3,
+      "applied": 1.674832746386528,
+      "saved_realized": 1.6748327463865298,
+      "replay_realized": 1.6748327463865298,
+      "speed_m_s": 7.021949018963558,
+      "lane": "mlk_on_0",
+      "lane_position_m": 104.61529204928888,
+      "distance_to_lane_end_m": 0.04470795071111411,
+      "stopping_distance_m": 5.4786408916581415
+    },
+    {
+      "time_s": 3.4,
+      "applied": 1.6750314980745316,
+      "saved_realized": 1.675031498074535,
+      "replay_realized": 1.675031498074535,
+      "speed_m_s": 7.189452168771012,
+      "lane": ":n1_3_0",
+      "lane_position_m": 0.6742372661659886
+    },
+    {
+      "time_s": 3.5,
+      "applied": 1.785070389509201,
+      "saved_realized": 1.7850703895092046,
+      "replay_realized": 1.7850703895092046,
+      "speed_m_s": 7.367959207721932,
+      "lane": ":n1_3_0",
+      "lane_position_m": 1.4110331869381818
+    },
+    {
+      "time_s": 3.6,
+      "applied": 1.7956427782773972,
+      "saved_realized": 1.7956427782773954,
+      "replay_realized": 1.7956427782773954,
+      "speed_m_s": 7.547523485549672,
+      "lane": ":n1_3_0",
+      "lane_position_m": 2.165785535493149
+    },
+    {
+      "time_s": 3.7,
+      "applied": 1.7965652495622635,
+      "saved_realized": 1.7965652495622653,
+      "replay_realized": 1.7965652495622653,
+      "speed_m_s": 7.727180010505898,
+      "lane": ":n1_3_0",
+      "lane_position_m": 2.938503536543739
+    },
+    {
+      "time_s": 3.8,
+      "applied": 1.7965921759605408,
+      "saved_realized": 1.7965921759605408,
+      "replay_realized": 1.7965921759605408,
+      "speed_m_s": 7.906839228101952,
+      "lane": ":n1_3_0",
+      "lane_position_m": 3.7291874593539345
+    },
+    {
+      "time_s": 3.9,
+      "applied": 1.7965292185544968,
+      "saved_realized": 1.7965292185544879,
+      "replay_realized": 1.7965292185544879,
+      "speed_m_s": 8.086492149957401,
+      "lane": ":n1_3_0",
+      "lane_position_m": 4.537836674349674
+    },
+    {
+      "time_s": 4.0,
+      "applied": 1.7964507639408112,
+      "saved_realized": 1.7964507639408112,
+      "replay_realized": 1.7964507639408112,
+      "speed_m_s": 8.266137226351482,
+      "lane": ":n1_3_0",
+      "lane_position_m": 5.3644503969848225
+    }
+  ],
+  "counterfactual_speed_mode_23": [
+    {
+      "time_s": 0.2,
+      "applied": 1.2049535363912582,
+      "saved_realized": 1.2049535363912511,
+      "replay_realized": 1.2049535363912511,
+      "speed_m_s": 8.435562063168247,
+      "lane": "mlk_on_0",
+      "lane_position_m": 77.8596567403146,
+      "distance_to_lane_end_m": 26.80034325968539,
+      "stopping_distance_m": 7.906523035729259
+    },
+    {
+      "time_s": 0.3,
+      "applied": 1.6032437831163406,
+      "saved_realized": 1.603243783116337,
+      "replay_realized": 1.603243783116337,
+      "speed_m_s": 8.59588644147988,
+      "lane": "mlk_on_0",
+      "lane_position_m": 78.7192453844626,
+      "distance_to_lane_end_m": 25.9407546155374,
+      "stopping_distance_m": 8.209918190535294
+    },
+    {
+      "time_s": 0.4,
+      "applied": 1.6715118885040283,
+      "saved_realized": 1.6715118885040248,
+      "replay_realized": 1.6715118885040248,
+      "speed_m_s": 8.763037630330283,
+      "lane": "mlk_on_0",
+      "lane_position_m": 79.59554914749562,
+      "distance_to_lane_end_m": 25.06445085250438,
+      "stopping_distance_m": 8.53231427895384
+    },
+    {
+      "time_s": 0.5,
+      "applied": 1.6772646456956863,
+      "saved_realized": 1.6772646456956863,
+      "replay_realized": 1.6772646456956863,
+      "speed_m_s": 8.930764094899851,
+      "lane": "mlk_on_0",
+      "lane_position_m": 80.4886255569856,
+      "distance_to_lane_end_m": 24.1713744430144,
+      "stopping_distance_m": 8.862060813194708
+    },
+    {
+      "time_s": 0.6,
+      "applied": 1.6730437874794006,
+      "saved_realized": 1.6730437874793935,
+      "replay_realized": 1.6730437874793935,
+      "speed_m_s": 9.09806847364779,
+      "lane": "mlk_on_0",
+      "lane_position_m": 81.39843240435037,
+      "distance_to_lane_end_m": 23.261567595649623,
+      "stopping_distance_m": 9.197205550131537
+    },
+    {
+      "time_s": 0.7,
+      "applied": 1.6670889854431152,
+      "saved_realized": 1.6670889854431081,
+      "replay_realized": 1.6670889854431081,
+      "speed_m_s": 9.264777372192102,
+      "lane": "mlk_on_0",
+      "lane_position_m": 82.32491014156959,
+      "distance_to_lane_end_m": 22.335089858430408,
+      "stopping_distance_m": 9.537344417364753
+    },
+    {
+      "time_s": 0.8,
+      "applied": 1.6606673300266266,
+      "saved_realized": 1.6606673300266195,
+      "replay_realized": 1.6606673300266195,
+      "speed_m_s": 9.430844105194764,
+      "lane": "mlk_on_0",
+      "lane_position_m": 83.26799455208906,
+      "distance_to_lane_end_m": 21.392005447910933,
+      "stopping_distance_m": 9.882313392942981
+    },
+    {
+      "time_s": 0.9,
+      "applied": 1.6539717614650726,
+      "saved_realized": 1.6539717614650762,
+      "replay_realized": 1.6539717614650762,
+      "speed_m_s": 9.596241281341271,
+      "lane": "mlk_on_0",
+      "lane_position_m": 84.22761868022319,
+      "distance_to_lane_end_m": 20.43238131977681,
+      "stopping_distance_m": 10.231982969968707
+    },
+    {
+      "time_s": 1.0,
+      "applied": 1.6470253318548203,
+      "saved_realized": 1.6470253318548167,
+      "replay_realized": 1.6470253318548167,
+      "speed_m_s": 9.760943814526753,
+      "lane": "mlk_on_0",
+      "lane_position_m": 85.20371306167586,
+      "distance_to_lane_end_m": 19.45628693832414,
+      "stopping_distance_m": 10.58622490559423
+    },
+    {
+      "time_s": 1.1,
+      "applied": 1.639823392033577,
+      "saved_realized": 1.639823392033577,
+      "replay_realized": 1.639823392033577,
+      "speed_m_s": 9.92492615373011,
+      "lane": "mlk_on_0",
+      "lane_position_m": 86.19620567704887,
+      "distance_to_lane_end_m": 18.46379432295113,
+      "stopping_distance_m": 10.944906572999551
+    },
+    {
+      "time_s": 1.2,
+      "applied": 1.6323564499616623,
+      "saved_realized": 1.6323564499616694,
+      "replay_realized": 1.6323564499616694,
+      "speed_m_s": 10.088161798726277,
+      "lane": "mlk_on_0",
+      "lane_position_m": 87.20502185692149,
+      "distance_to_lane_end_m": 17.454978143078506,
+      "stopping_distance_m": 11.30788983080891
+    },
+    {
+      "time_s": 1.3,
+      "applied": 1.6246136575937271,
+      "saved_realized": 1.6246136575937342,
+      "replay_realized": 1.6246136575937342,
+      "speed_m_s": 10.250623164485651,
+      "lane": "mlk_on_0",
+      "lane_position_m": 88.23008417337006,
+      "distance_to_lane_end_m": 16.429915826629937,
+      "stopping_distance_m": 11.675030584476646
+    },
+    {
+      "time_s": 1.4,
+      "applied": 1.6165835857391357,
+      "saved_realized": 1.6165835857391286,
+      "replay_realized": 1.6165835857391286,
+      "speed_m_s": 10.412281523059564,
+      "lane": "mlk_on_0",
+      "lane_position_m": 89.27131232567602,
+      "distance_to_lane_end_m": 15.388687674323975,
+      "stopping_distance_m": 12.0461785017164,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 294.6,
+          "speed_m_s": 18.97
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 216.2,
+          "speed_m_s": 18.53
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 207.2,
+          "speed_m_s": 19.18
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 138.3,
+          "speed_m_s": 19.2
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 120.3,
+          "speed_m_s": 19.76
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 63.8,
+          "speed_m_s": 19.64
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 56.8,
+          "speed_m_s": 19.54
+        }
+      ]
+    },
+    {
+      "time_s": 1.5,
+      "applied": 1.608253836631775,
+      "saved_realized": 1.6082538366317678,
+      "replay_realized": 1.6082538366317678,
+      "speed_m_s": 10.57310690672274,
+      "lane": "mlk_on_0",
+      "lane_position_m": 90.32862301634829,
+      "distance_to_lane_end_m": 14.331376983651708,
+      "stopping_distance_m": 12.42117662899868,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 296.5,
+          "speed_m_s": 19.07
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 218.1,
+          "speed_m_s": 18.55
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 209.1,
+          "speed_m_s": 19.26
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 140.2,
+          "speed_m_s": 19.18
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 122.3,
+          "speed_m_s": 19.77
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 65.7,
+          "speed_m_s": 19.65
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 58.8,
+          "speed_m_s": 19.53
+        }
+      ]
+    },
+    {
+      "time_s": 1.6,
+      "applied": 1.5996120125055313,
+      "saved_realized": 1.5996120125055313,
+      "replay_realized": 1.5996120125055313,
+      "speed_m_s": 10.733068107973294,
+      "lane": "mlk_on_0",
+      "lane_position_m": 91.40192982714562,
+      "distance_to_lane_end_m": 13.258070172854374,
+      "stopping_distance_m": 12.799861223377047,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 298.4,
+          "speed_m_s": 19.18
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 219.9,
+          "speed_m_s": 18.57
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 211.1,
+          "speed_m_s": 19.34
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 142.1,
+          "speed_m_s": 19.18
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 124.3,
+          "speed_m_s": 19.79
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 67.7,
+          "speed_m_s": 19.65
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 60.7,
+          "speed_m_s": 19.52
+        }
+      ]
+    },
+    {
+      "time_s": 1.7,
+      "applied": 1.5906445533037186,
+      "saved_realized": -0.7595553595063897,
+      "replay_realized": 1.590644553303715,
+      "speed_m_s": 10.892132563303665,
+      "lane": "mlk_on_0",
+      "lane_position_m": 92.49114308347599,
+      "distance_to_lane_end_m": 12.168856916524007,
+      "stopping_distance_m": 13.182061308508898,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 300.3,
+          "speed_m_s": 19.28
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 221.8,
+          "speed_m_s": 18.59
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 213.0,
+          "speed_m_s": 19.41
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 144.0,
+          "speed_m_s": 19.17
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 126.2,
+          "speed_m_s": 19.81
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 69.7,
+          "speed_m_s": 19.65
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 62.7,
+          "speed_m_s": 19.52
+        }
+      ]
+    },
+    {
+      "time_s": 1.8,
+      "applied": 1.3729161471128464,
+      "saved_realized": -4.499999999999993,
+      "replay_realized": 1.3729161471128393,
+      "speed_m_s": 11.02942417801495,
+      "lane": "mlk_on_0",
+      "lane_position_m": 93.59408550127749,
+      "distance_to_lane_end_m": 11.065914498722506,
+      "stopping_distance_m": 13.516466410953415,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 302.3,
+          "speed_m_s": 19.38
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 223.7,
+          "speed_m_s": 18.61
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 215.0,
+          "speed_m_s": 19.48
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 145.9,
+          "speed_m_s": 19.16
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 128.2,
+          "speed_m_s": 19.82
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 71.6,
+          "speed_m_s": 19.66
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 64.6,
+          "speed_m_s": 19.51
+        }
+      ]
+    },
+    {
+      "time_s": 1.9,
+      "applied": 0.678405299782753,
+      "saved_realized": -4.499999999999993,
+      "replay_realized": 0.6784052997827494,
+      "speed_m_s": 11.097264707993224,
+      "lane": "mlk_on_0",
+      "lane_position_m": 94.7038119720768,
+      "distance_to_lane_end_m": 9.95618802792319,
+      "stopping_distance_m": 13.683253777696882,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 304.2,
+          "speed_m_s": 19.47
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 225.5,
+          "speed_m_s": 18.63
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 216.9,
+          "speed_m_s": 19.55
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 147.8,
+          "speed_m_s": 19.16
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 130.2,
+          "speed_m_s": 19.84
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 73.6,
+          "speed_m_s": 19.66
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 66.6,
+          "speed_m_s": 19.51
+        }
+      ]
+    },
+    {
+      "time_s": 2.0,
+      "applied": 0.4000963717699051,
+      "saved_realized": -4.499999999999993,
+      "replay_realized": 0.400096371769898,
+      "speed_m_s": 11.137274345170214,
+      "lane": "mlk_on_0",
+      "lane_position_m": 95.81753940659382,
+      "distance_to_lane_end_m": 8.842460593406173,
+      "stopping_distance_m": 13.782097759954068,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 306.2,
+          "speed_m_s": 19.56
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 227.4,
+          "speed_m_s": 18.65
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 218.9,
+          "speed_m_s": 19.62
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 149.8,
+          "speed_m_s": 19.15
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 132.2,
+          "speed_m_s": 19.86
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 75.6,
+          "speed_m_s": 19.66
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 68.5,
+          "speed_m_s": 19.5
+        }
+      ]
+    },
+    {
+      "time_s": 2.1,
+      "applied": 0.32609885185956955,
+      "saved_realized": -4.499999999999975,
+      "replay_realized": 0.3260988518595731,
+      "speed_m_s": 11.169884230356171,
+      "lane": "mlk_on_0",
+      "lane_position_m": 96.93452782962945,
+      "distance_to_lane_end_m": 7.725472170370551,
+      "stopping_distance_m": 13.862923746617719,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 308.2,
+          "speed_m_s": 19.66
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 229.2,
+          "speed_m_s": 18.68
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 220.8,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 151.7,
+          "speed_m_s": 19.15
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 134.2,
+          "speed_m_s": 19.87
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 77.5,
+          "speed_m_s": 19.67
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 70.5,
+          "speed_m_s": 19.5
+        }
+      ]
+    },
+    {
+      "time_s": 2.2,
+      "applied": 0.3618277609348297,
+      "saved_realized": -4.499999999999993,
+      "replay_realized": 0.3618277609348297,
+      "speed_m_s": 11.206067006449654,
+      "lane": "mlk_on_0",
+      "lane_position_m": 98.05513453027442,
+      "distance_to_lane_end_m": 6.604865469725581,
+      "stopping_distance_m": 13.952881972559945,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 310.1,
+          "speed_m_s": 19.74
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 231.1,
+          "speed_m_s": 18.7
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 222.8,
+          "speed_m_s": 19.75
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 153.6,
+          "speed_m_s": 19.14
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 136.2,
+          "speed_m_s": 19.89
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 79.5,
+          "speed_m_s": 19.67
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 72.4,
+          "speed_m_s": 19.5
+        }
+      ]
+    },
+    {
+      "time_s": 2.3,
+      "applied": 0.4537486732006073,
+      "saved_realized": -4.500000000000002,
+      "replay_realized": 0.4537486732006002,
+      "speed_m_s": 11.251441873769714,
+      "lane": "mlk_on_0",
+      "lane_position_m": 99.18027871765139,
+      "distance_to_lane_end_m": 5.479721282348606,
+      "stopping_distance_m": 14.066104915424283,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 312.1,
+          "speed_m_s": 19.83
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 233.0,
+          "speed_m_s": 18.72
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 224.8,
+          "speed_m_s": 19.81
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 155.5,
+          "speed_m_s": 19.14
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 138.2,
+          "speed_m_s": 19.9
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 81.5,
+          "speed_m_s": 19.67
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 74.4,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.4,
+      "applied": 0.5048861652612686,
+      "saved_realized": -4.500000000000002,
+      "replay_realized": 0.5048861652612757,
+      "speed_m_s": 11.301930490295842,
+      "lane": "mlk_on_0",
+      "lane_position_m": 100.31047176668098,
+      "distance_to_lane_end_m": 4.34952823331902,
+      "stopping_distance_m": 14.192625867497645,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 314.1,
+          "speed_m_s": 19.91
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 234.9,
+          "speed_m_s": 18.74
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 226.8,
+          "speed_m_s": 19.87
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 157.4,
+          "speed_m_s": 19.13
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 140.2,
+          "speed_m_s": 19.92
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 83.4,
+          "speed_m_s": 19.67
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 76.3,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.5,
+      "applied": 0.5345606058835983,
+      "saved_realized": -4.500000000000002,
+      "replay_realized": 0.5345606058835983,
+      "speed_m_s": 11.355386550884202,
+      "lane": "mlk_on_0",
+      "lane_position_m": 101.4460104217694,
+      "distance_to_lane_end_m": 3.2139895782305956,
+      "stopping_distance_m": 14.327200413333534,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 316.1,
+          "speed_m_s": 19.99
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 236.7,
+          "speed_m_s": 18.76
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 228.8,
+          "speed_m_s": 19.93
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 159.3,
+          "speed_m_s": 19.13
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 142.1,
+          "speed_m_s": 19.93
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 85.4,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 78.3,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.6,
+      "applied": 0.5531595796346664,
+      "saved_realized": -4.500000000000002,
+      "replay_realized": 0.55315957963467,
+      "speed_m_s": 11.410702508847669,
+      "lane": "mlk_on_0",
+      "lane_position_m": 102.58708067265417,
+      "distance_to_lane_end_m": 2.0729193273458293,
+      "stopping_distance_m": 14.467125749491386,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 318.1,
+          "speed_m_s": 20.07
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 238.6,
+          "speed_m_s": 18.78
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 230.8,
+          "speed_m_s": 19.99
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 161.2,
+          "speed_m_s": 19.13
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 144.1,
+          "speed_m_s": 19.95
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 87.4,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 80.2,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.7,
+      "applied": 0.5660854130983353,
+      "saved_realized": -4.500000000000002,
+      "replay_realized": 0.5660854130983317,
+      "speed_m_s": 11.467311050157502,
+      "lane": "mlk_on_0",
+      "lane_position_m": 103.73381177766991,
+      "distance_to_lane_end_m": 0.926188222330083,
+      "stopping_distance_m": 14.611024746784928,
+      "next_links": [
+        {
+          "to_lane": "sb2_0",
+          "via": ":n1_3_0",
+          "has_priority": false,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "m",
+          "direction": "s",
+          "link_length_m": 15.65
+        },
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 320.1,
+          "speed_m_s": 20.15
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 240.5,
+          "speed_m_s": 18.8
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 232.8,
+          "speed_m_s": 20.04
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 163.1,
+          "speed_m_s": 19.12
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 146.1,
+          "speed_m_s": 19.97
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 89.3,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 82.2,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.8,
+      "applied": 0.5760946720838547,
+      "saved_realized": 0.5760946720838511,
+      "replay_realized": 0.5760946720838511,
+      "speed_m_s": 11.524920517365887,
+      "lane": ":n1_3_0",
+      "lane_position_m": 0.22630382940650406,
+      "next_links": [
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        },
+        {
+          "to_lane": "sb4_0",
+          "via": ":n3_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 8.0
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 322.1,
+          "speed_m_s": 20.23
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 242.4,
+          "speed_m_s": 18.83
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 234.8,
+          "speed_m_s": 20.1
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 165.1,
+          "speed_m_s": 19.12
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 148.1,
+          "speed_m_s": 19.98
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 91.3,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 84.1,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 2.9,
+      "applied": 1.4221866130828857,
+      "saved_realized": 1.4221866130828875,
+      "replay_realized": 1.4221866130828786,
+      "speed_m_s": 11.667139178674175,
+      "lane": ":n1_3_0",
+      "lane_position_m": 1.3930177472739216,
+      "next_links": [
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        },
+        {
+          "to_lane": "sb4_0",
+          "via": ":n3_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 8.0
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 324.2,
+          "speed_m_s": 20.3
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 244.3,
+          "speed_m_s": 18.85
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 236.8,
+          "speed_m_s": 20.15
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 167.0,
+          "speed_m_s": 19.12
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 150.1,
+          "speed_m_s": 19.99
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 93.3,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 86.1,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 3.0,
+      "applied": 1.6329246163368225,
+      "saved_realized": 1.632924616336826,
+      "replay_realized": 1.632924616336826,
+      "speed_m_s": 11.830431640307857,
+      "lane": ":n1_3_0",
+      "lane_position_m": 2.5760609113047073,
+      "next_links": [
+        {
+          "to_lane": "sb3_0",
+          "via": ":n2_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 0.1
+        },
+        {
+          "to_lane": "sb4_0",
+          "via": ":n3_0_0",
+          "has_priority": true,
+          "is_open": true,
+          "has_approaching_foe": false,
+          "state": "M",
+          "direction": "s",
+          "link_length_m": 8.0
+        }
+      ],
+      "junction_foes": [],
+      "leader": null,
+      "sb1_vehicles": [
+        {
+          "id": "main_6",
+          "lane": "sb1_1",
+          "pos_m": 326.2,
+          "speed_m_s": 20.37
+        },
+        {
+          "id": "main_4",
+          "lane": "sb1_1",
+          "pos_m": 246.2,
+          "speed_m_s": 18.87
+        },
+        {
+          "id": "main_5",
+          "lane": "sb1_2",
+          "pos_m": 238.8,
+          "speed_m_s": 20.2
+        },
+        {
+          "id": "main_2",
+          "lane": "sb1_1",
+          "pos_m": 168.9,
+          "speed_m_s": 19.11
+        },
+        {
+          "id": "main_3",
+          "lane": "sb1_2",
+          "pos_m": 152.1,
+          "speed_m_s": 20.01
+        },
+        {
+          "id": "main_0",
+          "lane": "sb1_1",
+          "pos_m": 95.2,
+          "speed_m_s": 19.68
+        },
+        {
+          "id": "main_1",
+          "lane": "sb1_2",
+          "pos_m": 88.0,
+          "speed_m_s": 19.49
+        }
+      ]
+    },
+    {
+      "time_s": 3.1,
+      "applied": 1.6684010177850723,
+      "saved_realized": 1.6684010177850706,
+      "replay_realized": 1.6684010177850794,
+      "speed_m_s": 11.997271742086365,
+      "lane": ":n1_3_0",
+      "lane_position_m": 3.775788085513344
+    },
+    {
+      "time_s": 3.2,
+      "applied": 1.6739248037338257,
+      "saved_realized": 1.673924803733824,
+      "replay_realized": 1.6739248037338328,
+      "speed_m_s": 12.164664222459749,
+      "lane": ":n1_3_0",
+      "lane_position_m": 4.992254507759319
+    },
+    {
+      "time_s": 3.3,
+      "applied": 1.674832746386528,
+      "saved_realized": 1.6748327463865298,
+      "replay_realized": 1.674832746386521,
+      "speed_m_s": 12.3321474970984,
+      "lane": ":n1_3_0",
+      "lane_position_m": 6.225469257469159
+    },
+    {
+      "time_s": 3.4,
+      "applied": 1.6750314980745316,
+      "saved_realized": 1.675031498074535,
+      "replay_realized": 1.675031498074535,
+      "speed_m_s": 12.499650646905854,
+      "lane": ":n1_3_0",
+      "lane_position_m": 7.475434322159745
+    },
+    {
+      "time_s": 3.5,
+      "applied": 1.785070389509201,
+      "saved_realized": 1.7850703895092046,
+      "replay_realized": 1.7850703895092046,
+      "speed_m_s": 12.678157685856775,
+      "lane": ":n1_3_0",
+      "lane_position_m": 8.743250090745423
+    },
+    {
+      "time_s": 3.6,
+      "applied": 1.7956427782773972,
+      "saved_realized": 1.7956427782773954,
+      "replay_realized": 1.7956427782774043,
+      "speed_m_s": 12.857721963684515,
+      "lane": ":n1_3_0",
+      "lane_position_m": 10.029022287113875
+    },
+    {
+      "time_s": 3.7,
+      "applied": 1.7965652495622635,
+      "saved_realized": 1.7965652495622653,
+      "replay_realized": 1.7965652495622564,
+      "speed_m_s": 13.03737848864074,
+      "lane": ":n1_3_0",
+      "lane_position_m": 11.33276013597795
+    },
+    {
+      "time_s": 3.8,
+      "applied": 1.7965921759605408,
+      "saved_realized": 1.7965921759605408,
+      "replay_realized": 1.7965921759605408,
+      "speed_m_s": 13.217037706236795,
+      "lane": ":n1_3_0",
+      "lane_position_m": 12.65446390660163
+    },
+    {
+      "time_s": 3.9,
+      "applied": 1.7965292185544968,
+      "saved_realized": 1.7965292185544879,
+      "replay_realized": 1.7965292185544968,
+      "speed_m_s": 13.396690628092244,
+      "lane": ":n1_3_0",
+      "lane_position_m": 13.994132969410854
+    },
+    {
+      "time_s": 4.0,
+      "applied": 1.7964507639408112,
+      "saved_realized": 1.7964507639408112,
+      "replay_realized": 1.7964507639408112,
+      "speed_m_s": 13.576335704486326,
+      "lane": ":n1_3_0",
+      "lane_position_m": 15.351766539859486
+    }
+  ],
+  "limitation": "Open-loop replay of saved commands; counterfactual mode is diagnostic only."
+}

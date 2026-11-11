@@ -829,3 +829,16 @@ fleet maximum comes from SUMO's own unattributed maximum braking on on-ramp
 at most 8.46 m/s3. The uncommitted Nov 10 "continuity v05" draft is absorbed as
 starting material (no training authorized). No simulation, training or
 promotion. [Diagnosis](highway-jerk-diagnosis-v05.md). Guide sync pending.
+
+
+## November 11, 2026 - v05: native ramp braking explained
+
+The 50.76 m/s3 peak comes from SUMO's minor-link approach rule at junction `n1`.
+A ramp car on a yield (`m`) link must stay able to stop at the stop line until
+it is within 4.5 m visibility, even with an open link and no conflicting car.
+A bounded open-loop replay reproduces the saved run exactly (39/39 steps).
+Clearing only the right-of-way speed-mode bit removes the braking. All six
+ramp networks in the v05 bank share this junction design (10/20 v04 training
+rows). Network, actor-guard and metric-attribution options are listed for
+decision; none implemented. No policy, training or promotion.
+[Explanation](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026).

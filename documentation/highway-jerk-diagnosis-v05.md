@@ -75,9 +75,70 @@ with input trace hashes per case. Tests:
 - The startup handoff needs a defined policy: either a ramped first command or a
   gate that measures jerk only after the first controlled decision. Either
   choice changes the acceptance rule, so it needs the user's agreement first.
-- The unattributed native braking on `mlk_on_0` needs its own investigation
-  (likely an internal SUMO junction/foe or safe-speed rule) before it is treated
-  as a policy failure.
+- The unattributed native braking on `mlk_on_0` is explained below: it is a SUMO
+  junction rule, not a policy failure.
+
+## Native braking on `mlk_on_0` explained (November 11, 2026)
+
+**Cause:** SUMO's approach rule for a non-priority junction link. In the saved
+network, ramp `mlk_on_0` (104.66 m) ends at priority junction `n1` and enters
+`sb2_0` through connection `:n1_3_0` with link state `m` (minor, must yield).
+SUMO requires a car on a minor link to stay able to stop at the stop line until
+it is within the link's visibility distance (default 4.5 m; the networks set no
+`visibility` attribute). This holds even when the link is open and no conflicting
+car exists.
+
+**Evidence:** a bounded, headless, open-loop SUMO 1.27.1 replay
+([`scripts/replay_highway_flow_rl_v05_native_braking.py`](../scripts/replay_highway_flow_rl_v05_native_braking.py))
+fed the saved applied accelerations back into the saved network/routes with
+seed 8400004. No policy, training or reward was involved.
+
+- The replay reproduces the saved realized acceleration exactly at all 39
+  steps up to the first lane request (|difference| <= 0.001 m/s2).
+- From 1.4 to 3.0 s the link is open (`isOpen=True`, `hasFoe=False`), there are
+  no junction foes, and no highway car is in `sb1_0`, the only conflicting lane.
+  Every main-road car is in `sb1_1` or `sb1_2`.
+- Braking starts at 1.7 s, the first step where the car's stopping distance at
+  4.5 m/s2 (12.62 m) exceeds its distance to the stop line (12.19 m). SUMO then
+  holds maximum normal braking (-4.5 m/s2), keeping stopping distance just above
+  the remaining distance.
+- Braking ends at 2.8 s, when the remaining distance (3.39 m) first falls inside
+  the 4.5 m visibility distance. The full request returns in one step, giving
+  the 50.76 m/s3 peak.
+- **Counterfactual:** with only speed-mode bit 3 (right of way at junctions)
+  cleared (mode 23 instead of 31), the same commands produce no braking at all.
+  The car enters the junction at 11.5 m/s instead of 6.2 m/s. This mode was
+  used only for diagnosis, never for control.
+
+Evidence: [native-braking-replay.json](evidence/highway-jerk-diagnosis-v05/native-braking-replay.json)
+(SHA-256 `93d81c299964d77aad5d2ff11d5811b2763e83bd935378beeeeb26a0037b0bbb`).
+Test: [`tests/test_highway_flow_rl_v05_native_braking_replay.py`](../tests/test_highway_flow_rl_v05_native_braking_replay.py).
+
+```text
+python scripts/replay_highway_flow_rl_v05_native_braking.py --episode outputs/highway-flow-rl/v04/long-round-03/final-validation/case-04/episode-8400004-67e660a5 --seed 8400004 --output outputs/highway-flow-rl/v05/native-braking-01/replay.json
+```
+
+**Scope:** all six ramp networks in `outputs/highway-environment/v05/network-bank/`
+(train 2/3/4/5-lane, validation 2/4-lane) join the ramp through the same `m`
+connection with default visibility. Those networks supply 10 of the 20 v04
+training rows. Any ramp car that reaches the last ~13 m of the ramp faster than
+it could stop there gets this braking. The actor's analytical guards and
+masks do not model the rule, which is why the trace logged it as
+`native_realization_unattributed`. Not checked here: the I-110 `candidate`
+network, and the 0.3 s braking of I-110 cars `agent_2`/`agent_5`, which ran with
+a `following` bound active and may be a different mechanism.
+
+**Options for the user to decide on** (none implemented; each changes the
+environment or the actor contract):
+
+1. Change the network so ramp cars can see the junction earlier: a larger
+   connection `visibility`, or a zipper/acceleration-lane merge instead of a
+   priority junction. This changes the training/evaluation networks.
+2. Give the actor the rule: add a minor-link approach bound to the analytical
+   guards/mask, so the policy learns to arrive slowly enough and brakes smoothly.
+3. Keep the network and gates, but attribute this event to the native junction
+   rule in the jerk and intervention metrics, so it is not counted as a policy
+   comfort failure.
 
 ## Draft material absorbed into v05
 
