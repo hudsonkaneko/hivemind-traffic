@@ -1,0 +1,762 @@
+{
+  "schema": "highway_flow_rl_v05_jerk_diagnosis",
+  "training": false,
+  "simulation_run": false,
+  "source_run": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v04/long-round-03",
+  "summary": {
+    "jerk_limit_m_s3": 5.0,
+    "peak_samples": 26,
+    "failing_car_count": 16,
+    "failing_only_at_startup": 11,
+    "failing_with_policy_owned_peak": 3,
+    "failing_with_native_or_override_peak": 3,
+    "peaks_by_cause": {
+      "startup": 16,
+      "safety_override": 4,
+      "policy_request": 3,
+      "lane_change": 2,
+      "override_release": 1
+    },
+    "max_abs_jerk_by_cause": {
+      "startup": 12.109468877315521,
+      "policy_request": 8.460919409990364,
+      "lane_change": 8.36825966835022,
+      "safety_override": 37.40444640493603,
+      "override_release": 50.760946720838525
+    },
+    "failing_cars": [
+      {
+        "case_id": "v02-development-train-2-lane-ramp120-merge",
+        "agent": "agent_0",
+        "peaks": 6,
+        "max_abs_jerk_m_s3": 50.760946720838525,
+        "causes": {
+          "startup": 1,
+          "safety_override": 2,
+          "override_release": 1,
+          "policy_request": 1,
+          "lane_change": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-merge",
+        "agent": "agent_2",
+        "peaks": 2,
+        "max_abs_jerk_m_s3": 13.339847712514086,
+        "causes": {
+          "startup": 1,
+          "safety_override": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-merge",
+        "agent": "agent_0",
+        "peaks": 3,
+        "max_abs_jerk_m_s3": 12.109468877315521,
+        "causes": {
+          "startup": 1,
+          "policy_request": 1,
+          "lane_change": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-merge",
+        "agent": "agent_5",
+        "peaks": 2,
+        "max_abs_jerk_m_s3": 12.068794213728395,
+        "causes": {
+          "startup": 1,
+          "safety_override": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-merge",
+        "agent": "agent_6",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 11.165669560432434,
+        "causes": {
+          "startup": 1
+        }
+      },
+      {
+        "case_id": "v02-development-60mph-cruise",
+        "agent": "agent_6",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 9.952054172754288,
+        "causes": {
+          "startup": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-merge",
+        "agent": "agent_3",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 8.680729120969843,
+        "causes": {
+          "startup": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "agent": "agent_4",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 8.190788775682378,
+        "causes": {
+          "startup": 1
+        }
+      },
+      {
+        "case_id": "v02-development-60mph-cruise",
+        "agent": "agent_7",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 8.148971498012614,
+        "causes": {
+          "startup": 1
+        }
+      },
+      {
+        "case_id": "v02-development-60mph-cruise",
+        "agent": "agent_2",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 8.129326850176,
+        "causes": {
+          "startup": 1
+        }
+      },
+      {
+        "case_id": "v05-val-0-passing",
+        "agent": "agent_0",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 7.105716913938487,
+        "causes": {
+          "startup": 1
+        }
+      },
+      {
+        "case_id": "v02-development-60mph-cruise",
+        "agent": "agent_0",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 6.557927429675914,
+        "causes": {
+          "startup": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "agent": "agent_5",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 5.946093797683716,
+        "causes": {
+          "startup": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "agent": "agent_2",
+        "peaks": 2,
+        "max_abs_jerk_m_s3": 5.928320437669754,
+        "causes": {
+          "startup": 1,
+          "policy_request": 1
+        }
+      },
+      {
+        "case_id": "v02-development-60mph-cruise",
+        "agent": "agent_4",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 5.836801677942205,
+        "causes": {
+          "startup": 1
+        }
+      },
+      {
+        "case_id": "v05-val-0-cruise",
+        "agent": "agent_0",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 5.6852273643016815,
+        "causes": {
+          "startup": 1
+        }
+      }
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "v05-validation-i110-merge",
+      "seed": 6900019,
+      "trace": "final-validation/case-00/episode-6900019-925e47f9/actions.jsonl.gz",
+      "trace_sha256": "63433d7467c244a46e7adfe9e376c84faba58f52e89759a0a7682b188d7228f6",
+      "decisions": 428,
+      "cars": {
+        "agent_0": {
+          "samples": 371,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 12.109468877315521,
+              "cause": "startup",
+              "requested": 1.2109468877315521,
+              "previous_requested": null,
+              "realized": 1.2109468877315521,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 3.8,
+              "jerk_m_s3": -6.997103542089533,
+              "cause": "policy_request",
+              "requested": 1.0612977147102356,
+              "previous_requested": 1.7610080689191818,
+              "realized": 1.061297714710232,
+              "previous_realized": 1.7610080689191854,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 13.5,
+              "jerk_m_s3": 8.36825966835022,
+              "cause": "lane_change",
+              "requested": 0.7620636820793152,
+              "previous_requested": -0.07476228475570679,
+              "realized": 0.7620636820793081,
+              "previous_realized": -0.07476228475571389,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            }
+          ]
+        },
+        "agent_1": {
+          "samples": 359,
+          "peaks": []
+        },
+        "agent_2": {
+          "samples": 343,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 9.846167564392161,
+              "cause": "startup",
+              "requested": 0.984616756439209,
+              "previous_requested": null,
+              "realized": 0.9846167564392161,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            },
+            {
+              "time_s": 0.3,
+              "jerk_m_s3": -13.339847712514086,
+              "cause": "safety_override",
+              "requested": 0.42406803369522095,
+              "previous_requested": 0.984616756439209,
+              "realized": -0.3493680148121925,
+              "previous_realized": 0.9846167564392161,
+              "override_causes": [
+                "native_realization_unattributed"
+              ],
+              "native_cause": "unattributed",
+              "active_bound": "following",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_3": {
+          "samples": 316,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 8.680729120969843,
+              "cause": "startup",
+              "requested": 0.8680729120969772,
+              "previous_requested": null,
+              "realized": 0.8680729120969843,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_4": {
+          "samples": 427,
+          "peaks": []
+        },
+        "agent_5": {
+          "samples": 396,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 5.442632138729131,
+              "cause": "startup",
+              "requested": 0.5442632138729095,
+              "previous_requested": null,
+              "realized": 0.5442632138729131,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            },
+            {
+              "time_s": 0.3,
+              "jerk_m_s3": -12.068794213728395,
+              "cause": "safety_override",
+              "requested": -0.12946471571922302,
+              "previous_requested": 0.5442632138729095,
+              "realized": -0.6626162074999264,
+              "previous_realized": 0.5442632138729131,
+              "override_causes": [
+                "native_realization_unattributed"
+              ],
+              "native_cause": "unattributed",
+              "active_bound": "following",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_6": {
+          "samples": 302,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 11.165669560432434,
+              "cause": "startup",
+              "requested": 1.1165669560432434,
+              "previous_requested": null,
+              "realized": 1.1165669560432434,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_7": {
+          "samples": 411,
+          "peaks": []
+        }
+      }
+    },
+    {
+      "case_id": "v05-val-0-cruise",
+      "seed": 6900000,
+      "trace": "final-validation/case-01/episode-6900000-8247ac8d/actions.jsonl.gz",
+      "trace_sha256": "dce036d431d5647419a8fc27d66558d43f02285bc09cc91c68247bd3ae7f0644",
+      "decisions": 1556,
+      "cars": {
+        "agent_0": {
+          "samples": 1555,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 5.6852273643016815,
+              "cause": "startup",
+              "requested": 0.5685227364301682,
+              "previous_requested": null,
+              "realized": 0.5685227364301682,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "v05-val-0-passing",
+      "seed": 6900002,
+      "trace": "final-validation/case-02/episode-6900002-1dceeff0/actions.jsonl.gz",
+      "trace_sha256": "2617b27de73a911fef207b1eacbd2f45088719e55f82c758997b713b4bb33efb",
+      "decisions": 1746,
+      "cars": {
+        "agent_0": {
+          "samples": 1745,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 7.105716913938487,
+              "cause": "startup",
+              "requested": 0.7105716913938522,
+              "previous_requested": null,
+              "realized": 0.7105716913938487,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "v05-validation-i110-following",
+      "seed": 6900017,
+      "trace": "final-validation/case-03/episode-6900017-7d5b620c/actions.jsonl.gz",
+      "trace_sha256": "84061af5d321db5b48f7f980576886ee73dfd5916740865a53a03ce46c12a17a",
+      "decisions": 412,
+      "cars": {
+        "agent_0": {
+          "samples": 364,
+          "peaks": []
+        },
+        "agent_1": {
+          "samples": 326,
+          "peaks": []
+        },
+        "agent_2": {
+          "samples": 357,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 5.928320437669754,
+              "cause": "startup",
+              "requested": 0.5928320437669754,
+              "previous_requested": null,
+              "realized": 0.5928320437669754,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            },
+            {
+              "time_s": 33.1,
+              "jerk_m_s3": 5.327692031860387,
+              "cause": "policy_request",
+              "requested": 0.487375870347023,
+              "previous_requested": -0.045393332839012146,
+              "realized": 0.48737587034702656,
+              "previous_realized": -0.045393332839012146,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_3": {
+          "samples": 397,
+          "peaks": []
+        },
+        "agent_4": {
+          "samples": 389,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 8.190788775682378,
+              "cause": "startup",
+              "requested": 0.8190788775682449,
+              "previous_requested": null,
+              "realized": 0.8190788775682378,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_5": {
+          "samples": 359,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 5.946093797683716,
+              "cause": "startup",
+              "requested": 0.5946093797683716,
+              "previous_requested": null,
+              "realized": 0.5946093797683716,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_6": {
+          "samples": 411,
+          "peaks": []
+        },
+        "agent_7": {
+          "samples": 306,
+          "peaks": []
+        }
+      }
+    },
+    {
+      "case_id": "v02-development-train-2-lane-ramp120-merge",
+      "seed": 8400004,
+      "trace": "final-validation/case-04/episode-8400004-67e660a5/actions.jsonl.gz",
+      "trace_sha256": "100b81b25d75abc11a2be67d738c24ba9a98d1bfd05e804e01946a600841b991",
+      "decisions": 831,
+      "cars": {
+        "agent_0": {
+          "samples": 830,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 12.049535363912511,
+              "cause": "startup",
+              "requested": 1.2049535363912582,
+              "previous_requested": null,
+              "realized": 1.2049535363912511,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 1.7,
+              "jerk_m_s3": -23.59167372011921,
+              "cause": "safety_override",
+              "requested": 1.5906445533037186,
+              "previous_requested": 1.5996120125055313,
+              "realized": -0.7595553595063897,
+              "previous_realized": 1.5996120125055313,
+              "override_causes": [
+                "native_realization_unattributed"
+              ],
+              "native_cause": "unattributed",
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 1.8,
+              "jerk_m_s3": -37.40444640493603,
+              "cause": "safety_override",
+              "requested": 1.3729161471128464,
+              "previous_requested": 1.5906445533037186,
+              "realized": -4.499999999999993,
+              "previous_realized": -0.7595553595063897,
+              "override_causes": [
+                "native_realization_unattributed"
+              ],
+              "native_cause": "unattributed",
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 2.8,
+              "jerk_m_s3": 50.760946720838525,
+              "cause": "override_release",
+              "requested": 0.5760946720838547,
+              "previous_requested": 0.5660854130983353,
+              "realized": 0.5760946720838511,
+              "previous_realized": -4.500000000000002,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 2.9,
+              "jerk_m_s3": 8.460919409990364,
+              "cause": "policy_request",
+              "requested": 1.4221866130828857,
+              "previous_requested": 0.5760946720838547,
+              "realized": 1.4221866130828875,
+              "previous_realized": 0.5760946720838511,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 12.5,
+              "jerk_m_s3": 8.01576212048527,
+              "cause": "lane_change",
+              "requested": 1.4806883782148361,
+              "previous_requested": 0.6791121661663055,
+              "realized": 1.4806883782148361,
+              "previous_realized": 0.6791121661663091,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "v02-development-60mph-cruise",
+      "seed": 8400005,
+      "trace": "final-validation/case-05/episode-8400005-05b57732/actions.jsonl.gz",
+      "trace_sha256": "5d49c0d98a58d0b0a6459dbc7477495004e084b161a5d42b4ec7aa9507a59ada",
+      "decisions": 901,
+      "cars": {
+        "agent_0": {
+          "samples": 872,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 6.557927429675914,
+              "cause": "startup",
+              "requested": 0.6557927429676056,
+              "previous_requested": null,
+              "realized": 0.6557927429675914,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_1": {
+          "samples": 900,
+          "peaks": []
+        },
+        "agent_2": {
+          "samples": 884,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 8.129326850176,
+              "cause": "startup",
+              "requested": 0.8129326850175858,
+              "previous_requested": null,
+              "realized": 0.8129326850176,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_3": {
+          "samples": 877,
+          "peaks": []
+        },
+        "agent_4": {
+          "samples": 856,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 5.836801677942205,
+              "cause": "startup",
+              "requested": 0.5836801677942276,
+              "previous_requested": null,
+              "realized": 0.5836801677942205,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_5": {
+          "samples": 889,
+          "peaks": []
+        },
+        "agent_6": {
+          "samples": 855,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 9.952054172754288,
+              "cause": "startup",
+              "requested": 0.9952054172754288,
+              "previous_requested": null,
+              "realized": 0.9952054172754288,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_7": {
+          "samples": 855,
+          "peaks": [
+            {
+              "time_s": 0.2,
+              "jerk_m_s3": 8.148971498012614,
+              "cause": "startup",
+              "requested": 0.8148971498012543,
+              "previous_requested": null,
+              "realized": 0.8148971498012614,
+              "previous_realized": null,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "limitation": "Descriptive attribution on saved trajectories; not a causal or counterfactual claim."
+}

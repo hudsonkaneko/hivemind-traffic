@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** inspect remaining jerk peaks and the specific failed following/cruise cars using saved traces before more training or integration. [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
+**Next action:** agree how the jerk gate treats the startup handoff, and investigate SUMO's unattributed braking on `mlk_on_0`, before more training. [V05 jerk diagnosis](highway-jerk-diagnosis-v05.md) (November 11): 11/16 failing cars exceed 5 m/s3 only at startup; the 50.76 m/s3 maximum is native braking and its release, not the actor. Previous v04 terminal context: [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -650,3 +650,13 @@ checkpoint metrics/checksums and confirmed the best full checkpoint matches its
 retained candidate. No automatic acceptance, deployment or further training.
 [Terminal evidence](highway-merge-rewards-v04.md#completed-long-run---november-10-2026).
 Next: saved-trace comfort/failure diagnosis. Guide sync pending.
+
+
+### v43 - November 11: v05 peak-jerk diagnosis from saved traces
+
+New step, handled November 11. Startup handoff explains 11/16 jerk-failing cars;
+the 50.76 m/s3 maximum is unattributed native SUMO braking and release on
+`mlk_on_0`, not the actor. Policy-owned peaks are at most 8.46 m/s3. A request
+rate limiter alone cannot clear the gate. No simulation or training.
+[Diagnosis](highway-jerk-diagnosis-v05.md). Next: agree on the startup jerk
+rule and investigate the native braking. Guide sync pending.

@@ -1231,3 +1231,15 @@ overrides 0.42%, I-110 focal overrides/stopped time both zero, stable merges
 jerk; the retained best candidate (update 1078) passes 1/6. Final and best
 actors/checkpoints, raw metrics and source hashes preserved; no promotion,
 held-out test or additional training. [Results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026). Guide sync pending.
+
+
+## November 11, 2026 - v05 step: peak-jerk diagnosis (saved traces only)
+
+New step on branch `highway-jerk-diagnosis-v05`. Labeled all 26 samples above
+5 m/s3 in the v04 final-validation traces. 11 of 16 failing cars exceed the
+limit only on their first controlled decision (startup handoff). The 50.76 m/s3
+fleet maximum comes from SUMO's own unattributed maximum braking on on-ramp
+`mlk_on_0` and its release, not from the actor's request. Policy-owned peaks are
+at most 8.46 m/s3. The uncommitted Nov 10 "continuity v05" draft is absorbed as
+starting material (no training authorized). No simulation, training or
+promotion. [Diagnosis](highway-jerk-diagnosis-v05.md). Guide sync pending.

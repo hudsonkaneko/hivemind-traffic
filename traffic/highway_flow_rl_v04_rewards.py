@@ -51,7 +51,7 @@ def maneuver_gap_evidence(speed, neighbors, duration=3.1):
     return result
 
 
-def gap_plan(state, context):
+def gap_plan(state, context, *, previous_plan=None, switch_margin=.10):
     """Score the current slot and moving behind/ahead of an observed neighbor.
 
     Outer neighbors of alternative slots are unknown: these slots only shape
@@ -112,7 +112,18 @@ def gap_plan(state, context):
                 candidates.append((cost, horizon, name, target, ahead, behind, outer_unknown, deficit))
     if not candidates:
         return dict(known=False, required=True, potential=0., reason='no_reachable_speed_candidate')
-    cost,horizon,name,target,ahead,behind,unknown,deficit = min(candidates,key=lambda c:(c[0],c[1],c[2],-c[3]))
+    selected = min(candidates,key=lambda c:(c[0],c[1],c[2],-c[3]))
+    # Opt-in v05 reward-target hysteresis. Legacy callers retain exactly the
+    # original candidate choice; this never grants permission to change lanes.
+    if previous_plan and previous_plan.get('known') and previous_plan.get('required'):
+        previous_key = (previous_plan.get('slot'), previous_plan.get('front_id'), previous_plan.get('rear_id'))
+        retained = [c for c in candidates if c[7] <= 1e-8 and
+                    (c[2], c[4]['id'] if c[4] else None, c[5]['id'] if c[5] else None) == previous_key]
+        if retained:
+            alternative = min(retained,key=lambda c:(c[0],c[1],c[2],-c[3]))
+            if alternative[0] <= selected[0] + switch_margin:
+                selected = alternative
+    cost,horizon,name,target,ahead,behind,unknown,deficit = selected
     # Readiness uses present gaps for the selected slot, not the optimized future
     # score alone. A future solution must still be approached to earn shaping.
     error = abs(speed-target)/max(5.,limit)

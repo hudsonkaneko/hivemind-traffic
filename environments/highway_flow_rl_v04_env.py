@@ -56,7 +56,7 @@ class HighwayFlowRLV04Env(HighwayFlowRLEnv):
             kinds = {r['lane_id']: self.graph.identity(r['lane_id']).get('kind')
                      for r in context['corridors'].values() if r.get('lane_id')}
             preview = map_evidence(self.graph, state)
-            target, plan = merge_speed_target(state, context, preview)
+            target, plan = self._reward_target(agent, state, context, preview)
             detours = {str(d): optional_detour_evidence(state, context, d, kinds,
                        lane_change_duration=self.lane_change_duration) for d in (-1, 1)}
             self._v02_pre_action[agent] = dict(time_s=self.time,
@@ -65,6 +65,15 @@ class HighwayFlowRLV04Env(HighwayFlowRLEnv):
                 ego_state=deepcopy(state), context=deepcopy(context), lane_kinds=kinds,
                 maneuver_gap_checks={label: maneuver_gap_evidence(state['speed'],self._context(agent)['neighbors'][label]) for label in ('left','right')})
         return super().step(actions)
+
+    def _reward_target(self, agent, state, context, preview):
+        return merge_speed_target(state, context, preview)
+
+    def _successor_plan(self, agent, state):
+        return gap_plan(state, flow_context(self.graph,state,self.states)) if state else dict(potential=0.)
+
+    def _acceptance_target(self, agent, snapshot):
+        return snapshot['target']
 
     def _update_merge_metrics(self, agents, infos, rewards, terminated, truncated):
         super()._update_merge_metrics(agents, infos, rewards, terminated, truncated)
@@ -75,16 +84,17 @@ class HighwayFlowRLV04Env(HighwayFlowRLEnv):
             state = self.states.get(agent)
             next_speed = state['speed'] if state else None
             weights = self.v04_reward_weights
-            successor = gap_plan(state, flow_context(self.graph,state,self.states)) if state else dict(potential=0.)
+            successor = self._successor_plan(agent, state)
             gap_reward = shaping_reward(snapshot['gap_plan'], successor,
                 terminated=terminated[agent], weight=weights['gap_preparation']) if agent in self.merge_agents else 0.
             target = snapshot['target']
+            acceptance_target = self._acceptance_target(agent, snapshot)
             context = self._context(agent) if state else None
             neighbor_ids = {n['id'] for neighbors in context['neighbors'].values() for n in neighbors.values() if n} if context else set()
             neighbor_accel = min((self.states[n]['acceleration'] for n in neighbor_ids if n in self.states), default=None)
             sample = dict(time_s=self.time, stopped=next_speed is not None and next_speed < .1,
                 jerk=info['realized_jerk_m_s3'], override=info['override'], neighbor_acceleration=neighbor_accel,
-                speed_match=bool(next_speed is not None and target['eligible'] and abs(next_speed-target['target_m_s'])<=2.))
+                speed_match=bool(next_speed is not None and acceptance_target['eligible'] and abs(next_speed-acceptance_target['target_m_s'])<=2.))
             history = self.quality_history.setdefault(agent,[])
             history.append(sample)
             tracker = self.merge_trackers.get(agent)
@@ -113,7 +123,7 @@ class HighwayFlowRLV04Env(HighwayFlowRLEnv):
             info['reward_terms'].update(terms)
             for name, value in terms.items():
                 self.stats['reward_terms'][name] = self.stats['reward_terms'].get(name, 0.) + value
-            diagnosis = self.braking_diagnostic.observe(agent, snapshot['time_s'], snapshot['target'],
+            diagnosis = self.braking_diagnostic.observe(agent, snapshot['time_s'], acceptance_target,
                 snapshot['ego_state']['speed'], info['requested_acceleration'], info['feasible_acceleration_ceiling'])
             info.update(objective_version=REWARD_VERSION, v04_reward_audit=dict(
                 pre_action=deepcopy(snapshot), measured_speed_m_s=next_speed, detour_event=event,
