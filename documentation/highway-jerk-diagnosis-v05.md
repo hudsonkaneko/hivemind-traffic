@@ -316,3 +316,66 @@ Not demonstrated, and probably not reliably yet.
 A proper answer needs a held-out geometry bank with those merge types. It
 should be built and frozen before any tuning, then the frozen actor evaluated
 on it, after the startup-jerk rule and the merge-quality gate are settled.
+
+## Held-out merge geometry bank (November 11, 2026)
+
+**Purpose:** answer whether the policy works on highway and merge designs it
+has never seen. Until now there was no held-out *geometry*, only held-out
+demand seeds on training roads. This bank is built once and frozen. Use it only
+for frozen-actor evaluation; never tune rewards, gates or training data on its
+results.
+
+Builder: [`scripts/build_highway_flow_rl_v05_heldout_bank.py`](../scripts/build_highway_flow_rl_v05_heldout_bank.py).
+Frozen bank: `outputs/highway-flow-rl/v05/heldout-bank-01/`, with a manifest copy at
+[heldout-bank-01.json](evidence/highway-jerk-diagnosis-v05/heldout-bank-01.json)
+(SHA-256 `224e3e3cd56a953cd07637cc61450e30449eb361d013cad384544a5adc40d781`),
+which records every network hash. All layouts use the realistic ramp-started
+design: the ramp becomes the acceleration lane, joins with priority and has a
+parallel final approach.
+
+```text
+python -m scripts.build_highway_flow_rl_v05_heldout_bank --output outputs/highway-flow-rl/v05/heldout-bank-01
+```
+
+Trained family, for comparison: 2-5 through lanes, 3.2 m lanes, 50-60 mph,
+30 mph ramp, ramp start 120-240 m upstream, acceleration lane ending at n3
+(~800 m), bend <= 30 m, uniform segments.
+
+| Layout | What is new | Lanes | Road / ramp speed | Ramp length | Acceleration lane |
+| --- | --- | ---: | --- | ---: | --- |
+| `heldout-short-accel-3lane` | Short 180 m acceleration lane | 3 | 55 / 30 mph | 168 m | sb2 only |
+| `heldout-long-accel-2lane` | Long acceleration lane to n4 (~1,260 m) | 2 | 50 / 30 mph | 159 m | sb2-sb4 |
+| `heldout-6lane` | Six through lanes | 6 | 60 / 30 mph | 206 m | sb2-sb3 |
+| `heldout-tight-curve-3lane` | Merge on a strong curve (150 m bend) | 3 | 55 / 30 mph | 168 m | sb2-sb3 |
+| `heldout-45mph-4lane` | Slower road and ramp | 4 | 45 / 25 mph | 150 m | sb2-sb3 |
+| `heldout-wide-lanes-2lane` | 3.65 m (US-standard) lanes | 2 | 55 / 30 mph | 168 m | sb2-sb3 |
+| `heldout-short-ramp-4lane` | Short ramp, 60 m upstream | 4 | 60 / 30 mph | 85 m | sb2-sb3 |
+| `heldout-fast-ramp-3lane` | Long 45 mph ramp, 300 m upstream | 3 | 55 / 45 mph | 303 m | sb2-sb3 |
+
+**Structural checks** (all eight pass): the ramp link is priority (`M`) with no
+foes; the auxiliary lane is fed only by the ramp and spans exactly the declared
+edges; every through lane continues; lane widths match; and the ramp connector
+speed is at least the ramp speed limit, so there is no hidden corner braking.
+netconvert reported no warnings.
+
+**Environment compatibility smoke** (no policy loaded): every layout was loaded
+into the v04 flow-RL environment with a single-AV merge row, reset (demand,
+lane identities, speed limits), and driven for 60 s by SUMO itself (native
+handoff, no commands applied). All eight reset and ran without errors, with
+zero collisions and teleports, and SUMO merged the car on each. This shows the
+environment can represent the layouts; it says nothing about the trained
+policy. Script: [`scripts/smoke_highway_flow_rl_v05_heldout_bank.py`](../scripts/smoke_highway_flow_rl_v05_heldout_bank.py).
+Evidence: [heldout-bank-01-smoke.json](evidence/highway-jerk-diagnosis-v05/heldout-bank-01-smoke.json)
+(SHA-256 `96ca759ae9a2df1f4156781072a5b04a26b8c729f30feda586e4693e34c2e341`).
+Tests: [`tests/test_highway_flow_rl_v05_heldout_bank.py`](../tests/test_highway_flow_rl_v05_heldout_bank.py).
+
+**Not representable without environment changes** (listed in the builder,
+deliberately not approximated): left-side entries; ramps with no acceleration
+lane; mainline lane drops; weaving sections with an exit; consecutive ramps;
+loop ramps. These are common real designs, so a policy that passes this bank
+still would not be shown to handle all highway merges.
+
+**Not done:** the trained policy has not been evaluated on this bank. That
+evaluation is a one-time held-out measurement. It is most informative after the
+startup-jerk rule and merge-quality gate are settled, since results must not
+feed back into tuning.

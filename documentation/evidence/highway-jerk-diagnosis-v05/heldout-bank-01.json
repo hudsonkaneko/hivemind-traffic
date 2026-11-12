@@ -1,0 +1,595 @@
+{
+  "builder_sha256": "a2db000000a583c27cbd674a9687c742f8b656bb296f48cbd9056108ee54a47c",
+  "discipline": "Frozen-actor evaluation only; never tune rewards, gates or training data on these results",
+  "frozen": true,
+  "geometry_version": "highway_heldout_merge_designs_v05",
+  "layouts": [
+    {
+      "compiled_checks": {
+        "auxiliary_edges": [
+          "sb2"
+        ],
+        "lane_widths_m": [
+          3.2
+        ],
+        "passed": true,
+        "ramp_connector_speed_m_s": 19.0,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "0000",
+        "ramp_request_response": "0000",
+        "ramp_speed_limit_m_s": 13.4112,
+        "sb1_lane_count": 3,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      "compiled_ramp_length_m": 168.12,
+      "description": "Short 180 m acceleration lane (aux lane ends at n2)",
+      "id": "heldout-short-accel-3lane",
+      "network_sha256": "09b48deaa6c89541c92e77a8571aa7e9e6358689d160af1621157180be3cf9ce",
+      "options": {
+        "aux_end": 2,
+        "lanes": 3,
+        "ramp_upstream": 160.0,
+        "segments": [
+          400,
+          180,
+          520,
+          450,
+          450
+        ],
+        "speed_mph": 55
+      },
+      "placement": {
+        "aux_lane_end_node": "n2",
+        "parallel_approach_m": 55.0,
+        "road_tangent_at_n1": [
+          0.0,
+          -1.0
+        ],
+        "segment_lengths_m": [
+          400,
+          180,
+          520,
+          450,
+          450
+        ]
+      }
+    },
+    {
+      "compiled_checks": {
+        "auxiliary_edges": [
+          "sb2",
+          "sb3",
+          "sb4"
+        ],
+        "lane_widths_m": [
+          3.2
+        ],
+        "passed": true,
+        "ramp_connector_speed_m_s": 17.88,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "000",
+        "ramp_request_response": "000",
+        "ramp_speed_limit_m_s": 13.4112,
+        "sb1_lane_count": 2,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "compiled_ramp_length_m": 159.07,
+      "description": "Long acceleration lane continuing to n4 (~1250 m)",
+      "id": "heldout-long-accel-2lane",
+      "network_sha256": "7793289aa7785bfac88bd9ce86b6bfddfccac2ea732044fac460b8fb99d4e5ff",
+      "options": {
+        "aux_end": 4,
+        "lanes": 2,
+        "ramp_upstream": 150.0,
+        "segments": [
+          400,
+          420,
+          420,
+          420,
+          400
+        ],
+        "speed_mph": 50
+      },
+      "placement": {
+        "aux_lane_end_node": "n4",
+        "parallel_approach_m": 55.0,
+        "road_tangent_at_n1": [
+          0.0,
+          -1.0
+        ],
+        "segment_lengths_m": [
+          400,
+          420,
+          420,
+          420,
+          400
+        ]
+      }
+    },
+    {
+      "compiled_checks": {
+        "auxiliary_edges": [
+          "sb2",
+          "sb3"
+        ],
+        "lane_widths_m": [
+          3.2
+        ],
+        "passed": true,
+        "ramp_connector_speed_m_s": 20.12,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "0000000",
+        "ramp_request_response": "0000000",
+        "ramp_speed_limit_m_s": 13.4112,
+        "sb1_lane_count": 6,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            5
+          ],
+          [
+            5,
+            6
+          ]
+        ]
+      },
+      "compiled_ramp_length_m": 205.53,
+      "description": "Six through lanes (trained maximum is five)",
+      "id": "heldout-6lane",
+      "network_sha256": "ed8a709c2289824b69867d13591113334ef9c847ed13b7a6a98d7c616ff3d9b6",
+      "options": {
+        "aux_end": 3,
+        "lanes": 6,
+        "ramp_upstream": 200.0,
+        "segments": [
+          420,
+          420,
+          420,
+          420,
+          420
+        ],
+        "speed_mph": 60
+      },
+      "placement": {
+        "aux_lane_end_node": "n3",
+        "parallel_approach_m": 55.0,
+        "road_tangent_at_n1": [
+          0.0,
+          -1.0
+        ],
+        "segment_lengths_m": [
+          420,
+          420,
+          420,
+          420,
+          420
+        ]
+      }
+    },
+    {
+      "compiled_checks": {
+        "auxiliary_edges": [
+          "sb2",
+          "sb3"
+        ],
+        "lane_widths_m": [
+          3.2
+        ],
+        "passed": true,
+        "ramp_connector_speed_m_s": 19.0,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "0000",
+        "ramp_request_response": "0000",
+        "ramp_speed_limit_m_s": 13.4112,
+        "sb1_lane_count": 3,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      "compiled_ramp_length_m": 168.06,
+      "description": "Merge on a strong curve (150 m lateral bend vs <= 30 m trained)",
+      "id": "heldout-tight-curve-3lane",
+      "network_sha256": "057e55d34849e71ae18882b84e0afcf1d1e168cfef38a4df924c3ec497870d2e",
+      "options": {
+        "aux_end": 3,
+        "bend": 150.0,
+        "lanes": 3,
+        "ramp_upstream": 160.0,
+        "segments": [
+          420,
+          420,
+          420,
+          420,
+          420
+        ],
+        "speed_mph": 55
+      },
+      "placement": {
+        "aux_lane_end_node": "n3",
+        "parallel_approach_m": 55.0,
+        "road_tangent_at_n1": [
+          0.17862332937029807,
+          -0.9839175301846542
+        ],
+        "segment_lengths_m": [
+          420,
+          420,
+          420,
+          420,
+          420
+        ]
+      }
+    },
+    {
+      "compiled_checks": {
+        "auxiliary_edges": [
+          "sb2",
+          "sb3"
+        ],
+        "lane_widths_m": [
+          3.2
+        ],
+        "passed": true,
+        "ramp_connector_speed_m_s": 15.65,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "00000",
+        "ramp_request_response": "00000",
+        "ramp_speed_limit_m_s": 11.176,
+        "sb1_lane_count": 4,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "compiled_ramp_length_m": 150.22,
+      "description": "Slower 45 mph road with a 25 mph ramp",
+      "id": "heldout-45mph-4lane",
+      "network_sha256": "7b9c22715c968385c34963a2e301c5bd7ad4bf3049942c4dfe95593a9c7d00ce",
+      "options": {
+        "aux_end": 3,
+        "lanes": 4,
+        "ramp_speed_mph": 25,
+        "ramp_upstream": 140.0,
+        "segments": [
+          400,
+          400,
+          400,
+          400,
+          400
+        ],
+        "speed_mph": 45
+      },
+      "placement": {
+        "aux_lane_end_node": "n3",
+        "parallel_approach_m": 55.0,
+        "road_tangent_at_n1": [
+          0.0,
+          -1.0
+        ],
+        "segment_lengths_m": [
+          400,
+          400,
+          400,
+          400,
+          400
+        ]
+      }
+    },
+    {
+      "compiled_checks": {
+        "auxiliary_edges": [
+          "sb2",
+          "sb3"
+        ],
+        "lane_widths_m": [
+          3.65
+        ],
+        "passed": true,
+        "ramp_connector_speed_m_s": 19.0,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "000",
+        "ramp_request_response": "000",
+        "ramp_speed_limit_m_s": 13.4112,
+        "sb1_lane_count": 2,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "compiled_ramp_length_m": 168.11,
+      "description": "US-standard 3.65 m lanes (trained 3.2 m)",
+      "id": "heldout-wide-lanes-2lane",
+      "network_sha256": "ea4f962259a9b5c9ffc3dab6a0246ff13c104d4022ec0d4c3d32c62cdf252849",
+      "options": {
+        "aux_end": 3,
+        "lane_width": 3.65,
+        "lanes": 2,
+        "ramp_upstream": 160.0,
+        "segments": [
+          400,
+          400,
+          400,
+          400,
+          400
+        ],
+        "speed_mph": 55
+      },
+      "placement": {
+        "aux_lane_end_node": "n3",
+        "parallel_approach_m": 55.0,
+        "road_tangent_at_n1": [
+          0.0,
+          -1.0
+        ],
+        "segment_lengths_m": [
+          400,
+          400,
+          400,
+          400,
+          400
+        ]
+      }
+    },
+    {
+      "compiled_checks": {
+        "auxiliary_edges": [
+          "sb2",
+          "sb3"
+        ],
+        "lane_widths_m": [
+          3.2
+        ],
+        "passed": true,
+        "ramp_connector_speed_m_s": 20.12,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "00000",
+        "ramp_request_response": "00000",
+        "ramp_speed_limit_m_s": 13.4112,
+        "sb1_lane_count": 4,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "compiled_ramp_length_m": 84.97,
+      "description": "Short 60 m-upstream ramp with a brief parallel approach",
+      "id": "heldout-short-ramp-4lane",
+      "network_sha256": "26be0257cfacd312442b5c0a97647b8ceb805c725a42ba3bb219fae81569615e",
+      "options": {
+        "aux_end": 3,
+        "lanes": 4,
+        "ramp_upstream": 60.0,
+        "segments": [
+          420,
+          420,
+          420,
+          420,
+          420
+        ],
+        "speed_mph": 60
+      },
+      "placement": {
+        "aux_lane_end_node": "n3",
+        "parallel_approach_m": 31.0,
+        "road_tangent_at_n1": [
+          0.0,
+          -1.0
+        ],
+        "segment_lengths_m": [
+          420,
+          420,
+          420,
+          420,
+          420
+        ]
+      }
+    },
+    {
+      "compiled_checks": {
+        "auxiliary_edges": [
+          "sb2",
+          "sb3"
+        ],
+        "lane_widths_m": [
+          3.2
+        ],
+        "passed": true,
+        "ramp_connector_speed_m_s": 22.36,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "0000",
+        "ramp_request_response": "0000",
+        "ramp_speed_limit_m_s": 20.1168,
+        "sb1_lane_count": 3,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      "compiled_ramp_length_m": 302.67,
+      "description": "Long 45 mph ramp (300 m upstream) onto a 55 mph road",
+      "id": "heldout-fast-ramp-3lane",
+      "network_sha256": "1b54b1a306871c5b3e103b50ce2a65f32d9ac2c5f26a9fd1ba1a975553c0713a",
+      "options": {
+        "aux_end": 3,
+        "lanes": 3,
+        "ramp_speed_mph": 45,
+        "ramp_upstream": 300.0,
+        "segments": [
+          500,
+          420,
+          420,
+          420,
+          420
+        ],
+        "speed_mph": 55
+      },
+      "placement": {
+        "aux_lane_end_node": "n3",
+        "parallel_approach_m": 55.0,
+        "road_tangent_at_n1": [
+          0.0,
+          -1.0
+        ],
+        "segment_lengths_m": [
+          500,
+          420,
+          420,
+          420,
+          420
+        ]
+      }
+    }
+  ],
+  "netconvert_version": "Eclipse SUMO netconvert 1.27.1",
+  "split": "held_out_geometry",
+  "traffic_run": false,
+  "trained_family": {
+    "aux_lane_ends": "n3",
+    "lane_width_m": 3.2,
+    "max_abs_bend_m": 30,
+    "ramp_speed_mph": 30,
+    "ramp_upstream_m": [
+      120,
+      180,
+      240
+    ],
+    "segments": "uniform",
+    "speed_limit_mph": [
+      50,
+      55,
+      60
+    ],
+    "through_lanes": [
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "training": false,
+  "unsupported_designs": {
+    "consecutive_ramps": "Environment supports a single mlk_on ramp",
+    "left_side_entry": "Lane identity counts auxiliary lanes from the right edge only",
+    "loop_ramp": "Not representable by the single straight-to-parallel ramp shape",
+    "mainline_lane_drop": "Demand requires the same through-lane count on sb1..sb5",
+    "no_acceleration_lane": "Ramp joining a through lane directly needs a different merge-completion rule",
+    "weaving_with_exit": "Fixed main/ramp routes have no exit edge"
+  }
+}

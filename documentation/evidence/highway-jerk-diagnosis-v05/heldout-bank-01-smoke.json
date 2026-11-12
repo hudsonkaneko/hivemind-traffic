@@ -1,0 +1,81 @@
+{
+  "schema": "highway_flow_rl_v05_heldout_smoke",
+  "policy_loaded": false,
+  "actions": "native SUMO driving (no commands applied)",
+  "bank_sha256": "224e3e3cd56a953cd07637cc61450e30449eb361d013cad384544a5adc40d781",
+  "steps_limit": 600,
+  "results": [
+    {
+      "id": "heldout-short-accel-3lane",
+      "ok": true,
+      "steps": 600,
+      "merged_native": true,
+      "collisions": 0,
+      "teleports": 0,
+      "seconds": 3.3
+    },
+    {
+      "id": "heldout-long-accel-2lane",
+      "ok": true,
+      "steps": 600,
+      "merged_native": true,
+      "collisions": 0,
+      "teleports": 0,
+      "seconds": 3.4
+    },
+    {
+      "id": "heldout-6lane",
+      "ok": true,
+      "steps": 600,
+      "merged_native": true,
+      "collisions": 0,
+      "teleports": 0,
+      "seconds": 3.8
+    },
+    {
+      "id": "heldout-tight-curve-3lane",
+      "ok": true,
+      "steps": 600,
+      "merged_native": true,
+      "collisions": 0,
+      "teleports": 0,
+      "seconds": 3.4
+    },
+    {
+      "id": "heldout-45mph-4lane",
+      "ok": true,
+      "steps": 600,
+      "merged_native": true,
+      "collisions": 0,
+      "teleports": 0,
+      "seconds": 3.5
+    },
+    {
+      "id": "heldout-wide-lanes-2lane",
+      "ok": true,
+      "steps": 600,
+      "merged_native": true,
+      "collisions": 0,
+      "teleports": 0,
+      "seconds": 3.5
+    },
+    {
+      "id": "heldout-short-ramp-4lane",
+      "ok": true,
+      "steps": 600,
+      "merged_native": true,
+      "collisions": 0,
+      "teleports": 0,
+      "seconds": 3.6
+    },
+    {
+      "id": "heldout-fast-ramp-3lane",
+      "ok": true,
+      "steps": 600,
+      "merged_native": true,
+      "collisions": 0,
+      "teleports": 0,
+      "seconds": 3.4
+    }
+  ]
+}

@@ -1282,3 +1282,16 @@ There were zero collisions, and every case merged. Gates still fail on startup
 jerk and merge quality (46% vs 90%). Generalization to other merge designs is
 not demonstrated; no held-out geometry exists yet. A stale draft ledger
 segment was reconciled conservatively. [Details](highway-jerk-diagnosis-v05.md#frozen-actor-on-ramp-started-networks-november-11-2026).
+
+
+## November 11, 2026 - v05: held-out merge geometry bank
+
+Built and froze the project's first held-out *geometry* bank (earlier
+held-out rows only changed demand seeds). It has eight ramp-started merge
+layouts outside the trained family: a short 180 m and a long ~1,260 m
+acceleration lane, six lanes, a strong curve, a 45 mph road, 3.65 m lanes, a
+short ramp, and a long 45 mph ramp. All pass structural checks, and all run in
+the environment with native SUMO driving (no policy). Left entries, no
+acceleration lane, lane drops, weaving, consecutive ramps and loop ramps need
+environment changes and are listed, not faked. The policy has not been
+evaluated on the bank yet. [Details](highway-jerk-diagnosis-v05.md#held-out-merge-geometry-bank-november-11-2026).

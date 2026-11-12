@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** decide how the jerk gate treats the startup handoff and how to improve merge quality (46% vs 90% target-speed agreement), then build a frozen held-out geometry bank of other merge designs before more training. [Ramp-started network results](highway-jerk-diagnosis-v05.md#frozen-actor-on-ramp-started-networks-november-11-2026): 0% overrides, ~12 m/s3 peak (startup only) on all six layouts. The `mlk_on_0` braking is [explained](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026). [V05 jerk diagnosis](highway-jerk-diagnosis-v05.md) (November 11): 11/16 failing cars exceed 5 m/s3 only at startup; the 50.76 m/s3 maximum is native braking and its release, not the actor. Previous v04 terminal context: [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
+**Next action:** decide how the jerk gate treats the startup handoff and how to improve merge quality (46% vs 90% target-speed agreement), then run the frozen actor once on the [held-out merge geometry bank](highway-jerk-diagnosis-v05.md#held-out-merge-geometry-bank-november-11-2026) (built and frozen Nov 11) before more training. [Ramp-started network results](highway-jerk-diagnosis-v05.md#frozen-actor-on-ramp-started-networks-november-11-2026): 0% overrides, ~12 m/s3 peak (startup only) on all six layouts. The `mlk_on_0` braking is [explained](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026). [V05 jerk diagnosis](highway-jerk-diagnosis-v05.md) (November 11): 11/16 failing cars exceed 5 m/s3 only at startup; the 50.76 m/s3 maximum is native braking and its release, not the actor. Previous v04 terminal context: [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -690,3 +690,12 @@ cases merged with no collisions, but the gates still fail (startup jerk,
 merge quality 46%). Generalization to other merge designs is not
 demonstrated: held-out rows are seeds, not geometry. No training.
 [Details](highway-jerk-diagnosis-v05.md#frozen-actor-on-ramp-started-networks-november-11-2026).
+
+### v47 - November 11: held-out merge geometry bank
+
+The project's first held-out geometry: eight frozen ramp-started merge layouts
+outside the trained family (short and long acceleration lanes, six lanes,
+strong curve, 45 mph, wide lanes, short ramp, fast ramp). Structural checks
+pass, and the environment runs all of them natively without the policy.
+Unsupported real designs are listed. The policy has not been evaluated; do
+not tune on this bank. [Details](highway-jerk-diagnosis-v05.md#held-out-merge-geometry-bank-november-11-2026).
