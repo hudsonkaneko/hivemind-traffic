@@ -1,0 +1,190 @@
+{
+  "geometry_version": "highway_ramp_started_acceleration_lane_v05",
+  "historical_bank_unchanged": true,
+  "layouts": [
+    {
+      "checks": {
+        "passed": true,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "000",
+        "ramp_request_response": "000",
+        "sb1_lane_count": 2,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "id": "train-2-lane-ramp120",
+      "network_sha256": "822946635b994fec0ab0c2621d07ec6c8425b85c2e3f4377709232677f45ca38",
+      "split": "train"
+    },
+    {
+      "checks": {
+        "passed": true,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "0000",
+        "ramp_request_response": "0000",
+        "sb1_lane_count": 3,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ]
+        ]
+      },
+      "id": "train-3-lane-ramp240",
+      "network_sha256": "f91c8c1a70abe04244b1ba5003ed7c4bc7e34411fbeb2932d61ae7b2b5f77cb1",
+      "split": "train"
+    },
+    {
+      "checks": {
+        "passed": true,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "00000",
+        "ramp_request_response": "00000",
+        "sb1_lane_count": 4,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "id": "train-4-lane-ramp120",
+      "network_sha256": "8fd3f3ac2684cfff805f5afd6e8e4b0d5ea0f1a952f135236716db5aec22e212",
+      "split": "train"
+    },
+    {
+      "checks": {
+        "passed": true,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "000000",
+        "ramp_request_response": "000000",
+        "sb1_lane_count": 5,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ],
+          [
+            4,
+            5
+          ]
+        ]
+      },
+      "id": "train-5-lane-ramp240",
+      "network_sha256": "16b28ca4e9334fb00f7da085b9e6ad65abec2dd28be57ed17c5aca4536ee08be",
+      "split": "train"
+    },
+    {
+      "checks": {
+        "passed": true,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "000",
+        "ramp_request_response": "000",
+        "sb1_lane_count": 2,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ]
+        ]
+      },
+      "id": "validation-2-lane-ramp180",
+      "network_sha256": "e7256933461c62825619ce5c41acfe491d36a47a48478f1bf77efe61af5e70aa",
+      "split": "validation"
+    },
+    {
+      "checks": {
+        "passed": true,
+        "ramp_link_state": "M",
+        "ramp_request_foes": "00000",
+        "ramp_request_response": "00000",
+        "sb1_lane_count": 4,
+        "sb2_0_feeders": [
+          "mlk_on"
+        ],
+        "through_connections": [
+          [
+            0,
+            1
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            3,
+            4
+          ]
+        ]
+      },
+      "id": "validation-4-lane-ramp180",
+      "network_sha256": "2d512cd3797ba38a519fda43260638b08d4a158568957892d511a4a49b25002a",
+      "split": "validation"
+    }
+  ],
+  "traffic_run": false,
+  "training": false
+}

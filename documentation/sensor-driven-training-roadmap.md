@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** decide how the jerk gate treats the startup handoff, and choose how to handle SUMO's minor-link ramp braking (network visibility/merge design, an actor guard, or metric attribution), before more training. The `mlk_on_0` braking is [explained](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026). [V05 jerk diagnosis](highway-jerk-diagnosis-v05.md) (November 11): 11/16 failing cars exceed 5 m/s3 only at startup; the 50.76 m/s3 maximum is native braking and its release, not the actor. Previous v04 terminal context: [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
+**Next action:** decide how the jerk gate treats the startup handoff, and integrate the [ramp-started acceleration-lane networks](highway-jerk-diagnosis-v05.md#corrected-ramp-networks-acceleration-lane-starts-at-the-ramp-november-11-2026) (sb1 lane-ID shift) for a closed-loop frozen-actor check, before more training. The `mlk_on_0` braking is [explained](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026). [V05 jerk diagnosis](highway-jerk-diagnosis-v05.md) (November 11): 11/16 failing cars exceed 5 m/s3 only at startup; the 50.76 m/s3 maximum is native braking and its release, not the actor. Previous v04 terminal context: [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -669,3 +669,13 @@ car present. Exact open-loop replay (39/39 steps). Clearing only the
 right-of-way bit removes it. Shared by all six ramp networks in the v05 bank.
 Options are recorded for decision; nothing implemented, no training.
 [Explanation](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026).
+
+### v45 - November 11: ramp-started acceleration lane networks
+
+User decision: ramp cars should merge from an acceleration lane that the ramp
+itself becomes, not yield at the gore. Built corrected copies of all six ramp
+networks with a parallel final approach; the ramp link is priority with no
+foes. Replay of the saved commands: no SUMO braking (lowest 0.0 m/s2, was
+-4.5). Only the ramp legal speed cap remains, an open-loop artifact. No
+closed-loop run or training; needs sb1 lane-ID integration first.
+[Details](highway-jerk-diagnosis-v05.md#corrected-ramp-networks-acceleration-lane-starts-at-the-ramp-november-11-2026).

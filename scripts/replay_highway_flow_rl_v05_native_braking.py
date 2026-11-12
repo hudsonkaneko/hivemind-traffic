@@ -15,6 +15,8 @@ import gzip
 import json
 import os
 from pathlib import Path
+from uuid import uuid4
+import xml.etree.ElementTree as ET
 
 import traci
 
@@ -52,9 +54,27 @@ def junction_state(conn, agent):
                 leader=dict(id=leader[0], gap_m=round(leader[1], 2)) if leader else None)
 
 
-def replay(episode, journal, agent, seed, speed_mode, window):
-    label = f'replay-{speed_mode}'
-    traci.start([sumo_binary(), '-n', str(episode / 'network.net.xml'), '-r', str(episode / 'routes.rou.xml'),
+def shifted_routes(source, destination, shift):
+    """Copy saved routes, moving mainline departures by ``shift`` lane indices.
+
+    Used with the ramp-started v05 networks, whose sb1 has no auxiliary lane:
+    historical sb1 lane k is lane k-1 there (shift=-1). Ramp departures stay.
+    """
+    tree = ET.parse(source)
+    for vehicle in tree.getroot().iter('vehicle'):
+        if vehicle.get('route') == 'main':
+            lane = int(vehicle.get('departLane')) + shift
+            if lane < 0:
+                raise ValueError('Mainline departure would leave the road')
+            vehicle.set('departLane', str(lane))
+    tree.write(destination, encoding='utf-8', xml_declaration=True)
+    return destination
+
+
+def replay(episode, journal, agent, seed, speed_mode, window, network=None, routes=None):
+    label = f'replay-{speed_mode}-{uuid4().hex[:8]}'
+    traci.start([sumo_binary(), '-n', str(network or episode / 'network.net.xml'),
+                 '-r', str(routes or episode / 'routes.rou.xml'),
                  '--seed', str(seed), '--step-length', str(DT), '--lanechange.duration', '3.0',
                  '--collision.action', 'warn', '--collision.check-junctions', 'true',
                  '--time-to-teleport', '-1', '--no-step-log', 'true', '--duration-log.disable', 'true',
@@ -105,15 +125,30 @@ def main(argv=None):
     parser.add_argument('--seed', type=int, required=True)
     parser.add_argument('--window', type=float, nargs=2, default=(1.4, 3.0))
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--network', type=Path, help='Replay on this network instead of the saved one')
+    parser.add_argument('--main-lane-shift', type=int, default=0,
+                        help='Shift mainline departLane (use -1 for ramp-started v05 networks)')
     args = parser.parse_args(argv)
     journal = load_journal(args.episode, args.agent)
-    baseline = replay(args.episode, journal, args.agent, args.seed, 31, args.window)
-    no_row = replay(args.episode, journal, args.agent, args.seed, 31 & ~8, args.window)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    routes = None
+    if args.main_lane_shift:
+        routes = shifted_routes(args.episode / 'routes.rou.xml', args.output.with_name('routes.rou.xml'),
+                                args.main_lane_shift)
+    baseline = replay(args.episode, journal, args.agent, args.seed, 31, args.window, args.network, routes)
+    no_row = replay(args.episode, journal, args.agent, args.seed, 31 & ~8, args.window, args.network, routes)
     matched = [abs(r['replay_realized'] - r['saved_realized']) <= 1e-3 for r in baseline]
+    overridden = [r for r in baseline if abs(r['replay_realized'] - r['applied']) > .05]
     report = dict(schema='highway_flow_rl_v05_native_braking_replay', training=False, policy_used=False,
                   episode=str(args.episode).replace('\\', '/'), agent=args.agent, seed=args.seed,
+                  network=str(args.network).replace('\\', '/') if args.network else 'saved episode network',
+                  main_lane_shift=args.main_lane_shift,
                   reproduction=dict(samples=len(baseline), matched_within_1e3=sum(matched),
                                     first_mismatch_s=next((r['time_s'] for r, m in zip(baseline, matched) if not m), None)),
+                  native_overrides=dict(count=len(overridden), times_s=[r['time_s'] for r in overridden],
+                                        min_realized_m_s2=min((r['replay_realized'] for r in baseline), default=None),
+                                        max_abs_jerk_m_s3=max((abs(b['replay_realized'] - a['replay_realized']) / DT
+                                                               for a, b in zip(baseline, baseline[1:])), default=None)),
                   baseline_speed_mode_31=baseline, counterfactual_speed_mode_23=no_row,
                   limitation='Open-loop replay of saved commands; counterfactual mode is diagnostic only.')
     args.output.parent.mkdir(parents=True, exist_ok=True)
@@ -124,6 +159,7 @@ def main(argv=None):
 if __name__ == '__main__':
     report = main()
     print(json.dumps(report['reproduction']))
+    print(json.dumps(report['native_overrides']))
     for name in ('baseline_speed_mode_31', 'counterfactual_speed_mode_23'):
         print(name)
         for r in report[name]:

@@ -842,3 +842,15 @@ ramp networks in the v05 bank share this junction design (10/20 v04 training
 rows). Network, actor-guard and metric-attribution options are listed for
 decision; none implemented. No policy, training or promotion.
 [Explanation](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026).
+
+
+## November 11, 2026 - v05: ramp-started acceleration lane networks
+
+Built corrected copies of all six v05-bank ramp networks where the ramp
+becomes the acceleration lane (no upstream `sb1_0`), with a parallel final
+approach. The ramp link is now priority (`M`) with no foes. Replaying the
+saved ramp120 commands removes SUMO's braking entirely (lowest realized
+acceleration 0.0 m/s2 instead of -4.5). The only remaining difference is the
+ramp's legal speed cap, an open-loop artifact. Historical bank unchanged; no
+closed-loop run or training. Closed-loop use needs the `sb1` lane-ID shift
+integrated first. [Details](highway-jerk-diagnosis-v05.md#corrected-ramp-networks-acceleration-lane-starts-at-the-ramp-november-11-2026).

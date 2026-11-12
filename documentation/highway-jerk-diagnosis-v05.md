@@ -167,3 +167,67 @@ The draft was never reviewed or authorized for training. Training any v05
 configuration still needs the user to agree on the configuration first.
 
 Google engineering-guide synchronization is pending for this step.
+
+## Corrected ramp networks: acceleration lane starts at the ramp (November 11, 2026)
+
+**Why:** on a real on-ramp the ramp becomes the acceleration lane and the car
+merges into traffic from that lane; it never has to yield at the gore. The v05
+bank instead starts the right auxiliary lane at the beginning of the road
+(`sb1_0`, 375+ m upstream), so the ramp joins an existing lane as a yield link.
+That layout, not the driving task, caused the gore braking above.
+
+**What changed:** [`scripts/build_highway_flow_rl_v05_ramp_networks.py`](../scripts/build_highway_flow_rl_v05_ramp_networks.py)
+reuses the historical geometry (same lane counts, lengths, bends, speeds, ramp
+start points and lane drop at `n3`) with two differences:
+
+1. `sb1` carries only the through lanes. The auxiliary lane `sb2_0` is fed by
+   the ramp alone, and `sb1` lane i continues into `sb2` lane i+1.
+2. The ramp's last stretch runs parallel to the road on the auxiliary lane's
+   line (up to 60 m, 5 m short of the junction). Without this, removing the
+   yield exposed a second artifact: a ~24 degree corner where netconvert capped
+   the short connector at 11.24 m/s and SUMO braked the replayed car at -4.5
+   m/s2 (first corrected build, `ramp-networks-01`, 44.99 m/s3).
+
+All six layouts compile with the ramp link at state `M` (priority), no foes and
+no yield. Ramp connectors allow 17.88-20.12 m/s (19.00 m/s on validation
+roads), at least as much as the historical 17.88 m/s connector. Ramps are longer
+because of the parallel approach (e.g. 133.4 m instead of 104.7 m on
+`train-2-lane-ramp120`). Bank checks: [ramp-started-bank.json](evidence/highway-jerk-diagnosis-v05/ramp-started-bank.json)
+(SHA-256 `80046001fbce880437c75fc1f136d5c677ca09b3501f2c52be896e8cfe64937f`).
+The historical bank, builder and checks are unchanged.
+
+```text
+python -m scripts.build_highway_flow_rl_v05_ramp_networks --output outputs/highway-flow-rl/v05/ramp-networks-02
+python scripts/replay_highway_flow_rl_v05_native_braking.py --episode outputs/highway-flow-rl/v04/long-round-03/final-validation/case-04/episode-8400004-67e660a5 --seed 8400004 --window 0.2 14 --network outputs/highway-flow-rl/v05/ramp-networks-02/train-2-lane-ramp120/network.net.xml --main-lane-shift -1 --output outputs/highway-flow-rl/v05/native-braking-03-ramp-started/replay.json
+```
+
+**Replay test** (same saved commands, seed and traffic; open loop up to the
+car's first lane request at 10.7 s; mainline departures moved down one lane
+index to match the new `sb1` numbering):
+
+| Network | SUMO overrides | Lowest realized accel | Largest jerk |
+| --- | --- | ---: | ---: |
+| Historical v05 bank | 1.7-2.7 s, gore yield braking | -4.50 m/s2 | 50.76 m/s3 |
+| Ramp-started, sharp corner (`-01`) | 3.4-4.0 s, connector turn-speed braking | -4.50 m/s2 | 44.99 m/s3 |
+| Ramp-started, parallel approach (`-02`) | 4.0-5.0 s, held at ramp speed limit | 0.00 m/s2 | 17.95 m/s3 |
+
+On the final corrected network SUMO never brakes the car. The only remaining
+difference is that the replayed commands keep accelerating past the ramp's
+30 mph (13.41 m/s) legal limit, so SUMO holds the car at the limit. This is an
+open-loop artifact: the saved commands were chosen for a car that was
+travelling at 6 m/s after the old braking. In closed loop the actor sees the limit
+through its existing speed-ceiling guard. Evidence:
+[ramp-started-replay.json](evidence/highway-jerk-diagnosis-v05/ramp-started-replay.json)
+(SHA-256 `027262abf2378439c851cd0e9cbe58864a72199e9bf91f1e9cc1639a178f7b79`).
+Tests: [`tests/test_highway_flow_rl_v05_ramp_networks.py`](../tests/test_highway_flow_rl_v05_ramp_networks.py).
+
+**Not done yet:**
+
+- No closed-loop run. Evaluating the frozen v04 actor on these networks needs
+  integration first: `sb1` lane IDs shift by one (`sb1_k` becomes `sb1_{k-1}`),
+  which touches the demand generator's mainline `departLane`, the lane-graph
+  identities and any fixture that names `sb1_0` as the auxiliary lane.
+- Results from v04 and earlier were measured on the historical layout and stay
+  historical evidence; they do not transfer automatically.
+- The I-110 `candidate` network was not changed or checked.
+- Training on the corrected networks is not authorized and has not started.
