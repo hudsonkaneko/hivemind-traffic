@@ -1,0 +1,459 @@
+{
+  "schema": "highway_flow_rl_v05_ramp_eval_summary",
+  "training": false,
+  "held_out": false,
+  "checkpoint": "outputs/highway-flow-rl/v04/long-round-03/last.pt",
+  "checkpoint_sha256": "20777e239d5c5461046ace6308fa7ebd7aa28644fe3f810635a0634e5bbdfc7c",
+  "variant": "legacy (v04 behavior)",
+  "config": "configs/evaluation/highway-flow-rl-v05-ramp-eval-01.json",
+  "config_sha256": "d38de2e26d425befdd3053c9a08f3dcfc2f14eb20cb4f5ba5c0a2a6ac459041b",
+  "git_commit": "7367b802e0354c4ac7f70f8388c960f44d5d5767",
+  "git_dirty": true,
+  "elapsed_seconds": 90.06300000000192,
+  "cases": [
+    {
+      "case_id": "ramp-eval-train-2-lane-ramp120-historical",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.013237063778580024,
+      "peak_abs_jerk_m_s3": 50.760946720838525,
+      "mean_legal_speed_fraction": 0.9029134510247938,
+      "pre_merge_stop_seconds": 0.0,
+      "merge_speed_match_fraction": 0.422360248447205,
+      "minimum_headway_s": 1.7847088437916039,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 12.049535363912511,
+          "cause": "startup"
+        },
+        {
+          "time_s": 1.7,
+          "jerk_m_s3": -23.59167372011921,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 1.8,
+          "jerk_m_s3": -37.40444640493603,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 2.8,
+          "jerk_m_s3": 50.760946720838525,
+          "cause": "override_release"
+        },
+        {
+          "time_s": 2.9,
+          "jerk_m_s3": 8.460919409990364,
+          "cause": "policy_request"
+        },
+        {
+          "time_s": 12.5,
+          "jerk_m_s3": 8.01576212048527,
+          "cause": "lane_change"
+        }
+      ]
+    },
+    {
+      "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.0,
+      "peak_abs_jerk_m_s3": 12.136941552162206,
+      "mean_legal_speed_fraction": 0.9624087649448667,
+      "pre_merge_stop_seconds": 0.0,
+      "merge_speed_match_fraction": 0.46099290780141844,
+      "minimum_headway_s": null,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 12.136941552162206,
+          "cause": "startup"
+        }
+      ]
+    },
+    {
+      "case_id": "ramp-eval-train-3-lane-ramp240-historical",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.17350157728706625,
+      "peak_abs_jerk_m_s3": 52.48017981648445,
+      "mean_legal_speed_fraction": 0.7065658793561959,
+      "pre_merge_stop_seconds": 8.999999999999984,
+      "merge_speed_match_fraction": 0.4658385093167702,
+      "minimum_headway_s": 16.955423266552454,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 11.724349707365,
+          "cause": "startup"
+        },
+        {
+          "time_s": 1.7,
+          "jerk_m_s3": -13.433351937173477,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 1.8,
+          "jerk_m_s3": -46.96217196858061,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 2.8,
+          "jerk_m_s3": 52.48017981648445,
+          "cause": "override_release"
+        },
+        {
+          "time_s": 2.9,
+          "jerk_m_s3": 7.426314204931295,
+          "cause": "policy_request"
+        },
+        {
+          "time_s": 41.0,
+          "jerk_m_s3": -25.745350322438654,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 41.1,
+          "jerk_m_s3": -17.925552227781694,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 46.4,
+          "jerk_m_s3": 22.779793077183708,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 46.5,
+          "jerk_m_s3": 22.22020692281629,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 55.4,
+          "jerk_m_s3": 18.563381731510162,
+          "cause": "override_release"
+        }
+      ]
+    },
+    {
+      "case_id": "ramp-eval-train-3-lane-ramp240-ramp-started",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.0,
+      "peak_abs_jerk_m_s3": 12.420629560947383,
+      "mean_legal_speed_fraction": 0.936421569382286,
+      "pre_merge_stop_seconds": 0.0,
+      "merge_speed_match_fraction": 0.2978723404255319,
+      "minimum_headway_s": null,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 12.420629560947383,
+          "cause": "startup"
+        }
+      ]
+    },
+    {
+      "case_id": "ramp-eval-train-4-lane-ramp120-historical",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.012485811577752554,
+      "peak_abs_jerk_m_s3": 50.937184840440786,
+      "mean_legal_speed_fraction": 0.9372839633757717,
+      "pre_merge_stop_seconds": 0.0,
+      "merge_speed_match_fraction": 0.34782608695652173,
+      "minimum_headway_s": null,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 12.115824669599462,
+          "cause": "startup"
+        },
+        {
+          "time_s": 1.7,
+          "jerk_m_s3": -24.40679173120799,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 1.8,
+          "jerk_m_s3": -36.630029872566716,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 2.8,
+          "jerk_m_s3": 50.937184840440786,
+          "cause": "override_release"
+        },
+        {
+          "time_s": 2.9,
+          "jerk_m_s3": 8.39199364185328,
+          "cause": "policy_request"
+        }
+      ]
+    },
+    {
+      "case_id": "ramp-eval-train-4-lane-ramp120-ramp-started",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.0,
+      "peak_abs_jerk_m_s3": 12.029683440923655,
+      "mean_legal_speed_fraction": 0.960829732457525,
+      "pre_merge_stop_seconds": 0.0,
+      "merge_speed_match_fraction": 0.5035460992907801,
+      "minimum_headway_s": null,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 12.029683440923655,
+          "cause": "startup"
+        }
+      ]
+    },
+    {
+      "case_id": "ramp-eval-train-5-lane-ramp240-historical",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.013630731102850062,
+      "peak_abs_jerk_m_s3": 50.68541139364244,
+      "mean_legal_speed_fraction": 0.9153803563905082,
+      "pre_merge_stop_seconds": 0.0,
+      "merge_speed_match_fraction": 0.16875,
+      "minimum_headway_s": null,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 11.851674765348363,
+          "cause": "startup"
+        },
+        {
+          "time_s": 1.7,
+          "jerk_m_s3": -19.767877370851927,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 1.8,
+          "jerk_m_s3": -41.043068557244844,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 2.8,
+          "jerk_m_s3": 50.68541139364244,
+          "cause": "override_release"
+        },
+        {
+          "time_s": 2.9,
+          "jerk_m_s3": 8.314356505870801,
+          "cause": "policy_request"
+        }
+      ]
+    },
+    {
+      "case_id": "ramp-eval-train-5-lane-ramp240-ramp-started",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.0,
+      "peak_abs_jerk_m_s3": 12.47463539242748,
+      "mean_legal_speed_fraction": 0.940552133388562,
+      "pre_merge_stop_seconds": 0.0,
+      "merge_speed_match_fraction": 0.2907801418439716,
+      "minimum_headway_s": null,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 12.47463539242748,
+          "cause": "startup"
+        }
+      ]
+    },
+    {
+      "case_id": "ramp-eval-validation-2-lane-ramp180-historical",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.012605042016806723,
+      "peak_abs_jerk_m_s3": 50.66262081265451,
+      "mean_legal_speed_fraction": 0.7571669361764988,
+      "pre_merge_stop_seconds": 0.0,
+      "merge_speed_match_fraction": 0.38509316770186336,
+      "minimum_headway_s": 1.8148381899755357,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 11.935193091630936,
+          "cause": "startup"
+        },
+        {
+          "time_s": 1.7,
+          "jerk_m_s3": -21.483099837590913,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 1.8,
+          "jerk_m_s3": -39.40880737752739,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 2.8,
+          "jerk_m_s3": 50.66262081265451,
+          "cause": "override_release"
+        },
+        {
+          "time_s": 2.9,
+          "jerk_m_s3": 8.410840183496493,
+          "cause": "policy_request"
+        },
+        {
+          "time_s": 53.8,
+          "jerk_m_s3": 11.269060894846916,
+          "cause": "lane_change"
+        }
+      ]
+    },
+    {
+      "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.0,
+      "peak_abs_jerk_m_s3": 12.55470752716068,
+      "mean_legal_speed_fraction": 0.9499594893049723,
+      "pre_merge_stop_seconds": 0.0,
+      "merge_speed_match_fraction": 0.41134751773049644,
+      "minimum_headway_s": null,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 12.55470752716068,
+          "cause": "startup"
+        }
+      ]
+    },
+    {
+      "case_id": "ramp-eval-validation-4-lane-ramp180-historical",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.012865497076023392,
+      "peak_abs_jerk_m_s3": 50.848839133977904,
+      "mean_legal_speed_fraction": 0.926742530576494,
+      "pre_merge_stop_seconds": 0.0,
+      "merge_speed_match_fraction": 0.25,
+      "minimum_headway_s": null,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 12.005978524684835,
+          "cause": "startup"
+        },
+        {
+          "time_s": 1.7,
+          "jerk_m_s3": -22.36961122427239,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 1.8,
+          "jerk_m_s3": -38.5665870102855,
+          "cause": "safety_override"
+        },
+        {
+          "time_s": 2.8,
+          "jerk_m_s3": 50.848839133977904,
+          "cause": "override_release"
+        },
+        {
+          "time_s": 2.9,
+          "jerk_m_s3": 8.339969515800494,
+          "cause": "policy_request"
+        }
+      ]
+    },
+    {
+      "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+      "passed": false,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "successful_merges": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "intervention_fraction": 0.0,
+      "peak_abs_jerk_m_s3": 12.60821744799614,
+      "mean_legal_speed_fraction": 0.9516670699721992,
+      "pre_merge_stop_seconds": 0.0,
+      "merge_speed_match_fraction": 0.40425531914893614,
+      "minimum_headway_s": null,
+      "jerk_peaks_over_5": [
+        {
+          "time_s": 0.2,
+          "jerk_m_s3": 12.60821744799614,
+          "cause": "startup"
+        }
+      ]
+    }
+  ],
+  "scope": "Same merge row/seed (8400004) per layout; development measurement only, not held-out geometry or demand"
+}

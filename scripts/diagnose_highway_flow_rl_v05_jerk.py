@@ -116,12 +116,16 @@ def main(argv=None):
     parser.add_argument('--run', type=Path, default=DEFAULT_RUN)
     parser.add_argument('--output', type=Path,
                         default=Path('outputs/highway-flow-rl/v05/jerk-diagnosis-01/jerk-diagnosis.json'))
+    parser.add_argument('--summary-file', default='final-validation.json',
+                        help='Run-relative JSON with summary.case_gates (summary.json for evaluate runs)')
+    parser.add_argument('--cases-dir', default='final-validation',
+                        help='Run-relative directory holding case-NN/episode-*/actions.jsonl.gz')
     args = parser.parse_args(argv)
     run = args.run if args.run.is_absolute() else ROOT / args.run
-    validation = json.loads((run / 'final-validation.json').read_text())
+    validation = json.loads((run / args.summary_file).read_text())
     gates = {g['case_id']: g for g in validation['summary']['case_gates']}
     cases = []
-    for path in sorted((run / 'final-validation').glob('case-*/*/actions.jsonl.gz')):
+    for path in sorted((run / args.cases_dir).glob('case-*/*/actions.jsonl.gz')):
         rows, cars = analyse_case(path)
         index = int(path.parent.parent.name.split('-')[1])
         case_id = validation['summary']['case_gates'][index]['case_id']

@@ -1268,3 +1268,17 @@ acceleration 0.0 m/s2 instead of -4.5). The only remaining difference is the
 ramp's legal speed cap, an open-loop artifact. Historical bank unchanged; no
 closed-loop run or training. Closed-loop use needs the `sb1` lane-ID shift
 integrated first. [Details](highway-jerk-diagnosis-v05.md#corrected-ramp-networks-acceleration-lane-starts-at-the-ramp-november-11-2026).
+
+
+## November 11, 2026 - v05: frozen actor on ramp-started networks
+
+Integrated the ramp-started networks; lane identities already handle them, so
+the change is config-only, now covered by a regression test. The frozen v04
+final actor ran on all six ramp layouts, historical vs ramp-started, with the
+same merge row and seed (12 episodes, no training). On the corrected networks,
+overrides went from 1.25-17.35% to 0%, peak jerk from about 51 to about 12
+m/s3 (startup handoff only), and mean speed rose to 0.94-0.96 of the limit.
+There were zero collisions, and every case merged. Gates still fail on startup
+jerk and merge quality (46% vs 90%). Generalization to other merge designs is
+not demonstrated; no held-out geometry exists yet. A stale draft ledger
+segment was reconciled conservatively. [Details](highway-jerk-diagnosis-v05.md#frozen-actor-on-ramp-started-networks-november-11-2026).
