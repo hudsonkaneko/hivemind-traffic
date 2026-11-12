@@ -8,9 +8,19 @@ from traffic.highway_flow_rl_v05_rewards import (REWARD_VERSION, SETTINGS, WEIGH
 from traffic.highway_flow_context import flow_context
 
 
+# 'startup' (Nov 11 2026): legacy v04 behavior except during control handoff.
+# A car enters the episode at its SUMO insertion acceleration (0 m/s2) and the
+# actor's first command used to be applied in one 0.1 s step (12 m/s3 jerk).
+# The same comfort rate limit as 'continuity' (4 m/s3, max braking and lower
+# safety ceilings bypass it) applies only until the realized command catches
+# up with the actor's request, or for at most HANDOFF_MAX_STEPS decisions.
+HANDOFF_MAX_STEPS = 30
+VARIANTS = ('legacy', 'continuity', 'full', 'startup')
+
+
 class HighwayFlowRLV05Env(HighwayFlowRLV04Env):
     def __init__(self, *args, v05_variant='full', v05_weights=None, **kwargs):
-        if v05_variant not in ('legacy', 'continuity', 'full'):
+        if v05_variant not in VARIANTS:
             raise ValueError('Unknown v05 variant')
         self.v05_variant = v05_variant
         self.v05_weights = dict(WEIGHTS if v05_weights is None else v05_weights)
@@ -24,17 +34,40 @@ class HighwayFlowRLV05Env(HighwayFlowRLV04Env):
     def _reset_v05(self):
         self._planner, self._reference_targets, self._conditioning = {}, {}, {}
         self._v05_seen = set()
+        self._handoff = {}  # agent -> handoff decisions so far, or None once complete
         self.v05_metrics = dict(per_car={}, phases={}, decisions=0, conditioning_changes=0,
             safety_or_native_changes=0, combined_changes=0, safety_exceptions=0,
-            reward_terms={}, acceptance_target='unchanged_v04_reference')
+            reward_terms={}, acceptance_target='unchanged_v04_reference',
+            handoff=dict(cars=0, conditioned_decisions=0, completed_by_catch_up=0, completed_by_limit=0))
 
     def reset(self, seed=None, options=None):
         self._reset_v05()
         return super().reset(seed=seed, options=options)
 
+    def _handoff_active(self, agent):
+        if agent not in self._handoff:
+            self._handoff[agent] = 0
+            self.v05_metrics['handoff']['cars'] += 1
+        return self._handoff[agent] is not None
+
     def _condition_acceleration(self, agent, requested, ceiling):
+        if self.v05_variant == 'startup':
+            enabled = self._handoff_active(agent)
+        else:
+            enabled = self.v05_variant != 'legacy'
         evidence = condition_acceleration(requested, self.states[agent]['acceleration'], ceiling,
-            enabled=self.v05_variant != 'legacy')
+            enabled=enabled)
+        evidence['handoff'] = bool(self.v05_variant == 'startup' and enabled)
+        if evidence['handoff']:
+            handoff = self.v05_metrics['handoff']
+            self._handoff[agent] += 1
+            handoff['conditioned_decisions'] += int(evidence['changed'])
+            if not evidence['changed']:
+                self._handoff[agent] = None  # caught up: legacy behavior from here on
+                handoff['completed_by_catch_up'] += 1
+            elif self._handoff[agent] >= HANDOFF_MAX_STEPS:
+                self._handoff[agent] = None
+                handoff['completed_by_limit'] += 1
         self._conditioning[agent] = evidence
         return evidence['conditioned']
 

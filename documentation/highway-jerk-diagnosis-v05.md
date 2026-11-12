@@ -379,3 +379,64 @@ still would not be shown to handle all highway merges.
 evaluation is a one-time held-out measurement. It is most informative after the
 startup-jerk rule and merge-quality gate are settled, since results must not
 feed back into tuning.
+
+## Startup handoff ramp (November 11, 2026)
+
+**Problem:** each controlled car enters at its SUMO insertion acceleration
+(0 m/s2), and the actor's first command was applied in one 0.1 s step. That
+caused the 12.0-12.6 m/s3 peaks, the only jerk failures left on the corrected
+networks.
+
+**Fix:** a new opt-in environment mode, `startup`, in
+[`environments/highway_flow_rl_v05_env.py`](../environments/highway_flow_rl_v05_env.py).
+It keeps legacy v04 behavior except during control handoff. There it applies
+the draft's comfort rate limit: 4 m/s3, i.e. at most 0.4 m/s2 change per step
+from the measured acceleration. Maximum braking and any lower safety ceiling
+bypass the limit. The ramp ends permanently once the realized command catches
+up with the actor's request, or after 30 decisions (3 s). Conditioned steps are
+still counted as interventions (`comfort_rate_limit`). The acceptance gates are
+unchanged, and the actor itself is unchanged. Tests:
+[`tests/test_highway_flow_rl_v05_startup_handoff.py`](../tests/test_highway_flow_rl_v05_startup_handoff.py).
+
+The draft's conditioning hook in `environments/highway_environment_v05.py` existed
+only as an uncommitted edit in the main checkout, so on the branch the draft's
+`continuity` mode silently did nothing. The hook is now committed, identical to
+that edit. Its default returns the request unchanged, so legacy behavior is
+identical. The two changed files (`highway_flow_rl_v05_env.py`,
+`highway_flow_rl_v05_contract.py`) were also copied over the untracked draft
+copies in the main checkout so the evaluation could charge the shared ledger.
+The original draft versions are preserved in commit `e98cc7e`.
+
+**Frozen v04 actor, same 12 ramp rows as before (seed 8400004), startup vs legacy:**
+
+| Layout (ramp-started) | Peak jerk | Overrides | Speed / limit | Per-car checks | Result |
+| --- | ---: | ---: | ---: | --- | --- |
+| train 3-lane, 240 m ramp | 12.4 -> 4.0 | 0.00% -> 0.58% | 0.94 -> 0.93 | all pass | only merge quality fails |
+| train 4-lane, 120 m ramp | 12.0 -> 4.0 | 0.00% -> 0.47% | 0.96 -> 0.96 | all pass | only merge quality fails |
+| train 5-lane, 240 m ramp | 12.5 -> 4.0 | 0.00% -> 0.53% | 0.94 -> 0.94 | all pass | only merge quality fails |
+| validation 2-lane, 180 m ramp | 12.6 -> 4.0 | 0.00% -> 0.54% | 0.95 -> 0.95 | all pass | only merge quality fails |
+| validation 4-lane, 180 m ramp | 12.6 -> 4.0 | 0.00% -> 0.49% | 0.95 -> 0.95 | all pass | only merge quality fails |
+| train 2-lane, 120 m ramp | 12.1 -> 28.9 | 0.00% -> 17.89% | 0.96 -> 0.79 | jerk, interventions fail | regressed (see below) |
+
+The handoff lasted 4 decisions (0.2-0.5 s) per car. Historical-network rows are
+essentially unchanged: the gore braking still dominates there, at about 51
+m/s3. All 12 episodes merged with zero collisions. Merge quality (target-speed
+agreement around the merge) is 27-49% against the 90% gate everywhere.
+Evidence: [startup-handoff-eval.json](evidence/highway-jerk-diagnosis-v05/startup-handoff-eval.json)
+(SHA-256 `3c12cc374a735c1886a46e6389b2e1d1795accd2669b06a0f64201cbd93fc7e5`).
+
+**Why one layout regressed:** the handoff left the car about 0.4 m/s slower
+at 3.2 s. At that moment, the actor-input flag for a left lane change was open
+in the legacy run but closed in the startup run. That flag is the v04
+projected-gap mask, which checks the closing rear car `main_6` (69 m back, 7.4-7.6
+m/s faster) over a 3.1 s maneuver. The policy never accelerated enough to
+reopen the window. It made no lane request until 42.7 s (legacy: 3.2 s), rode
+the acceleration lane to its end, braked for the lane end (`lane_end`
+overrides, then SUMO), stopped, and merged at 50.7 s. The handoff ramp did what
+it was designed to do. The regression exposes a fragile merge decision in the
+frozen actor: a borderline gap check plus no learned strategy for creating a
+new gap. That needs a policy or training change, not a handoff change.
+
+**Not run:** the startup mode on v04's original six development cases (with
+I-110). The runner refused it, because the config's authorized budget of 60
+diagnostic episodes is used up. Raising it is a budget decision for the user.

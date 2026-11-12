@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** decide how the jerk gate treats the startup handoff and how to improve merge quality (46% vs 90% target-speed agreement), then run the frozen actor once on the [held-out merge geometry bank](highway-jerk-diagnosis-v05.md#held-out-merge-geometry-bank-november-11-2026) (built and frozen Nov 11) before more training. [Ramp-started network results](highway-jerk-diagnosis-v05.md#frozen-actor-on-ramp-started-networks-november-11-2026): 0% overrides, ~12 m/s3 peak (startup only) on all six layouts. The `mlk_on_0` braking is [explained](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026). [V05 jerk diagnosis](highway-jerk-diagnosis-v05.md) (November 11): 11/16 failing cars exceed 5 m/s3 only at startup; the 50.76 m/s3 maximum is native braking and its release, not the actor. Previous v04 terminal context: [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
+**Next action:** the [startup handoff ramp](highway-jerk-diagnosis-v05.md#startup-handoff-ramp-november-11-2026) fixes startup jerk on 5/6 ramp-started layouts. Remaining blockers are merge quality (27-49% vs 90%) and fragile merge decisions (a missed borderline gap window leads to riding the acceleration lane to its end). Both need a training change; agree on it before launching. Then run the frozen actor once on the held-out merge geometry bank. [Ramp-started network results](highway-jerk-diagnosis-v05.md#frozen-actor-on-ramp-started-networks-november-11-2026): 0% overrides, ~12 m/s3 peak (startup only) on all six layouts. The `mlk_on_0` braking is [explained](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026). [V05 jerk diagnosis](highway-jerk-diagnosis-v05.md) (November 11): 11/16 failing cars exceed 5 m/s3 only at startup; the 50.76 m/s3 maximum is native braking and its release, not the actor. Previous v04 terminal context: [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -699,3 +699,14 @@ strong curve, 45 mph, wide lanes, short ramp, fast ramp). Structural checks
 pass, and the environment runs all of them natively without the policy.
 Unsupported real designs are listed. The policy has not been evaluated; do
 not tune on this bank. [Details](highway-jerk-diagnosis-v05.md#held-out-merge-geometry-bank-november-11-2026).
+
+### v48 - November 11: startup handoff ramp
+
+Opt-in `startup` mode: a 4 m/s3 comfort ramp only during control handoff;
+max braking and safety ceilings bypass it. The draft's conditioning hook is now
+committed. Frozen v04 actor: peak jerk from about 12.5 to 4.0 m/s3 on 5/6
+ramp-started layouts, with all per-car checks passing. One layout regressed: a
+borderline projected-gap mask closed, and the actor rode the acceleration lane
+to its end. That is a fragile merge decision, needing a training change.
+Merge quality still fails everywhere. The dev-case run was blocked by the
+episode budget. No training. [Details](highway-jerk-diagnosis-v05.md#startup-handoff-ramp-november-11-2026).

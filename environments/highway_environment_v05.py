@@ -446,6 +446,10 @@ class HighwayEnvironmentV05Env(HighwayPopulationEnv):
     def scripted_actions(self):
         return self.teacher_actions()
 
+    def _condition_acceleration(self, agent, requested, ceiling):
+        """Optional actuator conditioning; the default preserves legacy motion."""
+        return requested
+
     def step(self, actions):
         agents = list(self.agents)
         if not agents and not actions:
@@ -475,7 +479,10 @@ class HighwayEnvironmentV05Env(HighwayPopulationEnv):
             rejected[agent] = bool(causes)
             if self.control_mode == 'policy' and delta and not rejected[agent]:
                 self._begin_maneuver(agent, delta)
-            applied[agent] = min(requested[agent], ceiling)
+            conditioned = self._condition_acceleration(agent, requested[agent], ceiling)
+            applied[agent] = min(conditioned, ceiling)
+            if abs(conditioned - requested[agent]) > 1e-4:
+                causes.append('comfort_rate_limit')
             # Causes count constraints violated by the request, not a speculative
             # attribution of native SUMO acceleration differences.
             violations = [key for key, value in bounds.items() if value is not None and requested[agent] > value + 1e-4]

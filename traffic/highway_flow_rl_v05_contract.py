@@ -78,7 +78,7 @@ def validate_config(cfg, require_training=False):
     artifact(warm)
     if warm['path'] != 'outputs/highway-flow-rl/v04/long-round-03/best.pt':
         raise ValueError('Expected frozen v04 best initialization')
-    if cfg.get('continuity_settings') != SETTINGS or cfg.get('variant') not in ('legacy', 'continuity', 'full'):
+    if cfg.get('continuity_settings') != SETTINGS or cfg.get('variant') not in ('legacy', 'continuity', 'full', 'startup'):
         raise ValueError('Unreviewed continuity variant/settings')
     if require_training and cfg['variant'] != 'full':
         raise ValueError('Only the resolved full v05 configuration may train')

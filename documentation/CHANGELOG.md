@@ -1295,3 +1295,17 @@ the environment with native SUMO driving (no policy). Left entries, no
 acceleration lane, lane drops, weaving, consecutive ramps and loop ramps need
 environment changes and are listed, not faked. The policy has not been
 evaluated on the bank yet. [Details](highway-jerk-diagnosis-v05.md#held-out-merge-geometry-bank-november-11-2026).
+
+
+## November 11, 2026 - v05: startup handoff ramp
+
+Added an opt-in `startup` environment mode: legacy behavior, plus a 4 m/s3
+comfort ramp only until the car catches up with the actor's first command
+(max braking and lower safety ceilings bypass it). Also committed the draft's
+missing conditioning hook. On 5 of 6 ramp-started layouts, the frozen v04
+actor's peak jerk fell from about 12.5 to 4.0 m/s3 and every per-car check
+passes; only merge quality (27-49% vs 90%) fails. On `train-2-lane-ramp120`
+the slightly slower start closed a borderline projected-gap lane mask. The
+actor then stayed in the acceleration lane until its end (17.9% overrides,
+28.9 m/s3), exposing fragile merge decisions. No training. The dev-case run
+was blocked by the 60-episode diagnostic budget. [Details](highway-jerk-diagnosis-v05.md#startup-handoff-ramp-november-11-2026).
