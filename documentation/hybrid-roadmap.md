@@ -905,3 +905,15 @@ gate (v04 final 0/6, best 1/6), and failing cars fell from 18 to 7, with zero
 collisions. Remaining failures: historical ramp120 gore braking, I-110
 mid-episode jerk (5.3-10.5 m/s3), one following-car intervention and one
 avoidable-braking car. Merge quality still fails. No training. [Details](highway-jerk-diagnosis-v05.md#startup-mode-on-the-v04-development-cases-november-13-2026).
+
+
+## November 13, 2026 - v05: remaining jerk peaks explained
+
+Analysis of all 10 remaining jerk peaks in the startup development run, using
+policy inputs, policy outputs and SUMO state. Four are the known gore yield on
+the historical ramp network. Two are SUMO's ACC car-following law capping
+commands that the actor's own guard allows. One is a leader leaving at the end
+of the road. Two are the policy reacting in one step to merge inputs switching
+on or off at lane transitions, which training barely penalizes (jerk weight
+0.0, huber 0.09, against shaping swings of about 1). Fix options are recorded
+for decision. No simulation or training. [Details](highway-jerk-diagnosis-v05.md#remaining-jerk-peaks-explained-november-13-2026).

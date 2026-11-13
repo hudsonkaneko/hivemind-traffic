@@ -718,3 +718,11 @@ actor with the startup handoff on the six v04 development cases: 2/6 cases
 pass (v04 final 0/6), and failing cars fell from 18 to 7, with no collisions.
 Remaining: historical gore braking, I-110 mid-episode jerk, merge quality.
 No training. [Details](highway-jerk-diagnosis-v05.md#startup-mode-on-the-v04-development-cases-november-13-2026).
+
+### v50 - November 13: remaining jerk peaks explained
+
+The 10 peaks in the startup dev run come from: gore yield (historical network,
+4); SUMO ACC law vs actor guard (2); a leader leaving at the road end (1); and
+policy step reactions to switching merge inputs (2), which the training reward
+barely penalizes. Fixes are recorded for decision (network, environment,
+evaluation rule, training). [Details](highway-jerk-diagnosis-v05.md#remaining-jerk-peaks-explained-november-13-2026).

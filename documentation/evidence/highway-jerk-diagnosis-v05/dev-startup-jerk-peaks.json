@@ -1,0 +1,406 @@
+{
+  "schema": "highway_flow_rl_v05_jerk_diagnosis",
+  "training": false,
+  "simulation_run": false,
+  "source_run": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-startup-01",
+  "summary": {
+    "jerk_limit_m_s3": 5.0,
+    "peak_samples": 10,
+    "failing_car_count": 5,
+    "failing_only_at_startup": 0,
+    "failing_with_policy_owned_peak": 3,
+    "failing_with_native_or_override_peak": 3,
+    "peaks_by_cause": {
+      "safety_override": 4,
+      "policy_request": 3,
+      "lane_change": 2,
+      "override_release": 1
+    },
+    "max_abs_jerk_by_cause": {
+      "policy_request": 8.479829877614975,
+      "lane_change": 8.387394845485652,
+      "safety_override": 51.05499229170718,
+      "override_release": 50.73517292737959
+    },
+    "failing_cars": [
+      {
+        "case_id": "v02-development-train-2-lane-ramp120-merge",
+        "agent": "agent_0",
+        "peaks": 5,
+        "max_abs_jerk_m_s3": 51.05499229170718,
+        "causes": {
+          "safety_override": 2,
+          "override_release": 1,
+          "policy_request": 1,
+          "lane_change": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-merge",
+        "agent": "agent_5",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 10.543052156878474,
+        "causes": {
+          "safety_override": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-merge",
+        "agent": "agent_0",
+        "peaks": 2,
+        "max_abs_jerk_m_s3": 8.387394845485652,
+        "causes": {
+          "policy_request": 1,
+          "lane_change": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-merge",
+        "agent": "agent_2",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 7.082225751089588,
+        "causes": {
+          "safety_override": 1
+        }
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "agent": "agent_2",
+        "peaks": 1,
+        "max_abs_jerk_m_s3": 5.327104106545377,
+        "causes": {
+          "policy_request": 1
+        }
+      }
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "v05-validation-i110-merge",
+      "seed": 6900019,
+      "trace": "evaluation/case-00/episode-6900019-fd63f547/actions.jsonl.gz",
+      "trace_sha256": "eeb2ef2f1dd5d6f1d5f89812a2504b250bdc36ef13e0a8c52c9fce81480ea6da",
+      "decisions": 429,
+      "cars": {
+        "agent_0": {
+          "samples": 372,
+          "peaks": [
+            {
+              "time_s": 3.9,
+              "jerk_m_s3": -7.206652909517253,
+              "cause": "policy_request",
+              "requested": 1.0807978510856628,
+              "previous_requested": 1.8014631420373917,
+              "realized": 1.0807978510856664,
+              "previous_realized": 1.8014631420373917,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 13.3,
+              "jerk_m_s3": 8.387394845485652,
+              "cause": "lane_change",
+              "requested": 0.7689657509326935,
+              "previous_requested": -0.06977373361587524,
+              "realized": 0.7689657509326864,
+              "previous_realized": -0.0697737336158788,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            }
+          ]
+        },
+        "agent_1": {
+          "samples": 360,
+          "peaks": []
+        },
+        "agent_2": {
+          "samples": 343,
+          "peaks": [
+            {
+              "time_s": 0.3,
+              "jerk_m_s3": -7.082225751089588,
+              "cause": "safety_override",
+              "requested": 0.3049101009964943,
+              "previous_requested": 0.984616756439209,
+              "realized": -0.30822257510896733,
+              "previous_realized": 0.3999999999999915,
+              "override_causes": [
+                "native_realization_unattributed"
+              ],
+              "native_cause": "unattributed",
+              "active_bound": "following",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_3": {
+          "samples": 316,
+          "peaks": []
+        },
+        "agent_4": {
+          "samples": 428,
+          "peaks": []
+        },
+        "agent_5": {
+          "samples": 397,
+          "peaks": [
+            {
+              "time_s": 0.3,
+              "jerk_m_s3": -10.543052156878474,
+              "cause": "safety_override",
+              "requested": -0.15250257402658463,
+              "previous_requested": 0.5442632138729095,
+              "realized": -0.6543052156878559,
+              "previous_realized": 0.3999999999999915,
+              "override_causes": [
+                "comfort_rate_limit",
+                "native_realization_unattributed"
+              ],
+              "native_cause": "unattributed",
+              "active_bound": "following",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_6": {
+          "samples": 302,
+          "peaks": []
+        },
+        "agent_7": {
+          "samples": 412,
+          "peaks": []
+        }
+      }
+    },
+    {
+      "case_id": "v05-val-0-cruise",
+      "seed": 6900000,
+      "trace": "evaluation/case-01/episode-6900000-6e54f2f4/actions.jsonl.gz",
+      "trace_sha256": "b38f9398999ad3ce9351075fbc1c11844762e4b3647b0843bd034afc38952c69",
+      "decisions": 1556,
+      "cars": {
+        "agent_0": {
+          "samples": 1555,
+          "peaks": []
+        }
+      }
+    },
+    {
+      "case_id": "v05-val-0-passing",
+      "seed": 6900002,
+      "trace": "evaluation/case-02/episode-6900002-77af1798/actions.jsonl.gz",
+      "trace_sha256": "82b6cf64d1465f023434ac59edd0c1aa6d204fc7112fb8c9b9ebc65100b2344e",
+      "decisions": 1746,
+      "cars": {
+        "agent_0": {
+          "samples": 1745,
+          "peaks": []
+        }
+      }
+    },
+    {
+      "case_id": "v05-validation-i110-following",
+      "seed": 6900017,
+      "trace": "evaluation/case-03/episode-6900017-ceb0fa48/actions.jsonl.gz",
+      "trace_sha256": "4e351e63700d033efbfa7edc8e50c6dd106552d947130e68f75f336bc1d0b893",
+      "decisions": 412,
+      "cars": {
+        "agent_0": {
+          "samples": 364,
+          "peaks": []
+        },
+        "agent_1": {
+          "samples": 326,
+          "peaks": []
+        },
+        "agent_2": {
+          "samples": 357,
+          "peaks": [
+            {
+              "time_s": 33.1,
+              "jerk_m_s3": 5.327104106545377,
+              "cause": "policy_request",
+              "requested": 0.4872923791408539,
+              "previous_requested": -0.04541803151369095,
+              "realized": 0.4872923791408468,
+              "previous_realized": -0.04541803151369095,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": null
+            }
+          ]
+        },
+        "agent_3": {
+          "samples": 397,
+          "peaks": []
+        },
+        "agent_4": {
+          "samples": 389,
+          "peaks": []
+        },
+        "agent_5": {
+          "samples": 359,
+          "peaks": []
+        },
+        "agent_6": {
+          "samples": 411,
+          "peaks": []
+        },
+        "agent_7": {
+          "samples": 306,
+          "peaks": []
+        }
+      }
+    },
+    {
+      "case_id": "v02-development-train-2-lane-ramp120-merge",
+      "seed": 8400004,
+      "trace": "evaluation/case-04/episode-8400004-63bd4ec0/actions.jsonl.gz",
+      "trace_sha256": "fbb9bbf2b86707991461d29949d1ef0744f968fe76e2fe5a6597e4e2265e73ee",
+      "decisions": 830,
+      "cars": {
+        "agent_0": {
+          "samples": 829,
+          "peaks": [
+            {
+              "time_s": 1.8,
+              "jerk_m_s3": -51.05499229170718,
+              "cause": "safety_override",
+              "requested": 1.5926936715841293,
+              "previous_requested": 1.6015745401382446,
+              "realized": -3.5039246890324804,
+              "previous_realized": 1.6015745401382375,
+              "override_causes": [
+                "native_realization_unattributed"
+              ],
+              "native_cause": "unattributed",
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 1.9,
+              "jerk_m_s3": -9.96075310967477,
+              "cause": "safety_override",
+              "requested": 0.9696042239665985,
+              "previous_requested": 1.5926936715841293,
+              "realized": -4.499999999999957,
+              "previous_realized": -3.5039246890324804,
+              "override_causes": [
+                "native_realization_unattributed"
+              ],
+              "native_cause": "unattributed",
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 2.8,
+              "jerk_m_s3": 50.73517292737959,
+              "cause": "override_release",
+              "requested": 0.5735172927379608,
+              "previous_requested": 0.5629557520151138,
+              "realized": 0.5735172927379573,
+              "previous_realized": -4.500000000000002,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 2.9,
+              "jerk_m_s3": 8.479829877614975,
+              "cause": "policy_request",
+              "requested": 1.4215002804994583,
+              "previous_requested": 0.5735172927379608,
+              "realized": 1.4215002804994548,
+              "previous_realized": 0.5735172927379573,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            },
+            {
+              "time_s": 12.6,
+              "jerk_m_s3": 8.059185296297144,
+              "cause": "lane_change",
+              "requested": 1.4726863950490952,
+              "previous_requested": 0.6667678654193878,
+              "realized": 1.4726863950490987,
+              "previous_realized": 0.6667678654193843,
+              "override_causes": [],
+              "native_cause": null,
+              "active_bound": "speed_ceiling",
+              "merge_completed": false,
+              "route_completed": false,
+              "stable_merge_status": "pending"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "case_id": "v02-development-60mph-cruise",
+      "seed": 8400005,
+      "trace": "evaluation/case-05/episode-8400005-3d247fe9/actions.jsonl.gz",
+      "trace_sha256": "22e8b6b6d5d37f3f5a8e5acaac170cf3239d2caa1e80b42be4d7db78b9807f91",
+      "decisions": 901,
+      "cars": {
+        "agent_0": {
+          "samples": 872,
+          "peaks": []
+        },
+        "agent_1": {
+          "samples": 900,
+          "peaks": []
+        },
+        "agent_2": {
+          "samples": 884,
+          "peaks": []
+        },
+        "agent_3": {
+          "samples": 878,
+          "peaks": []
+        },
+        "agent_4": {
+          "samples": 856,
+          "peaks": []
+        },
+        "agent_5": {
+          "samples": 889,
+          "peaks": []
+        },
+        "agent_6": {
+          "samples": 855,
+          "peaks": []
+        },
+        "agent_7": {
+          "samples": 855,
+          "peaks": []
+        }
+      }
+    }
+  ],
+  "limitation": "Descriptive attribution on saved trajectories; not a causal or counterfactual claim."
+}

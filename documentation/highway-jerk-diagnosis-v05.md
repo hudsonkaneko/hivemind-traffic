@@ -470,3 +470,71 @@ mid-episode peaks of 5.3-10.5 m/s3 among the I-110 cars. Evidence:
 [dev-startup-eval.json](evidence/highway-jerk-diagnosis-v05/dev-startup-eval.json)
 (SHA-256 `7839a66dea73c68a4cd684ac574095ae456f70d57600c694bba2fd8a51a5e47f`).
 Development measurement only; no held-out evaluation or promotion.
+
+## Remaining jerk peaks explained (November 13, 2026)
+
+Source: the `startup` development run (`outputs/highway-flow-rl/v05/dev-startup-01`).
+Each of the 10 samples above 5 m/s3 was checked against three things: the
+actor's own requests (policy output), the 117 observation fields the actor saw
+before deciding (policy input), and the SUMO state (leaders, bounds, realized
+acceleration). The observation layout is 51 legacy local fields, then 18 flow
+extras, then 48 message fields. Attribution:
+[dev-startup-jerk-peaks.json](evidence/highway-jerk-diagnosis-v05/dev-startup-jerk-peaks.json)
+(SHA-256 `01c9bfd743bea1afe3f2728d26db645fb99d7cdec9189903f54cab6eafcdba44`).
+
+| # | Case / car | Time | Jerk (m/s3) | Cause |
+| --- | --- | ---: | ---: | --- |
+| 1-4 | ramp120 merge (historical network), focal | 1.8-2.9 s | -51.1, -10.0, +50.7, +8.5 | SUMO gore yield braking, release, and the actor resuming |
+| 5 | I-110 merge, `agent_5` | 0.3 s | -10.5 | SUMO's ACC car-following law |
+| 6 | I-110 merge, `agent_2` | 0.3 s | -7.1 | SUMO, during a lane change already in progress at handoff |
+| 7 | I-110 merge, focal `agent_0` | 3.9 s | -7.2 | Actor reacts to merge inputs switching on |
+| 8 | I-110 merge, focal `agent_0` | 13.3 s | +8.4 | Actor reacts to merge inputs switching off |
+| 9 | I-110 following, `agent_2` | 33.1 s | +5.3 | Leader leaves the end of the road |
+
+**1. SUMO's ACC model overrides commands that the actor's guard allows (peaks
+5-6).** The controlled vehicle type uses SUMO's `ACC` car-following model
+(tau 1.5 s), and speed mode 31 makes SUMO cap every command at that model's
+"safe" speed. For ACC this is a comfort control law, not a collision limit.
+`agent_5` had a leader 32 m ahead, 1.2 m/s slower. The actor's analytical
+following bound allowed +31.7 m/s2 and the actor applied 0.0, but SUMO's ACC
+follow speed allowed only -0.55 m/s2 (realized -0.65). So the actor's guard and
+SUMO's model disagree about what is allowed. `agent_2` started mid lane change,
+and its realized -0.31 m/s2 likely reflects SUMO also following the target-lane
+leader (not verified).
+
+**2. The actor reacts in one step to inputs that switch on or off (peaks 7-8,
+and 9).** The policy maps inputs to acceleration with no memory of its previous
+output beyond one observation field. When groups of binary inputs flip in a
+single step, its request jumps:
+
+- At 3.9 s the focal car enters `sb2_0` from the ramp connector. In one step,
+  `merge_context_known`, `merge_target_lane_delta`, `target_front_present`,
+  `target_rear_present`, `left_lane_exists` and `left_rear_present` go from 0
+  to 1. The request drops from +1.80 to +1.08 m/s2.
+- At 13.3 s the lane change completes. `requires_merge` and the target fields
+  go from 1 to 0, and `right_lane_exists` from 0 to 1. The request jumps from
+  -0.07 to +0.77 m/s2.
+- At 33.1 s the following car's leader `slow_leader` (43.5 m ahead) reaches the
+  end of the 64 m final road segment and leaves the simulation, with the follower
+  49 m from its own route end. `own_front_present` goes from 1 to 0, and the
+  request jumps from -0.05 to +0.49 m/s2. That is an end-of-road artifact, not
+  real traffic.
+
+**3. The training reward hardly penalizes these jumps.** v04 trained with
+`jerk` weight 0.0 and `jerk_huber` 0.09. At the 7.2 m/s3 peak the jerk term was
+-0.28, while the potential-shaping term `gap_preparation` swung from +0.97 to
+-0.01 between the same two steps. The shaping rewards flip with the same
+discrete inputs, so they teach the jumps rather than discourage them. The 5 m/s3
+limit exists only in the acceptance gate, which training never sees.
+
+**What would fix each cause** (each changes the environment, the evaluation
+rules or training, so each needs a decision):
+
+| Cause | Peaks | Fix | Type |
+| --- | --- | --- | --- |
+| Gore yield on historical networks | 1-4 | Use the ramp-started networks (already built) | network |
+| SUMO ACC law vs actor guard | 5-6 | Give controlled cars a collision-only car-following model, or put SUMO's ACC limit into the actor's guard and mask | environment |
+| Leader leaves at road end | 9 | Stop measuring jerk/headway in the final stretch, or extend the last segment | evaluation rule / network |
+| Step reactions to input flips | 7-8 | Train with a real jerk penalty matched to the 5 m/s3 gate (the v05 `full` variant's `jerk_excess`), and/or smooth the switching inputs | training |
+
+No simulation, training or code change was made for this analysis.
