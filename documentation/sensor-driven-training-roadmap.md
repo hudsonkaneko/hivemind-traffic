@@ -710,3 +710,11 @@ borderline projected-gap mask closed, and the actor rode the acceleration lane
 to its end. That is a fragile merge decision, needing a training change.
 Merge quality still fails everywhere. The dev-case run was blocked by the
 episode budget. No training. [Details](highway-jerk-diagnosis-v05.md#startup-handoff-ramp-november-11-2026).
+
+### v49 - November 13: startup mode on development cases
+
+The diagnostic episode cap was raised from 60 to 80 by the user. Frozen v04
+actor with the startup handoff on the six v04 development cases: 2/6 cases
+pass (v04 final 0/6), and failing cars fell from 18 to 7, with no collisions.
+Remaining: historical gore braking, I-110 mid-episode jerk, merge quality.
+No training. [Details](highway-jerk-diagnosis-v05.md#startup-mode-on-the-v04-development-cases-november-13-2026).

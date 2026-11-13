@@ -1,0 +1,156 @@
+{
+  "schema": "highway_flow_rl_v05_dev_startup_eval",
+  "date": "2026-11-13",
+  "training": false,
+  "held_out": false,
+  "checkpoint": "outputs/highway-flow-rl/v04/long-round-03/last.pt",
+  "variant": "startup",
+  "budget_change": "max_diagnostic_episodes 60 -> 80 (user decision)",
+  "summary": {
+    "pooled_intervention_fraction": 0.006005652378709373,
+    "max_peak_jerk_m_s3": 51.05499229170718,
+    "collisions": 0,
+    "teleports": 0,
+    "stable_merges": 2,
+    "development_gates_passed": false
+  },
+  "v04_final_summary": {
+    "pooled_intervention_fraction": 0.004181636138759644,
+    "max_peak_jerk_m_s3": 50.760946720838525,
+    "collisions": 0,
+    "stable_merges": 2
+  },
+  "cases": [
+    {
+      "case_id": "v05-validation-i110-merge",
+      "v04_passed": false,
+      "startup_passed": false,
+      "startup_failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "v04_failing_cars": [
+        "agent_0",
+        "agent_2",
+        "agent_3",
+        "agent_5",
+        "agent_6"
+      ],
+      "startup_failing_cars": {
+        "agent_0": [
+          "peak_jerk"
+        ],
+        "agent_2": [
+          "peak_jerk"
+        ],
+        "agent_5": [
+          "peak_jerk"
+        ]
+      },
+      "v04_peak_jerk": 13.339847712514086,
+      "startup_peak_jerk": 10.543052156878474,
+      "startup_intervention_fraction": 0.005786249149081007,
+      "collisions": 0
+    },
+    {
+      "case_id": "v05-val-0-cruise",
+      "v04_passed": false,
+      "startup_passed": true,
+      "startup_failures": [],
+      "v04_failing_cars": [
+        "agent_0"
+      ],
+      "startup_failing_cars": {},
+      "v04_peak_jerk": 5.6852273643016815,
+      "startup_peak_jerk": 3.9999999999999147,
+      "startup_intervention_fraction": 0.0012853470437017994,
+      "collisions": 0
+    },
+    {
+      "case_id": "v05-val-0-passing",
+      "v04_passed": false,
+      "startup_passed": true,
+      "startup_failures": [],
+      "v04_failing_cars": [
+        "agent_0"
+      ],
+      "startup_failing_cars": {},
+      "v04_peak_jerk": 7.105716913938487,
+      "startup_peak_jerk": 3.9999999999999147,
+      "startup_intervention_fraction": 0.010882016036655211,
+      "collisions": 0
+    },
+    {
+      "case_id": "v05-validation-i110-following",
+      "v04_passed": false,
+      "startup_passed": false,
+      "startup_failures": [
+        "per_car_route_comfort_or_control"
+      ],
+      "v04_failing_cars": [
+        "agent_2",
+        "agent_4",
+        "agent_5",
+        "agent_7"
+      ],
+      "startup_failing_cars": {
+        "agent_2": [
+          "peak_jerk"
+        ],
+        "agent_7": [
+          "interventions"
+        ]
+      },
+      "v04_peak_jerk": 8.190788775682378,
+      "startup_peak_jerk": 5.327104106545377,
+      "startup_intervention_fraction": 0.013712718546451834,
+      "collisions": 0
+    },
+    {
+      "case_id": "v02-development-train-2-lane-ramp120-merge",
+      "v04_passed": false,
+      "startup_passed": false,
+      "startup_failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality"
+      ],
+      "v04_failing_cars": [
+        "agent_0"
+      ],
+      "startup_failing_cars": {
+        "agent_0": [
+          "peak_jerk"
+        ]
+      },
+      "v04_peak_jerk": 50.760946720838525,
+      "startup_peak_jerk": 51.05499229170718,
+      "startup_intervention_fraction": 0.016867469879518072,
+      "collisions": 0
+    },
+    {
+      "case_id": "v02-development-60mph-cruise",
+      "v04_passed": false,
+      "startup_passed": false,
+      "startup_failures": [
+        "per_car_route_comfort_or_control"
+      ],
+      "v04_failing_cars": [
+        "agent_0",
+        "agent_2",
+        "agent_4",
+        "agent_5",
+        "agent_6",
+        "agent_7"
+      ],
+      "startup_failing_cars": {
+        "agent_5": [
+          "avoidable_braking"
+        ]
+      },
+      "v04_peak_jerk": 9.952054172754288,
+      "startup_peak_jerk": 3.9999999999999147,
+      "startup_intervention_fraction": 0.0014291839359725598,
+      "collisions": 0
+    }
+  ]
+}

@@ -68,7 +68,7 @@ def validate_config(cfg, require_training=False):
     expected = dict(per_round_decisions=300000, total_decisions=4630000,
         per_round_wall_seconds=5400, total_wall_seconds=41400, final_reserve_seconds=900,
         inherited_spent_seconds=0, preparation_wall_seconds=3600, diagnostic_wall_seconds=2700,
-        rollout_decisions=38400, max_diagnostic_episodes=60,
+        rollout_decisions=38400, max_diagnostic_episodes=80,
         conditional_second_round_authorized=False)
     if budget != expected:
         raise ValueError('Declared v05 budget changed')

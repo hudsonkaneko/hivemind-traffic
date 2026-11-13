@@ -437,6 +437,36 @@ it was designed to do. The regression exposes a fragile merge decision in the
 frozen actor: a borderline gap check plus no learned strategy for creating a
 new gap. That needs a policy or training change, not a handoff change.
 
-**Not run:** the startup mode on v04's original six development cases (with
-I-110). The runner refused it, because the config's authorized budget of 60
-diagnostic episodes is used up. Raising it is a budget decision for the user.
+**Development cases:** first blocked by the 60-episode diagnostic budget; run
+on November 13 after the user raised the budget (see below).
+
+## Startup mode on the v04 development cases (November 13, 2026)
+
+**Budget change (user decision, November 13):** the v05 diagnostic episode cap
+was raised from 60 to 80, in the pinned contract
+(`traffic/highway_flow_rl_v05_contract.py`) and the pilot config. No other
+budget value changed, and training remains unauthorized.
+
+The frozen v04 final actor ran in `startup` mode on the same six development
+cases and seeds as the v04 final validation. These are the original networks,
+including I-110 and the historical ramp120 layout. It used 6 episodes and 79 s.
+Config: [highway-flow-rl-v05-dev-startup-01.json](../configs/evaluation/highway-flow-rl-v05-dev-startup-01.json).
+
+| Case | Peak jerk, v04 -> startup | Failing cars | Case gate |
+| --- | ---: | ---: | --- |
+| I-110 merge (8 AVs) | 13.3 -> 10.5 | 5 -> 3 (jerk) | fail (+ merge quality) |
+| Cruise, 1 AV | 5.7 -> 4.0 | 1 -> 0 | **pass** |
+| Passing, 1 AV | 7.1 -> 4.0 | 1 -> 0 | **pass** |
+| I-110 following (8 AVs) | 8.2 -> 5.3 | 4 -> 2 (jerk 5.3; interventions) | fail |
+| 2-lane ramp120 merge (historical network) | 50.8 -> 51.1 | 1 -> 1 (gore braking) | fail (+ merge quality) |
+| 60 mph cruise (8 AVs) | 10.0 -> 4.0 | 6 -> 1 (avoidable braking) | fail |
+
+Overall: 2/6 cases pass every gate (v04 final 0/6; v04 selected best 1/6), and
+failing cars fell from 18 to 7. Zero collisions and teleports; 2/2 stable merges.
+Pooled interventions rose from 0.42% to 0.60%, because the handoff steps count
+as interventions. The remaining jerk failures are not startup peaks: the
+historical ramp120 gore braking (fixed by the ramp-started networks), and
+mid-episode peaks of 5.3-10.5 m/s3 among the I-110 cars. Evidence:
+[dev-startup-eval.json](evidence/highway-jerk-diagnosis-v05/dev-startup-eval.json)
+(SHA-256 `7839a66dea73c68a4cd684ac574095ae456f70d57600c694bba2fd8a51a5e47f`).
+Development measurement only; no held-out evaluation or promotion.

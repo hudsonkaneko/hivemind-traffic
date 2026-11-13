@@ -64,7 +64,7 @@
     "preparation_wall_seconds": 3600,
     "diagnostic_wall_seconds": 2700,
     "rollout_decisions": 38400,
-    "max_diagnostic_episodes": 60,
+    "max_diagnostic_episodes": 80,
     "conditional_second_round_authorized": false
   },
   "critic_warmup_decisions": 0,

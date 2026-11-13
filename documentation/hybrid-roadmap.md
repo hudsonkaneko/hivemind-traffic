@@ -895,3 +895,13 @@ the slightly slower start closed a borderline projected-gap lane mask. The
 actor then stayed in the acceleration lane until its end (17.9% overrides,
 28.9 m/s3), exposing fragile merge decisions. No training. The dev-case run
 was blocked by the 60-episode diagnostic budget. [Details](highway-jerk-diagnosis-v05.md#startup-handoff-ramp-november-11-2026).
+
+
+## November 13, 2026 - v05: startup mode on v04 development cases
+
+User raised the v05 diagnostic episode cap from 60 to 80. The frozen v04
+actor in `startup` mode on the six v04 development cases: 2/6 cases pass every
+gate (v04 final 0/6, best 1/6), and failing cars fell from 18 to 7, with zero
+collisions. Remaining failures: historical ramp120 gore braking, I-110
+mid-episode jerk (5.3-10.5 m/s3), one following-car intervention and one
+avoidable-braking car. Merge quality still fails. No training. [Details](highway-jerk-diagnosis-v05.md#startup-mode-on-the-v04-development-cases-november-13-2026).
