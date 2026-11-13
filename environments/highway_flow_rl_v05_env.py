@@ -19,10 +19,15 @@ VARIANTS = ('legacy', 'continuity', 'full', 'startup')
 
 
 class HighwayFlowRLV05Env(HighwayFlowRLV04Env):
-    def __init__(self, *args, v05_variant='full', v05_weights=None, **kwargs):
+    def __init__(self, *args, v05_variant='full', v05_weights=None,
+                 controlled_car_follow_model='ACC', road_end_leader_exit_rule=False, **kwargs):
         if v05_variant not in VARIANTS:
             raise ValueError('Unknown v05 variant')
+        if controlled_car_follow_model not in ('ACC', 'Krauss'):
+            raise ValueError('Controlled car-following model must be ACC or Krauss')
         self.v05_variant = v05_variant
+        self.controlled_car_follow_model = controlled_car_follow_model
+        self.road_end_leader_exit_rule = bool(road_end_leader_exit_rule)
         self.v05_weights = dict(WEIGHTS if v05_weights is None else v05_weights)
         if self.v05_weights != WEIGHTS:
             raise ValueError('Unreviewed v05 reward weights')
@@ -35,6 +40,8 @@ class HighwayFlowRLV05Env(HighwayFlowRLV04Env):
         self._planner, self._reference_targets, self._conditioning = {}, {}, {}
         self._v05_seen = set()
         self._handoff = {}  # agent -> handoff decisions so far, or None once complete
+        self._leader_exit_pending = set()  # leader left the road end last step
+        self.road_end = dict(leader_exits=0, exempt_decisions=0, per_car={})
         self.v05_metrics = dict(per_car={}, phases={}, decisions=0, conditioning_changes=0,
             safety_or_native_changes=0, combined_changes=0, safety_exceptions=0,
             reward_terms={}, acceptance_target='unchanged_v04_reference',
@@ -106,6 +113,7 @@ class HighwayFlowRLV05Env(HighwayFlowRLV04Env):
             for key,value in extra.items():
                 self.stats['reward_terms'][key] = self.stats['reward_terms'].get(key,0.)+value
                 self.v05_metrics['reward_terms'][key] = self.v05_metrics['reward_terms'].get(key,0.)+value
+            self._road_end_sample(agent, info)
             phase = ('startup' if agent not in self._v05_seen else
                      'braking_recovery' if audit['measured'] < -.2 and audit['requested'] > audit['measured'] else
                      'merge' if merge_active else 'normal')
@@ -125,8 +133,40 @@ class HighwayFlowRLV05Env(HighwayFlowRLV04Env):
                 reward_target=snapshot['target'], raw_actor_action_preserved=True,
                 safety_or_native_change=non_comfort, variant=self.v05_variant))
 
+    def _road_end_sample(self, agent, info):
+        """Track per-car peak jerk, exempting the one decision after a leader exit.
+
+        When the car's own leader leaves the simulation at its route end, the
+        actor sees an empty lane on the next decision. That reaction is an
+        end-of-network artifact, so with the rule enabled exactly that one
+        decision is excluded from the per-car jerk gate. Every other sample,
+        including the following ones, still counts.
+        """
+        car = self.road_end['per_car'].setdefault(agent, dict(peak_abs_jerk_m_s3=0., exempt=[]))
+        jerk = info.get('realized_jerk_m_s3')
+        exempt = agent in self._leader_exit_pending
+        self._leader_exit_pending.discard(agent)
+        if jerk is not None:
+            if exempt:
+                car['exempt'].append(dict(time_s=round(self.time, 1), jerk_m_s3=jerk))
+                self.road_end['exempt_decisions'] += 1
+            else:
+                car['peak_abs_jerk_m_s3'] = max(car['peak_abs_jerk_m_s3'], abs(jerk))
+        front = (self._flow_before_context.get(agent, {}).get('corridors', {}).get('own', {}).get('front') or {})
+        leader = front.get('id')
+        if leader and leader not in self.states and leader in self._arrived_this_step():
+            self._leader_exit_pending.add(agent)
+            self.road_end['leader_exits'] += 1
+
+    def _arrived_this_step(self):
+        if not hasattr(self, '_arrival_cache') or self._arrival_cache[0] != self.time:
+            self._arrival_cache = (self.time, set(self.conn.simulation.getArrivedIDList()))
+        return self._arrival_cache[1]
+
     def report(self):
         result = super().report()
+        result.update(controlled_car_follow_model=self.controlled_car_follow_model,
+            road_end_leader_exit_rule=self.road_end_leader_exit_rule, road_end=deepcopy(self.road_end))
         result.update(schema='highway_flow_rl_continuity_env_v05', reward_version=REWARD_VERSION,
             objective_version=REWARD_VERSION, v05_variant=self.v05_variant,
             v05_weights=self.v05_weights, v05_settings=SETTINGS, v05_metrics=deepcopy(self.v05_metrics),

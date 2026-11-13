@@ -1,0 +1,281 @@
+{
+  "schema": "highway_flow_rl_v05_native_fixes_eval",
+  "date": "2026-11-13",
+  "training": false,
+  "held_out": false,
+  "dev-native-fixes-01": {
+    "summary": {
+      "pooled_intervention_fraction": 0.0026498645624779176,
+      "max_peak_jerk_m_s3": 51.05499229170718,
+      "collisions": 0,
+      "teleports": 0,
+      "stable_merges": 2,
+      "development_gates_passed": false
+    },
+    "cases": [
+      {
+        "case_id": "v05-validation-i110-merge",
+        "passed": false,
+        "failures": [
+          "per_car_route_comfort_or_control",
+          "rolling_merge_quality"
+        ],
+        "failing_cars": {
+          "agent_0": [
+            "peak_jerk"
+          ]
+        },
+        "peak_jerk": 8.387537226080788,
+        "intervention_fraction": 0.004765146358066712,
+        "road_end_exempt": [
+          {
+            "agent": "agent_1",
+            "time_s": 30.5,
+            "jerk_m_s3": -0.7802911847829108
+          },
+          {
+            "agent": "agent_2",
+            "time_s": 31.9,
+            "jerk_m_s3": 0.7784596085549822
+          },
+          {
+            "agent": "agent_4",
+            "time_s": 40.0,
+            "jerk_m_s3": 0.2448035776616564
+          },
+          {
+            "agent": "agent_5",
+            "time_s": 36.3,
+            "jerk_m_s3": -0.04611872136592865
+          },
+          {
+            "agent": "agent_7",
+            "time_s": 38.1,
+            "jerk_m_s3": -0.43495818972587585
+          }
+        ],
+        "car_follow_model": "Krauss"
+      },
+      {
+        "case_id": "v05-val-0-cruise",
+        "passed": true,
+        "failures": [],
+        "failing_cars": {},
+        "peak_jerk": 3.9999999999999147,
+        "intervention_fraction": 0.0012853470437017994,
+        "road_end_exempt": [],
+        "car_follow_model": "Krauss"
+      },
+      {
+        "case_id": "v05-val-0-passing",
+        "passed": true,
+        "failures": [],
+        "failing_cars": {},
+        "peak_jerk": 3.9999999999999147,
+        "intervention_fraction": 0.0005730659025787965,
+        "road_end_exempt": [
+          {
+            "agent": "agent_0",
+            "time_s": 166.2,
+            "jerk_m_s3": -0.425622090697253
+          }
+        ],
+        "car_follow_model": "Krauss"
+      },
+      {
+        "case_id": "v05-validation-i110-following",
+        "passed": true,
+        "failures": [],
+        "failing_cars": {},
+        "peak_jerk": 4.63931478559978,
+        "intervention_fraction": 0.0013717421124828531,
+        "road_end_exempt": [
+          {
+            "agent": "agent_0",
+            "time_s": 32.6,
+            "jerk_m_s3": -0.9611494094134088
+          },
+          {
+            "agent": "agent_2",
+            "time_s": 33.1,
+            "jerk_m_s3": 5.341421589255191
+          },
+          {
+            "agent": "agent_3",
+            "time_s": 36.2,
+            "jerk_m_s3": -0.18949598073980667
+          },
+          {
+            "agent": "agent_4",
+            "time_s": 36.5,
+            "jerk_m_s3": 1.0019535571338167
+          },
+          {
+            "agent": "agent_5",
+            "time_s": 32.9,
+            "jerk_m_s3": 0.4168584197760339
+          },
+          {
+            "agent": "agent_6",
+            "time_s": 36.0,
+            "jerk_m_s3": -0.5903632193803077
+          }
+        ],
+        "car_follow_model": "Krauss"
+      },
+      {
+        "case_id": "v02-development-train-2-lane-ramp120-merge",
+        "passed": false,
+        "failures": [
+          "per_car_route_comfort_or_control",
+          "rolling_merge_quality"
+        ],
+        "failing_cars": {
+          "agent_0": [
+            "peak_jerk"
+          ]
+        },
+        "peak_jerk": 51.05499229170718,
+        "intervention_fraction": 0.016867469879518072,
+        "road_end_exempt": [],
+        "car_follow_model": "Krauss"
+      },
+      {
+        "case_id": "v02-development-60mph-cruise",
+        "passed": false,
+        "failures": [
+          "per_car_route_comfort_or_control"
+        ],
+        "failing_cars": {
+          "agent_5": [
+            "avoidable_braking"
+          ]
+        },
+        "peak_jerk": 3.9999999999999147,
+        "intervention_fraction": 0.0014291839359725598,
+        "road_end_exempt": [
+          {
+            "agent": "agent_1",
+            "time_s": 87.5,
+            "jerk_m_s3": -0.5217435210944643
+          },
+          {
+            "agent": "agent_2",
+            "time_s": 85.8,
+            "jerk_m_s3": -0.14815233647809123
+          },
+          {
+            "agent": "agent_3",
+            "time_s": 85.9,
+            "jerk_m_s3": 0.5442619323730469
+          },
+          {
+            "agent": "agent_5",
+            "time_s": 85.8,
+            "jerk_m_s3": -1.2780692428350449
+          }
+        ],
+        "car_follow_model": "Krauss"
+      }
+    ]
+  },
+  "ramp-native-fixes-01": {
+    "summary": {
+      "pooled_intervention_fraction": 0.024853801169590642,
+      "max_peak_jerk_m_s3": 28.888966339491063,
+      "collisions": 0,
+      "teleports": 0,
+      "stable_merges": 5,
+      "development_gates_passed": false
+    },
+    "cases": [
+      {
+        "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+        "passed": false,
+        "failures": [
+          "per_car_route_comfort_or_control",
+          "stable_merge",
+          "rolling_merge_quality"
+        ],
+        "failing_cars": {
+          "agent_0": [
+            "peak_jerk",
+            "interventions",
+            "headway"
+          ]
+        },
+        "peak_jerk": 28.888966339491063,
+        "intervention_fraction": 0.10509554140127389,
+        "road_end_exempt": [
+          {
+            "agent": "agent_0",
+            "time_s": 90.3,
+            "jerk_m_s3": 0.9573564678429847
+          }
+        ],
+        "car_follow_model": "Krauss"
+      },
+      {
+        "case_id": "ramp-eval-train-3-lane-ramp240-ramp-started",
+        "passed": false,
+        "failures": [
+          "rolling_merge_quality"
+        ],
+        "failing_cars": {},
+        "peak_jerk": 3.9999999999999147,
+        "intervention_fraction": 0.005772005772005772,
+        "road_end_exempt": [],
+        "car_follow_model": "Krauss"
+      },
+      {
+        "case_id": "ramp-eval-train-4-lane-ramp120-ramp-started",
+        "passed": false,
+        "failures": [
+          "rolling_merge_quality"
+        ],
+        "failing_cars": {},
+        "peak_jerk": 3.9999999999999147,
+        "intervention_fraction": 0.004739336492890996,
+        "road_end_exempt": [],
+        "car_follow_model": "Krauss"
+      },
+      {
+        "case_id": "ramp-eval-train-5-lane-ramp240-ramp-started",
+        "passed": false,
+        "failures": [
+          "rolling_merge_quality"
+        ],
+        "failing_cars": {},
+        "peak_jerk": 3.9999999999999147,
+        "intervention_fraction": 0.005305039787798408,
+        "road_end_exempt": [],
+        "car_follow_model": "Krauss"
+      },
+      {
+        "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+        "passed": false,
+        "failures": [
+          "rolling_merge_quality"
+        ],
+        "failing_cars": {},
+        "peak_jerk": 3.9999999999999147,
+        "intervention_fraction": 0.005376344086021506,
+        "road_end_exempt": [],
+        "car_follow_model": "Krauss"
+      },
+      {
+        "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+        "passed": false,
+        "failures": [
+          "rolling_merge_quality"
+        ],
+        "failing_cars": {},
+        "peak_jerk": 3.9999999999999147,
+        "intervention_fraction": 0.004932182490752158,
+        "road_end_exempt": [],
+        "car_follow_model": "Krauss"
+      }
+    ]
+  },
+  "note": "ramp120 ramp-started headway 0.34 s: native main_3 keepRight lane change into sb4_0 3.0 m ahead of the AV (followerSecureGap 0.00 under Krauss); AV slower, TTC 38 s; not observed under ACC"
+}

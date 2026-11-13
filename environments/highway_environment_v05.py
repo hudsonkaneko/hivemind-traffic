@@ -167,7 +167,8 @@ class HighwayEnvironmentV05Env(HighwayPopulationEnv):
         self.population_manifest = write_demand(path, seed, self.graph, self.task,
             self.controlled_count, self.total_vehicles, speed_limit_m_s=self.speed_limit_m_s,
             difficulty=self.difficulty, traffic_mode=self.traffic_mode,
-            stabilization_seconds=self.native_warmup_seconds, horizon_seconds=self.horizon * DT)
+            stabilization_seconds=self.native_warmup_seconds, horizon_seconds=self.horizon * DT,
+            controlled_car_follow_model=getattr(self, 'controlled_car_follow_model', 'ACC'))
         self.merge_agents = tuple(v['vehicle_id'] for v in self.population_manifest
                                   if v['controlled'] and v['route'] == 'ramp')
 

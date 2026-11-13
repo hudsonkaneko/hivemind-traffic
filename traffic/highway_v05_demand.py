@@ -167,7 +167,8 @@ def validate_initial_spawns(graph, rows, *, ceiling=CAP):
 
 def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
                  speed_limit_m_s=None, difficulty=0, traffic_mode='initial',
-                 stabilization_seconds=8., horizon_seconds=80., assignment_seed=None):
+                 stabilization_seconds=8., horizon_seconds=80., assignment_seed=None,
+                 controlled_car_follow_model='ACC'):
     """Write deterministic initial/sustained traffic and return all vehicle rows.
 
     ``total_vehicles`` means the complete initial cohort (8, 16 or 24), including
@@ -178,6 +179,10 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
     Here ``stabilization_seconds`` means native reset warmup before measurement,
     not the environment's separate post-merge stabilization scoring window.
     """
+    # 'ACC' (historical) makes SUMO cap AV commands at its ACC comfort law;
+    # 'Krauss' keeps only SUMO's reaction-time collision-avoidance limit.
+    if controlled_car_follow_model not in ('ACC', 'Krauss'):
+        raise ValueError('Controlled car-following model must be ACC or Krauss')
     seed = _integer('seed', seed, 0)
     assignment_seed = seed if assignment_seed is None else _integer('assignment_seed', assignment_seed, 0)
     controlled_count = _integer('controlled_count', controlled_count, 0, MAX_AGENTS)
@@ -282,7 +287,7 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
     root = ET.Element('routes')
     common = dict(length=str(LENGTH), minGap=str(MIN_GAP), emergencyDecel='9',
                   maxSpeed=str(CAP), speedDev='0', sigma='0')
-    ET.SubElement(root, 'vType', id='controlled', carFollowModel='ACC', tau='1.5',
+    ET.SubElement(root, 'vType', id='controlled', carFollowModel=controlled_car_follow_model, tau='1.5',
                   accel='2', decel='4.5', speedFactor='1', **common)
     for name, profile in PROFILES.items():
         ET.SubElement(root, 'vType', id=name, carFollowModel='IDM',

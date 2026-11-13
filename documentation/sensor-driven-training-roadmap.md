@@ -726,3 +726,12 @@ The 10 peaks in the startup dev run come from: gore yield (historical network,
 policy step reactions to switching merge inputs (2), which the training reward
 barely penalizes. Fixes are recorded for decision (network, environment,
 evaluation rule, training). [Details](highway-jerk-diagnosis-v05.md#remaining-jerk-peaks-explained-november-13-2026).
+
+### v51 - November 13: native car-following and road-end fixes
+
+Opt-in Krauss car-following for AVs and a road-end leader-exit jerk rule.
+Frozen v04 actor: 3/6 development cases pass, failing cars fell from 7 to 3,
+and interventions from 0.60% to 0.26%. Side effect: closer native cut-ins
+ahead of slower AVs (one 0.34 s headway case). Remaining blockers need
+training: focal merge input reactions, merge quality, gap recovery and one
+avoidable-braking cruise car. [Details](highway-jerk-diagnosis-v05.md#native-car-following-and-road-end-fixes-november-13-2026).

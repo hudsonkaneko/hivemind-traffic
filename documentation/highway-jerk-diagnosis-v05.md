@@ -538,3 +538,62 @@ rules or training, so each needs a decision):
 | Step reactions to input flips | 7-8 | Train with a real jerk penalty matched to the 5 m/s3 gate (the v05 `full` variant's `jerk_excess`), and/or smooth the switching inputs | training |
 
 No simulation, training or code change was made for this analysis.
+
+## Native car-following and road-end fixes (November 13, 2026)
+
+Both fixes are opt-in config keys. With them absent, behavior and gates are
+identical to before: the v05 `development_gates` function stays byte-identical
+to v04's, as an existing test requires.
+
+**1. `controlled_car_follow_model: "Krauss"`** (default `"ACC"`). Written into
+the controlled vType by `traffic/highway_v05_demand.py`. SUMO's Krauss model
+caps commands only at its reaction-time collision-avoidance speed. At the two
+I-110 states where ACC trimmed the actor (shown earlier), Krauss allows +2.0
+m/s2. In close or fast-closing situations it still brakes hard: -4.5 to -13.1
+m/s2 in a direct `getFollowSpeed` comparison.
+
+**2. `road_end_leader_exit_rule: true`** (default off). The v05 environment
+records when a car's own leader leaves the simulation at its route end
+(`getArrivedIDList`). It excludes exactly the next decision from that car's
+per-car jerk peak and lists every exemption. The gate wrapper `ruled_gates`
+substitutes that peak and then calls the unchanged gates. The uncensored peak
+stays in the report.
+
+Tests: [`tests/test_highway_flow_rl_v05_native_fixes.py`](../tests/test_highway_flow_rl_v05_native_fixes.py).
+The four changed runtime files were copied over the main checkout only after
+confirming they matched the branch's previous commit. Configs:
+[dev](../configs/evaluation/highway-flow-rl-v05-dev-native-fixes-01.json),
+[ramp](../configs/evaluation/highway-flow-rl-v05-ramp-native-fixes-01.json).
+
+**Frozen v04 actor, `startup` mode plus both fixes:** 12 episodes, 106 s;
+diagnostic episodes used 78/80.
+
+| Development case | Before fixes | After fixes |
+| --- | --- | --- |
+| I-110 merge | 3 cars fail jerk (max 10.5) | 1 car fails: focal, 8.4 m/s3 policy reaction |
+| Cruise, 1 AV | pass | pass |
+| Passing, 1 AV | pass | pass |
+| I-110 following | 2 cars fail (jerk 5.3; interventions) | **pass** |
+| ramp120 merge, historical network | gore braking, 51.1 | unchanged (network issue) |
+| 60 mph cruise | 1 car avoidable braking | unchanged |
+
+3/6 development cases now pass every gate (before fixes 2/6; v04 final 0/6),
+and failing cars fell from 7 to 3. Pooled interventions fell from 0.60% to
+0.26%, with zero collisions and teleports and 2/2 stable merges. The road-end
+rule exempted 17 decisions across both runs, all genuine leader exits. Only one
+exceeded 5 m/s3: the 5.34 m/s3 following-case peak diagnosed earlier.
+
+On the six ramp-started layouts, five are unchanged: every per-car check passes
+and only merge quality fails. On `train-2-lane-ramp120` (already failing, as
+diagnosed above), interventions fell from 17.9% to 10.5%. But it now also fails
+headway, at 0.34 s. Cause: the native car `main_3` made a `keepRight` lane
+change into the AV's lane 3.0 m ahead. SUMO logged the AV's required follower
+gap as 0.00, because under Krauss a slower follower needs no secure gap. TTC
+stayed 38 s, since `main_3` was faster. This cut-in did not occur with ACC.
+**Side effect: with Krauss, native drivers cut in closer in front of AVs.**
+Whether to accept that, lengthen Krauss's gap, or keep ACC and instead teach the
+actor ACC's limit is a decision for the user.
+
+Evidence: [native-fixes-eval.json](evidence/highway-jerk-diagnosis-v05/native-fixes-eval.json)
+(SHA-256 `434bd053271a53f0479f42a286f30711acfab06f8a6d5419c1163f20e50a364f`).
+No training.

@@ -1331,3 +1331,15 @@ of the road. Two are the policy reacting in one step to merge inputs switching
 on or off at lane transitions, which training barely penalizes (jerk weight
 0.0, huber 0.09, against shaping swings of about 1). Fix options are recorded
 for decision. No simulation or training. [Details](highway-jerk-diagnosis-v05.md#remaining-jerk-peaks-explained-november-13-2026).
+
+
+## November 13, 2026 - v05: native car-following and road-end fixes
+
+Added two opt-in options. `controlled_car_follow_model: Krauss` stops SUMO's
+ACC comfort law from overriding AV commands. `road_end_leader_exit_rule`
+exempts only the decision right after a leader leaves the road end. The gate
+function is unchanged; a wrapper applies the rule. Frozen v04 actor with
+startup mode and both fixes: 3/6 development cases pass (was 2/6), failing cars
+fell from 7 to 3, interventions from 0.60% to 0.26%, with zero collisions. Side
+effect: on one ramp layout a native car cut in 3 m ahead, because Krauss gives
+slower AVs no secure gap (headway 0.34 s, TTC 38 s). No training. [Details](highway-jerk-diagnosis-v05.md#native-car-following-and-road-end-fixes-november-13-2026).

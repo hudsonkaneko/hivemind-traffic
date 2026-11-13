@@ -224,7 +224,9 @@ def env_for(cfg, row, directory):
         control_target_version='v3', speed_limit_m_s=row['speed_limit_m_s'], difficulty=row['difficulty'],
         traffic_mode=row['traffic_mode'], lane_change_duration=3., stabilization_seconds=8.,
         jerk_reward_weight=cfg['reward_weights']['jerk'], v05_weights=cfg['v05_reward_weights'],
-        v05_variant=cfg['variant'])
+        v05_variant=cfg['variant'],
+        controlled_car_follow_model=cfg.get('controlled_car_follow_model', 'ACC'),
+        road_end_leader_exit_rule=cfg.get('road_end_leader_exit_rule', False))
     env.case_id = case['id']
     if fixture and fixture.get('native_conflict_schedule'):
         from scripts.screen_flow_rl_v02_network import install_conflict_schedule
@@ -321,6 +323,27 @@ def episode(cfg, row, directory, model, *, collect=False, limit=None, deadline=N
             report['native_emergencies'] = native_emergency_report(env.directory / 'sumo-errors.log')
 
 
+def ruled_gates(report):
+    """Apply opt-in evaluation rules, then the unchanged development gates.
+
+    road_end_leader_exit_rule: each car's peak jerk excludes only the single
+    decision right after its own leader left the network at its route end
+    (environment evidence in report['road_end']). Missing evidence fails the
+    gate. The original uncensored peak stays in the report.
+    """
+    if report.get('road_end_leader_exit_rule') is not True:
+        return development_gates(report)
+    ruled = deepcopy(report)
+    for agent, car in ruled.get('smooth_control', {}).get('per_car', {}).items():
+        realized = car.get('all', {}).get('jerk_m_s3', {}).get('realized')
+        if realized is not None:
+            realized['peak_abs'] = report.get('road_end', {}).get('per_car', {}).get(agent, {}).get('peak_abs_jerk_m_s3')
+    result = development_gates(ruled)
+    result['evaluation_rules'] = dict(road_end_leader_exit=True,
+        exempt=[dict(agent=a, **e) for a, c in report.get('road_end', {}).get('per_car', {}).items() for e in c['exempt']])
+    return result
+
+
 def development_gates(report):
     """Uncensored per-car gates; missing evidence fails instead of becoming zero."""
     failures, cars = [], {}
@@ -379,7 +402,7 @@ def development_gates(report):
 
 def summarize(reports):
     result = legacy_summary(reports)
-    gates = [dict(case_id=report['case_id'], seed=report['seed'], **development_gates(report)) for report in reports]
+    gates = [dict(case_id=report['case_id'], seed=report['seed'], **ruled_gates(report)) for report in reports]
     result.update(development_gates_passed=bool(gates) and all(gate['passed'] for gate in gates), case_gates=gates,
         acceptance_scope='Development only; uncensored full-route per-car gates, no promotion')
     return result
