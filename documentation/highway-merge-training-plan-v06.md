@@ -1,6 +1,7 @@
 # Highway merge training plan v06
 
-Written on November 13, 2026. **Status: proposed. Nothing in this plan is
+Written on November 13, 2026. Phase 0 started November 14 (see the progress
+section at the end). **Status: proposed. Nothing in this plan is
 implemented, run or authorized for training.** Training starts only after the
 user approves the resolved configuration in Phase 4 (AGENTS.md).
 
@@ -177,3 +178,96 @@ expected shape:
    unreachable.
 4. Command rate limit for the whole episode (recommended), or startup only.
 5. Training configuration and budget, at Phase 3.
+
+## Phase 0 progress (November 14, 2026)
+
+**User decisions (November 14):** use Krauss for controlled cars, and raise
+the diagnostic episode cap. The cap was raised from 80 to 100 in the pinned
+contract (`traffic/highway_flow_rl_v05_contract.py`) and the pilot config. No
+other budget value changed. No episodes were used for the work below.
+
+### 0b. Krauss cut-in: no Krauss setting prevents it
+
+The cut-in happened at 56.9 s on the ramp-started 2-lane ramp120 layout. The
+native car `main_3` (19.05 m/s) moved 3.0 m in front of the AV, which was doing
+8.75 m/s while still stuck after missing its merge. SUMO's lane changer asks
+the car behind (the AV) how much gap it needs. The answer comes from the AV's
+own car-following model. Asked directly through
+`traci.vehicle.getSecureGap` ([probe](../scripts/probe_highway_flow_rl_v06_secure_gap.py)):
+
+| Situation (AV speed, new leader speed) | ACC tau 1.5 | Krauss tau 1.5 | Krauss tau 2.0 | Krauss tau 3.0 |
+| --- | ---: | ---: | ---: | ---: |
+| The cut-in (8.75, 19.05) | 10.0 m | 0 m | 0 m | 0 m |
+| Same speed (20, 20) | 30.0 m | 30.0 m | 40.0 m | 60.0 m |
+| AV slower (15, 20) | 21.0 m | 5.5 m | 13.0 m | 28.0 m |
+| AV faster (20, 15) | 31.5 m | 47.0 m | 57.0 m | 77.0 m |
+
+At equal speeds Krauss and ACC require the same gap. Only when the AV is much
+slower than the car cutting in does Krauss require nothing: that car's own
+braking distance covers the AV's. Raising Krauss's tau does not change that
+case, and would make the AV more cautious everywhere else. As far as we can
+tell, the native lane-change caution settings (such as `lcAssertive`) scale
+this required gap, so they cannot raise a zero either; this was not tested. **Conclusion:** keep Krauss as decided and accept this cut-in as a
+known side effect. It occurs only when an AV crawls more than 10 m/s below
+traffic, which is the missed-gap failure Phase 1 item 2 targets. The headway
+gate still counts it. Evidence:
+[krauss-secure-gap.json](evidence/highway-merge-training-v06/krauss-secure-gap.json)
+(SHA-256 `92a7b974e78231fbd5cf32fa2f49b0be90d5ba3b7edd9d7d1a02d8f88a5d821f`).
+
+### 0a. Merge-target feasibility: 90% is unreachable on most layouts
+
+The new offline audit
+([script](../scripts/audit_highway_flow_rl_v06_merge_target.py),
+[tests](../tests/test_highway_flow_rl_v06_merge_target_audit.py)) rebuilds
+each merge's quality window from the saved traces. It reproduces the recorded
+speed-match fractions exactly. It then finds the best fraction any car could
+reach against the same recorded target sequence, starting from the car's real
+speed. Two limit sets: the vehicle limits with the 5 m/s3 gate jerk
+(-4.5 to +2.0 m/s2), and comfort limits (-2.0 to +1.5 m/s2, 4 m/s3).
+
+| Layout (frozen v04, Krauss + startup run) | Observed | Best possible (vehicle limits) | Best possible (comfort) |
+| --- | ---: | ---: | ---: |
+| I-110 merge | 0.48 | **0.99** | 0.99 |
+| 2-lane ramp120, historical network | 0.42 | 0.70 | 0.68 |
+| 2-lane ramp120, ramp-started (unstable merge, not gated) | 0.65 | 0.69 | 0.67 |
+| 3-lane ramp240, ramp-started | 0.28 | 0.49 | 0.26 |
+| 4-lane ramp120, ramp-started | 0.49 | 0.65 | 0.48 |
+| 5-lane ramp240, ramp-started | 0.27 | 0.49 | 0.26 |
+| 2-lane ramp180 validation, ramp-started | 0.39 | 0.57 | 0.37 |
+| 4-lane ramp180 validation, ramp-started | 0.38 | 0.57 | 0.37 |
+
+- **I-110: a policy problem.** A car could match 99% of the window. The actor
+  instead holds about 13.5 m/s for 6 s while the target is 15.8-18 m/s.
+- **Ramp-started layouts: a layout problem.** The merge completes about 6 s
+  after the car is inserted on the ramp at about 8 m/s, so the 8 s window
+  reaches back to insertion. When the car enters the acceleration lane, the
+  target rises to the 26.8 m/s mainline speed. Even at the 2 m/s2 limit the car
+  needs about 6 s to get within 2 m/s. The gate's target itself does not jitter
+  there (no step changes over 0.2 m/s, apart from one 22 m/s switch on ramp120).
+  The 60 m parallel acceleration lane chosen for the v05 ramp-started builder is
+  too short for a 60 mph mainline.
+- Open-loop caveat: a different trajectory would see a somewhat different
+  target, and could merge at a different time. The ceilings are estimates for
+  the recorded sequences, not proofs.
+
+**Consequence for the plan:** training cannot pass merge quality on the
+current ramp-started layouts. Before re-baselining, they should be rebuilt with
+an acceleration lane and ramp long enough to reach mainline speed (a network
+change, not a gate change). The reward-target mismatch (finding 2 above)
+matters less than expected: the gate's target is mostly steady.
+
+Evidence:
+[merge-target-feasibility.json](evidence/highway-merge-training-v06/merge-target-feasibility.json)
+(SHA-256 `44701e95f62604101d31e4639b9855dccffb3a5a58a3ee302109335be5e12313`).
+
+### Road end: not changed yet
+
+Extending the road so lead cars keep driving still leaves someone vanishing at
+the new end. Unless scoring stops before that end, this is a measurement-window
+choice, equivalent to not scoring the final stretch. It needs a user decision
+and must be reported beside the original-rules result.
+
+### Not run yet
+
+The frozen-v04 re-baseline (0c) waits for the rebuilt ramp layouts and the
+road-end decision, so its baseline is measured on the layouts training will use.

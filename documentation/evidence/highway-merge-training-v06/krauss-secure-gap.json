@@ -1,0 +1,26 @@
+{
+ "ACC tau1.5": {
+  "cut-in seen (AV 8.75, leader 19.05)": 9.99,
+  "same speed 20": 30.0,
+  "AV 15, leader 20": 20.98,
+  "AV 20, leader 15": 31.52
+ },
+ "Krauss tau1.5": {
+  "cut-in seen (AV 8.75, leader 19.05)": 0.0,
+  "same speed 20": 30.0,
+  "AV 15, leader 20": 5.5,
+  "AV 20, leader 15": 47.0
+ },
+ "Krauss tau2.0": {
+  "cut-in seen (AV 8.75, leader 19.05)": 0.0,
+  "same speed 20": 40.0,
+  "AV 15, leader 20": 13.0,
+  "AV 20, leader 15": 57.0
+ },
+ "Krauss tau3.0": {
+  "cut-in seen (AV 8.75, leader 19.05)": 0.0,
+  "same speed 20": 60.0,
+  "AV 15, leader 20": 28.0,
+  "AV 20, leader 15": 77.0
+ }
+}

@@ -939,3 +939,15 @@ never-completed v05 `full` variant. Phases: environment and measurement fixes
 with a frozen-v04 re-baseline under the original gate rules, implementation
 with tests, an offline reward audit, then a training configuration for user
 approval. Nothing implemented, run or authorized. [Plan](highway-merge-training-plan-v06.md).
+
+
+## November 14, 2026 - v06 Phase 0: Krauss cut-ins and merge-target feasibility
+
+User chose Krauss and raised the diagnostic cap from 80 to 100. A direct SUMO
+query shows no Krauss setting prevents the cut-in: when the AV is much slower
+than the car cutting in, Krauss requires no gap at any tau. That only happens
+after a missed merge, which training targets. An offline audit finds 90% merge
+speed matching reachable on I-110 (99% possible; the actor reaches 48%), but
+unreachable on every ramp-started layout (49-69% at best), because the
+acceleration lane is too short to reach mainline speed. No episodes used.
+[Details](highway-merge-training-plan-v06.md#phase-0-progress-november-14-2026).

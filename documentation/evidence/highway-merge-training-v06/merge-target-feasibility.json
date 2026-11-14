@@ -1,0 +1,297 @@
+{
+ "schema": "highway_flow_rl_v06_merge_target_feasibility",
+ "tolerance_m_s": 2.0,
+ "window_s": 8.0,
+ "required_fraction": 0.9,
+ "open_loop_caveat": "Open-loop caveat: the recorded target depends on the car's own past motion and\nneighbors. A different trajectory would see a somewhat different target, so the\nceiling is an estimate for this target sequence, not a proof.",
+ "cars": [
+  {
+   "samples": 161,
+   "observed_speed_match": 0.4782608695652174,
+   "ineligible_target_samples": 0,
+   "target_step_change_m_s": {
+    "max": 4.044214627175975,
+    "over_0_2": 18,
+    "over_1_0": 3
+   },
+   "ceilings": {
+    "gate": {
+     "best_fraction": 0.9875776397515528,
+     "best_count": 159,
+     "limits": {
+      "accel_min": -4.5,
+      "accel_max": 2.0,
+      "jerk_max": 5.0
+     }
+    },
+    "comfort": {
+     "best_fraction": 0.9875776397515528,
+     "best_count": 159,
+     "limits": {
+      "accel_min": -2.0,
+      "accel_max": 1.5,
+      "jerk_max": 4.0
+     }
+    }
+   },
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_0",
+   "completed_at_s": 14.7,
+   "stable_at_s": 22.7,
+   "trace_sha256": "ee02b1eee03998719300f1a70af238114cb72f46d8844544a3cf2138594eb0aa"
+  },
+  {
+   "samples": 161,
+   "observed_speed_match": 0.422360248447205,
+   "ineligible_target_samples": 0,
+   "target_step_change_m_s": {
+    "max": 6.531407525047969,
+    "over_0_2": 15,
+    "over_1_0": 2
+   },
+   "ceilings": {
+    "gate": {
+     "best_fraction": 0.7018633540372671,
+     "best_count": 113,
+     "limits": {
+      "accel_min": -4.5,
+      "accel_max": 2.0,
+      "jerk_max": 5.0
+     }
+    },
+    "comfort": {
+     "best_fraction": 0.6770186335403726,
+     "best_count": 109,
+     "limits": {
+      "accel_min": -2.0,
+      "accel_max": 1.5,
+      "jerk_max": 4.0
+     }
+    }
+   },
+   "run": "dev-native-fixes-01",
+   "case_id": "v02-development-train-2-lane-ramp120-merge",
+   "agent": "agent_0",
+   "completed_at_s": 14.0,
+   "stable_at_s": 22.0,
+   "trace_sha256": "531672530dc078e3c802aa4758b6af4ca4d3d5c497f2e88771694297bb8e2de3"
+  },
+  {
+   "samples": 112,
+   "observed_speed_match": 0.6517857142857143,
+   "ineligible_target_samples": 0,
+   "target_step_change_m_s": {
+    "max": 22.35,
+    "over_0_2": 1,
+    "over_1_0": 1
+   },
+   "ceilings": {
+    "gate": {
+     "best_fraction": 0.6875,
+     "best_count": 77,
+     "limits": {
+      "accel_min": -4.5,
+      "accel_max": 2.0,
+      "jerk_max": 5.0
+     }
+    },
+    "comfort": {
+     "best_fraction": 0.6696428571428571,
+     "best_count": 75,
+     "limits": {
+      "accel_min": -2.0,
+      "accel_max": 1.5,
+      "jerk_max": 4.0
+     }
+    }
+   },
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "agent": "agent_0",
+   "completed_at_s": 52.4,
+   "stable_at_s": 55.5,
+   "trace_sha256": "36059e9c1c1039570174fbe01fba335d0d6fcfc124a13977980c750eb7b95dfd"
+  },
+  {
+   "samples": 141,
+   "observed_speed_match": 0.2765957446808511,
+   "ineligible_target_samples": 3,
+   "target_step_change_m_s": {
+    "max": 0.0,
+    "over_0_2": 0,
+    "over_1_0": 0
+   },
+   "ceilings": {
+    "gate": {
+     "best_fraction": 0.48936170212765956,
+     "best_count": 69,
+     "limits": {
+      "accel_min": -4.5,
+      "accel_max": 2.0,
+      "jerk_max": 5.0
+     }
+    },
+    "comfort": {
+     "best_fraction": 0.2624113475177305,
+     "best_count": 37,
+     "limits": {
+      "accel_min": -2.0,
+      "accel_max": 1.5,
+      "jerk_max": 4.0
+     }
+    }
+   },
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-train-3-lane-ramp240-ramp-started",
+   "agent": "agent_0",
+   "completed_at_s": 6.2,
+   "stable_at_s": 14.2,
+   "trace_sha256": "de9f48b85412a7c787267343c2cf6870bdae8d1d644356b9a22ca67ae9c267cb"
+  },
+  {
+   "samples": 141,
+   "observed_speed_match": 0.48936170212765956,
+   "ineligible_target_samples": 3,
+   "target_step_change_m_s": {
+    "max": 0.0,
+    "over_0_2": 0,
+    "over_1_0": 0
+   },
+   "ceilings": {
+    "gate": {
+     "best_fraction": 0.6524822695035462,
+     "best_count": 92,
+     "limits": {
+      "accel_min": -4.5,
+      "accel_max": 2.0,
+      "jerk_max": 5.0
+     }
+    },
+    "comfort": {
+     "best_fraction": 0.475177304964539,
+     "best_count": 67,
+     "limits": {
+      "accel_min": -2.0,
+      "accel_max": 1.5,
+      "jerk_max": 4.0
+     }
+    }
+   },
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-train-4-lane-ramp120-ramp-started",
+   "agent": "agent_0",
+   "completed_at_s": 6.2,
+   "stable_at_s": 14.2,
+   "trace_sha256": "434763be376e05ceb699b364b815729a16b00db91476a7712de89b5ab3f475fd"
+  },
+  {
+   "samples": 141,
+   "observed_speed_match": 0.2695035460992908,
+   "ineligible_target_samples": 3,
+   "target_step_change_m_s": {
+    "max": 0.0,
+    "over_0_2": 0,
+    "over_1_0": 0
+   },
+   "ceilings": {
+    "gate": {
+     "best_fraction": 0.48936170212765956,
+     "best_count": 69,
+     "limits": {
+      "accel_min": -4.5,
+      "accel_max": 2.0,
+      "jerk_max": 5.0
+     }
+    },
+    "comfort": {
+     "best_fraction": 0.2624113475177305,
+     "best_count": 37,
+     "limits": {
+      "accel_min": -2.0,
+      "accel_max": 1.5,
+      "jerk_max": 4.0
+     }
+    }
+   },
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-train-5-lane-ramp240-ramp-started",
+   "agent": "agent_0",
+   "completed_at_s": 6.2,
+   "stable_at_s": 14.2,
+   "trace_sha256": "845268cda9b08e938e5cb693b88fc9825fdb8c43202212e7f682f169766c733d"
+  },
+  {
+   "samples": 141,
+   "observed_speed_match": 0.3900709219858156,
+   "ineligible_target_samples": 3,
+   "target_step_change_m_s": {
+    "max": 0.0,
+    "over_0_2": 0,
+    "over_1_0": 0
+   },
+   "ceilings": {
+    "gate": {
+     "best_fraction": 0.5673758865248227,
+     "best_count": 80,
+     "limits": {
+      "accel_min": -4.5,
+      "accel_max": 2.0,
+      "jerk_max": 5.0
+     }
+    },
+    "comfort": {
+     "best_fraction": 0.36879432624113473,
+     "best_count": 52,
+     "limits": {
+      "accel_min": -2.0,
+      "accel_max": 1.5,
+      "jerk_max": 4.0
+     }
+    }
+   },
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "agent": "agent_0",
+   "completed_at_s": 6.2,
+   "stable_at_s": 14.2,
+   "trace_sha256": "db0ffbbf678551007532d1c98f81f68cf3877884e31248e563b793da71735244"
+  },
+  {
+   "samples": 141,
+   "observed_speed_match": 0.3829787234042553,
+   "ineligible_target_samples": 3,
+   "target_step_change_m_s": {
+    "max": 0.0,
+    "over_0_2": 0,
+    "over_1_0": 0
+   },
+   "ceilings": {
+    "gate": {
+     "best_fraction": 0.5673758865248227,
+     "best_count": 80,
+     "limits": {
+      "accel_min": -4.5,
+      "accel_max": 2.0,
+      "jerk_max": 5.0
+     }
+    },
+    "comfort": {
+     "best_fraction": 0.36879432624113473,
+     "best_count": 52,
+     "limits": {
+      "accel_min": -2.0,
+      "accel_max": 1.5,
+      "jerk_max": 4.0
+     }
+    }
+   },
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "agent": "agent_0",
+   "completed_at_s": 6.2,
+   "stable_at_s": 14.2,
+   "trace_sha256": "fe75bd8452b0b6763a351ad063f205b8977e39ffc07e7a3beded4005ae8d5a75"
+  }
+ ]
+}

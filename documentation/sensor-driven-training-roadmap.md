@@ -745,3 +745,10 @@ merge target than the gate scores. Also corrects the v05 note: potential-based
 `gap_preparation` adds critic noise rather than teaching the jumps. Phase 0
 (measurement and environment fixes) comes before any training. Nothing
 implemented or run. [Plan](highway-merge-training-plan-v06.md).
+
+### v53 - November 14: v06 Phase 0 findings
+
+Krauss kept (user decision); its close cut-ins cannot be tuned away and occur
+only behind a stuck AV. 90% merge speed matching is reachable on I-110 but not
+on the ramp-started layouts, whose acceleration lanes are too short; rebuild
+them before re-baselining. Diagnostic cap raised to 100. [Details](highway-merge-training-plan-v06.md#phase-0-progress-november-14-2026).
