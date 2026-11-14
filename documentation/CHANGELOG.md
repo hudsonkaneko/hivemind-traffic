@@ -1343,3 +1343,13 @@ startup mode and both fixes: 3/6 development cases pass (was 2/6), failing cars
 fell from 7 to 3, interventions from 0.60% to 0.26%, with zero collisions. Side
 effect: on one ramp layout a native car cut in 3 m ahead, because Krauss gives
 slower AVs no secure gap (headway 0.34 s, TTC 38 s). No training. [Details](highway-jerk-diagnosis-v05.md#native-car-following-and-road-end-fixes-november-13-2026).
+
+
+## November 13, 2026 - v06: merge training plan proposed
+
+Proposed plan for merge speed matching (42% and 48% vs 90%), missed-gap
+recovery, merge-input jerk spikes and avoidable braking, building on the
+never-completed v05 `full` variant. Phases: environment and measurement fixes
+with a frozen-v04 re-baseline under the original gate rules, implementation
+with tests, an offline reward audit, then a training configuration for user
+approval. Nothing implemented, run or authorized. [Plan](highway-merge-training-plan-v06.md).
