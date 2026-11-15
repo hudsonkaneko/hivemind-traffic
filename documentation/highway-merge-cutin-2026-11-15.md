@@ -79,3 +79,19 @@ relaxed to manufacture acceptance.
 
 References: [SUMO lane-change state](https://sumo.dlr.de/docs/TraCI/Vehicle_Value_Retrieval.html#change_lane_information_0x13),
 [lane-change control mode](https://sumo.dlr.de/docs/TraCI/Change_Vehicle_State.html#lane_change_mode_0xb6).
+
+## First native qualification and preflight correction
+
+`train-20261115-01` retained both completed smoke cases: zero collisions,
+teleports or overspeed. Nominal combined interventions 0.5249%, two admitted
+native moves, 161 rejected native requests, zero ongoing gap violations.
+The stress case executed and completed one measured cut-in, interventions
+4.1754%; eight ongoing gap-violation samples remain recorded. These are
+frozen-actor diagnostic episodes, not learned improvement or full acceptance.
+
+Preflight stopped before learning because the v07 mask had retained the old
+v04 audit-version label. Corrected the version at audit initialization and
+added a regression assertion. Also withdraw queued native requests if the gap
+is lost before motion starts; remaining-maneuver prediction now starts from
+measured motion onset. Repeat source-bound qualification before launching.
+All artifacts and charges from the failed attempt remain in the study ledger.

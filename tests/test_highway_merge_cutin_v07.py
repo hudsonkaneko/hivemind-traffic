@@ -94,6 +94,7 @@ def test_sparse_five_lane_missed_gap_keeps_a_blocker_without_reseeding(tmp_path)
     cfg = config()
     row = next(r for r in cfg['training_rows'] if r.get('cutin_stress') and r['case']['through_lanes'] == 5)
     env = env_for(cfg, row, tmp_path / 'env')
+    assert env.v04_mask_audit['version'] == cfg['mask_version']
     reproduced = False
     for cursor in range(12):
         seed = row['seed'] + 50000 + 1000 * cursor

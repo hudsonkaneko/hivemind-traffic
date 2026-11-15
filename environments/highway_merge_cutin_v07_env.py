@@ -9,6 +9,7 @@ from copy import deepcopy
 
 from environments.highway_flow_rl_v06_env import HighwayFlowRLV06Env
 from traffic.highway_flow_context import route_continuation
+from traffic.highway_flow_rl_v04_rewards import MASK_VERSION
 from traffic.highway_merge_cutin_v07 import SETTINGS, VERSION, gap_check
 
 
@@ -21,8 +22,12 @@ class HighwayMergeCutinV07Env(HighwayFlowRLV06Env):
     def _reset_admission(self):
         self.reservations, self.native_moves = {}, {}
         self.admission = dict(version=VERSION, native_requests=0, native_allowed=0,
-            native_blocked=0, av_blocked=0, ongoing_gap_violations=0,
+            native_blocked=0, native_pending_cancelled=0, av_blocked=0, ongoing_gap_violations=0,
             stress_requests=0, stress_started=0, stress_completed=0, events=[])
+
+    def _reset_v04(self):
+        super()._reset_v04()
+        self.v04_mask_audit.update(base_version=MASK_VERSION, version=MASK_VERSION + '_headway_ttc_v07')
 
     def reset(self, seed=None, options=None):
         self._reset_admission()
@@ -150,10 +155,22 @@ class HighwayMergeCutinV07Env(HighwayFlowRLV06Env):
             moved = abs(state.get('lateral_speed', 0.)) > .01 or state['lane_id'] == reservation['target']
             if vid in self.native_moves and moved and not reservation.get('moved'):
                 reservation['moved'] = True
+                reservation['motion_started'] = self.time
                 self.admission['stress_started'] += int(reservation['stress'])
-            if not self._evidence(vid, reservation['target'], horizon=max(.1, 3.1 - elapsed),
-                                  stress=reservation['stress'])['permitted']:
+            remaining = max(.1, 3.1 - (self.time - reservation['motion_started'])) if 'motion_started' in reservation else 3.1
+            admissible = self._evidence(vid, reservation['target'], horizon=remaining,
+                                       stress=reservation['stress'])['permitted']
+            if not admissible:
                 self.admission['ongoing_gap_violations'] += 1
+                if vid in self.native_moves and not reservation.get('moved'):
+                    # A queued SUMO request may wait before movement begins.
+                    # Withdraw it if the predicted gap is lost while waiting.
+                    self.conn.vehicle.changeLane(vid, self.graph.lanes[state['lane_id']]['index'], .1)
+                    self.admission['native_pending_cancelled'] += 1
+                    self._event(vehicle=vid, event='pending_gap_lost', stress=reservation['stress'])
+                    self.native_moves.pop(vid, None)
+                    self.reservations.pop(vid, None)
+                    continue
             if vid in self.native_moves:
                 centered = abs(state.get('lateral_position', 0.)) < .02 and abs(state.get('lateral_speed', 0.)) < .02
                 complete = reservation.get('moved') and centered
