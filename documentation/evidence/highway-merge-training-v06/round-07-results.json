@@ -1,0 +1,477 @@
+{
+ "run": "outputs/highway-flow-rl/v06/round-07 (main checkout)",
+ "validations": {
+  "initial-validation": {
+   "sha256": "9af3445e102ea8cac249161d4b44ec61a315cafea86d625e16edaca5a1374ece",
+   "gate_counts": {
+    "original": 4,
+    "v06_after_first": 1,
+    "v06_all_decisions": 1
+   },
+   "merge_speed_match": 0.4367,
+   "pooled_intervention_fraction": 0.0027,
+   "max_peak_jerk_m_s3": 4.76,
+   "stable_merges": 4,
+   "collisions": 0,
+   "teleports": 0,
+   "cases": [
+    {
+     "case": "v05-validation-i110-merge",
+     "failures": [
+      "rolling_merge_quality",
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 13.315682172775265,
+      "agent_1": 1.2747102379798037,
+      "agent_2": 3.022036850452494,
+      "agent_3": 7.77441149950036,
+      "agent_4": 2.4683816730977526,
+      "agent_5": 4.486108437180434,
+      "agent_6": 9.219481557607736,
+      "agent_7": 1.5019990503788705
+     },
+     "intervention": 0.0053,
+     "overrides": {
+      "comfort_rate_limit": 15
+     },
+     "merge_match": {
+      "agent_0": 0.5341614906832298
+     },
+     "stop_s": {
+      "agent_0": 0.0
+     },
+     "stable": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "v05-val-0-cruise",
+     "failures": [
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 5.312139600515451
+     },
+     "intervention": 0.0013,
+     "overrides": {
+      "comfort_rate_limit": 2
+     },
+     "merge_match": {},
+     "stop_s": {},
+     "stable": {},
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "v05-val-0-passing",
+     "failures": [],
+     "raw_after_first": {
+      "agent_0": 1.7860095947981591
+     },
+     "intervention": 0.0006,
+     "overrides": {
+      "comfort_rate_limit": 1
+     },
+     "merge_match": {},
+     "stop_s": {},
+     "stable": {},
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "v05-validation-i110-following",
+     "failures": [
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 1.6172953695058467,
+      "agent_1": 2.015267521143045,
+      "agent_2": 6.037750840187108,
+      "agent_3": 0.6778846681117301,
+      "agent_4": 3.996109962463308,
+      "agent_5": 3.0867502689362425,
+      "agent_6": 0.9386319667101617,
+      "agent_7": 3.4958639740943553
+     },
+     "intervention": 0.0021,
+     "overrides": {
+      "comfort_rate_limit": 6
+     },
+     "merge_match": {},
+     "stop_s": {},
+     "stable": {},
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+     "failures": [
+      "rolling_merge_quality",
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 12.451674103736963
+     },
+     "intervention": 0.0052,
+     "overrides": {
+      "comfort_rate_limit": 4
+     },
+     "merge_match": {
+      "agent_0": 0.45390070921985815
+     },
+     "stop_s": {
+      "agent_0": 0.0
+     },
+     "stable": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "v02-development-60mph-cruise",
+     "failures": [
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 4.088009357452478,
+      "agent_1": 2.2295212745666504,
+      "agent_2": 3.220870852470483,
+      "agent_3": 1.6992058604954252,
+      "agent_4": 2.3070189356802473,
+      "agent_5": 1.2511786818503623,
+      "agent_6": 6.516997128725137,
+      "agent_7": 6.635248571634378
+     },
+     "intervention": 0.0013,
+     "overrides": {
+      "comfort_rate_limit": 9
+     },
+     "merge_match": {},
+     "stop_s": {},
+     "stable": {},
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+     "failures": [
+      "rolling_merge_quality",
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 12.747571974992837
+     },
+     "intervention": 0.0095,
+     "overrides": {
+      "comfort_rate_limit": 4,
+      "speed_ceiling": 3
+     },
+     "merge_match": {
+      "agent_0": 0.3900709219858156
+     },
+     "stop_s": {
+      "agent_0": 0.0
+     },
+     "stable": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.76
+    },
+    {
+     "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+     "failures": [
+      "rolling_merge_quality",
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 12.771509349346246
+     },
+     "intervention": 0.005,
+     "overrides": {
+      "comfort_rate_limit": 4
+     },
+     "merge_match": {
+      "agent_0": 0.36879432624113473
+     },
+     "stop_s": {
+      "agent_0": 0.0
+     },
+     "stable": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0
+    }
+   ]
+  },
+  "periodic-validation-00041": {
+   "sha256": "c567a5f2842fb52fcc51334d0917e540b679ce540814946e15c960ac82ec13b5",
+   "gate_counts": {
+    "original": 4,
+    "v06_after_first": 2,
+    "v06_all_decisions": 1
+   },
+   "merge_speed_match": 0.3434,
+   "pooled_intervention_fraction": 0.0046,
+   "max_peak_jerk_m_s3": 4.0,
+   "stable_merges": 3,
+   "collisions": 0,
+   "teleports": 0,
+   "cases": [
+    {
+     "case": "v05-validation-i110-merge",
+     "failures": [
+      "rolling_merge_quality",
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 13.310169041156765,
+      "agent_1": 1.5291230529545885,
+      "agent_2": 3.1368256360291724,
+      "agent_3": 7.289120316505517,
+      "agent_4": 2.2059161216021295,
+      "agent_5": 4.801933780312453,
+      "agent_6": 9.039283901453103,
+      "agent_7": 1.402692943811381
+     },
+     "intervention": 0.0049,
+     "overrides": {
+      "comfort_rate_limit": 14
+     },
+     "merge_match": {
+      "agent_0": 0.5652173913043478
+     },
+     "stop_s": {
+      "agent_0": 0.0
+     },
+     "stable": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "v05-val-0-cruise",
+     "failures": [],
+     "raw_after_first": {
+      "agent_0": 4.468243032693948
+     },
+     "intervention": 0.0013,
+     "overrides": {
+      "comfort_rate_limit": 2
+     },
+     "merge_match": {},
+     "stop_s": {},
+     "stable": {},
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "v05-val-0-passing",
+     "failures": [],
+     "raw_after_first": {
+      "agent_0": 1.7219751328229904
+     },
+     "intervention": 0.0006,
+     "overrides": {
+      "comfort_rate_limit": 1
+     },
+     "merge_match": {},
+     "stop_s": {},
+     "stable": {},
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "v05-validation-i110-following",
+     "failures": [
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 1.502022296190333,
+      "agent_1": 1.7493557929993386,
+      "agent_2": 5.86678370833404,
+      "agent_3": 0.6271041929722188,
+      "agent_4": 4.3581305444240215,
+      "agent_5": 2.964949965477075,
+      "agent_6": 1.200416609645032,
+      "agent_7": 3.274593874812126
+     },
+     "intervention": 0.0025,
+     "overrides": {
+      "comfort_rate_limit": 7
+     },
+     "merge_match": {},
+     "stop_s": {},
+     "stable": {},
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+     "failures": [
+      "rolling_merge_quality",
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 12.468575745821084
+     },
+     "intervention": 0.0052,
+     "overrides": {
+      "comfort_rate_limit": 4
+     },
+     "merge_match": {
+      "agent_0": 0.44680851063829785
+     },
+     "stop_s": {
+      "agent_0": 0.0
+     },
+     "stable": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "v02-development-60mph-cruise",
+     "failures": [
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 3.6005892455578703,
+      "agent_1": 2.059803605079722,
+      "agent_2": 3.0371998846531767,
+      "agent_3": 1.3377015292645211,
+      "agent_4": 2.315538525581431,
+      "agent_5": 1.1140593886374006,
+      "agent_6": 6.195261538028802,
+      "agent_7": 6.008119195699777
+     },
+     "intervention": 0.001,
+     "overrides": {
+      "comfort_rate_limit": 7
+     },
+     "merge_match": {},
+     "stop_s": {},
+     "stable": {},
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+     "failures": [
+      "per_car_route_comfort_or_control",
+      "stable_merge",
+      "rolling_merge_quality",
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 12.710808724165048
+     },
+     "intervention": 0.06,
+     "overrides": {
+      "comfort_rate_limit": 4,
+      "speed_ceiling": 40
+     },
+     "merge_match": {
+      "agent_0": null
+     },
+     "stop_s": {
+      "agent_0": null
+     },
+     "stable": {
+      "agent_0": [
+       "intervention_fraction"
+      ]
+     },
+     "peak_jerk": 4.0
+    },
+    {
+     "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+     "failures": [
+      "rolling_merge_quality",
+      "raw_request_jerk"
+     ],
+     "raw_after_first": {
+      "agent_0": 12.734035164117898
+     },
+     "intervention": 0.005,
+     "overrides": {
+      "comfort_rate_limit": 4
+     },
+     "merge_match": {
+      "agent_0": 0.3617021276595745
+     },
+     "stop_s": {
+      "agent_0": 0.0
+     },
+     "stable": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0
+    }
+   ]
+  }
+ },
+ "updates": {
+  "records": 41,
+  "critic_only": 10,
+  "ppo_episodes": 31,
+  "merged_updates": 7,
+  "deferred_records": 24,
+  "optimizer_steps_total": 236,
+  "optimizer_steps": [
+   1,
+   37,
+   73,
+   30,
+   22,
+   30,
+   43
+  ],
+  "completed_epochs": [
+   0,
+   0,
+   2,
+   0,
+   0,
+   1,
+   0
+  ],
+  "early_stopped": 7,
+  "samples": [
+   4053,
+   13332,
+   6744,
+   16992,
+   13436,
+   4283,
+   13877
+  ],
+  "last_kl": [
+   0.0374,
+   0.0353,
+   0.0308,
+   0.0301,
+   0.0322,
+   0.0366,
+   0.0324
+  ],
+  "value_loss": [
+   3.47,
+   1.58,
+   2.95,
+   0.74,
+   0.87,
+   6.63,
+   1.66
+  ]
+ },
+ "failure": {
+  "elapsed_seconds": 911.719000000041,
+  "total_charged_seconds": 35913.984000000055,
+  "reason": "StopRuleTriggered: periodic-validation-00041: merge speed match 0.343432007400555 below the frozen-v04 baseline 0.4167"
+ },
+ "schema": "highway_flow_rl_v06_round07_results",
+ "ledger_after": {
+  "charged_seconds": 35914,
+  "total_wall_seconds": 41400,
+  "decisions": 4465628,
+  "total_decisions": 4630000,
+  "diagnostic_episodes": 91,
+  "max_diagnostic_episodes": 100
+ },
+ "warm_start_log_std": -3.2188,
+ "warm_start_action_std": 0.04
+}

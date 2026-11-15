@@ -1,0 +1,549 @@
+{
+  "status": "stopped_by_declared_merge_regression_rule",
+  "promoted": false,
+  "run": "outputs/highway-flow-rl/v07/train-20261115-02/train",
+  "source_commit": "1ecba3b714f42149e8e09e7f817c742a463f00e5",
+  "training": {
+    "decisions": 100728,
+    "critic_decisions": 23955,
+    "updates": 62,
+    "optimizer_steps": 696,
+    "critic_optimizer_steps": 2000,
+    "episodes": 62
+  },
+  "training_events": {
+    "stress_episodes": 11,
+    "stress_started": 2,
+    "stress_completed": 2,
+    "collisions": 0,
+    "teleports": 0
+  },
+  "curriculum_actual": {
+    "normal_merge": {
+      "ppo": 20352,
+      "critic": 8858,
+      "ppo_fraction": 0.2650931968270095,
+      "critic_fraction": 0.36977666457941977
+    },
+    "missed_gap": {
+      "ppo": 14319,
+      "critic": 3255,
+      "ppo_fraction": 0.18651088273221053,
+      "critic_fraction": 0.1358797745773325
+    },
+    "cutin_recovery": {
+      "ppo": 7432,
+      "critic": 1666,
+      "ppo_fraction": 0.09680486629413987,
+      "critic_fraction": 0.06954706741807556
+    },
+    "cruise_following": {
+      "ppo": 20439,
+      "critic": 4653,
+      "ppo_fraction": 0.26622640772146455,
+      "critic_fraction": 0.1942391984971822
+    },
+    "passing": {
+      "ppo": 14231,
+      "critic": 5523,
+      "ppo_fraction": 0.18536464642517553,
+      "critic_fraction": 0.23055729492799
+    }
+  },
+  "initial_summary": {
+    "cases": 10,
+    "decisions": 19788,
+    "pooled_intervention_fraction": 0.005407317566201738,
+    "max_peak_jerk_m_s3": 44.8388612137558,
+    "collisions": 0,
+    "teleports": 0,
+    "stable_merges": 6,
+    "merge_targets": 6,
+    "merge_entries": 6,
+    "lateral_merges": 6,
+    "full_horizon_cases": 10,
+    "quality_accepted": false,
+    "held_out": false,
+    "development_gates_passed": false,
+    "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+    "merge_speed_match": 0.4351790670014537
+  },
+  "latest_summary": {
+    "cases": 10,
+    "decisions": 19644,
+    "pooled_intervention_fraction": 0.004428833231521075,
+    "max_peak_jerk_m_s3": 10.838213886646564,
+    "collisions": 0,
+    "teleports": 0,
+    "stable_merges": 6,
+    "merge_targets": 6,
+    "merge_entries": 6,
+    "lateral_merges": 6,
+    "full_horizon_cases": 10,
+    "quality_accepted": false,
+    "held_out": false,
+    "development_gates_passed": false,
+    "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+    "merge_speed_match": 0.39657579787234043
+  },
+  "initial_nominal": {
+    "cases": 8,
+    "decisions": 18092,
+    "pooled_intervention_fraction": 0.0026531063453460093,
+    "max_peak_jerk_m_s3": 4.762152016037646,
+    "collisions": 0,
+    "teleports": 0,
+    "stable_merges": 4,
+    "merge_targets": 4,
+    "merge_entries": 4,
+    "lateral_merges": 4,
+    "full_horizon_cases": 8,
+    "quality_accepted": false,
+    "held_out": false,
+    "development_gates_passed": false,
+    "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+  },
+  "latest_nominal": {
+    "cases": 8,
+    "decisions": 18029,
+    "pooled_intervention_fraction": 0.0032725054079538523,
+    "max_peak_jerk_m_s3": 4.0000000000000036,
+    "collisions": 0,
+    "teleports": 0,
+    "stable_merges": 4,
+    "merge_targets": 4,
+    "merge_entries": 4,
+    "lateral_merges": 4,
+    "full_horizon_cases": 8,
+    "quality_accepted": false,
+    "held_out": false,
+    "development_gates_passed": false,
+    "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+  },
+  "initial_stress": {
+    "cases": 2,
+    "decisions": 1696,
+    "pooled_intervention_fraction": 0.0347877358490566,
+    "max_peak_jerk_m_s3": 44.8388612137558,
+    "collisions": 0,
+    "teleports": 0,
+    "stable_merges": 2,
+    "merge_targets": 2,
+    "merge_entries": 2,
+    "lateral_merges": 2,
+    "full_horizon_cases": 2,
+    "quality_accepted": false,
+    "held_out": false,
+    "development_gates_passed": false,
+    "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+  },
+  "latest_stress": {
+    "cases": 2,
+    "decisions": 1615,
+    "pooled_intervention_fraction": 0.0173374613003096,
+    "max_peak_jerk_m_s3": 10.838213886646564,
+    "collisions": 0,
+    "teleports": 0,
+    "stable_merges": 2,
+    "merge_targets": 2,
+    "merge_entries": 2,
+    "lateral_merges": 2,
+    "full_horizon_cases": 2,
+    "quality_accepted": false,
+    "held_out": false,
+    "development_gates_passed": false,
+    "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+  },
+  "initial_cases": [
+    {
+      "case_id": "v05-validation-i110-merge",
+      "stress": false,
+      "passed": false,
+      "merge_match": 0.5279503105590062,
+      "overrides": 0.005270555165144062,
+      "realized_peak_jerk": 4.0000000000000036,
+      "raw_peak_jerk": 13.915426284074783,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "v05-val-0-cruise",
+      "stress": false,
+      "passed": false,
+      "merge_match": null,
+      "overrides": 0.0012911555842479018,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 6.187133491039276,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "v05-val-0-passing",
+      "stress": false,
+      "passed": true,
+      "merge_match": null,
+      "overrides": 0.0005649717514124294,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 4.575600177049637,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": []
+    },
+    {
+      "case_id": "v05-validation-i110-following",
+      "stress": false,
+      "passed": false,
+      "merge_match": null,
+      "overrides": 0.002117148906139732,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 6.7582617700099945,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+      "stress": false,
+      "passed": false,
+      "merge_match": 0.45390070921985815,
+      "overrides": 0.005249343832020997,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 13.513235002756119,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "v02-development-60mph-cruise",
+      "stress": false,
+      "passed": false,
+      "merge_match": null,
+      "overrides": 0.001324308416715715,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 9.061696976423264,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+      "stress": false,
+      "passed": false,
+      "merge_match": 0.3900709219858156,
+      "overrides": 0.009523809523809525,
+      "realized_peak_jerk": 4.762152016037646,
+      "raw_peak_jerk": 13.752763718366623,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+      "stress": false,
+      "passed": false,
+      "merge_match": 0.36879432624113473,
+      "overrides": 0.005,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 13.788963258266449,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started-cutin-stress",
+      "stress": true,
+      "passed": false,
+      "merge_match": 0.024844720496894408,
+      "overrides": 0.04175365344467641,
+      "realized_peak_jerk": 44.8388612137558,
+      "raw_peak_jerk": 34.441470324993055,
+      "stress_started": 1,
+      "stress_completed": 1,
+      "ongoing_gap_violations": 8,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started-cutin-stress",
+      "stress": true,
+      "passed": false,
+      "merge_match": 0.4931506849315068,
+      "overrides": 0.025745257452574527,
+      "realized_peak_jerk": 12.091926906676598,
+      "raw_peak_jerk": 15.33006176352501,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    }
+  ],
+  "latest_cases": [
+    {
+      "case_id": "v05-validation-i110-merge",
+      "stress": false,
+      "passed": false,
+      "merge_match": 0.54375,
+      "overrides": 0.004275026718916993,
+      "realized_peak_jerk": 4.0000000000000036,
+      "raw_peak_jerk": 12.817877233028412,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "v05-val-0-cruise",
+      "stress": false,
+      "passed": false,
+      "merge_match": null,
+      "overrides": 0.001288659793814433,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 5.584848076105118,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "v05-val-0-passing",
+      "stress": false,
+      "passed": true,
+      "merge_match": null,
+      "overrides": 0.0005675368898978433,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 4.327443391084671,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": []
+    },
+    {
+      "case_id": "v05-validation-i110-following",
+      "stress": false,
+      "passed": false,
+      "merge_match": null,
+      "overrides": 0.008522727272727272,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 5.907856374979019,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+      "stress": false,
+      "passed": false,
+      "merge_match": 0.41134751773049644,
+      "overrides": 0.005242463958060288,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 12.779089659452438,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "v02-development-60mph-cruise",
+      "stress": false,
+      "passed": false,
+      "merge_match": null,
+      "overrides": 0.00117820324005891,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 7.878481298685074,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+      "stress": false,
+      "passed": false,
+      "merge_match": 0.3404255319148936,
+      "overrides": 0.005434782608695652,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 12.430857717990875,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 1,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+      "stress": false,
+      "passed": false,
+      "merge_match": 0.2907801418439716,
+      "overrides": 0.0049813200498132005,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 12.467843741178513,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started-cutin-stress",
+      "stress": true,
+      "passed": false,
+      "merge_match": 0.7950310559006211,
+      "overrides": 0.0136986301369863,
+      "realized_peak_jerk": 3.9999999999999147,
+      "raw_peak_jerk": 11.316773146390915,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    },
+    {
+      "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started-cutin-stress",
+      "stress": true,
+      "passed": false,
+      "merge_match": 0.4657534246575342,
+      "overrides": 0.02165087956698241,
+      "realized_peak_jerk": 10.838213886646564,
+      "raw_peak_jerk": 12.486682534217834,
+      "stress_started": 0,
+      "stress_completed": 0,
+      "ongoing_gap_violations": 0,
+      "collisions": 0,
+      "teleports": 0,
+      "failures": [
+        "per_car_route_comfort_or_control",
+        "rolling_merge_quality",
+        "raw_request_jerk"
+      ]
+    }
+  ],
+  "artifacts": {
+    "last.pt": {
+      "path": "outputs/highway-flow-rl/v07/train-20261115-02/train/last.pt",
+      "sha256": "f7bb59b084f4fe2aed6cb022381679eb6efec3395ab10512604d827179fcf4bc"
+    },
+    "candidate-policy.pt": {
+      "path": "outputs/highway-flow-rl/v07/train-20261115-02/train/candidate-policy.pt",
+      "sha256": "59276b0171331b20bbf8a66f6c4625e2b1b4e3556d56af550a9d171683f49a3c"
+    },
+    "best-policy.pt": {
+      "path": "outputs/highway-flow-rl/v07/train-20261115-02/train/best-policy.pt",
+      "sha256": "a0fb2717c2fe896164a9874a9b5bdf32f8d48a82b4f1aac749703c9b67dafe41"
+    },
+    "initial-validation.json": {
+      "path": "outputs/highway-flow-rl/v07/train-20261115-02/train/initial-validation.json",
+      "sha256": "5c5d2c1e48799dffa005905e017e266715467a9642901d1230ee5210a14ad05d"
+    },
+    "periodic-validation-00062.json": {
+      "path": "outputs/highway-flow-rl/v07/train-20261115-02/train/periodic-validation-00062.json",
+      "sha256": "145a9656e877cb0763f5d97c44be0144b1cc5a3a450e883e8fb9403bf46392ed"
+    },
+    "failure.json": {
+      "path": "outputs/highway-flow-rl/v07/train-20261115-02/train/failure.json",
+      "sha256": "142bcfc454abc5381db423241411cdc66999d5573dbdc6c40e5c842bae1241c1"
+    },
+    "resolved-config.json": {
+      "path": "outputs/highway-flow-rl/v07/train-20261115-02/train/resolved-config.json",
+      "sha256": "9febcb8f996df4e52ea4ab744931e0e5144fa7b271f94d146b716c195b97c9b0"
+    }
+  },
+  "limitations": [
+    "No held-out or 3D evaluation.",
+    "Latest stress validation had zero realized cut-ins; reduced interventions do not prove improved cut-in recovery.",
+    "Original merge-quality and raw-request-jerk gates remain failed.",
+    "Baseline uses the same new admission layer; improvement against earlier traffic rules is not attributed to learning.",
+    "candidate-policy.pt is experimental; best-policy.pt retains the unpromoted initial actor."
+  ]
+}

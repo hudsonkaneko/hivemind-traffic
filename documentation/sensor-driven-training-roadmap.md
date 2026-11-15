@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** user decision on the v06 training proposal (resolved config committed with training_authorized=false; preflight passed November 15). Previous next action: v06 Phase 3 training proposal. Weights set by the Phase 2 audit (November 15). Previous next action: v06 Phase 2 offline reward audit. Phase 1 implemented November 14 (not trained). Previous next action: v06 Phase 1 (code and tests only). Baseline to beat (original rules, November 14): development 2/6, ramp-started 0/6. Previous next action: v06 Phase 0c re-baseline (done). Previous next action: follow the proposed [v06 merge training plan](highway-merge-training-plan-v06.md) (November 13). Phase 0 first, with no training: a merge-target feasibility audit, the controlled car-following choice (ACC with an ACC-aware guard recommended), extending the road end, and a frozen-v04 re-baseline under the original gate rules (currently 2/6 cases pass, 4/27 cars fail, merge speed matching 42% and 48% vs 90%). Needs user decisions, including raising the diagnostic cap to 100. Training only after the user approves the resolved configuration. Previous next action: the [startup handoff ramp](highway-jerk-diagnosis-v05.md#startup-handoff-ramp-november-11-2026) fixes startup jerk on 5/6 ramp-started layouts. Remaining blockers are merge quality (27-49% vs 90%) and fragile merge decisions (a missed borderline gap window leads to riding the acceleration lane to its end). Both need a training change; agree on it before launching. Then run the frozen actor once on the held-out merge geometry bank. [Ramp-started network results](highway-jerk-diagnosis-v05.md#frozen-actor-on-ramp-started-networks-november-11-2026): 0% overrides, ~12 m/s3 peak (startup only) on all six layouts. The `mlk_on_0` braking is [explained](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026). [V05 jerk diagnosis](highway-jerk-diagnosis-v05.md) (November 11): 11/16 failing cars exceed 5 m/s3 only at startup; the 50.76 m/s3 maximum is native braking and its release, not the actor. Previous v04 terminal context: [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
+**Next action:** user decision after v06 round 7 stopped at its merge stop rule (remaining study budget 5,486 s / 164,372 decisions, less than one round); no training until a revised configuration is approved. Previous: launch round 7 (done November 15). Previous: approval of the round-6 configuration (approved November 15; round index 6 already charged by v07, so it runs as round 7). Previous: user chose fix scoring + updates (November 15). Previous: diagnose v06 round 5 (done November 15). Previous next action: user decision on the v06 training proposal (approved and run November 15). Previous next action: v06 Phase 3 training proposal. Weights set by the Phase 2 audit (November 15). Previous next action: v06 Phase 2 offline reward audit. Phase 1 implemented November 14 (not trained). Previous next action: v06 Phase 1 (code and tests only). Baseline to beat (original rules, November 14): development 2/6, ramp-started 0/6. Previous next action: v06 Phase 0c re-baseline (done). Previous next action: follow the proposed [v06 merge training plan](highway-merge-training-plan-v06.md) (November 13). Phase 0 first, with no training: a merge-target feasibility audit, the controlled car-following choice (ACC with an ACC-aware guard recommended), extending the road end, and a frozen-v04 re-baseline under the original gate rules (currently 2/6 cases pass, 4/27 cars fail, merge speed matching 42% and 48% vs 90%). Needs user decisions, including raising the diagnostic cap to 100. Training only after the user approves the resolved configuration. Previous next action: the [startup handoff ramp](highway-jerk-diagnosis-v05.md#startup-handoff-ramp-november-11-2026) fixes startup jerk on 5/6 ramp-started layouts. Remaining blockers are merge quality (27-49% vs 90%) and fragile merge decisions (a missed borderline gap window leads to riding the acceleration lane to its end). Both need a training change; agree on it before launching. Then run the frozen actor once on the held-out merge geometry bank. [Ramp-started network results](highway-jerk-diagnosis-v05.md#frozen-actor-on-ramp-started-networks-november-11-2026): 0% overrides, ~12 m/s3 peak (startup only) on all six layouts. The `mlk_on_0` braking is [explained](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026). [V05 jerk diagnosis](highway-jerk-diagnosis-v05.md) (November 11): 11/16 failing cars exceed 5 m/s3 only at startup; the 50.76 m/s3 maximum is native braking and its release, not the actor. Previous v04 terminal context: [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -783,3 +783,46 @@ and avoidable_braking 0.25. No training. [Details](highway-merge-training-plan-v
 
 Resolved v06 config, runner and contract; zero-update preflight passed. Awaiting
 user approval to train. [Details](highway-merge-training-plan-v06.md#phase-3---resolved-training-proposal-november-15-2026-awaiting-approval).
+
+### v60 - November 15: merge/cut-in revision prepared
+
+[November 15 merge/cut-in revision](highway-merge-cutin-2026-11-15.md) implements the approved focused curriculum and additional lane admission without changing audited v06 rewards or flow117 dimensions. Native smoke/preflight precede the approved one-round launch; existing v06 training is untouched. Next action: completion/failure-only review of preserved per-car metrics and actual stress-event coverage. No promotion or sensor-driven driving claim; guide synchronization pending.
+
+### v60 - November 15: v06 round 5 failed to improve
+
+Trained 289,563 decisions with no collisions. Best validation was the warm start
+(4/8 original rules under the whole-episode rate limit, against 2/8 baseline). The
+final policy got jumpier and lost merges. Nothing promoted. [Details](highway-merge-training-plan-v06.md#round-5-training-result-november-15-2026-no-improvement-nothing-promoted).
+
+### v61 - November 15: merge/cut-in training stopped, not promoted
+
+[Retained results](highway-merge-cutin-2026-11-15.md#training-outcome-stopped-at-the-declared-regression-gate): 100,728 decisions, nominal merge matching 43.52% -> 39.66% triggered the approved stop; stable merges 4/4, zero collisions/teleports, nominal overrides 0.327%. Raw requested jerk and merge quality remain failures. Only two actual cut-ins in 11 training stress episodes; none in the latest stress validation, so recovery improvement is unproven. Full checkpoint, experimental actor, per-case CSV, metrics and hashes retained. Previous policy remains in place. Next: reliable cut-in exposure and corrected-ramp objective diagnosis before another reviewed configuration. Guide synchronization pending.
+
+### v61 - November 15: v06 round 5 diagnosed
+
+Raw-request jerk failures are almost all the insertion step (the first decision).
+The realized peaks come from one late I-110 merge that stops at the lane end.
+The new interventions come from speed-limit riding (+0.05 m/s2). PPO updates were
+KL-limited to about one epoch. The earlier "1-4 steps" and "jumpier requests"
+claims are corrected. [Details](highway-merge-training-plan-v06.md#round-5-diagnosis-november-15-2026).
+
+### v62 - November 15: v06 round 6 prepared
+
+The scoring fix (raw-request jerk from the second decision) and steadier
+updates (4 episodes per update, KL 0.03, 10 epochs) are implemented, with an
+added intervention stop rule. Tests and a SUMO smoke run pass. Awaiting
+approval; not trained. [Details](highway-merge-training-plan-v06.md#round-6-proposal-november-15-2026-fix-scoring-and-updates).
+
+### v63 - November 15: round-6 profile approved, runs as round 7
+
+Round index 6 was already used by the v07 cut-in run in the shared ledger. With
+user approval, the profile runs as round 7 on the remaining 6,400 s / 264,622 decisions.
+[Details](highway-merge-training-plan-v06.md#launch-correction-runs-as-round-7-november-15-2026).
+
+### v64 - November 15: v06 round 7 stopped at 100k
+
+The merge stop rule fired (0.343 against 0.4167) because of one ramp180 car's
+speed-limit interventions after its merge. Original rules held 4/8 with no jerk
+spikes. The insertion lag lasts 3-4 decisions, which corrects the round-5
+diagnosis. A small policy std (0.04) keeps updates KL-limited.
+[Details](highway-merge-training-plan-v06.md#round-7-result-november-15-2026-stopped-by-the-merge-stop-rule-at-100k).

@@ -1,0 +1,21 @@
+evaluation,case_id,stress,passed,merge_match,overrides,realized_peak_jerk,raw_peak_jerk,stress_started,stress_completed,ongoing_gap_violations,collisions,teleports,failures
+initial,v05-validation-i110-merge,False,False,0.5279503105590062,0.005270555165144062,4.0000000000000036,13.915426284074783,0,0,0,0,0,"['rolling_merge_quality', 'raw_request_jerk']"
+initial,v05-val-0-cruise,False,False,,0.0012911555842479018,3.9999999999999147,6.187133491039276,0,0,0,0,0,['raw_request_jerk']
+initial,v05-val-0-passing,False,True,,0.0005649717514124294,3.9999999999999147,4.575600177049637,0,0,0,0,0,[]
+initial,v05-validation-i110-following,False,False,,0.002117148906139732,3.9999999999999147,6.7582617700099945,0,0,0,0,0,['raw_request_jerk']
+initial,ramp-eval-train-2-lane-ramp120-ramp-started,False,False,0.45390070921985815,0.005249343832020997,3.9999999999999147,13.513235002756119,0,0,0,0,0,"['rolling_merge_quality', 'raw_request_jerk']"
+initial,v02-development-60mph-cruise,False,False,,0.001324308416715715,3.9999999999999147,9.061696976423264,0,0,0,0,0,['raw_request_jerk']
+initial,ramp-eval-validation-2-lane-ramp180-ramp-started,False,False,0.3900709219858156,0.009523809523809525,4.762152016037646,13.752763718366623,0,0,1,0,0,"['rolling_merge_quality', 'raw_request_jerk']"
+initial,ramp-eval-validation-4-lane-ramp180-ramp-started,False,False,0.36879432624113473,0.005,3.9999999999999147,13.788963258266449,0,0,0,0,0,"['rolling_merge_quality', 'raw_request_jerk']"
+initial,ramp-eval-train-2-lane-ramp120-ramp-started-cutin-stress,True,False,0.024844720496894408,0.04175365344467641,44.8388612137558,34.441470324993055,1,1,8,0,0,"['per_car_route_comfort_or_control', 'rolling_merge_quality', 'raw_request_jerk']"
+initial,ramp-eval-validation-2-lane-ramp180-ramp-started-cutin-stress,True,False,0.4931506849315068,0.025745257452574527,12.091926906676598,15.33006176352501,0,0,0,0,0,"['per_car_route_comfort_or_control', 'rolling_merge_quality', 'raw_request_jerk']"
+100k,v05-validation-i110-merge,False,False,0.54375,0.004275026718916993,4.0000000000000036,12.817877233028412,0,0,0,0,0,"['rolling_merge_quality', 'raw_request_jerk']"
+100k,v05-val-0-cruise,False,False,,0.001288659793814433,3.9999999999999147,5.584848076105118,0,0,0,0,0,['raw_request_jerk']
+100k,v05-val-0-passing,False,True,,0.0005675368898978433,3.9999999999999147,4.327443391084671,0,0,0,0,0,[]
+100k,v05-validation-i110-following,False,False,,0.008522727272727272,3.9999999999999147,5.907856374979019,0,0,0,0,0,['raw_request_jerk']
+100k,ramp-eval-train-2-lane-ramp120-ramp-started,False,False,0.41134751773049644,0.005242463958060288,3.9999999999999147,12.779089659452438,0,0,0,0,0,"['rolling_merge_quality', 'raw_request_jerk']"
+100k,v02-development-60mph-cruise,False,False,,0.00117820324005891,3.9999999999999147,7.878481298685074,0,0,0,0,0,['raw_request_jerk']
+100k,ramp-eval-validation-2-lane-ramp180-ramp-started,False,False,0.3404255319148936,0.005434782608695652,3.9999999999999147,12.430857717990875,0,0,1,0,0,"['rolling_merge_quality', 'raw_request_jerk']"
+100k,ramp-eval-validation-4-lane-ramp180-ramp-started,False,False,0.2907801418439716,0.0049813200498132005,3.9999999999999147,12.467843741178513,0,0,0,0,0,"['rolling_merge_quality', 'raw_request_jerk']"
+100k,ramp-eval-train-2-lane-ramp120-ramp-started-cutin-stress,True,False,0.7950310559006211,0.0136986301369863,3.9999999999999147,11.316773146390915,0,0,0,0,0,"['rolling_merge_quality', 'raw_request_jerk']"
+100k,ramp-eval-validation-2-lane-ramp180-ramp-started-cutin-stress,True,False,0.4657534246575342,0.02165087956698241,10.838213886646564,12.486682534217834,0,0,0,0,0,"['per_car_route_comfort_or_control', 'rolling_merge_quality', 'raw_request_jerk']"

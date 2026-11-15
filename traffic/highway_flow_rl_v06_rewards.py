@@ -125,28 +125,51 @@ def late_in_acceleration_lane(context, lane_length_m, merge_active):
         distance <= SETTINGS['late_lane_fraction'] * lane_length_m
 
 
-def raw_request_jerk_check(report, limit=SETTINGS['jerk_acceptance_m_s3']):
+RAW_REQUEST_SCOPES = ('all', 'after_first_decision')
+FIRST_DECISION_EXCLUDED_KEY = 'peak_raw_requested_jerk_after_first_decision_m_s3'
+
+
+def raw_request_jerk_check(report, limit=SETTINGS['jerk_acceptance_m_s3'], scope='all'):
     """Extra per-car evaluation check: the actor's raw requested jerk stays under 5 m/s3.
 
     Stops a command rate limit from hiding a jerky policy. Missing evidence fails.
+    scope='all' scores every decision (round 5). scope='after_first_decision'
+    (round 6, user decision November 15, 2026) skips each car's first decision,
+    where SUMO inserts the car at 0 m/s2 and the request is compared with that
+    insertion value; the first decision's realized jerk stays under the
+    original per-car gate.
     """
-    per_car = (report.get('v05_metrics') or {}).get('per_car')
+    if scope not in RAW_REQUEST_SCOPES:
+        raise ValueError('Unknown raw-request scope')
+    if scope == 'all':
+        per_car, key = (report.get('v05_metrics') or {}).get('per_car'), 'peak_raw_requested_jerk_m_s3'
+    else:
+        per_car, key = (report.get('v06_metrics') or {}).get('per_car'), FIRST_DECISION_EXCLUDED_KEY
     assigned = [a for a, c in (report.get('smooth_control') or {}).get('per_car', {}).items()
                 if c.get('assigned_controlled')]
     cars = {}
     for agent in assigned:
-        peak = (per_car or {}).get(agent, {}).get('peak_raw_requested_jerk_m_s3')
+        peak = (per_car or {}).get(agent, {}).get(key)
         cars[agent] = dict(peak_raw_requested_jerk_m_s3=peak,
                            passed=peak is not None and peak <= limit + 1e-9)
-    return dict(limit_m_s3=limit, passed=bool(cars) and all(c['passed'] for c in cars.values()), per_car=cars)
+    return dict(limit_m_s3=limit, scope=scope,
+                passed=bool(cars) and all(c['passed'] for c in cars.values()), per_car=cars)
 
 
 def v06_gates(report):
-    """Original development gates (no exemption) plus the raw-request jerk check."""
+    """Original development gates (no exemption) plus the raw-request jerk check.
+
+    The check's scope comes from the episode report (set by the environment from
+    the resolved configuration); the every-decision result is always reported
+    beside it so the two scorings stay comparable.
+    """
     from experiments.run_highway_flow_rl_v05 import development_gates
     result = development_gates(report)
-    raw = raw_request_jerk_check(report)
+    scope = report.get('v06_raw_request_scope', 'all')
+    raw = raw_request_jerk_check(report, scope=scope)
     result['raw_request_jerk'] = raw
+    if scope != 'all':
+        result['raw_request_jerk_all_decisions'] = raw_request_jerk_check(report, scope='all')
     if not raw['passed']:
         result['failures'] = list(result['failures']) + ['raw_request_jerk']
         result['passed'] = False

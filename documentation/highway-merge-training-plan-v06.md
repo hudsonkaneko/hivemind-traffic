@@ -487,3 +487,263 @@ matches; run the preflight again; then
 `experiments/run_highway_flow_rl_v06.py train --config configs/training/highway-flow-rl-v06.json --output outputs/highway-flow-rl/v06/round-05 --preflight <new preflight.json>`
 in the background, and report when it exits.
 
+## Round 5 training result (November 15, 2026): no improvement, nothing promoted
+
+User approved the Phase 3 configuration ("Approve and launch"). Authorized in
+commit `4b64751`; preflight repeated (`preflight-02`, 1 diagnostic episode,
+80/100); trained in the main checkout at `outputs/highway-flow-rl/v06/round-05`.
+The run completed normally in 2,489 s: 289,563 decisions (22,062 critic-only),
+109 updates, no collisions or teleports in any episode, and no stop rule fired.
+It ended when the remaining budget could not hold another complete episode.
+
+| Validation (8 rows) | Original gates | + raw-request jerk | Merge speed match | Stable merges | Interventions | Peak jerk |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Initial (v04 actor, v06 env) | **4/8** | 1/8 | 0.437 | 4/4 | 0.27% | 4.8 |
+| 100k (update 42) | 1/8 | 0/8 | 0.463 | 4/4 | 9.47% | 33.3 |
+| 200k (update 78) | 4/8 | 0/8 | 0.468 | 4/4 | 1.96% | 36.5 |
+| Final | 1/8 | 0/8 | **0.254** | **2/4** | 10.47% | 30.9 |
+
+**Outcome: training did not beat its own starting point.** The v05 validation
+ranking selected the initial (warm-start) policy as best. Merge speed matching
+improved only slightly at 100k/200k (0.44 to 0.47) and collapsed at the end,
+when both ramp180 validation merges were lost. The actor's requests became
+jumpier, not smoother: the I-110 focal car's peak raw requested jerk rose from
+13.9 to 20.8 m/s3 and the ramp cars' from 13.8 to 16.3, while interventions
+(which include the comfort rate limit) rose to 10%. **No policy is promoted and
+held-out evaluation is not run.** The v04 policy remains the reference.
+
+**What the run shows:**
+1. **The whole-episode rate limit alone helped the old policy.** The unchanged
+   v04 actor passes 4/8 under the original gates in the v06 environment, against
+   2/8 in the Phase 0c baseline (startup handoff only). Under the new
+   raw-request check it passes 1/8: 15 of 29 cars request steps above 5 m/s3,
+   which the rate limit then smooths.
+2. **Learning was throttled.** Most actor updates hit the 0.02 KL target after
+   1-4 optimizer steps (of up to 20 epochs). With one complete episode per
+   update, every update was small and noisy, and only about 99 actor updates
+   happened.
+3. **The jerk cost did not shape requests.** Under a rate limit, the requested
+   jerk is measured against the already-smoothed acceleration, so a stepped
+   request is charged again on later steps. Above the 10 m/s3 cap there is no
+   extra gradient. The policy found no smoother way to request commands.
+4. **Missed-gap recovery did not improve.** Late-lane decisions in missed-gap and
+   focused ramp episodes did not trend down (for example 142-256 per episode
+   through training).
+5. **The stop-rule floor was too lenient.** 0.3128 came from the startup-mode
+   baseline, but the same actor already scores 0.437 under the v06 rate limit.
+   The final drop to 0.254 was below the floor, but the floor applies only at
+   periodic checks.
+
+Evidence: [round-05-results.json](evidence/highway-merge-training-v06/round-05-results.json)
+(SHA-256 `60c2169987632156c45e38a4fcb5aeb1d46334428f484c64d7aace85b489f864`),
+with the hashes of the summary and the four validation files. Study ledger
+after the run: 33,825 s of 41,400 s and 4,264,650 of 4,630,000 decisions used.
+No further training is authorized.
+
+## Round 5 diagnosis (November 15, 2026)
+
+Read-only analysis of the saved round-5 validation episodes (per-decision action
+logs) and the 99 PPO update records. No simulation, training or ledger charge.
+Script: [`scripts/diagnose_highway_flow_rl_v06_round05.py`](../scripts/diagnose_highway_flow_rl_v06_round05.py).
+
+**Corrections to the round-5 summary above** (kept unchanged as the
+first-pass record):
+- "Requests became jumpier": mostly wrong. Almost every raw-request check
+  failure is the car's **first decision** (finding 1). Outside that first
+  decision, 1 car fails at the start and 2 at the end.
+- "1-4 optimizer steps per update": wrong. The median was 11 steps (63 max,
+  1,593 in total). The accurate statement: KL early stopping ended 98 of 99
+  updates, usually within the **first epoch** (median 1 of 20).
+- "Lost 2 of 4 stable merges": the ramp180 cars did merge (lateral merge done
+  at 6.2 s, as before). Their post-merge window failed only on
+  `intervention_fraction`, caused by the speed-limit guard (finding 3).
+
+### Findings
+
+1. **The raw-request jerk check mostly measures vehicle insertion.** SUMO
+   inserts each car at 0 m/s2. The actor's first command (typically 0.6-1.7
+   m/s2) is compared with that 0, which gives 6-17 m/s3 on one decision. Of the
+   failing cars, 14 of 15 at the start and 18 of 20 at the end fail only on
+   that first decision. With the first decision excluded (a diagnostic count,
+   not a rule change), the starting policy passes 3/8 instead of 1/8, and the
+   200k checkpoint 3/8 instead of 0/8. Training made the first command larger,
+   which is why the failing count rose from 15 to 20. During driving, the
+   actor's own command changes stay small: the median per-car 95th percentile
+   is 0.2-0.26 m/s2 per decision, below the 0.5 limit.
+2. **The large realized jerk (31-36 m/s3) is one car, a late merge.** In the
+   100k, 200k and final policies, the I-110 focal car reaches the end of its
+   acceleration lane unmerged. The lane-end guard brakes it from 0 to about
+   -3 m/s2 in one step, it stops for 6.6 s, and native SUMO restarts it. The
+   starting policy merged without stopping. All other realized peaks are
+   16 m/s3 or below, from the speed-limit guard. This is a merge-timing
+   regression, not a smoothness one.
+3. **Most of the 10% interventions are the speed-limit guard.** Speed-ceiling
+   interventions rose from 3 (start) to 1,644 (final), plus 148 lane-end
+   decisions from the stopped I-110 car. The final policy asks for about +0.05
+   m/s2 while already at the speed limit, and the guard trims it every step.
+   On the one-AV cruise case that is 86% of decisions, at 99.8% of the limit
+   (start: 99.0%, zero interventions). Physically harmless, but it fails the
+   5% intervention gate on cruise, passing and I-110 following, and the ramp180
+   post-merge windows. The reward already charges -0.2 per intervention, so this
+   drift ran against the reward signal (finding 5).
+4. **Merge quality was never passable on 3 of the 4 merge rows.** Every
+   checkpoint fails `rolling_merge_quality` on all four merge rows. On the
+   ramp-started layouts the measured ceiling is below 0.90 (ramp120 0.69,
+   ramp180 0.57), as recorded in Phase 0c. So the best possible score on these
+   8 rows is 5/8, and the starting policy already passed the 4 non-merge rows.
+   The only real room was the I-110 merge (ceiling 0.99) and closing the gap to
+   the ceiling elsewhere. The 200k checkpoint did close it a little (ramp120
+   0.45 to 0.50, ramp180 0.39/0.37 to 0.43/0.43), while I-110 fell from 0.53 to
+   0.50 with the lane-end stop.
+5. **The learning signal was weak and noisy.** With one complete episode per
+   update (median 1,042 samples), the KL check stopped 98 of 99 updates, and
+   33 never finished one epoch. Mean value loss rose from 5.6 to 9.8 in the
+   middle of training before falling to 6.6. Gradient norms averaged about 18
+   against a 0.5 clip. A small systematic drift (finding 3) can then win over a
+   -0.2 per-step cost. Training rows are mostly merges, so the cruise-at-limit
+   behavior gets little correction. This is an inference from the statistics,
+   not a tested cause.
+
+### What this changes
+
+- The jerk diagnosis that motivated an acceleration-change action is weaker
+  than reported. Requests are mostly smooth; the check is dominated by the
+  insertion step. An acceleration-change action is **not** indicated by this
+  evidence.
+- The concrete regressions to fix are (a) speed-limit riding and (b) the I-110
+  late merge, both under a noisy one-episode-per-update optimizer.
+- Options for user decision (none started):
+  1. Score the raw-request check from the second decision, or seed each car's
+     insertion acceleration from its first command. Either is a rule or
+     environment change and needs a decision; results would be reported beside
+     the current rule.
+  2. Larger, steadier updates: several episodes per update and/or a looser KL
+     target, within the remaining budget (7,575 s, about 365,000 decisions).
+  3. Stop speed-limit riding: clamp a positive request at the ceiling before
+     it counts as an intervention, or add cruise rows to the curriculum.
+  4. Do not train further in this study; keep v04 with the whole-episode rate
+     limit as the reference (4/8 under the original rules).
+
+Evidence: [round-05-diagnosis.json](evidence/highway-merge-training-v06/round-05-diagnosis.json)
+(SHA-256 `dac359ede09fc30fba651d8ea0069257eb4dfa2bd8af895d7bdeb318600f966d`),
+with the input hash of each validation report.
+
+## Round 6 proposal (November 15, 2026): fix scoring and updates
+
+User decision after the round-5 diagnosis: "Fix scoring + updates" (options 1
+and 2). Speed-limit riding gets no objective change; it is guarded by a stop rule
+instead. Code, configuration and tests are ready. `training_authorized` is
+**false**, and no preflight has been run for this configuration yet. The preflight
+must follow authorization anyway, because the configuration hash changes.
+
+| Item | Round 5 | Round 6 (proposed) |
+| --- | --- | --- |
+| Raw-request jerk check | every decision | from each car's **second** decision. The first decision is compared with SUMO's 0 m/s2 insertion value; its realized jerk stays under the original per-car gate. Every validation also reports the every-decision result. |
+| Episodes per PPO update | 1 | **4** complete episodes, one on-policy batch, advantages normalized once |
+| KL target / epochs | 0.02 / 20 | **0.03 / 10** |
+| Stop: merge speed match | below 0.3128 (startup-mode baseline) | below **0.4167** (this actor's round-5 initial validation in the v06 environment, 0.4367, minus 0.02) |
+| Stop: interventions | none | periodic-validation pooled interventions above **5%** (the per-case gate value; round 5 reached 9.5-10.5%) |
+| Round index / seeds | 5 | 6 (every training seed shifts; all 33 missed-gap seeds for 10 cycles rebuilt) |
+| Unchanged | | rows, reward and weights, faded inputs, whole-episode rate limit, Krauss, original road-end rules, safety, warm start (v04 best), critic warmup 20,000, 300,000 decisions / 5,400 s, validation rows, held-out not authorized |
+
+**Expected effect and limits.** About 99 PPO episodes become about 25
+updates of roughly 10,000 samples. Each KL check then sees about 4 times more
+data per epoch before stopping, but there are about 4 times fewer updates.
+Up to 4 episodes are collected but never learned from: on interruption, or when
+the budget ends mid-group. They show as trailing `deferred` update records and
+their decisions stay charged. The scoring change cannot affect training: the reward
+still charges the first decision's requested jerk, as in round 5. Merge quality
+on the three ramp validation rows still cannot reach 90% (ceilings 0.57-0.69),
+so the best possible result on the 8 rows is 5/8.
+
+**Verification (no ledger charge).** 557 tests pass, 3 skipped, across the
+highway-flow suites. New tests cover the scope rule, the gates reporting both
+scopes, the buffered trainer (merge, no duplicate on retry, exact round-5
+behavior at 1 episode), the intervention stop rule, the round-6 contract
+rejections, and round-6 seed separation. A SUMO smoke run in the worktree (2
+short episodes, sampled actions) confirmed:
+- the new per-car metric and scope reach the report;
+- the first episode was deferred, and the second triggered one real update on
+  the merged 300 samples that changed the weights.
+
+Remaining budget: 7,575 s and 365,350 decisions. Round 5 used 2,489 s for its
+300,000-decision round, so one round fits. Diagnostic episodes: 80/100 (the
+preflight needs 1).
+
+Files: [`configs/training/highway-flow-rl-v06-round6.json`](../configs/training/highway-flow-rl-v06-round6.json)
+(generated by [`scripts/prepare_highway_flow_rl_v06_round6.py`](../scripts/prepare_highway_flow_rl_v06_round6.py)),
+`traffic/highway_flow_rl_v06_contract.py` (`ROUNDS[6]`),
+`experiments/run_highway_flow_rl_v06.py` (`BufferedMappoTrainer`, stop rule),
+`environments/highway_flow_rl_v06_env.py` and `traffic/highway_flow_rl_v06_rewards.py` (scope).
+
+### Launch correction: runs as round 7 (November 15, 2026)
+
+The user approved the round-6 profile ("Approve and launch"). Before launch,
+the shared study ledger showed that **round index 6 was already charged** by the
+v07 cut-in run from another session (`documentation/highway-merge-cutin-2026-11-15.md`):
+preparation episodes plus 100,728 training decisions and 1,133 s, stopped at its
+merge-regression rule. The runner refuses a fresh round on a charged index, and the
+budget quoted above was out of date. Actual remaining budget at launch: **6,400 s and
+264,622 decisions**; diagnostic episodes 90/100.
+
+User decision: "Round 7, all remaining". The same profile is
+`contract.ROUNDS[7]`, with config
+[`highway-flow-rl-v06-round7.json`](../configs/training/highway-flow-rl-v06-round7.json).
+Every training seed shifts by one more round, and all 33 missed-gap seeds were
+rebuilt. The runner stops at the smaller of the 300,000-decision / 5,400 s round
+limit and the study total, so the study budget will be essentially used up.
+The round-6 config stays as the approval record, marked superseded and not
+authorized.
+
+## Round 7 result (November 15, 2026): stopped by the merge stop rule at 100k
+
+The approved round-6 profile ran as round 7 (`outputs/highway-flow-rl/v06/round-07`).
+Preflight passed (`preflight-r07`). The first periodic validation (100,250
+decisions, 912 s charged, 31 PPO episodes in 7 merged updates plus 10
+critic-only episodes) triggered the declared stop rule: merge speed match
+**0.343**, below the 0.4167 floor. No collisions or teleports. Nothing is
+promoted, and held-out evaluation is not run.
+
+| Validation (8 rows) | Original gates | + raw check from 2nd decision | + raw check, every decision | Merge speed match | Stable merges | Interventions | Peak jerk |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Initial (v04 actor) | 4/8 | 1/8 | 1/8 | 0.437 | 4/4 | 0.27% | 4.8 |
+| 100k (update 41) | 4/8 | 2/8 | 1/8 | **0.343** | 3/4 | 0.46% | 4.0 |
+
+**What happened:**
+1. **The stop came from one car.** I-110 speed matching rose from 0.534 to
+   0.565. The ramp120 and ramp180 4-lane merges were nearly unchanged (0.454 to
+   0.447; 0.369 to 0.362). On the 2-lane ramp180 the car merged as before (6.2
+   s), but its post-merge window failed `intervention_fraction`: the speed-limit
+   guard trimmed it 40 times. A failed stable merge counts as 0, so the mean
+   fell from 0.437 to 0.343. With that car at its earlier value, the mean would
+   be about 0.44. This is the same speed-limit riding as round 5, now in one
+   case (pooled interventions only 0.46%).
+2. **The original-rule result held (4/8).** No realized jerk exceeded 4.0
+   m/s3 (round 5's 100k checkpoint: 33 m/s3), and the I-110 car did not stop at
+   the lane end.
+3. **Correction to the round-5 diagnosis, finding 1.** The insertion effect is
+   not one decision. A ramp car's first command is about 1.6-1.7 m/s2. The
+   whole-episode rate limit raises the realized command by only 0.4 m/s2 per
+   decision, so |request - measured| stays above 0.5 m/s2 for about 3-4
+   decisions (the second decision still reads 12-13 m/s3). The diagnosis
+   attributed that whole lag run to "first decision" and counted it out. The
+   implemented rule (skip only the first decision) therefore passes 1/8 at the
+   start, not the predicted 3/8. The raw-request check stays dominated by the
+   insertion handoff, not by the actor's behavior once driving.
+4. **Updates were still KL-limited, now by a known cause.** All 7 merged
+   updates (4,053-16,992 samples) stopped on KL (last KL 0.030-0.037 against
+   0.03), 5 of them inside the first epoch (236 optimizer steps in total). The
+   warm-start policy's action standard deviation is 0.04 in normalized units
+   (log std -3.22, about 0.13 m/s2). For a Gaussian, a KL of 0.03 is reached
+   when the mean moves by only about 0.01 normalized (about 0.03 m/s2). So each
+   update can shift commands by only about 0.03 m/s2. Larger batches cannot
+   change that. The same scale matches the +0.05 m/s2 drift that trips the
+   speed-limit guard.
+
+Evidence: [round-07-results.json](evidence/highway-merge-training-v06/round-07-results.json)
+(SHA-256 `71aa3a6145014b4ef3e81f906bec0e699d99727ee1f15e7dcf55d10451e3d2ce`), with validation hashes, per-case failures and update
+statistics. Study ledger after the run: 35,914 s of 41,400 s, 4,465,628 of
+4,630,000 decisions, and 91 of 100 diagnostic episodes used. That leaves 5,486 s
+and 164,372 decisions, which is less than one full round. No further training is
+authorized.
+

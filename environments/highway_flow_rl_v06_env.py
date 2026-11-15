@@ -25,9 +25,12 @@ RATE_LIMITS = ('full', 'startup')
 
 
 class HighwayFlowRLV06Env(HighwayFlowRLV05Env):
-    def __init__(self, *args, rate_limit='full', v06_weights=None, missed_gap=False, **kwargs):
+    def __init__(self, *args, rate_limit='full', v06_weights=None, missed_gap=False, raw_request_scope='all', **kwargs):
         if rate_limit not in RATE_LIMITS:
             raise ValueError('rate_limit must be full (whole episode) or startup (handoff only)')
+        if raw_request_scope not in v06.RAW_REQUEST_SCOPES:
+            raise ValueError('Unknown raw-request scope')
+        self.raw_request_scope = raw_request_scope
         weights = dict(v06.WEIGHTS if v06_weights is None else v06_weights)
         if weights != v06.WEIGHTS:
             raise ValueError('Unreviewed v06 reward weights')
@@ -108,7 +111,10 @@ class HighwayFlowRLV06Env(HighwayFlowRLV05Env):
         lane = self.graph.lanes.get(ego['lane_id'], {})
         late = v06.late_in_acceleration_lane(snapshot['context'], lane.get('length'), merge_active)
         car = self.v06_metrics['per_car'].setdefault(agent, dict(decisions=0, late_lane_decisions=0,
-            first_late_lane_time_s=None, avoidable_braking_charged=0))
+            first_late_lane_time_s=None, avoidable_braking_charged=0, **{v06.FIRST_DECISION_EXCLUDED_KEY: 0.}))
+        if agent in self._v05_seen:  # not this car's first decision (insertion at 0 m/s2)
+            car[v06.FIRST_DECISION_EXCLUDED_KEY] = max(car[v06.FIRST_DECISION_EXCLUDED_KEY],
+                                                       abs(audit['raw_requested_jerk']))
         for row in (car, self.v06_metrics):
             row['decisions'] += 1
             row['late_lane_decisions'] += int(late)
@@ -141,6 +147,6 @@ class HighwayFlowRLV06Env(HighwayFlowRLV05Env):
             v06_rate_limit=self.rate_limit, v06_weights=dict(self.v06_weights),
             v06_weights_status=v06.WEIGHTS_STATUS, v06_settings=dict(v06.SETTINGS),
             v06_fade_indices=list(v06.FADE_INDICES), v06_missed_gap=self.missed_gap,
-            v06_metrics=deepcopy(self.v06_metrics),
+            v06_metrics=deepcopy(self.v06_metrics), v06_raw_request_scope=self.raw_request_scope,
             v06_scope='Actor (and critic) merge inputs faded; safety guard, mask, lane permission and journaled observation117 stay raw')
         return result

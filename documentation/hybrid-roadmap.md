@@ -1007,3 +1007,69 @@ of merge rows missed-gap), stop rules on any collision or merge speed matching
 below the frozen-v04 0.3128. Zero-update preflight passed (1 diagnostic
 episode, 79/100). Training waits for user approval.
 [Details](highway-merge-training-plan-v06.md#phase-3---resolved-training-proposal-november-15-2026-awaiting-approval).
+
+## November 15, 2026 - merge/cut-in revision
+
+[November 15 merge/cut-in revision](highway-merge-cutin-2026-11-15.md): approved one-round SUMO MAPPO refinement on existing corrected roads, with explicit native/AV lane-change gaps and actual-decision sampling. 155 tests pass, native qualification remains a launch gate. Preserve existing 3D demos and every historical gate/failure; no new rendering or Isaac job.
+
+## November 15, 2026 - v06 round 5 trained: no improvement, nothing promoted
+
+The approved round completed (289,563 decisions, 2,489 s, no collisions, no
+stop rule). Best validation was the starting v04 policy. The final policy
+passes 1/8 original-rule cases (start 4/8) and lost 2 of 4 stable merges.
+Its requests became jumpier (raw requested jerk up to 20.8 m/s3), and merge
+speed matching fell to 0.25. Finding: the whole-episode rate limit alone lifts
+the old policy from 2/8 to 4/8. Learning was KL-throttled, with 1-4 optimizer
+steps per update. No promotion; no held-out run.
+[Details](highway-merge-training-plan-v06.md#round-5-training-result-november-15-2026-no-improvement-nothing-promoted).
+
+## November 15, 2026 - merge/cut-in training result
+
+[Retained results](highway-merge-cutin-2026-11-15.md#training-outcome-stopped-at-the-declared-regression-gate): 100,728 decisions, nominal merge matching 43.52% -> 39.66% triggered the approved stop; stable merges 4/4, zero collisions/teleports, nominal overrides 0.327%. Raw requested jerk and merge quality remain failures. Only two actual cut-ins in 11 training stress episodes; none in the latest stress validation, so recovery improvement is unproven. Full checkpoint, experimental actor, per-case CSV, metrics and hashes retained. Previous policy remains in place. Next: reliable cut-in exposure and corrected-ramp objective diagnosis before another reviewed configuration. Guide synchronization pending.
+
+## November 15, 2026 - v06 round 5 diagnosis
+
+Read-only diagnosis of round 5. The raw-request jerk failures are almost all the
+car's first decision (inserted at 0 m/s2): 14/15 failing cars at the start and 18/20
+at the end. Excluding that decision, the start would pass 3/8 rather than 1/8.
+The 31-36 m/s3 peaks come from one I-110 car reaching the lane end unmerged and
+stopping. Most interventions are the speed-limit guard (3 to 1,644): the
+final policy asks for about +0.05 m/s2 at the limit. KL early stopping ended
+98/99 updates (median 11 optimizer steps, not 1-4 as first reported). An
+acceleration-change action is not indicated.
+[Details](highway-merge-training-plan-v06.md#round-5-diagnosis-november-15-2026).
+
+## November 15, 2026 - v06 round 6 prepared (not authorized)
+
+Following the round-5 diagnosis (user choice: fix scoring and updates):
+- raw-request jerk scored from each car's second decision, with the
+  every-decision result still reported;
+- 4 complete episodes per PPO update, KL target 0.03 with 10 epochs;
+- stop rules: merge speed match below 0.4167, or periodic-validation
+  interventions above 5%.
+
+The rest of the configuration is unchanged from round 5. 557 tests pass; a
+SUMO smoke run verified the metric and a real merged update. `training_authorized`
+is false; this awaits user approval.
+[Details](highway-merge-training-plan-v06.md#round-6-proposal-november-15-2026-fix-scoring-and-updates).
+
+## November 15, 2026 - v06 round-6 profile launches as round 7
+
+Round index 6 was already charged in the shared ledger by the v07 cut-in run
+(100,728 decisions, stopped at its regression rule). With user approval, the
+approved profile runs as round 7. The remaining study budget is 6,400 s and
+264,622 decisions, which this round will essentially use up.
+[Details](highway-merge-training-plan-v06.md#launch-correction-runs-as-round-7-november-15-2026).
+
+## November 15, 2026 - v06 round 7 stopped by its merge stop rule
+
+The round-6 profile (run as round 7) stopped at the 100k periodic validation.
+Merge speed match fell from 0.437 to 0.343 because one ramp180 car failed its
+post-merge window on speed-limit interventions; the other merges were near
+their starting values, and I-110 improved from 0.534 to 0.565. Original rules
+stayed at 4/8, with peak jerk 4.0 m/s3 and no collisions. Corrections: the
+insertion effect lasts 3-4 decisions, not one, so the second-decision rule passes
+1/8 at start rather than the predicted 3/8. Updates remain KL-limited because
+the policy's action std is 0.04, so a 0.03 KL allows about a 0.03 m/s2 mean
+shift per update. Nothing promoted; 5,486 s and 164,372 decisions remain.
+[Details](highway-merge-training-plan-v06.md#round-7-result-november-15-2026-stopped-by-the-merge-stop-rule-at-100k).

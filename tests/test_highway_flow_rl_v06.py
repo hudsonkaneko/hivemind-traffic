@@ -107,6 +107,33 @@ def test_raw_request_jerk_check_fails_on_spike_and_on_missing_evidence():
     assert not v06.raw_request_jerk_check(_report({}))['passed']
 
 
+def test_round6_scope_skips_only_the_insertion_decision():
+    report = _report(dict(agent_0=13.9, agent_1=4.))  # every-decision peaks (first decision 13.9)
+    report['v06_metrics'] = dict(per_car={'agent_0': {v06.FIRST_DECISION_EXCLUDED_KEY: 2.1},
+                                          'agent_1': {v06.FIRST_DECISION_EXCLUDED_KEY: 4.}})
+    assert not v06.raw_request_jerk_check(report)['passed']
+    later = v06.raw_request_jerk_check(report, scope='after_first_decision')
+    assert later['passed'] and later['scope'] == 'after_first_decision'
+    report['v06_metrics']['per_car']['agent_1'][v06.FIRST_DECISION_EXCLUDED_KEY] = 6.
+    assert not v06.raw_request_jerk_check(report, scope='after_first_decision')['passed']
+    del report['v06_metrics']['per_car']['agent_1']  # missing evidence still fails
+    assert not v06.raw_request_jerk_check(report, scope='after_first_decision')['passed']
+    with pytest.raises(ValueError):
+        v06.raw_request_jerk_check(report, scope='none')
+
+
+def test_v06_gates_take_scope_from_report_and_report_both(monkeypatch):
+    pytest.importorskip('torch')
+    import experiments.run_highway_flow_rl_v05 as runner
+    monkeypatch.setattr(runner, 'development_gates', lambda report: dict(passed=True, failures=[]))
+    report = _report(dict(agent_0=13.9))
+    report['v06_metrics'] = dict(per_car={'agent_0': {v06.FIRST_DECISION_EXCLUDED_KEY: 2.}})
+    assert not v06.v06_gates(report)['passed']  # round 5: no scope key -> every decision
+    report['v06_raw_request_scope'] = 'after_first_decision'
+    gates = v06.v06_gates(report)
+    assert gates['passed'] and not gates['raw_request_jerk_all_decisions']['passed']
+
+
 # --- environment guards (logic only, no SUMO) -------------------------------
 def test_environment_rejects_unreviewed_weights_and_unknown_rate_limit():
     pytest.importorskip('torch')
@@ -117,6 +144,8 @@ def test_environment_rejects_unreviewed_weights_and_unknown_rate_limit():
         HighwayFlowRLV06Env('net', 'dir', rate_limit='none')
     with pytest.raises(ValueError):
         HighwayFlowRLV06Env('net', 'dir', v05_variant='legacy')
+    with pytest.raises(ValueError):
+        HighwayFlowRLV06Env('net', 'dir', raw_request_scope='second_half')
 
 
 def test_pre_action_and_successor_potentials_agree_for_the_same_state(monkeypatch):
