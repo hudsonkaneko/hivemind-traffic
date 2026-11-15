@@ -487,3 +487,56 @@ matches; run the preflight again; then
 `experiments/run_highway_flow_rl_v06.py train --config configs/training/highway-flow-rl-v06.json --output outputs/highway-flow-rl/v06/round-05 --preflight <new preflight.json>`
 in the background, and report when it exits.
 
+## Round 5 training result (November 15, 2026): no improvement, nothing promoted
+
+User approved the Phase 3 configuration ("Approve and launch"). Authorized in
+commit `4b64751`; preflight repeated (`preflight-02`, 1 diagnostic episode,
+80/100); trained in the main checkout at `outputs/highway-flow-rl/v06/round-05`.
+The run completed normally in 2,489 s: 289,563 decisions (22,062 critic-only),
+109 updates, no collisions or teleports in any episode, and no stop rule fired.
+It ended when the remaining budget could not hold another complete episode.
+
+| Validation (8 rows) | Original gates | + raw-request jerk | Merge speed match | Stable merges | Interventions | Peak jerk |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Initial (v04 actor, v06 env) | **4/8** | 1/8 | 0.437 | 4/4 | 0.27% | 4.8 |
+| 100k (update 42) | 1/8 | 0/8 | 0.463 | 4/4 | 9.47% | 33.3 |
+| 200k (update 78) | 4/8 | 0/8 | 0.468 | 4/4 | 1.96% | 36.5 |
+| Final | 1/8 | 0/8 | **0.254** | **2/4** | 10.47% | 30.9 |
+
+**Outcome: training did not beat its own starting point.** The v05 validation
+ranking selected the initial (warm-start) policy as best. Merge speed matching
+improved only slightly at 100k/200k (0.44 to 0.47) and collapsed at the end,
+when both ramp180 validation merges were lost. The actor's requests became
+jumpier, not smoother: the I-110 focal car's peak raw requested jerk rose from
+13.9 to 20.8 m/s3 and the ramp cars' from 13.8 to 16.3, while interventions
+(which include the comfort rate limit) rose to 10%. **No policy is promoted and
+held-out evaluation is not run.** The v04 policy remains the reference.
+
+**What the run shows:**
+1. **The whole-episode rate limit alone helped the old policy.** The unchanged
+   v04 actor passes 4/8 under the original gates in the v06 environment, against
+   2/8 in the Phase 0c baseline (startup handoff only). Under the new
+   raw-request check it passes 1/8: 15 of 29 cars request steps above 5 m/s3,
+   which the rate limit then smooths.
+2. **Learning was throttled.** Most actor updates hit the 0.02 KL target after
+   1-4 optimizer steps (of up to 20 epochs). With one complete episode per
+   update, every update was small and noisy, and only about 99 actor updates
+   happened.
+3. **The jerk cost did not shape requests.** Under a rate limit, the requested
+   jerk is measured against the already-smoothed acceleration, so a stepped
+   request is charged again on later steps. Above the 10 m/s3 cap there is no
+   extra gradient. The policy found no smoother way to request commands.
+4. **Missed-gap recovery did not improve.** Late-lane decisions in missed-gap and
+   focused ramp episodes did not trend down (for example 142-256 per episode
+   through training).
+5. **The stop-rule floor was too lenient.** 0.3128 came from the startup-mode
+   baseline, but the same actor already scores 0.437 under the v06 rate limit.
+   The final drop to 0.254 was below the floor, but the floor applies only at
+   periodic checks.
+
+Evidence: [round-05-results.json](evidence/highway-merge-training-v06/round-05-results.json)
+(SHA-256 `60c2169987632156c45e38a4fcb5aeb1d46334428f484c64d7aace85b489f864`),
+with the hashes of the summary and the four validation files. Study ledger
+after the run: 33,825 s of 41,400 s and 4,264,650 of 4,630,000 decisions used.
+No further training is authorized.
+

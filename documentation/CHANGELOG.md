@@ -1425,3 +1425,14 @@ episode, 79/100). Training waits for user approval.
 ## 2026-11-15 - merge/cut-in revision prepared
 
 [November 15 merge/cut-in revision](highway-merge-cutin-2026-11-15.md): decision-balanced curriculum, projected headway/TTC admission for native and AV lane changes, joint reservations, labeled cut-in stress and sparse blocker-lane fix. 155 targeted tests pass; 72 recovery-demand seeds prepared. Approved 300k/90-minute round is gated by native smoke and source-bound preflight, after the existing v06 process exits. No learned improvement claimed. Guide synchronization pending.
+
+## November 15, 2026 - v06 round 5 trained: no improvement, nothing promoted
+
+The approved round completed (289,563 decisions, 2,489 s, no collisions, no
+stop rule). Best validation was the starting v04 policy. The final policy
+passes 1/8 original-rule cases (start 4/8) and lost 2 of 4 stable merges.
+Its requests became jumpier (raw requested jerk up to 20.8 m/s3), and merge
+speed matching fell to 0.25. Finding: the whole-episode rate limit alone lifts
+the old policy from 2/8 to 4/8. Learning was KL-throttled, with 1-4 optimizer
+steps per update. No promotion; no held-out run.
+[Details](highway-merge-training-plan-v06.md#round-5-training-result-november-15-2026-no-improvement-nothing-promoted).

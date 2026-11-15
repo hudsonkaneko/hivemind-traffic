@@ -1011,3 +1011,14 @@ episode, 79/100). Training waits for user approval.
 ## November 15, 2026 - merge/cut-in revision
 
 [November 15 merge/cut-in revision](highway-merge-cutin-2026-11-15.md): approved one-round SUMO MAPPO refinement on existing corrected roads, with explicit native/AV lane-change gaps and actual-decision sampling. 155 tests pass, native qualification remains a launch gate. Preserve existing 3D demos and every historical gate/failure; no new rendering or Isaac job.
+
+## November 15, 2026 - v06 round 5 trained: no improvement, nothing promoted
+
+The approved round completed (289,563 decisions, 2,489 s, no collisions, no
+stop rule). Best validation was the starting v04 policy. The final policy
+passes 1/8 original-rule cases (start 4/8) and lost 2 of 4 stable merges.
+Its requests became jumpier (raw requested jerk up to 20.8 m/s3), and merge
+speed matching fell to 0.25. Finding: the whole-episode rate limit alone lifts
+the old policy from 2/8 to 4/8. Learning was KL-throttled, with 1-4 optimizer
+steps per update. No promotion; no held-out run.
+[Details](highway-merge-training-plan-v06.md#round-5-training-result-november-15-2026-no-improvement-nothing-promoted).
