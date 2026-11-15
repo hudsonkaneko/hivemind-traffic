@@ -1412,3 +1412,12 @@ no simulation. Weights: merge_tracking 0.25, jerk_excess 1.50, avoidable_braking
 outweighed a whole episode. All new terms are costs and none can be farmed. A
 smooth merge gains +7 to +25 over the recorded ones. Not trained.
 [Details](highway-merge-training-plan-v06.md#phase-2---offline-reward-audit-november-15-2026).
+
+## November 15, 2026 - v06 Phase 3: training proposal ready (not authorized)
+
+V06 runner, launch contract and resolved config prepared. MAPPO from v04 best,
+20k critic warmup, 300k decisions / 5,400 s in one round, 20 training rows (25%
+of merge rows missed-gap), stop rules on any collision or merge speed matching
+below the frozen-v04 0.3128. Zero-update preflight passed (1 diagnostic
+episode, 79/100). Training waits for user approval.
+[Details](highway-merge-training-plan-v06.md#phase-3---resolved-training-proposal-november-15-2026-awaiting-approval).
