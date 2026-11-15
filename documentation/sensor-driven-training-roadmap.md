@@ -783,3 +783,7 @@ and avoidable_braking 0.25. No training. [Details](highway-merge-training-plan-v
 
 Resolved v06 config, runner and contract; zero-update preflight passed. Awaiting
 user approval to train. [Details](highway-merge-training-plan-v06.md#phase-3---resolved-training-proposal-november-15-2026-awaiting-approval).
+
+### v60 - November 15: merge/cut-in revision prepared
+
+[November 15 merge/cut-in revision](highway-merge-cutin-2026-11-15.md) implements the approved focused curriculum and additional lane admission without changing audited v06 rewards or flow117 dimensions. Native smoke/preflight precede the approved one-round launch; existing v06 training is untouched. Next action: completion/failure-only review of preserved per-car metrics and actual stress-event coverage. No promotion or sensor-driven driving claim; guide synchronization pending.

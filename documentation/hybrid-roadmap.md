@@ -1007,3 +1007,7 @@ of merge rows missed-gap), stop rules on any collision or merge speed matching
 below the frozen-v04 0.3128. Zero-update preflight passed (1 diagnostic
 episode, 79/100). Training waits for user approval.
 [Details](highway-merge-training-plan-v06.md#phase-3---resolved-training-proposal-november-15-2026-awaiting-approval).
+
+## November 15, 2026 - merge/cut-in revision
+
+[November 15 merge/cut-in revision](highway-merge-cutin-2026-11-15.md): approved one-round SUMO MAPPO refinement on existing corrected roads, with explicit native/AV lane-change gaps and actual-decision sampling. 155 tests pass, native qualification remains a launch gate. Preserve existing 3D demos and every historical gate/failure; no new rendering or Isaac job.

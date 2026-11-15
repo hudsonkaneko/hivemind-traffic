@@ -201,7 +201,7 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
                  speed_limit_m_s=None, difficulty=0, traffic_mode='initial',
                  stabilization_seconds=8., horizon_seconds=80., assignment_seed=None,
                  controlled_car_follow_model='ACC', missed_gap=False,
-                 missed_gap_alignment_accel_m_s2=1.):
+                 missed_gap_alignment_accel_m_s2=1., require_missed_gap_blocker=False):
     """Write deterministic initial/sustained traffic and return all vehicle rows.
 
     ``total_vehicles`` means the complete initial cohort (8, 16 or 24), including
@@ -285,6 +285,12 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
     main_count = total_vehicles - len(ramps) - leader_count
     physical_rows = []
     lane_order = list(rng.permutation(len(paths)))
+    # Opt-in v07: a sparse five-lane cohort can otherwise leave the intended
+    # blocker lane empty. Keep the seed, population and draws; move lane zero
+    # into the occupied prefix rather than silently resampling the scenario.
+    if missed_gap and require_missed_gap_blocker and 0 not in lane_order[:main_count]:
+        zero = lane_order.index(0)
+        lane_order[0], lane_order[zero] = lane_order[zero], lane_order[0]
     lane_members = {i: [] for i in range(len(paths))}
     for i in range(main_count):
         lane_index = int(lane_order[i % len(paths)])

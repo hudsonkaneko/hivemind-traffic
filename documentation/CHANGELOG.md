@@ -1421,3 +1421,7 @@ of merge rows missed-gap), stop rules on any collision or merge speed matching
 below the frozen-v04 0.3128. Zero-update preflight passed (1 diagnostic
 episode, 79/100). Training waits for user approval.
 [Details](highway-merge-training-plan-v06.md#phase-3---resolved-training-proposal-november-15-2026-awaiting-approval).
+
+## 2026-11-15 - merge/cut-in revision prepared
+
+[November 15 merge/cut-in revision](highway-merge-cutin-2026-11-15.md): decision-balanced curriculum, projected headway/TTC admission for native and AV lane changes, joint reservations, labeled cut-in stress and sparse blocker-lane fix. 155 targeted tests pass; 72 recovery-demand seeds prepared. Approved 300k/90-minute round is gated by native smoke and source-bound preflight, after the existing v06 process exits. No learned improvement claimed. Guide synchronization pending.
