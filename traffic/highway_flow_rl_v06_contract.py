@@ -14,7 +14,7 @@ from traffic import highway_flow_rl_v06_rewards as v06
 SCHEMA = 'highway_flow_rl_v06'
 PREFLIGHT_SCHEMA = 'highway_flow_rl_preflight_v05'  # produced by the shared runner; bound to the v06 config hash
 PREFLIGHT_CHECKS = ('api', 'shapes', 'native_guards', 'finite_gradient', 'export', 'reward_version', 'mask_version')
-ROUND_INDEX = 5
+ROUND_INDEX = 5  # first v06 round (completed November 15, 2026)
 WARM_START = dict(path='outputs/highway-flow-rl/v04/long-round-03/best.pt',
                   sha256='79e36b5425fa8a37f02ca990af23854f2cc5d73d6e62d27738ea767a55c25f0f')
 BUDGET = dict(per_round_decisions=300000, total_decisions=4630000,
@@ -25,6 +25,19 @@ BUDGET = dict(per_round_decisions=300000, total_decisions=4630000,
 ACCEPTANCE = dict(max_intervention_fraction=.05, max_peak_jerk_m_s3=5., collisions=0, teleports=0,
                   overspeed_steps=0, report_per_car=True, full_route=True, min_headway_s=1.5, min_ttc_s=3.,
                   max_optional_detour_events=0, max_raw_requested_jerk_m_s3=5., road_end_exemption=False)
+# Round profiles. Round 5 is frozen as run. Round 6 (user decision November 15,
+# 2026, after the round-5 diagnosis): raw-request jerk scored from each car's
+# second decision, 4 complete episodes per PPO update, KL target 0.03 with
+# 10 epochs, and a pooled-intervention stop rule.
+ROUNDS = {
+    5: dict(learning_profile='merge_v06_300k_20epochs', optimizer=dict(OPTIMIZER, epochs=20),
+            raw_request_scope='all', acceptance=ACCEPTANCE, extra_stop_rules=()),
+    6: dict(learning_profile='merge_v06_r6_4episode_updates',
+            optimizer=dict(OPTIMIZER, epochs=10, target_kl=.03, episodes_per_update=4),
+            raw_request_scope='after_first_decision',
+            acceptance=dict(ACCEPTANCE, raw_request_scope='after_first_decision'),
+            extra_stop_rules=('max_pooled_intervention_fraction',)),
+}
 RAMP_STARTED_PREFIX = 'outputs/highway-flow-rl/v05/ramp-networks-02/'
 I110_NETWORK = 'outputs/highway-flow-rl/v02/network-screen-01/candidate/network.net.xml'
 
@@ -40,10 +53,13 @@ def validate_config(cfg, require_training=False):
     if cfg.get('safety') != dict(speed_mode=31, lane_change_mode=512, native_guards_unchanged=True,
                                  safety_shield_unchanged=True, global_speed_ceiling_m_s=26.8224):
         raise ValueError('Native or explicit safety settings changed')
-    if cfg.get('round_index') != ROUND_INDEX or cfg.get('learning_profile') != 'merge_v06_300k_20epochs':
-        raise ValueError('Expected the v06 round-five profile')
-    if cfg.get('optimizer') != dict(OPTIMIZER, epochs=20) or cfg.get('gae') != {'gamma': .99, 'lambda': .95}:
+    profile = ROUNDS.get(cfg.get('round_index'))
+    if profile is None or cfg.get('learning_profile') != profile['learning_profile']:
+        raise ValueError('Expected a declared v06 round profile')
+    if cfg.get('optimizer') != profile['optimizer'] or cfg.get('gae') != {'gamma': .99, 'lambda': .95}:
         raise ValueError('Declared MAPPO optimizer or GAE changed')
+    if cfg.get('raw_request_scope', 'all') != profile['raw_request_scope']:
+        raise ValueError('Raw-request jerk scope differs from the round profile')
     if cfg.get('evaluation_interval_decisions') != 100000:
         raise ValueError('Unexpected automatic validation interval')
     if cfg.get('reward_weights') != dict(REWARD_WEIGHTS, jerk=0.):
@@ -64,12 +80,14 @@ def validate_config(cfg, require_training=False):
         raise ValueError('Critic warmup must be bounded and counted inside the round')
     if cfg.get('warm_start') != WARM_START:
         raise ValueError('Expected frozen v04 best initialization')
-    if cfg.get('acceptance') != ACCEPTANCE:
+    if cfg.get('acceptance') != profile['acceptance']:
         raise ValueError('Acceptance must be the original rules plus the raw-request jerk check')
     stop = cfg.get('stop_rules', {})
     if stop.get('any_collision') is not True or not isinstance(stop.get('merge_speed_match_floor'), (int, float)):
         raise ValueError('Stop rules missing')
     number(stop['merge_speed_match_floor'], 'merge speed-match floor', 0., 1.)
+    for key in profile['extra_stop_rules']:
+        number(stop.get(key), key, 0., 1.)
     if type(cfg.get('seed')) is not int or cfg['seed'] < 0:
         raise ValueError('Invalid training seed')
     for pin in cfg.get('evaluation_initializers', []):

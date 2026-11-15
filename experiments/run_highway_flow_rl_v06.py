@@ -6,7 +6,11 @@ complete-episode rollouts, checkpoints, periodic validation) and replaces only:
 - the config/preflight contract (traffic/highway_flow_rl_v06_contract.py);
 - case gates (original development gates plus the raw-request jerk check);
 - stop rules: any collision in any episode, or periodic-validation merge
-  speed matching below the frozen-v04 baseline, stops the run for diagnosis;
+  speed matching below the declared floor, stops the run for diagnosis; round 6
+  also stops when periodic-validation pooled interventions exceed the declared
+  maximum;
+- round 6: several complete episodes per PPO update (BufferedMappoTrainer) and
+  the raw-request jerk scope declared in the configuration;
 - outputs under outputs/highway-flow-rl/v06 and a v06 checkpoint schema.
 No training happens on import; `train` still requires training_authorized=true
 and a measured zero-update preflight bound to this config and these sources.
@@ -21,7 +25,10 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+import torch  # noqa: E402
+
 from experiments import run_highway_flow_rl_v05 as base  # noqa: E402
+from policies.mappo import MappoTrainer  # noqa: E402
 from traffic import highway_flow_rl_v06_contract as contract  # noqa: E402
 from traffic.highway_flow_rl_v06_rewards import v06_gates  # noqa: E402
 from traffic.highway_flow_contract import file_digest  # noqa: E402
@@ -45,6 +52,40 @@ def merge_speed_match(reports):
     return sum(values) / len(values) if values else None
 
 
+class BufferedMappoTrainer(MappoTrainer):
+    """MAPPO trainer that runs one PPO update per `episodes_per_update` complete episodes.
+
+    Each episode keeps its own GAE (computed at collection). Buffered episodes
+    were all collected by the same, not yet updated policy, so the merged batch
+    is on-policy; advantages are normalized once over the merged batch. With
+    episodes_per_update=1 this is exactly MappoTrainer.update (round 5).
+    The buffer is in memory only: an interrupted run discards buffered episodes
+    (their decisions stay charged), and episodes left over when the budget ends
+    are never learned from; both show as trailing `deferred` update records.
+    """
+
+    def __init__(self, model, *, episodes_per_update=1, **kwargs):
+        if type(episodes_per_update) is not int or episodes_per_update < 1:
+            raise ValueError('episodes_per_update must be a positive integer')
+        super().__init__(model, **kwargs)
+        self.episodes_per_update = episodes_per_update
+        self.buffer = []
+
+    def update(self, batch, *, deadline=None, phase='ppo'):
+        if self.episodes_per_update == 1:
+            return super().update(batch, deadline=deadline, phase=phase)
+        if not self.buffer or self.buffer[-1] is not batch:  # a retried update must not duplicate its batch
+            self.buffer.append(batch)
+        if len(self.buffer) < self.episodes_per_update:
+            return dict(optimizer_steps=0, deferred=True, buffered_episodes=len(self.buffer),
+                        episodes_per_update=self.episodes_per_update)
+        merged = {key: torch.cat([b[key] for b in self.buffer]) for key in self.buffer[0]}
+        stats = super().update(merged, deadline=deadline, phase=phase)
+        stats.update(deferred=False, merged_episodes=len(self.buffer), episodes_per_update=self.episodes_per_update)
+        self.buffer = []
+        return stats
+
+
 def env_for(cfg, row, directory):
     from environments.highway_flow_rl_v06_env import HighwayFlowRLV06Env
     case = row['case']
@@ -60,6 +101,7 @@ def env_for(cfg, row, directory):
         jerk_reward_weight=cfg['reward_weights']['jerk'], rate_limit=cfg['rate_limit'],
         v06_weights=cfg['v06_reward_weights'], missed_gap=row.get('missed_gap', False),
         controlled_car_follow_model=cfg['controlled_car_follow_model'],
+        raw_request_scope=cfg.get('raw_request_scope', 'all'),
         road_end_leader_exit_rule=cfg['road_end_leader_exit_rule'])
     env.case_id = case['id']
     return env
@@ -82,6 +124,10 @@ def evaluate(cfg, output, label, model, deadline, **kwargs):
     if label.startswith('periodic-validation') and (score is None or score < cfg['stop_rules']['merge_speed_match_floor']):
         raise StopRuleTriggered(f'{label}: merge speed match {score} below the frozen-v04 baseline '
                                 f"{cfg['stop_rules']['merge_speed_match_floor']}")
+    limit = cfg['stop_rules'].get('max_pooled_intervention_fraction')
+    pooled = result['summary'].get('pooled_intervention_fraction')
+    if label.startswith('periodic-validation') and limit is not None and (pooled is None or pooled > limit):
+        raise StopRuleTriggered(f'{label}: pooled intervention fraction {pooled} above {limit}')
     return result
 
 
@@ -93,6 +139,7 @@ def install():
     base.validate_config, base.validate_preflight = contract.validate_config, contract.validate_preflight
     base.env_for, base.episode, base.evaluate = env_for, episode, evaluate
     base.ruled_gates = v06_gates
+    base.MappoTrainer = BufferedMappoTrainer
 
 
 def main(argv=None):

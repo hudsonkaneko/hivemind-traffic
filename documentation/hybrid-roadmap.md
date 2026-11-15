@@ -1038,3 +1038,17 @@ final policy asks for about +0.05 m/s2 at the limit. KL early stopping ended
 98/99 updates (median 11 optimizer steps, not 1-4 as first reported). An
 acceleration-change action is not indicated.
 [Details](highway-merge-training-plan-v06.md#round-5-diagnosis-november-15-2026).
+
+## November 15, 2026 - v06 round 6 prepared (not authorized)
+
+Following the round-5 diagnosis (user choice: fix scoring and updates):
+- raw-request jerk scored from each car's second decision, with the
+  every-decision result still reported;
+- 4 complete episodes per PPO update, KL target 0.03 with 10 epochs;
+- stop rules: merge speed match below 0.4167, or periodic-validation
+  interventions above 5%.
+
+The rest of the configuration is unchanged from round 5. 557 tests pass; a
+SUMO smoke run verified the metric and a real merged update. `training_authorized`
+is false; this awaits user approval.
+[Details](highway-merge-training-plan-v06.md#round-6-proposal-november-15-2026-fix-scoring-and-updates).
