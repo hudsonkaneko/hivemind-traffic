@@ -1365,3 +1365,13 @@ speed matching reachable on I-110 (99% possible; the actor reaches 48%), but
 unreachable on every ramp-started layout (49-69% at best), because the
 acceleration lane is too short to reach mainline speed. No episodes used.
 [Details](highway-merge-training-plan-v06.md#phase-0-progress-november-14-2026).
+
+## November 14, 2026 - v06: no network rebuild
+
+User decision: do not rebuild the ramp-started layouts; use only the road
+geometry already in GitHub, and train a policy that works on any on-ramp. The
+gate stays unchanged, so ramp-started merge-quality failures are expected under
+the original rules. Each merge result will be reported beside its physical
+ceiling from the feasibility audit (diagnostic only), and training mixes all
+existing layouts. The re-baseline now waits only on the road-end decision.
+[Details](highway-merge-training-plan-v06.md#phase-0-progress-november-14-2026).

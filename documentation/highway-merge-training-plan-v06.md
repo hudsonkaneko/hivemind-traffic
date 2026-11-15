@@ -256,6 +256,24 @@ an acceleration lane and ramp long enough to reach mainline speed (a network
 change, not a gate change). The reward-target mismatch (finding 2 above)
 matters less than expected: the gate's target is mostly steady.
 
+**User decision (November 14, 2026): do not rebuild.** Use only the road
+geometry already in GitHub; the policy must work on any scenario and on-ramp,
+including short acceleration lanes. So the rebuild proposed above is withdrawn,
+and:
+
+- The gate stays as it is. On the ramp-started layouts the 90% merge
+  speed-match rule is likely unreachable (ceiling 0.49-0.69), so failures there
+  under the original rules are expected and will be reported as such.
+- Every merge-quality result is reported next to that car's physical ceiling
+  from this audit, so "policy fell short" and "the road made it impossible" stay
+  separate. The ceiling is a diagnostic only, never a pass rule.
+- Training targets generalization: the curriculum mixes all existing layouts
+  (short and long acceleration lanes, 2- and 4-lane, I-110), and the Phase 1
+  merge speed reward pushes toward the target as fast as the acceleration and
+  jerk limits allow, rather than assuming a long lane.
+- Success on these layouts is measured as closing the gap to the ceiling (for
+  example I-110 0.48 toward 0.99), alongside the original pass/fail.
+
 Evidence:
 [merge-target-feasibility.json](evidence/highway-merge-training-v06/merge-target-feasibility.json)
 (SHA-256 `44701e95f62604101d31e4639b9855dccffb3a5a58a3ee302109335be5e12313`).
@@ -269,5 +287,5 @@ and must be reported beside the original-rules result.
 
 ### Not run yet
 
-The frozen-v04 re-baseline (0c) waits for the rebuilt ramp layouts and the
-road-end decision, so its baseline is measured on the layouts training will use.
+The frozen-v04 re-baseline (0c) waits only for the road-end decision. It runs
+on the existing layouts (no rebuild, per the user decision above).
