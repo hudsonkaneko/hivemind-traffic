@@ -676,3 +676,21 @@ Files: [`configs/training/highway-flow-rl-v06-round6.json`](../configs/training/
 `experiments/run_highway_flow_rl_v06.py` (`BufferedMappoTrainer`, stop rule),
 `environments/highway_flow_rl_v06_env.py` and `traffic/highway_flow_rl_v06_rewards.py` (scope).
 
+### Launch correction: runs as round 7 (November 15, 2026)
+
+The user approved the round-6 profile ("Approve and launch"). Before launch,
+the shared study ledger showed that **round index 6 was already charged** by the
+v07 cut-in run from another session (`documentation/highway-merge-cutin-2026-11-15.md`):
+preparation episodes plus 100,728 training decisions and 1,133 s, stopped at its
+merge-regression rule. The runner refuses a fresh round on a charged index, and the
+budget quoted above was out of date. Actual remaining budget at launch: **6,400 s and
+264,622 decisions**; diagnostic episodes 90/100.
+
+User decision: "Round 7, all remaining". The same profile is
+`contract.ROUNDS[7]`, with config
+[`highway-flow-rl-v06-round7.json`](../configs/training/highway-flow-rl-v06-round7.json).
+Every training seed shifts by one more round, and all 33 missed-gap seeds were
+rebuilt. The runner stops at the smaller of the 300,000-decision / 5,400 s round
+limit and the study total, so the study budget will be essentially used up.
+The round-6 config stays as the approval record, marked superseded and not
+authorized.

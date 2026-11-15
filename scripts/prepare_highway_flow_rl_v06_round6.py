@@ -1,4 +1,7 @@
-"""Write the resolved v06 round-6 configuration (training_authorized stays false).
+"""Write the resolved v06 round-6 profile configuration (training_authorized stays false).
+
+Runs as round index 7 (`--round 7`, the default): round index 6 was already
+charged in the shared ledger by the v07 cut-in run.
 
 Derived from the committed round-5 configuration
 (configs/training/highway-flow-rl-v06.json). Rows, objective, observation,
@@ -29,7 +32,7 @@ from traffic import highway_flow_rl_v06_contract as contract  # noqa: E402
 from traffic.highway_merge_context import Stage1LaneGraph  # noqa: E402
 from traffic.highway_v05_demand import write_demand  # noqa: E402
 
-ROUND = 6
+DEFAULT_ROUND = 7
 CYCLES_CHECKED = 10
 ROUND5_INITIAL_MERGE_SPEED_MATCH = .4367  # documentation/evidence/highway-merge-training-v06/round-05-results.json
 FLOOR_MARGIN = .02
@@ -39,8 +42,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--project-root', type=Path, required=True, help='checkout holding outputs/ (main checkout)')
     parser.add_argument('--round5', type=Path, default=HERE / 'configs/training/highway-flow-rl-v06.json')
-    parser.add_argument('--output', type=Path, default=HERE / 'configs/training/highway-flow-rl-v06-round6.json')
+    parser.add_argument('--round', type=int, default=DEFAULT_ROUND, choices=(6, 7))
+    parser.add_argument('--output', type=Path)
     args = parser.parse_args()
+    ROUND = args.round
+    output = args.output or HERE / f'configs/training/highway-flow-rl-v06-round{ROUND}.json'
     cfg = json.loads(args.round5.read_text(encoding='utf-8'))
     contract.validate_config(cfg)
     profile = contract.ROUNDS[ROUND]
@@ -76,7 +82,7 @@ def main():
         missed_gap_seed_check=dict(cycles=CYCLES_CHECKED, built=len(seed_check), rows=seed_check),
         authorization='Prepared for user review; training_authorized=false until the user approves this configuration')
     contract.validate_config(cfg)
-    args.output.write_text(json.dumps(cfg, indent=2) + '\n', encoding='utf-8')
+    output.write_text(json.dumps(cfg, indent=2) + '\n', encoding='utf-8')
     print(json.dumps(dict(round_index=ROUND, optimizer=cfg['optimizer'], raw_request_scope=cfg['raw_request_scope'],
         stop_rules={k: v for k, v in cfg['stop_rules'].items() if not k.endswith('source')},
         missed_gap_seeds_built=len(seed_check)), indent=1))

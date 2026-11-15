@@ -12,6 +12,7 @@ from traffic import highway_flow_rl_v06_rewards as v06
 
 CONFIG = Path(__file__).resolve().parents[1] / 'configs/training/highway-flow-rl-v06.json'
 ROUND6 = Path(__file__).resolve().parents[1] / 'configs/training/highway-flow-rl-v06-round6.json'
+ROUND7 = Path(__file__).resolve().parents[1] / 'configs/training/highway-flow-rl-v06-round7.json'
 
 
 @pytest.fixture
@@ -54,7 +55,13 @@ def test_contract_rejects_unreviewed_changes(cfg, change):
 
 @pytest.fixture
 def cfg6():
-    return json.loads(ROUND6.read_text(encoding='utf-8'))
+    return json.loads(ROUND7.read_text(encoding='utf-8'))  # the round-6 profile, run as round 7
+
+
+def test_superseded_round6_config_is_not_runnable():
+    old = json.loads(ROUND6.read_text(encoding='utf-8'))
+    contract.validate_config(old)
+    assert old['training_authorized'] is False and 'Superseded' in old['authorization']
 
 
 def test_round6_config_is_valid_unauthorized_and_changes_only_the_chosen_fields(cfg, cfg6):
@@ -63,7 +70,7 @@ def test_round6_config_is_valid_unauthorized_and_changes_only_the_chosen_fields(
     contract.validate_config(cfg6, require_training=cfg6['training_authorized'])  # user approval 2026-11-15
     with pytest.raises(ValueError, match='disabled'):
         contract.validate_config(dict(cfg6, training_authorized=False), require_training=True)
-    assert cfg6['round_index'] == 6 and cfg6['raw_request_scope'] == 'after_first_decision'
+    assert cfg6['round_index'] == 7 and cfg6['raw_request_scope'] == 'after_first_decision'
     assert cfg6['optimizer'] == dict(cfg['optimizer'], epochs=10, target_kl=.03, episodes_per_update=4)
     assert cfg6['stop_rules']['merge_speed_match_floor'] == pytest.approx(.4167)
     assert cfg6['stop_rules']['max_pooled_intervention_fraction'] == .05
@@ -80,7 +87,7 @@ def test_round6_config_is_valid_unauthorized_and_changes_only_the_chosen_fields(
     lambda c: c['stop_rules'].pop('max_pooled_intervention_fraction'),
     lambda c: c['acceptance'].update(raw_request_scope='all'),
     lambda c: c.update(learning_profile='merge_v06_300k_20epochs'),
-    lambda c: c.update(round_index=7),
+    lambda c: c.update(round_index=8),
 ])
 def test_contract_rejects_unreviewed_round6_changes(cfg6, change):
     bad = deepcopy(cfg6)
@@ -94,7 +101,7 @@ def test_round6_training_seeds_do_not_reach_evaluation_seeds(cfg6):
     for cycle in range(40):
         for row in cfg6['training_rows']:
             for critic in (0, 50000):
-                assert row['seed'] + 1000 * cycle + 10000 * 5 + critic not in held
+                assert row['seed'] + 1000 * cycle + 10000 * 6 + critic not in held
 
 
 def test_buffered_trainer_merges_episodes_and_never_duplicates_a_retry(monkeypatch):

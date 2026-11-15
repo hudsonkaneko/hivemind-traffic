@@ -1466,3 +1466,11 @@ The rest of the configuration is unchanged from round 5. 557 tests pass; a
 SUMO smoke run verified the metric and a real merged update. `training_authorized`
 is false; this awaits user approval.
 [Details](highway-merge-training-plan-v06.md#round-6-proposal-november-15-2026-fix-scoring-and-updates).
+
+## November 15, 2026 - v06 round-6 profile launches as round 7
+
+Round index 6 was already charged in the shared ledger by the v07 cut-in run
+(100,728 decisions, stopped at its regression rule). With user approval, the
+approved profile runs as round 7. The remaining study budget is 6,400 s and
+264,622 decisions, which this round will essentially use up.
+[Details](highway-merge-training-plan-v06.md#launch-correction-runs-as-round-7-november-15-2026).

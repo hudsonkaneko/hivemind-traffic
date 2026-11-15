@@ -38,6 +38,10 @@ ROUNDS = {
             acceptance=dict(ACCEPTANCE, raw_request_scope='after_first_decision'),
             extra_stop_rules=('max_pooled_intervention_fraction',)),
 }
+# Round index 6 was charged in the shared ledger by the v07 cut-in run before
+# the v06 round-6 configuration launched, so that configuration runs as round 7
+# (user decision November 15, 2026: same profile, all remaining study budget).
+ROUNDS[7] = dict(ROUNDS[6])
 RAMP_STARTED_PREFIX = 'outputs/highway-flow-rl/v05/ramp-networks-02/'
 I110_NETWORK = 'outputs/highway-flow-rl/v02/network-screen-01/candidate/network.net.xml'
 
