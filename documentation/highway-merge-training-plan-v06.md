@@ -395,3 +395,49 @@ applies for the whole episode, with maximum braking and lower safety ceilings
 bypassing it. The raw-request jerk check still applies in evaluation. Next:
 Phase 2, the offline reward audit on saved v04 trajectories.
 
+## Phase 2 - offline reward audit (November 15, 2026)
+
+No simulation. [`scripts/audit_highway_flow_rl_v06_rewards.py`](../scripts/audit_highway_flow_rl_v06_rewards.py)
+recomputes every v06 reward term for every decision of the 12 saved
+Phase 0c baseline episodes (34 cars, 21,770 decisions). These were frozen v04
+runs in startup mode, whose base terms and speed target are the ones v06 keeps.
+The gap-preparation term is re-scored with the blended potential. Merge tracking
+is also scored for the best acceleration- and jerk-limited trajectory (4 m/s3,
+the v06 rate limit) against the same recorded target, which gives the reward a
+smooth, well-matched merge would earn. Open-loop caveat as in Phase 0a.
+
+**Change found by the audit: the jerk cost is now capped at 10 m/s3** (per-step
+cost at most 1 x weight). Uncapped, emergency braking (raw requested jerk of
+18-50 m/s3) cost 141 to 879 unit-weight points per episode. One emergency would
+outweigh a whole episode of every other term and could teach the actor not to
+brake. Emergencies stay with the safety layer. The 5-10 m/s3 range, where the
+actor's spikes are (7-12 m/s3), keeps the full quadratic signal.
+
+### Weights and the rules that set them
+
+| Term | Weight | Rule | Evidence |
+| --- | ---: | --- | --- |
+| `merge_tracking` | 0.25 (was 0.50 provisional) | (a) A smooth merge must earn clearly more: weight x median tracking improvement >= the 5-point quality bonus, so >= 0.15. (b) The per-step cost must stay at most half the median per-step progress reward (0.80), so a car waiting for a gap still earns positive reward per step and gains nothing by ending the episode: <= 0.40. | Best-vs-observed improvement at 0.25: I-110 +25.4; ramp-started layouts +7.1 to +9.3; stuck ramp120 car +2.3 inside the window. |
+| `jerk_excess` | 1.50 (unchanged), capped | An 8 m/s3 request (unit cost 0.36) must outweigh (a) the 99th-percentile per-step guidance shaping (0.072), needing >= 0.2; and (b) one step of tracking gain (0.25), needing >= 0.7. | Cost: 0.54 at 8 m/s3, 1.50 at 10 m/s3 and above. Per episode: about -3.7 for the startup spike on every ramp car, -5.0 for the I-110 focal car, -80.5 for the stuck ramp120 car (was -212 uncapped). |
+| `avoidable_braking` | 0.25 (was 0.05 provisional) | At most one step of tracking cost: unneeded free-road braking at full depth costs as much as being off the merge target. At 0.05 the 60 mph cruise car's cost (-0.02) was negligible. | Charged on 7 cars, 64 decisions in total, all of them braking requests on a free road. |
+
+### Farming and balance checks
+
+- All three new terms are never positive in any of the 21,770 decisions, so none
+  can be farmed by lingering, stopping or refusing to merge.
+- Guidance shaping stays potential-based. Blending spreads the merge-onset jump
+  over 1 s: the per-step 99th percentile is 0.072 (0.044 unblended), the episode
+  total is unchanged within 0.6, and the 2.0 maximum is the terminal step.
+- **Worst case, the stuck car** (ramp120 ramp-started, 553 pending decisions):
+  tracking -116.6 and jerk -80.5 against base +495. Its return stays positive,
+  so ending the episode early does not pay, but it is clearly worse than a
+  timely merge.
+- The stuck car's merge-window gain (+2.3) is below the quality bonus. Its loss
+  is mostly the long pending phase before the window, which the missed-gap
+  episodes target.
+
+Evidence: [reward-audit.json](evidence/highway-merge-training-v06/reward-audit.json)
+(SHA-256 `157737e642f1d35515dce79f0032daef65128230f39e8017fcc3c65718741661`);
+the source traces' SHA-256 values are inside. 374 tests pass, including a test
+for the jerk cap. Next: Phase 3, the training proposal for user approval.
+

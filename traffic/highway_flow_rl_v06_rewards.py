@@ -3,7 +3,8 @@
 Pure functions only; the environment wiring is environments/highway_flow_rl_v06_env.py.
 Nothing here changes the safety shield, native guards, action contract or the
 117-field observation size. Weights are PROVISIONAL until the Phase 2 offline
-reward audit; the environment refuses any other weights.
+reward audit (scripts/audit_highway_flow_rl_v06_rewards.py); the environment
+refuses any other weights.
 """
 import math
 
@@ -11,17 +12,18 @@ import numpy as np
 
 REWARD_VERSION = 'highway_flow_rl_merge_v06'
 OBSERVATION_VERSION = 'highway_flow_actor117_v1_faded_merge_v06'
-WEIGHTS_STATUS = 'provisional: set by the Phase 2 offline reward audit before any training'
+WEIGHTS_STATUS = 'Phase 2 offline reward audit (November 15, 2026); not yet trained'
 
 # v04 base terms (unchanged values from v04 DEFAULT_WEIGHTS) plus v06 additions.
 WEIGHTS = dict(speed_error=.30, jerk_huber=.09, route_detour=2., gap_preparation=2., quality_merge=5.,
-               merge_tracking=.50, jerk_excess=1.50, avoidable_braking=.05)
+               merge_tracking=.25, jerk_excess=1.50, avoidable_braking=.25)
 BASE_KEYS = ('speed_error', 'jerk_huber', 'route_detour', 'gap_preparation', 'quality_merge')
 
 SETTINGS = dict(
     step_s=.1,
     fade_steps=10,                 # 1 s fade for actor merge inputs and the merge-guidance potential
     jerk_acceptance_m_s3=5.,       # same threshold as the per-car gate
+    jerk_excess_cap=1.,            # normalized excess cap: cost stops growing at 10 m/s3
     tracking_tolerance_m_s=2.,     # same tolerance as the gate's speed_match
     braking_request_m_s2=-.2,      # same as BrakingDiagnostic
     braking_scale_m_s2=2.,
@@ -73,7 +75,10 @@ def blend_potential(plan, run, *, steps=SETTINGS['fade_steps']):
 
 def jerk_excess(realized_jerk, requested_jerk, weight):
     peak = max(abs(requested_jerk), abs(realized_jerk) if realized_jerk is not None else 0.)
-    excess = max(0., peak - SETTINGS['jerk_acceptance_m_s3']) / SETTINGS['jerk_acceptance_m_s3']
+    # Capped: emergency braking (often 20-50 m/s3) belongs to the safety layer.
+    # Uncapped, one emergency outweighs a whole episode of every other term.
+    excess = min(SETTINGS['jerk_excess_cap'],
+                 max(0., peak - SETTINGS['jerk_acceptance_m_s3']) / SETTINGS['jerk_acceptance_m_s3'])
     return -weight * excess * excess
 
 

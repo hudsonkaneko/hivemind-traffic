@@ -989,3 +989,12 @@ User decision: v06 keeps the 4 m/s3 command rate limit for the whole episode
 (`rate_limit='full'`, already the default); maximum braking and lower safety
 ceilings bypass it, and evaluation still checks the policy's raw requested jerk.
 [Details](highway-merge-training-plan-v06.md#phase-1-progress-november-14-2026-implemented-not-trained).
+
+## November 15, 2026 - v06 Phase 2: reward weights from offline audit
+
+All v06 terms were re-scored on the 12 saved baseline episodes (34 cars), with
+no simulation. Weights: merge_tracking 0.25, jerk_excess 1.50, avoidable_braking
+0.25. New: the jerk cost is capped at 10 m/s3, because uncapped emergency braking
+outweighed a whole episode. All new terms are costs and none can be farmed. A
+smooth merge gains +7 to +25 over the recorded ones. Not trained.
+[Details](highway-merge-training-plan-v06.md#phase-2---offline-reward-audit-november-15-2026).

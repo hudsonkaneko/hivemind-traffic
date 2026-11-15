@@ -65,6 +65,8 @@ def test_jerk_excess_at_observed_peak_is_comparable_to_a_guidance_step():
     assert v06.jerk_excess(4.9, -4.9, 1.5) == 0.
     # The raw request counts even when the executed command was smooth.
     assert v06.jerk_excess(1., -9., 1.5) < 0.
+    # Capped at 10 m/s3: an emergency stop costs at most one weight per step.
+    assert v06.jerk_excess(50., -45., 1.5) == v06.jerk_excess(10., 0., 1.5) == -1.5
 
 
 def test_merge_tracking_uses_gate_tolerance_and_only_while_merging():

@@ -1,0 +1,1118 @@
+{
+ "schema": "highway_flow_rl_v06_reward_audit",
+ "gamma": 0.99,
+ "gap_weight": 2.0,
+ "caveat": "V06 Phase 2: offline reward audit on saved frozen-v04 trajectories (no simulation).",
+ "traces": [
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-native-fixes-01/evaluation/case-00/episode-6900019-f7cea428/actions.jsonl.gz",
+   "sha256": "ee02b1eee03998719300f1a70af238114cb72f46d8844544a3cf2138594eb0aa"
+  },
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-native-fixes-01/evaluation/case-01/episode-6900000-1ab344ff/actions.jsonl.gz",
+   "sha256": "3f9815e921a7bbbb2db63c62d4c8e5426a9da798c9ccea7bddfd73562a6ab600"
+  },
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-native-fixes-01/evaluation/case-02/episode-6900002-8c999dc0/actions.jsonl.gz",
+   "sha256": "ad698874a2f11f5f9f259e53d7bd7b22315ac785fd249cb4c9310b3a600a5e0b"
+  },
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-native-fixes-01/evaluation/case-03/episode-6900017-960b44ed/actions.jsonl.gz",
+   "sha256": "7a4bb9d577fa072ca217f2522d2ee610040e737376d176d7781a2df40ac8e0db"
+  },
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-native-fixes-01/evaluation/case-04/episode-8400004-3257e9ce/actions.jsonl.gz",
+   "sha256": "531672530dc078e3c802aa4758b6af4ca4d3d5c497f2e88771694297bb8e2de3"
+  },
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-native-fixes-01/evaluation/case-05/episode-8400005-eb4dcb4a/actions.jsonl.gz",
+   "sha256": "c3a39798c2f78dd0e21b5a0092dd3eab161072c24dd4ff8a55269a26ab0917b7"
+  },
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/case-00/episode-8400004-65b9a060/actions.jsonl.gz",
+   "sha256": "36059e9c1c1039570174fbe01fba335d0d6fcfc124a13977980c750eb7b95dfd"
+  },
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/case-01/episode-8400004-c7f000b0/actions.jsonl.gz",
+   "sha256": "de9f48b85412a7c787267343c2cf6870bdae8d1d644356b9a22ca67ae9c267cb"
+  },
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/case-02/episode-8400004-41631228/actions.jsonl.gz",
+   "sha256": "434763be376e05ceb699b364b815729a16b00db91476a7712de89b5ab3f475fd"
+  },
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/case-03/episode-8400004-c4dff68b/actions.jsonl.gz",
+   "sha256": "845268cda9b08e938e5cb693b88fc9825fdb8c43202212e7f682f169766c733d"
+  },
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/case-04/episode-8400004-4179f8a7/actions.jsonl.gz",
+   "sha256": "db0ffbbf678551007532d1c98f81f68cf3877884e31248e563b793da71735244"
+  },
+  {
+   "path": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/case-05/episode-8400004-7699e028/actions.jsonl.gz",
+   "sha256": "fe75bd8452b0b6763a351ad063f205b8977e39ffc07e7a3beded4005ae8d5a75"
+  }
+ ],
+ "shaping_per_step": {
+  "recorded": {
+   "n": 5991,
+   "p50": 0.020000000000000018,
+   "p95": 0.020000000000000018,
+   "p99": 0.044046555341449946,
+   "max": 2.0
+  },
+  "blended": {
+   "n": 5991,
+   "p50": 0.020000000000000018,
+   "p95": 0.020000000000000018,
+   "p99": 0.0724052519770868,
+   "max": 2.0
+  },
+  "recorded_at_onset": {
+   "n": 16,
+   "p50": 0.20280786971191,
+   "p95": 0.8918734218246309,
+   "p99": 1.6176685736249805,
+   "max": 1.7991173615750684
+  },
+  "blended_at_onset": {
+   "n": 16,
+   "p50": 0.23755501777639054,
+   "p95": 0.8918734218246309,
+   "p99": 1.6176685736249805,
+   "max": 1.7991173615750684
+  }
+ },
+ "unit_jerk_cost_at_8": 0.36,
+ "unit_terms_all_nonpositive": {
+  "tracking": true,
+  "jerk": true,
+  "braking": true
+ },
+ "merge_windows": {
+  "count": 8,
+  "improvement_units": [
+   101.5083805369745,
+   51.94352060101753,
+   9.088810592346633,
+   35.73172033609451,
+   28.589263151814173,
+   37.00792380588274,
+   30.68967366386194,
+   31.694812720975847
+  ]
+ },
+ "per_step_progress": {
+  "n": 21770,
+  "p50": 0.8022082827323683,
+  "p95": 0.9816235875565147,
+  "p99": 0.9933031892838543,
+  "max": 0.9954039013762488
+ },
+ "weights": {
+  "speed_error": 0.3,
+  "jerk_huber": 0.09,
+  "route_detour": 2.0,
+  "gap_preparation": 2.0,
+  "quality_merge": 5.0,
+  "merge_tracking": 0.25,
+  "jerk_excess": 1.5,
+  "avoidable_braking": 0.25
+ },
+ "weights_status": "Phase 2 offline reward audit (November 15, 2026); not yet trained",
+ "weighted_new_terms_per_car": [
+  {
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_0",
+   "merge_tracking": -39.87083734554396,
+   "jerk_excess": -5.0029127192494105,
+   "avoidable_braking": -0.05046054460108279,
+   "base": 209.09338230693183,
+   "progress": 213.54649335470504
+  },
+  {
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_1",
+   "merge_tracking": 0.0,
+   "jerk_excess": -0.002417281966594853,
+   "avoidable_braking": 0.0,
+   "base": 223.85437071609167,
+   "progress": 226.6869820917617
+  },
+  {
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_2",
+   "merge_tracking": 0.0,
+   "jerk_excess": -1.4091204037299576,
+   "avoidable_braking": -0.3589478131383656,
+   "base": 199.80722552721127,
+   "progress": 205.20855540619226
+  },
+  {
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_3",
+   "merge_tracking": 0.0,
+   "jerk_excess": -1.244937731533599,
+   "avoidable_braking": 0.0,
+   "base": 191.1718871283506,
+   "progress": 195.45163342139867
+  },
+  {
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_5",
+   "merge_tracking": 0.0,
+   "jerk_excess": -0.028294514290650212,
+   "avoidable_braking": 0.0,
+   "base": 235.24213696833692,
+   "progress": 240.43592118064802
+  },
+  {
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_6",
+   "merge_tracking": 0.0,
+   "jerk_excess": -2.8570924993965896,
+   "avoidable_braking": 0.0,
+   "base": 194.3337469630154,
+   "progress": 195.64484929594133
+  },
+  {
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_7",
+   "merge_tracking": 0.0,
+   "jerk_excess": 0.0,
+   "avoidable_braking": -0.2502610629424453,
+   "base": 229.92113787202254,
+   "progress": 240.50775756734657
+  },
+  {
+   "case_id": "v05-val-0-cruise",
+   "agent": "agent_0",
+   "merge_tracking": 0.0,
+   "jerk_excess": -0.02817219244726976,
+   "avoidable_braking": 0.0,
+   "base": 687.278953337347,
+   "progress": 687.2583724991166
+  },
+  {
+   "case_id": "v05-val-0-passing",
+   "agent": "agent_0",
+   "merge_tracking": 0.0,
+   "jerk_excess": -0.26604262329880646,
+   "avoidable_braking": 0.0,
+   "base": 769.9723899546108,
+   "progress": 768.1522858636498
+  },
+  {
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_0",
+   "merge_tracking": 0.0,
+   "jerk_excess": 0.0,
+   "avoidable_braking": -0.004367192834615702,
+   "base": 223.828846248471,
+   "progress": 226.93251292129978
+  },
+  {
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_2",
+   "merge_tracking": 0.0,
+   "jerk_excess": -0.05870085219629714,
+   "avoidable_braking": 0.0,
+   "base": 202.68034066962593,
+   "progress": 210.66518654024316
+  },
+  {
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_4",
+   "merge_tracking": 0.0,
+   "jerk_excess": -0.6108679806612662,
+   "avoidable_braking": 0.0,
+   "base": 213.51159607869684,
+   "progress": 224.51548704544678
+  },
+  {
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_5",
+   "merge_tracking": 0.0,
+   "jerk_excess": -0.05370560844093575,
+   "avoidable_braking": 0.0,
+   "base": 220.23841058117884,
+   "progress": 223.74775233566035
+  },
+  {
+   "case_id": "v02-development-train-2-lane-ramp120-merge",
+   "agent": "agent_0",
+   "merge_tracking": -36.48686555890734,
+   "jerk_excess": -21.42892356351667,
+   "avoidable_braking": 0.0,
+   "base": 597.2451385063163,
+   "progress": 616.2490257758627
+  },
+  {
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_0",
+   "merge_tracking": 0.0,
+   "jerk_excess": -0.14562827256822253,
+   "avoidable_braking": 0.0,
+   "base": 810.5150418408144,
+   "progress": 819.2485531284258
+  },
+  {
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_2",
+   "merge_tracking": 0.0,
+   "jerk_excess": -0.5875611921138932,
+   "avoidable_braking": 0.0,
+   "base": 842.7238266658009,
+   "progress": 847.6887320188756
+  },
+  {
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_4",
+   "merge_tracking": 0.0,
+   "jerk_excess": -0.042014222892420516,
+   "avoidable_braking": 0.0,
+   "base": 841.2478277511274,
+   "progress": 840.6730252970327
+  },
+  {
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_5",
+   "merge_tracking": 0.0,
+   "jerk_excess": 0.0,
+   "avoidable_braking": -0.08864563424140218,
+   "base": 818.0196311028557,
+   "progress": 828.7680921637209
+  },
+  {
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_6",
+   "merge_tracking": 0.0,
+   "jerk_excess": -1.6972746493386883,
+   "avoidable_braking": 0.0,
+   "base": 811.1761531730562,
+   "progress": 817.0758733381684
+  },
+  {
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_7",
+   "merge_tracking": 0.0,
+   "jerk_excess": -0.7340315062737006,
+   "avoidable_braking": 0.0,
+   "base": 800.0798130279958,
+   "progress": 808.6106780530286
+  },
+  {
+   "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "agent": "agent_0",
+   "merge_tracking": -116.61123171988571,
+   "jerk_excess": -80.47709170423259,
+   "avoidable_braking": 0.0,
+   "base": 495.1501274208543,
+   "progress": 607.6266717946304
+  },
+  {
+   "case_id": "ramp-eval-train-3-lane-ramp240-ramp-started",
+   "agent": "agent_0",
+   "merge_tracking": -28.97340857666498,
+   "jerk_excess": -3.7067981839016095,
+   "avoidable_braking": 0.0,
+   "base": 632.8832422871662,
+   "progress": 637.4297483164465
+  },
+  {
+   "case_id": "ramp-eval-train-4-lane-ramp120-ramp-started",
+   "agent": "agent_0",
+   "merge_tracking": -21.475826487785824,
+   "jerk_excess": -3.6250733585851975,
+   "avoidable_braking": 0.0,
+   "base": 666.6193305287867,
+   "progress": 668.0368948912268
+  },
+  {
+   "case_id": "ramp-eval-train-5-lane-ramp240-ramp-started",
+   "agent": "agent_0",
+   "merge_tracking": -29.295529729097044,
+   "jerk_excess": -3.719438558291505,
+   "avoidable_braking": 0.0,
+   "base": 692.3868593449174,
+   "progress": 697.6724100071074
+  },
+  {
+   "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "agent": "agent_0",
+   "merge_tracking": -24.894586742890798,
+   "jerk_excess": -3.7517966185309857,
+   "avoidable_braking": 0.0,
+   "base": 635.9468255798866,
+   "progress": 638.2686803960291
+  },
+  {
+   "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "agent": "agent_0",
+   "merge_tracking": -25.147414112535834,
+   "jerk_excess": -3.7644538243021044,
+   "avoidable_braking": 0.0,
+   "base": 694.799943563942,
+   "progress": 697.8398780446481
+  }
+ ],
+ "cars": [
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_0",
+   "decisions": 373,
+   "merge_agent": true,
+   "totals": {
+    "base": 209.09338230693183,
+    "progress": 213.54649335470504,
+    "speed_error": -8.217997429186918,
+    "recorded_gap": -7.9464853597768155,
+    "blended_gap": -8.59079345116319,
+    "tracking": -159.48334938217585,
+    "jerk": -3.3352751461662735,
+    "braking": -0.20184217840433116
+   },
+   "pending_decisions": 225,
+   "peak_raw_requested_jerk": 12.109468877315521,
+   "braking_charged": 8,
+   "braking_requests": 17,
+   "merge_window": {
+    "samples": 161,
+    "observed_tracking_units": 120.09732674120056,
+    "best_tracking_units": 18.588946204226055,
+    "improvement_units": 101.5083805369745,
+    "observed_match": 0.4782608695652174,
+    "ceiling_match": 0.9875776397515528
+   }
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_1",
+   "decisions": 361,
+   "merge_agent": false,
+   "totals": {
+    "base": 223.85437071609167,
+    "progress": 226.6869820917617,
+    "speed_error": -4.181235985366161,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.0016115213110632354,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 5.20071879029274,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_2",
+   "decisions": 344,
+   "merge_agent": false,
+   "totals": {
+    "base": 199.80722552721127,
+    "progress": 205.20855540619226,
+    "speed_error": -6.266028009765326,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.9394136024866384,
+    "braking": -1.4357912525534624
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 9.84616756439209,
+   "braking_charged": 14,
+   "braking_requests": 18
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_3",
+   "decisions": 317,
+   "merge_agent": false,
+   "totals": {
+    "base": 191.1718871283506,
+    "progress": 195.45163342139867,
+    "speed_error": -4.969232172791651,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.829958487689066,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 8.680729120969772,
+   "braking_charged": 0,
+   "braking_requests": 13
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_4",
+   "decisions": 429,
+   "merge_agent": false,
+   "totals": {
+    "base": 247.58298817450716,
+    "progress": 254.91966528430075,
+    "speed_error": -9.095145978360819,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": 0.0,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 2.5796256959438324,
+   "braking_charged": 0,
+   "braking_requests": 5
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_5",
+   "decisions": 398,
+   "merge_agent": false,
+   "totals": {
+    "base": 235.24213696833692,
+    "progress": 240.43592118064802,
+    "speed_error": -6.202877619980937,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.01886300952710014,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 5.525025740265761,
+   "braking_charged": 0,
+   "braking_requests": 21
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_6",
+   "decisions": 303,
+   "merge_agent": false,
+   "totals": {
+    "base": 194.3337469630154,
+    "progress": 195.64484929594133,
+    "speed_error": -1.6574914489187782,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -1.9047283329310598,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 11.165669560432434,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-merge",
+   "agent": "agent_7",
+   "decisions": 413,
+   "merge_agent": false,
+   "totals": {
+    "base": 229.92113787202254,
+    "progress": 240.50775756734657,
+    "speed_error": -12.464803895365826,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": 0.0,
+    "braking": -1.0010442517697813
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 1.2673025578261132,
+   "braking_charged": 23,
+   "braking_requests": 23
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-val-0-cruise",
+   "agent": "agent_0",
+   "decisions": 1556,
+   "merge_agent": false,
+   "totals": {
+    "base": 687.278953337347,
+    "progress": 687.2583724991166,
+    "speed_error": -0.868604382700742,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.018781461631513174,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 5.6852273643016815,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-val-0-passing",
+   "agent": "agent_0",
+   "decisions": 1745,
+   "merge_agent": false,
+   "totals": {
+    "base": 769.9723899546108,
+    "progress": 768.1522858636498,
+    "speed_error": -1.0197967063744506,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.17736174886587097,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 7.105716913938522,
+   "braking_charged": 0,
+   "braking_requests": 6
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_0",
+   "decisions": 365,
+   "merge_agent": false,
+   "totals": {
+    "base": 223.828846248471,
+    "progress": 226.93251292129978,
+    "speed_error": -4.99320694945247,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": 0.0,
+    "braking": -0.017468771338462807
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 1.5043316036462784,
+   "braking_charged": 4,
+   "braking_requests": 4
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_1",
+   "decisions": 327,
+   "merge_agent": false,
+   "totals": {
+    "base": 206.9140684779603,
+    "progress": 207.49016479503004,
+    "speed_error": -2.1133562910850197,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": 0.0,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 4.8564812541008,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_2",
+   "decisions": 358,
+   "merge_agent": false,
+   "totals": {
+    "base": 202.68034066962593,
+    "progress": 210.66518654024316,
+    "speed_error": -8.938786946189667,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.039133901464198095,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 5.928320437669754,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_3",
+   "decisions": 398,
+   "merge_agent": false,
+   "totals": {
+    "base": 244.80343227935776,
+    "progress": 248.03396192194796,
+    "speed_error": -5.194647094565323,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": 0.0,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 0.7033049315215578,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_4",
+   "decisions": 390,
+   "merge_agent": false,
+   "totals": {
+    "base": 213.51159607869684,
+    "progress": 224.51548704544678,
+    "speed_error": -12.12345335489641,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.40724532044084416,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 8.19078877568245,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_5",
+   "decisions": 360,
+   "merge_agent": false,
+   "totals": {
+    "base": 220.23841058117884,
+    "progress": 223.74775233566035,
+    "speed_error": -4.970877136258579,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.03580373896062383,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 5.946093797683716,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_6",
+   "decisions": 411,
+   "merge_agent": false,
+   "totals": {
+    "base": 268.15223865148886,
+    "progress": 267.1851781980478,
+    "speed_error": -0.9350309878206943,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": 0.0,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 1.0330668836832047,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v05-validation-i110-following",
+   "agent": "agent_7",
+   "decisions": 307,
+   "merge_agent": false,
+   "totals": {
+    "base": 194.73190945149014,
+    "progress": 195.4397355102956,
+    "speed_error": -2.2982895145885687,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": 0.0,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 3.994974046945572,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v02-development-train-2-lane-ramp120-merge",
+   "agent": "agent_0",
+   "decisions": 830,
+   "merge_agent": true,
+   "totals": {
+    "base": 597.2451385063163,
+    "progress": 616.2490257758627,
+    "speed_error": -15.981160619262328,
+    "recorded_gap": -16.815707143662323,
+    "blended_gap": -17.3897415729704,
+    "tracking": -145.94746223562936,
+    "jerk": -14.285949042344445,
+    "braking": 0.0
+   },
+   "pending_decisions": 218,
+   "peak_raw_requested_jerk": 50.73517292737962,
+   "braking_charged": 0,
+   "braking_requests": 2,
+   "merge_window": {
+    "samples": 161,
+    "observed_tracking_units": 110.67526898588184,
+    "best_tracking_units": 58.73174838486431,
+    "improvement_units": 51.94352060101753,
+    "observed_match": 0.422360248447205,
+    "ceiling_match": 0.7018633540372671
+   }
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_0",
+   "decisions": 873,
+   "merge_agent": false,
+   "totals": {
+    "base": 810.5150418408144,
+    "progress": 819.2485531284258,
+    "speed_error": -9.907017944894074,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.09708551504548169,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 6.557927429676056,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_1",
+   "decisions": 901,
+   "merge_agent": false,
+   "totals": {
+    "base": 840.2945754411229,
+    "progress": 848.3327719308554,
+    "speed_error": -9.915998142028522,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": 0.0,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 1.3945675641299715,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_2",
+   "decisions": 885,
+   "merge_agent": false,
+   "totals": {
+    "base": 842.7238266658009,
+    "progress": 847.6887320188756,
+    "speed_error": -6.212379700627753,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.39170746140926216,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 8.129326850175858,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_3",
+   "decisions": 879,
+   "merge_agent": false,
+   "totals": {
+    "base": 838.8552735324681,
+    "progress": 841.0451075125957,
+    "speed_error": -3.969633578615142,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": 0.0,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 1.548362821340703,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_4",
+   "decisions": 857,
+   "merge_agent": false,
+   "totals": {
+    "base": 841.2478277511274,
+    "progress": 840.6730252970327,
+    "speed_error": -0.5575964749194717,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.028009481928280344,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 5.836801677942276,
+   "braking_charged": 0,
+   "braking_requests": 5
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_5",
+   "decisions": 890,
+   "merge_agent": false,
+   "totals": {
+    "base": 818.0196311028557,
+    "progress": 828.7680921637209,
+    "speed_error": -12.522226445831226,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": 0.0,
+    "braking": -0.3545825369656087
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 2.1742478013038635,
+   "braking_charged": 15,
+   "braking_requests": 15
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_6",
+   "decisions": 856,
+   "merge_agent": false,
+   "totals": {
+    "base": 811.1761531730562,
+    "progress": 817.0758733381684,
+    "speed_error": -6.858142479133283,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -1.131516432892459,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 9.952054172754288,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "dev-native-fixes-01",
+   "case_id": "v02-development-60mph-cruise",
+   "agent": "agent_7",
+   "decisions": 856,
+   "merge_agent": false,
+   "totals": {
+    "base": 800.0798130279958,
+    "progress": 808.6106780530286,
+    "speed_error": -9.390949160411793,
+    "recorded_gap": 0.0,
+    "blended_gap": 0.0,
+    "tracking": 0.0,
+    "jerk": -0.4893543375158004,
+    "braking": 0.0
+   },
+   "pending_decisions": 0,
+   "peak_raw_requested_jerk": 8.148971498012543,
+   "braking_charged": 0,
+   "braking_requests": 0
+  },
+  {
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "agent": "agent_0",
+   "decisions": 942,
+   "merge_agent": true,
+   "totals": {
+    "base": 495.1501274208543,
+    "progress": 607.6266717946304,
+    "speed_error": -84.25832727590183,
+    "recorded_gap": -14.452193531518908,
+    "blended_gap": -15.02623430925237,
+    "tracking": -466.44492687954283,
+    "jerk": -53.651394469488395,
+    "braking": 0.0
+   },
+   "pending_decisions": 553,
+   "peak_raw_requested_jerk": 18.14109057188034,
+   "braking_charged": 0,
+   "braking_requests": 85,
+   "merge_window": {
+    "samples": 112,
+    "observed_tracking_units": 46.038810592346636,
+    "best_tracking_units": 36.95,
+    "improvement_units": 9.088810592346633,
+    "observed_match": 0.6517857142857143,
+    "ceiling_match": 0.6875
+   }
+  },
+  {
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-train-3-lane-ramp240-ramp-started",
+   "agent": "agent_0",
+   "decisions": 693,
+   "merge_agent": true,
+   "totals": {
+    "base": 632.8832422871662,
+    "progress": 637.4297483164465,
+    "speed_error": -9.599825409676136,
+    "recorded_gap": -15.030056551174617,
+    "blended_gap": -15.60408739872969,
+    "tracking": -115.89363430665992,
+    "jerk": -2.47119878926774,
+    "braking": 0.0
+   },
+   "pending_decisions": 140,
+   "peak_raw_requested_jerk": 12.420629560947418,
+   "braking_charged": 0,
+   "braking_requests": 0,
+   "merge_window": {
+    "samples": 141,
+    "observed_tracking_units": 115.96672033609474,
+    "best_tracking_units": 80.23500000000023,
+    "improvement_units": 35.73172033609451,
+    "observed_match": 0.2765957446808511,
+    "ceiling_match": 0.48936170212765956
+   }
+  },
+  {
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-train-4-lane-ramp120-ramp-started",
+   "agent": "agent_0",
+   "decisions": 844,
+   "merge_agent": true,
+   "totals": {
+    "base": 666.6193305287867,
+    "progress": 668.0368948912268,
+    "speed_error": -5.819362845634895,
+    "recorded_gap": -18.06546920437167,
+    "blended_gap": -18.639504969541125,
+    "tracking": -85.9033059511433,
+    "jerk": -2.4167155723901317,
+    "braking": 0.0
+   },
+   "pending_decisions": 140,
+   "peak_raw_requested_jerk": 12.02968344092369,
+   "braking_charged": 0,
+   "braking_requests": 2,
+   "merge_window": {
+    "samples": 141,
+    "observed_tracking_units": 85.95926315181417,
+    "best_tracking_units": 57.37,
+    "improvement_units": 28.589263151814173,
+    "observed_match": 0.48936170212765956,
+    "ceiling_match": 0.6524822695035462
+   }
+  },
+  {
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-train-5-lane-ramp240-ramp-started",
+   "agent": "agent_0",
+   "decisions": 754,
+   "merge_agent": true,
+   "totals": {
+    "base": 692.3868593449174,
+    "progress": 697.6724100071074,
+    "speed_error": -9.93838299607889,
+    "recorded_gap": -16.250039646528627,
+    "blended_gap": -16.82406970995353,
+    "tracking": -117.18211891638818,
+    "jerk": -2.47962570552767,
+    "braking": 0.0
+   },
+   "pending_decisions": 140,
+   "peak_raw_requested_jerk": 12.474635392427444,
+   "braking_charged": 0,
+   "braking_requests": 6,
+   "merge_window": {
+    "samples": 141,
+    "observed_tracking_units": 117.24292380588297,
+    "best_tracking_units": 80.23500000000023,
+    "improvement_units": 37.00792380588274,
+    "observed_match": 0.2695035460992908,
+    "ceiling_match": 0.48936170212765956
+   }
+  },
+  {
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "agent": "agent_0",
+   "decisions": 744,
+   "merge_agent": true,
+   "totals": {
+    "base": 635.9468255798866,
+    "progress": 638.2686803960291,
+    "speed_error": -7.302224768561535,
+    "recorded_gap": -16.057857157267172,
+    "blended_gap": -16.631885001776844,
+    "tracking": -99.57834697156319,
+    "jerk": -2.501197745687324,
+    "braking": 0.0
+   },
+   "pending_decisions": 140,
+   "peak_raw_requested_jerk": 12.554707527160645,
+   "braking_charged": 0,
+   "braking_requests": 3,
+   "merge_window": {
+    "samples": 141,
+    "observed_tracking_units": 99.64767366386187,
+    "best_tracking_units": 68.95799999999993,
+    "improvement_units": 30.68967366386194,
+    "observed_match": 0.3900709219858156,
+    "ceiling_match": 0.5673758865248227
+   }
+  },
+  {
+   "run": "ramp-native-fixes-01",
+   "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "agent": "agent_0",
+   "decisions": 811,
+   "merge_agent": true,
+   "totals": {
+    "base": 694.799943563942,
+    "progress": 697.8398780446481,
+    "speed_error": -7.716253799290495,
+    "recorded_gap": -17.397832917364028,
+    "blended_gap": -17.971860000656932,
+    "tracking": -100.58965645014334,
+    "jerk": -2.5096358828680696,
+    "braking": 0.0
+   },
+   "pending_decisions": 140,
+   "peak_raw_requested_jerk": 12.60821744799614,
+   "braking_charged": 0,
+   "braking_requests": 1,
+   "merge_window": {
+    "samples": 141,
+    "observed_tracking_units": 100.65281272097577,
+    "best_tracking_units": 68.95799999999993,
+    "improvement_units": 31.694812720975847,
+    "observed_match": 0.3829787234042553,
+    "ceiling_match": 0.5673758865248227
+   }
+  }
+ ]
+}
