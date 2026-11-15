@@ -1026,3 +1026,15 @@ steps per update. No promotion; no held-out run.
 ## November 15, 2026 - merge/cut-in training result
 
 [Retained results](highway-merge-cutin-2026-11-15.md#training-outcome-stopped-at-the-declared-regression-gate): 100,728 decisions, nominal merge matching 43.52% -> 39.66% triggered the approved stop; stable merges 4/4, zero collisions/teleports, nominal overrides 0.327%. Raw requested jerk and merge quality remain failures. Only two actual cut-ins in 11 training stress episodes; none in the latest stress validation, so recovery improvement is unproven. Full checkpoint, experimental actor, per-case CSV, metrics and hashes retained. Previous policy remains in place. Next: reliable cut-in exposure and corrected-ramp objective diagnosis before another reviewed configuration. Guide synchronization pending.
+
+## November 15, 2026 - v06 round 5 diagnosis
+
+Read-only diagnosis of round 5. The raw-request jerk failures are almost all the
+car's first decision (inserted at 0 m/s2): 14/15 failing cars at the start and 18/20
+at the end. Excluding that decision, the start would pass 3/8 rather than 1/8.
+The 31-36 m/s3 peaks come from one I-110 car reaching the lane end unmerged and
+stopping. Most interventions are the speed-limit guard (3 to 1,644): the
+final policy asks for about +0.05 m/s2 at the limit. KL early stopping ended
+98/99 updates (median 11 optimizer steps, not 1-4 as first reported). An
+acceleration-change action is not indicated.
+[Details](highway-merge-training-plan-v06.md#round-5-diagnosis-november-15-2026).

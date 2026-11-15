@@ -540,3 +540,91 @@ with the hashes of the summary and the four validation files. Study ledger
 after the run: 33,825 s of 41,400 s and 4,264,650 of 4,630,000 decisions used.
 No further training is authorized.
 
+## Round 5 diagnosis (November 15, 2026)
+
+Read-only analysis of the saved round-5 validation episodes (per-decision action
+logs) and the 99 PPO update records. No simulation, training or ledger charge.
+Script: [`scripts/diagnose_highway_flow_rl_v06_round05.py`](../scripts/diagnose_highway_flow_rl_v06_round05.py).
+
+**Corrections to the round-5 summary above** (kept unchanged as the
+first-pass record):
+- "Requests became jumpier": mostly wrong. Almost every raw-request check
+  failure is the car's **first decision** (finding 1). Outside that first
+  decision, 1 car fails at the start and 2 at the end.
+- "1-4 optimizer steps per update": wrong. The median was 11 steps (63 max,
+  1,593 in total). The accurate statement: KL early stopping ended 98 of 99
+  updates, usually within the **first epoch** (median 1 of 20).
+- "Lost 2 of 4 stable merges": the ramp180 cars did merge (lateral merge done
+  at 6.2 s, as before). Their post-merge window failed only on
+  `intervention_fraction`, caused by the speed-limit guard (finding 3).
+
+### Findings
+
+1. **The raw-request jerk check mostly measures vehicle insertion.** SUMO
+   inserts each car at 0 m/s2. The actor's first command (typically 0.6-1.7
+   m/s2) is compared with that 0, which gives 6-17 m/s3 on one decision. Of the
+   failing cars, 14 of 15 at the start and 18 of 20 at the end fail only on
+   that first decision. With the first decision excluded (a diagnostic count,
+   not a rule change), the starting policy passes 3/8 instead of 1/8, and the
+   200k checkpoint 3/8 instead of 0/8. Training made the first command larger,
+   which is why the failing count rose from 15 to 20. During driving, the
+   actor's own command changes stay small: the median per-car 95th percentile
+   is 0.2-0.26 m/s2 per decision, below the 0.5 limit.
+2. **The large realized jerk (31-36 m/s3) is one car, a late merge.** In the
+   100k, 200k and final policies, the I-110 focal car reaches the end of its
+   acceleration lane unmerged. The lane-end guard brakes it from 0 to about
+   -3 m/s2 in one step, it stops for 6.6 s, and native SUMO restarts it. The
+   starting policy merged without stopping. All other realized peaks are
+   16 m/s3 or below, from the speed-limit guard. This is a merge-timing
+   regression, not a smoothness one.
+3. **Most of the 10% interventions are the speed-limit guard.** Speed-ceiling
+   interventions rose from 3 (start) to 1,644 (final), plus 148 lane-end
+   decisions from the stopped I-110 car. The final policy asks for about +0.05
+   m/s2 while already at the speed limit, and the guard trims it every step.
+   On the one-AV cruise case that is 86% of decisions, at 99.8% of the limit
+   (start: 99.0%, zero interventions). Physically harmless, but it fails the
+   5% intervention gate on cruise, passing and I-110 following, and the ramp180
+   post-merge windows. The reward already charges -0.2 per intervention, so this
+   drift ran against the reward signal (finding 5).
+4. **Merge quality was never passable on 3 of the 4 merge rows.** Every
+   checkpoint fails `rolling_merge_quality` on all four merge rows. On the
+   ramp-started layouts the measured ceiling is below 0.90 (ramp120 0.69,
+   ramp180 0.57), as recorded in Phase 0c. So the best possible score on these
+   8 rows is 5/8, and the starting policy already passed the 4 non-merge rows.
+   The only real room was the I-110 merge (ceiling 0.99) and closing the gap to
+   the ceiling elsewhere. The 200k checkpoint did close it a little (ramp120
+   0.45 to 0.50, ramp180 0.39/0.37 to 0.43/0.43), while I-110 fell from 0.53 to
+   0.50 with the lane-end stop.
+5. **The learning signal was weak and noisy.** With one complete episode per
+   update (median 1,042 samples), the KL check stopped 98 of 99 updates, and
+   33 never finished one epoch. Mean value loss rose from 5.6 to 9.8 in the
+   middle of training before falling to 6.6. Gradient norms averaged about 18
+   against a 0.5 clip. A small systematic drift (finding 3) can then win over a
+   -0.2 per-step cost. Training rows are mostly merges, so the cruise-at-limit
+   behavior gets little correction. This is an inference from the statistics,
+   not a tested cause.
+
+### What this changes
+
+- The jerk diagnosis that motivated an acceleration-change action is weaker
+  than reported. Requests are mostly smooth; the check is dominated by the
+  insertion step. An acceleration-change action is **not** indicated by this
+  evidence.
+- The concrete regressions to fix are (a) speed-limit riding and (b) the I-110
+  late merge, both under a noisy one-episode-per-update optimizer.
+- Options for user decision (none started):
+  1. Score the raw-request check from the second decision, or seed each car's
+     insertion acceleration from its first command. Either is a rule or
+     environment change and needs a decision; results would be reported beside
+     the current rule.
+  2. Larger, steadier updates: several episodes per update and/or a looser KL
+     target, within the remaining budget (7,575 s, about 365,000 decisions).
+  3. Stop speed-limit riding: clamp a positive request at the ceiling before
+     it counts as an intervention, or add cruise rows to the curriculum.
+  4. Do not train further in this study; keep v04 with the whole-episode rate
+     limit as the reference (4/8 under the original rules).
+
+Evidence: [round-05-diagnosis.json](evidence/highway-merge-training-v06/round-05-diagnosis.json)
+(SHA-256 `dac359ede09fc30fba651d8ea0069257eb4dfa2bd8af895d7bdeb318600f966d`),
+with the input hash of each validation report.
+
