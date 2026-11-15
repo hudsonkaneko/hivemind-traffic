@@ -1060,3 +1060,16 @@ Round index 6 was already charged in the shared ledger by the v07 cut-in run
 approved profile runs as round 7. The remaining study budget is 6,400 s and
 264,622 decisions, which this round will essentially use up.
 [Details](highway-merge-training-plan-v06.md#launch-correction-runs-as-round-7-november-15-2026).
+
+## November 15, 2026 - v06 round 7 stopped by its merge stop rule
+
+The round-6 profile (run as round 7) stopped at the 100k periodic validation.
+Merge speed match fell from 0.437 to 0.343 because one ramp180 car failed its
+post-merge window on speed-limit interventions; the other merges were near
+their starting values, and I-110 improved from 0.534 to 0.565. Original rules
+stayed at 4/8, with peak jerk 4.0 m/s3 and no collisions. Corrections: the
+insertion effect lasts 3-4 decisions, not one, so the second-decision rule passes
+1/8 at start rather than the predicted 3/8. Updates remain KL-limited because
+the policy's action std is 0.04, so a 0.03 KL allows about a 0.03 m/s2 mean
+shift per update. Nothing promoted; 5,486 s and 164,372 decisions remain.
+[Details](highway-merge-training-plan-v06.md#round-7-result-november-15-2026-stopped-by-the-merge-stop-rule-at-100k).

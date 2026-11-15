@@ -694,3 +694,56 @@ rebuilt. The runner stops at the smaller of the 300,000-decision / 5,400 s round
 limit and the study total, so the study budget will be essentially used up.
 The round-6 config stays as the approval record, marked superseded and not
 authorized.
+
+## Round 7 result (November 15, 2026): stopped by the merge stop rule at 100k
+
+The approved round-6 profile ran as round 7 (`outputs/highway-flow-rl/v06/round-07`).
+Preflight passed (`preflight-r07`). The first periodic validation (100,250
+decisions, 912 s charged, 31 PPO episodes in 7 merged updates plus 10
+critic-only episodes) triggered the declared stop rule: merge speed match
+**0.343**, below the 0.4167 floor. No collisions or teleports. Nothing is
+promoted, and held-out evaluation is not run.
+
+| Validation (8 rows) | Original gates | + raw check from 2nd decision | + raw check, every decision | Merge speed match | Stable merges | Interventions | Peak jerk |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Initial (v04 actor) | 4/8 | 1/8 | 1/8 | 0.437 | 4/4 | 0.27% | 4.8 |
+| 100k (update 41) | 4/8 | 2/8 | 1/8 | **0.343** | 3/4 | 0.46% | 4.0 |
+
+**What happened:**
+1. **The stop came from one car.** I-110 speed matching rose from 0.534 to
+   0.565. The ramp120 and ramp180 4-lane merges were nearly unchanged (0.454 to
+   0.447; 0.369 to 0.362). On the 2-lane ramp180 the car merged as before (6.2
+   s), but its post-merge window failed `intervention_fraction`: the speed-limit
+   guard trimmed it 40 times. A failed stable merge counts as 0, so the mean
+   fell from 0.437 to 0.343. With that car at its earlier value, the mean would
+   be about 0.44. This is the same speed-limit riding as round 5, now in one
+   case (pooled interventions only 0.46%).
+2. **The original-rule result held (4/8).** No realized jerk exceeded 4.0
+   m/s3 (round 5's 100k checkpoint: 33 m/s3), and the I-110 car did not stop at
+   the lane end.
+3. **Correction to the round-5 diagnosis, finding 1.** The insertion effect is
+   not one decision. A ramp car's first command is about 1.6-1.7 m/s2. The
+   whole-episode rate limit raises the realized command by only 0.4 m/s2 per
+   decision, so |request - measured| stays above 0.5 m/s2 for about 3-4
+   decisions (the second decision still reads 12-13 m/s3). The diagnosis
+   attributed that whole lag run to "first decision" and counted it out. The
+   implemented rule (skip only the first decision) therefore passes 1/8 at the
+   start, not the predicted 3/8. The raw-request check stays dominated by the
+   insertion handoff, not by the actor's behavior once driving.
+4. **Updates were still KL-limited, now by a known cause.** All 7 merged
+   updates (4,053-16,992 samples) stopped on KL (last KL 0.030-0.037 against
+   0.03), 5 of them inside the first epoch (236 optimizer steps in total). The
+   warm-start policy's action standard deviation is 0.04 in normalized units
+   (log std -3.22, about 0.13 m/s2). For a Gaussian, a KL of 0.03 is reached
+   when the mean moves by only about 0.01 normalized (about 0.03 m/s2). So each
+   update can shift commands by only about 0.03 m/s2. Larger batches cannot
+   change that. The same scale matches the +0.05 m/s2 drift that trips the
+   speed-limit guard.
+
+Evidence: [round-07-results.json](evidence/highway-merge-training-v06/round-07-results.json)
+(SHA-256 `71aa3a6145014b4ef3e81f906bec0e699d99727ee1f15e7dcf55d10451e3d2ce`), with validation hashes, per-case failures and update
+statistics. Study ledger after the run: 35,914 s of 41,400 s, 4,465,628 of
+4,630,000 decisions, and 91 of 100 diagnostic episodes used. That leaves 5,486 s
+and 164,372 decisions, which is less than one full round. No further training is
+authorized.
+
