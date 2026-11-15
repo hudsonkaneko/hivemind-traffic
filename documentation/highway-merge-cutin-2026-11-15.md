@@ -95,3 +95,49 @@ added a regression assertion. Also withdraw queued native requests if the gap
 is lost before motion starts; remaining-maneuver prediction now starts from
 measured motion onset. Repeat source-bound qualification before launching.
 All artifacts and charges from the failed attempt remain in the study ledger.
+
+## Training outcome: stopped at the declared regression gate
+
+Source commit `1ecba3b`; run `outputs/highway-flow-rl/v07/train-20261115-02/train`.
+The second job passed both native smoke checks and the zero-update preflight,
+then trained without interactive monitoring. At 100,728 decisions (23,955
+critic-only), 62 updates and 696 actor/2,000 critic optimizer steps, the first
+periodic validation triggered the configured merge-regression stop. There was
+no runtime training defect to bypass. No second round or automatic promotion.
+
+| Matched nominal validation (8 cases) | Initial frozen actor | Trained candidate |
+| --- | ---: | ---: |
+| Merge speed matching, four mergers | 43.52% | 39.66% |
+| Stable merges | 4/4 | 4/4 |
+| Pooled combined overrides | 0.265% | 0.327% |
+| Peak realized jerk | 4.762 m/s3 | 4.000 m/s3 |
+| Collision / teleport events | 0 / 0 | 0 / 0 |
+| Cases passing every original + raw-request gate | 1/8 | 1/8 |
+
+I-110 speed matching improved 52.80% -> 54.38%, but all three corrected-ramp
+cases declined, so aggregate merge quality failed the predeclared rule. Raw
+requested jerk still fails despite smoother executed motion; no claim that
+the actor itself is sufficiently smooth. One ongoing nominal gap-violation
+sample remains in both evaluations; admission prediction does not guarantee
+all later gaps under changing speeds.
+
+The two stress validation cases produced one actual cut-in initially and zero
+after learning. Their lower aggregate interventions are therefore **not proof
+of better cut-in recovery**. Across 11 stress-labeled training episodes, two
+cut-ins actually started and completed. That is insufficient stress coverage;
+a subsequent approved revision should create reliable recoverable cut-in
+encounters before increasing learning time. All 62 training episodes and both
+validation sets recorded zero collisions and teleports.
+
+Actual PPO decision shares at the early stop: normal merge 26.51%, missed gap
+18.65%, stress 9.68%, cruise/follow 26.62%, passing 18.54%. Full episodes cause
+sampling overshoot; these measured values, not the target percentages, describe
+this stopped run. Missed-gap exposure is higher than the previous ~5% proposal.
+
+Saved evidence: [result.json](evidence/highway-merge-cutin-2026-11-15/result.json)
+and [paired cases.csv](evidence/highway-merge-cutin-2026-11-15/cases.csv), including
+input/output hashes, actual coverage, per-case failures and event counts.
+The full checkpoint `last.pt` and exported `candidate-policy.pt` remain local
+under the run directory. The candidate is experimental and not accepted;
+`best-policy.pt` remains the initial actor. No held-out test, 3D run or new
+training was started after the stop. Google guide synchronization is pending.

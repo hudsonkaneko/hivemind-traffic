@@ -793,3 +793,7 @@ user approval to train. [Details](highway-merge-training-plan-v06.md#phase-3---r
 Trained 289,563 decisions with no collisions. Best validation was the warm start
 (4/8 original rules under the whole-episode rate limit, against 2/8 baseline). The
 final policy got jumpier and lost merges. Nothing promoted. [Details](highway-merge-training-plan-v06.md#round-5-training-result-november-15-2026-no-improvement-nothing-promoted).
+
+### v61 - November 15: merge/cut-in training stopped, not promoted
+
+[Retained results](highway-merge-cutin-2026-11-15.md#training-outcome-stopped-at-the-declared-regression-gate): 100,728 decisions, nominal merge matching 43.52% -> 39.66% triggered the approved stop; stable merges 4/4, zero collisions/teleports, nominal overrides 0.327%. Raw requested jerk and merge quality remain failures. Only two actual cut-ins in 11 training stress episodes; none in the latest stress validation, so recovery improvement is unproven. Full checkpoint, experimental actor, per-case CSV, metrics and hashes retained. Previous policy remains in place. Next: reliable cut-in exposure and corrected-ramp objective diagnosis before another reviewed configuration. Guide synchronization pending.

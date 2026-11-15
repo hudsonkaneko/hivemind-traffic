@@ -1022,3 +1022,7 @@ speed matching fell to 0.25. Finding: the whole-episode rate limit alone lifts
 the old policy from 2/8 to 4/8. Learning was KL-throttled, with 1-4 optimizer
 steps per update. No promotion; no held-out run.
 [Details](highway-merge-training-plan-v06.md#round-5-training-result-november-15-2026-no-improvement-nothing-promoted).
+
+## November 15, 2026 - merge/cut-in training result
+
+[Retained results](highway-merge-cutin-2026-11-15.md#training-outcome-stopped-at-the-declared-regression-gate): 100,728 decisions, nominal merge matching 43.52% -> 39.66% triggered the approved stop; stable merges 4/4, zero collisions/teleports, nominal overrides 0.327%. Raw requested jerk and merge quality remain failures. Only two actual cut-ins in 11 training stress episodes; none in the latest stress validation, so recovery improvement is unproven. Full checkpoint, experimental actor, per-case CSV, metrics and hashes retained. Previous policy remains in place. Next: reliable cut-in exposure and corrected-ramp objective diagnosis before another reviewed configuration. Guide synchronization pending.
