@@ -982,3 +982,10 @@ an optional missed-gap demand mode exists (a mainline car beside the ramp car in
 33/47 native SUMO runs vs 0/48 normally). Weights are provisional pending the
 Phase 2 audit. 374 tests pass. No training or policy episodes.
 [Details](highway-merge-training-plan-v06.md#phase-1-progress-november-14-2026-implemented-not-trained).
+
+## November 15, 2026 - v06: whole-episode command rate limit
+
+User decision: v06 keeps the 4 m/s3 command rate limit for the whole episode
+(`rate_limit='full'`, already the default); maximum braking and lower safety
+ceilings bypass it, and evaluation still checks the policy's raw requested jerk.
+[Details](highway-merge-training-plan-v06.md#phase-1-progress-november-14-2026-implemented-not-trained).

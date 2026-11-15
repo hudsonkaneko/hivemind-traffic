@@ -389,6 +389,9 @@ sets them.
   about -190 for `merge_tracking` per 400 decisions, against +5 for a quality
   merge. Phase 2 must check this balance.
 
-**Still needed from the user:** the rate-limit choice (item 4). Next: Phase 2,
-the offline reward audit on saved v04 trajectories.
+**Rate limit (user decision, November 15, 2026): whole episode.** v06 uses
+`rate_limit='full'` (the environment default): the 4 m/s3 command rate limit
+applies for the whole episode, with maximum braking and lower safety ceilings
+bypassing it. The raw-request jerk check still applies in evaluation. Next:
+Phase 2, the offline reward audit on saved v04 trajectories.
 
