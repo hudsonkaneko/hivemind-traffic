@@ -68,7 +68,7 @@ def test_round6_config_is_valid_unauthorized_and_changes_only_the_chosen_fields(
     assert cfg6['stop_rules']['merge_speed_match_floor'] == pytest.approx(.4167)
     assert cfg6['stop_rules']['max_pooled_intervention_fraction'] == .05
     changed = {k for k in set(cfg) | set(cfg6) if cfg.get(k) != cfg6.get(k)}
-    assert changed == {'round_index', 'training_authorized', 'learning_profile', 'optimizer', 'raw_request_scope',
+    assert changed == {'round_index', 'learning_profile', 'optimizer', 'raw_request_scope',
                        'acceptance', 'stop_rules', 'provenance', 'missed_gap_seed_check', 'authorization'}
 
 
