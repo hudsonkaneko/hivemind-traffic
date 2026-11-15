@@ -59,9 +59,10 @@ def cfg6():
 
 def test_round6_config_is_valid_unauthorized_and_changes_only_the_chosen_fields(cfg, cfg6):
     contract.validate_config(cfg6)
-    assert cfg6['training_authorized'] is False and cfg6['held_out_authorized'] is False
+    assert cfg6['held_out_authorized'] is False and cfg6['development_gates_passed'] is False
+    contract.validate_config(cfg6, require_training=cfg6['training_authorized'])  # user approval 2026-11-15
     with pytest.raises(ValueError, match='disabled'):
-        contract.validate_config(cfg6, require_training=True)
+        contract.validate_config(dict(cfg6, training_authorized=False), require_training=True)
     assert cfg6['round_index'] == 6 and cfg6['raw_request_scope'] == 'after_first_decision'
     assert cfg6['optimizer'] == dict(cfg['optimizer'], epochs=10, target_kl=.03, episodes_per_update=4)
     assert cfg6['stop_rules']['merge_speed_match_floor'] == pytest.approx(.4167)

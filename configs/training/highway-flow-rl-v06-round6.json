@@ -1,6 +1,6 @@
 {
   "schema": "highway_flow_rl_v06",
-  "training_authorized": false,
+  "training_authorized": true,
   "round_index": 6,
   "seed": 9811,
   "observation_size": 117,
@@ -1048,7 +1048,7 @@
   },
   "evaluation_interval_decisions": 100000,
   "rollout_mode": "complete_declared_episode_before_update",
-  "authorization": "Prepared for user review; training_authorized=false until the user approves this configuration",
+  "authorization": "User approved the resolved v06 round-6 configuration in chat on 2026-11-15 (\"Approve and launch\"): one round, 300k decisions / 5400 s, raw-request jerk from the second decision, 4 episodes per update, stop rules as declared. Held-out evaluation not authorized.",
   "publication_branch": "highway-jerk-diagnosis-v05",
   "evaluation_initializers": [
     {
