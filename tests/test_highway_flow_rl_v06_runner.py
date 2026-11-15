@@ -18,11 +18,12 @@ def cfg():
     return json.loads(CONFIG.read_text(encoding='utf-8'))
 
 
-def test_committed_config_is_valid_and_not_authorized(cfg):
+def test_committed_config_is_valid_and_held_out_not_authorized(cfg):
     contract.validate_config(cfg)
-    assert cfg['training_authorized'] is False and cfg['held_out_authorized'] is False
+    assert cfg["held_out_authorized"] is False and cfg["development_gates_passed"] is False
+    contract.validate_config(cfg, require_training=cfg['training_authorized'])
     with pytest.raises(ValueError, match='disabled'):
-        contract.validate_config(cfg, require_training=True)
+        contract.validate_config(dict(cfg, training_authorized=False), require_training=True)
 
 
 def test_config_carries_user_decisions_and_audited_weights(cfg):
