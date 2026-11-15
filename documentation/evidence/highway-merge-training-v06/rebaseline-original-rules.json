@@ -1,0 +1,357 @@
+{
+ "schema": "highway_flow_rl_v06_rebaseline",
+ "rules": "original development_gates, no road-end exemption",
+ "actor": "v04 long-round-03/last.pt, v05 startup mode, Krauss controlled vehicles",
+ "swap": {
+  "replaced": "v02-development-train-2-lane-ramp120-merge",
+  "by": "ramp-eval-train-2-lane-ramp120-ramp-started",
+  "same_row_keys": [
+   "controlled_count",
+   "total_vehicles",
+   "seed",
+   "speed_limit_m_s",
+   "communication",
+   "packet_loss",
+   "difficulty",
+   "traffic_mode",
+   "horizon_steps"
+  ]
+ },
+ "development": [
+  {
+   "case_id": "v05-validation-i110-merge",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-native-fixes-01/evaluation/00.json",
+   "report_sha256": "d2731a284a58a81078ccd1daf0fab05cbdeded57776e812f2aba096a4f451a44",
+   "passed": false,
+   "failures": [
+    "per_car_route_comfort_or_control",
+    "rolling_merge_quality"
+   ],
+   "failing_cars": {
+    "agent_0": [
+     "peak_jerk"
+    ]
+   },
+   "cars": 8,
+   "pooled_intervention_fraction": 0.004765146358066712,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {
+    "agent_0": {
+     "qualified": false,
+     "samples": 161,
+     "stop_seconds": 0.0,
+     "full_approach_stop_seconds": 0.0,
+     "speed_match_fraction": 0.4782608695652174,
+     "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+    }
+   },
+   "physical_ceiling": {
+    "agent_0": {
+     "observed": 0.478,
+     "ceiling_vehicle_limits": 0.988,
+     "ceiling_comfort_limits": 0.988
+    }
+   }
+  },
+  {
+   "case_id": "v05-val-0-cruise",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-native-fixes-01/evaluation/01.json",
+   "report_sha256": "928c721335bd4966c1771c406c5ecc27e4be1fbaf4034b9ab8394bde5b0f308d",
+   "passed": true,
+   "failures": [],
+   "failing_cars": {},
+   "cars": 1,
+   "pooled_intervention_fraction": 0.0012853470437017994,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {},
+   "physical_ceiling": null
+  },
+  {
+   "case_id": "v05-val-0-passing",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-native-fixes-01/evaluation/02.json",
+   "report_sha256": "30d7991db9f2840a47a7690b955e4037f4701f6d7f5a36a9454194c9550ab028",
+   "passed": true,
+   "failures": [],
+   "failing_cars": {},
+   "cars": 1,
+   "pooled_intervention_fraction": 0.0005730659025787965,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {},
+   "physical_ceiling": null
+  },
+  {
+   "case_id": "v05-validation-i110-following",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-native-fixes-01/evaluation/03.json",
+   "report_sha256": "349ba451b465c0996b53061408a1be9fa7629204b0a81dccb45104df2195973e",
+   "passed": false,
+   "failures": [
+    "per_car_route_comfort_or_control"
+   ],
+   "failing_cars": {
+    "agent_2": [
+     "peak_jerk"
+    ]
+   },
+   "cars": 8,
+   "pooled_intervention_fraction": 0.0013717421124828531,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {},
+   "physical_ceiling": null
+  },
+  {
+   "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/00.json",
+   "report_sha256": "fe7dba5766f819b9535cbb2085f7dd192fec7dc06b3be6eebfeb8e55d46fb581",
+   "passed": false,
+   "failures": [
+    "per_car_route_comfort_or_control",
+    "stable_merge",
+    "rolling_merge_quality"
+   ],
+   "failing_cars": {
+    "agent_0": [
+     "peak_jerk",
+     "interventions",
+     "headway"
+    ]
+   },
+   "cars": 1,
+   "pooled_intervention_fraction": 0.10509554140127389,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {},
+   "physical_ceiling": {
+    "agent_0": {
+     "observed": 0.652,
+     "ceiling_vehicle_limits": 0.688,
+     "ceiling_comfort_limits": 0.67
+    }
+   }
+  },
+  {
+   "case_id": "v02-development-60mph-cruise",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/dev-native-fixes-01/evaluation/05.json",
+   "report_sha256": "56c1489996bd49700c3733dcb5f58a889bc401b137dfb4cd980c0fece95777d9",
+   "passed": false,
+   "failures": [
+    "per_car_route_comfort_or_control"
+   ],
+   "failing_cars": {
+    "agent_5": [
+     "avoidable_braking"
+    ]
+   },
+   "cars": 8,
+   "pooled_intervention_fraction": 0.0014291839359725598,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {},
+   "physical_ceiling": null
+  }
+ ],
+ "ramp_started": [
+  {
+   "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/00.json",
+   "report_sha256": "fe7dba5766f819b9535cbb2085f7dd192fec7dc06b3be6eebfeb8e55d46fb581",
+   "passed": false,
+   "failures": [
+    "per_car_route_comfort_or_control",
+    "stable_merge",
+    "rolling_merge_quality"
+   ],
+   "failing_cars": {
+    "agent_0": [
+     "peak_jerk",
+     "interventions",
+     "headway"
+    ]
+   },
+   "cars": 1,
+   "pooled_intervention_fraction": 0.10509554140127389,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {},
+   "physical_ceiling": {
+    "agent_0": {
+     "observed": 0.652,
+     "ceiling_vehicle_limits": 0.688,
+     "ceiling_comfort_limits": 0.67
+    }
+   }
+  },
+  {
+   "case_id": "ramp-eval-train-3-lane-ramp240-ramp-started",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/01.json",
+   "report_sha256": "2bc72fb7586d0b0055c83ea23640377c20b5f4a3e7f7b4bbbb8e5cebf969b9a9",
+   "passed": false,
+   "failures": [
+    "rolling_merge_quality"
+   ],
+   "failing_cars": {},
+   "cars": 1,
+   "pooled_intervention_fraction": 0.005772005772005772,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {
+    "agent_0": {
+     "qualified": false,
+     "samples": 141,
+     "stop_seconds": 0.0,
+     "full_approach_stop_seconds": 0.0,
+     "speed_match_fraction": 0.2765957446808511,
+     "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+    }
+   },
+   "physical_ceiling": {
+    "agent_0": {
+     "observed": 0.277,
+     "ceiling_vehicle_limits": 0.489,
+     "ceiling_comfort_limits": 0.262
+    }
+   }
+  },
+  {
+   "case_id": "ramp-eval-train-4-lane-ramp120-ramp-started",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/02.json",
+   "report_sha256": "fe9bc8eb24fc0af7831e1b45b9d13c57423a5a9b204782c158efc769974c585d",
+   "passed": false,
+   "failures": [
+    "rolling_merge_quality"
+   ],
+   "failing_cars": {},
+   "cars": 1,
+   "pooled_intervention_fraction": 0.004739336492890996,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {
+    "agent_0": {
+     "qualified": false,
+     "samples": 141,
+     "stop_seconds": 0.0,
+     "full_approach_stop_seconds": 0.0,
+     "speed_match_fraction": 0.48936170212765956,
+     "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+    }
+   },
+   "physical_ceiling": {
+    "agent_0": {
+     "observed": 0.489,
+     "ceiling_vehicle_limits": 0.652,
+     "ceiling_comfort_limits": 0.475
+    }
+   }
+  },
+  {
+   "case_id": "ramp-eval-train-5-lane-ramp240-ramp-started",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/03.json",
+   "report_sha256": "2f4be47cd8aa99037644d1fe53df9662d4b550f84e9de76325894688caf0e94e",
+   "passed": false,
+   "failures": [
+    "rolling_merge_quality"
+   ],
+   "failing_cars": {},
+   "cars": 1,
+   "pooled_intervention_fraction": 0.005305039787798408,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {
+    "agent_0": {
+     "qualified": false,
+     "samples": 141,
+     "stop_seconds": 0.0,
+     "full_approach_stop_seconds": 0.0,
+     "speed_match_fraction": 0.2695035460992908,
+     "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+    }
+   },
+   "physical_ceiling": {
+    "agent_0": {
+     "observed": 0.27,
+     "ceiling_vehicle_limits": 0.489,
+     "ceiling_comfort_limits": 0.262
+    }
+   }
+  },
+  {
+   "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/04.json",
+   "report_sha256": "903a72dc9185208da1cc85d61f45a3303ada919177f1a0d9bca2d10687ac86a8",
+   "passed": false,
+   "failures": [
+    "rolling_merge_quality"
+   ],
+   "failing_cars": {},
+   "cars": 1,
+   "pooled_intervention_fraction": 0.005376344086021506,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {
+    "agent_0": {
+     "qualified": false,
+     "samples": 141,
+     "stop_seconds": 0.0,
+     "full_approach_stop_seconds": 0.0,
+     "speed_match_fraction": 0.3900709219858156,
+     "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+    }
+   },
+   "physical_ceiling": {
+    "agent_0": {
+     "observed": 0.39,
+     "ceiling_vehicle_limits": 0.567,
+     "ceiling_comfort_limits": 0.369
+    }
+   }
+  },
+  {
+   "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "source": "C:/Users/hudso/Documents/highwaysim/outputs/highway-flow-rl/v05/ramp-native-fixes-01/evaluation/05.json",
+   "report_sha256": "181ae4a76e1c7d5afd6f1c8e0fb9f8460399aa553ca606cdfe3b3066e021a3c4",
+   "passed": false,
+   "failures": [
+    "rolling_merge_quality"
+   ],
+   "failing_cars": {},
+   "cars": 1,
+   "pooled_intervention_fraction": 0.004932182490752158,
+   "collisions": 0,
+   "teleports": 0,
+   "merge_quality": {
+    "agent_0": {
+     "qualified": false,
+     "samples": 141,
+     "stop_seconds": 0.0,
+     "full_approach_stop_seconds": 0.0,
+     "speed_match_fraction": 0.3829787234042553,
+     "scope": "Observed approach and post-merge quality; neighbor braking is not causal attribution"
+    }
+   },
+   "physical_ceiling": {
+    "agent_0": {
+     "observed": 0.383,
+     "ceiling_vehicle_limits": 0.567,
+     "ceiling_comfort_limits": 0.369
+    }
+   }
+  }
+ ],
+ "totals": {
+  "development": {
+   "cases": 6,
+   "passed": 2,
+   "cars": 27,
+   "failing_cars": 4
+  },
+  "ramp_started": {
+   "cases": 6,
+   "passed": 0,
+   "cars": 6,
+   "failing_cars": 1
+  }
+ }
+}

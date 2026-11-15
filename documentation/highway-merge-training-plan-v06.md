@@ -289,3 +289,50 @@ and must be reported beside the original-rules result.
 
 The frozen-v04 re-baseline (0c) waits only for the road-end decision. It runs
 on the existing layouts (no rebuild, per the user decision above).
+
+### Road end: keep the original rules (user decision, November 14, 2026)
+
+No road-end exemption. `road_end_leader_exit_rule` stays off for the baseline
+and for v06 evaluation; end-of-road jerk counts as a failure.
+
+### 0c. Frozen-v04 baseline under the original rules
+
+No new episodes were needed (still 78/100). The frozen v04 actor (startup mode,
+Krauss) had already run every baseline case; only the scoring differed.
+[`scripts/rebaseline_highway_flow_rl_v06.py`](../scripts/rebaseline_highway_flow_rl_v06.py)
+applies the unchanged `development_gates` to the saved per-episode reports of
+`dev-native-fixes-01` and `ramp-native-fixes-01`. The historical ramp120 merge
+case is swapped for the ramp-started run of the same row; the script asserts
+that demand, seed and controlled car are identical and only the network
+differs.
+
+| Case | Original rules | Failing check | Merge match: observed / ceiling |
+| --- | --- | --- | --- |
+| I-110 merge | fail | focal peak jerk 8.4; merge quality | 0.48 / 0.99 |
+| Cruise, 1 AV | pass | | |
+| Passing, 1 AV | pass | | |
+| I-110 following | fail | 1 car peak jerk 5.34 (road end) | |
+| ramp120 merge, ramp-started | fail | jerk 28.9, interventions 10.5%, headway 0.34 s, no stable merge, merge quality | 0.65 / 0.69 |
+| 60 mph cruise | fail | 1 car avoidable braking | |
+
+**Development: 2/6 cases pass, 4/27 cars fail.** Zero collisions and teleports.
+
+| Ramp-started layout | Original rules | Merge match: observed / ceiling (vehicle limits) |
+| --- | --- | --- |
+| train 2-lane ramp120 | fail (as above) | 0.65 / 0.69 |
+| train 3-lane ramp240 | fail, merge quality only | 0.28 / 0.49 |
+| train 4-lane ramp120 | fail, merge quality only | 0.49 / 0.65 |
+| train 5-lane ramp240 | fail, merge quality only | 0.27 / 0.49 |
+| validation 2-lane ramp180 | fail, merge quality only | 0.39 / 0.57 |
+| validation 4-lane ramp180 | fail, merge quality only | 0.38 / 0.57 |
+
+**Ramp-started: 0/6 pass, and all fail the 90% rule, which no car could pass
+there.** On five layouts every per-car check passes. This is the baseline v06
+must beat: more cases passing under the original rules, and on every merge a
+smaller gap between observed and ceiling.
+
+Evidence: [rebaseline-original-rules.json](evidence/highway-merge-training-v06/rebaseline-original-rules.json)
+(SHA-256 `c789523991729742590f099e1dcf71e897ae156f44a08733050c1389489a5343`).
+The source runs are under `outputs/highway-flow-rl/v05/` (not in Git); the
+evidence records each report's SHA-256. Phase 0 is complete. Next: Phase 1
+(code and tests only).

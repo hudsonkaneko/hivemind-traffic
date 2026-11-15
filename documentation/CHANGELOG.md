@@ -1375,3 +1375,13 @@ the original rules. Each merge result will be reported beside its physical
 ceiling from the feasibility audit (diagnostic only), and training mixes all
 existing layouts. The re-baseline now waits only on the road-end decision.
 [Details](highway-merge-training-plan-v06.md#phase-0-progress-november-14-2026).
+
+## November 14, 2026 - v06 Phase 0c: original-rules baseline
+
+User kept the original road-end rules (no exemption). The frozen v04 baseline
+was rescored from saved reports with the unchanged gates, using no new
+episodes: development 2/6 cases pass, 4/27 cars fail; ramp-started 0/6, all
+failing only the 90% merge-speed rule except ramp120. Each merge is shown beside
+its physical ceiling (I-110 0.48 of 0.99; ramp layouts 0.27-0.65 of 0.49-0.69).
+Phase 0 complete; Phase 1 next.
+[Details](highway-merge-training-plan-v06.md#0c-frozen-v04-baseline-under-the-original-rules).
