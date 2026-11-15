@@ -105,9 +105,7 @@ class HighwayFlowRLV05Env(HighwayFlowRLV04Env):
             audit = self._conditioning[agent]
             state, tracker = self.states.get(agent), self.merge_trackers.get(agent)
             merge_active = bool(tracker and tracker.status == 'pending')
-            extra = extra_rewards(info['realized_jerk_m_s3'], audit['raw_requested_jerk'],
-                snapshot['target'], state['speed'] if state else None, merge_active=merge_active,
-                weights=self.v05_weights) if self.v05_variant == 'full' else {}
+            extra = self._extra_rewards(agent, info, snapshot, audit, state, merge_active)
             rewards[agent] += sum(extra.values())
             info['reward_terms'].update(extra)
             for key,value in extra.items():
@@ -132,6 +130,14 @@ class HighwayFlowRLV05Env(HighwayFlowRLV04Env):
                 phase=phase, merge_active=merge_active, legacy_acceptance_target=self._reference_targets[agent],
                 reward_target=snapshot['target'], raw_actor_action_preserved=True,
                 safety_or_native_change=non_comfort, variant=self.v05_variant))
+
+    def _extra_rewards(self, agent, info, snapshot, audit, state, merge_active):
+        """Reward terms added on top of v04; only the 'full' variant has any in v05."""
+        if self.v05_variant != 'full':
+            return {}
+        return extra_rewards(info['realized_jerk_m_s3'], audit['raw_requested_jerk'],
+            snapshot['target'], state['speed'] if state else None, merge_active=merge_active,
+            weights=self.v05_weights)
 
     def _road_end_sample(self, agent, info):
         """Track per-car peak jerk, exempting the one decision after a leader exit.

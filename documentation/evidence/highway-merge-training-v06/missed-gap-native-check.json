@@ -1,0 +1,1732 @@
+{
+ "schema": "highway_flow_rl_v06_missed_gap_check",
+ "level_threshold_m": 7.3,
+ "scope": "Native SUMO only: every car, including the would-be AV, drives under SUMO's own\nmodel. No policy, no environment episode, no ledger charge. For each network and\nseed this records the blocker's longitudinal offset from the front ramp car when\nthe ramp car first reaches the acceleration lane (route edge sb2). A policy-driven\ncar will move differently, so this checks the demand construction, not training.",
+ "summary": {
+  "normal": {
+   "runs": 48,
+   "measured": 48,
+   "errors": 0,
+   "first_gap_closed": 0
+  },
+  "missed_gap": {
+   "runs": 48,
+   "measured": 47,
+   "errors": 1,
+   "first_gap_closed": 33
+  }
+ },
+ "rows": [
+  {
+   "seed": 7100000,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100000,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_5",
+    "ramp_slot": "ramp_0",
+    "shift_m": 135.92464337142871,
+    "predicted_arrival_s": 3.915382190885257,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 398.5,
+    "blocker_speed_m_s": 19.604766307987056,
+    "ramp_speed_m_s": 8.252813983340701,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 141.84818237640195,
+    "predicted_arrival_s": 3.310718934448362,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 398.5,
+    "blocker_speed_m_s": 15.456414833940114,
+    "ramp_speed_m_s": 7.986103624703702,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": "main_4",
+    "nearest_offset_m": 3.3534516412948716,
+    "first_gap_closed": true,
+    "blocker_offset_m": 3.3534516412948716
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 126.22366183417893,
+    "predicted_arrival_s": 3.340161549296969,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 398.5,
+    "blocker_speed_m_s": 16.507498630844022,
+    "ramp_speed_m_s": 9.354760878627706,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": "main_4",
+    "nearest_offset_m": 8.533622100137919,
+    "first_gap_closed": false,
+    "blocker_offset_m": 8.533622100137919
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_6",
+    "ramp_slot": "ramp_0",
+    "shift_m": 86.77655299692171,
+    "predicted_arrival_s": 3.934097487021141,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 398.5,
+    "blocker_speed_m_s": 17.84491257780603,
+    "ramp_speed_m_s": 8.069100283368241,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": "main_6",
+    "nearest_offset_m": 0.7697017411648654,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.7697017411648654
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.6,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 147.70811175736583,
+    "predicted_arrival_s": 3.4841292295579986,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 398.5,
+    "blocker_speed_m_s": 20.562,
+    "ramp_speed_m_s": 9.461273524138738,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.6,
+    "nearest_vehicle": "main_4",
+    "nearest_offset_m": -0.6704236385128195,
+    "first_gap_closed": true,
+    "blocker_offset_m": -0.6704236385128195
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_5",
+    "ramp_slot": "ramp_0",
+    "shift_m": 154.74806664882863,
+    "predicted_arrival_s": 2.8646282417284272,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 398.5,
+    "blocker_speed_m_s": 18.15440449455129,
+    "ramp_speed_m_s": 8.565933758167604,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": "main_5",
+    "nearest_offset_m": 0.7920033267585924,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.7920033267585924
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_5",
+    "ramp_slot": "ramp_0",
+    "shift_m": 159.42363403237414,
+    "predicted_arrival_s": 3.4485115540998006,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 398.5,
+    "blocker_speed_m_s": 16.168605116999476,
+    "ramp_speed_m_s": 8.029603524246118,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": "main_5",
+    "nearest_offset_m": 0.8391311584627492,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.8391311584627492
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.1,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 146.0349985148218,
+    "predicted_arrival_s": 2.9616522659465208,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 398.5,
+    "blocker_speed_m_s": 18.362682303112653,
+    "ramp_speed_m_s": 9.534796096932306,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.1,
+    "nearest_vehicle": "main_4",
+    "nearest_offset_m": -0.4040586712862644,
+    "first_gap_closed": true,
+    "blocker_offset_m": -0.4040586712862644
+   },
+   "network": "train-2-lane-ramp120"
+  },
+  {
+   "seed": 7100000,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100000,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_2",
+    "ramp_slot": "ramp_0",
+    "shift_m": 278.54244926252863,
+    "predicted_arrival_s": 3.915382190885259,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.6,
+    "blocker_speed_m_s": 23.973004908609145,
+    "ramp_speed_m_s": 8.252813983340701,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_3",
+    "ramp_slot": "ramp_0",
+    "shift_m": 220.76950852155414,
+    "predicted_arrival_s": 3.310718934448362,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.6,
+    "blocker_speed_m_s": 18.547697800728134,
+    "ramp_speed_m_s": 7.986103624703702,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": "main_3",
+    "nearest_offset_m": 6.514773875230615,
+    "first_gap_closed": true,
+    "blocker_offset_m": 6.514773875230615
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_1",
+    "ramp_slot": "ramp_0",
+    "shift_m": 286.18513934582865,
+    "predicted_arrival_s": 3.340161549296969,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.6,
+    "blocker_speed_m_s": 21.327514158581646,
+    "ramp_speed_m_s": 9.354760878627706,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": "main_1",
+    "nearest_offset_m": 2.122308282125714,
+    "first_gap_closed": true,
+    "blocker_offset_m": 2.122308282125714
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_5",
+    "ramp_slot": "ramp_0",
+    "shift_m": 197.9477436855094,
+    "predicted_arrival_s": 3.934097487021141,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.6,
+    "blocker_speed_m_s": 21.413895093367238,
+    "ramp_speed_m_s": 8.069100283368241,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_3",
+    "ramp_slot": "ramp_0",
+    "shift_m": 201.52672934509854,
+    "predicted_arrival_s": 3.4841292295579986,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.6,
+    "blocker_speed_m_s": 24.674400000000002,
+    "ramp_speed_m_s": 9.461273524138738,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": "main_3",
+    "nearest_offset_m": 2.286115085103165,
+    "first_gap_closed": true,
+    "blocker_offset_m": 2.286115085103165
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_5",
+    "ramp_slot": "ramp_0",
+    "shift_m": 240.75057534791108,
+    "predicted_arrival_s": 2.8646282417284272,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.6,
+    "blocker_speed_m_s": 21.785285393461546,
+    "ramp_speed_m_s": 8.565933758167604,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": "main_5",
+    "nearest_offset_m": 0.1754177060999158,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.1754177060999158
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_5",
+    "ramp_slot": "ramp_0",
+    "shift_m": 208.28190237442075,
+    "predicted_arrival_s": 3.4485115540998006,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.6,
+    "blocker_speed_m_s": 18.650362348840012,
+    "ramp_speed_m_s": 8.029603524246118,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": "main_5",
+    "nearest_offset_m": 10.283890460845106,
+    "first_gap_closed": false,
+    "blocker_offset_m": 10.283890460845106
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.3,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_2",
+    "ramp_slot": "ramp_0",
+    "shift_m": 315.8821940559484,
+    "predicted_arrival_s": 2.9616522659465208,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.6,
+    "blocker_speed_m_s": 22.39790580653759,
+    "ramp_speed_m_s": 9.534796096932302,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.3,
+    "nearest_vehicle": "main_2",
+    "nearest_offset_m": 4.10390295706261,
+    "first_gap_closed": true,
+    "blocker_offset_m": 4.10390295706261
+   },
+   "network": "train-3-lane-ramp240"
+  },
+  {
+   "seed": 7100000,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100000,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_2",
+    "ramp_slot": "ramp_0",
+    "shift_m": 313.46728343463934,
+    "predicted_arrival_s": 3.915382190885257,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 438.5,
+    "blocker_speed_m_s": 19.977504090507622,
+    "ramp_speed_m_s": 8.252813983340701,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 252.0309282776874,
+    "predicted_arrival_s": 3.310718934448362,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 438.5,
+    "blocker_speed_m_s": 17.385786723548485,
+    "ramp_speed_m_s": 7.986103624703702,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": "main_4",
+    "nearest_offset_m": 3.296889770074604,
+    "first_gap_closed": true,
+    "blocker_offset_m": 3.296889770074604
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 281.5178449998589,
+    "predicted_arrival_s": 3.340161549296969,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 438.5,
+    "blocker_speed_m_s": 18.32258885768102,
+    "ramp_speed_m_s": 9.354760878627706,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": "main_4",
+    "nearest_offset_m": 7.157787881762861,
+    "first_gap_closed": true,
+    "blocker_offset_m": 7.157787881762861
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_6",
+    "ramp_slot": "ramp_0",
+    "shift_m": 242.61753907639894,
+    "predicted_arrival_s": 3.934097487021141,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 438.5,
+    "blocker_speed_m_s": 16.777295267714887,
+    "ramp_speed_m_s": 8.069100283368241,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": "main_6",
+    "nearest_offset_m": -0.7451678429598836,
+    "first_gap_closed": true,
+    "blocker_offset_m": -0.7451678429598836
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.6,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 275.61350939547293,
+    "predicted_arrival_s": 3.4841292295579986,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 438.5,
+    "blocker_speed_m_s": 20.065329838687855,
+    "ramp_speed_m_s": 9.461273524138738,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.6,
+    "nearest_vehicle": "main_4",
+    "nearest_offset_m": 0.04083475998713304,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.04083475998713304
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_3",
+    "ramp_slot": "ramp_0",
+    "shift_m": 331.7759087999288,
+    "predicted_arrival_s": 2.8646282417284272,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 438.5,
+    "blocker_speed_m_s": 17.814535546757796,
+    "ramp_speed_m_s": 8.565933758167604,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": "main_3",
+    "nearest_offset_m": 0.2698725250600922,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.2698725250600922
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_3",
+    "ramp_slot": "ramp_0",
+    "shift_m": 331.48032215942936,
+    "predicted_arrival_s": 3.4485115540998006,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 438.5,
+    "blocker_speed_m_s": 16.374875395634533,
+    "ramp_speed_m_s": 8.029603524246118,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": "main_3",
+    "nearest_offset_m": 0.6238443004629937,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.6238443004629937
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.1,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_2",
+    "ramp_slot": "ramp_0",
+    "shift_m": 335.252865419076,
+    "predicted_arrival_s": 2.9616522659465208,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 438.5,
+    "blocker_speed_m_s": 18.664921505447992,
+    "ramp_speed_m_s": 9.534796096932306,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.1,
+    "nearest_vehicle": "main_2",
+    "nearest_offset_m": 0.3857084147546277,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.3857084147546277
+   },
+   "network": "train-4-lane-ramp120"
+  },
+  {
+   "seed": 7100000,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100000,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 320.7382996227286,
+    "predicted_arrival_s": 3.915382190885259,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.57,
+    "blocker_speed_m_s": 23.246401783740694,
+    "ramp_speed_m_s": 8.252813983340701,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_3",
+    "ramp_slot": "ramp_0",
+    "shift_m": 353.64637629629465,
+    "predicted_arrival_s": 3.310718934448362,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.57,
+    "blocker_speed_m_s": 19.237849709215936,
+    "ramp_speed_m_s": 7.986103624703702,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": "main_3",
+    "nearest_offset_m": 3.297389572749203,
+    "first_gap_closed": true,
+    "blocker_offset_m": 3.297389572749203
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_2",
+    "ramp_slot": "ramp_0",
+    "shift_m": 354.72062572080614,
+    "predicted_arrival_s": 3.340161549296969,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.57,
+    "blocker_speed_m_s": 21.987106629217223,
+    "ramp_speed_m_s": 9.354760878627706,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": "main_2",
+    "nearest_offset_m": 1.478949603881167,
+    "first_gap_closed": true,
+    "blocker_offset_m": 1.478949603881167
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_3",
+    "ramp_slot": "ramp_0",
+    "shift_m": 310.48767044215447,
+    "predicted_arrival_s": 3.934097487021141,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.57,
+    "blocker_speed_m_s": 19.476518074637855,
+    "ramp_speed_m_s": 8.069100283368241,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": "main_3",
+    "nearest_offset_m": 2.910830716806187,
+    "first_gap_closed": true,
+    "blocker_offset_m": 2.910830716806187
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": true,
+   "error": "missed_gap needs a ramp car and a rightmost-lane mainline car",
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 340.47118664822244,
+    "predicted_arrival_s": 2.8646282417284272,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.57,
+    "blocker_speed_m_s": 21.785285393461546,
+    "ramp_speed_m_s": 8.565933758167604,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": "main_4",
+    "nearest_offset_m": -0.9089185400917033,
+    "first_gap_closed": true,
+    "blocker_offset_m": -0.9089185400917033
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_3",
+    "ramp_slot": "ramp_0",
+    "shift_m": 341.11012328663975,
+    "predicted_arrival_s": 3.4485115540998006,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.57,
+    "blocker_speed_m_s": 19.40232614039937,
+    "ramp_speed_m_s": 8.029603524246118,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": "main_3",
+    "nearest_offset_m": 7.901774802335183,
+    "first_gap_closed": false,
+    "blocker_offset_m": 7.901774802335183
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.3,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_2",
+    "ramp_slot": "ramp_0",
+    "shift_m": 345.34121690715637,
+    "predicted_arrival_s": 2.9616522659465208,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.57,
+    "blocker_speed_m_s": 22.035218763735184,
+    "ramp_speed_m_s": 9.534796096932302,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.3,
+    "nearest_vehicle": "main_2",
+    "nearest_offset_m": 5.554199315706786,
+    "first_gap_closed": true,
+    "blocker_offset_m": 5.554199315706786
+   },
+   "network": "train-5-lane-ramp240"
+  },
+  {
+   "seed": 7100000,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100000,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_5",
+    "ramp_slot": "ramp_0",
+    "shift_m": 140.2496160283181,
+    "predicted_arrival_s": 3.915382190885259,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.91,
+    "blocker_speed_m_s": 21.567172714440236,
+    "ramp_speed_m_s": 8.252813983340701,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 147.54785034909472,
+    "predicted_arrival_s": 3.310718934448362,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.91,
+    "blocker_speed_m_s": 17.003577754141045,
+    "ramp_speed_m_s": 7.986103624703702,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": "main_4",
+    "nearest_offset_m": 3.6644049587436816,
+    "first_gap_closed": true,
+    "blocker_offset_m": 3.6644049587436816
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_3",
+    "ramp_slot": "ramp_0",
+    "shift_m": 199.54837900337918,
+    "predicted_arrival_s": 3.340161549296969,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.91,
+    "blocker_speed_m_s": 18.15987339312251,
+    "ramp_speed_m_s": 9.354760878627706,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": "main_3",
+    "nearest_offset_m": 11.12277870795634,
+    "first_gap_closed": false,
+    "blocker_offset_m": 11.12277870795634
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_6",
+    "ramp_slot": "ramp_0",
+    "shift_m": 89.82343031524897,
+    "predicted_arrival_s": 3.934097487021141,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.91,
+    "blocker_speed_m_s": 19.631160381791158,
+    "ramp_speed_m_s": 8.069100283368241,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": "main_6",
+    "nearest_offset_m": 0.8164370736583701,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.8164370736583701
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.6,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 139.33522650923118,
+    "predicted_arrival_s": 3.4841292295579986,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.91,
+    "blocker_speed_m_s": 22.620224,
+    "ramp_speed_m_s": 9.461273524138738,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.6,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_5",
+    "ramp_slot": "ramp_0",
+    "shift_m": 160.8207522506642,
+    "predicted_arrival_s": 2.8646282417284272,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.91,
+    "blocker_speed_m_s": 19.97163195473966,
+    "ramp_speed_m_s": 8.565933758167604,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": "main_5",
+    "nearest_offset_m": 1.0368915457232446,
+    "first_gap_closed": true,
+    "blocker_offset_m": 1.0368915457232446
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_5",
+    "ramp_slot": "ramp_0",
+    "shift_m": 167.10839616925745,
+    "predicted_arrival_s": 3.4485115540998006,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.91,
+    "blocker_speed_m_s": 17.787057169247852,
+    "ramp_speed_m_s": 8.029603524246118,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": "main_5",
+    "nearest_offset_m": 0.8106814632361958,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.8106814632361958
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.1,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 150.5113849179023,
+    "predicted_arrival_s": 2.9616522659465208,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 418.91,
+    "blocker_speed_m_s": 20.200758045775903,
+    "ramp_speed_m_s": 9.534796096932302,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.1,
+    "nearest_vehicle": "main_4",
+    "nearest_offset_m": -0.19472767201136776,
+    "first_gap_closed": true,
+    "blocker_offset_m": -0.19472767201136776
+   },
+   "network": "validation-2-lane-ramp180"
+  },
+  {
+   "seed": 7100000,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100000,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_2",
+    "ramp_slot": "ramp_0",
+    "shift_m": 326.03762759632156,
+    "predicted_arrival_s": 3.915382190885259,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.9,
+    "blocker_speed_m_s": 21.97722096528541,
+    "ramp_speed_m_s": 8.252813983340701,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100001,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 263.549331382843,
+    "predicted_arrival_s": 3.310718934448362,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.9,
+    "blocker_speed_m_s": 19.126076748511466,
+    "ramp_speed_m_s": 7.986103624703702,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.5,
+    "nearest_vehicle": "main_4",
+    "nearest_offset_m": 3.690197335227676,
+    "first_gap_closed": true,
+    "blocker_offset_m": 3.690197335227676
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100002,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_1",
+    "ramp_slot": "ramp_0",
+    "shift_m": 363.1843728765494,
+    "predicted_arrival_s": 3.340161549296969,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.9,
+    "blocker_speed_m_s": 19.55197077255327,
+    "ramp_speed_m_s": 9.354760878627706,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.8,
+    "nearest_vehicle": "main_1",
+    "nearest_offset_m": 11.3386418341694,
+    "first_gap_closed": false,
+    "blocker_offset_m": 11.3386418341694
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100003,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_6",
+    "ramp_slot": "ramp_0",
+    "shift_m": 253.14299737846022,
+    "predicted_arrival_s": 3.934097487021141,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.9,
+    "blocker_speed_m_s": 18.456676250843824,
+    "ramp_speed_m_s": 8.069100283368241,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.9,
+    "nearest_vehicle": "main_6",
+    "nearest_offset_m": -0.7335372670569273,
+    "first_gap_closed": true,
+    "blocker_offset_m": -0.7335372670569273
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.6,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100004,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_4",
+    "ramp_slot": "ramp_0",
+    "shift_m": 255.59133433736986,
+    "predicted_arrival_s": 3.4841292295579986,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.9,
+    "blocker_speed_m_s": 22.07383793332376,
+    "ramp_speed_m_s": 9.461273524138738,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.6,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100005,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_3",
+    "ramp_slot": "ramp_0",
+    "shift_m": 347.06768334963056,
+    "predicted_arrival_s": 2.8646282417284272,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.9,
+    "blocker_speed_m_s": 19.59774265750529,
+    "ramp_speed_m_s": 8.565933758167604,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.0,
+    "nearest_vehicle": "main_3",
+    "nearest_offset_m": 0.529525595532419,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.529525595532419
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100006,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_3",
+    "ramp_slot": "ramp_0",
+    "shift_m": 346.2278689949688,
+    "predicted_arrival_s": 3.4485115540998006,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.9,
+    "blocker_speed_m_s": 18.01397477975594,
+    "ramp_speed_m_s": 8.029603524246118,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.4,
+    "nearest_vehicle": "main_3",
+    "nearest_offset_m": 0.6216442604813799,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.6216442604813799
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": false,
+   "alignment": null,
+   "at_acceleration_lane": {
+    "time_s": 3.1,
+    "nearest_vehicle": null,
+    "nearest_offset_m": null,
+    "first_gap_closed": false,
+    "blocker_offset_m": null
+   },
+   "network": "validation-4-lane-ramp180"
+  },
+  {
+   "seed": 7100007,
+   "missed_gap": true,
+   "alignment": {
+    "blocker_slot": "main_2",
+    "ramp_slot": "ramp_0",
+    "shift_m": 350.11952337801426,
+    "predicted_arrival_s": 2.9616522659465208,
+    "alignment_accel_m_s2": 1.0,
+    "merge_point_m": 458.9,
+    "blocker_speed_m_s": 20.53325091895977,
+    "ramp_speed_m_s": 9.534796096932302,
+    "rule": "Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration"
+   },
+   "at_acceleration_lane": {
+    "time_s": 3.1,
+    "nearest_vehicle": "main_2",
+    "nearest_offset_m": 0.6518272649538717,
+    "first_gap_closed": true,
+    "blocker_offset_m": 0.6518272649538717
+   },
+   "network": "validation-4-lane-ramp180"
+  }
+ ]
+}

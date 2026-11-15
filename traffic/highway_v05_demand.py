@@ -131,6 +131,38 @@ def _ramp_insertion_speed(speed, remaining):
     return min(speed, max(0., ceiling))
 
 
+def _align_missed_gap(graph, path, right_lane, ramps, ramp_length, accel):
+    """Shift the rightmost-lane platoon so its nearest car meets the front ramp car.
+
+    Only positions change (one common shift); speeds, spacings and draws are kept.
+    Returns the resolved alignment for the scenario report.
+    """
+    if not ramps or not right_lane:
+        raise ValueError('missed_gap needs a ramp car and a rightmost-lane mainline car')
+    ramp = ramps[0]
+    remaining = ramp_length - ramp['position']
+    speed = ramp['speed']
+    arrival = (-speed + math.sqrt(speed * speed + 2. * accel * remaining)) / accel
+    merge_point = graph.lanes[path[0]]['length']  # sb1 end = where the acceleration lane begins
+    first = right_lane[0][1]
+    best = None
+    for index, (row, distance, main_speed) in enumerate(right_lane):
+        shift = merge_point - main_speed * arrival - distance
+        if first + shift >= 25. and (best is None or abs(shift) < abs(best[1])):
+            best = (index, shift)
+    if best is None:
+        raise ValueError('missed_gap alignment would place mainline cars before the road start')
+    index, shift = best
+    for row, distance, _ in right_lane:
+        edge, lane, position, _, lid = _main_position(graph, path, distance + shift)
+        row.update(edge=edge, lane=lane, position=float(position), lane_id=lid)
+    blocker = right_lane[index]
+    return dict(blocker_slot=blocker[0]['slot'], ramp_slot=ramp['slot'], shift_m=shift,
+                predicted_arrival_s=arrival, alignment_accel_m_s2=accel, merge_point_m=merge_point,
+                blocker_speed_m_s=blocker[2], ramp_speed_m_s=speed,
+                rule='Rightmost platoon shifted as one; mainline constant speed, ramp car constant acceleration')
+
+
 def validate_initial_spawns(graph, rows, *, ceiling=CAP):
     """Reject invalid positions/limits and connected-lane overlap or short gaps.
 
@@ -168,7 +200,8 @@ def validate_initial_spawns(graph, rows, *, ceiling=CAP):
 def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
                  speed_limit_m_s=None, difficulty=0, traffic_mode='initial',
                  stabilization_seconds=8., horizon_seconds=80., assignment_seed=None,
-                 controlled_car_follow_model='ACC'):
+                 controlled_car_follow_model='ACC', missed_gap=False,
+                 missed_gap_alignment_accel_m_s2=1.):
     """Write deterministic initial/sustained traffic and return all vehicle rows.
 
     ``total_vehicles`` means the complete initial cohort (8, 16 or 24), including
@@ -178,11 +211,21 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
     ``controlled_count`` or ``assignment_seed`` preserves physical demand.
     Here ``stabilization_seconds`` means native reset warmup before measurement,
     not the environment's separate post-merge stabilization scoring window.
+
+    ``missed_gap`` (v06, merge only): shift the whole rightmost through-lane
+    platoon, keeping every draw, spacing and speed, so one mainline car is
+    predicted level with the front ramp car where the acceleration lane begins.
+    The prediction assumes the ramp car accelerates at
+    ``missed_gap_alignment_accel_m_s2`` and mainline cars hold speed; the
+    environment measures what actually happens. Default demand is unchanged.
     """
     # 'ACC' (historical) makes SUMO cap AV commands at its ACC comfort law;
     # 'Krauss' keeps only SUMO's reaction-time collision-avoidance limit.
     if controlled_car_follow_model not in ('ACC', 'Krauss'):
         raise ValueError('Controlled car-following model must be ACC or Krauss')
+    if missed_gap and task != 'merge':
+        raise ValueError('missed_gap demand requires the merge task')
+    missed_gap_alignment_accel_m_s2 = _finite('missed_gap_alignment_accel_m_s2', missed_gap_alignment_accel_m_s2, .1, 2.)
     seed = _integer('seed', seed, 0)
     assignment_seed = seed if assignment_seed is None else _integer('assignment_seed', assignment_seed, 0)
     controlled_count = _integer('controlled_count', controlled_count, 0, MAX_AGENTS)
@@ -251,6 +294,7 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
         legacy_speed = 10. if task == 'passing' else 16.
         leader_speed = min(legacy_speed, (.6 if task == 'passing' else .8) * ceiling, .90 * lane_limits[0])
         lane_members[0].append(('slow_leader', leader_speed))
+    right_lane = []  # (row, route distance, speed) of the rightmost through lane
     for lane_index, members in lane_members.items():
         distance = float(rng.uniform(25., 80.))
         previous = None
@@ -259,8 +303,14 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
                 distance += LENGTH + _safe_gap(previous, speed) + float(rng.uniform(*settings['spacing_slack_m']))
             edge, lane, position, distance, lid = _main_position(graph, paths[lane_index], distance)
             physical_rows.append(physical(slot, 'main', edge, lane, position, speed, lid))
+            if lane_index == 0:
+                right_lane.append((physical_rows[-1], distance, speed))
             previous = speed
     physical_rows.extend(ramps)
+    missed_gap_report = None
+    if missed_gap:
+        missed_gap_report = _align_missed_gap(graph, paths[0], right_lane, ramps, ramp_length,
+                                              missed_gap_alignment_accel_m_s2)
 
     if traffic_mode == 'sustained':
         depart = stabilization_seconds + 3.
@@ -322,7 +372,8 @@ def write_demand(path, seed, graph, task, controlled_count, total_vehicles, *,
         spawn_validation='Static connected-lane clearance plus required native reset verification',
         spawn_gap_rule='Maximum of cautious native headway/braking floor and stationary ACC insertion clearance, before AV assignment',
         ramp_insertion_rule='Common ramp speed capped by cautious reaction plus braking distance to yield line; positions and population unchanged',
-        sustained_arrival_interval_s=settings['arrival_interval_s'] if traffic_mode == 'sustained' else None)
+        sustained_arrival_interval_s=settings['arrival_interval_s'] if traffic_mode == 'sustained' else None,
+        missed_gap=missed_gap_report)
     ET.ElementTree(root).write(path, encoding='utf-8', xml_declaration=True)
     return DemandManifest(rows, scenario)
 

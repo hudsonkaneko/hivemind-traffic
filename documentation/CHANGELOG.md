@@ -1385,3 +1385,14 @@ failing only the 90% merge-speed rule except ramp120. Each merge is shown beside
 its physical ceiling (I-110 0.48 of 0.99; ramp layouts 0.27-0.65 of 0.49-0.69).
 Phase 0 complete; Phase 1 next.
 [Details](highway-merge-training-plan-v06.md#0c-frozen-v04-baseline-under-the-original-rules).
+
+## November 14, 2026 - v06 Phase 1: merge objective implemented (not trained)
+
+New v06 environment and reward module. The merge speed reward tracks the
+gate's own target, actor merge inputs fade over 1 s (safety keeps raw values),
+the jerk penalty is stronger and paired with a raw-request jerk check, the
+merge-guidance potential is continuous, avoidable braking has a small cost, and
+an optional missed-gap demand mode exists (a mainline car beside the ramp car in
+33/47 native SUMO runs vs 0/48 normally). Weights are provisional pending the
+Phase 2 audit. 374 tests pass. No training or policy episodes.
+[Details](highway-merge-training-plan-v06.md#phase-1-progress-november-14-2026-implemented-not-trained).

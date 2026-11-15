@@ -336,3 +336,59 @@ Evidence: [rebaseline-original-rules.json](evidence/highway-merge-training-v06/r
 The source runs are under `outputs/highway-flow-rl/v05/` (not in Git); the
 evidence records each report's SHA-256. Phase 0 is complete. Next: Phase 1
 (code and tests only).
+
+## Phase 1 progress (November 14, 2026): implemented, not trained
+
+Code and tests only. No training, no policy episodes, no ledger charge.
+Environment `environments/highway_flow_rl_v06_env.py` (subclass of the v05
+environment); pure functions in `traffic/highway_flow_rl_v06_rewards.py`;
+reward version `highway_flow_rl_merge_v06`, observation version
+`highway_flow_actor117_v1_faded_merge_v06`. The safety shield, native guards,
+action contract and 117-field observation size are unchanged, so a v04 warm
+start still loads. The only v05 change is a behavior-preserving refactor: the
+v05 extra reward terms moved into an overridable `_extra_rewards` method.
+
+| Plan item | Implemented as |
+| --- | --- |
+| 1. Merge speed reward | `merge_tracking` now tracks the unsmoothed v04 reference target, the same one the gate's `speed_match` scores, with the gate's 2 m/s tolerance. Weight 0.50 (was 0.12). `speed_error` also uses that target. |
+| 2. Missed-gap recovery | `write_demand(..., missed_gap=True)`: the rightmost through-lane platoon is shifted as one, keeping every draw, spacing and speed, so one mainline car is predicted level with the front ramp car where the acceleration lane begins. Default demand is byte-identical (tested). Metric: decisions in the last 20% of the acceleration lane without merging. No cost added yet. |
+| 3. Faded merge inputs | Actor indices 27, 28 and 33-42 move at most 0.1 per decision, so a 0-to-1 flip takes 10 decisions (1 s). The mask (30-32), acceleration ceiling (43), safety guard and lane permission use raw values. The critic sees the same faded inputs as the actors, because the MAPPO runner builds the successor critic state from returned observations. |
+| 4. Jerk | `jerk_excess` weight 1.50 (was 0.10): an 8.39 m/s3 request now costs 0.69, comparable to a step of merge guidance. Evaluation check `v06_gates` = the original gates plus a per-car raw requested jerk check (at most 5 m/s3; missing evidence fails). Both rate-limit options exist: `rate_limit='full'` (whole episode, recommended) or `'startup'` (handoff only). |
+| 5. Continuous guidance potential | When a merge becomes required, the gap-preparation potential fades from 1 to the plan's value over 10 decisions. It is a function of state plus a consecutive-required counter, so shaping stays potential-based; a test checks the pre-action and successor potentials agree. |
+| 6. Avoidable braking | Cost 0.05 x min(1, (-0.2 - request)/2) on the actor's own request, only when the existing diagnosis finds no binding ceiling and no lower target, and no leader is inside a 1.5 s headway. |
+
+**All weights are provisional.** The environment refuses any others; Phase 2
+sets them.
+
+### Checks
+
+- 16 new tests in `tests/test_highway_flow_rl_v06.py`; 374 passed and 1
+  skipped across the v04/v05/v06/demand tests (`-k "v04 or v05 or v06 or demand"`).
+- A bounded 400-step SUMO smoke run of the v06 environment (constant command,
+  2-lane ramp120 ramp-started, normal and missed-gap) had no collisions. Input
+  fading was active and the report fields were present. This only checks the
+  wiring, not driving quality.
+- **Missed-gap check in native SUMO**
+  ([`scripts/check_highway_flow_rl_v06_missed_gap.py`](../scripts/check_highway_flow_rl_v06_missed_gap.py)).
+  Every car is SUMO-driven; six ramp-started layouts x 8 non-evaluation seeds.
+  A mainline car is level with the ramp car (within 7.3 m) when it reaches the
+  acceleration lane in **33/47** missed-gap runs, against **0/48** with normal
+  demand. One seed could not be built (no rightmost-lane car). A policy-driven
+  car moves differently, so the measured rate under training will differ.
+  Evidence: [missed-gap-native-check.json](evidence/highway-merge-training-v06/missed-gap-native-check.json)
+  (SHA-256 `f6d203f319282754971adff336571b15c5788194e5203aa1469641294faa2e29`).
+
+### Known limits
+
+- Messages from other cars (`requires_merge` in message slots) are not faded.
+- In rows with several AVs, the missed-gap blocker can itself be an AV.
+  Training should use it in one-AV merge rows.
+- The v05 runner still builds v05 environments. Wiring v06 into a runner and
+  config is part of the Phase 3 proposal.
+- The smoke run's constant command never merges. The new costs then add up to
+  about -190 for `merge_tracking` per 400 decisions, against +5 for a quality
+  merge. Phase 2 must check this balance.
+
+**Still needed from the user:** the rate-limit choice (item 4). Next: Phase 2,
+the offline reward audit on saved v04 trajectories.
+
