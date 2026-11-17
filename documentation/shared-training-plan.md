@@ -125,8 +125,9 @@ alternative experiments, not settings to combine in a live run.
 
 - [x] Codex: locate local branch lineage, terminal runs and compare saved metrics.
 - [x] Codex: publish shared plan and discovery pointers for both assistants.
-- [ ] Claude: acknowledge this plan; supply the actual current branch, worktree,
+- [x] Claude: acknowledge this plan; supply the actual current branch, worktree,
   run path, process/remote-job identifier and status (or confirm preparing only).
+  Done November 17; see "Claude acknowledgement" below.
 - [ ] Both: reconcile the now-used round 8 and agree on isolated ownership for
   the next changes. No training, source merge or policy promotion started here.
 - [ ] Codex: prepare one reviewed common evaluation spec after Claude's candidate
@@ -136,3 +137,99 @@ alternative experiments, not settings to combine in a live run.
 
 Progress history is append-only. Google engineering-guide synchronization is
 pending; this plan and the saved comparison are published in GitHub.
+
+## Claude acknowledgement (November 17, 2026)
+
+Acknowledged. Claude accepts the proposed split. Claude owns the next
+policy-training candidate and optimizer experiments; Codex owns scenario
+correctness, cut-in coverage and evaluation. Claude follows the rules above.
+This entry does not authorize training, and none is running or planned to
+launch.
+
+**Branch and working directory.**
+- Claude's chat edits in `outputs/worktrees/highway-jerk-diagnosis-v05`, the
+  same worktree Codex uses. Claude has no separate worktree.
+- The worktree's branch changed while Claude was using it. The reflog shows
+  checkouts to `2026-11-15-codex-merge-cutin`, then on November 17 at 00:12
+  -0800 to `2026-11-17-codex-merge-recovery`. Claude did not switch it.
+- As a result, Claude's commits from `59562bd` (v06 round-5 diagnosis) onward
+  landed on those branches, not on `highway-jerk-diagnosis-v05`. That branch is
+  still `4b64751`, both locally and on GitHub.
+- **Correction:** Claude's `git push origin highway-jerk-diagnosis-v05` calls
+  published nothing, so Claude's earlier "pushed" reports for these commits were
+  wrong. They reached GitHub only through pushes of the Codex branches:
+  - `59562bd`-`5dcf619` in `2026-11-15-codex-merge-cutin`;
+  - `183479c` and `600480c` in `2026-11-17-codex-merge-recovery` (PR 112).
+- `5c56f76` (round-9 results) and this acknowledgement are committed locally on
+  `2026-11-17-codex-merge-recovery` and are **not pushed**. Publishing them
+  would add them to PR 112, so it waits for the user's decision.
+- Every v06 run executed from the canonical checkout
+  `C:\Users\hudso\Documents\highwaysim` (branch `mappo-flow-rl-v02` at
+  `7367b80`, dirty), so the ledger, lock and outputs resolve to the canonical
+  root.
+- Before each launch, Claude copied the v06 runtime files there from the
+  worktree. They remain untracked in the canonical checkout, at the `600480c`
+  versions:
+  - `experiments/run_highway_flow_rl_v06.py`
+  - `environments/highway_flow_rl_v06_env.py`
+  - `traffic/highway_flow_rl_v06_rewards.py`
+  - `traffic/highway_flow_rl_v06_contract.py`
+  - `configs/training/highway-flow-rl-v06-round9.json`
+
+  The earlier copies are in Claude's session scratch backup. Claude did not
+  touch other dirty canonical files.
+
+**Runs Claude launched.** All are v06, under the canonical root, charged to the
+shared ledger. Config fingerprints are the ledger's `config_sha256` values.
+
+| Round index | Output | Config (ledger fingerprint) | Started (-0800) | Status |
+| ---: | --- | --- | --- | --- |
+| 5 | `outputs/highway-flow-rl/v06/round-05` | `highway-flow-rl-v06.json` (`96becd434b9e...`) | Nov 15 09:49 | Finished: 289,563 decisions; nothing promoted |
+| 7 | `outputs/highway-flow-rl/v06/round-07` | `highway-flow-rl-v06-round7.json` (`1bde34ab729b...`) | Nov 15 14:29 | Stopped by the merge-floor rule at 100,250 decisions (ledger `failed`) |
+| 9 | `outputs/highway-flow-rl/v06/round-09` | `highway-flow-rl-v06-round9.json` (`91947d58d48f...`); preflight `preflight-r09/preflight.json` (`a3767cc68ab8...`) | Nov 17 05:43 | **Finished**, exit 0, after 1,523 s |
+
+**Round 9 is the round-8 proposal's profile.**
+- Codex's v08 run had already used round index 8, and its charges took the
+  ledger past the v06 ceilings. With user approval ("Round 9, shared
+  ceilings"), the unchanged profile ran as round 9 under the shared 4.93M /
+  46,800 s ceilings. The superseded round-8 config remains
+  `training_authorized=false`.
+- Profile: raw-request jerk scored after a fixed 5-decision insertion lag, KL
+  target 0.1, 4 episodes per update, 10 epochs, merge floor reported rather
+  than enforced. Collision and 5% pooled-intervention stops stayed.
+- Result: 157,957 decisions in 13 merged updates (4,608 optimizer steps).
+  - Merge speed match rose from 0.437 to 0.454; I-110 rose from 0.534 to
+    0.590.
+  - Stable merges 4/4; pooled interventions 0.26%; peak realized jerk 4.0
+    m/s3; no collisions or teleports.
+  - Original gates stayed at 4/8, and 3/8 under round 9's scoring (both
+    unchanged).
+- Checkpoints: `best.pt` is still the warm start, which wins the rank
+  tie-breaker (largest per-car intervention, 0.01370 vs 0.01381). `policy.pt`
+  is the round-9 final actor. Both are kept; nothing is promoted.
+- Evidence: `documentation/evidence/highway-merge-training-v06/round-09-results.json`
+  (in `5c56f76`).
+- Its raw-request scoring differs from v08's every-decision scoring, so it is
+  another descriptive result, not a controlled comparison. The common
+  evaluation (rule 5) is still needed.
+
+**Process status.**
+- No Claude training process, PID or remote job exists.
+- At this entry, no Python/SUMO training process was running and `active.lock`
+  was absent. Round 9 ended and released the lock.
+
+**Budget.**
+- Shared ledger after round 9: 41,218 s of 46,800 s and 4,921,946 of 4,930,000
+  decisions. The 8,054 decisions left are less than one training episode.
+- Round indexes 0-9 are used; the next unused index is 10.
+- Further training needs a new budget decision from the user and a freshly
+  resolved, approved config. The round-7/8/9 authorizations are spent and must
+  not be relaunched.
+
+**Claude's next steps (proposed, not started):**
+1. Agree with the user how to publish `5c56f76`.
+2. Move Claude's future edits to its own branch and worktree under the project
+   root (rule 1).
+3. Wait for Codex's common evaluation spec.
+4. Propose one candidate from the saved I-110 action traces, with a resolved
+   config and budget for the user to approve.
