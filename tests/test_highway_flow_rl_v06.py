@@ -122,6 +122,37 @@ def test_round6_scope_skips_only_the_insertion_decision():
         v06.raw_request_jerk_check(report, scope='none')
 
 
+def test_round8_scope_reads_the_fixed_insertion_lag_key():
+    report = _report(dict(agent_0=13.9))
+    report['v06_metrics'] = dict(per_car={'agent_0': {v06.FIRST_DECISION_EXCLUDED_KEY: 12.,
+                                                      v06.INSERTION_LAG_EXCLUDED_KEY: 4.2}})
+    assert not v06.raw_request_jerk_check(report, scope='after_first_decision')['passed']
+    lag = v06.raw_request_jerk_check(report, scope='after_insertion_lag')
+    assert lag['passed'] and lag['scope'] == 'after_insertion_lag'
+    assert lag['per_car']['agent_0']['peak_raw_requested_jerk_m_s3'] == 4.2
+    del report['v06_metrics']['per_car']['agent_0'][v06.INSERTION_LAG_EXCLUDED_KEY]
+    assert not v06.raw_request_jerk_check(report, scope='after_insertion_lag')['passed']
+    assert v06.INSERTION_LAG_DECISIONS == 5
+
+
+def test_environment_scores_requests_after_first_decision_and_after_insertion_lag():
+    pytest.importorskip('torch')
+    from types import SimpleNamespace
+    from environments.highway_flow_rl_v06_env import HighwayFlowRLV06Env
+    env = object.__new__(HighwayFlowRLV06Env)
+    env.v06_weights, env._v05_seen = dict(v06.WEIGHTS), set()
+    env.graph = SimpleNamespace(lanes={})
+    env._reset_v06()
+    snapshot = dict(ego_state=dict(speed=20., lane_id='x'), context={}, target={}, gap_plan={}, time_s=0.)
+    for raw in (14., 12., 9., 6., 5.5, 4., 3.):  # an insertion lag, then ordinary driving
+        info = dict(realized_jerk_m_s3=4., v04_reward_audit={})
+        env._extra_rewards('agent_0', info, snapshot, dict(raw_requested_jerk=raw, requested=0.), None, False)
+        env._v05_seen.add('agent_0')
+    car = env.v06_metrics['per_car']['agent_0']
+    assert car['decisions'] == 7 and car[v06.FIRST_DECISION_EXCLUDED_KEY] == 12.
+    assert car[v06.INSERTION_LAG_EXCLUDED_KEY] == 4.
+
+
 def test_v06_gates_take_scope_from_report_and_report_both(monkeypatch):
     pytest.importorskip('torch')
     import experiments.run_highway_flow_rl_v05 as runner

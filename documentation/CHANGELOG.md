@@ -1487,3 +1487,19 @@ insertion effect lasts 3-4 decisions, not one, so the second-decision rule passe
 the policy's action std is 0.04, so a 0.03 KL allows about a 0.03 m/s2 mean
 shift per update. Nothing promoted; 5,486 s and 164,372 decisions remain.
 [Details](highway-merge-training-plan-v06.md#round-7-result-november-15-2026-stopped-by-the-merge-stop-rule-at-100k).
+
+## November 17, 2026 - v06 round 8 (final round) proposed, not authorized
+
+Proposed on the remaining study budget (164,372 decisions, 5,486 s):
+- raw-request jerk scored after a fixed 5-decision insertion lag (round-7
+  validations: the lag lasts at most 4 decisions; the starting result becomes
+  3/8 instead of 1/8);
+- KL target 0.1, scaled to the warm start's 0.04 action std (about 0.06 m/s2 of
+  mean shift per update instead of 0.03);
+- the merge-speed floor reported rather than enforced, because no budget
+  remains for another round.
+
+Collision and pooled-intervention stops stay, and speed-limit trims are left to
+the existing −0.2 penalty. The config `highway-flow-rl-v06-round8.json` has
+`training_authorized=false` and awaits user approval.
+[Details](highway-merge-training-plan-v06.md#round-8-proposal-november-17-2026-final-round-on-the-remaining-budget).

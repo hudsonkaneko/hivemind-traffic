@@ -11,6 +11,8 @@ complete-episode rollouts, checkpoints, periodic validation) and replaces only:
   maximum;
 - round 6: several complete episodes per PPO update (BufferedMappoTrainer) and
   the raw-request jerk scope declared in the configuration;
+- round 8 (final round): the merge-speed floor is reported, not enforced, at
+  periodic validation (stop_rules.merge_floor_action='report');
 - outputs under outputs/highway-flow-rl/v06 and a v06 checkpoint schema.
 No training happens on import; `train` still requires training_authorized=true
 and a measured zero-update preflight bound to this config and these sources.
@@ -121,7 +123,9 @@ def evaluate(cfg, output, label, model, deadline, **kwargs):
     result = _evaluate(cfg, output, label, model, deadline, **kwargs)
     score = merge_speed_match(result['reports'])
     result['summary']['merge_speed_match'] = score
-    if label.startswith('periodic-validation') and (score is None or score < cfg['stop_rules']['merge_speed_match_floor']):
+    below = score is None or score < cfg['stop_rules']['merge_speed_match_floor']
+    result['summary']['merge_speed_match_below_floor'] = below
+    if label.startswith('periodic-validation') and below and cfg['stop_rules'].get('merge_floor_action', 'stop') == 'stop':
         raise StopRuleTriggered(f'{label}: merge speed match {score} below the frozen-v04 baseline '
                                 f"{cfg['stop_rules']['merge_speed_match_floor']}")
     limit = cfg['stop_rules'].get('max_pooled_intervention_fraction')
