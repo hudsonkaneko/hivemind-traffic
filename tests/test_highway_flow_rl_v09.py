@@ -105,12 +105,20 @@ def cfg():
     return json.loads(CONFIG.read_text(encoding='utf-8'))
 
 
-def test_proposed_config_validates_and_is_not_authorized(cfg):
+PROPOSAL_SHA256 = '918c313fdcccac74267c65c8df71247eaa6df00303e19c3e62fb079f5f073f13'
+PROPOSAL_AUTHORIZATION = ('Proposed by Claude for user review; training_authorized=false until the user approves '
+                          'this configuration and the budget increase')
+
+
+def test_authorized_config_is_the_approved_proposal(cfg):
     from traffic import highway_flow_rl_v09_contract as contract
-    contract.validate_config(cfg)
-    assert cfg['training_authorized'] is False
+    contract.validate_config(cfg, require_training=True)  # user approval 2026-11-17 ("Approve and launch")
+    assert cfg['training_authorized'] is True and PROPOSAL_SHA256 in cfg['authorization']
+    assert cfg['held_out_authorized'] is False
+    proposal = dict(cfg, training_authorized=False, authorization=PROPOSAL_AUTHORIZATION)
+    assert hashlib.sha256((json.dumps(proposal, indent=2) + '\n').encode('utf-8')).hexdigest() == PROPOSAL_SHA256
     with pytest.raises(ValueError):
-        contract.validate_config(cfg, require_training=True)
+        contract.validate_config(proposal, require_training=True)
     assert cfg['round_index'] == 11 and cfg['budget']['total_decisions'] == 5230000
     assert cfg['stop_rules']['merge_speed_match_floor'] == .4343 and cfg['stop_rules']['merge_floor_action'] == 'stop'
     assert cfg['missed_gap_seed_check']['built'] == 15
@@ -122,8 +130,7 @@ def test_only_declared_fields_differ_from_round_9(cfg):
     assert hashlib.sha256(ROUND9.read_bytes().replace(b'\r\n', b'\n')).hexdigest() == contract.PARENT_CONFIG_SHA256
     view = contract.round9_view(cfg)
     changed = {k for k in set(view) | set(parent) if view.get(k) != parent.get(k)}
-    assert changed == {'stop_rules', 'provenance', 'missed_gap_seed_check', 'authorization',
-                       'training_authorized', 'publication_branch'}
+    assert changed == {'stop_rules', 'provenance', 'missed_gap_seed_check', 'authorization', 'publication_branch'}
     for key in ('training_rows', 'validation_rows', 'held_out_rows', 'optimizer', 'acceptance', 'safety',
                 'v06_reward_weights', 'reward_weights', 'raw_request_scope', 'rate_limit', 'critic_warmup_decisions'):
         assert cfg[key] == parent[key]
