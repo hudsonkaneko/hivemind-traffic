@@ -181,6 +181,8 @@ alternative experiments, not settings to combine in a live run.
   is identified; the linked proposal is disabled and pinned to local artifacts.
 - [ ] Claude/user: review common evaluation semantics and allowance; implement
   and run only after approval. No new simulation has been launched.
+  Claude's review is done (see "Claude review of the common evaluation
+  proposal" below). The ledger category and allowance still need the user.
 - [ ] Both: choose one next correction from the saved I-110 action traces and
   common results, then present its final configuration before training.
 
@@ -293,3 +295,79 @@ and disabled common evaluation specification above are the next review items.
 Claude's candidate ownership is acknowledged; isolated future edit ownership
 still needs to be established before either assistant changes shared runtime
 files. No further training or evaluation was started.
+
+## Claude review of the common evaluation proposal (November 17, 2026)
+
+Claude reviewed
+[`highway-shared-2026-11-17.json`](../configs/evaluation/highway-shared-2026-11-17.json)
+at `d60fc9e`, at the user's request. All checks were read-only: no simulation,
+training, ledger write or runtime edit.
+
+**Verified and agreed:**
+- **Actors.** All three files match the spec's SHA-256. Round-9 `policy.pt`
+  and v08 `policy.pt` are frozen TorchScript actors (`export_actor`). The v04
+  baseline is the exact file round 9 warm-started from (same path and hash as
+  round 9's `warm_start`).
+- **Cases.** The 8 nominal rows are JSON-equal to round 9's resolved
+  `validation_rows`. All 10 rows, including the 2 cut-in rows, are JSON-equal
+  to v08's validation rows.
+- **Interfaces.** Round 9's and v08's resolved configs match on everything the
+  actor sees or is limited by:
+  - observation version `highway_flow_actor117_v1_faded_merge_v06` (117 inputs);
+  - action contract;
+  - safety (speed mode 31, lane-change mode 512, 26.8224 m/s ceiling);
+  - full rate limit, 24 agents, Krauss.
+
+  The v08 environment subclasses v07, which subclasses v06, so the same code
+  builds the round-9 actor's inputs. The only differences are raw-request
+  scoring and v08 lane admission, and the spec fixes both for every candidate.
+- **Normalization.** Observations are analytically scaled, and no running
+  normalizer exists (`policies/mappo.py` header). So "each actor retains its
+  frozen training normalization" needs no extra check.
+- **Scoring.** All-decision metrics as primary, with 0/1/5-decision startup
+  windows, cover round 9's 5-decision insertion-lag view without hiding
+  full-route numbers. Paired per-case differences against the baseline, no
+  pooled-reward rank and no automatic promotion: agreed.
+
+**To settle before authorization:**
+1. **Ledger category (blocker).** The spec says not to use training decisions
+   but does not name the category to charge. Under the shared ledger rules
+   (`ledger_totals` in the v02-v05 runners, reused by later versions):
+   - `preparation` cannot hold it. 95 of 100 diagnostic episodes are used, so
+     only 5 remain.
+   - `final_evaluation` fits exactly: 900 s reserved, none used. But it is the
+     study's final-evaluation reserve. Spending it on a development comparison
+     leaves none for a later final evaluation unless the user re-reserves.
+   - A new category (for example `development_evaluation`) is rejected by every
+     existing ledger reader (`Unknown ledger category`). Writing one would break
+     all runners' budget checks until the shared reader is changed and reviewed.
+
+   The user chooses. The spec should then name the category and the exact
+   seconds and episodes.
+2. **No room for a rerun.** 30 episodes is exactly 3 actors x 10 cases. The
+   spec should say what happens if an episode crashes: record the failure and
+   stop, or allow one retry inside the same cap.
+3. **Baseline loader.** The v04 baseline is a full checkpoint; the other two
+   are TorchScript. Round 9's `candidates/initial-policy.pt` is the v06
+   runner's TorchScript export of that same warm start, taken before any
+   update. Suggest the preflight check that both give identical outputs on
+   recorded observations. One TorchScript loader could then serve all three
+   actors, with the full-checkpoint hash kept as the baseline's identity.
+4. **Lane-admission shift.** The round-9 actor never trained under v08
+   admission. That is acceptable for a common environment, but report the v07
+   `admission` counters (including `av_blocked`) per candidate and case. Then a
+   lower merge score can be traced to blocked lane-change requests rather than
+   speed control.
+
+**Ownership.**
+- Codex builds the evaluation runner and preflight in its own new files.
+  Claude will not edit them.
+- After an authorized run, Claude waits for Codex's single handoff and does not
+  poll.
+- Claude still needs its own branch and worktree before any code edits.
+  Proposed: worktree `outputs/worktrees/claude-policy-candidate` on a new branch
+  `2026-11-17-claude-policy-candidate`, cut from this branch's tip. It is not
+  created yet.
+
+Nothing was trained or evaluated, and no runtime file changed. The evaluation
+allowance needs the user's approval. Google engineering-guide sync is pending.

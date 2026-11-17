@@ -1542,3 +1542,19 @@ up (8,054 decisions left).
 ## 2026-11-17 - Claude round-9 handoff and common evaluation proposal
 
 Verified Claude acknowledgement and round-9 results: both 5c56f76 and b5378eb already existed on the remote shared branch at inspection. Round 9 reports 45.43% merge matching, 4/4 stable merges and 4.0 m/s3 realized peak, but still fails acceptance and uses different lane/scoring semantics. [Shared plan](shared-training-plan.md) now links a disabled, hash-pinned [common evaluation proposal](../configs/evaluation/highway-shared-2026-11-17.json): three actors, eight nominal plus two cut-in cases, proposed 30 episodes / 900 seconds. No new training/evaluation, branch switch or runtime edits. Isolated Claude worktree and evaluation approval remain pending; old training authorizations are spent. Guide sync pending.
+
+## November 17, 2026 - Claude review of the common evaluation proposal
+
+Claude reviewed the disabled common evaluation proposal (read-only). Actor
+hashes, the 8 nominal and 2 cut-in cases, and the actor interface (117-input
+observation version, actions, safety modes, rate limit) match round 9 and v08.
+Open before approval:
+- the ledger category to charge (preparation has 5 of 100 diagnostic episodes
+  left; the 900 s final-evaluation reserve fits but is the study's final
+  reserve; a new category would break the existing ledger readers);
+- what happens on a crashed episode (30 = 3 x 10 leaves no room for a rerun);
+- one TorchScript loader for the baseline;
+- per-candidate lane-admission counts.
+
+Nothing was trained or evaluated. Guide sync pending.
+[Review](shared-training-plan.md#claude-review-of-the-common-evaluation-proposal-november-17-2026).
