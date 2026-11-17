@@ -1,0 +1,186 @@
+{
+  "observed_at": "2026-11-17T05:44:10.808693-08:00",
+  "claude_attribution": "Confirmed coauthor on v05 commits e98cc7e, a21038e, daa2440; later v06 run ownership unconfirmed.",
+  "branches": {
+    "claude_associated": "highway-jerk-diagnosis-v05",
+    "codex": "2026-11-17-codex-merge-recovery",
+    "v06_execution_checkout": "mappo-flow-rl-v02"
+  },
+  "local_training_snapshot": "No local Python/SUMO training process found; no active shared lock. Claude app processes exist; this does not establish a training job.",
+  "v06": {
+    "initial": {
+      "source": "outputs/highway-flow-rl/v06/round-07/initial-validation.json",
+      "sha256": "9af3445e102ea8cac249161d4b44ec61a315cafea86d625e16edaca5a1374ece",
+      "merge_speed_match": 0.4367318620325096,
+      "strict_cases_passed": 1,
+      "cases": 8,
+      "stable_merges": 4,
+      "merge_targets": 4,
+      "pooled_intervention_fraction": 0.0026570716855798507,
+      "max_peak_jerk_m_s3": 4.762152016037646,
+      "collisions": 0,
+      "teleports": 0
+    },
+    "latest": {
+      "source": "outputs/highway-flow-rl/v06/round-07/periodic-validation-00041.json",
+      "sha256": "c567a5f2842fb52fcc51334d0917e540b679ce540814946e15c960ac82ec13b5",
+      "merge_speed_match": 0.343432007400555,
+      "strict_cases_passed": 2,
+      "cases": 8,
+      "stable_merges": 3,
+      "merge_targets": 4,
+      "pooled_intervention_fraction": 0.004573254724778225,
+      "max_peak_jerk_m_s3": 4.0000000000000036,
+      "collisions": 0,
+      "teleports": 0
+    },
+    "failure_sha256": "ee2ccecdde7a5c9f2f6be768aa57573fea28dd1786b1144e381690f9c9b74015",
+    "source_commit": "7367b802e0354c4ac7f70f8388c960f44d5d5767",
+    "dirty": true,
+    "optimizer": {
+      "actor_lr": 0.0001,
+      "critic_lr": 0.0003,
+      "clip": 0.2,
+      "value_clip": 0.2,
+      "entropy_coef": 0.001,
+      "value_coef": 0.5,
+      "max_grad_norm": 0.5,
+      "epochs": 10,
+      "minibatch_size": 256,
+      "target_kl": 0.03,
+      "imitation_coef": 0.0,
+      "imitation_lane_change_weight": 10.0,
+      "gradient_diagnostics": true,
+      "imitation_acceleration_weight": 1.0,
+      "near_limit_coef": 0.0,
+      "near_limit_band_m_s": 1.0,
+      "episodes_per_update": 4
+    },
+    "raw_request_scope": "after_first_decision",
+    "latest_config_proposal_authorized": false
+  },
+  "v08": {
+    "initial": {
+      "source": "outputs/worktrees/highway-jerk-diagnosis-v05/outputs/highway-flow-rl/v08/train-20261117-01/train/initial-validation.json",
+      "sha256": "5485c34b178d388ca8709a5474ddda2152f213cdc8129bb3d40fbf4b9958f0d2",
+      "merge_speed_match": 0.4351790670014537,
+      "strict_cases_passed": 1,
+      "cases": 8,
+      "stable_merges": 4,
+      "merge_targets": 4,
+      "pooled_intervention_fraction": 0.0026531063453460093,
+      "max_peak_jerk_m_s3": 4.762152016037646,
+      "collisions": 0,
+      "teleports": 0
+    },
+    "latest": {
+      "source": "outputs/worktrees/highway-jerk-diagnosis-v05/outputs/highway-flow-rl/v08/train-20261117-01/train/final-validation.json",
+      "sha256": "0684bae664845d431173b643e9fda4acb1983b9b82dedc8d61273bf86f5e7825",
+      "merge_speed_match": 0.39358398308444564,
+      "strict_cases_passed": 0,
+      "cases": 8,
+      "stable_merges": 4,
+      "merge_targets": 4,
+      "pooled_intervention_fraction": 0.0044761273209549075,
+      "max_peak_jerk_m_s3": 28.37963300878279,
+      "collisions": 0,
+      "teleports": 0
+    },
+    "source_commit": "0efc28a5dc8e9a5eef1b41fde09bfe7e1c7d1675",
+    "optimizer": {
+      "actor_lr": 3e-05,
+      "critic_lr": 0.0003,
+      "clip": 0.2,
+      "value_clip": 0.2,
+      "entropy_coef": 0.001,
+      "value_coef": 0.5,
+      "max_grad_norm": 0.5,
+      "epochs": 20,
+      "minibatch_size": 256,
+      "target_kl": 0.02,
+      "imitation_coef": 0.0,
+      "imitation_lane_change_weight": 10.0,
+      "gradient_diagnostics": true,
+      "imitation_acceleration_weight": 1.0,
+      "near_limit_coef": 0.0,
+      "near_limit_band_m_s": 1.0,
+      "episodes_per_update": 4
+    },
+    "raw_request_scope": "all"
+  },
+  "contract": {
+    "observation_size": {
+      "v06": 117,
+      "v08": 117,
+      "equal": true
+    },
+    "state_size": {
+      "v06": 2832,
+      "v08": 2832,
+      "equal": true
+    },
+    "action_contract": {
+      "v06": {
+        "acceleration": [
+          -1.0,
+          1.0
+        ],
+        "lane_intent": [
+          -1,
+          0,
+          1
+        ]
+      },
+      "v08": {
+        "acceleration": [
+          -1.0,
+          1.0
+        ],
+        "lane_intent": [
+          -1,
+          0,
+          1
+        ]
+      },
+      "equal": true
+    },
+    "rate_limit": {
+      "v06": "full",
+      "v08": "full",
+      "equal": true
+    },
+    "controlled_car_follow_model": {
+      "v06": "Krauss",
+      "v08": "Krauss",
+      "equal": true
+    },
+    "warm_start": {
+      "v06": {
+        "path": "outputs/highway-flow-rl/v04/long-round-03/best.pt",
+        "sha256": "79e36b5425fa8a37f02ca990af23854f2cc5d73d6e62d27738ea767a55c25f0f"
+      },
+      "v08": {
+        "path": "outputs/highway-flow-rl/v04/long-round-03/best.pt",
+        "sha256": "79e36b5425fa8a37f02ca990af23854f2cc5d73d6e62d27738ea767a55c25f0f"
+      },
+      "equal": true
+    }
+  },
+  "matched_scenario_fields": [
+    "case.id",
+    "case.network_sha256",
+    "seed",
+    "horizon_steps",
+    "controlled_count",
+    "total_vehicles",
+    "speed_limit_m_s",
+    "communication",
+    "packet_loss"
+  ],
+  "limitations": [
+    "Eight nominal scenario seeds match, but lane admission and raw-request scoring differ; no causal policy ranking.",
+    "No fresh simulator evaluation, no checkpoint modification, no process interruption, no background watcher.",
+    "v06 raw-request scope is after-first-decision; v08 uses all decisions.",
+    "Latest v06 round-8 proposal is not a launched run; attribution of any external active job needs confirmation."
+  ]
+}

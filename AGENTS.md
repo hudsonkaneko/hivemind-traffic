@@ -117,3 +117,10 @@ asset generators, importers, exporters, vehicle packages, or viewer scenes.
 - Inspect the composed hierarchy AND layer/composition structure before calling
   a scene finished; add appropriate structure/regression checks with each scene
   implementation. Document runtime-owned namespace exceptions explicitly.
+
+## Shared assistant training coordination
+
+Before related training, evaluation or overlapping edits, read
+`TRAINING_COORDINATION.md` and its shared plan. Preserve active run inputs and
+follow the recorded ownership and completion/failure-only handoff. This project
+memory does not authorize new training or interrupt existing jobs.

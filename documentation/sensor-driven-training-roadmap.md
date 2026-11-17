@@ -851,3 +851,8 @@ ledger past the v06 ceilings. With user approval, the profile runs as round 9
 under the shared 4.93M / 46,800 s ceilings (166,011 decisions / 7,108 s left).
 [Details](highway-merge-training-plan-v06.md#launch-correction-runs-as-round-9-under-the-shared-study-ceilings-november-17-2026).
 
+
+
+### v67 - November 17: shared assistant plan and saved comparison
+
+[Shared training plan](shared-training-plan.md) and [saved comparison](evidence/training-coordination-2026-11-17/comparison.json) now define one Claude/Codex handoff, source ownership, canonical ledger/lock, matched evaluation and completion-only review. Claude-authored v05 lineage is identified; latest separate v06 round 7 is terminal, round 8 is an unauthorized proposal, and no active local training job was found. Later v06 launcher attribution remains unconfirmed. No training/source changes, simulator runs or interruptions; neither candidate promoted. Discovery pointers are installed in both the canonical checkout and existing worktree. Claude acknowledgement and any external run location remain pending; guide synchronization pending.
