@@ -1,10 +1,14 @@
-# Highway merge training v10: round-12 proposal (not authorized)
+# Highway merge training v10: round-12 proposal
 
-Proposed by Claude on November 17, 2026, for user review, after
+Proposed by Claude on November 17, 2026, after
 [v09 round 11](highway-merge-training-plan-v09.md#round-11-result-november-17-2026-stopped-by-the-merge-floor-at-100k)
-was stopped by its merge floor. **Training is not authorized.** The resolved
-configuration has `training_authorized=false` and needs the user's approval.
-Held-out evaluation is not part of this proposal and is not authorized.
+was stopped by its merge floor. **Approved by the user the same day ("Approve and
+launch").** The approval covers the configuration below and the use of 200,000 of
+the remaining decisions. The authorized config differs from the proposal only in
+`training_authorized` (now true) and its `authorization` text. A test rebuilds the
+proposal from it and checks the approved SHA-256. Its own file hash is
+`779181ac22d7ce36a710b9eece3160336b979b65affc157265f02da4b68ad208`. One round
+only. Held-out evaluation is not part of this proposal and is not authorized.
 
 ## Decision requested
 

@@ -1,6 +1,6 @@
 {
   "schema": "highway_flow_rl_v10",
-  "training_authorized": false,
+  "training_authorized": true,
   "round_index": 12,
   "seed": 9811,
   "observation_size": 117,
@@ -1049,7 +1049,7 @@
   },
   "evaluation_interval_decisions": 100000,
   "rollout_mode": "complete_declared_episode_before_update",
-  "authorization": "Proposed by Claude for user review; training_authorized=false until the user approves this configuration and the use of the remaining decision budget",
+  "authorization": "User approved the v10 round-12 proposal on 2026-11-17 (\"Approve and launch\"): the resolved configuration proposed as SHA-256 08730eafc1c3bec89f9b916e6081f06f9e19d7a5cb5ad6804927ddfafec6bcd6 (only training_authorized and this text differ) and the use of 200,000 of the 207,597 decisions left under the existing 5,230,000 study ceiling, wall clock unchanged, diagnostic-episode cap 127 for the one preflight episode. One round only; collision, merge-floor (0.4343, stop) and pooled-intervention stops. Held-out evaluation not authorized.",
   "publication_branch": "2026-11-17-claude-policy-candidate",
   "evaluation_initializers": [
     {
