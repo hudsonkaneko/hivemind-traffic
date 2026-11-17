@@ -207,8 +207,10 @@ The broader run of the highway-flow, v07 and v08 tests gave 481 passed and
 Both fail with FileNotFoundError: they read network files under `outputs/`,
 which a fresh worktree does not have (for example,
 `outputs/highway-flow-rl/v05/ramp-networks-02/train-5-lane-ramp240/network.net.xml`).
-They do not touch v09 code. They will pass once the inputs are staged, or when
-run in the canonical checkout.
+They do not touch v09 code. Correction (after staging): with the networks
+present, both still fail because they write environments to pytest's temp
+directory, which the environment rejects outside `outputs/`. With `--basetemp`
+inside `outputs/`, both pass.
 
 ## Status
 
