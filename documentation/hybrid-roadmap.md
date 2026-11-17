@@ -1093,3 +1093,7 @@ the existing −0.2 penalty. The config `highway-flow-rl-v06-round8.json` has
 ## November 17, 2026 - merge recovery retrain
 
 [November 17 recovery revision](highway-merge-recovery-2026-11-17.md): adds unsaturated merge tracking, safe acceleration alignment and explicit speed-ceiling request cost; learns true command slew while preserving historical gates. Seeded native cut-ins must already be moving at reset and complete into the intended lane. 151 tests, zero-update preflight and three measured cut-in checks pass. Approved round 8: 300k/90min within the existing shared study ceilings, lower actor LR, wider exploration, four episodes/update. Next: review only after completion/failure, retain all outcomes and actual event coverage. No learned improvement claimed; guide synchronization pending.
+
+## November 17, 2026 - v08 finished, previous policy retained
+
+[Completed v08 evidence](highway-merge-recovery-2026-11-17.md#completed-retrain-cut-in-coverage-fixed-merge-regression-remains): all 34 training cut-ins and eight validation exposures occurred; 298,361 decisions completed with no collisions/teleports. Final merge matching regressed to 39.36% from 43.52%, despite an early 51.44% result. The final actor failed acceptance and remains experimental. Raw traces, checkpoints, configuration, hashes and compact metrics are retained; no extra training or 3D evaluation. Next: per-scenario/final regression protection and saved-trace diagnosis of I-110 deterioration. Guide synchronization pending.

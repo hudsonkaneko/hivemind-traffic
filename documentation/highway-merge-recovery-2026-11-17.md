@@ -84,3 +84,63 @@ metrics and failures. It waits for process completion without interactive
 progress inspection. Technical documentation is updated in GitHub; the Google
 engineering-guide synchronization is pending, and its generated mirror is
 unchanged.
+
+## Completed retrain: cut-in coverage fixed, merge regression remains
+
+Run `outputs/highway-flow-rl/v08/train-20261117-01/train` completed on source
+commit `0efc28a`, using 3,751.58 charged seconds (62.5 minutes) and 298,361
+decisions. This includes 23,119 critic-only decisions. It stopped because the
+remaining decision allowance could not reserve another complete episode.
+There were 233 episodes, 54 actual four-episode actor updates and 21,840 actor
+optimizer minibatch steps; the historical `updates=233` counter counts episodes,
+not actor batches. The last two buffered episodes remained charged but did not
+form another four-episode update. No interactive progress inspection occurred.
+
+**Not accepted or promoted. The merge regression is not solved.** The final
+actor and all metrics are retained, and the prior deployed policy is untouched.
+The safety-first checkpoint ranking retained the initial actor as `best-policy.pt`;
+the final experimental actor is `policy.pt`. A deterministic probe verified the
+final export against `last.pt`. Hashes are in the evidence JSON.
+
+| Nominal validation metric | Initial | About 100k | About 200k | Final |
+| --- | ---: | ---: | ---: | ---: |
+| Merge-speed matching | 43.52% | 51.44% | 47.70% | 39.36% |
+| Stable merges | 4/4 | 4/4 | 4/4 | 4/4 |
+| I-110 merge-speed matching | 52.80% | 89.44% | 45.96% | 12.42% |
+| Original strict case gates | 1/8 | 1/8 | 1/8 | 0/8 |
+| Peak realized jerk, m/s3 | 4.76 | 4.00 | 30.02 | 28.38 |
+
+Final nominal pooled overrides were 0.448% versus 0.265% initially; the low
+pooled value does not erase per-car comfort and merge-quality failures.
+The training 2-lane ramp's match improved from 45.39% to 72.67%, while the
+validation 2-lane ramp fell from 39.01% to 35.46% and the 4-lane ramp remained
+36.88%. This is uneven learning, not a general merge improvement. Both periodic
+checks stayed above the initial aggregate merge floor. The final evaluation
+fell below it after the last periodic check; the existing stop applies to
+periodic checks only. The final summary correctly says
+`training_acceptance=experimental_not_promoted` and `quality_accepted=false`.
+No acceptance rule was relaxed and no extra round was launched.
+
+Cut-ins actually started and completed in **34/34 training stress episodes**
+and **2/2 stress cases at each of the four validation evaluations**. Cut-in
+recovery supplied 10.08% of PPO-phase collected decisions. Across all 233
+training episodes and all validation cases: zero collisions and teleports.
+The final stress overrides were 1.875%, essentially unchanged from 1.874%;
+stress peak jerk remained 45.0 m/s3 and both stress cases failed the original
+comfort/raw-request checks. Exposure is fixed; smooth recovery is unproven.
+
+Retained review artifacts:
+
+- [Result, checkpoint hashes and all evaluation summaries](evidence/highway-merge-recovery-2026-11-17/result.json).
+- [Paired per-case measurements](evidence/highway-merge-recovery-2026-11-17/cases.csv).
+- [Per-episode optimizer and intervention curve](evidence/highway-merge-recovery-2026-11-17/learning-curve.csv).
+- Full checkpoints, resolved config, raw actions and evaluation files in the
+  run directory above; runtime logs in `logs/train-20261117-01-*.log`.
+  These bulk artifacts remain local, not in GitHub.
+
+The next revision should preserve every evaluated checkpoint, apply the merge
+comparison at final evaluation too, and constrain per-scenario regressions so a
+gain on one ramp cannot hide deterioration on I-110. Diagnose the retained
+I-110 requested/applied actions before changing weights again. These are next
+steps, not completed fixes or authorization for another run. No held-out or 3D
+claims. Google engineering-guide synchronization remains pending.
