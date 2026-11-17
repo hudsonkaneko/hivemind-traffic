@@ -1,11 +1,11 @@
 {
-  "schema": "highway_shared_evaluation_proposal_v01",
-  "status": "proposed_not_executable",
-  "evaluation_authorized": false,
+  "schema": "highway_shared_evaluation_v01",
+  "status": "authorized_evaluation_only",
+  "evaluation_authorized": true,
   "training_authorized": false,
   "held_out_authorized": false,
   "owner": "Codex; Claude reviews candidate identity and interface",
-  "source_commit": "b5378eb0550af6e734a60e39713108fc60c1b60d",
+  "source_commit": "4f30d8949f1b183f395004fba5c25012ae3cf146",
   "source_hashes": {
     "experiments/run_highway_stage1.py": "30320a4dbc1706b87d5ee6a6548589eb07e67b4647db9dd9f7d49d91808aa195",
     "environments/highway_stage1_env.py": "8536026880606d0f4050f7c4e5144dc390bb58e959db51aea1114b44256d6a84",
@@ -80,7 +80,8 @@
     "traffic/highway_merge_recovery_v08.py": "3b0e7e012c034a485118d0852d77d16eace8646b013b7080184ae3e34fb72feb",
     "traffic/highway_merge_recovery_v08_contract.py": "13684371e126e44c6423248a170942376b794282d670cf95e0de016c62d799cd",
     "scripts/prepare_highway_merge_recovery_v08.py": "d534a21293e228359393833ebf72ea8d64312198ffbe7426ad57f943bcd14684",
-    "scripts/run_highway_merge_recovery_v08_job.py": "85ac7b6403e3094892f39b579a0ad7b38c67d10589f3d9ad3a2c1c559104074f"
+    "scripts/run_highway_merge_recovery_v08_job.py": "85ac7b6403e3094892f39b579a0ad7b38c67d10589f3d9ad3a2c1c559104074f",
+    "experiments/run_shared_highway_evaluation.py": "a593fdef50e3d1cc2e20e600792596ae5a029dbc47561f6ec5585e7cc4c162ff"
   },
   "source_note": "Hashes freeze the current proposal; a source-bound evaluation preflight is still required. Historical run manifests are unchanged.",
   "path_bases": {
@@ -451,13 +452,23 @@
     "acceptance": "Development comparison only; no automatic promotion"
   },
   "budget": {
-    "approved": false,
+    "approved": true,
     "proposed_max_episode_runs": 30,
     "proposed_max_wall_seconds": 900,
     "training_decisions": 0,
     "shared_ledger": "outputs/highway-flow-rl/v02/cost-ledger.json",
     "shared_lock": "outputs/highway-flow-rl/v02/active.lock",
-    "note": "Needs an explicit evaluation allowance within reconciled study limits; do not consume the remaining training-decision allowance or reset prior charges. This does not start any job."
+    "note": "User-authorized evaluation allowance: existing cumulative diagnostic totals plus at most 30 episodes/900 seconds, within unchanged 46,800-second shared study ceiling; zero training decisions. Prior charges preserved.",
+    "max_episode_runs": 30,
+    "max_wall_seconds": 900,
+    "ledger_before_sha256": "31d806da7a4cbc6e5d2919eb818e5ac779e8b8239929788f03db75f81b17b381",
+    "resolved_ledger_limits": {
+      "max_diagnostic_episodes": 125,
+      "diagnostic_wall_seconds": 2252.7800000001444,
+      "preparation_wall_seconds": 2287.483000000124,
+      "total_wall_seconds": 46800
+    },
+    "ledger_before_content_sha256": "aed00dc2109c429e4ab24b901c3518c4090d2f08c73d94bfbf853ed6ac429446"
   },
   "execution": {
     "mode": "Serial, headless; no renderer",
@@ -473,11 +484,17 @@
       "failure_and_exit_status"
     ],
     "preflight_required": [
-      "verify all actor interfaces and hashes",
-      "prove nominal/stress contract matches across candidates",
-      "verify isolated worktree ownership and ledger allowance",
-      "verify free existing shared lock; never clear another owner"
+      "verify candidate/checkpoint hashes and deterministic [24,117] -> [24,2] local actor contract with no simulator episodes",
+      "verify source/config/network hashes",
+      "acquire canonical existing lock atomically; reject conflicting or unclosed job",
+      "one 900-second deadline includes actor loading, all episodes and accounting; parent watchdog bounds this job only"
     ]
   },
-  "next_step": "Claude reviews this spec; implement and run only after evaluation authorization. No new training authorized."
+  "next_step": "Run this approved evaluation once, retain outcomes and update the shared document; no training or automatic promotion.",
+  "round_index": 10,
+  "authorization": "User approved 30 serial comparison episodes with a 15-minute cap, no training; November 17, 2026.",
+  "environment_config": {
+    "path": "configs/training/highway-merge-recovery-2026-11-17.json",
+    "sha256": "3d5d07a9cb34c3d2a8487c0e6fbb000ca56885e0b9cb0b99f7e50663a6fc6770"
+  }
 }

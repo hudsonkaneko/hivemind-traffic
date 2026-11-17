@@ -1,3 +1,124 @@
+<!-- GENERATED PUBLICATION SNAPSHOT: edit the canonical master, then refresh. -->
+> **Publication snapshot, not an independent plan.** The authoritative living
+> document is `TRAINING_COORDINATION.md` in the parent of Git's common directory
+> (`C:\Users\hudso\Documents\highwaysim\TRAINING_COORDINATION.md` here).
+> Both assistants read and update that same master. This file was generated from
+> the master on November 17, 2026; refresh it after master changes before
+> publication. Do not independently edit its copied content.
+
+# Shared Claude / Codex coordination - authoritative living document
+
+Updated November 17, 2026. **Current status: ready to launch the authorized common evaluation.
+No new training is authorized.**
+
+This canonical file is the single editable source used by both assistants.
+The current instructions below supersede dated status and proposals in the
+preserved history; historical claims and results have not been rewritten.
+
+## Current ownership and authorization
+
+| Owner | Working directory | Branch | Responsibility / status |
+| --- | --- | --- | --- |
+| Codex | `C:\Users\hudso\Documents\highwaysim\outputs\worktrees\highway-jerk-diagnosis-v05` | `2026-11-17-codex-merge-recovery` | Prepare the common actor-only evaluation runner, preflight and comparison; maintain the published snapshot |
+| Claude | `C:\Users\hudso\Documents\highwaysim\outputs\worktrees\claude-policy-2026-11-17` | `2026-11-17-claude-policy-candidate` | Separate worktree created from `d60fc9e`; review evaluation results and prepare the next policy proposal in its own worktree |
+| Canonical checkout | `C:\Users\hudso\Documents\highwaysim` | `mappo-flow-rl-v02` at consolidation | Hosts this shared document, historical run artifacts and the shared ledger/lock; preserve unrelated dirty files |
+
+The user authorized **one serial, headless development comparison of at most
+30 episode attempts and 900 wall-clock seconds**, evaluating the frozen v04
+baseline, Claude v06 round-9 final actor and Codex v08 final actor on the same
+8 nominal and 2 verified cut-in cases. No additional simulator preflight episode
+or retry may exceed either cap. Loading and non-simulation interface preflight
+must not construct or update an optimizer. This is evaluation only: **zero new
+training decisions, no training, no held-out test and no automatic promotion**.
+
+Codex is preparing the resolved evaluation allowance and source-bound actor
+preflight. Reconcile cumulative ledger charges and name the charged category in
+the resolved configuration before launch; preserve prior charges and training
+ceilings. The existing canonical `outputs/highway-flow-rl/v02/cost-ledger.json`
+and `active.lock` serialize measured work across both worktrees. Never reset the
+ledger, create a competing lock, clear another owner's lock or relaunch a spent
+training authorization. Record a failure and stop when an attempt fails; do not
+silently rerun it. Codex owns the single completion/failure handoff.
+
+The earlier common specification remains historical until Codex publishes its
+resolved authorized replacement. Current run ID, exact source/config hashes,
+ledger category and launch status must be entered here at the next milestone.
+Neither candidate is promoted. New training requires a separate resolved
+configuration and explicit user approval.
+
+## How both assistants use this one document
+
+The one editable coordination document is `TRAINING_COORDINATION.md` in the
+parent directory of Git's common directory. Resolve
+`git rev-parse --path-format=absolute --git-common-dir`, take its parent, and
+read/update that parent's `TRAINING_COORDINATION.md`. On this workstation it is
+`C:\Users\hudso\Documents\highwaysim\TRAINING_COORDINATION.md`.
+
+- Read the latest full master before adopting related work, before overlapping
+  edits and before every launch. Check the ownership and active-run entry first.
+- Update this master at task milestones: ownership or scope changes, preflight
+  completion, launch, terminal completion/failure, publication and handoff.
+  Record the actual branch, worktree, run path, hashes, status, budget and next
+  action. Progress history is append-only; correct old claims with a dated note.
+- Re-read immediately before each scoped edit. If the file changed since your
+  read, reconcile the new content; never overwrite another assistant's entry
+  from a stale full-file copy. Keep source/config/branch inputs of a live run
+  immutable. Edits belong in the assigned worktree; do not switch another
+  assistant's branch or copy new runtime files into the dirty canonical checkout.
+- This is milestone-based project memory, **not a background LLM watcher**.
+  No cross-app messages or recurring polling are configured. During a measured
+  run, the owner waits for completion/failure and the other assistant waits for
+  the terminal handoff instead of polling or launching competing work.
+- `documentation/shared-training-plan.md` in the Codex worktree is a generated
+  publication snapshot of this master, not another editable plan. Refresh it
+  from a verified latest master, then commit/push it with related documentation
+  in the Codex worktree. Record publication status honestly. Other worktree
+  copies are historical snapshots and must never override this canonical file.
+  Reconcile changes into this master before regenerating the snapshot. Do not
+  commit the canonical checkout's unrelated files. Guide synchronization follows
+  its existing documented workflow and is reported separately.
+
+## Milestone - consolidation and evaluation preparation (November 17, 2026)
+
+The user requested one document both assistants continually reference and
+update. This canonical file now owns coordination; both worktrees' discovery
+and assistant instruction files point here. Claude has its own branch/worktree
+from `d60fc9e`; its acknowledgement of the new location remains pending. The
+user's 30-episode / 900-second evaluation authorization is recorded above. The
+runner is being prepared; this documentation change did not launch simulation
+or training. Existing local run artifacts, ledger charges and unrelated changes
+were preserved. The Codex publication snapshot is refreshed locally; its next
+commit/push and the engineering-guide synchronization are pending.
+
+## Evaluation launch checkpoint (November 17, 2026)
+
+The actor-only evaluator and 9 focused tests pass. All three pinned actors load
+and return deterministic finite local actions with gradients disabled; no
+optimizer or critic is constructed. Sources, networks and the common environment
+config are hash-bound. Evaluation allowance is the existing 95 diagnostic
+episodes plus at most 30 (125 cumulative), and existing diagnostic/preparation
+time plus 900 seconds, within the unchanged 46,800-second study ceiling.
+Training decisions remain unchanged. The shared ledger is checked under its
+existing lock; round index 10 records evaluation only.
+
+Planned run: `outputs/worktrees/highway-jerk-diagnosis-v05/outputs/highway-shared-evaluation/compare-20261117-01` from the canonical root.
+Runtime log: `logs/compare-20261117-01.log` in the Codex worktree.
+The entire launched comparison, including actor loading/preflight, is capped at
+900 seconds by a deadline plus a parent watchdog for this process only.
+No extra simulator smoke episode, retry, training or promotion is authorized.
+Codex will wait without inspecting progress until completion or failure.
+
+## Preserved history through the common-evaluation review
+
+The complete prior `documentation/shared-training-plan.md` follows verbatim.
+Its statements about a shared worktree, disabled evaluation, missing allowance
+or lack of a separate Claude worktree describe earlier states and are superseded
+by the current block above. Historical relative Markdown links were authored
+relative to the Codex worktree's `documentation/` directory; use its publication
+snapshot when opening those evidence links.
+
+---
+
 # Shared Claude / Codex training plan
 
 Updated November 17, 2026. User requested coordination, comparison and low usage;
@@ -371,3 +492,16 @@ training, ledger write or runtime edit.
 
 Nothing was trained or evaluated, and no runtime file changed. The evaluation
 allowance needs the user's approval. Google engineering-guide sync is pending.
+
+## Milestone - Claude coordination pointers published (November 17, 2026)
+
+Verified the assigned Claude branch, reviewed its scoped documentation diff and
+passed `git diff --check`. Committed only `AGENTS.md`, `CLAUDE.md` and
+`TRAINING_COORDINATION.md` as
+[`8a7971207743aefd6d99f4974076c1de327a5ebc`](https://github.com/hudsonkaneko/hivemind-traffic/commit/8a7971207743aefd6d99f4974076c1de327a5ebc)
+and pushed branch `2026-11-17-claude-policy-candidate`. Claude's worktree is clean
+at this handoff. Its instructions now resolve and read/update this canonical
+master. The canonical checkout and Codex documentation changes remain
+uncommitted for Codex's related evaluation checkpoint; their publication is
+pending. No runtime/configuration changes, simulator execution, training or
+ledger writes were performed by this coordination update.

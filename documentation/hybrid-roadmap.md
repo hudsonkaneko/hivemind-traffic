@@ -1144,3 +1144,8 @@ Open before approval:
 
 Nothing was trained or evaluated. Guide sync pending.
 [Review](shared-training-plan.md#claude-review-of-the-common-evaluation-proposal-november-17-2026).
+
+
+## November 17, 2026 - shared evaluation authorized
+
+Created and pushed Claude branch `2026-11-17-claude-policy-candidate` in its own project-contained worktree. The canonical `TRAINING_COORDINATION.md` is now the single live document; both assistants resolve it through the Git common directory, and the GitHub plan is a generated snapshot. Added an actor-only comparison runner with a shared ledger lock, frozen sources/inputs, full action traces, startup diagnostics, a 30-episode/900-second cap and no optimizer/critic/training. Nine focused tests and all three actual actor-interface probes pass. User authorized the comparison; completion/failure-only review. Results pending; guide sync pending.
