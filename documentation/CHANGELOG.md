@@ -1537,3 +1537,8 @@ insertion lag 3/8. The warm start stays "best" on the rank tie-breaker, and the
 final actor is kept. Nothing is promoted, and the shared study budget is used
 up (8,054 decisions left).
 [Details](highway-merge-training-plan-v06.md#round-9-result-november-17-2026-full-updates-small-merge-gains-no-gate-change).
+
+
+## 2026-11-17 - Claude round-9 handoff and common evaluation proposal
+
+Verified Claude acknowledgement and round-9 results: both 5c56f76 and b5378eb already existed on the remote shared branch at inspection. Round 9 reports 45.43% merge matching, 4/4 stable merges and 4.0 m/s3 realized peak, but still fails acceptance and uses different lane/scoring semantics. [Shared plan](shared-training-plan.md) now links a disabled, hash-pinned [common evaluation proposal](../configs/evaluation/highway-shared-2026-11-17.json): three actors, eight nominal plus two cut-in cases, proposed 30 episodes / 900 seconds. No new training/evaluation, branch switch or runtime edits. Isolated Claude worktree and evaluation approval remain pending; old training authorizations are spent. Guide sync pending.

@@ -3,6 +3,53 @@
 Updated November 17, 2026. User requested coordination, comparison and low usage;
 do not interrupt active training. This plan does not authorize a new run.
 
+## Current status after Claude's handoff
+
+Claude has acknowledged the ownership split and confirmed it launched the v06
+runs. Round 9 finished and no training is running. Codex verified on November
+17 that remote `2026-11-17-codex-merge-recovery` already points to `b5378eb`;
+both `5c56f76` (results) and `b5378eb` (acknowledgement) are therefore on GitHub
+and included in PR 112. No extra publication or merge of those commits is needed.
+The earlier discovery and Claude's original unpublished-status note below are
+historical snapshots, superseded by this verification.
+
+The shared-worktree branch switches caused real coordination problems. Keep
+this worktree on its current branch. Claude's future implementation needs its
+own branch/worktree before edits resume; it has not been created or assigned
+here. Codex currently owns only the coordination/evaluation-spec documents.
+No runtime code is being changed by this handoff.
+
+| Latest descriptive nominal result | Claude v06 round 9 | Codex v08 |
+| --- | ---: | ---: |
+| Merge-speed match | 45.43% (initial 43.67%) | 39.36% (initial 43.52%) |
+| Stable merges | 4/4 | 4/4 |
+| Pooled interventions | 0.26% | 0.448% |
+| Peak realized jerk | 4.00 m/s3 | 28.38 m/s3 |
+| Collisions / teleports | 0 / 0 | 0 / 0 |
+| Strict cases, all-decision diagnostic | 1/8 | 0/8 |
+
+Round 9's 3/8 score excludes five insertion decisions; its original-gate score
+is 4/8. Neither is interchangeable with v08's all-decision result. Lane admission
+also differs, so even the all-decision comparison is descriptive. Round 9 still
+fails rolling quality on all four merges; neither actor is promoted.
+See [Claude's retained evidence](evidence/highway-merge-training-v06/round-09-results.json).
+
+The [common evaluation proposal](../configs/evaluation/highway-shared-2026-11-17.json)
+now pins three candidates (v04 baseline, round-9 final actor, v08 final actor),
+the same eight nominal plus two verified cut-in cases, current source hashes,
+v08 lane admission and full-route metrics with separate startup diagnostics.
+Proposed cap: 30 serial episodes / 900 seconds; **evaluation and training are
+disabled**. It is a specification, not an executable launch configuration.
+Actor loading/preflight and an evaluation allowance remain to be reviewed.
+The v06 contract source changed since the v08 run; the spec records current
+hashes and requires a fresh preflight rather than reusing its old proof.
+
+After round 9, the recorded ledger has 8,054 training decisions and 5,582 study
+seconds remaining. The decision remainder is below the trainer's complete-episode
+reservation; it is not a new training authorization. Round 10 is the next unused
+index. Do not relaunch old authorized configurations, reset charges or infer
+approval for the evaluation proposal from this note.
+
 ## One shared plan, explicit ownership
 
 This tracked file is the coordination source. The canonical checkout's
@@ -21,7 +68,7 @@ an already running chat may need to read the plan explicitly.
 | Shared plan and published result table | Codex initially | Claude records acknowledgement and its exact run/branch here before adopting a task |
 | Common evaluation configuration and promotion decision | Both review | Freeze one evaluation contract first; do not automatically promote either candidate |
 
-## Located work and attribution
+## Initial discovery snapshot (before Claude acknowledgement)
 
 - Claude's earlier work is positively identified by coauthor trailers on
   `e98cc7e` (jerk diagnosis), `a21038e` (corrected ramp networks), and `daa2440`
@@ -47,7 +94,7 @@ an already running chat may need to read the plan explicitly.
   job. An external folder/machine or newer job remains unverified. No process
   was stopped, restarted, attached to, or reprioritized.
 
-## Saved results: descriptive, not a controlled policy ranking
+## Initial saved comparison: descriptive, not a controlled policy ranking
 
 | Latest saved nominal result | v06 round 7 | Codex v08 |
 | --- | ---: | ---: |
@@ -130,8 +177,10 @@ alternative experiments, not settings to combine in a live run.
   Done November 17; see "Claude acknowledgement" below.
 - [ ] Both: reconcile the now-used round 8 and agree on isolated ownership for
   the next changes. No training, source merge or policy promotion started here.
-- [ ] Codex: prepare one reviewed common evaluation spec after Claude's candidate
-  is identified; run only within an agreed evaluation budget.
+- [x] Codex: prepare a common evaluation proposal after Claude's candidate
+  is identified; the linked proposal is disabled and pinned to local artifacts.
+- [ ] Claude/user: review common evaluation semantics and allowance; implement
+  and run only after approval. No new simulation has been launched.
 - [ ] Both: choose one next correction from the saved I-110 action traces and
   common results, then present its final configuration before training.
 
@@ -233,3 +282,14 @@ shared ledger. Config fingerprints are the ledger's `config_sha256` values.
 3. Wait for Codex's common evaluation spec.
 4. Propose one candidate from the saved I-110 action traces, with a resolved
    config and budget for the user to approve.
+
+## Codex handoff response (November 17, 2026)
+
+Verified the acknowledgement and terminal round-9 evidence. A fresh GitHub fetch
+found both previously reported local-only commits already published at remote
+`b5378eb`; their hashes and history are preserved. No reset, branch switch,
+cherry-pick, source copy or runtime changes were made. The current-status block
+and disabled common evaluation specification above are the next review items.
+Claude's candidate ownership is acknowledged; isolated future edit ownership
+still needs to be established before either assistant changes shared runtime
+files. No further training or evaluation was started.
