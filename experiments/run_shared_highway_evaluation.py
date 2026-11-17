@@ -133,11 +133,16 @@ def accumulate(stats, agent, index, metrics):
             row['sum_squared'] += value * value
 
 
+def native_evidence(env):
+    from traffic.sumo_warnings import native_emergency_report
+    # SUMO creates a unique episode child; the case directory is only its parent.
+    return native_emergency_report(Path(env.directory) / 'sumo-errors.log')
+
+
 def evaluate_case(cfg, row, directory, actor, deadline):
     import numpy as np
     import torch
     from experiments import run_highway_merge_recovery_v08 as runtime
-    from traffic.sumo_warnings import native_emergency_report
     env = runtime.env_for(cfg, row, directory)
     base = runtime.base
     report = None
@@ -200,7 +205,8 @@ def evaluate_case(cfg, row, directory, actor, deadline):
     finally:
         env.close()
         if report is not None:
-            report['native_emergencies'] = native_emergency_report(directory / 'sumo-errors.log')
+            report['native_emergencies'] = native_evidence(env)
+            report['native_episode_directory'] = Path(env.directory).relative_to(ROOT).as_posix()
             save(directory / 'report.json', report)
     return report
 

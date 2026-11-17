@@ -1149,3 +1149,8 @@ Nothing was trained or evaluated. Guide sync pending.
 ## November 17, 2026 - shared evaluation authorized
 
 Created and pushed Claude branch `2026-11-17-claude-policy-candidate` in its own project-contained worktree. The canonical `TRAINING_COORDINATION.md` is now the single live document; both assistants resolve it through the Git common directory, and the GitHub plan is a generated snapshot. Added an actor-only comparison runner with a shared ledger lock, frozen sources/inputs, full action traces, startup diagnostics, a 30-episode/900-second cap and no optimizer/critic/training. Nine focused tests and all three actual actor-interface probes pass. User authorized the comparison; completion/failure-only review. Results pending; guide sync pending.
+
+
+## November 17, 2026 - common evaluation favors round 9; not accepted
+
+[Common evaluation complete](shared-highway-evaluation-2026-11-17.md): 30/30 episodes in 294 seconds, zero training decisions, zero collisions/teleports, 6/6 actual cut-ins. Under identical rules: baseline merge match 43.52%, Claude round 9 48.84%, Codex v08 39.36%; nominal peak jerk 4.76/4.00/28.38 m/s3. All still fail acceptance; cut-in peak jerk remains 45.0. An initial native-log directory lookup error was corrected by offline re-scoring existing logs, with originals preserved and no rerun. Ten tests pass. Metrics/provenance saved, shared master updated, evaluation authorization consumed and config disabled. Guide sync pending.

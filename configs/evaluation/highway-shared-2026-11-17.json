@@ -1,7 +1,7 @@
 {
   "schema": "highway_shared_evaluation_v01",
-  "status": "authorized_evaluation_only",
-  "evaluation_authorized": true,
+  "status": "completed_authorization_consumed",
+  "evaluation_authorized": false,
   "training_authorized": false,
   "held_out_authorized": false,
   "owner": "Codex; Claude reviews candidate identity and interface",
@@ -452,7 +452,7 @@
     "acceptance": "Development comparison only; no automatic promotion"
   },
   "budget": {
-    "approved": true,
+    "approved": false,
     "proposed_max_episode_runs": 30,
     "proposed_max_wall_seconds": 900,
     "training_decisions": 0,
@@ -490,11 +490,12 @@
       "one 900-second deadline includes actor loading, all episodes and accounting; parent watchdog bounds this job only"
     ]
   },
-  "next_step": "Run this approved evaluation once, retain outcomes and update the shared document; no training or automatic promotion.",
+  "next_step": "Review corrected retained metrics; this 30-episode authorization is consumed. No training or rerun authorized.",
   "round_index": 10,
   "authorization": "User approved 30 serial comparison episodes with a 15-minute cap, no training; November 17, 2026.",
   "environment_config": {
     "path": "configs/training/highway-merge-recovery-2026-11-17.json",
     "sha256": "3d5d07a9cb34c3d2a8487c0e6fbb000ca56885e0b9cb0b99f7e50663a6fc6770"
-  }
+  },
+  "completed_run": "outputs/highway-shared-evaluation/compare-20261117-01"
 }

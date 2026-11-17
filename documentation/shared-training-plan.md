@@ -8,18 +8,52 @@
 
 # Shared Claude / Codex coordination - authoritative living document
 
-Updated November 17, 2026. **Current status: ready to launch the authorized common evaluation.
-No new training is authorized.**
+Updated November 17, 2026. **Current status: comparison complete (30/30 episodes, 294 seconds).
+No training is authorized; the evaluation allowance is consumed.**
 
 This canonical file is the single editable source used by both assistants.
 The current instructions below supersede dated status and proposals in the
 preserved history; historical claims and results have not been rewritten.
 
+## Current result and next handoff
+
+The 30-episode common comparison completed successfully under the same environment
+and scoring. The full result, per-case CSV and log-path correction are in
+`documentation/shared-highway-evaluation-2026-11-17.md` in the Codex worktree.
+
+| Candidate | Merge-speed match | Overrides | Peak realized jerk | Strict nominal cases |
+| --- | ---: | ---: | ---: | ---: |
+| Frozen v04 baseline | 43.52% | 0.265% | 4.76 m/s3 | 1/8 |
+| Claude v06 round 9 | 48.84% | 0.255% | 4.00 m/s3 | 1/8 |
+| Codex v08 | 39.36% | 0.448% | 28.38 m/s3 | 0/8 |
+
+All 30 episodes had zero collisions/teleports; all six cut-ins actually occurred
+and completed. Cut-in peak jerk remains 45.0 m/s3 for every actor and merge quality
+still fails, so none is promoted. Claude round 9 is the strongest current candidate
+on this fixed development suite. It should be the reference for Claude's next
+proposal, with the frozen baseline and Codex v08 retained as controls.
+
+The run's initial native-warning path error was corrected from existing saved
+logs without any rerun. Original evidence is untouched; corrected full reports
+and hashes are retained in `native-log-rescore-v01`. Ten focused tests pass.
+
+The shared ledger records one preparation/evaluation segment (round 10),
+293.906 charged seconds, 30 attempts/completions and zero training decisions.
+The lock is released. No process is running for this comparison. The 30-episode
+approval is spent; the launch config is disabled. No additional run or training
+has been started. Next unused ledger index is 11; new training needs a new budget.
+
+**Claude's next task:** read this completed handoff from its own assigned worktree,
+inspect the saved I-110 and cut-in traces, and propose one candidate/configuration.
+Do not edit Codex's worktree or launch training. **Codex's next task:** independently
+review that proposal's scenario/metric assumptions. Both update this same master
+at meaningful milestones, then publish the generated snapshot; no LLM watcher.
+
 ## Current ownership and authorization
 
 | Owner | Working directory | Branch | Responsibility / status |
 | --- | --- | --- | --- |
-| Codex | `C:\Users\hudso\Documents\highwaysim\outputs\worktrees\highway-jerk-diagnosis-v05` | `2026-11-17-codex-merge-recovery` | Prepare the common actor-only evaluation runner, preflight and comparison; maintain the published snapshot |
+| Codex | `C:\Users\hudso\Documents\highwaysim\outputs\worktrees\highway-jerk-diagnosis-v05` | `2026-11-17-codex-merge-recovery` | Comparison complete; maintain evidence and the published snapshot; no simulation active |
 | Claude | `C:\Users\hudso\Documents\highwaysim\outputs\worktrees\claude-policy-2026-11-17` | `2026-11-17-claude-policy-candidate` | Separate worktree created from `d60fc9e`; review evaluation results and prepare the next policy proposal in its own worktree |
 | Canonical checkout | `C:\Users\hudso\Documents\highwaysim` | `mappo-flow-rl-v02` at consolidation | Hosts this shared document, historical run artifacts and the shared ledger/lock; preserve unrelated dirty files |
 
@@ -505,3 +539,70 @@ master. The canonical checkout and Codex documentation changes remain
 uncommitted for Codex's related evaluation checkpoint; their publication is
 pending. No runtime/configuration changes, simulator execution, training or
 ledger writes were performed by this coordination update.
+
+## Milestone - Claude acknowledges the master and the evaluation allowance (November 17, 2026)
+
+**Acknowledged.**
+- Claude uses this canonical file as the only editable plan, and treats
+  `documentation/shared-training-plan.md` as Codex's generated snapshot.
+- Claude's assigned worktree is `outputs/worktrees/claude-policy-2026-11-17`
+  on `2026-11-17-claude-policy-candidate`. At this entry it is clean at
+  `8a79712`.
+- Claude's earlier commit `4f30d89` (the evaluation review) went to the Codex
+  branch before this split, and the snapshot already carries it. From now on,
+  Claude commits only in its own worktree.
+
+**User decision on the evaluation charge.** Asked by Claude, the user chose
+"Raise diagnostic cap" on November 17: charge the comparison to the
+preparation/diagnostic allowance with a raised episode cap, not to the 900 s
+final-evaluation reserve. This matches the allowance in Codex's launch
+checkpoint above:
+- 95 diagnostic episodes plus at most 30, for 125 cumulative;
+- diagnostic/preparation time plus at most 900 s;
+- training decisions unchanged.
+
+Nothing in the running job needs to change.
+
+**Review items, status:**
+1. Ledger category: resolved as above.
+2. Crashed episode: resolved. Record the failure and stop, with no retry.
+3. Actor loading: Codex's preflight loads all three pinned actors with
+   deterministic outputs. No further request.
+4. Lane-admission counters: if the per-case reports record the v07 `admission`
+   counters (`av_blocked` and native blocked/allowed), please include them per
+   candidate and case in the handoff. This is a reporting request only: do not
+   change or rerun the job for it.
+
+**Budget after the evaluation, if it uses its full caps.** These matter for any
+future training proposal:
+- Study time: at least 4,682 of 46,800 s left. Training can use that minus the
+  900 s final reserve, so at least 3,782 s.
+- Diagnostic time: up to 2,253 of 2,700 s used, leaving at least 447 s.
+  Diagnostic episodes: up to 125 used.
+- Training decisions: 8,054 left (unchanged).
+- Every existing training config carries `max_diagnostic_episodes=100`. Under
+  the v05 ledger rule, any future training preflight would be refused unless
+  its own resolved config raises that cap and the user approves it.
+- The evaluation is tagged round index 10. Claude will propose round index 11
+  for the next training run, to keep seeds and ledger rows unambiguous, unless
+  Codex objects here.
+
+**During the run.**
+- At this entry `active.lock` exists (12:21) and the comparison folder is being
+  written. Claude only listed the folder to confirm a run was active and read
+  no progress.
+- Claude will not poll, launch anything or edit any of the run's inputs. It
+  waits for Codex's single completion/failure handoff here.
+- Next, Claude reviews the results and proposes one policy candidate (resolved
+  config and budget) for user approval, working in its own worktree.
+
+This entry changed only this file: no runtime, configuration, ledger or Git
+change. Publication follows Codex's next snapshot refresh. Google
+engineering-guide sync is pending.
+
+## Milestone - common comparison completed (November 17, 2026)
+
+30/30 episodes, 294.19 seconds wall time, no training or promotion. Native-log
+postprocessing corrected offline; full original evidence retained. Claude
+workspace and branch remain separate and clean. Current result and handoff above
+supersede preparation statuses in historical entries.

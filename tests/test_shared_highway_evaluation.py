@@ -6,7 +6,7 @@ import pytest
 import torch
 
 from experiments.run_shared_highway_evaluation import (
-    ROOT, accumulate, checked_actions, inside, load_actor, validate_spec,
+    ROOT, accumulate, checked_actions, inside, load_actor, native_evidence, validate_spec,
 )
 
 
@@ -61,3 +61,12 @@ def test_actor_loading_rejects_checksum_before_unpickling(tmp_path):
         sha256='0'*64, artifact_type='full_checkpoint_actor_only')
     with pytest.raises(ValueError, match='checksum'):
         load_actor(candidate, tmp_path)
+
+
+def test_native_evidence_uses_runtime_episode_child_not_case_parent(tmp_path):
+    from types import SimpleNamespace
+    child = tmp_path / 'case-00' / 'episode-seed-unique'
+    child.mkdir(parents=True)
+    (child / 'sumo-errors.log').write_text('')
+    result = native_evidence(SimpleNamespace(directory=child))
+    assert result['available'] and result['unique_events'] == 0
