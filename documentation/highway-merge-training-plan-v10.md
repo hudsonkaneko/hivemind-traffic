@@ -172,8 +172,75 @@ regression is priced in. It will not reach the 90% quality gate.
   `outputs/`. With `--basetemp` inside `outputs/`, both pass. They do not
   involve v09 or v10 code.
 
-## Not done and not authorized
+## Status
 
-- No training, staging run, preflight or ledger write has happened for v10.
+- Approved and run on November 17, 2026. The result is below.
 - Held-out evaluation is not authorized.
 - Google engineering guide sync is still pending.
+
+## Round 12 result (November 17, 2026): stopped by the merge floor at 100k
+
+The run stopped itself at its first periodic validation, after 101,292
+decisions and 1,164 s, with no collisions. Pooled merge-speed match was 0.240,
+below the 0.4343 floor. The round-9 policy stays the best policy (the best
+validation is the initial one), and nothing is promoted.
+
+Evidence: [round-12-results.json](evidence/highway-merge-training-v10/round-12-results.json).
+Run outputs stay in Claude's worktree, `outputs/highway-flow-rl/v10/round-12`.
+
+### Per merging car
+
+"Before" is the run's initial validation of the round-9 policy, which matches
+round 9's final scores exactly.
+
+| Merging car | Before | After 100k | Post-merge overrides (gate allows 4 of 81) |
+| --- | --- | --- | --- |
+| I-110 | 0.590, stable | 0.590, stable | 0 → 0. It merged 0.9 s earlier than before; the round-11 problem is gone |
+| Ramp 120 m, 2 lanes | 0.461, stable | Stable merge failed | 0 → 5, all speed-ceiling clamps |
+| Ramp 180 m, 2 lanes | 0.397, stable | Stable merge failed | 2 → 11, all speed-ceiling clamps |
+| Ramp 180 m, 4 lanes | 0.369, stable | 0.369, stable | 0 → 0 |
+
+Pooled: (0.590 + 0 + 0 + 0.369) / 4 = 0.240.
+
+Mean speed error while merging barely moved: -2.33 → -2.38, -3.74 → -3.72,
+-3.94 → -3.89 m/s on the three ramp cars.
+
+Other measures:
+- Gate counts: 4/8 under the original rules and 3/8 with the raw check, both
+  unchanged.
+- Pooled interventions: 0.26% → 0.36%. Peak jerk 4.0 m/s³.
+- Updates: 8 merged PPO updates and 3,120 optimizer steps. `log_std`
+  -3.227 → -3.230.
+
+### What this shows
+
+- **The new term fixed what it targeted.** In training episodes 16–41, 1 of 16
+  merging cars failed the stable-merge gate. Round 11 had 6 of 17 and round 9
+  had 2 of 17. No car after a PPO update failed on native-realization changes.
+  The I-110 validation car kept its merge.
+- **The validation stop now comes from tiny requests at the speed limit.** Both
+  failing ramp cars reach their target, which equals the speed limit. They then
+  hold it with requests that alternate around zero (for example -0.01, then
+  +0.02, then +0.12 m/s²). Each slightly positive request is clamped by the
+  speed ceiling and counted as an override. In round 9's own policy the
+  ramp-180 car already had 2 such clamps. A few more in one episode fails the
+  gate.
+- **The gate is borderline for round 9 too.** In this run, 2 of the 9 merging
+  cars in the first 15 training episodes failed the stable-merge gate. Both
+  were in critic-only episodes, where the actor is still exactly round 9's (with
+  exploration noise): 12 native changes on I-110 and 11 filter changes on a
+  ramp. One validation seed per case cannot tell a real regression from this
+  noise.
+- **Merge matching did not improve in either round.** On the cars that stayed
+  stable, round 11 changed matching by +0.007 and round 12 by 0.000. At this
+  update size (8 PPO updates per 100k decisions, σ ≈ 0.04), reward changes do
+  not move merge quality measurably within a round.
+
+### Ledger after round 12
+
+- Training decisions: 5,123,695 of 5,230,000 (106,305 left).
+- Time: 43,766.3 s of 46,800 s (2,134 s left for training after the final
+  reserve).
+- Diagnostic episodes: 127 of 127. Any further run or evaluation needs a new cap.
+
+The approval covered this one round only.
