@@ -1525,3 +1525,15 @@ leaving 166,011 decisions and 7,108 s.
 ## 2026-11-17 - shared Claude/Codex coordination
 
 [Shared training plan](shared-training-plan.md) and [saved comparison](evidence/training-coordination-2026-11-17/comparison.json) now define one Claude/Codex handoff, source ownership, canonical ledger/lock, matched evaluation and completion-only review. Claude-authored v05 lineage is identified; latest separate v06 round 7 is terminal, round 8 is an unauthorized proposal, and no active local training job was found. Later v06 launcher attribution remains unconfirmed. No training/source changes, simulator runs or interruptions; neither candidate promoted. Discovery pointers are installed in both the canonical checkout and existing worktree. Claude acknowledgement and any external run location remain pending; guide synchronization pending.
+
+## November 17, 2026 - v06 round 9 (final round) complete: small merge gains, gates unchanged
+
+The final round ran to the end of the budget (157,957 decisions, 1,523 s, 13
+merged updates, 4,608 optimizer steps; round 7 had 236). Merge speed matching
+rose from 0.437 to 0.454; I-110 rose from 0.534 to 0.590. All stable merges
+held, interventions stayed at 0.26%, and peak jerk was 4.0 m/s3, with no
+collisions. Gate counts did not change: original rules 4/8, raw check after the
+insertion lag 3/8. The warm start stays "best" on the rank tie-breaker, and the
+final actor is kept. Nothing is promoted, and the shared study budget is used
+up (8,054 decisions left).
+[Details](highway-merge-training-plan-v06.md#round-9-result-november-17-2026-full-updates-small-merge-gains-no-gate-change).
