@@ -1097,3 +1097,12 @@ the existing −0.2 penalty. The config `highway-flow-rl-v06-round8.json` has
 ## November 17, 2026 - v08 finished, previous policy retained
 
 [Completed v08 evidence](highway-merge-recovery-2026-11-17.md#completed-retrain-cut-in-coverage-fixed-merge-regression-remains): all 34 training cut-ins and eight validation exposures occurred; 298,361 decisions completed with no collisions/teleports. Final merge matching regressed to 39.36% from 43.52%, despite an early 51.44% result. The final actor failed acceptance and remains experimental. Raw traces, checkpoints, configuration, hashes and compact metrics are retained; no extra training or 3D evaluation. Next: per-scenario/final regression protection and saved-trace diagnosis of I-110 deterioration. Guide synchronization pending.
+
+## November 17, 2026 - v06 final round launches as round 9 under the shared ceilings
+
+Round index 8 was charged in the shared ledger by the v08 merge-recovery run
+(298,361 decisions). That run also took the ledger past the v06 study ceilings
+(4.63M decisions / 41,400 s). With user approval, the round-8 profile runs as
+round 9 under the shared ceilings already used by v07/v08 (4.93M / 46,800 s),
+leaving 166,011 decisions and 7,108 s.
+[Details](highway-merge-training-plan-v06.md#launch-correction-runs-as-round-9-under-the-shared-study-ceilings-november-17-2026).

@@ -830,3 +830,38 @@ seeds, all built. One seed does not build: row 16 (ramp240 missed-gap), seed
   It rose from 0.534 to 0.565 in round 7, against a layout ceiling of 0.99.
 - The ramp layouts cannot pass merge quality (ceilings 0.69 and 0.57).
 - Held-out evaluation stays unauthorized.
+
+### Launch correction: runs as round 9 under the shared study ceilings (November 17, 2026)
+
+The user approved the round-8 profile ("Approve and launch"). Before launch, the
+shared study ledger showed two changes:
+
+- **Round index 8 was already charged** by another session's v08
+  merge-recovery run
+  ([highway-merge-recovery-2026-11-17.md](highway-merge-recovery-2026-11-17.md),
+  branch `2026-11-17-codex-merge-recovery`): 298,361 training decisions and
+  3,752 s, plus preparation episodes.
+- That run used the shared study ceilings first approved for v07 (4.93M
+  decisions / 46,800 s), so the ledger (4,763,989 decisions, 39,692 s) is now
+  past the v06 ceilings (4.63M / 41,400 s). Under v06's own budget nothing
+  remained.
+
+User decision: "Round 9, shared ceilings". The same profile is
+`contract.ROUNDS[9]`, with the shared ceilings as its only budget change
+(`SHARED_STUDY_BUDGET`). The config is
+[`highway-flow-rl-v06-round9.json`](../configs/training/highway-flow-rl-v06-round9.json)
+(SHA-256 `91947d58d48feabe1efa97bb0a678909a27ba419ffab86b124e506cf2da99217`, `training_authorized=true`).
+
+**Remaining budget at approval:**
+- 166,011 decisions and 7,108 s;
+- 98 of 100 diagnostic episodes used.
+
+The runner caps the round at the smaller of the 300,000-decision / 5,400 s
+round limit, the study totals and the 900 s final reserve.
+
+**Seeds.** Every training seed shifts by one more round (+80,000). The 15
+missed-gap seeds for the reachable cycles were rebuilt, and all built.
+
+**Shared ledger.** Further v08 training would compete for the same shared
+remaining budget. The round-8 config stays as the approval record, marked
+superseded and not authorized.

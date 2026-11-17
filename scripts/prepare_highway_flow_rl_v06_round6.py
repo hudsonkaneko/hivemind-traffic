@@ -1,10 +1,12 @@
 """Write a resolved v06 round-6/7/8 configuration (training_authorized stays false).
 
 `--round 7` runs the round-6 profile: round index 6 was already charged in the
-shared ledger by the v07 cut-in run. `--round 8` (the default) writes the
-proposed final round on the remaining study budget (see contract.ROUNDS[8]):
-raw-request jerk scored after a fixed 5-decision insertion lag, KL target 0.1,
-and the merge-speed floor reported rather than enforced at periodic validation.
+shared ledger by the v07 cut-in run. `--round 8` writes the proposed final round
+(see contract.ROUNDS[8]): raw-request jerk scored after a fixed 5-decision
+insertion lag, KL target 0.1, and the merge-speed floor reported rather than
+enforced at periodic validation. `--round 9` (the default) is that same profile
+under the shared study ceilings: round index 8 was charged by the v08
+merge-recovery run.
 
 Derived from the committed round-5 configuration
 (configs/training/highway-flow-rl-v06.json). Rows, objective, observation,
@@ -35,13 +37,13 @@ from traffic import highway_flow_rl_v06_contract as contract  # noqa: E402
 from traffic.highway_merge_context import Stage1LaneGraph  # noqa: E402
 from traffic.highway_v05_demand import write_demand  # noqa: E402
 
-DEFAULT_ROUND = 8
+DEFAULT_ROUND = 9
 # Curriculum cycles whose missed-gap seeds must build. Rounds 6/7 checked 10.
 # One cycle is the 20 training rows (101,600 decisions), so the 300,000-decision
 # round cap reaches PPO cycles 0-2 and critic cycle 0; round 8 checks 0-3.
 # (Row 16, ramp240 missed-gap, seed 9177010 at round-8 cycle 7 does not build;
 # no round can reach it.)
-CYCLES_CHECKED = {6: 10, 7: 10, 8: 4}
+CYCLES_CHECKED = {6: 10, 7: 10, 8: 4, 9: 4}
 ROUND5_INITIAL_MERGE_SPEED_MATCH = .4367  # documentation/evidence/highway-merge-training-v06/round-05-results.json
 FLOOR_MARGIN = .02
 
@@ -50,7 +52,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--project-root', type=Path, required=True, help='checkout holding outputs/ (main checkout)')
     parser.add_argument('--round5', type=Path, default=HERE / 'configs/training/highway-flow-rl-v06.json')
-    parser.add_argument('--round', type=int, default=DEFAULT_ROUND, choices=(6, 7, 8))
+    parser.add_argument('--round', type=int, default=DEFAULT_ROUND, choices=(6, 7, 8, 9))
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     ROUND = args.round
@@ -84,7 +86,7 @@ def main():
         changes=['raw-request jerk scored from the second decision', '4 complete episodes per PPO update',
                  'KL target 0.03, 10 epochs', 'pooled-intervention stop rule',
                  'merge floor from the round-5 initial validation'])
-    if ROUND == 8:
+    if ROUND in (8, 9):
         stop_rules.update(merge_floor_action='report',
             merge_floor_action_source=('final round: the remaining study budget (under 300k decisions) cannot fund '
                                        'another round, so stopping early saves nothing usable; the floor result is '
@@ -102,6 +104,7 @@ def main():
     cfg.update(round_index=ROUND, training_authorized=False, learning_profile=profile['learning_profile'],
         optimizer=deepcopy(profile['optimizer']), raw_request_scope=profile['raw_request_scope'],
         acceptance=deepcopy(profile['acceptance']), stop_rules=stop_rules, provenance=provenance,
+        budget=deepcopy(profile.get('budget', contract.BUDGET)),
         missed_gap_seed_check=dict(cycles=CYCLES_CHECKED[ROUND], built=len(seed_check), rows=seed_check),
         authorization='Prepared for user review; training_authorized=false until the user approves this configuration')
     contract.validate_config(cfg)

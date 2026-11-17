@@ -14,6 +14,7 @@ CONFIG = Path(__file__).resolve().parents[1] / 'configs/training/highway-flow-rl
 ROUND6 = Path(__file__).resolve().parents[1] / 'configs/training/highway-flow-rl-v06-round6.json'
 ROUND7 = Path(__file__).resolve().parents[1] / 'configs/training/highway-flow-rl-v06-round7.json'
 ROUND8 = Path(__file__).resolve().parents[1] / 'configs/training/highway-flow-rl-v06-round8.json'
+ROUND9 = Path(__file__).resolve().parents[1] / 'configs/training/highway-flow-rl-v06-round9.json'
 
 
 @pytest.fixture
@@ -112,7 +113,7 @@ def cfg8():
 
 def test_round8_config_is_valid_unauthorized_and_changes_only_the_proposed_fields(cfg, cfg6, cfg8):
     contract.validate_config(cfg8)
-    assert cfg8['training_authorized'] is False  # proposed November 17, 2026; awaiting user approval
+    assert cfg8['training_authorized'] is False and 'Superseded' in cfg8['authorization']  # runs as round 9
     assert cfg8['held_out_authorized'] is False and cfg8['development_gates_passed'] is False
     with pytest.raises(ValueError, match='disabled'):
         contract.validate_config(cfg8, require_training=True)
@@ -183,6 +184,54 @@ def test_round8_merge_floor_is_reported_not_enforced(cfg8, monkeypatch, tmp_path
     monkeypatch.setattr(runner, '_evaluate', lambda *a, **k: deepcopy(noisy))
     with pytest.raises(runner.StopRuleTriggered, match='intervention'):
         runner.evaluate(cfg8, tmp_path, 'periodic-validation-00030', None, None)
+
+
+@pytest.fixture
+def cfg9():
+    return json.loads(ROUND9.read_text(encoding='utf-8'))
+
+
+def test_round9_is_the_round8_profile_under_the_shared_study_ceilings(cfg8, cfg9):
+    contract.validate_config(cfg9, require_training=True)  # user approval 2026-11-17
+    assert cfg9['round_index'] == 9 and cfg9['held_out_authorized'] is False
+    assert cfg9['budget'] == dict(cfg8['budget'], total_decisions=4930000, total_wall_seconds=46800)
+    changed = {k for k in set(cfg8) | set(cfg9) if cfg8.get(k) != cfg9.get(k)}
+    assert changed == {'round_index', 'budget', 'missed_gap_seed_check', 'authorization', 'training_authorized'}
+
+
+@pytest.mark.parametrize('change', [
+    lambda c: c.update(budget=contract.BUDGET),
+    lambda c: c['budget'].update(total_decisions=5230000),
+    lambda c: c['budget'].update(per_round_decisions=400000),
+    lambda c: c['optimizer'].update(target_kl=.03),
+    lambda c: c['stop_rules'].update(merge_floor_action='stop'),
+])
+def test_contract_rejects_unreviewed_round9_changes(cfg9, change):
+    bad = deepcopy(cfg9)
+    change(bad)
+    with pytest.raises(ValueError):
+        contract.validate_config(bad)
+
+
+def test_earlier_rounds_keep_the_v06_study_ceilings(cfg6, cfg8, cfg9):
+    for old in (cfg6, cfg8):
+        with pytest.raises(ValueError):
+            contract.validate_config(dict(old, budget=cfg9['budget']))
+
+
+def test_round9_training_seeds_and_missed_gap_check(cfg9):
+    held = {r['seed'] for r in cfg9['validation_rows'] + cfg9['held_out_rows']}
+    rows = cfg9['training_rows']
+    for cycle in range(40):
+        for row in rows:
+            for critic in (0, 50000):
+                assert row['seed'] + 1000 * cycle + 10000 * 8 + critic not in held
+    reachable = -(-cfg9['budget']['per_round_decisions'] // sum(r['rollout_decisions'] for r in rows))
+    built = {(c['row'], c['seed']) for c in cfg9['missed_gap_seed_check']['rows']}
+    for i, row in enumerate(rows):
+        if row.get('missed_gap'):
+            assert all((i, row['seed'] + 1000 * c + 80000) in built for c in range(reachable))
+            assert (i, row['seed'] + 80000 + 50000) in built
 
 
 def test_buffered_trainer_merges_episodes_and_never_duplicates_a_retry(monkeypatch):

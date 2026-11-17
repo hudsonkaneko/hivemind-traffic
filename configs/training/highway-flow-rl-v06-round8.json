@@ -1048,7 +1048,7 @@
   },
   "evaluation_interval_decisions": 100000,
   "rollout_mode": "complete_declared_episode_before_update",
-  "authorization": "Prepared for user review; training_authorized=false until the user approves this configuration",
+  "authorization": "Superseded (November 17, 2026): the user approved this profile (\"Approve and launch\"), but round index 8 had meanwhile been charged in the shared ledger by the v08 merge-recovery run, which also took the ledger past the v06 study ceilings. It runs as round 9 (highway-flow-rl-v06-round9.json). Kept as the approval record; not runnable.",
   "publication_branch": "highway-jerk-diagnosis-v05",
   "evaluation_initializers": [
     {
