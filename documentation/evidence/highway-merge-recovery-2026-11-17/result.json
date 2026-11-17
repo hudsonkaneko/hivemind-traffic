@@ -1,0 +1,1084 @@
+{
+  "status": "completed_experimental_not_promoted",
+  "promoted": false,
+  "run": "outputs/highway-flow-rl/v08/train-20261117-01/train",
+  "source_commit": "0efc28a5dc8e9a5eef1b41fde09bfe7e1c7d1675",
+  "elapsed_seconds": 3751.5779999999795,
+  "training": {
+    "phase": "complete",
+    "episodes": 233,
+    "ppo_episodes": 218,
+    "critic_episodes": 15,
+    "decisions": 298361,
+    "critic_decisions": 23119,
+    "updates": 233,
+    "optimizer_steps": 21840,
+    "critic_optimizer_steps": 1960,
+    "pending": null,
+    "best_validation_label": "initial-validation",
+    "approximate_kl": 0.0,
+    "next_validation_decisions": 300967,
+    "learning_stop": "remaining_budget_below_complete_episode_reservation"
+  },
+  "actor_update_batches": 54,
+  "training_events": {
+    "stress_episodes": 34,
+    "moving_at_handoff": 34,
+    "completed_into_target": 34,
+    "collisions": 0,
+    "teleports": 0
+  },
+  "curriculum_actual": {
+    "normal_merge": {
+      "ppo": 81160,
+      "critic": 8829,
+      "ppo_fraction": 0.2948677890728886,
+      "critic_fraction": 0.38189368052251393
+    },
+    "missed_gap": {
+      "ppo": 54212,
+      "critic": 3366,
+      "ppo_fraction": 0.1969612195813139,
+      "critic_fraction": 0.14559453263549463
+    },
+    "cutin_recovery": {
+      "ppo": 27736,
+      "critic": 1725,
+      "ppo_fraction": 0.10076950465408623,
+      "critic_fraction": 0.07461395389073922
+    },
+    "cruise_following": {
+      "ppo": 71842,
+      "critic": 3869,
+      "ppo_fraction": 0.2610139440928347,
+      "critic_fraction": 0.16735152904537393
+    },
+    "passing": {
+      "ppo": 40292,
+      "critic": 5330,
+      "ppo_fraction": 0.14638754259887662,
+      "critic_fraction": 0.23054630390587827
+    }
+  },
+  "evaluations": {
+    "initial-validation": {
+      "summary": {
+        "cases": 10,
+        "decisions": 19853,
+        "pooled_intervention_fraction": 0.00407998791114693,
+        "max_peak_jerk_m_s3": 44.99999999999993,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 4,
+        "merge_targets": 4,
+        "merge_entries": 4,
+        "lateral_merges": 4,
+        "full_horizon_cases": 10,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+        "merge_speed_match": 0.4351790670014537
+      },
+      "nominal": {
+        "cases": 8,
+        "decisions": 18092,
+        "pooled_intervention_fraction": 0.0026531063453460093,
+        "max_peak_jerk_m_s3": 4.762152016037646,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 4,
+        "merge_targets": 4,
+        "merge_entries": 4,
+        "lateral_merges": 4,
+        "full_horizon_cases": 8,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+      },
+      "stress": {
+        "cases": 2,
+        "decisions": 1761,
+        "pooled_intervention_fraction": 0.018739352640545145,
+        "max_peak_jerk_m_s3": 44.99999999999993,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 0,
+        "merge_targets": 0,
+        "merge_entries": 0,
+        "lateral_merges": 0,
+        "full_horizon_cases": 2,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+      },
+      "cases": [
+        {
+          "case_id": "v05-validation-i110-merge",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.5279503105590062,
+          "overrides": 0.005270555165144062,
+          "realized_peak_jerk": 4.0000000000000036,
+          "raw_peak_jerk": 13.915426284074783,
+          "command_slew_peak": 5.955229178071022,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v05-val-0-cruise",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.0012911555842479018,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 6.187133491039276,
+          "command_slew_peak": 3.1250061094760895,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v05-val-0-passing",
+          "stress": false,
+          "passed": true,
+          "merge_match": null,
+          "overrides": 0.0005649717514124294,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 4.575600177049637,
+          "command_slew_peak": 3.037016838788986,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": []
+        },
+        {
+          "case_id": "v05-validation-i110-following",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.002117148906139732,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 6.7582617700099945,
+          "command_slew_peak": 6.037750840187073,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.45390070921985815,
+          "overrides": 0.005249343832020997,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 13.513235002756119,
+          "command_slew_peak": 2.9384391009807587,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v02-development-60mph-cruise",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.001324308416715715,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 9.061696976423264,
+          "command_slew_peak": 2.7770763635635376,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.3900709219858156,
+          "overrides": 0.009523809523809525,
+          "realized_peak_jerk": 4.762152016037646,
+          "raw_peak_jerk": 13.752763718366623,
+          "command_slew_peak": 2.994808256626129,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.36879432624113473,
+          "overrides": 0.005,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 13.788963258266449,
+          "command_slew_peak": 2.982546091079712,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started-cutin-stress-verified-onset",
+          "stress": true,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.017817371937639197,
+          "realized_peak_jerk": 44.99999999999993,
+          "raw_peak_jerk": 31.07999935746193,
+          "command_slew_peak": 8.626154996454716,
+          "moving_at_handoff": true,
+          "completed_into_target": true,
+          "handoff_headway_s": 1.0288392745966988,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started-cutin-stress-verified-onset",
+          "stress": true,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.019698725376593278,
+          "realized_peak_jerk": 44.99999999999993,
+          "raw_peak_jerk": 30.579974204301834,
+          "command_slew_peak": 8.9869948849082,
+          "moving_at_handoff": true,
+          "completed_into_target": true,
+          "handoff_headway_s": 1.0268427323970355,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "raw_request_jerk"
+          ]
+        }
+      ]
+    },
+    "periodic-validation-00062": {
+      "summary": {
+        "cases": 10,
+        "decisions": 19778,
+        "pooled_intervention_fraction": 0.003842653453331985,
+        "max_peak_jerk_m_s3": 44.99999999999993,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 4,
+        "merge_targets": 4,
+        "merge_entries": 4,
+        "lateral_merges": 4,
+        "full_horizon_cases": 10,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+        "merge_speed_match": 0.5143826263160214
+      },
+      "nominal": {
+        "cases": 8,
+        "decisions": 18015,
+        "pooled_intervention_fraction": 0.002497918401332223,
+        "max_peak_jerk_m_s3": 4.0000000000000036,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 4,
+        "merge_targets": 4,
+        "merge_entries": 4,
+        "lateral_merges": 4,
+        "full_horizon_cases": 8,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+      },
+      "stress": {
+        "cases": 2,
+        "decisions": 1763,
+        "pooled_intervention_fraction": 0.01758366420873511,
+        "max_peak_jerk_m_s3": 44.99999999999993,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 0,
+        "merge_targets": 0,
+        "merge_entries": 0,
+        "lateral_merges": 0,
+        "full_horizon_cases": 2,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+      },
+      "cases": [
+        {
+          "case_id": "v05-validation-i110-merge",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.8944099378881988,
+          "overrides": 0.004632929436920884,
+          "realized_peak_jerk": 4.0000000000000036,
+          "raw_peak_jerk": 12.724882125854489,
+          "command_slew_peak": 4.800723046064377,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v05-val-0-cruise",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.0012861736334405145,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 5.9763385355472565,
+          "command_slew_peak": 3.215186297893524,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v05-val-0-passing",
+          "stress": false,
+          "passed": true,
+          "merge_match": null,
+          "overrides": 0.0005665722379603399,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 4.809224456548691,
+          "command_slew_peak": 2.799057215452194,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": []
+        },
+        {
+          "case_id": "v05-validation-i110-following",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.0021321961620469083,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 6.600914746522903,
+          "command_slew_peak": 5.193963721394539,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.425531914893617,
+          "overrides": 0.005235602094240838,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 12.396765798330307,
+          "command_slew_peak": 3.2191748917102814,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v02-development-60mph-cruise",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.001626737651582372,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 8.317493945360184,
+          "command_slew_peak": 3.459373861551285,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.375886524822695,
+          "overrides": 0.005405405405405406,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 12.761595249176025,
+          "command_slew_peak": 3.329162448644638,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.3617021276595745,
+          "overrides": 0.004944375772558714,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 12.812222689390182,
+          "command_slew_peak": 3.3149534463882446,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started-cutin-stress-verified-onset",
+          "stress": true,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.015555555555555555,
+          "realized_peak_jerk": 44.99999999999993,
+          "raw_peak_jerk": 30.79947665333748,
+          "command_slew_peak": 8.054117951542139,
+          "moving_at_handoff": true,
+          "completed_into_target": true,
+          "handoff_headway_s": 1.0288392745966988,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started-cutin-stress-verified-onset",
+          "stress": true,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.019698725376593278,
+          "realized_peak_jerk": 44.99999999999993,
+          "raw_peak_jerk": 30.323948711156845,
+          "command_slew_peak": 8.41457113623619,
+          "moving_at_handoff": true,
+          "completed_into_target": true,
+          "handoff_headway_s": 1.0268427323970355,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "raw_request_jerk"
+          ]
+        }
+      ]
+    },
+    "periodic-validation-00152": {
+      "summary": {
+        "cases": 10,
+        "decisions": 19874,
+        "pooled_intervention_fraction": 0.004931065713998189,
+        "max_peak_jerk_m_s3": 44.99999999999993,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 4,
+        "merge_targets": 4,
+        "merge_entries": 4,
+        "lateral_merges": 4,
+        "full_horizon_cases": 10,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+        "merge_speed_match": 0.47699440553279593
+      },
+      "nominal": {
+        "cases": 8,
+        "decisions": 18071,
+        "pooled_intervention_fraction": 0.003596923247191633,
+        "max_peak_jerk_m_s3": 30.01800367180465,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 4,
+        "merge_targets": 4,
+        "merge_entries": 4,
+        "lateral_merges": 4,
+        "full_horizon_cases": 8,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+      },
+      "stress": {
+        "cases": 2,
+        "decisions": 1803,
+        "pooled_intervention_fraction": 0.018302828618968387,
+        "max_peak_jerk_m_s3": 44.99999999999993,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 0,
+        "merge_targets": 0,
+        "merge_entries": 0,
+        "lateral_merges": 0,
+        "full_horizon_cases": 2,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+      },
+      "cases": [
+        {
+          "case_id": "v05-validation-i110-merge",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.45962732919254656,
+          "overrides": 0.010691375623663579,
+          "realized_peak_jerk": 30.01800367180465,
+          "raw_peak_jerk": 24.370133876800466,
+          "command_slew_peak": 12.33429729938507,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v05-val-0-cruise",
+          "stress": false,
+          "passed": true,
+          "merge_match": null,
+          "overrides": 0.0012804097311139564,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 4.959570616483688,
+          "command_slew_peak": 3.106132447719574,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": []
+        },
+        {
+          "case_id": "v05-val-0-passing",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.000564334085778781,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 6.547877490520477,
+          "command_slew_peak": 1.2131795287132263,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v05-validation-i110-following",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.0031982942430703624,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 8.090700060129166,
+          "command_slew_peak": 5.0966645032167435,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.7391304347826086,
+          "overrides": 0.005221932114882507,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 11.080398112535477,
+          "command_slew_peak": 3.6709707975387573,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v02-development-60mph-cruise",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.0016181229773462784,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 8.907309919595718,
+          "command_slew_peak": 3.767566829919815,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.3546099290780142,
+          "overrides": 0.005376344086021506,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 11.956676095724106,
+          "command_slew_peak": 3.5947400331497192,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.3546099290780142,
+          "overrides": 0.004944375772558714,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 12.009366601705551,
+          "command_slew_peak": 3.5826832056045532,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started-cutin-stress-verified-onset",
+          "stress": true,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.017429193899782137,
+          "realized_peak_jerk": 44.99999999999993,
+          "raw_peak_jerk": 27.214268371462822,
+          "command_slew_peak": 9.058386161923409,
+          "moving_at_handoff": true,
+          "completed_into_target": true,
+          "handoff_headway_s": 1.0288392745966988,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started-cutin-stress-verified-onset",
+          "stress": true,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.0192090395480226,
+          "realized_peak_jerk": 44.99999999999993,
+          "raw_peak_jerk": 26.754179522395134,
+          "command_slew_peak": 9.417450651526451,
+          "moving_at_handoff": true,
+          "completed_into_target": true,
+          "handoff_headway_s": 1.0268427323970355,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "raw_request_jerk"
+          ]
+        }
+      ]
+    },
+    "final-validation": {
+      "summary": {
+        "cases": 10,
+        "decisions": 19856,
+        "pooled_intervention_fraction": 0.0057413376309427885,
+        "max_peak_jerk_m_s3": 44.99999999999993,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 4,
+        "merge_targets": 4,
+        "merge_entries": 4,
+        "lateral_merges": 4,
+        "full_horizon_cases": 10,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+        "merge_speed_match": 0.39358398308444564
+      },
+      "nominal": {
+        "cases": 8,
+        "decisions": 18096,
+        "pooled_intervention_fraction": 0.0044761273209549075,
+        "max_peak_jerk_m_s3": 28.37963300878279,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 4,
+        "merge_targets": 4,
+        "merge_entries": 4,
+        "lateral_merges": 4,
+        "full_horizon_cases": 8,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+      },
+      "stress": {
+        "cases": 2,
+        "decisions": 1760,
+        "pooled_intervention_fraction": 0.01875,
+        "max_peak_jerk_m_s3": 44.99999999999993,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 0,
+        "merge_targets": 0,
+        "merge_entries": 0,
+        "lateral_merges": 0,
+        "full_horizon_cases": 2,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion"
+      },
+      "cases": [
+        {
+          "case_id": "v05-validation-i110-merge",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.12422360248447205,
+          "overrides": 0.01689545934530095,
+          "realized_peak_jerk": 28.37963300878279,
+          "raw_peak_jerk": 34.99074560403816,
+          "command_slew_peak": 16.886481002438813,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v05-val-0-cruise",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.0012836970474967907,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 5.179123431444168,
+          "command_slew_peak": 3.1813636422157288,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v05-val-0-passing",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.0005668934240362812,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 6.069887429475784,
+          "command_slew_peak": 2.5161227583885193,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v05-validation-i110-following",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.0028429282160625444,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 7.032277584075928,
+          "command_slew_peak": 5.000709667801857,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.7267080745341615,
+          "overrides": 0.006544502617801047,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 11.776290535926819,
+          "command_slew_peak": 3.832836225628853,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "v02-development-60mph-cruise",
+          "stress": false,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.0013204225352112676,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 8.178919851779938,
+          "command_slew_peak": 3.6297617852687836,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.3546099290780142,
+          "overrides": 0.005427408412483039,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 11.869920790195465,
+          "command_slew_peak": 3.507087826728821,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+          "stress": false,
+          "passed": false,
+          "merge_match": 0.36879432624113473,
+          "overrides": 0.004987531172069825,
+          "realized_peak_jerk": 3.9999999999999147,
+          "raw_peak_jerk": 11.915288865566254,
+          "command_slew_peak": 3.497367203235626,
+          "moving_at_handoff": false,
+          "completed_into_target": false,
+          "handoff_headway_s": null,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "rolling_merge_quality",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started-cutin-stress-verified-onset",
+          "stress": true,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.017817371937639197,
+          "realized_peak_jerk": 44.99999999999993,
+          "raw_peak_jerk": 26.82347722351551,
+          "command_slew_peak": 8.609486296772957,
+          "moving_at_handoff": true,
+          "completed_into_target": true,
+          "handoff_headway_s": 1.0288392745966988,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "raw_request_jerk"
+          ]
+        },
+        {
+          "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started-cutin-stress-verified-onset",
+          "stress": true,
+          "passed": false,
+          "merge_match": null,
+          "overrides": 0.019721577726218097,
+          "realized_peak_jerk": 44.99999999999993,
+          "raw_peak_jerk": 26.30438081920147,
+          "command_slew_peak": 8.992280885577202,
+          "moving_at_handoff": true,
+          "completed_into_target": true,
+          "handoff_headway_s": 1.0268427323970355,
+          "collisions": 0,
+          "teleports": 0,
+          "failures": [
+            "per_car_route_comfort_or_control",
+            "raw_request_jerk"
+          ]
+        }
+      ]
+    }
+  },
+  "final_below_matched_merge_baseline": true,
+  "actor_export_probe_matches_checkpoint": true,
+  "artifacts": {
+    "last.pt": {
+      "path": "outputs/highway-flow-rl/v08/train-20261117-01/train/last.pt",
+      "sha256": "7506fe7f60dc13772539b772a28efff7c0c1d65253f92a4f86c6174ddf5b9e1c"
+    },
+    "policy.pt": {
+      "path": "outputs/highway-flow-rl/v08/train-20261117-01/train/policy.pt",
+      "sha256": "211cfc140694328b409711008f9c0d4c84c6846d6c3bb022f6df4e250b0fbbfe"
+    },
+    "best.pt": {
+      "path": "outputs/highway-flow-rl/v08/train-20261117-01/train/best.pt",
+      "sha256": "94d00fa3cef70da12ce6f11ea0c32897e4b9bc651640b57d6115e1471d0bfcb0"
+    },
+    "best-policy.pt": {
+      "path": "outputs/highway-flow-rl/v08/train-20261117-01/train/best-policy.pt",
+      "sha256": "a0fb2717c2fe896164a9874a9b5bdf32f8d48a82b4f1aac749703c9b67dafe41"
+    },
+    "resolved-config.json": {
+      "path": "outputs/highway-flow-rl/v08/train-20261117-01/train/resolved-config.json",
+      "sha256": "3d5d07a9cb34c3d2a8487c0e6fbb000ca56885e0b9cb0b99f7e50663a6fc6770"
+    },
+    "manifest.json": {
+      "path": "outputs/highway-flow-rl/v08/train-20261117-01/train/manifest.json",
+      "sha256": "a0aa2a486779b9fc8d8fbfc417c2b8bb239db87f44e121b3392cab65e88c7f8c"
+    },
+    "initial-validation.json": {
+      "path": "outputs/highway-flow-rl/v08/train-20261117-01/train/initial-validation.json",
+      "sha256": "5485c34b178d388ca8709a5474ddda2152f213cdc8129bb3d40fbf4b9958f0d2"
+    },
+    "periodic-validation-00062.json": {
+      "path": "outputs/highway-flow-rl/v08/train-20261117-01/train/periodic-validation-00062.json",
+      "sha256": "59009a3f41339047fd050279979529fd87e902b4b5f76ac43620a97f427a706e"
+    },
+    "periodic-validation-00152.json": {
+      "path": "outputs/highway-flow-rl/v08/train-20261117-01/train/periodic-validation-00152.json",
+      "sha256": "76e30f8060804e040b5b46d054a9a45000c87ca4ebeebeb9281552b435beccdd"
+    },
+    "final-validation.json": {
+      "path": "outputs/highway-flow-rl/v08/train-20261117-01/train/final-validation.json",
+      "sha256": "0684bae664845d431173b643e9fda4acb1983b9b82dedc8d61273bf86f5e7825"
+    }
+  },
+  "limitations": [
+    "No held-out or 3D evaluation; no policy promotion.",
+    "Cut-ins are already moving at handoff; this measures recovery, not anticipation.",
+    "Nominal and stress gates remain failed; emergency jerk peaks are not hidden.",
+    "Periodic merge checks passed, but final validation regressed after the last periodic check.",
+    "best-policy.pt remains the initial actor under the safety-first ranking.",
+    "Early validation improvements do not imply a retained improved checkpoint.",
+    "Historical raw-request jerk includes actuator lag; command-slew is reported separately.",
+    "The final two buffered episodes were charged but did not form a four-episode PPO batch."
+  ]
+}

@@ -1,0 +1,354 @@
+{
+  "schema": "shared_highway_comparison_evidence_v01",
+  "completed_episodes": 30,
+  "training": false,
+  "optimizer_steps": 0,
+  "promoted": false,
+  "held_out": false,
+  "run": "outputs/highway-shared-evaluation/compare-20261117-01",
+  "elapsed_seconds": 293.905999999959,
+  "source_commit": "55af9f6ea0a218d404d0b278f347966a9880fc01",
+  "config_sha256": "b40ffd61059341925858c5bf1cb1d4b4bc5be9cebcebb557bed9e1fe70c43ed0",
+  "source_manifest_sha256": "5a8abf98e7bb1eac4839feed918742030b9ca6b7e37c587166a189b9571b4dfc",
+  "candidates": [
+    {
+      "id": "frozen_v04_baseline",
+      "path_base": "coordination_worktree",
+      "path": "outputs/highway-flow-rl/v04/long-round-03/best.pt",
+      "artifact_type": "full_checkpoint_actor_only",
+      "sha256": "79e36b5425fa8a37f02ca990af23854f2cc5d73d6e62d27738ea767a55c25f0f"
+    },
+    {
+      "id": "claude_v06_round09_final",
+      "path_base": "canonical_checkout",
+      "path": "outputs/highway-flow-rl/v06/round-09/policy.pt",
+      "artifact_type": "torchscript_actor",
+      "sha256": "5a363a7b621f00e818e4b340fcef2eb773501b776f8dcf8320b9bd214299c05b"
+    },
+    {
+      "id": "codex_v08_final",
+      "path_base": "coordination_worktree",
+      "path": "outputs/highway-flow-rl/v08/train-20261117-01/train/policy.pt",
+      "artifact_type": "torchscript_actor",
+      "sha256": "211cfc140694328b409711008f9c0d4c84c6846d6c3bb022f6df4e250b0fbbfe"
+    }
+  ],
+  "results": {
+    "frozen_v04_baseline": {
+      "nominal": {
+        "cases": 8,
+        "decisions": 18092,
+        "pooled_intervention_fraction": 0.0026531063453460093,
+        "max_peak_jerk_m_s3": 4.762152016037646,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 4,
+        "merge_targets": 4,
+        "merge_entries": 4,
+        "lateral_merges": 4,
+        "full_horizon_cases": 8,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+        "strict_cases_passed": 1,
+        "merge_speed_match": 0.4351790670014537
+      },
+      "cutin": {
+        "cases": 2,
+        "decisions": 1761,
+        "pooled_intervention_fraction": 0.018739352640545145,
+        "max_peak_jerk_m_s3": 44.99999999999993,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 0,
+        "merge_targets": 0,
+        "merge_entries": 0,
+        "lateral_merges": 0,
+        "full_horizon_cases": 2,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+        "strict_cases_passed": 0,
+        "merge_speed_match": null
+      }
+    },
+    "claude_v06_round09_final": {
+      "nominal": {
+        "cases": 8,
+        "decisions": 18016,
+        "pooled_intervention_fraction": 0.0025532859680284193,
+        "max_peak_jerk_m_s3": 4.0000000000000036,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 4,
+        "merge_targets": 4,
+        "merge_entries": 4,
+        "lateral_merges": 4,
+        "full_horizon_cases": 8,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+        "strict_cases_passed": 1,
+        "merge_speed_match": 0.4884146072860227
+      },
+      "cutin": {
+        "cases": 2,
+        "decisions": 1763,
+        "pooled_intervention_fraction": 0.01871809415768576,
+        "max_peak_jerk_m_s3": 44.99999999999993,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 0,
+        "merge_targets": 0,
+        "merge_entries": 0,
+        "lateral_merges": 0,
+        "full_horizon_cases": 2,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+        "strict_cases_passed": 0,
+        "merge_speed_match": null
+      }
+    },
+    "codex_v08_final": {
+      "nominal": {
+        "cases": 8,
+        "decisions": 18096,
+        "pooled_intervention_fraction": 0.0044761273209549075,
+        "max_peak_jerk_m_s3": 28.37963300878279,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 4,
+        "merge_targets": 4,
+        "merge_entries": 4,
+        "lateral_merges": 4,
+        "full_horizon_cases": 8,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+        "strict_cases_passed": 0,
+        "merge_speed_match": 0.39358398308444564
+      },
+      "cutin": {
+        "cases": 2,
+        "decisions": 1760,
+        "pooled_intervention_fraction": 0.01875,
+        "max_peak_jerk_m_s3": 44.99999999999993,
+        "collisions": 0,
+        "teleports": 0,
+        "stable_merges": 0,
+        "merge_targets": 0,
+        "merge_entries": 0,
+        "lateral_merges": 0,
+        "full_horizon_cases": 2,
+        "quality_accepted": false,
+        "held_out": false,
+        "development_gates_passed": false,
+        "acceptance_scope": "Development only; uncensored full-route per-car gates, no promotion",
+        "strict_cases_passed": 0,
+        "merge_speed_match": null
+      }
+    }
+  },
+  "source_evidence": [
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-00/report.json",
+      "report_sha256": "458d5aff89bf6478cda1b2be1ba67652a05a7808786589c43f9e1e1aa16999ed",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-00/episode-6900019-90587bfc/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-01/report.json",
+      "report_sha256": "0a6c4740eb8f49164ce41c1f922368fc32df35b5b225a3764d8e320da15c8623",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-01/episode-6900000-232ad33a/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-02/report.json",
+      "report_sha256": "999c393674a1a4e1d2036bf2a6b0b8eead81def721f3a9f375a62bedee056bb9",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-02/episode-6900002-5b3cd22a/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-03/report.json",
+      "report_sha256": "30e96e8656b57d26306e20124f2b63eb286b84d488152c7b06e1485fc6dfae8e",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-03/episode-6900017-f2389f35/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-04/report.json",
+      "report_sha256": "c7b57b10701b06c8721d071e69bcb6f64592662c13dc7fcad047547240ad74fc",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-04/episode-8400004-08cccb24/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-05/report.json",
+      "report_sha256": "49e1bc2457eb661d6ea545a4756a78dce14ec343c951db6964220893897e38d5",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-05/episode-8400005-fc97e829/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-06/report.json",
+      "report_sha256": "405da33b7adc2f184de65bb11409a356204e095ef720823f419e119ca8ddfc80",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-06/episode-8400004-9db1a2c1/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-07/report.json",
+      "report_sha256": "73ab34d5c589bea0eb3d21488d46157e0dc093653d139bb00b6578bd4a935aca",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-07/episode-8400004-978a0ca6/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-08/report.json",
+      "report_sha256": "aacfe6120d34b7818dd8d6723b4aa48a2cc5f6b793f9855b3483dada18d83b69",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-08/episode-8700004-bf5b8506/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-09/report.json",
+      "report_sha256": "e5d95373aa47d22e39d49589ff442d8d6e0fc781939be02c1ddb7a57a837ee94",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/frozen_v04_baseline/case-09/episode-8700004-c19c645d/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-00/report.json",
+      "report_sha256": "7a5e88886fdc755f45b043e82baa8ba486d9e16e2c759bca6230a1ab75985dcb",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-00/episode-6900019-6311ebf8/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-01/report.json",
+      "report_sha256": "8e0a105e011f36386977c5945ab4bf8c6410f4a4f9461887e9930c1ad4611c24",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-01/episode-6900000-a6f75952/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-02/report.json",
+      "report_sha256": "48690711fd159b7caf7d9947eea6cfe4178ed2ab4989693e8bb1c0d02fd64b98",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-02/episode-6900002-39284044/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-03/report.json",
+      "report_sha256": "9221453fbf80f95aa0b28971da59def8b19ff8213ba19aa8272af650fd9433e6",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-03/episode-6900017-c8d2f4af/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-04/report.json",
+      "report_sha256": "727253a3ae7578aedcc9f2dfc63c724cad5c7693af56fb13ad75dec0e5e3bdfd",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-04/episode-8400004-bad1d322/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-05/report.json",
+      "report_sha256": "d4910beb371a100b7deb234f703e7a7dabb4ca6dd4cf161664c1cbf2847566f2",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-05/episode-8400005-3841e48f/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-06/report.json",
+      "report_sha256": "9a8c037237a2f1fb9d2d2ff057ee9feb454395f4122d48c1c00e9909c6ec8377",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-06/episode-8400004-883022ab/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-07/report.json",
+      "report_sha256": "220d3cd2d45c2b45bde4264e586416f3d6f7492f13804b940f8fd1c69c6c5add",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-07/episode-8400004-687856d5/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-08/report.json",
+      "report_sha256": "d196bed1239706559f0f46a50ff2abc8a4a21c8f816fa1ca1d5b025dd9d3b5d2",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-08/episode-8700004-35a6a36a/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-09/report.json",
+      "report_sha256": "6275f344d1e1d9ddb5623dcc9c528abd98e75febbe672db3e68fb6a17210a583",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/claude_v06_round09_final/case-09/episode-8700004-ef743f4f/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-00/report.json",
+      "report_sha256": "4ae918e498ddd603c25d62193e9978c927146cacce9e5169c4f1450295ed924a",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-00/episode-6900019-6ec53fb1/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-01/report.json",
+      "report_sha256": "6385157bbc84599f1a964e7528f4a255a7e2932195969392980513362ae96cf2",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-01/episode-6900000-9f843268/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-02/report.json",
+      "report_sha256": "e628920d727d8ddfbcabe2c313c8b8447074db5e23cdc3e164523869e3deb8c7",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-02/episode-6900002-68ae3ba2/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-03/report.json",
+      "report_sha256": "384f431c736ec409ac1cad17fecd8427cd981049b8fc00e723c89d500a10c7f8",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-03/episode-6900017-e775ec4c/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-04/report.json",
+      "report_sha256": "0b98a45bbc882831c2b76a28f3880a163703546163fa39898486cbbf998a5464",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-04/episode-8400004-e4117f1c/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-05/report.json",
+      "report_sha256": "caad02f5a924755b9af175358de73a1bc8a4a4b9ff807cf86f537beca87c1a47",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-05/episode-8400005-87f020d7/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-06/report.json",
+      "report_sha256": "974e318dd9bf513211d00d3feacd8de25d951f8b4dd1d9e7b1f85fd6493f5cfa",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-06/episode-8400004-9c3a4cc4/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-07/report.json",
+      "report_sha256": "24001987ad116828800f29202734decd6a34f98217acdb30f033d106b44ea696",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-07/episode-8400004-6472dbcd/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-08/report.json",
+      "report_sha256": "ef11297d767ad0b138ddcc154bb1efe47a95fdc8acbdb60e1ac197a970cb9b81",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-08/episode-8700004-7017597a/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "report": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-09/report.json",
+      "report_sha256": "20b44230d9b09ba1a1d0efe9c271efa8ff371a4431bb2f7bd5455b5697121314",
+      "native_log": "outputs/highway-shared-evaluation/compare-20261117-01/codex_v08_final/case-09/episode-8700004-ee573b19/sumo-errors.log",
+      "native_log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "postprocessing_correction": {
+    "reason": "Initial scorer looked in case parent instead of native episode child.",
+    "changed_fields": "Native warning availability/events and dependent acceptance gates only.",
+    "original_summary_sha256": "e806894a5faab192314f7133f26d4b0ae89d3344770478f607db73e1066c2dd7",
+    "original_files_unchanged": true,
+    "extra_simulator_episodes": 0,
+    "reducer_sha256": "c24ef60d767eebff7aa23490e1e39fec7fe8047a15f2a7fbca9465ab3e3b9e48"
+  },
+  "limits": [
+    "Single fixed seed per scenario, development cases only; no held-out claims.",
+    "Same v08 lane admission for all candidates; this is a transfer evaluation for v06.",
+    "All-decision scoring is primary; startup exclusions are diagnostics only.",
+    "All candidates retain failed merge-quality and cut-in comfort checks; no promotion."
+  ]
+}

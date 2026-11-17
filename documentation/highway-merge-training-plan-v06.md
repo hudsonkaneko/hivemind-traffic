@@ -747,3 +747,172 @@ statistics. Study ledger after the run: 35,914 s of 41,400 s, 4,465,628 of
 and 164,372 decisions, which is less than one full round. No further training is
 authorized.
 
+## Round 8 proposal (November 17, 2026): final round on the remaining budget
+
+The user asked for a final-round proposal after round 7. The resolved
+configuration is
+[`highway-flow-rl-v06-round8.json`](../configs/training/highway-flow-rl-v06-round8.json)
+(SHA-256 `b876e2468a94b28dc9e8574a1454de7be15a49579716b33880a8c14f4eb207f9`),
+profile `contract.ROUNDS[8]`, with **`training_authorized=false`**. Nothing
+runs until the user approves it.
+
+**Budget.** The study has 5,486 s, 164,372 decisions and 9 diagnostic episodes
+left. One curriculum cycle (20 training rows) is 101,600 decisions. Of the
+164,372, 20,000 go to critic warm-up and about 144,000 to PPO: roughly 35
+episodes, or 9 merged updates. The run gets one periodic validation at 100k and
+a final validation. Preflight uses 1 diagnostic episode. Round 7 charged 912 s
+per 100k decisions, so time is not the limit.
+
+**What stays the same as round 7:**
+- training/validation/held-out rows;
+- frozen v04 warm start;
+- reward weights, observation, whole-episode rate limit and safety settings;
+- 4 complete episodes per update and 10 epochs;
+- merge-floor value 0.4167;
+- collision and pooled-intervention (5%) stop rules.
+
+**Changes:**
+
+1. **Raw-request jerk scored after a fixed 5-decision insertion lag.**
+   - [round-08-insertion-lag.json](evidence/highway-merge-training-v06/round-08-insertion-lag.json)
+     (SHA-256 `3215c801cce6650246cb1c2e1578d22264b1253baf1a2934453e634257a00a6a`,
+     from `scripts/measure_highway_flow_rl_v06_insertion_lag.py`) re-scores
+     round 7's saved validations.
+   - The insertion lag lasts at most 4 decisions.
+   - Cases passing the original gates plus the raw check are:
+     - 1/8 with no skip or one skipped decision;
+     - 3/8 with 2 to 8 skipped decisions.
+   - The round-8 window is a fixed 5 decisions (0.5 s): the measured lag plus
+     one decision. It does not depend on the policy, and realized jerk in those
+     decisions still has to stay under the original 5 m/s3 gate.
+   - Starting value: 3/8, since validation is deterministic and the warm start
+     is the same. Ceiling: 4/8 (5/8 if the I-110 merge also passes).
+   - One failure that remains is a genuine actor jump: car `agent_2` in
+     I-110 following reaches 6.0 m/s3 after the window.
+
+2. **KL target 0.1 instead of 0.03.**
+   - For a Gaussian, the mean can move about sigma * sqrt(2 * KL) before the
+     per-minibatch early stop fires. With the warm-start sigma of 0.04
+     normalized, that is:
+     - 0.0098 normalized (about 0.03 m/s2) per update at a KL target of 0.03;
+     - 0.018 normalized (about 0.06 m/s2) at 0.1.
+   - In round 7, every merged update stopped on KL at 0.03, mostly within the
+     first epoch.
+   - The critic shares that early stop, so it was also under-trained.
+   - Risk: larger steps can degrade the policy, as in round 5. The intervention
+     and collision stops stay, and checkpoint selection keeps the warm start
+     unless a validation ranks better.
+
+3. **Merge-speed floor reported, not enforced, at periodic validation**
+   (`stop_rules.merge_floor_action='report'`).
+   - Round 7 stopped at 100k because one ramp180 car failed its stable window,
+     although I-110 was improving.
+   - The remaining budget cannot fund another round, so stopping early saves
+     nothing usable.
+   - The floor result is still recorded (`merge_speed_match_below_floor`).
+   - Earlier rounds' profiles cannot switch it off.
+
+**Not changed: speed-limit trims.**
+- The ramp180 car's 40 trims were tiny: median 0.028 m/s2, largest 0.21 m/s2.
+- A cost graded by trim size would be close to zero.
+- Each trim already costs the reward's −0.2 intervention penalty.
+- This round relies on larger update steps to let that penalty act. If the
+  trims persist, the case still fails its gate.
+- The intervention gate, the guard and the reward weights are unchanged.
+
+**Seed check.** The missed-gap seeds were rebuilt for every cycle that the
+300,000-decision round cap can reach (PPO cycles 0-3 and critic cycle 0): 15
+seeds, all built. One seed does not build: row 16 (ramp240 missed-gap), seed
+9177010 at round-8 cycle 7. No round can reach that cycle.
+
+**Expected outcome (not a promise).**
+- The realistic target is the I-110 merge passing the original gates (5/8).
+  It rose from 0.534 to 0.565 in round 7, against a layout ceiling of 0.99.
+- The ramp layouts cannot pass merge quality (ceilings 0.69 and 0.57).
+- Held-out evaluation stays unauthorized.
+
+### Launch correction: runs as round 9 under the shared study ceilings (November 17, 2026)
+
+The user approved the round-8 profile ("Approve and launch"). Before launch, the
+shared study ledger showed two changes:
+
+- **Round index 8 was already charged** by another session's v08
+  merge-recovery run
+  ([highway-merge-recovery-2026-11-17.md](highway-merge-recovery-2026-11-17.md),
+  branch `2026-11-17-codex-merge-recovery`): 298,361 training decisions and
+  3,752 s, plus preparation episodes.
+- That run used the shared study ceilings first approved for v07 (4.93M
+  decisions / 46,800 s), so the ledger (4,763,989 decisions, 39,692 s) is now
+  past the v06 ceilings (4.63M / 41,400 s). Under v06's own budget nothing
+  remained.
+
+User decision: "Round 9, shared ceilings". The same profile is
+`contract.ROUNDS[9]`, with the shared ceilings as its only budget change
+(`SHARED_STUDY_BUDGET`). The config is
+[`highway-flow-rl-v06-round9.json`](../configs/training/highway-flow-rl-v06-round9.json)
+(SHA-256 `91947d58d48feabe1efa97bb0a678909a27ba419ffab86b124e506cf2da99217`, `training_authorized=true`).
+
+**Remaining budget at approval:**
+- 166,011 decisions and 7,108 s;
+- 98 of 100 diagnostic episodes used.
+
+The runner caps the round at the smaller of the 300,000-decision / 5,400 s
+round limit, the study totals and the 900 s final reserve.
+
+**Seeds.** Every training seed shifts by one more round (+80,000). The 15
+missed-gap seeds for the reachable cycles were rebuilt, and all built.
+
+**Shared ledger.** Further v08 training would compete for the same shared
+remaining budget. The round-8 config stays as the approval record, marked
+superseded and not authorized.
+
+## Round 9 result (November 17, 2026): full updates, small merge gains, no gate change
+
+The final-round profile ran as round 9 (`outputs/highway-flow-rl/v06/round-09`,
+main checkout). Preflight `preflight-r09` passed. The run completed normally:
+157,957 decisions (22,184 critic warm-up), 1,523 s charged, 54 PPO episodes in
+13 merged updates plus 10 critic-only episodes. It stopped when the remaining
+budget could not hold another complete episode. No collisions or teleports, and
+no stop rule fired. Nothing is promoted, and held-out evaluation is not run.
+
+| Validation (8 rows) | Original gates | + raw check after 5-decision lag | Merge speed match | I-110 merge | Stable merges | Interventions | Peak jerk |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Initial (v04 actor) | 4/8 | 3/8 | 0.437 | 0.534 | 4/4 | 0.27% | 4.8 |
+| 100k (update 41) | 4/8 | 3/8 | 0.451 | 0.571 | 4/4 | 0.25% | 4.0 |
+| Final (158k) | 4/8 | 3/8 | **0.454** | **0.590** | 4/4 | 0.26% | 4.0 |
+
+**What happened:**
+1. **Updates now train.** 11 of 13 merged updates ran all 10 epochs (2
+   stopped on KL, at 0.118 against 0.1), for 4,608 optimizer steps in total.
+   Round 7 had 236. The critic trained alongside (value loss 0.55 to 3.99).
+2. **Merge speed matching improved slightly and steadily, without breaking
+   anything:**
+   - I-110: 0.534 to 0.590;
+   - ramp120 2-lane: 0.454 to 0.461;
+   - ramp180 2-lane: 0.390 to 0.397;
+   - ramp180 4-lane: unchanged (0.369).
+
+   The ramp180 car that failed round 7 kept its stable merge (interventions
+   0.82%). Pooled interventions stayed at about 0.26%, and peak realized jerk
+   was 4.0 m/s3.
+3. **No gate result changed.**
+   - The original rules stayed at 4/8: every merge row still fails
+     `rolling_merge_quality`. I-110 at 0.59 is far below the gate's speed-match
+     requirement, and the ramp layouts cannot reach it (ceilings 0.69/0.57).
+   - The v06 count stayed at 3/8. I-110 following still fails the raw-request
+     check on one genuine request jump (`agent_2`, 6.0 to 6.2 m/s3).
+4. **The starting policy stays "best".** The three validations tie on safety,
+   gate failures, completed routes, qualified merges and stops. The last
+   tie-breaker, the largest per-car intervention fraction, is 0.01370
+   (initial), 0.01377 (100k) and 0.01381 (final). Merge speed matching is not
+   part of the rank, so `best.pt` is the warm start, and `policy.pt` is the
+   round-9 final actor. Both are kept.
+
+Evidence: [round-09-results.json](evidence/highway-merge-training-v06/round-09-results.json)
+(SHA-256 `ca1c2d662188e502451f52b8c2d48c58596f17d0380e235770a881be5d15df97`), with validation hashes and ranks, per-case failures and
+update statistics.
+
+**Shared ledger after the run:** 41,218 s of 46,800 s and 4,921,946 of
+4,930,000 decisions. Only 8,054 decisions remain, less than one training
+episode, so the v06 training budget is used up. Any further v06 training would
+need a new budget decision.

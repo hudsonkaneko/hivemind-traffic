@@ -16,7 +16,7 @@ and score evaluation; it must not silently enter the deployed actor or its masks
 
 Latest offline comparison: [adjacent native traffic](highway-flow-rl-v02.md#november-8---speed-comparison-with-adjacent-native-traffic) accelerates more steadily than the frozen actor; no additional simulation or training.
 
-**Next action:** user decision after v06 round 7 stopped at its merge stop rule (remaining study budget 5,486 s / 164,372 decisions, less than one round); no training until a revised configuration is approved. Previous: launch round 7 (done November 15). Previous: approval of the round-6 configuration (approved November 15; round index 6 already charged by v07, so it runs as round 7). Previous: user chose fix scoring + updates (November 15). Previous: diagnose v06 round 5 (done November 15). Previous next action: user decision on the v06 training proposal (approved and run November 15). Previous next action: v06 Phase 3 training proposal. Weights set by the Phase 2 audit (November 15). Previous next action: v06 Phase 2 offline reward audit. Phase 1 implemented November 14 (not trained). Previous next action: v06 Phase 1 (code and tests only). Baseline to beat (original rules, November 14): development 2/6, ramp-started 0/6. Previous next action: v06 Phase 0c re-baseline (done). Previous next action: follow the proposed [v06 merge training plan](highway-merge-training-plan-v06.md) (November 13). Phase 0 first, with no training: a merge-target feasibility audit, the controlled car-following choice (ACC with an ACC-aware guard recommended), extending the road end, and a frozen-v04 re-baseline under the original gate rules (currently 2/6 cases pass, 4/27 cars fail, merge speed matching 42% and 48% vs 90%). Needs user decisions, including raising the diagnostic cap to 100. Training only after the user approves the resolved configuration. Previous next action: the [startup handoff ramp](highway-jerk-diagnosis-v05.md#startup-handoff-ramp-november-11-2026) fixes startup jerk on 5/6 ramp-started layouts. Remaining blockers are merge quality (27-49% vs 90%) and fragile merge decisions (a missed borderline gap window leads to riding the acceleration lane to its end). Both need a training change; agree on it before launching. Then run the frozen actor once on the held-out merge geometry bank. [Ramp-started network results](highway-jerk-diagnosis-v05.md#frozen-actor-on-ramp-started-networks-november-11-2026): 0% overrides, ~12 m/s3 peak (startup only) on all six layouts. The `mlk_on_0` braking is [explained](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026). [V05 jerk diagnosis](highway-jerk-diagnosis-v05.md) (November 11): 11/16 failing cars exceed 5 m/s3 only at startup; the 50.76 m/s3 maximum is native braking and its release, not the actor. Previous v04 terminal context: [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
+**Next action:** user decision on the common evaluation allowance and its ledger category (final-evaluation reserve, raised preparation caps, or a new category after a reviewed ledger-reader change). Codex then implements and runs the approved evaluation, and Claude proposes the next candidate from its results. Previous: user decision after the final v06 round 9. It finished with merge speed matching 0.437 to 0.454 (I-110 0.534 to 0.590), gate counts unchanged (4/8 original, 3/8 with the raw check) and nothing promoted. The study budget is used up (8,054 decisions left), so any further training needs a new budget decision. Previous: launch round 9 (done November 17). Previous: approval of the proposed final round 8 (approved November 17; round index 8 already charged by v08, so it runs as round 9). Previous: user decision after round 7 (chose to propose a final round, November 17). Previous: launch round 7 (done November 15). Previous: approval of the round-6 configuration (approved November 15; round index 6 already charged by v07, so it runs as round 7). Previous: user chose fix scoring + updates (November 15). Previous: diagnose v06 round 5 (done November 15). Previous next action: user decision on the v06 training proposal (approved and run November 15). Previous next action: v06 Phase 3 training proposal. Weights set by the Phase 2 audit (November 15). Previous next action: v06 Phase 2 offline reward audit. Phase 1 implemented November 14 (not trained). Previous next action: v06 Phase 1 (code and tests only). Baseline to beat (original rules, November 14): development 2/6, ramp-started 0/6. Previous next action: v06 Phase 0c re-baseline (done). Previous next action: follow the proposed [v06 merge training plan](highway-merge-training-plan-v06.md) (November 13). Phase 0 first, with no training: a merge-target feasibility audit, the controlled car-following choice (ACC with an ACC-aware guard recommended), extending the road end, and a frozen-v04 re-baseline under the original gate rules (currently 2/6 cases pass, 4/27 cars fail, merge speed matching 42% and 48% vs 90%). Needs user decisions, including raising the diagnostic cap to 100. Training only after the user approves the resolved configuration. Previous next action: the [startup handoff ramp](highway-jerk-diagnosis-v05.md#startup-handoff-ramp-november-11-2026) fixes startup jerk on 5/6 ramp-started layouts. Remaining blockers are merge quality (27-49% vs 90%) and fragile merge decisions (a missed borderline gap window leads to riding the acceleration lane to its end). Both need a training change; agree on it before launching. Then run the frozen actor once on the held-out merge geometry bank. [Ramp-started network results](highway-jerk-diagnosis-v05.md#frozen-actor-on-ramp-started-networks-november-11-2026): 0% overrides, ~12 m/s3 peak (startup only) on all six layouts. The `mlk_on_0` braking is [explained](highway-jerk-diagnosis-v05.md#native-braking-on-mlk_on_0-explained-november-11-2026). [V05 jerk diagnosis](highway-jerk-diagnosis-v05.md) (November 11): 11/16 failing cars exceed 5 m/s3 only at startup; the 50.76 m/s3 maximum is native braking and its release, not the actor. Previous v04 terminal context: [V04 terminal results](highway-merge-rewards-v04.md#completed-long-run---november-10-2026): 3,643,488 learning decisions, 1,298 updates, about 7h47m. Final focal stopped time and interventions are both zero; fleet interventions 0.42%, stable merges 2/2 and no collisions/teleports. Final actor passes 0/6 whole-case gates; selected best update 1078 passes 1/6. Both actors retained; no promotion, held-out evaluation or new run.
 
 Latest GPUDrive diagnostic: [v05](gpudrive-i110-v05.md) improves longitudinal comfort with an explicit filter, but the crossing audit finds an unconnected early ramp exit in both v04 and v05. Mainline occupancy/goal arrival must not be treated as verified proper merging. Next transfer work is the intended merge corridor and steering validation; no training or policy promotion.
 
@@ -826,3 +826,73 @@ speed-limit interventions after its merge. Original rules held 4/8 with no jerk
 spikes. The insertion lag lasts 3-4 decisions, which corrects the round-5
 diagnosis. A small policy std (0.04) keeps updates KL-limited.
 [Details](highway-merge-training-plan-v06.md#round-7-result-november-15-2026-stopped-by-the-merge-stop-rule-at-100k).
+
+### v65 - November 17: final v06 round 8 proposed
+
+Raw-request jerk is scored after a fixed 5-decision insertion lag (start 3/8).
+The KL target is 0.1, scaled to the policy's 0.04 action std. The merge floor is
+reported, not enforced, because no budget remains for another round. Training is
+not authorized.
+[Details](highway-merge-training-plan-v06.md#round-8-proposal-november-17-2026-final-round-on-the-remaining-budget).
+
+
+### v65 - November 17: merge recovery and verified cut-ins prepared
+
+[November 17 recovery revision](highway-merge-recovery-2026-11-17.md): adds unsaturated merge tracking, safe acceleration alignment and explicit speed-ceiling request cost; learns true command slew while preserving historical gates. Seeded native cut-ins must already be moving at reset and complete into the intended lane. 151 tests, zero-update preflight and three measured cut-in checks pass. Approved round 8: 300k/90min within the existing shared study ceilings, lower actor LR, wider exploration, four episodes/update. Next: review only after completion/failure, retain all outcomes and actual event coverage. No learned improvement claimed; guide synchronization pending.
+
+### v66 - November 17: v08 completed, merge regression unresolved
+
+[Results and evidence](highway-merge-recovery-2026-11-17.md#completed-retrain-cut-in-coverage-fixed-merge-regression-remains): 298,361 decisions, 62.5 minutes, 34/34 real training cut-ins plus 8/8 validation stress exposures. No collisions or teleports. Merge-speed match peaked at 51.44% but ended at 39.36% (initial 43.52%); strict nominal gates 0/8. Cut-in exposure is verified, smooth recovery and generalized merging are not. Experimental actor/checkpoint and metrics retained, previous policy unchanged. Next: retain every evaluated checkpoint, include final/per-case regression gates, diagnose the saved I-110 action sequence before another reviewed configuration. No additional round started; guide sync pending.
+
+### v66 - November 17: final round approved, runs as round 9
+
+Round index 8 was used by the v08 merge-recovery run, which also took the shared
+ledger past the v06 ceilings. With user approval, the profile runs as round 9
+under the shared 4.93M / 46,800 s ceilings (166,011 decisions / 7,108 s left).
+[Details](highway-merge-training-plan-v06.md#launch-correction-runs-as-round-9-under-the-shared-study-ceilings-november-17-2026).
+
+
+
+### v67 - November 17: shared assistant plan and saved comparison
+
+[Shared training plan](shared-training-plan.md) and [saved comparison](evidence/training-coordination-2026-11-17/comparison.json) now define one Claude/Codex handoff, source ownership, canonical ledger/lock, matched evaluation and completion-only review. Claude-authored v05 lineage is identified; latest separate v06 round 7 is terminal, round 8 is an unauthorized proposal, and no active local training job was found. Later v06 launcher attribution remains unconfirmed. No training/source changes, simulator runs or interruptions; neither candidate promoted. Discovery pointers are installed in both the canonical checkout and existing worktree. Claude acknowledgement and any external run location remain pending; guide synchronization pending.
+
+### v67 - November 17: final v06 round 9 complete
+
+Full PPO updates (4,608 optimizer steps) gave small, steady merge-speed gains:
+overall 0.437 to 0.454, I-110 0.534 to 0.590. No gate changed and no safety
+measure regressed. The warm start stays "best" on the rank tie-breaker. The study
+budget is used up.
+[Details](highway-merge-training-plan-v06.md#round-9-result-november-17-2026-full-updates-small-merge-gains-no-gate-change).
+
+
+
+### v69 - November 17: reconciled round-9 handoff and shared evaluation proposal
+
+Verified Claude acknowledgement and round-9 results: both 5c56f76 and b5378eb already existed on the remote shared branch at inspection. Round 9 reports 45.43% merge matching, 4/4 stable merges and 4.0 m/s3 realized peak, but still fails acceptance and uses different lane/scoring semantics. [Shared plan](shared-training-plan.md) now links a disabled, hash-pinned [common evaluation proposal](../configs/evaluation/highway-shared-2026-11-17.json): three actors, eight nominal plus two cut-in cases, proposed 30 episodes / 900 seconds. No new training/evaluation, branch switch or runtime edits. Isolated Claude worktree and evaluation approval remain pending; old training authorizations are spent. Guide sync pending.
+
+### v70 - November 17: Claude review of the common evaluation proposal
+
+Claude reviewed the disabled common evaluation proposal (read-only). Actor
+hashes, the 8 nominal and 2 cut-in cases, and the actor interface (117-input
+observation version, actions, safety modes, rate limit) match round 9 and v08.
+Open before approval:
+- the ledger category to charge (preparation has 5 of 100 diagnostic episodes
+  left; the 900 s final-evaluation reserve fits but is the study's final
+  reserve; a new category would break the existing ledger readers);
+- what happens on a crashed episode (30 = 3 x 10 leaves no room for a rerun);
+- one TorchScript loader for the baseline;
+- per-candidate lane-admission counts.
+
+Nothing was trained or evaluated. Guide sync pending.
+[Review](shared-training-plan.md#claude-review-of-the-common-evaluation-proposal-november-17-2026).
+
+
+### v70 - November 17: isolated collaboration and common actor evaluation
+
+Created and pushed Claude branch `2026-11-17-claude-policy-candidate` in its own project-contained worktree. The canonical `TRAINING_COORDINATION.md` is now the single live document; both assistants resolve it through the Git common directory, and the GitHub plan is a generated snapshot. Added an actor-only comparison runner with a shared ledger lock, frozen sources/inputs, full action traces, startup diagnostics, a 30-episode/900-second cap and no optimizer/critic/training. Nine focused tests and all three actual actor-interface probes pass. User authorized the comparison; completion/failure-only review. Results pending; guide sync pending.
+
+
+### v71 - November 17: 30-episode common comparison completed
+
+[Common evaluation complete](shared-highway-evaluation-2026-11-17.md): 30/30 episodes in 294 seconds, zero training decisions, zero collisions/teleports, 6/6 actual cut-ins. Under identical rules: baseline merge match 43.52%, Claude round 9 48.84%, Codex v08 39.36%; nominal peak jerk 4.76/4.00/28.38 m/s3. All still fail acceptance; cut-in peak jerk remains 45.0. An initial native-log directory lookup error was corrected by offline re-scoring existing logs, with originals preserved and no rerun. Ten tests pass. Metrics/provenance saved, shared master updated, evaluation authorization consumed and config disabled. Guide sync pending.

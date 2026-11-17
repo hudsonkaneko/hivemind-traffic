@@ -125,8 +125,17 @@ def late_in_acceleration_lane(context, lane_length_m, merge_active):
         distance <= SETTINGS['late_lane_fraction'] * lane_length_m
 
 
-RAW_REQUEST_SCOPES = ('all', 'after_first_decision')
+RAW_REQUEST_SCOPES = ('all', 'after_first_decision', 'after_insertion_lag')
 FIRST_DECISION_EXCLUDED_KEY = 'peak_raw_requested_jerk_after_first_decision_m_s3'
+# Round 8 (final round): SUMO inserts each car at 0 m/s2 and the whole-episode
+# rate limit raises the realized command by 0.4 m/s2 per decision, so the
+# request stays more than 0.5 m/s2 from the measured value for up to 4
+# decisions (round-7 validations). A fixed, policy-independent 5-decision
+# (0.5 s) exclusion covers that lag with one decision of margin.
+INSERTION_LAG_DECISIONS = 5
+INSERTION_LAG_EXCLUDED_KEY = 'peak_raw_requested_jerk_after_insertion_lag_m_s3'
+SCOPE_KEYS = {'after_first_decision': FIRST_DECISION_EXCLUDED_KEY,
+              'after_insertion_lag': INSERTION_LAG_EXCLUDED_KEY}
 
 
 def raw_request_jerk_check(report, limit=SETTINGS['jerk_acceptance_m_s3'], scope='all'):
@@ -137,14 +146,16 @@ def raw_request_jerk_check(report, limit=SETTINGS['jerk_acceptance_m_s3'], scope
     (round 6, user decision November 15, 2026) skips each car's first decision,
     where SUMO inserts the car at 0 m/s2 and the request is compared with that
     insertion value; the first decision's realized jerk stays under the
-    original per-car gate.
+    original per-car gate. scope='after_insertion_lag' (round 8) skips each
+    car's first INSERTION_LAG_DECISIONS decisions, a fixed count independent of
+    the policy; their realized jerk also stays under the original gate.
     """
     if scope not in RAW_REQUEST_SCOPES:
         raise ValueError('Unknown raw-request scope')
     if scope == 'all':
         per_car, key = (report.get('v05_metrics') or {}).get('per_car'), 'peak_raw_requested_jerk_m_s3'
     else:
-        per_car, key = (report.get('v06_metrics') or {}).get('per_car'), FIRST_DECISION_EXCLUDED_KEY
+        per_car, key = (report.get('v06_metrics') or {}).get('per_car'), SCOPE_KEYS[scope]
     assigned = [a for a, c in (report.get('smooth_control') or {}).get('per_car', {}).items()
                 if c.get('assigned_controlled')]
     cars = {}

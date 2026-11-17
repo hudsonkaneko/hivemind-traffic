@@ -111,10 +111,13 @@ class HighwayFlowRLV06Env(HighwayFlowRLV05Env):
         lane = self.graph.lanes.get(ego['lane_id'], {})
         late = v06.late_in_acceleration_lane(snapshot['context'], lane.get('length'), merge_active)
         car = self.v06_metrics['per_car'].setdefault(agent, dict(decisions=0, late_lane_decisions=0,
-            first_late_lane_time_s=None, avoidable_braking_charged=0, **{v06.FIRST_DECISION_EXCLUDED_KEY: 0.}))
+            first_late_lane_time_s=None, avoidable_braking_charged=0,
+            **{v06.FIRST_DECISION_EXCLUDED_KEY: 0., v06.INSERTION_LAG_EXCLUDED_KEY: 0.}))
+        raw = abs(audit['raw_requested_jerk'])
         if agent in self._v05_seen:  # not this car's first decision (insertion at 0 m/s2)
-            car[v06.FIRST_DECISION_EXCLUDED_KEY] = max(car[v06.FIRST_DECISION_EXCLUDED_KEY],
-                                                       abs(audit['raw_requested_jerk']))
+            car[v06.FIRST_DECISION_EXCLUDED_KEY] = max(car[v06.FIRST_DECISION_EXCLUDED_KEY], raw)
+        if car['decisions'] >= v06.INSERTION_LAG_DECISIONS:  # past the fixed insertion-lag window
+            car[v06.INSERTION_LAG_EXCLUDED_KEY] = max(car[v06.INSERTION_LAG_EXCLUDED_KEY], raw)
         for row in (car, self.v06_metrics):
             row['decisions'] += 1
             row['late_lane_decisions'] += int(late)

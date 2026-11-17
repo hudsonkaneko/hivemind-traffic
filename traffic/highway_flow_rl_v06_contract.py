@@ -42,6 +42,26 @@ ROUNDS = {
 # the v06 round-6 configuration launched, so that configuration runs as round 7
 # (user decision November 15, 2026: same profile, all remaining study budget).
 ROUNDS[7] = dict(ROUNDS[6])
+# Round 8, the final round on the remaining study budget (proposed November 17,
+# 2026 after round 7; training stays disabled until the user approves): the
+# raw-request check skips a fixed 5-decision insertion lag, the KL target is
+# scaled to the warm start's small action std (0.04 normalized), and the
+# merge-speed floor is reported at periodic validation instead of stopping the
+# run, because the remaining budget cannot fund another round. Collision and
+# pooled-intervention stops stay.
+ROUNDS[8] = dict(learning_profile='merge_v06_r8_final',
+                 optimizer=dict(OPTIMIZER, epochs=10, target_kl=.1, episodes_per_update=4),
+                 raw_request_scope='after_insertion_lag',
+                 acceptance=dict(ACCEPTANCE, raw_request_scope='after_insertion_lag'),
+                 extra_stop_rules=('max_pooled_intervention_fraction',), merge_floor_action='report')
+# Round index 8 was charged in the shared ledger by the v08 merge-recovery run
+# (298,361 decisions) before round 8 launched, which also took the shared ledger
+# past the v06 study ceilings. User decision (November 17, 2026): run the same
+# profile as round 9 under the shared study ceilings already used by v07/v08
+# (4.93M decisions / 46,800 s, approved for v07); every other budget value is
+# unchanged.
+SHARED_STUDY_BUDGET = dict(BUDGET, total_decisions=4930000, total_wall_seconds=46800)
+ROUNDS[9] = dict(ROUNDS[8], budget=SHARED_STUDY_BUDGET)
 RAMP_STARTED_PREFIX = 'outputs/highway-flow-rl/v05/ramp-networks-02/'
 I110_NETWORK = 'outputs/highway-flow-rl/v02/network-screen-01/candidate/network.net.xml'
 
@@ -78,7 +98,8 @@ def validate_config(cfg, require_training=False):
         raise ValueError('User decision (2026-11-15): whole-episode command rate limit')
     if cfg.get('controlled_car_follow_model') != 'Krauss' or cfg.get('road_end_leader_exit_rule') is not False:
         raise ValueError('User decisions: Krauss controlled vehicles, original road-end rules')
-    if cfg.get('shared_cost_ledger') != 'outputs/highway-flow-rl/v02/cost-ledger.json' or cfg.get('budget') != BUDGET:
+    if (cfg.get('shared_cost_ledger') != 'outputs/highway-flow-rl/v02/cost-ledger.json'
+            or cfg.get('budget') != profile.get('budget', BUDGET)):
         raise ValueError('Declared v06 budget or ledger changed')
     if type(cfg.get('critic_warmup_decisions')) is not int or not 0 <= cfg['critic_warmup_decisions'] <= 30000:
         raise ValueError('Critic warmup must be bounded and counted inside the round')
@@ -90,6 +111,8 @@ def validate_config(cfg, require_training=False):
     if stop.get('any_collision') is not True or not isinstance(stop.get('merge_speed_match_floor'), (int, float)):
         raise ValueError('Stop rules missing')
     number(stop['merge_speed_match_floor'], 'merge speed-match floor', 0., 1.)
+    if stop.get('merge_floor_action', 'stop') != profile.get('merge_floor_action', 'stop'):
+        raise ValueError('Merge-floor action differs from the round profile')
     for key in profile['extra_stop_rules']:
         number(stop.get(key), key, 0., 1.)
     if type(cfg.get('seed')) is not int or cfg['seed'] < 0:

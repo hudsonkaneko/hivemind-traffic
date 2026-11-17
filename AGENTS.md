@@ -117,3 +117,20 @@ asset generators, importers, exporters, vehicle packages, or viewer scenes.
 - Inspect the composed hierarchy AND layer/composition structure before calling
   a scene finished; add appropriate structure/regression checks with each scene
   implementation. Document runtime-owned namespace exceptions explicitly.
+
+## Shared assistant training coordination
+
+The one editable coordination document is `TRAINING_COORDINATION.md` in the
+parent directory of Git's common directory. Resolve
+`git rev-parse --path-format=absolute --git-common-dir`, take its parent, and
+read/update that parent's `TRAINING_COORDINATION.md`. On this workstation it is
+`C:\Users\hudso\Documents\highwaysim\TRAINING_COORDINATION.md`.
+
+Read the latest full master before related training, evaluation or overlapping
+edits. Update that same master at task milestones, re-read immediately before
+scoped changes, and reconcile concurrent edits instead of overwriting them.
+Follow the recorded worktree ownership and completion/failure-only handoff;
+preserve active run inputs. `documentation/shared-training-plan.md` is a
+generated publication snapshot, not an independently editable plan. Refresh and
+publish it from the master through the assigned documentation worktree. No
+background LLM watcher or new training is authorized by this project memory.

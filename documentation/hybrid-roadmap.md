@@ -1073,3 +1073,84 @@ insertion effect lasts 3-4 decisions, not one, so the second-decision rule passe
 the policy's action std is 0.04, so a 0.03 KL allows about a 0.03 m/s2 mean
 shift per update. Nothing promoted; 5,486 s and 164,372 decisions remain.
 [Details](highway-merge-training-plan-v06.md#round-7-result-november-15-2026-stopped-by-the-merge-stop-rule-at-100k).
+
+## November 17, 2026 - v06 round 8 (final round) proposed, not authorized
+
+Proposed on the remaining study budget (164,372 decisions, 5,486 s):
+- raw-request jerk scored after a fixed 5-decision insertion lag (round-7
+  validations: the lag lasts at most 4 decisions; the starting result becomes
+  3/8 instead of 1/8);
+- KL target 0.1, scaled to the warm start's 0.04 action std (about 0.06 m/s2 of
+  mean shift per update instead of 0.03);
+- the merge-speed floor reported rather than enforced, because no budget
+  remains for another round.
+
+Collision and pooled-intervention stops stay, and speed-limit trims are left to
+the existing −0.2 penalty. The config `highway-flow-rl-v06-round8.json` has
+`training_authorized=false` and awaits user approval.
+[Details](highway-merge-training-plan-v06.md#round-8-proposal-november-17-2026-final-round-on-the-remaining-budget).
+
+## November 17, 2026 - merge recovery retrain
+
+[November 17 recovery revision](highway-merge-recovery-2026-11-17.md): adds unsaturated merge tracking, safe acceleration alignment and explicit speed-ceiling request cost; learns true command slew while preserving historical gates. Seeded native cut-ins must already be moving at reset and complete into the intended lane. 151 tests, zero-update preflight and three measured cut-in checks pass. Approved round 8: 300k/90min within the existing shared study ceilings, lower actor LR, wider exploration, four episodes/update. Next: review only after completion/failure, retain all outcomes and actual event coverage. No learned improvement claimed; guide synchronization pending.
+
+## November 17, 2026 - v08 finished, previous policy retained
+
+[Completed v08 evidence](highway-merge-recovery-2026-11-17.md#completed-retrain-cut-in-coverage-fixed-merge-regression-remains): all 34 training cut-ins and eight validation exposures occurred; 298,361 decisions completed with no collisions/teleports. Final merge matching regressed to 39.36% from 43.52%, despite an early 51.44% result. The final actor failed acceptance and remains experimental. Raw traces, checkpoints, configuration, hashes and compact metrics are retained; no extra training or 3D evaluation. Next: per-scenario/final regression protection and saved-trace diagnosis of I-110 deterioration. Guide synchronization pending.
+
+## November 17, 2026 - v06 final round launches as round 9 under the shared ceilings
+
+Round index 8 was charged in the shared ledger by the v08 merge-recovery run
+(298,361 decisions). That run also took the ledger past the v06 study ceilings
+(4.63M decisions / 41,400 s). With user approval, the round-8 profile runs as
+round 9 under the shared ceilings already used by v07/v08 (4.93M / 46,800 s),
+leaving 166,011 decisions and 7,108 s.
+[Details](highway-merge-training-plan-v06.md#launch-correction-runs-as-round-9-under-the-shared-study-ceilings-november-17-2026).
+
+
+## November 17, 2026 - shared training ownership and comparison
+
+[Shared training plan](shared-training-plan.md) and [saved comparison](evidence/training-coordination-2026-11-17/comparison.json) now define one Claude/Codex handoff, source ownership, canonical ledger/lock, matched evaluation and completion-only review. Claude-authored v05 lineage is identified; latest separate v06 round 7 is terminal, round 8 is an unauthorized proposal, and no active local training job was found. Later v06 launcher attribution remains unconfirmed. No training/source changes, simulator runs or interruptions; neither candidate promoted. Discovery pointers are installed in both the canonical checkout and existing worktree. Claude acknowledgement and any external run location remain pending; guide synchronization pending.
+
+## November 17, 2026 - v06 round 9 (final round) complete: small merge gains, gates unchanged
+
+The final round ran to the end of the budget (157,957 decisions, 1,523 s, 13
+merged updates, 4,608 optimizer steps; round 7 had 236). Merge speed matching
+rose from 0.437 to 0.454; I-110 rose from 0.534 to 0.590. All stable merges
+held, interventions stayed at 0.26%, and peak jerk was 4.0 m/s3, with no
+collisions. Gate counts did not change: original rules 4/8, raw check after the
+insertion lag 3/8. The warm start stays "best" on the rank tie-breaker, and the
+final actor is kept. Nothing is promoted, and the shared study budget is used
+up (8,054 decisions left).
+[Details](highway-merge-training-plan-v06.md#round-9-result-november-17-2026-full-updates-small-merge-gains-no-gate-change).
+
+
+## November 17, 2026 - common evaluation proposal ready
+
+Verified Claude acknowledgement and round-9 results: both 5c56f76 and b5378eb already existed on the remote shared branch at inspection. Round 9 reports 45.43% merge matching, 4/4 stable merges and 4.0 m/s3 realized peak, but still fails acceptance and uses different lane/scoring semantics. [Shared plan](shared-training-plan.md) now links a disabled, hash-pinned [common evaluation proposal](../configs/evaluation/highway-shared-2026-11-17.json): three actors, eight nominal plus two cut-in cases, proposed 30 episodes / 900 seconds. No new training/evaluation, branch switch or runtime edits. Isolated Claude worktree and evaluation approval remain pending; old training authorizations are spent. Guide sync pending.
+
+## November 17, 2026 - common evaluation proposal reviewed by Claude
+
+Claude reviewed the disabled common evaluation proposal (read-only). Actor
+hashes, the 8 nominal and 2 cut-in cases, and the actor interface (117-input
+observation version, actions, safety modes, rate limit) match round 9 and v08.
+Open before approval:
+- the ledger category to charge (preparation has 5 of 100 diagnostic episodes
+  left; the 900 s final-evaluation reserve fits but is the study's final
+  reserve; a new category would break the existing ledger readers);
+- what happens on a crashed episode (30 = 3 x 10 leaves no room for a rerun);
+- one TorchScript loader for the baseline;
+- per-candidate lane-admission counts.
+
+Nothing was trained or evaluated. Guide sync pending.
+[Review](shared-training-plan.md#claude-review-of-the-common-evaluation-proposal-november-17-2026).
+
+
+## November 17, 2026 - shared evaluation authorized
+
+Created and pushed Claude branch `2026-11-17-claude-policy-candidate` in its own project-contained worktree. The canonical `TRAINING_COORDINATION.md` is now the single live document; both assistants resolve it through the Git common directory, and the GitHub plan is a generated snapshot. Added an actor-only comparison runner with a shared ledger lock, frozen sources/inputs, full action traces, startup diagnostics, a 30-episode/900-second cap and no optimizer/critic/training. Nine focused tests and all three actual actor-interface probes pass. User authorized the comparison; completion/failure-only review. Results pending; guide sync pending.
+
+
+## November 17, 2026 - common evaluation favors round 9; not accepted
+
+[Common evaluation complete](shared-highway-evaluation-2026-11-17.md): 30/30 episodes in 294 seconds, zero training decisions, zero collisions/teleports, 6/6 actual cut-ins. Under identical rules: baseline merge match 43.52%, Claude round 9 48.84%, Codex v08 39.36%; nominal peak jerk 4.76/4.00/28.38 m/s3. All still fail acceptance; cut-in peak jerk remains 45.0. An initial native-log directory lookup error was corrected by offline re-scoring existing logs, with originals preserved and no rerun. Ten tests pass. Metrics/provenance saved, shared master updated, evaluation authorization consumed and config disabled. Guide sync pending.
