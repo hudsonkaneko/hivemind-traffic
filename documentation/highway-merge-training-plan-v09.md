@@ -210,8 +210,85 @@ which a fresh worktree does not have (for example,
 They do not touch v09 code. They will pass once the inputs are staged, or when
 run in the canonical checkout.
 
-## Not done and not authorized
+## Status
 
-- No training, staging, preflight or ledger write has happened.
+- Approved and run on November 17, 2026. The result is below.
 - Held-out evaluation is not authorized.
 - Google engineering guide sync is still pending.
+
+## Round 11 result (November 17, 2026): stopped by the merge floor at 100k
+
+The run stopped itself at its first periodic validation, after 100,457
+decisions and 1,084 s, with no collisions. Pooled merge-speed match was 0.211,
+below the 0.4343 floor. The round-9 policy (the starting point) stays the best
+policy; nothing is promoted. The stop message says "below the frozen-v04
+baseline 0.4343". That is the v06 runner's wording: the v09 floor is round 9's
+final validation minus 0.02.
+
+Evidence: [round-11-results.json](evidence/highway-merge-training-v09/round-11-results.json)
+(validation summaries with hashes, per-car traces, updates, ledger and
+checkpoint hashes). Run outputs stay in Claude's worktree,
+`outputs/highway-flow-rl/v09/round-11`, and are not versioned.
+
+### Per merging car
+
+"Before" is the run's initial validation of the round-9 policy in the v09
+environment. It reproduces round 9's final scores exactly. "After" is the
+validation at 100k decisions.
+
+| Merging car | Before | After 100k | What changed |
+| --- | --- | --- | --- |
+| I-110 | 0.590, stable | Stable merge failed; no quality window | Merged 6.1 s later (entry 23.0 s vs 16.9 s). In the 8 s after merging, 32 of 81 decisions had a native-realization override |
+| Ramp 120 m, 2 lanes | 0.461 | 0.468 | Mean speed error while merging -2.33 → -2.25 m/s |
+| Ramp 180 m, 2 lanes | 0.397, stable | Stable merge failed; no quality window | 6 of 81 post-merge decisions clamped by the speed ceiling (7.4%; the gate allows 5%). Error -3.74 → -3.63 m/s |
+| Ramp 180 m, 4 lanes | 0.369 | 0.376 | Error -3.94 → -3.82 m/s |
+
+The pooled score counts a car whose stable merge fails as zero:
+(0 + 0.468 + 0 + 0.376) / 4 = 0.211.
+
+Other measures:
+- Gate counts unchanged: 4/8 under the original rules, 3/8 with the raw check.
+- Pooled interventions rose from 0.26% to 0.51%. Peak jerk stayed 4.0 m/s³.
+- Stable merges fell from 4 to 2.
+- The graded quality payment was already earned by the round-9 policy at the
+  start (2.86, 2.31, 1.99, 1.84). After training: 0, 2.34, 0, 1.88.
+
+Updates:
+- 43 update records, 10 of them critic-only.
+- 8 merged PPO updates, 2,583 optimizer steps; 2 stopped early on KL (0.108
+  and 0.188).
+- `log_std` barely moved: -3.227 → -3.220.
+
+### What this shows
+
+- **The tracking change pushed the right way, but only weakly.** On the two ramp
+  cars that still merged stably, matching rose by 0.007 each. Mean speed error
+  improved by only about 0.1 m/s, and ramp cars requested about the same
+  acceleration as before (1.00–1.16 m/s² while merging).
+- **The drop is the stable-merge gate, not a safety problem.** Both failures
+  are override counts in the 8 s after merging, which the gate caps at 5%
+  (4 of 81 decisions).
+  - On the 2-lane ramp 180 case, the car reaches its target at the speed limit
+    (24.59 m/s) and keeps asking for small positive acceleration that the speed
+    ceiling clamps.
+  - On I-110, the car merged 6 s later. It then sat just under its 18.0 m/s
+    target, asking for +0.1–0.2 m/s² that the native vehicle model did not
+    realize.
+  - In both cases the requests press against a limit the car cannot pass. The
+    I-110 timing change is one episode on one seed; it is not attributed
+    causally.
+- **What a further attempt would need.** The tracking term should not reward
+  pushing against limits. Two candidates: clip the tracking target to what the
+  car can actually reach (the speed ceiling and the native leader), or charge
+  requests that the speed ceiling or native realization would cut in the
+  post-merge window. That would be a new proposal with its own approval.
+
+### Ledger after round 11
+
+- Training decisions: 5,022,403 of the raised 5,230,000 (207,597 left).
+- Time: 42,599.8 s of 46,800 s charged (3,300 s left for training after the
+  final reserve).
+- Diagnostic episodes: 126 of 126.
+
+The approval covered this one round only. Nothing else runs without a new
+decision.

@@ -1,0 +1,650 @@
+{
+ "schema": "highway_merge_training_v09_round11_results",
+ "run": "outputs/highway-flow-rl/v09/round-11/ (Claude worktree outputs/worktrees/claude-policy-2026-11-17; outputs are not versioned)",
+ "config": {
+  "path": "configs/training/highway-flow-rl-v09-round11.json",
+  "sha256": "c02a2c33c8464560cf74a99e2cbffa8acbf8e978dedc4d8caf7a2168d7c3629a",
+  "approved_proposal_sha256": "918c313fdcccac74267c65c8df71247eaa6df00303e19c3e62fb079f5f073f13",
+  "commit": "acea499"
+ },
+ "outcome": {
+  "stopped_by": "merge_floor",
+  "at": "periodic-validation-00043",
+  "decisions": 100457,
+  "critic_decisions": 21425,
+  "charged_seconds": 1084.4,
+  "merge_speed_match": 0.211,
+  "floor": 0.4343,
+  "note": "Stop message reads \"below the frozen-v04 baseline 0.4343\": the v06 wording; the v09 floor is the round-9 final validation (0.4543) minus 0.02",
+  "best_validation_label": "initial-validation",
+  "promoted": false
+ },
+ "checkpoints": {
+  "last.pt": "a55055f861f6fd5c4eeb8284b5d70c8f4d1b2d19c762e0f7ad318b232fc1aaa8",
+  "best.pt": "9e3b3b2d8ae659b6cf0d379abf703cc50d6d7f8a9434024c7151b905a766e23e",
+  "best-policy.pt": "b046d6f599e49a27a7eb71bbc6b4e206785e919fbc4bf36b52730357aad03c41",
+  "candidates/initial-policy.pt": "b48dc788bc01e53dbffda960ddfe6d29b24f348603eee58913deb855ed0ba5ae"
+ },
+ "ledger_after": {
+  "total_seconds": 42599.8,
+  "training_decisions": 5022403,
+  "decision_ceiling": 5230000,
+  "decisions_left": 207597,
+  "training_seconds_left": 3300.2,
+  "diagnostic_episodes": 126,
+  "diagnostic_episode_cap": 126,
+  "preflight": {
+   "seconds": 3.4,
+   "episodes": 1
+  }
+ },
+ "validations": {
+  "initial-validation": {
+   "sha256": "c5b2324792b06a0c8a424d1b8e4286665f02d63e6b6c4919887bda341cd8d1c2",
+   "gate_counts": {
+    "original": 4,
+    "v06_after_insertion_lag": 3,
+    "v06_after_first_decision": 2,
+    "v06_all_decisions": 1
+   },
+   "merge_speed_match": 0.4543,
+   "merge_speed_match_below_floor": null,
+   "pooled_intervention_fraction": 0.0026,
+   "max_peak_jerk_m_s3": 4.0,
+   "stable_merges": 4,
+   "collisions": 0,
+   "teleports": 0,
+   "cases": [
+    {
+     "case": "v05-validation-i110-merge",
+     "original_failures": [
+      "rolling_merge_quality"
+     ],
+     "v06_failures": [
+      "rolling_merge_quality"
+     ],
+     "raw_after_lag": {
+      "agent_0": 4.739553630351949,
+      "agent_1": 0.7058484107257357,
+      "agent_2": 2.751612514257502,
+      "agent_3": 1.1585208773614397,
+      "agent_4": 1.937461867928647,
+      "agent_5": 1.3612359762192128,
+      "agent_6": 1.6979864239692688,
+      "agent_7": 0.6550873070955276
+     },
+     "intervention": 0.0046,
+     "overrides": {
+      "comfort_rate_limit": 13
+     },
+     "merge_match": {
+      "agent_0": 0.5900621118012422
+     },
+     "stable_failures": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "v05-val-0-cruise",
+     "original_failures": [],
+     "v06_failures": [],
+     "raw_after_lag": {
+      "agent_0": 1.7150033265351894
+     },
+     "intervention": 0.0013,
+     "overrides": {
+      "comfort_rate_limit": 2
+     },
+     "merge_match": {},
+     "stable_failures": {},
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "v05-val-0-passing",
+     "original_failures": [],
+     "v06_failures": [],
+     "raw_after_lag": {
+      "agent_0": 1.9298014044761302
+     },
+     "intervention": 0.0,
+     "overrides": {},
+     "merge_match": {},
+     "stable_failures": {},
+     "peak_jerk": 3.89,
+     "collisions": 0
+    },
+    {
+     "case": "v05-validation-i110-following",
+     "original_failures": [],
+     "v06_failures": [
+      "raw_request_jerk"
+     ],
+     "raw_after_lag": {
+      "agent_0": 0.9615455567836761,
+      "agent_1": 0.99350467324264,
+      "agent_2": 6.1417438834906335,
+      "agent_3": 0.7193242013454437,
+      "agent_4": 4.4161637127400155,
+      "agent_5": 1.079951971769404,
+      "agent_6": 1.3402479141951318,
+      "agent_7": 3.1640658527611265
+     },
+     "intervention": 0.0028,
+     "overrides": {
+      "comfort_rate_limit": 8
+     },
+     "merge_match": {},
+     "stable_failures": {},
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+     "original_failures": [
+      "rolling_merge_quality"
+     ],
+     "v06_failures": [
+      "rolling_merge_quality"
+     ],
+     "raw_after_lag": {
+      "agent_0": 1.782604083418704
+     },
+     "intervention": 0.0053,
+     "overrides": {
+      "comfort_rate_limit": 4
+     },
+     "merge_match": {
+      "agent_0": 0.46099290780141844
+     },
+     "stable_failures": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "v02-development-60mph-cruise",
+     "original_failures": [],
+     "v06_failures": [],
+     "raw_after_lag": {
+      "agent_0": 0.8887745440006256,
+      "agent_1": 0.6776347756384382,
+      "agent_2": 0.8716869354248757,
+      "agent_3": 1.065863072872304,
+      "agent_4": 1.0655221343039756,
+      "agent_5": 0.8241957426069746,
+      "agent_6": 1.1806567013264413,
+      "agent_7": 0.4118247330188751
+     },
+     "intervention": 0.0013,
+     "overrides": {
+      "comfort_rate_limit": 9
+     },
+     "merge_match": {},
+     "stable_failures": {},
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+     "original_failures": [
+      "rolling_merge_quality"
+     ],
+     "v06_failures": [
+      "rolling_merge_quality"
+     ],
+     "raw_after_lag": {
+      "agent_0": 1.74808308482163
+     },
+     "intervention": 0.0082,
+     "overrides": {
+      "comfort_rate_limit": 4,
+      "speed_ceiling": 2
+     },
+     "merge_match": {
+      "agent_0": 0.3971631205673759
+     },
+     "stable_failures": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+     "original_failures": [
+      "rolling_merge_quality"
+     ],
+     "v06_failures": [
+      "rolling_merge_quality"
+     ],
+     "raw_after_lag": {
+      "agent_0": 1.7723410576582665
+     },
+     "intervention": 0.005,
+     "overrides": {
+      "comfort_rate_limit": 4
+     },
+     "merge_match": {
+      "agent_0": 0.36879432624113473
+     },
+     "stable_failures": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0,
+     "collisions": 0
+    }
+   ]
+  },
+  "periodic-validation-00043": {
+   "sha256": "2ff773041fbea81df065a0f9363a2d802b1832dbd563a6f96825fef66688e0b8",
+   "gate_counts": {
+    "original": 4,
+    "v06_after_insertion_lag": 3,
+    "v06_after_first_decision": 2,
+    "v06_all_decisions": 1
+   },
+   "merge_speed_match": 0.211,
+   "merge_speed_match_below_floor": null,
+   "pooled_intervention_fraction": 0.0051,
+   "max_peak_jerk_m_s3": 4.0,
+   "stable_merges": 2,
+   "collisions": 0,
+   "teleports": 0,
+   "cases": [
+    {
+     "case": "v05-validation-i110-merge",
+     "original_failures": [
+      "per_car_route_comfort_or_control",
+      "stable_merge",
+      "rolling_merge_quality"
+     ],
+     "v06_failures": [
+      "per_car_route_comfort_or_control",
+      "stable_merge",
+      "rolling_merge_quality"
+     ],
+     "raw_after_lag": {
+      "agent_0": 4.752711728215182,
+      "agent_1": 0.8980932086706161,
+      "agent_2": 2.661593109369278,
+      "agent_3": 1.3855840265750885,
+      "agent_4": 1.7938812077046151,
+      "agent_5": 1.6919308900833485,
+      "agent_6": 1.74481123685851,
+      "agent_7": 0.7699700444937463
+     },
+     "intervention": 0.0179,
+     "overrides": {
+      "comfort_rate_limit": 14,
+      "speed_ceiling": 4,
+      "native_realization_unattributed": 32
+     },
+     "merge_match": {
+      "agent_0": null
+     },
+     "stable_failures": {
+      "agent_0": [
+       "intervention_fraction"
+      ]
+     },
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "v05-val-0-cruise",
+     "original_failures": [],
+     "v06_failures": [],
+     "raw_after_lag": {
+      "agent_0": 1.2175875157117488
+     },
+     "intervention": 0.0013,
+     "overrides": {
+      "comfort_rate_limit": 2
+     },
+     "merge_match": {},
+     "stable_failures": {},
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "v05-val-0-passing",
+     "original_failures": [],
+     "v06_failures": [],
+     "raw_after_lag": {
+      "agent_0": 1.7307891696692224
+     },
+     "intervention": 0.0,
+     "overrides": {},
+     "merge_match": {},
+     "stable_failures": {},
+     "peak_jerk": 3.94,
+     "collisions": 0
+    },
+    {
+     "case": "v05-validation-i110-following",
+     "original_failures": [],
+     "v06_failures": [
+      "raw_request_jerk"
+     ],
+     "raw_after_lag": {
+      "agent_0": 0.7090979814529419,
+      "agent_1": 1.0026054084300995,
+      "agent_2": 6.363099217414856,
+      "agent_3": 0.6962837278844347,
+      "agent_4": 3.622677624225581,
+      "agent_5": 0.7269585132599587,
+      "agent_6": 1.281641349196363,
+      "agent_7": 2.867517098784589
+     },
+     "intervention": 0.0032,
+     "overrides": {
+      "comfort_rate_limit": 9
+     },
+     "merge_match": {},
+     "stable_failures": {},
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+     "original_failures": [
+      "rolling_merge_quality"
+     ],
+     "v06_failures": [
+      "rolling_merge_quality"
+     ],
+     "raw_after_lag": {
+      "agent_0": 2.073347195983004
+     },
+     "intervention": 0.0066,
+     "overrides": {
+      "comfort_rate_limit": 4,
+      "speed_ceiling": 1
+     },
+     "merge_match": {
+      "agent_0": 0.46808510638297873
+     },
+     "stable_failures": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "v02-development-60mph-cruise",
+     "original_failures": [],
+     "v06_failures": [],
+     "raw_after_lag": {
+      "agent_0": 0.8671791851519828,
+      "agent_1": 0.8741209656000848,
+      "agent_2": 0.941282957792211,
+      "agent_3": 1.0613301396369934,
+      "agent_4": 1.3663965463637595,
+      "agent_5": 0.9905398637057061,
+      "agent_6": 1.204012930393361,
+      "agent_7": 0.41335120797164393
+     },
+     "intervention": 0.0016,
+     "overrides": {
+      "comfort_rate_limit": 11
+     },
+     "merge_match": {},
+     "stable_failures": {},
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+     "original_failures": [
+      "stable_merge",
+      "rolling_merge_quality"
+     ],
+     "v06_failures": [
+      "stable_merge",
+      "rolling_merge_quality"
+     ],
+     "raw_after_lag": {
+      "agent_0": 1.765420585870885
+     },
+     "intervention": 0.0136,
+     "overrides": {
+      "comfort_rate_limit": 4,
+      "speed_ceiling": 6
+     },
+     "merge_match": {
+      "agent_0": null
+     },
+     "stable_failures": {
+      "agent_0": [
+       "intervention_fraction"
+      ]
+     },
+     "peak_jerk": 4.0,
+     "collisions": 0
+    },
+    {
+     "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+     "original_failures": [
+      "rolling_merge_quality"
+     ],
+     "v06_failures": [
+      "rolling_merge_quality"
+     ],
+     "raw_after_lag": {
+      "agent_0": 2.832551524042941
+     },
+     "intervention": 0.005,
+     "overrides": {
+      "comfort_rate_limit": 4
+     },
+     "merge_match": {
+      "agent_0": 0.375886524822695
+     },
+     "stable_failures": {
+      "agent_0": []
+     },
+     "peak_jerk": 4.0,
+     "collisions": 0
+    }
+   ]
+  }
+ },
+ "updates": {
+  "records": 43,
+  "critic_only": 10,
+  "ppo_episodes": 33,
+  "merged_updates": 8,
+  "deferred_records": 25,
+  "optimizer_steps_total": 2583,
+  "optimizer_steps": [
+   180,
+   392,
+   270,
+   650,
+   151,
+   160,
+   530,
+   250
+  ],
+  "completed_epochs": [
+   10,
+   7,
+   10,
+   10,
+   2,
+   10,
+   10,
+   10
+  ],
+  "early_stopped": 2,
+  "samples": [
+   4528,
+   13134,
+   6769,
+   16434,
+   13462,
+   3989,
+   13568,
+   6386
+  ],
+  "last_kl": [
+   0.0273,
+   0.1077,
+   0.0043,
+   0.0115,
+   0.1878,
+   0.0219,
+   0.0062,
+   0.0055
+  ],
+  "value_loss": [
+   15.04,
+   2.17,
+   9.4,
+   0.87,
+   5.19,
+   1.64,
+   2.01,
+   2.22
+  ]
+ },
+ "merge_cars": {
+  "initial-validation": [
+   {
+    "case": "v05-validation-i110-merge",
+    "entry_s": 16.9,
+    "lateral_s": 18.4,
+    "merge_active": 260,
+    "mean_error_active": -1.09,
+    "mean_req_active": 0.403,
+    "post_override_decisions": 0,
+    "post_causes": {},
+    "post_mean_req": 0.21,
+    "post_mean_ceil": 1.686,
+    "post_mean_error": -0.37,
+    "tracking_sum": -46.37,
+    "graded": 2.859
+   },
+   {
+    "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+    "entry_s": 4.7,
+    "lateral_s": 6.2,
+    "merge_active": 137,
+    "mean_error_active": -2.33,
+    "mean_req_active": 0.999,
+    "post_override_decisions": 0,
+    "post_causes": {},
+    "post_mean_req": 0.53,
+    "post_mean_ceil": 1.379,
+    "post_mean_error": -0.92,
+    "tracking_sum": -46.78,
+    "graded": 2.305
+   },
+   {
+    "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+    "entry_s": 4.7,
+    "lateral_s": 6.2,
+    "merge_active": 137,
+    "mean_error_active": -3.74,
+    "mean_req_active": 1.164,
+    "post_override_decisions": 2,
+    "post_causes": {
+     "speed_ceiling": 2
+    },
+    "post_mean_req": 0.831,
+    "post_mean_ceil": 1.437,
+    "post_mean_error": -1.96,
+    "tracking_sum": -59.34,
+    "graded": 1.986
+   },
+   {
+    "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+    "entry_s": 4.7,
+    "lateral_s": 6.2,
+    "merge_active": 137,
+    "mean_error_active": -3.94,
+    "mean_req_active": 1.158,
+    "post_override_decisions": 0,
+    "post_causes": {},
+    "post_mean_req": 0.837,
+    "post_mean_ceil": 1.81,
+    "post_mean_error": -2.28,
+    "tracking_sum": -62.63,
+    "graded": 1.844
+   }
+  ],
+  "periodic-validation-00043": [
+   {
+    "case": "v05-validation-i110-merge",
+    "entry_s": 23.0,
+    "lateral_s": 24.5,
+    "merge_active": 321,
+    "mean_error_active": 1.02,
+    "mean_req_active": 0.341,
+    "post_override_decisions": 32,
+    "post_causes": {
+     "native_realization_unattributed": 32
+    },
+    "post_mean_req": 0.205,
+    "post_mean_ceil": 1.712,
+    "post_mean_error": -0.32,
+    "tracking_sum": -66.39,
+    "graded": 0.0
+   },
+   {
+    "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+    "entry_s": 4.7,
+    "lateral_s": 6.2,
+    "merge_active": 137,
+    "mean_error_active": -2.25,
+    "mean_req_active": 1.001,
+    "post_override_decisions": 1,
+    "post_causes": {
+     "speed_ceiling": 1
+    },
+    "post_mean_req": 0.508,
+    "post_mean_ceil": 1.328,
+    "post_mean_error": -0.87,
+    "tracking_sum": -45.83,
+    "graded": 2.34
+   },
+   {
+    "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+    "entry_s": 4.7,
+    "lateral_s": 6.2,
+    "merge_active": 137,
+    "mean_error_active": -3.63,
+    "mean_req_active": 1.167,
+    "post_override_decisions": 6,
+    "post_causes": {
+     "speed_ceiling": 6
+    },
+    "post_mean_req": 0.809,
+    "post_mean_ceil": 1.348,
+    "post_mean_error": -1.85,
+    "tracking_sum": -57.82,
+    "graded": 0.0
+   },
+   {
+    "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+    "entry_s": 4.7,
+    "lateral_s": 6.2,
+    "merge_active": 137,
+    "mean_error_active": -3.82,
+    "mean_req_active": 1.159,
+    "post_override_decisions": 0,
+    "post_causes": {},
+    "post_mean_req": 0.81,
+    "post_mean_ceil": 1.775,
+    "post_mean_error": -2.16,
+    "tracking_sum": -61.03,
+    "graded": 1.879
+   }
+  ]
+ },
+ "merge_cars_note": "Per merging car, from the validation action journals. merge_speed_match pools four cars; a car whose stable merge fails has no quality window and counts as zero."
+}
