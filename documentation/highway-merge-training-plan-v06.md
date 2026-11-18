@@ -916,3 +916,87 @@ update statistics.
 4,930,000 decisions. Only 8,054 decisions remain, less than one training
 episode, so the v06 training budget is used up. Any further v06 training would
 need a new budget decision.
+
+
+## Round 9 replay videos on the I-110 merge (November 17, 2026)
+
+The user asked to see the current best policy on the I-110 merge, first as a
+video and then in 3D. Earlier validations saved only the controlled cars'
+decisions, not a full traffic scene, so one new episode was recorded. Nothing
+was trained and nothing is promoted.
+
+**Recording.** One deterministic episode of the round-9 final actor
+(`last.pt`, `8f056b40...`) on the I-110 validation case (seed 6900019, 8
+controlled of 16 cars) in round 9's own v06 environment. It reproduces the
+round-9 final validation of that case exactly: all nine compared values are
+equal, including the full decision journal (same SHA-256 once decompressed).
+
+| Measure (followed car `agent_0`) | Value |
+| --- | --- |
+| Merge-speed match | 0.590 |
+| Merge entry / lateral merge complete | 16.9 s / 18.4 s |
+| Stable-merge check | passed at 26.5 s |
+| Collisions / teleports | 0 / 0 |
+| Interventions (all cars) | 0.46% |
+| Peak realized jerk | 4.0 m/s3 |
+
+**What the videos show.** The car settles at about 33 mph in the acceleration
+lane from 5 s to 17 s while the merge target rises to 38-40 mph. It is more
+than 2 m/s below the target from 10.9 s to 15.4 s and from 16.4 s to 18.3 s,
+then reaches 40 mph after merging. That slow approach is where the 0.59 match
+comes from.
+
+![Top-down replay just before the lateral merge completes](evidence/highway-merge-training-v06/round-09-replay-topdown.png)
+
+![Isaac Sim replay at merge entry](evidence/highway-merge-training-v06/round-09-replay-3d-merge.png)
+
+**Two renders of the same recording, both local only:**
+
+- **Top-down (2D):** 36.2 s, 1280x720, 10 fps, following `agent_0`, with its
+  speed against the merge target underneath. Drawn from recorded SUMO poses and
+  lane shapes by `scripts/render_highway_flow_topdown.py`. Schematic, not
+  photoreal.
+- **Isaac Sim (3D):** 30 s (simulation 2.0-31.9 s), 1280x720, 10 fps, normal
+  speed, follow camera. Americano v14 SimReady is the followed car; cyan cars
+  use the same policy and gray cars are native traffic. Validation: 300 frames
+  encoded and decoded, exact pose placement (0.0 m error), static layers and
+  the prepared asset unchanged, Isaac Sim 6.0.1-rc.7.
+
+**Limits.**
+
+- The 3D video is a kinematic replay of SUMO motion. It is not a physics
+  (PhysX) test, not sensor capture, and the policy does not drive a physical
+  car in it. Road markings are illustrative.
+- Same validation case and seed as before, so this is not a new result and not
+  held-out evaluation.
+- The MP4 files stay in the ignored `outputs/` directory of the Claude
+  worktree; a clone does not include them.
+
+**Ledger.** The episode was charged as command `visual_recording`: 1
+preparation episode, 15.2 s, no training decisions. It is one diagnostic
+episode beyond the 127 cap, raised by exactly one for this command only; the
+count is now 128. The renders read the recording and charge nothing.
+
+**Renderer change.** `scripts/render_i110_merge_replay.py` gained an optional
+`--camera-offset X Y Z` (eye position relative to the look-at point). The
+default is the original view, so earlier commands render as before. The sent
+video uses `30 22 32`; the default-camera render is also kept.
+
+Reproduce from the worktree root (choose new output names for a rerun):
+
+```text
+.venv-traffic/Scripts/python.exe scripts/record_highway_flow_rl_round9_episode.py --output outputs/highway-flow-rl/v06-replay/round9-i110-merge-01
+.venv-traffic/Scripts/python.exe scripts/render_highway_flow_topdown.py outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/episode --summary outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/summary.json --title "Round 9 policy on the I-110 merge (validation case, seed 6900019)" --ffmpeg <ffmpeg.exe> --output outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/round9-i110-merge
+.venv-traffic/Scripts/python.exe scripts/stage_highway_flow_isaac_replay.py outputs/highway-flow-rl/v06-replay/round9-i110-merge-01 --output outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/isaac-input --policy-mode "deterministic MAPPO actor mean (v06 round 9 final, no exploration noise)"
+C:/isaacsim/python.bat scripts/render_i110_merge_replay.py --recording outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/isaac-input --output outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/isaac-render-02 --start-time 2.0 --end-time 31.9 --focal-agent agent_0 --simready-main <vehicles/sim_ready/americano-i7-ev/v14/assets/vehicle.usda> --highlight-agents agent_0 --camera-mode follow --camera-offset 30 22 32 --ffmpeg <ffmpeg.exe>
+```
+
+The recorder needs the round-9 checkpoint and the shared study ledger, and it
+refuses to run unless exactly 127 diagnostic episodes are charged, so it cannot
+silently spend more. `scripts/stage_highway_flow_isaac_replay.py` writes
+`isaac-input`: the recording with metadata keys added for the 3D renderer
+(frames unchanged), the episode's network file and a hash manifest.
+
+Evidence: [round-09-replay-video.json](evidence/highway-merge-training-v06/round-09-replay-video.json)
+(SHA-256 `5af544965685fb3d5aed66fdf18d501dc2ac8d5758f86f851ae0867c1d1321ba`), with the comparison against the final validation, input,
+renderer and video hashes, and both render reports.

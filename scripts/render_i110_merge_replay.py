@@ -349,6 +349,8 @@ def main():
     parser.add_argument('--highlight-agents', nargs='+', default=['agent_2', 'agent_3'])
     parser.add_argument('--camera-mode', choices=['merge-fixed', 'follow'], default='merge-fixed')
     parser.add_argument('--merge-center', type=float, nargs=2, default=[-10., -280.], metavar=('X', 'Y'))
+    parser.add_argument('--camera-offset', type=float, nargs=3, default=[62., 46., 78.], metavar=('X', 'Y', 'Z'),
+                        help='Eye position relative to the look-at target in metres (default is the original view)')
     parser.add_argument('--fps', type=int, default=10)
     parser.add_argument('--playback-speed', type=float, default=1.)
     parser.add_argument('--ffmpeg', type=Path, required=True)
@@ -357,6 +359,8 @@ def main():
     recording, output = args.recording.resolve(), args.output.resolve()
     if not Path.cwd().resolve().is_relative_to(ROOT) or not output.is_relative_to(ROOT/'outputs'):
         parser.error('Run inside the checkout; new outputs belong under outputs/')
+    if not all(math.isfinite(v) for v in args.camera_offset) or args.camera_offset[2] <= 0:
+        parser.error('Camera offset must be finite with the eye above the target')
     if not 1 <= args.fps <= 30 or not .25 <= args.playback_speed <= 2.:
         parser.error('FPS must be 1..30 and playback speed .25..2')
     data = json.loads((recording/'recording.json').read_text(encoding='utf-8'))
@@ -383,7 +387,7 @@ def main():
                   runtime_python_version=sys.version, runtime_python_sha256=sha256(sys.executable),
                   checkpoint_sha256=data.get('checkpoint_sha256'), network_sha256=sha256(output/'network.net.xml'),
                   focal_agent=args.focal_agent, highlighted_agents=args.highlight_agents, camera_mode=args.camera_mode,
-                  merge_center=args.merge_center, frames=len(frames), start_time=frames[0]['time'],
+                  merge_center=args.merge_center, camera_offset=args.camera_offset, frames=len(frames), start_time=frames[0]['time'],
                   end_time=frames[-1]['time'], fps=args.fps, playback_speed=args.playback_speed,
                   source_pose_interpolation=False, colors={'ramp_controlled':'orange', 'mainline_controlled':'cyan', 'native':'gray'})
     if args.simready_main is not None:
@@ -466,7 +470,7 @@ def main():
                 focal_position = (focal['x'], focal['y'], elevation(focal, lanes))
                 camera_position = tuple(.65*a+.35*b for a, b in zip(camera_position, focal_position))
             target = Gf.Vec3d(camera_position[0], camera_position[1]-8., camera_position[2])
-            eye = target+Gf.Vec3d(62., 46., 78.)
+            eye = target+Gf.Vec3d(*args.camera_offset)
             matrix = Gf.Matrix4d().SetLookAt(eye, target, Gf.Vec3d(0., 0., 1.)).GetInverse()
             camera_op.Set(matrix)
             camera_poses.append(dict(time=frame['time'], eye=list(eye), target=list(target)))

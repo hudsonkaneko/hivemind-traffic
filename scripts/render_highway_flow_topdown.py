@@ -44,7 +44,7 @@ def load(episode):
     return recording, rows, sumolib.net.readNet(str(networks[0]), withInternal=True)
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('episode', type=Path, help='directory holding recording.json and episode-*/')
     parser.add_argument('--car', default='agent_0')
@@ -53,7 +53,7 @@ def main():
                         help="recording summary.json with the car's stable_merge entry and lateral-merge times")
     parser.add_argument('--ffmpeg', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     recording, rows, net = load(args.episode)
     car = args.car
     frames = [f for f in recording['frames'] if any(v['id'] == car for v in f['vehicles'])]

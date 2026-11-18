@@ -1,0 +1,170 @@
+{
+  "schema": "highway_flow_rl_v06_round09_replay_video_v01",
+  "date": "2026-11-17",
+  "request": "User asked to run the current best policy (round 9 final) on the I-110 merge and show a video, then asked for the 3D version.",
+  "recording": {
+    "training": false,
+    "deterministic": true,
+    "case_id": "v05-validation-i110-merge",
+    "seed": 6900019,
+    "policy": "outputs/highway-flow-rl/v06/round-09/last.pt",
+    "policy_sha256": "8f056b401a37316f0daaa387dbe3b41116f17d631a501cb4cf723dd971d31ab0",
+    "config": "configs/training/highway-flow-rl-v06-round9.json",
+    "config_sha256": "91947d58d48feabe1efa97bb0a678909a27ba419ffab86b124e506cf2da99217",
+    "command": "scripts/record_highway_flow_rl_round9_episode.py --output outputs/highway-flow-rl/v06-replay/round9-i110-merge-01",
+    "recording": "outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/episode/recording.json",
+    "recording_sha256": "94ca0bc615624e339e82c85986c20957ba6283917a2951d8fdcfdc1ad88cc1aa",
+    "frames": 801,
+    "dt_s": 0.1,
+    "reference_report": "outputs/highway-flow-rl/v06/round-09/final-validation/00.json (canonical checkout)",
+    "reference_sha256": "48547fa3dcd2a8979eadc7aae6bbde6c43e0c7e2c1c31f2bf68eb7369918ae1c",
+    "comparison": {
+      "merge_speed_match_agent_0": {
+        "original": 0.5900621118012422,
+        "replay": 0.5900621118012422,
+        "equal": true
+      },
+      "stable_merge_succeeded_agent_0": {
+        "original": true,
+        "replay": true,
+        "equal": true
+      },
+      "merge_entry_time_s_agent_0": {
+        "original": 16.9,
+        "replay": 16.9,
+        "equal": true
+      },
+      "lateral_merge_complete_time_s_agent_0": {
+        "original": 18.4,
+        "replay": 18.4,
+        "equal": true
+      },
+      "collisions": {
+        "original": 0,
+        "replay": 0,
+        "equal": true
+      },
+      "teleports": {
+        "original": 0,
+        "replay": 0,
+        "equal": true
+      },
+      "intervention_fraction": {
+        "original": 0.004634581105169341,
+        "replay": 0.004634581105169341,
+        "equal": true
+      },
+      "peak_abs_jerk": {
+        "original": 4.0000000000000036,
+        "replay": 4.0000000000000036,
+        "equal": true
+      },
+      "decision_journal_sha256_uncompressed": {
+        "original": "59e55e8633e8401e499f028972ae516e623fabc69217dd0805ae7d08a79078ad",
+        "replay": "59e55e8633e8401e499f028972ae516e623fabc69217dd0805ae7d08a79078ad",
+        "equal": true
+      }
+    },
+    "all_compared_metrics_match": true,
+    "ledger": {
+      "command": "visual_recording",
+      "category": "preparation",
+      "episodes": 1,
+      "diagnostic_episodes_after": 128,
+      "training_decisions": 0
+    },
+    "elapsed_seconds": 15.2,
+    "limitation": "New deterministic replay of the same validation case and seed; not held-out evaluation and not a new result. One diagnostic episode beyond the 127 cap, raised by exactly one for this command."
+  },
+  "top_down": {
+    "command": "scripts/render_highway_flow_topdown.py",
+    "output": "outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/round9-i110-merge",
+    "video": "outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/round9-i110-merge/round9-i110-merge.mp4",
+    "video_sha256": "ab784d4b9a574f1f00671b17482c7a8a465ff46e74c4b9489eb9e253a2b5fddd",
+    "source_recording_sha256": "94ca0bc615624e339e82c85986c20957ba6283917a2951d8fdcfdc1ad88cc1aa",
+    "car": "agent_0",
+    "frames": 362,
+    "fps": 10,
+    "first_time_s": 0.1,
+    "last_time_s": 36.2,
+    "merge_entry_s": 16.9,
+    "lateral_merge_s": 18.4,
+    "stable_merge_passed_s": 26.5,
+    "limitation": "Schematic 2D view drawn from recorded SUMO poses and lane shapes; not photoreal."
+  },
+  "isaac_3d": {
+    "output": "outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/isaac-render-02",
+    "video": "outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/isaac-render-02/i110-merge.mp4",
+    "video_sha256": "e956f14245415c559c754ff6c57fdcf72c2f62c8696b3ddd9f3f4b0dc95403d6",
+    "passed": true,
+    "frames": 300,
+    "start_time": 2.0,
+    "end_time": 31.9,
+    "fps": 10,
+    "playback_speed": 1.0,
+    "camera_mode": "follow",
+    "camera_offset_m": [
+      30.0,
+      22.0,
+      32.0
+    ],
+    "decoded_frames": 300,
+    "video_decode_verified": true,
+    "static_layers_unchanged": true,
+    "max_position_error_m": 0.0,
+    "vehicle_count": 16,
+    "renderer_source_sha256": "3c966b213218485fd6e61194478f84196d2a5f200e17e35884fb4339e1821846",
+    "runtime": "Isaac Sim SimulationApp",
+    "runtime_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+    "main_vehicle": {
+      "version": "v14",
+      "source_unchanged": true,
+      "local_only": true
+    },
+    "command": "scripts/render_i110_merge_replay.py --camera-mode follow --camera-offset 30 22 32",
+    "source_recording_sha256": "94ca0bc615624e339e82c85986c20957ba6283917a2951d8fdcfdc1ad88cc1aa",
+    "staged_recording_sha256": "8e4c9e89ec4f61d32e9649bb0a3675b44c037c0976e6b8bca56d112796c9d1dd",
+    "staged_recording_note": "Frames copied unchanged; only metadata keys added for the Isaac replay renderer",
+    "network_sha256": "f8c72a4bdd9698493085b83d6c8ad42955960e8da2da2a1e987d4907035ffadb",
+    "limitation": "Kinematic visualization, not PhysX control validation or sensor capture. Road reconstructed from recorded SUMO network polylines; markings illustrative."
+  },
+  "isaac_3d_original_camera": {
+    "output": "outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/isaac-render-01",
+    "video": "outputs/highway-flow-rl/v06-replay/round9-i110-merge-01/isaac-render-01/i110-merge.mp4",
+    "video_sha256": "11e9960665ba4ef7b2fa11d40cd4c48bc7df03295f1ad64ca1d25107b070db4f",
+    "passed": true,
+    "frames": 300,
+    "start_time": 2.0,
+    "end_time": 31.9,
+    "fps": 10,
+    "playback_speed": 1.0,
+    "camera_mode": "follow",
+    "camera_offset_m": [
+      62.0,
+      46.0,
+      78.0
+    ],
+    "decoded_frames": 300,
+    "video_decode_verified": true,
+    "static_layers_unchanged": true,
+    "max_position_error_m": 0.0,
+    "vehicle_count": 16,
+    "renderer_source_sha256": "570a33d61bbf50eaf83afd53684499960e2bf38cd40aab09488f893e07f92a63",
+    "runtime": "Isaac Sim SimulationApp",
+    "runtime_version": "6.0.1-rc.7+release.42383.32955d8d.gl",
+    "main_vehicle": {
+      "version": "v14",
+      "source_unchanged": true,
+      "local_only": true
+    },
+    "note": "Same replay with the renderer default camera; kept, not sent."
+  },
+  "observation": "agent_0 holds about 33 mph in the acceleration lane from 5 s to 17 s while the merge target rises to 38-40 mph; it is below the 2 m/s band from 10.9 s to 15.4 s and from 16.4 s to 18.3 s, then reaches 40 mph after merging.",
+  "screenshots": {
+    "top_down_merged_18p3s": "round-09-replay-topdown.png",
+    "isaac_3d_merge_entry_16p9s": "round-09-replay-3d-merge.png",
+    "isaac_3d_on_ramp_2p0s": "round-09-replay-3d-ramp.png"
+  },
+  "videos_in_git": false,
+  "videos_note": "MP4 files and frames stay in the ignored outputs/ directory of the Claude worktree on the maintainer workstation; a clone does not include them."
+}
