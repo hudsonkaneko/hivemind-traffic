@@ -131,6 +131,7 @@ def test_only_declared_fields_differ_from_round_9(cfg):
     assert changed <= {'schema', 'round_index', 'training_authorized', 'learning_profile', 'reward_version',
                        'v10_reward_settings', 'v11_settings', 'v11_mask_version', 'warm_start', 'parent_config_sha256',
                        'budget', 'stop_rules', 'provenance', 'publication_branch', 'execution', 'authorization',
+                       'v11_training',
                        'missed_gap_seed_check', 'held_out_authorized'}
     for key in ('training_rows', 'validation_rows', 'held_out_rows', 'safety', 'acceptance', 'optimizer',
                 'action_contract', 'rate_limit', 'mask_version', 'observation_size'):
@@ -152,6 +153,7 @@ def test_contract_rejects_budget_stop_rule_and_authorization_drift(cfg):
                    lambda c: c['stop_rules'].update(merge_speed_match_floor=0.),
                    lambda c: c['stop_rules'].update(any_collision=False),
                    lambda c: c.update(training_authorized=not c['training_authorized']),
+                   lambda c: c.update(v11_training=dict(shield_coef=1.)),
                    lambda c: c['optimizer'].update(actor_lr=1.)):
         changed = deepcopy(cfg)
         mutate(changed)
@@ -181,3 +183,55 @@ def test_install_points_shared_loop_at_v11_and_keeps_the_canonical_ledger():
     finally:
         for key, value in saved.items():
             setattr(runner.base, key, value)
+
+
+# --- shield-consistency loss ------------------------------------------------------
+def test_shield_consistency_is_zero_inside_the_filters_band_and_grows_outside():
+    torch = pytest.importorskip('torch')
+    from experiments.run_highway_flow_rl_v11 import shield_consistency
+
+    def distance(request, measured, ceiling):
+        return float(shield_consistency(torch.tensor(request), torch.tensor(measured), torch.tensor(ceiling),
+                                        ceiling_margin=.05, rate_bound=.35))
+    assert distance(.2, 0., 2.) == 0. and distance(-.3, 0., 2.) == 0.           # inside the rate band
+    assert distance(.62, -.06, 2.) == pytest.approx((.62 - .29) ** 2)           # leader left: step of 0.68 m/s2
+    assert distance(.118, 0., 0.) == pytest.approx((.118 + .05) ** 2)           # at the speed limit: ceiling 0
+    assert distance(-.06, 0., 0.) == 0.                                         # just under the ceiling margin
+    assert distance(-3., -.5, -3.) == pytest.approx(.05 ** 2, abs=1e-6)         # ceiling demands hard braking: follow it
+    assert distance(-3.05, -.5, -3.) == pytest.approx(0., abs=1e-9)             # the rate band never forbids that
+    assert distance(-1.5, 0., 2.) == pytest.approx((1.5 - .35) ** 2)            # unforced hard braking step
+
+
+def test_trainer_adds_the_loss_only_when_the_round_declares_it():
+    torch = pytest.importorskip('torch')
+    from experiments import run_highway_flow_rl_v11 as runner
+    from policies.highway_flow import FlowModel
+    torch.manual_seed(0)
+    model = FlowModel()
+    observations = torch.zeros(6, 117)
+    observations[:, 30:33] = torch.tensor([0., 1., 0.])
+    observations[:, 43] = torch.tensor([2., 2., 0., 0., -3., 2.]) / 4.5
+    observations[:, 1] = torch.tensor([0., 1., 0., 0., -.5, -2.]) / 4.5
+    with torch.no_grad():
+        actions, log_probs, entropy, latent = model.act(observations)
+    part = dict(local_obs=observations, global_states=torch.zeros(6, 2832), agent_indices=torch.arange(6),
+                actions=actions, pre_tanh_actions=latent, old_log_probs=log_probs, old_values=torch.zeros(6),
+                advantages=torch.zeros(6), returns=torch.zeros(6))
+    ratio = torch.ones(6)
+    cfg = json.loads(config_path(15).read_text(encoding='utf-8'))
+    plain = runner.trainer_for(dict())(model, **cfg['optimizer'])
+    loss0, weighted0, stats0 = plain._loss_terms(part, ratio, entropy)
+    assert 'shield' not in weighted0 and 'shield_loss_m2_s4' not in stats0
+    trainer = runner.trainer_for(cfg)(model, **cfg['optimizer'])
+    assert (trainer.shield_coef, trainer.ceiling_margin, trainer.rate_bound) == (50., .05, .35)
+    assert trainer.episodes_per_update == cfg['optimizer']['episodes_per_update']
+    loss, weighted, stats = trainer._loss_terms(part, ratio, entropy)
+    # a fresh actor requests about -1.25 m/s2 (the middle of [-4.5, 2]): outside the band on most rows
+    assert stats['shield_outside_fraction'] > 0
+    assert float(weighted['shield']) == pytest.approx(50. * stats['shield_loss_m2_s4'], rel=1e-5)
+    assert float(loss) == pytest.approx(float(loss0) + float(weighted['shield']), rel=1e-5)
+    weighted['shield'].backward()
+    assert sum(float(p.grad.abs().sum()) for p in model.actor.parameters() if p.grad is not None) > 0
+    assert all(p.grad is None or float(p.grad.abs().sum()) == 0. for p in model.critic.parameters())
+    with pytest.raises(ValueError):
+        runner.ShieldConsistentTrainer(model, shield_coef=-1., **cfg['optimizer'])

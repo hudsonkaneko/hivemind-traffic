@@ -44,6 +44,9 @@ SETTINGS_BY_ROUND = {
     # end. A 15 s release hands I-110 back to the earlier mask before that gap opens
     # (220 m at 14.7 m/s) and still leaves the 800 m ramp-case lanes their dwell.
     14: dict(merge_dwell_decisions=40, merge_release_time_s=15., merge_release_min_m=150.),
+    # Round 15: first training round, same rule as round 14 (5 of 8 gates with the
+    # frozen round-9 policy; I-110 merge, I-110 following and one ramp case left).
+    15: dict(merge_dwell_decisions=40, merge_release_time_s=15., merge_release_min_m=150.),
 }
 
 

@@ -58,6 +58,8 @@ def build(round_index, round9_path=HERE / 'configs/training/highway-flow-rl-v06-
             evidence='documentation/highway-merge-training-plan-v11.md', round=row['learning_profile']),
         authorization=USER_DECISION + (' This round trains.' if row['training'] else
                                        ' This round is evaluation only; it makes no training decisions.'))
+    if row.get('training_settings') is not None:
+        cfg['v11_training'] = deepcopy(row['training_settings'])
     cfg.pop('missed_gap_seed_check', None)
     contract.validate_config(cfg)
     return cfg

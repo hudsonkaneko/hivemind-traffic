@@ -38,7 +38,7 @@ EXECUTION = dict(v10c.EXECUTION, output_root='outputs/highway-flow-rl/v11',
 STUDY_BUDGET = dict(v10c.BUDGET, total_decisions=6230000, total_wall_seconds=61200,
                     preparation_wall_seconds=7200, diagnostic_wall_seconds=6300, max_diagnostic_episodes=168)
 ROUND9_FINAL_MERGE_SPEED_MATCH = v10c.ROUND9_FINAL_MERGE_SPEED_MATCH
-V11_ONLY_KEYS = ('v11_settings', 'v11_mask_version')
+V11_ONLY_KEYS = ('v11_settings', 'v11_mask_version', 'v11_training')
 
 ROUNDS = {
     # Rule test: the frozen round-9 policy under the merge-speed precondition.
@@ -50,6 +50,21 @@ ROUNDS = {
     14: dict(learning_profile='merge_v11_r14_rule_test_release15_frozen_round9', training=False,
              warm_start=ROUND9_WARM_START, budget=dict(STUDY_BUDGET, per_round_decisions=0),
              merge_floor=v10c.MERGE_FLOOR),
+    # First training round under the rule. Round 14 left three failures, two of them
+    # requests the command filters change: speed-ceiling clamps right after a merge
+    # (ramp 180 m, 2 lanes: 6 of 81, gate allows 4) and a request step of 0.62 m/s2
+    # when a leader leaves the road end (I-110 following: raw request jerk 6.1,
+    # gate 5). The shield-consistency loss (experiments/run_highway_flow_rl_v11.py)
+    # trains the mean request to stay inside the filters' own band. Rewards are
+    # v10's, unchanged. The merge floor only catches a collapse: one ramp car
+    # flipping its stable merge moves the pooled score from 0.62 to 0.38, which
+    # stopped rounds 11 and 12 on single-episode noise.
+    15: dict(learning_profile='merge_v11_r15_rule_shield_consistency', training=True,
+             warm_start=ROUND9_WARM_START, budget=dict(STUDY_BUDGET, per_round_decisions=200000),
+             merge_floor=.3,
+             merge_floor_source='collapse guard: round 14 (frozen round 9 under the rule) scored 0.618; '
+                                'losing two of its three stable ramp merges gives about 0.15 to 0.38',
+             training_settings=dict(shield_coef=50., ceiling_margin_m_s2=.05, rate_bound_m_s2=.35)),
 }
 
 
@@ -73,6 +88,8 @@ def validate_config(cfg, require_training=False):
     if (cfg.get('v11_settings') != v11.SETTINGS_BY_ROUND[cfg['round_index']]
             or cfg.get('v11_mask_version') != v11.MASK_VERSION):
         raise ValueError('V11 settings differ from the row reviewed for this round')
+    if cfg.get('v11_training') != row.get('training_settings'):
+        raise ValueError('V11 training settings differ from the declared round')
     if cfg.get('warm_start') != row['warm_start'] or cfg.get('parent_config_sha256') != PARENT_CONFIG_SHA256:
         raise ValueError('Warm start differs from the declared round')
     if cfg.get('budget') != row['budget']:
