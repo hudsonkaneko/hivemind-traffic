@@ -57,9 +57,31 @@ def env_for(cfg, row, directory):
 
 
 ACCELERATION_INDEX, CEILING_INDEX, OBSERVATION_SCALE_M_S2 = 1, 43, 4.5  # actor117: both /4.5, neither is faded
+SPEED_INDEX, LIMIT_INDEX = 0, 4                                          # actor117: both / CAP, neither is faded
 
 
-def shield_consistency(request, measured, ceiling, *, ceiling_margin, rate_bound):
+def comfort_speed_ceiling(speed_margin, rate_bound, step_s=.1):
+    """Largest acceleration that can still be ramped to zero at `rate_bound` per decision under the speed limit.
+
+    Ramping a, a - r, a - 2r, ... down to zero adds at most
+    step * (a^2 / (2 r) + a / 2 + r / 8) of speed. Keeping that within the margin to
+    the limit gives a <= sqrt(2 r margin / step) - r / 2. Without it a car that
+    reaches the limit while still accelerating is clamped in one decision
+    (measured: 0.6 to 0.04 m/s2, a jerk of 5.6 m/s3).
+    """
+    margin = torch.clamp(speed_margin, min=0.)
+    return torch.clamp(torch.sqrt(2. * rate_bound * margin / step_s) - rate_bound / 2., min=0.)
+
+
+def shield_band(measured, ceiling, *, ceiling_margin, rate_bound, speed_margin=None):
+    """Lower and upper request bounds (m/s2); see shield_consistency."""
+    upper = torch.minimum(measured + rate_bound, ceiling - ceiling_margin)
+    if speed_margin is not None:
+        upper = torch.minimum(upper, comfort_speed_ceiling(speed_margin, rate_bound))
+    return torch.minimum(measured - rate_bound, upper), upper
+
+
+def shield_consistency(request, measured, ceiling, *, ceiling_margin, rate_bound, speed_margin=None):
     """Squared distance of each raw request from what the command filters would pass (m/s2).
 
     The environment caps every request at the feasible ceiling (speed limit,
@@ -68,10 +90,12 @@ def shield_consistency(request, measured, ceiling, *, ceiling_margin, rate_bound
     the raw-request check allows 0.5 m/s2 per decision. The allowed band here is
     [measured - rate_bound, min(measured + rate_bound, ceiling - ceiling_margin)].
     When the ceiling itself is below the band, the band collapses onto it, so a
-    request may always drop as fast as the ceiling demands.
+    request may always drop as fast as the ceiling demands. With `speed_margin`
+    (speed limit minus speed) the upper bound also anticipates the speed limit
+    (comfort_speed_ceiling).
     """
-    upper = torch.minimum(measured + rate_bound, ceiling - ceiling_margin)
-    lower = torch.minimum(measured - rate_bound, upper)
+    lower, upper = shield_band(measured, ceiling, ceiling_margin=ceiling_margin, rate_bound=rate_bound,
+                               speed_margin=speed_margin)
     return torch.relu(request - upper).square() + torch.relu(lower - request).square()
 
 

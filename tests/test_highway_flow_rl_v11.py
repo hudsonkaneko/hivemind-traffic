@@ -260,7 +260,7 @@ def test_projection_fit_moves_requests_into_the_band_and_keeps_the_rest():
     assert stats['after']['shield_m2_s4'] < .01 * stats['before']['shield_m2_s4']
     request, _ = projection.actor_outputs(model, observations)
     kept, _ = projection.actor_outputs(reference, observations)
-    assert float((request[:128] - kept[:128]).abs().max()) < .1      # rows inside the band stay with the reference
+    assert float((request[:128] - kept[:128]).abs().max().detach()) < .1      # rows inside the band stay with the reference
     assert float(request[128:].max()) < .35 + .1                     # rows outside moved to the band edge
     assert all(torch.equal(v, critic[k]) for k, v in model.state_dict().items() if not k.startswith('actor.'))
 
@@ -271,3 +271,125 @@ def test_projection_round_is_declared_without_ppo_settings():
     rows = cfg['training_rows']
     assert cfg['v11_projection']['episodes_per_iteration'] == len(rows)
     assert cfg['budget']['per_round_decisions'] == 2 * sum(r['horizon_steps'] * r['controlled_count'] for r in rows)
+
+
+# --- guided projection (round 17) ----------------------------------------------------
+def test_comfort_speed_ceiling_lets_a_car_ramp_down_before_the_speed_limit():
+    torch = pytest.importorskip('torch')
+    from experiments.run_highway_flow_rl_v11 import comfort_speed_ceiling, shield_band, shield_consistency
+    ceiling = lambda margin: float(comfort_speed_ceiling(torch.tensor(margin), .35))  # noqa: E731
+    assert ceiling(0.) == 0. and ceiling(-1.) == 0.
+    assert ceiling(.06) == pytest.approx(.473, abs=.002)       # the measured case: 0.6 m/s2 was too much there
+    assert ceiling(.15) == pytest.approx(.850, abs=.002)
+    for margin in (.02, .06, .15, .5):                         # ramping down at 0.35 per decision stays under the limit
+        a, gained = ceiling(margin), 0.
+        while a > 0:
+            gained += a * .1
+            a -= .35
+        assert gained <= margin + 1e-6
+    lower, upper = shield_band(torch.tensor(.6), torch.tensor(.6), ceiling_margin=.05, rate_bound=.35,
+                               speed_margin=torch.tensor(.06))
+    assert float(upper) == pytest.approx(.473, abs=.002) and float(lower) == pytest.approx(.25)
+    plain = shield_consistency(torch.tensor(.55), torch.tensor(.6), torch.tensor(.64), ceiling_margin=.05, rate_bound=.35)
+    ahead = shield_consistency(torch.tensor(.55), torch.tensor(.6), torch.tensor(.64), ceiling_margin=.05, rate_bound=.35,
+                               speed_margin=torch.tensor(.064))
+    assert float(plain) == 0. and float(ahead) > 0.           # round 15/16 band unchanged without the margin
+
+
+def _guided_env(speed=15., maneuver=False, status='pending', merged=None, eligible=True, target=16.88):
+    from types import SimpleNamespace
+    tracker = SimpleNamespace(status=status, merge_complete_time_s=merged)
+    return SimpleNamespace(merge_trackers=dict(agent_0=tracker), states=dict(agent_0=dict(speed=speed)),
+        flow_contexts=dict(agent_0={}), graph=None, maneuvers=dict(agent_0={}) if maneuver else {},
+        agents=['agent_0']), dict(eligible=eligible, target_m_s=target)
+
+
+def test_guidance_label_tracks_the_gate_target_only_while_the_merge_is_pending(monkeypatch):
+    torch = pytest.importorskip('torch')
+    from experiments import run_highway_flow_rl_v11_projection as projection
+    settings = json.loads(config_path(17).read_text(encoding='utf-8'))['v11_projection']
+    observation = torch.zeros(117)
+    observation[43] = 2. / 4.5
+    observation[0], observation[4] = 15. / projection.CAP, 18. / projection.CAP
+
+    def label(**kwargs):
+        env, target = _guided_env(**kwargs)
+        monkeypatch.setattr(projection, 'merge_speed_target', lambda state, context, preview: (target, {}))
+        monkeypatch.setattr(projection, 'map_evidence', lambda graph, state: None)
+        return projection.guidance_label(env, 'agent_0', observation, settings)
+    assert label() == pytest.approx(.35)                      # 0.6 * (16.88 - 0.7 - 15) = 0.71, held to measured + 0.35
+    observation[1] = .6 / 4.5
+    assert label() == pytest.approx(.6 * (16.88 - .7 - 15.))  # waiting: aims 0.7 m/s under the target
+    assert label(maneuver=True) == pytest.approx(.95)         # lane change started: aims at the target (rate-bounded)
+    assert label(speed=17.5) == pytest.approx(.6 - .35)       # above the waiting goal: eases off at the rate bound
+    assert label(status='succeeded') is None and label(merged=19.5) is None and label(eligible=False) is None
+
+
+def test_labeling_actor_records_labels_and_drives_them_only_in_the_expert_pass(monkeypatch):
+    torch = pytest.importorskip('torch')
+    from experiments import run_highway_flow_rl_v11_projection as projection
+    from policies.highway_flow import FlowModel
+    settings = json.loads(config_path(17).read_text(encoding='utf-8'))['v11_projection']
+    monkeypatch.setattr(projection, 'guidance_label', lambda env, agent, observation, s: .5 if agent == 'agent_0' else None)
+    torch.manual_seed(0)
+    model = FlowModel()
+    observations = torch.zeros(24, 117)
+    observations[:, 30:33] = torch.tensor([0., 1., 0.])
+    env, _ = _guided_env()
+    with torch.no_grad():
+        plain = model.act(observations, deterministic=True)[0]
+        learner = projection.LabelingActor(model, settings, expert=False)
+        learner.env = env
+        kept = learner.act(observations, deterministic=True)[0]
+        expert = projection.LabelingActor(model, settings, expert=True)
+        expert.env = env
+        driven = expert.act(observations, deterministic=True)[0]
+    assert torch.equal(kept, plain)
+    assert float(driven[0, 0]) == pytest.approx((.5 + 4.5) / 3.25 - 1.) and torch.equal(driven[1:], plain[1:])
+    for actor in (learner, expert):
+        assert len(actor.labels) == 1 and float(actor.labels[0][0]) == .5 and bool(torch.isnan(actor.labels[0][1:]).all())
+
+
+def test_guided_fit_follows_labels_where_given_and_the_reference_elsewhere():
+    torch = pytest.importorskip('torch')
+    from experiments import run_highway_flow_rl_v11_projection as projection
+    from policies.highway_flow import FlowModel
+    torch.manual_seed(2)
+    model, reference = FlowModel(), FlowModel()
+    reference.load_state_dict(model.state_dict())
+    settings = dict(json.loads(config_path(17).read_text(encoding='utf-8'))['v11_projection'], epochs=80, batch_size=64)
+    observations = torch.zeros(256, 117)
+    observations[:, 30:33] = torch.tensor([0., 1., 0.])
+    observations[:, 43] = 2. / 4.5
+    observations[:, 0], observations[:, 4] = 10. / projection.CAP, 18. / projection.CAP
+    observations[:, 1] = -1.25 / 4.5                           # a fresh actor requests about -1.25 m/s2: inside the band
+    observations[128:, 28] = 1.                                # the guided rows differ in one input
+    labels = torch.full((256,), float('nan'))
+    labels[128:] = -1.0
+    stats = projection.fit(model, reference, observations, settings, torch.Generator().manual_seed(0), labels)
+    assert stats['before']['guided_samples'] == 128 and stats['after']['guidance_rmse_m_s2'] < .05
+    request, _ = projection.actor_outputs(model, observations)
+    kept, _ = projection.actor_outputs(reference, observations)
+    assert float((request[:128] - kept[:128]).abs().max()) < .05 and float((request[128:] + 1.).abs().max()) < .1
+
+
+def test_round17_collection_adds_i110_merge_rows_with_training_seeds_only():
+    from experiments.run_highway_flow_rl_v11_projection import collection_rows
+    cfg = json.loads(config_path(17).read_text(encoding='utf-8'))
+    settings = cfg['v11_projection']
+    forbidden = {row['seed'] for row in cfg['validation_rows'] + cfg['held_out_rows']}
+    seen, decisions = set(), 0
+    for iteration in range(settings['iterations']):
+        rows = collection_rows(cfg, iteration, settings)
+        assert len(rows) == settings['episodes_per_iteration'] == 30
+        assert [row['case']['id'] for row in rows[:20]] == [row['case']['id'] for row in cfg['training_rows']]
+        assert sum(row['case']['id'] == 'i110-merge' for row in rows) == 6
+        assert sum(row['case']['id'] == 'i110-merge-focused-8' for row in rows) == 6
+        for row in rows:
+            key = (row['case']['id'], row['seed'])
+            assert key not in seen and row['seed'] not in forbidden and not (row.get('missed_gap') and row in rows[20:])
+            seen.add(key)
+            decisions += row['horizon_steps'] * row['controlled_count']
+    assert decisions == cfg['budget']['per_round_decisions']
+    warm = cfg['warm_start']
+    assert warm['path'].endswith('round-16/candidates/checkpoint-02.pt') and len(warm['sha256']) == 64

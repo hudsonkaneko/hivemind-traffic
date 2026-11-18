@@ -49,6 +49,8 @@ SETTINGS_BY_ROUND = {
     15: dict(merge_dwell_decisions=40, merge_release_time_s=15., merge_release_min_m=150.),
     # Round 16: shield projection from round 9 (no PPO), same rule.
     16: dict(merge_dwell_decisions=40, merge_release_time_s=15., merge_release_min_m=150.),
+    # Round 17: guided projection from the round-16 actor, same rule.
+    17: dict(merge_dwell_decisions=40, merge_release_time_s=15., merge_release_min_m=150.),
 }
 
 

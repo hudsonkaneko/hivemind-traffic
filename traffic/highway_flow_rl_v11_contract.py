@@ -79,6 +79,28 @@ ROUNDS = {
              projection_settings=dict(iterations=2, episodes_per_iteration=20, epochs=30, batch_size=1024,
                                       learning_rate=3e-4, hinge_weight=50., preserve_weight=1., lane_weight=1.,
                                       ceiling_margin_m_s2=.05, rate_bound_m_s2=.35)),
+    # Round 16 result: 7 of 8 gates after the second pass (4 of 8 after the first).
+    # Only I-110 merge fails. Scripted probes on that case (plan document) show the
+    # gate is reachable when the merging car tracks the gate's own target, held 0.7
+    # m/s under it while it waits: match 0.994, qualified. They also show one car
+    # reaching the speed limit while still accelerating (jerk 5.6). Round 17 starts
+    # from the round-16 actor and adds, to the same projection: (a) scripted guidance
+    # labels for cars whose merge is pending, (b) a band that anticipates the speed
+    # limit, (c) extra I-110 merge rows, since 2 of 20 rows give too few such states.
+    # The first pass drives pending merges with the label; later passes use the actor.
+    17: dict(learning_profile='merge_v11_r17_guided_projection', training=True,
+             warm_start=dict(path='outputs/highway-flow-rl/v11/round-16/candidates/checkpoint-02.pt',
+                             sha256='651d20fecaec4d6361f91ad00c103e4f3be6198fb64a8a87871d306aa553bed7'),
+             budget=dict(STUDY_BUDGET, per_round_decisions=364800),
+             merge_floor=.3,
+             merge_floor_source='collapse guard, as in round 15 (not checked by the projection runner, which '
+                                'reports every validation and selects by the shared validation rank)',
+             projection_settings=dict(iterations=3, episodes_per_iteration=30, epochs=30, batch_size=1024,
+                                      learning_rate=3e-4, hinge_weight=50., preserve_weight=1., lane_weight=1.,
+                                      ceiling_margin_m_s2=.05, rate_bound_m_s2=.35, comfort_speed_ceiling=True,
+                                      guidance=dict(gain=.6, wait_offset_m_s=.7, weight=10., expert_iterations=1),
+                                      extra_merge_rows=dict(case_ids=['i110-merge', 'i110-merge-focused-8'],
+                                                            cycles_per_iteration=5, first_cycle=50))),
 }
 
 
