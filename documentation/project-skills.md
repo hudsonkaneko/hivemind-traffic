@@ -1,6 +1,7 @@
 # Project-local agent skills
 
-Snapshot: October 12, 2026. Eight project-domain skills are checked into
+Snapshot: October 12, 2026, plus one skill written in the repository on
+November 18, 2026. Nine project-domain skills are checked into
 `.agents/skills/`. They are versioned **instructions for a coding agent**, not
 simulation code, installed dependencies, trained policies or evidence that a
 simulation has passed validation.
@@ -17,10 +18,12 @@ simulation has passed validation.
 | `validate-av-isaac-lab` | Selected policy-transfer/physics validation and motion-ownership checks |
 | `run-reproducible-av-experiments` | Seeds, matched comparisons, manifests, metrics and evidence |
 | `prepare-simready-vehicle` | Asset preparation, physical driving readiness and scoped validation |
+| `tune-highway-training` | Diagnosing a failing training gate and choosing one reward, weight or training change |
 
 Each folder includes `SKILL.md` and `agents/openai.yaml`. Vehicle preparation
-also includes two reusable technical references. The
-[source manifest](project-skills-manifest.json) records all 18 packaged files,
+also includes two reusable technical references, and training tuning includes
+a round-by-round tuning history. The
+[source manifest](project-skills-manifest.json) records all 21 packaged files,
 original source hashes, adaptations and exclusions.
 
 ## Use from a checkout
@@ -59,6 +62,24 @@ before applying a skill. The generic skills originated in the SUMO-first phase:
   generic `runs/` examples do not supersede the established storage conventions.
 - User participation is still required before new Isaac Lab policy training.
   A skill describing training does not authorize an unattended training run.
+
+## Repository-authored skill: tune-highway-training
+
+Written on November 18, 2026 at the user's request ("Write project skill"),
+after a review of published RL skills found none that fit this project's gates,
+filters, shared ledger and budget. It turns the lessons of highway flow rounds
+3 to 17 into one procedure: name the failing gate and car, read the saved
+journals, classify the failure layer, check reachability with a scripted probe,
+then change one reward term, weight or training setting, sized to the ledger
+and judged without tuning on held-out data. Its reference,
+`references/tuning-history.md`, lists each round, its change, result and
+lesson, with the plan documents it came from.
+
+It has no external source. Ideas were taken, not text, from NVIDIA Isaac Lab's
+`debug-rl-training` skill (classify the failure layer, change one variable per
+run, choose checkpoints by task metrics) and the tachyon-beep `yzmir` packs
+(reward-term review, reading PPO update statistics). Like the other skills it
+authorizes nothing: no training, evaluation, held-out run or budget increase.
 
 ## Publication boundary and provenance
 

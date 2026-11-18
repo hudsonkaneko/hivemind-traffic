@@ -4,6 +4,16 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-18 - Project skill for tuning highway training
+
+- Added `tune-highway-training` to `.agents/skills/`: a procedure for
+  diagnosing a failing development gate and choosing one reward, weight or
+  training change, with a tuning history of rounds 3 to 17. Written in the
+  repository from its own records after a review of published RL skills; no
+  external text copied. It authorizes no training. See
+  [project skills](project-skills.md#repository-authored-skill-tune-highway-training).
+  Google guide sync remains pending.
+
 ## 2026-11-17 - Merge-speed rule and shield projection reach 7 of 8 development gates (v11)
 
 - Found from saved journals that the round-9 policy merges on the first allowed

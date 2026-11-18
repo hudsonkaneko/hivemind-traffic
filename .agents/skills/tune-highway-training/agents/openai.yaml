@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tune Highway Training"
+  short_description: "Diagnose failing gates and pick one tuning change"
+  default_prompt: "Use $tune-highway-training to diagnose the failing development gate and propose the one reward, weight or training change most likely to fix it."

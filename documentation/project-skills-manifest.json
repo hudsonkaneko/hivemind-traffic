@@ -7,7 +7,8 @@
     "All SKILL.md copies add the Highway Sim repository-scope paragraph.",
     "prepare-simready-vehicle/SKILL.md replaces the private case-study link with an explicit exclusion.",
     "Only text instructions, UI metadata and reusable references are included; no runtime, asset, connector, credential or training artifact is bundled.",
-    "No upstream LICENSE or NOTICE file was present in the selected source directories; no new license grant is asserted."
+    "No upstream LICENSE or NOTICE file was present in the selected source directories; no new license grant is asserted.",
+    "tune-highway-training was written in this repository on 2026-11-18 from the project's own training records; its source_sha256 values hash the files as first committed. Published RL skills were reviewed for ideas (NVIDIA Isaac Lab debug-rl-training, tachyon-beep yzmir packs) but no text was copied."
   ],
   "files": [
     {
@@ -116,6 +117,27 @@
       "path": ".agents/skills/prepare-simready-vehicle/references/preparation-and-validation.md",
       "source_sha256": "2cfd9e310da83445fc7afffb33ec567b5f1195638fa2d2df340667fd90b3f05c",
       "changes": []
+    },
+    {
+      "path": ".agents/skills/tune-highway-training/SKILL.md",
+      "source_sha256": "a0635ea72ab6500511e291ecd1c577bfd0adf53da3a8cc722fcbbd12403841cf",
+      "changes": [
+        "authored in this repository on 2026-11-18; no external source"
+      ]
+    },
+    {
+      "path": ".agents/skills/tune-highway-training/agents/openai.yaml",
+      "source_sha256": "bcc270965466e026bad387ceabad8422628cae3307e804a951438568481602fa",
+      "changes": [
+        "authored in this repository on 2026-11-18; no external source"
+      ]
+    },
+    {
+      "path": ".agents/skills/tune-highway-training/references/tuning-history.md",
+      "source_sha256": "4336bd17be7afe43b454ec7ca40d7ecc0002b40354bd65d07aceda9a22966c92",
+      "changes": [
+        "authored in this repository on 2026-11-18; no external source"
+      ]
     }
   ],
   "excluded": [

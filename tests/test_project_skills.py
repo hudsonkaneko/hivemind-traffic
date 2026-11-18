@@ -12,7 +12,7 @@ NAMES = {
     "sumo-traci-traffic", "pettingzoo-multiagent-traffic", "train-hivemind-marl",
     "stream-traffic-openusd", "build-omniverse-traffic-viewer",
     "validate-av-isaac-lab", "run-reproducible-av-experiments",
-    "prepare-simready-vehicle",
+    "prepare-simready-vehicle", "tune-highway-training",
 }
 
 
@@ -23,7 +23,7 @@ class ProjectSkillsTests(unittest.TestCase):
         declared = [item["path"] for item in manifest["files"]]
         self.assertEqual(set(declared), actual)
         self.assertEqual(len(declared), len(set(declared)))
-        self.assertEqual(len(actual), 18)
+        self.assertEqual(len(actual), 21)
         self.assertEqual({p.name for p in SKILLS.iterdir() if p.is_dir()}, NAMES)
         for item in manifest["files"]:
             self.assertRegex(item["source_sha256"], r"^[0-9a-f]{64}$")
