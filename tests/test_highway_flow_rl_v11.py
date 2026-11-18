@@ -131,7 +131,7 @@ def test_only_declared_fields_differ_from_round_9(cfg):
     assert changed <= {'schema', 'round_index', 'training_authorized', 'learning_profile', 'reward_version',
                        'v10_reward_settings', 'v11_settings', 'v11_mask_version', 'warm_start', 'parent_config_sha256',
                        'budget', 'stop_rules', 'provenance', 'publication_branch', 'execution', 'authorization',
-                       'v11_training',
+                       'v11_training', 'v11_projection',
                        'missed_gap_seed_check', 'held_out_authorized'}
     for key in ('training_rows', 'validation_rows', 'held_out_rows', 'safety', 'acceptance', 'optimizer',
                 'action_contract', 'rate_limit', 'mask_version', 'observation_size'):
@@ -154,6 +154,7 @@ def test_contract_rejects_budget_stop_rule_and_authorization_drift(cfg):
                    lambda c: c['stop_rules'].update(any_collision=False),
                    lambda c: c.update(training_authorized=not c['training_authorized']),
                    lambda c: c.update(v11_training=dict(shield_coef=1.)),
+                   lambda c: c.update(v11_projection=dict(iterations=9)),
                    lambda c: c['optimizer'].update(actor_lr=1.)):
         changed = deepcopy(cfg)
         mutate(changed)
@@ -228,10 +229,45 @@ def test_trainer_adds_the_loss_only_when_the_round_declares_it():
     loss, weighted, stats = trainer._loss_terms(part, ratio, entropy)
     # a fresh actor requests about -1.25 m/s2 (the middle of [-4.5, 2]): outside the band on most rows
     assert stats['shield_outside_fraction'] > 0
-    assert float(weighted['shield']) == pytest.approx(50. * stats['shield_loss_m2_s4'], rel=1e-5)
-    assert float(loss) == pytest.approx(float(loss0) + float(weighted['shield']), rel=1e-5)
+    assert float(weighted['shield'].detach()) == pytest.approx(50. * stats['shield_loss_m2_s4'], rel=1e-5)
+    assert float(loss.detach()) == pytest.approx(float(loss0.detach()) + float(weighted['shield'].detach()), rel=1e-5)
     weighted['shield'].backward()
     assert sum(float(p.grad.abs().sum()) for p in model.actor.parameters() if p.grad is not None) > 0
     assert all(p.grad is None or float(p.grad.abs().sum()) == 0. for p in model.critic.parameters())
     with pytest.raises(ValueError):
         runner.ShieldConsistentTrainer(model, shield_coef=-1., **cfg['optimizer'])
+
+
+# --- shield projection (round 16) ---------------------------------------------------
+def test_projection_fit_moves_requests_into_the_band_and_keeps_the_rest():
+    torch = pytest.importorskip('torch')
+    from experiments import run_highway_flow_rl_v11_projection as projection
+    from policies.highway_flow import FlowModel
+    torch.manual_seed(1)
+    model, reference = FlowModel(), FlowModel()
+    reference.load_state_dict(model.state_dict())
+    with torch.no_grad():   # give the actor a clearly positive request so some rows start outside the band
+        model.actor.mean_net[1][-1].bias[0] = reference.actor.mean_net[1][-1].bias[0] = 1.
+    settings = dict(json.loads(config_path(16).read_text(encoding='utf-8'))['v11_projection'], epochs=60, batch_size=64)
+    observations = torch.zeros(256, 117)
+    observations[:, 30:33] = torch.tensor([0., 1., 0.])
+    observations[:, 43] = 2. / 4.5
+    observations[:128, 1] = 1.1 / 4.5         # measured 1.1 m/s2: a request near 0.98 is inside the band
+    observations[128:, 1] = 0.                # just inserted: the same request is 0.63 above measured + 0.35
+    critic = {k: v.clone() for k, v in model.state_dict().items() if not k.startswith('actor.')}
+    stats = projection.fit(model, reference, observations, settings, torch.Generator().manual_seed(0))
+    assert stats['before']['outside_fraction'] == pytest.approx(.5) and stats['before']['preserve_m2_s4'] == 0.
+    assert stats['after']['shield_m2_s4'] < .01 * stats['before']['shield_m2_s4']
+    request, _ = projection.actor_outputs(model, observations)
+    kept, _ = projection.actor_outputs(reference, observations)
+    assert float((request[:128] - kept[:128]).abs().max()) < .1      # rows inside the band stay with the reference
+    assert float(request[128:].max()) < .35 + .1                     # rows outside moved to the band edge
+    assert all(torch.equal(v, critic[k]) for k, v in model.state_dict().items() if not k.startswith('actor.'))
+
+
+def test_projection_round_is_declared_without_ppo_settings():
+    cfg = json.loads(config_path(16).read_text(encoding='utf-8'))
+    assert 'v11_training' not in cfg and cfg['v11_projection']['iterations'] == 2
+    rows = cfg['training_rows']
+    assert cfg['v11_projection']['episodes_per_iteration'] == len(rows)
+    assert cfg['budget']['per_round_decisions'] == 2 * sum(r['horizon_steps'] * r['controlled_count'] for r in rows)

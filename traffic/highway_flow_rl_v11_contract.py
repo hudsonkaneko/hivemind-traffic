@@ -38,7 +38,7 @@ EXECUTION = dict(v10c.EXECUTION, output_root='outputs/highway-flow-rl/v11',
 STUDY_BUDGET = dict(v10c.BUDGET, total_decisions=6230000, total_wall_seconds=61200,
                     preparation_wall_seconds=7200, diagnostic_wall_seconds=6300, max_diagnostic_episodes=168)
 ROUND9_FINAL_MERGE_SPEED_MATCH = v10c.ROUND9_FINAL_MERGE_SPEED_MATCH
-V11_ONLY_KEYS = ('v11_settings', 'v11_mask_version', 'v11_training')
+V11_ONLY_KEYS = ('v11_settings', 'v11_mask_version', 'v11_training', 'v11_projection')
 
 ROUNDS = {
     # Rule test: the frozen round-9 policy under the merge-speed precondition.
@@ -65,6 +65,20 @@ ROUNDS = {
              merge_floor_source='collapse guard: round 14 (frozen round 9 under the rule) scored 0.618; '
                                 'losing two of its three stable ramp merges gives about 0.15 to 0.38',
              training_settings=dict(shield_coef=50., ceiling_margin_m_s2=.05, rate_bound_m_s2=.35)),
+    # Round 15 result: 5 of 8 gates at the start, 3 of 8 at 100k, 2 of 8 at the end.
+    # PPO at this scale changed far more than the added loss asked for (cars stopped
+    # at lane ends, raw request jerk up to 22 m/s3). Round 16 therefore drops PPO:
+    # a supervised fit of the round-9 actor onto the filters' band, held to round 9
+    # everywhere else (experiments/run_highway_flow_rl_v11_projection.py). Two
+    # passes over the 20 training rows; each pass collects with the current actor.
+    16: dict(learning_profile='merge_v11_r16_shield_projection', training=True,
+             warm_start=ROUND9_WARM_START, budget=dict(STUDY_BUDGET, per_round_decisions=203200),
+             merge_floor=.3,
+             merge_floor_source='collapse guard, as in round 15 (not checked by the projection runner, which '
+                                'reports every validation and selects by the shared validation rank)',
+             projection_settings=dict(iterations=2, episodes_per_iteration=20, epochs=30, batch_size=1024,
+                                      learning_rate=3e-4, hinge_weight=50., preserve_weight=1., lane_weight=1.,
+                                      ceiling_margin_m_s2=.05, rate_bound_m_s2=.35)),
 }
 
 
@@ -88,6 +102,8 @@ def validate_config(cfg, require_training=False):
     if (cfg.get('v11_settings') != v11.SETTINGS_BY_ROUND[cfg['round_index']]
             or cfg.get('v11_mask_version') != v11.MASK_VERSION):
         raise ValueError('V11 settings differ from the row reviewed for this round')
+    if cfg.get('v11_projection') != row.get('projection_settings'):
+        raise ValueError('V11 projection settings differ from the declared round')
     if cfg.get('v11_training') != row.get('training_settings'):
         raise ValueError('V11 training settings differ from the declared round')
     if cfg.get('warm_start') != row['warm_start'] or cfg.get('parent_config_sha256') != PARENT_CONFIG_SHA256:

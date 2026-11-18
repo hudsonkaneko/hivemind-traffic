@@ -30,7 +30,7 @@ from traffic.highway_flow_contract import file_digest  # noqa: E402
 base = previous.base
 SOURCES = ('experiments/run_highway_flow_rl_v11.py', 'environments/highway_flow_rl_v11_env.py',
            'traffic/highway_flow_rl_v11_rewards.py', 'traffic/highway_flow_rl_v11_contract.py',
-           'scripts/prepare_highway_flow_rl_v11.py')
+           'scripts/prepare_highway_flow_rl_v11.py', 'experiments/run_highway_flow_rl_v11_projection.py')
 shared_study_directory = previous.shared_study_directory
 
 

@@ -1,0 +1,252 @@
+{
+  "schema": "highway_flow_rl_v11_validation_summary_v01",
+  "source": "outputs/highway-flow-rl/v10/round-12/initial-validation.json",
+  "gates_passed": 3,
+  "cases_total": 8,
+  "pooled_merge_speed_match": 0.4542531166027929,
+  "stable_merges": 4,
+  "merge_targets": 4,
+  "collisions": 0,
+  "pooled_intervention_fraction": 0.00255740256852171,
+  "max_peak_jerk_m_s3": 4.0000000000000036,
+  "cases": [
+    {
+      "index": 0,
+      "case_id": "v05-validation-i110-merge",
+      "seed": 6900019,
+      "gate_passed": false,
+      "gate_failures": [
+        "rolling_merge_quality"
+      ],
+      "collisions": 0,
+      "intervention_fraction": 0.004634581105169341,
+      "peak_abs_jerk": 4.0000000000000036,
+      "cars": {
+        "agent_0": {
+          "stable_merge": true,
+          "qualified": false,
+          "speed_match_fraction": 0.5900621118012422,
+          "entry_time_s": 16.9,
+          "lateral_merge_complete_time_s": 18.4,
+          "first_decision_time_s": 0.2,
+          "v11": null,
+          "merge_request": {
+            "time_s": 15.4,
+            "speed_m_s": 14.621404249825675,
+            "target_m_s": 18.0,
+            "lane": "sb2_0",
+            "rear_gap_m": 36.61004681582902,
+            "rear_closing_m_s": 0.5169978536232964
+          },
+          "window": {
+            "samples": 161,
+            "speed_match_fraction": 0.5900621118012422,
+            "stopped_seconds": 0.0,
+            "peak_abs_jerk_m_s3": 3.9999999999999147,
+            "override_fraction": 0.006211180124223602,
+            "neighbor_braking_samples": 5,
+            "minimum_neighbor_acceleration_m_s2": -4.499999999999993,
+            "missed_below_target": 65,
+            "missed_above_target": 0,
+            "missed_target_not_eligible": 1,
+            "missed_times_s": [
+              10.9,
+              18.2
+            ]
+          },
+          "post_merge_override_decisions": 0
+        }
+      }
+    },
+    {
+      "index": 1,
+      "case_id": "v05-val-0-cruise",
+      "seed": 6900000,
+      "gate_passed": true,
+      "gate_failures": [],
+      "collisions": 0,
+      "intervention_fraction": 0.0012903225806451613,
+      "peak_abs_jerk": 3.9999999999999147,
+      "cars": {}
+    },
+    {
+      "index": 2,
+      "case_id": "v05-val-0-passing",
+      "seed": 6900002,
+      "gate_passed": true,
+      "gate_failures": [],
+      "collisions": 0,
+      "intervention_fraction": 0.0,
+      "peak_abs_jerk": 3.893097341060603,
+      "cars": {}
+    },
+    {
+      "index": 3,
+      "case_id": "v05-validation-i110-following",
+      "seed": 6900017,
+      "gate_passed": false,
+      "gate_failures": [
+        "raw_request_jerk"
+      ],
+      "collisions": 0,
+      "intervention_fraction": 0.0028388928317956,
+      "peak_abs_jerk": 3.9999999999999147,
+      "cars": {}
+    },
+    {
+      "index": 4,
+      "case_id": "ramp-eval-train-2-lane-ramp120-ramp-started",
+      "seed": 8400004,
+      "gate_passed": false,
+      "gate_failures": [
+        "rolling_merge_quality"
+      ],
+      "collisions": 0,
+      "intervention_fraction": 0.005256241787122208,
+      "peak_abs_jerk": 3.9999999999999147,
+      "cars": {
+        "agent_0": {
+          "stable_merge": true,
+          "qualified": false,
+          "speed_match_fraction": 0.46099290780141844,
+          "entry_time_s": 4.7,
+          "lateral_merge_complete_time_s": 6.2,
+          "first_decision_time_s": 0.2,
+          "v11": null,
+          "merge_request": {
+            "time_s": 3.2,
+            "speed_m_s": 13.033182340275001,
+            "target_m_s": 22.35,
+            "lane": "sb2_0",
+            "rear_gap_m": 69.21320479497255,
+            "rear_closing_m_s": 7.403174707321636
+          },
+          "window": {
+            "samples": 141,
+            "speed_match_fraction": 0.46099290780141844,
+            "stopped_seconds": 0.0,
+            "peak_abs_jerk_m_s3": 3.9999999999999147,
+            "override_fraction": 0.028368794326241134,
+            "neighbor_braking_samples": 0,
+            "minimum_neighbor_acceleration_m_s2": -0.8839629182435615,
+            "missed_below_target": 66,
+            "missed_above_target": 7,
+            "missed_target_not_eligible": 3,
+            "missed_times_s": [
+              0.2,
+              7.7
+            ]
+          },
+          "post_merge_override_decisions": 0
+        }
+      }
+    },
+    {
+      "index": 5,
+      "case_id": "v02-development-60mph-cruise",
+      "seed": 8400005,
+      "gate_passed": true,
+      "gate_failures": [],
+      "collisions": 0,
+      "intervention_fraction": 0.001327433628318584,
+      "peak_abs_jerk": 3.9999999999999147,
+      "cars": {}
+    },
+    {
+      "index": 6,
+      "case_id": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+      "seed": 8400004,
+      "gate_passed": false,
+      "gate_failures": [
+        "rolling_merge_quality"
+      ],
+      "collisions": 0,
+      "intervention_fraction": 0.008174386920980926,
+      "peak_abs_jerk": 3.9999999999999147,
+      "cars": {
+        "agent_0": {
+          "stable_merge": true,
+          "qualified": false,
+          "speed_match_fraction": 0.3971631205673759,
+          "entry_time_s": 4.7,
+          "lateral_merge_complete_time_s": 6.2,
+          "first_decision_time_s": 0.2,
+          "v11": null,
+          "merge_request": {
+            "time_s": 3.2,
+            "speed_m_s": 13.059744786630814,
+            "target_m_s": 24.5872,
+            "lane": "sb2_0",
+            "rear_gap_m": null,
+            "rear_closing_m_s": null
+          },
+          "window": {
+            "samples": 141,
+            "speed_match_fraction": 0.3971631205673759,
+            "stopped_seconds": 0.0,
+            "peak_abs_jerk_m_s3": 3.9999999999999147,
+            "override_fraction": 0.0425531914893617,
+            "neighbor_braking_samples": 0,
+            "minimum_neighbor_acceleration_m_s2": -0.19426756496457642,
+            "missed_below_target": 82,
+            "missed_above_target": 0,
+            "missed_target_not_eligible": 3,
+            "missed_times_s": [
+              0.2,
+              9.4
+            ]
+          },
+          "post_merge_override_decisions": 2
+        }
+      }
+    },
+    {
+      "index": 7,
+      "case_id": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+      "seed": 8400004,
+      "gate_passed": false,
+      "gate_failures": [
+        "rolling_merge_quality"
+      ],
+      "collisions": 0,
+      "intervention_fraction": 0.004993757802746567,
+      "peak_abs_jerk": 3.9999999999999147,
+      "cars": {
+        "agent_0": {
+          "stable_merge": true,
+          "qualified": false,
+          "speed_match_fraction": 0.36879432624113473,
+          "entry_time_s": 4.7,
+          "lateral_merge_complete_time_s": 6.2,
+          "first_decision_time_s": 0.2,
+          "v11": null,
+          "merge_request": {
+            "time_s": 3.2,
+            "speed_m_s": 13.065349351774408,
+            "target_m_s": 24.5872,
+            "lane": "sb2_0",
+            "rear_gap_m": null,
+            "rear_closing_m_s": null
+          },
+          "window": {
+            "samples": 141,
+            "speed_match_fraction": 0.36879432624113473,
+            "stopped_seconds": 0.0,
+            "peak_abs_jerk_m_s3": 3.9999999999999147,
+            "override_fraction": 0.028368794326241134,
+            "neighbor_braking_samples": 0,
+            "minimum_neighbor_acceleration_m_s2": 0.21931506741140083,
+            "missed_below_target": 86,
+            "missed_above_target": 0,
+            "missed_target_not_eligible": 3,
+            "missed_times_s": [
+              0.2,
+              9.8
+            ]
+          },
+          "post_merge_override_decisions": 0
+        }
+      }
+    }
+  ]
+}

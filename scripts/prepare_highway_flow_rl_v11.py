@@ -60,6 +60,8 @@ def build(round_index, round9_path=HERE / 'configs/training/highway-flow-rl-v06-
                                        ' This round is evaluation only; it makes no training decisions.'))
     if row.get('training_settings') is not None:
         cfg['v11_training'] = deepcopy(row['training_settings'])
+    if row.get('projection_settings') is not None:
+        cfg['v11_projection'] = deepcopy(row['projection_settings'])
     cfg.pop('missed_gap_seed_check', None)
     contract.validate_config(cfg)
     return cfg

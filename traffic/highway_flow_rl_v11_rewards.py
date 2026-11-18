@@ -47,6 +47,8 @@ SETTINGS_BY_ROUND = {
     # Round 15: first training round, same rule as round 14 (5 of 8 gates with the
     # frozen round-9 policy; I-110 merge, I-110 following and one ramp case left).
     15: dict(merge_dwell_decisions=40, merge_release_time_s=15., merge_release_min_m=150.),
+    # Round 16: shield projection from round 9 (no PPO), same rule.
+    16: dict(merge_dwell_decisions=40, merge_release_time_s=15., merge_release_min_m=150.),
 }
 
 
