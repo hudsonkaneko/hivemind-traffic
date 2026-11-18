@@ -12,6 +12,13 @@ def config():
     return json.loads((ROOT / 'configs/training/highway-merge-recovery-2026-11-17.json').read_text())
 
 
+def require_generated_networks(rows):
+    """Skip in a clean clone: these ramp networks are generated locally under ignored outputs/."""
+    missing = [row['case']['network'] for row in rows if not (ROOT / row['case']['network']).is_file()]
+    if missing:
+        pytest.skip('Needs locally generated ramp network not stored in Git: ' + missing[0])
+
+
 def test_dense_tracking_still_improves_when_error_exceeds_two():
     target = dict(eligible=True, target_m_s=25.)
     a, _ = recovery_terms(19., 19., target, 1., 2., 2., True)
@@ -54,6 +61,7 @@ def test_seeded_cutins_are_real_adjacent_spawn_pairs(tmp_path):
     from experiments.run_highway_merge_recovery_v08 import env_for
     cfg = config()
     rows = [r for r in cfg['training_rows'] if r.get('cutin_stress')]
+    require_generated_networks(rows)
     for i, row in enumerate(rows):
         env = env_for(cfg, row, tmp_path / str(i))
         for seed in (100, 811, 9919, row['seed'] + 70000):

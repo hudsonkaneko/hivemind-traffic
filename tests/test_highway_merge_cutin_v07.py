@@ -14,6 +14,13 @@ def config():
     return json.loads((ROOT / 'configs/training/highway-merge-cutin-2026-11-15.json').read_text())
 
 
+def require_generated_networks(rows):
+    """Skip in a clean clone: these ramp networks are generated locally under ignored outputs/."""
+    missing = [row['case']['network'] for row in rows if not (ROOT / row['case']['network']).is_file()]
+    if missing:
+        pytest.skip('Needs locally generated ramp network not stored in Git: ' + missing[0])
+
+
 def test_historical_close_cutin_is_blocked_even_with_long_ttc():
     # Faster leader cuts in 3m ahead of an 8.75m/s follower: no closing TTC,
     # but 0.34s headway violates our requirement independently of Krauss.
@@ -93,6 +100,7 @@ def test_sparse_five_lane_missed_gap_keeps_a_blocker_without_reseeding(tmp_path)
     from traffic.highway_v05_demand import write_demand
     cfg = config()
     row = next(r for r in cfg['training_rows'] if r.get('cutin_stress') and r['case']['through_lanes'] == 5)
+    require_generated_networks([row])
     env = env_for(cfg, row, tmp_path / 'env')
     assert env.v04_mask_audit['version'] == cfg['mask_version']
     reproduced = False
