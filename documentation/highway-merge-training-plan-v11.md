@@ -82,7 +82,8 @@ Raising any of these again needs a new note to the user.
 | --- | --- | --- |
 | 13 | Rule test, 10 s release, frozen round-9 policy | 5 of 8 gates; I-110 regressed (stopped at the lane end) |
 | 14 | Rule test, 15 s release, frozen round-9 policy | 5 of 8 gates; I-110 as round 9 |
-| 15 | Training: round-14 rule plus shield-consistency loss | See below |
+| 15 | PPO training: round-14 rule plus shield-consistency loss | **Regressed:** 5 → 3 → 2 of 8 gates; nothing kept |
+| 16 | Shield projection from round 9 (supervised, no PPO) | See below |
 
 ### Round 13: rule test with a 10 s release (no training)
 
@@ -169,3 +170,56 @@ flipping its stable merge moves the pooled score from 0.62 to 0.38, and that
 kind of single-episode flip stopped rounds 11 and 12.
 
 Failure 3 (I-110 merge) has no dedicated change in this round.
+
+#### Round 15 result: regressed, nothing kept
+
+The run completed its 200,000-decision budget (197,345 decisions, 1,696 s, no
+collisions). Evidence:
+[round-15-results.json](evidence/highway-merge-training-v11/round-15-results.json).
+Run outputs stay in Claude's worktree, `outputs/highway-flow-rl/v11/round-15`.
+
+| Validation | Gates | Pooled merge match | Stable merges | Interventions | Peak jerk |
+| --- | --- | --- | --- | --- | --- |
+| Initial (round 9 under the rule) | 5 of 8 | 0.618 | 3 of 4 | 0.28% | 4.0 |
+| After 100k decisions | 3 of 8 | 0.796 | 4 of 4 | 0.30% | 5.2 |
+| Final (197k) | 2 of 8 | 0.409 | 3 of 4 | 2.30% | 39.5 |
+
+- **At 100k some things had improved.** Speed-ceiling clamps were gone from
+  every case (only comfort-rate changes remained), all four merges were stable,
+  and I-110 matched 0.851 after merging into a later gap. But three ramp cars
+  had dropped to 0.67–0.84, and raw request jerk had risen to 9–12 m/s³ on two
+  of them.
+- **By the end the policy was broken.** The I-110 car and the ramp 120 m car
+  both ran to the lane end and stopped (6.6 s and 6.5 s stopped, jerk 39.5 and
+  37.3 m/s³). Raw request jerk reached 22 m/s³. Six of eight cases failed.
+- **The updates were erratic.** 13 of 16 PPO updates stopped early on the KL
+  limit, most after 8 to 93 optimizer steps, with a last KL up to 0.35. In
+  training, 24 of 66 PPO episodes had a jerk above 10 m/s³, most from cars that
+  reached a lane end under exploration noise.
+- **Conclusion.** At this scale PPO changes far more than the term it is given.
+  The best validation of the run is the initial one, so the round-9 policy
+  under the rule stays the reference. The round-15 checkpoints are kept but
+  not used.
+
+### Round 16: shield projection from round 9 (no PPO)
+
+Runner: [`experiments/run_highway_flow_rl_v11_projection.py`](../experiments/run_highway_flow_rl_v11_projection.py).
+It makes the smallest change to the round-9 actor that removes requests the
+filters would alter.
+
+1. Collect the 20 training rows with the current actor in the v11 environment.
+2. Fit the actor on every observation collected so far with
+   `50 × shield consistency + (request − round-9 request)² + (lane outputs − round-9 lane outputs)²`.
+3. Run the 8 validation cases and save the actor. Then repeat once, so the
+   second fit also sees the states the changed actor visits.
+
+- No reward, advantage, critic or teacher label is used. The critic and the
+  action noise are not touched; a check fails the run if anything outside the
+  actor changes.
+- Inside the filters' band the first term is zero, so the fit only holds the
+  actor to round 9 there. With weights 50 and 1, a request that starts 1.35
+  m/s² outside the band (a car just inserted) ends about 0.03 m/s² outside,
+  inside the filters' 0.05 margin.
+- Budget: at most 203,200 decisions (two passes over the 20 rows).
+- It targets failures 1 and 2 above. Failure 3 (I-110 merge) is left for the
+  next round.
