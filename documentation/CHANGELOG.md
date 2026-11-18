@@ -4,6 +4,21 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-17 - Merge-speed rule and shield projection reach 7 of 8 development gates (v11)
+
+- Found from saved journals that the round-9 policy merges on the first allowed
+  decision, 16-21 mph slower than traffic. Added a merge-speed precondition to
+  the lane-change mask in a new v11 environment; nothing shared was edited.
+  With the frozen round-9 policy: 3 -> 5 of 8 gates and no training.
+- PPO under the rule regressed (5 -> 2 of 8) and was discarded. A supervised
+  "shield projection" of the round-9 actor onto the command filters' own band
+  reached 7 of 8 gates with no collisions, 0.06% interventions and peak jerk 4.8.
+- The last gate (I-110 merge) is reachable with a scripted speed law in the
+  merge approach (probes), but a guided fit did not teach it to the actor.
+  One seed per case, no held-out evaluation, nothing promoted. Details, failed
+  rounds and evidence: [v11 plan](highway-merge-training-plan-v11.md).
+  Google guide sync remains pending.
+
 ## 2026-10-26 - MAPPO cruise retraining passes the override gate
 
 - Diagnosed all prior learned overrides as speed-ceiling clamps. Added a separate
