@@ -37,6 +37,13 @@ SETTINGS_BY_ROUND = {
     # lasts 3 s, so 50 window samples precede the request; 4.0 s of matched speed
     # leaves at most 10 of them unmatched.
     13: dict(merge_dwell_decisions=40, merge_release_time_s=10., merge_release_min_m=150.),
+    # Round 14: second rule test, frozen round-9 policy. Round 13 passed two of the
+    # three ramp-start cases (match 0.938 and 0.944) but on I-110, whose ending lane
+    # is about 360 m long, the rule held the car through its only gap (15.4-17.5 s);
+    # the release came at 19 s, the gap was gone, and the car stopped at the lane
+    # end. A 15 s release hands I-110 back to the earlier mask before that gap opens
+    # (220 m at 14.7 m/s) and still leaves the 800 m ramp-case lanes their dwell.
+    14: dict(merge_dwell_decisions=40, merge_release_time_s=15., merge_release_min_m=150.),
 }
 
 

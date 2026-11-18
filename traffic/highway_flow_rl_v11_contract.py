@@ -46,6 +46,10 @@ ROUNDS = {
     13: dict(learning_profile='merge_v11_r13_rule_test_frozen_round9', training=False,
              warm_start=ROUND9_WARM_START, budget=dict(STUDY_BUDGET, per_round_decisions=0),
              merge_floor=v10c.MERGE_FLOOR),
+    # Second rule test (15 s lane-end release), also evaluation only.
+    14: dict(learning_profile='merge_v11_r14_rule_test_release15_frozen_round9', training=False,
+             warm_start=ROUND9_WARM_START, budget=dict(STUDY_BUDGET, per_round_decisions=0),
+             merge_floor=v10c.MERGE_FLOOR),
 }
 
 
