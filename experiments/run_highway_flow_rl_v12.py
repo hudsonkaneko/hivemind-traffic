@@ -50,6 +50,8 @@ SOURCES = ('experiments/run_highway_flow_rl_v12.py', 'environments/highway_flow_
            'scripts/build_la_10_110_corridors.py', 'scripts/build_la_10_110_corridors_exact.py')
 OBSERVATION_SIZE, STATE_SIZE = flow12.OBSERVATION_SIZE, flow12.STATE_SIZE
 CHECKPOINT_SCHEMA = 'highway_flow_rl_checkpoint_v12'
+# SUMO modes every controlled car must hold at every decision; a later version may declare others.
+NATIVE_MODES = dict(speed=31, lane_change=512)
 
 
 def env_for(cfg, row, directory):
@@ -105,7 +107,7 @@ def episode(cfg, row, directory, model, *, collect=False, limit=None, deadline=N
                 if value.shape != (OBSERVATION_SIZE,) or not np.isfinite(value).all():
                     raise ValueError('Invalid local observation')
                 modes[agent] = dict(speed=env.conn.vehicle.getSpeedMode(agent), lane_change=env.conn.vehicle.getLaneChangeMode(agent))
-                if modes[agent] != dict(speed=31, lane_change=512):
+                if modes[agent] != NATIVE_MODES:
                     raise ValueError('Native safety mode changed')
             active, indices = torch.tensor([agent in env.agents for agent in agents]), torch.arange(24)
             local = torch.tensor(np.stack([obs.get(agent, np.zeros(OBSERVATION_SIZE, np.float32)) for agent in agents]))

@@ -4,6 +4,32 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-19 - The policy is the only controller of the sim cars (v14, no training yet)
+
+- At the user's direction ("one controller on the car at all times"), v14 turns
+  SUMO's own checks off for controlled cars (speed mode 96, lane change mode 0).
+  Until now, SUMO's right-of-way check held merging cars at the LA yield lines
+  whatever the policy asked for: 575 of 26,507 decisions in round 19's validation.
+  The environment's own limits stay as part of the controller.
+- With SUMO's checks off and nothing retrained, SUMO's overrides fell 575 -> 0.
+  Interventions fell 2.3% -> 0.1%, peak LA merge jerk 43-58 -> 4.0 m/s³, and gates
+  went 8 -> 9 of 14. One crash in the focused northbound LA merge: v12's target sent
+  the car through the yield line ahead of a faster mainline car.
+- The v14 merge target now checks the gaps from the moment a car crosses a yield
+  line. After a stop, it rises no faster than 1.5 m/s². Acceleration-lane merges
+  keep v12's target.
+- New 3D video of one v14 episode, the southbound focused LA merge, on the LA model
+  with the top-down video's speed/target graph underneath
+  (`scripts/record_highway_flow_rl_v14_episode.py`,
+  `scripts/compose_highway_flow_3d_graph.py`; the video stays outside Git).
+  - The untrained policy ignores the target's "slow down and let `main_9` pass" and
+    cuts in ahead of it; `main_9` brakes at 9 m/s².
+  - After the line, the merge itself is clean.
+  - The recording was charged as one preparation episode (166 of 168).
+- v13 (target following SUMO's yield decision) is superseded and was never trained.
+  Details: [v14 plan](highway-merge-training-plan-v14.md); how the cars work:
+  [sim-car explainer](how-the-sim-cars-work.md).
+
 ## 2026-11-19 - Merge target follows SUMO's yield decision (v13, no training yet)
 
 - New v13 environment: at a yield-junction merge, while SUMO reports the yield link

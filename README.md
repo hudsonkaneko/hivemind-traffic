@@ -5,6 +5,52 @@ directly on GitHub. All Google guide tabs are mirrored in one searchable Markdow
 file, including tables and copyable commands. Guide updates from the project chat
 refresh both copies through the [documented sync workflow](documentation/learning-guide-sync.md#chat-managed-markdown-mirror).
 
+## Current work: a multi-car highway merge policy on the LA I-10/I-110 roads
+
+The main line of work is a shared driving policy for highway merging, trained with
+multi-agent PPO (MAPPO) in SUMO through TraCI. Up to 24 controlled cars share one
+policy network and drive among SUMO's own background traffic.
+**How the sim cars work, end to end:** [sim-car explainer](documentation/how-the-sim-cars-work.md).
+It covers what controls what, what each car sees, how it decides, what limits it, and
+how it is rewarded and graded.
+
+**Where it stands (November 19, 2026):**
+- **One controller per car (v14).** The policy, plus the environment's own speed,
+  following-gap, lane-end and comfort limits, is the only thing driving a controlled
+  car. Up to v13, SUMO's own safety and right-of-way checks ran on top of the policy,
+  and held merging cars at the LA yield lines whatever the policy asked for.
+  [v14 plan](documentation/highway-merge-training-plan-v14.md).
+- **Primary road.** The user's LA I-10/I-110 3D model
+  (`highway_usd/la_10_110/`, with its ODbL attribution). Two SUMO merge corridors
+  are cut from its lane graph exactly as the model has them: no acceleration lane,
+  a ramp that yields where it joins the right lane, and 65/45 mph limits. The 3D
+  model itself is not modified.
+- **Merge target.** The car gets a target speed as input, and a ±1.8 m/s band reward
+  (v12). At yield lines, the v14 target checks the gaps from the moment the car would
+  cross, and rises no faster than the car can accelerate after a stop.
+- **Results.** The best checkpoint is still the round-16 policy (8 of 14 development
+  gates on the model-exact roads; 9 of 14 with SUMO's checks off). All LA merge cases
+  still fail. Nothing has been trained on v14 yet, and there has been no held-out
+  evaluation.
+
+**Version history of the merge line** (each plan records its rounds, failures and
+evidence):
+
+| Version | What it changed | Plan |
+|---|---|---|
+| v01–v03 | Teacher-free MAPPO on the I-110 merge (117-field observation); ramp visibility and driving rewards; speed recovery and smoothness rewards | [v01](documentation/highway-flow-rl-v01.md), [v02](documentation/highway-flow-rl-v02.md), [v03](documentation/highway-flow-rl-v03.md) |
+| v04 | Merge gap preparation from current observations; complete-episode training | [v04](documentation/highway-merge-rewards-v04.md) |
+| v05–v06 | Continuous acceleration with a comfort rate limit (v05); merge speed tracked against the gate's own target, faded merge inputs (v06) | [v06](documentation/highway-merge-training-plan-v06.md) |
+| v07–v08 | Cut-in exposure and merge recovery (Codex branches) | [cut-in](documentation/highway-merge-cutin-2026-11-15.md), [recovery](documentation/highway-merge-recovery-2026-11-17.md) |
+| v09–v10 | Configurations and rewards for training rounds 11 and 12 | [v09](documentation/highway-merge-training-plan-v09.md), [v10](documentation/highway-merge-training-plan-v10.md) |
+| v11 | Merge-speed precondition on lane changes; shield projection (7 of 8 gates) | [v11](documentation/highway-merge-training-plan-v11.md) |
+| v12 | Target-speed inputs and band reward; LA I-10/I-110 model as the primary road | [v12](documentation/highway-merge-training-plan-v12.md) |
+| v13 | Target followed SUMO's yield decision (superseded by v14, never trained) | [v13](documentation/highway-merge-training-plan-v13.md) |
+| v14 | Policy is the only controller; yield-line crossing check; reachable target | [v14](documentation/highway-merge-training-plan-v14.md) |
+
+The curated [CHANGELOG](documentation/CHANGELOG.md) has dated entries for each step.
+Videos, checkpoints and run outputs stay out of Git.
+
 ## Start from a fresh clone
 
 See [clean-clone setup and validation](documentation/clean-clone.md). The supported
