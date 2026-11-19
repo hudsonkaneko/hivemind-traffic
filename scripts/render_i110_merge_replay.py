@@ -2,7 +2,10 @@
 
 Run with the configured Isaac Python. The input is recording.json plus the
 exact network.net.xml; every vehicle pose comes from that recording. Road
-surfaces and illustrative markings are reconstructed from SUMO lane geometry.
+surfaces and illustrative markings are reconstructed from SUMO lane geometry,
+or, with --road-model, the scene is a referenced road USD in the same frame
+(for example highway_usd/la_10_110/la_10_110_flat.usdc) and only the lanes named
+by --modeled-lanes are drawn from the SUMO network, slightly raised.
 """
 from __future__ import annotations
 
@@ -223,7 +226,8 @@ def road_quads(lane, offset, width, dashed=False):
     return result
 
 
-def author_scene(output, frames, lanes, focal, controlled, highlighted=None, *, simready_main=None):
+def author_scene(output, frames, lanes, focal, controlled, highlighted=None, *, simready_main=None,
+                 road_model=None, modeled_lanes=()):
     from pxr import Usd, UsdGeom, UsdLux, Gf
 
     def stage(name, root='/World', kind='assembly'):
@@ -275,11 +279,19 @@ def author_scene(output, frames, lanes, focal, controlled, highlighted=None, *, 
 
     road = stage('environment.usda')
     group(road, '/World/Environment'); group(road, '/World/Environment/Highway')
-    points = [p for lane in lanes.values() for p in lane['points']]
-    bounds = [(min(p[i] for p in points), max(p[i] for p in points)) for i in range(3)]
-    cube(road, '/World/Environment/Ground', ((sum(bounds[0])/2), (sum(bounds[1])/2), bounds[2][0]-1.),
-         (bounds[0][1]-bounds[0][0]+120., bounds[1][1]-bounds[1][0]+120., 1.), (.12, .17, .13))
-    for identity, lane in lanes.items():
+    drawn = lanes
+    if road_model is not None:
+        model = UsdGeom.Xform.Define(road, '/World/Environment/RoadModel')
+        model.GetPrim().GetReferences().AddReference(os.path.relpath(road_model, output).replace(os.sep, '/'))
+        model.GetPrim().SetCustomDataByKey('road_model', Path(road_model).name)
+        drawn = {identity: dict(lane, points=[(x, y, z+.03) for x, y, z in lane['points']])
+                 for identity, lane in lanes.items() if identity in set(modeled_lanes)}
+    else:
+        points = [p for lane in lanes.values() for p in lane['points']]
+        bounds = [(min(p[i] for p in points), max(p[i] for p in points)) for i in range(3)]
+        cube(road, '/World/Environment/Ground', ((sum(bounds[0])/2), (sum(bounds[1])/2), bounds[2][0]-1.),
+             (bounds[0][1]-bounds[0][0]+120., bounds[1][1]-bounds[1][0]+120., 1.), (.12, .17, .13))
+    for identity, lane in drawn.items():
         path = '/World/Environment/Highway/Lane_'+identity.encode().hex()
         group(road, path)
         road.GetPrimAtPath(path).SetCustomDataByKey('sumo_lane_id', identity)
@@ -355,7 +367,14 @@ def main():
     parser.add_argument('--playback-speed', type=float, default=1.)
     parser.add_argument('--ffmpeg', type=Path, required=True)
     parser.add_argument('--author-only', action='store_true')
+    parser.add_argument('--road-model', type=Path,
+                        help='Road USD in the same frame as the recording (Z-up metres), referenced instead of rebuilt roads')
+    parser.add_argument('--modeled-lanes', nargs='*', default=[],
+                        help='With --road-model: SUMO lanes absent from the road model, drawn from the network')
+    parser.add_argument('--video-name', default='i110-merge.mp4')
     args = parser.parse_args()
+    if args.road_model is not None and not args.road_model.resolve().is_file():
+        parser.error('The road model must be an existing USD file')
     recording, output = args.recording.resolve(), args.output.resolve()
     if not Path.cwd().resolve().is_relative_to(ROOT) or not output.is_relative_to(ROOT/'outputs'):
         parser.error('Run inside the checkout; new outputs belong under outputs/')
@@ -381,7 +400,10 @@ def main():
                   controller=data.get('controller', 'frozen_learned'),
                   recorded_policy_mode=data.get('policy_mode', 'frozen learned inference'),
                   learned_policy_sha256=data.get('policy_sha256'),
-                  limitation='Kinematic visualization, not PhysX control validation or sensor capture. Road reconstructed from recorded SUMO network polylines; markings illustrative.',
+                  limitation='Kinematic visualization, not PhysX control validation or sensor capture. ' + (
+                      f'Road from the referenced model {args.road_model.name}; lanes {args.modeled_lanes} drawn from the SUMO network.'
+                      if args.road_model is not None else
+                      'Road reconstructed from recorded SUMO network polylines; markings illustrative.'),
                   source_recording=str(recording), source_recording_sha256=sha256(recording/'recording.json'),
                   renderer_source_sha256=sha256(__file__), runtime_python=sys.executable,
                   runtime_python_version=sys.version, runtime_python_sha256=sha256(sys.executable),
@@ -415,8 +437,16 @@ def main():
             report['runtime_package_versions'] = versions
             version_files = [parent/'VERSION' for parent in Path(sys.executable).parents if (parent/'VERSION').is_file()]
             report['runtime_version_files'] = {str(path):path.read_text(encoding='utf-8').strip() for path in version_files}
+        if args.road_model is not None:
+            unknown = sorted(set(args.modeled_lanes) - set(lanes))
+            if unknown:
+                raise ValueError(f'Modeled lanes absent from the network: {unknown}')
+            report.update(road_model=str(args.road_model.resolve()), road_model_sha256=sha256(args.road_model),
+                          modeled_lanes=list(args.modeled_lanes))
         identities = author_scene(output, frames, lanes, args.focal_agent, controlled, set(args.highlight_agents),
-                                  simready_main=args.simready_main)
+                                  simready_main=args.simready_main,
+                                  road_model=None if args.road_model is None else args.road_model.resolve(),
+                                  modeled_lanes=args.modeled_lanes)
         names = ['world.usda', 'environment.usda', 'motion.usda', 'vehicle.usda', 'render.usda']
         if args.simready_main is not None:
             names += ['prepared-main.usda', 'prepared-main-manifest.json']
@@ -493,7 +523,7 @@ def main():
             changed.extend('prepared source: '+name for name in source_changes)
         if changed or maximum_pose_error > 1e-6:
             raise RuntimeError(f'Replay verification failed: changed={changed}, pose_error={maximum_pose_error}')
-        video = output/'i110-merge.mp4'
+        video = output/args.video_name
         encode = [str(args.ffmpeg.resolve()), '-hide_banner', '-n', '-framerate', str(args.fps*args.playback_speed),
                   '-i', str(frame_dir/'%05d.png'), '-c:v', 'libx264', '-preset', 'fast', '-crf', '18',
                   '-pix_fmt', 'yuv420p', '-movflags', '+faststart', str(video)]

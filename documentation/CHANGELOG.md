@@ -4,6 +4,24 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-18 - Target-speed inputs, band reward and LA I-10/I-110 corridors (v12)
+
+- The user's LA I-10/I-110 3D model is now the primary road. It is committed with
+  its ODbL attribution, and two SUMO merge corridors are cut from its lane graph, in
+  its own coordinates.
+- Added the gate's target speed as four actor inputs, and a ±1.8 m/s (±4 mph) band
+  reward (weight 1.0).
+- Round 18 did not improve on its start: 8 -> 5 of 14 development gates, and the
+  best checkpoint stays the migrated round-16 policy. No collisions.
+- Likely cause: near a lane end the target is a stopping speed, so the band reward
+  pays the car to slow down instead of merging.
+- Added a recorder for one validation episode and an option to render on the LA
+  model. Videos stay outside Git.
+- Details and the proposed fix are in the
+  [v12 plan](highway-merge-training-plan-v12.md#round-18-result).
+- One seed per case, no held-out evaluation, nothing promoted. Google guide sync
+  remains pending.
+
 ## 2026-11-18 - Project skill for tuning highway training
 
 - Added `tune-highway-training` to `.agents/skills/`: a procedure for

@@ -148,4 +148,82 @@ raised.
 
 ### Round 18 result
 
-Pending.
+**No improvement. The best checkpoint stays the starting point:** the migrated
+round-16 policy, scored by the initial validation. Training used 395,133 decisions
+and 3,628 s. There were no collisions, and no stop rule fired.
+
+| Validation | Gates passed (of 14) | Merge speed match | In band | Interventions | Stable merges |
+|---|---|---|---|---|---|
+| Initial | 8 | 0.567 | 0.389 | 1.84% | 12 of 12 |
+| Update 56 | 7 | 0.577 | 0.402 | 1.97% | 12 of 12 |
+| Update 116 | 7 | 0.570 | 0.427 | 1.56% | 12 of 12 |
+| Update 176 | 6 | 0.523 | 0.416 | 1.93% | 11 of 12 |
+| Final | 5 | 0.473 | 0.419 | 2.36% | 10 of 12 |
+
+**Round 16's 8 cases:**
+- **I-110 merge.** Its speed match moved between 0.50 and 0.89 (0.689 at the start;
+  the gate needs 0.90). At updates 56 and 176 it reached 0.869 and 0.889, but
+  another car's jerk failed the case.
+- **Lane-end stop.** In the final policy the I-110 car waits and stops at the lane
+  end: it starts its merge at 0 m/s with 2 m left, and has 36 lane-end overrides.
+  At the start it merged at 14.7 m/s with 216 m left.
+- **Ramp-start cases.** The three ramp-start cases each picked up a jerk failure.
+
+**The LA corridors:**
+- **All four LA merges fail** at every validation.
+- **The starting policy already stopped at the lane end.** Six of the eight LA
+  merging cars wait until the end of the 250 m auxiliary lane, stop, and merge
+  from 0–2 m/s.
+- **Training fixed one of them.** The southbound focused case now merges at 18.9 m/s
+  with 111 m left: no overrides, peak jerk 3.9. Only rolling merge quality fails
+  (match 0.447).
+- **The LA passing case still fails.**
+
+**Likely cause: the target is a stopping speed near the lane end.**
+- `merge_speed_target` keeps the `ending_lane_runway` bound
+  ([`highway_flow_rl_v03_rewards.py`](../traffic/highway_flow_rl_v03_rewards.py)):
+  the car must be able to finish a 3.1 s maneuver and then stop before its lane
+  ends, so the target is at most √(4 × (d − 3.1 v − 2.5)).
+- **The bound applies until the lane change completes**, because the ending lane
+  stays occupied during the maneuver.
+- **At 60 mph it needs 266 m of runway.** The modeled LA auxiliary lane is
+  244 m long, so in that lane the target always falls below mainline speed, and
+  toward zero near the end.
+- **An example from the recorded case.** Throughout the lane change (13.0–15.0 s,
+  at 19.4–20.7 m/s), the journaled target was 0–8 m/s, and target_band paid its
+  full −4 on every decision.
+  - From 13.8 s the ending-lane bound of the still-occupied auxiliary lane
+    accounts for the fall from 8.0 to 0.
+  - The zeros before 13.8 s come from another bound, not yet isolated.
+  - Once the lane change completed (15.2 s), the target jumped to 25.9 m/s.
+- **What the reward pays for.** The band reward therefore pays the car to slow
+  down near the lane end instead of taking a gap. This fits what happened: the
+  in-band fraction rose while the merge match fell, and the I-110 car learned to
+  stop at the lane end.
+
+Proposed directions:
+- Grade and reward only the traffic-matching part of the target, the gap plan
+  without the ending-lane bound.
+- Or apply the band only while that bound is not binding.
+- Measure the real acceleration-lane lengths before more LA training (see below).
+
+**Video.** `scripts/record_highway_flow_rl_v12_episode.py` re-ran validation row 11
+(southbound focused merge) with the final policy as one diagnostic episode. Its
+result equals the final validation of that row. Rendered outputs, not in Git:
+- top-down: `outputs/highway-flow-rl/v12/replay-01/topdown/topdown.mp4`;
+- 3D on the LA model: `outputs/highway-flow-rl/v12/replay-01/isaac-render/la-110-sb-adams-merge.mp4`.
+
+The 3D render uses `scripts/render_i110_merge_replay.py --road-model
+highway_usd/la_10_110/la_10_110_flat.usdc --modeled-lanes sb2_0 sb3_0 mlk_on_0`. It
+is a replay of SUMO motion, not physics, and the modeled lanes are drawn as a lighter
+overlay.
+
+**Budget after round 18.** The shared ledger has 6,022,217 of 6,230,000 decisions,
+51,888 of 61,200 s and 164 of 168 diagnostic episodes. A further 400,000-decision
+round does not fit, so the next round needs a budget decision from the user.
+
+**Open question on the road model.** The user asked that the 3D model be based on
+satellite images of the real road. The current model is built from OpenStreetMap,
+and has no acceleration lane at either corridor's on-ramp. Whether the real ramps
+have one, and how long it is, has not been checked. That length decides whether
+merging at mainline speed is possible under the ending-lane rule above.
