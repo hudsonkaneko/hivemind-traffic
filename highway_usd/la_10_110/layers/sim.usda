@@ -1,0 +1,978 @@
+#usda 1.0
+(
+    doc = """Simulation setup: materials, physics scene, lights, cameras, spawn points"""
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+)
+
+def Xform "World" (
+    kind = "assembly"
+)
+{
+    custom double geo:originLatitude = 34.038114
+    custom double geo:originLongitude = -118.274017
+    custom string geo:frame = "local ENU tangent plane, +X east, +Y north, metres"
+
+    def Scope "Looks"
+    {
+        def Material "FreewayAsphalt"
+        {
+            token outputs:surface.connect = </World/Looks/FreewayAsphalt/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.075, 0.075, 0.08)
+                float inputs:roughness = 0.85
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "StreetAsphalt"
+        {
+            token outputs:surface.connect = </World/Looks/StreetAsphalt/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.16, 0.16, 0.17)
+                float inputs:roughness = 0.9
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "Concrete"
+        {
+            token outputs:surface.connect = </World/Looks/Concrete/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.63, 0.61, 0.57)
+                float inputs:roughness = 0.8
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "PaintWhite"
+        {
+            token outputs:surface.connect = </World/Looks/PaintWhite/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.92, 0.92, 0.9)
+                float inputs:roughness = 0.6
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "PaintYellow"
+        {
+            token outputs:surface.connect = </World/Looks/PaintYellow/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.95, 0.74, 0.08)
+                float inputs:roughness = 0.6
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "Ground"
+        {
+            token outputs:surface.connect = </World/Looks/Ground/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.44, 0.41, 0.36)
+                float inputs:roughness = 0.95
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "Grass"
+        {
+            token outputs:surface.connect = </World/Looks/Grass/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.24, 0.4, 0.17)
+                float inputs:roughness = 0.95
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "Building0"
+        {
+            token outputs:surface.connect = </World/Looks/Building0/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.74, 0.7, 0.62)
+                float inputs:roughness = 0.85
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "Building1"
+        {
+            token outputs:surface.connect = </World/Looks/Building1/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.56, 0.56, 0.59)
+                float inputs:roughness = 0.85
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "Building2"
+        {
+            token outputs:surface.connect = </World/Looks/Building2/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.82, 0.8, 0.76)
+                float inputs:roughness = 0.85
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "Metal"
+        {
+            token outputs:surface.connect = </World/Looks/Metal/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.55, 0.56, 0.58)
+                float inputs:roughness = 0.45
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "SignBack"
+        {
+            token outputs:surface.connect = </World/Looks/SignBack/Shader.outputs:surface>
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.3, 0.32, 0.31)
+                float inputs:roughness = 0.6
+                float inputs:metallic = 0
+                token outputs:surface
+            }
+        }
+        def Material "PhysAsphalt" (
+            prepend apiSchemas = ["PhysicsMaterialAPI"]
+        )
+        {
+            float physics:staticFriction = 0.9
+            float physics:dynamicFriction = 0.8
+            float physics:restitution = 0.0
+        }
+        def Material "PhysConcrete" (
+            prepend apiSchemas = ["PhysicsMaterialAPI"]
+        )
+        {
+            float physics:staticFriction = 0.7
+            float physics:dynamicFriction = 0.6
+            float physics:restitution = 0.05
+        }
+    }
+
+    def PhysicsScene "PhysicsScene"
+    {
+        vector3f physics:gravityDirection = (0, 0, -1)
+        float physics:gravityMagnitude = 9.81
+    }
+
+    def Scope "Lights"
+    {
+        def DistantLight "Sun"
+        {
+            float inputs:angle = 0.53
+            float inputs:intensity = 3000
+            color3f inputs:color = (1, 0.96, 0.9)
+            float3 xformOp:rotateXYZ = (40, 0, 130)
+            uniform token[] xformOpOrder = ["xformOp:rotateXYZ"]
+        }
+        def DomeLight "Sky"
+        {
+            float inputs:intensity = 900
+            color3f inputs:color = (0.62, 0.76, 1)
+        }
+    }
+
+    def Scope "Cameras"
+    {
+        def Camera "TopDown"
+        {
+            float focalLength = 18.0
+            float2 clippingRange = (1, 20000)
+            double3 xformOp:translate = (0, 0, 800)
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Camera "TopDown_WithLoops"
+        {
+            float focalLength = 18.0
+            float2 clippingRange = (1, 20000)
+            double3 xformOp:translate = (0, 0, 2600)
+            float3 xformOp:rotateXYZ = (0, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Camera "Overview_FromSouth"
+        {
+            float focalLength = 24.0
+            float2 clippingRange = (1, 20000)
+            double3 xformOp:translate = (0, -650, 330)
+            float3 xformOp:rotateXYZ = (62, 0, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Camera "Interchange_FromSE"
+        {
+            float focalLength = 24.0
+            float2 clippingRange = (1, 20000)
+            double3 xformOp:translate = (300, -300, 120)
+            float3 xformOp:rotateXYZ = (68, 0, 45)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Camera "Interchange_FromNW"
+        {
+            float focalLength = 24.0
+            float2 clippingRange = (1, 20000)
+            double3 xformOp:translate = (-280, 280, 110)
+            float3 xformOp:rotateXYZ = (68, 0, 225)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Camera "Stack_LowAngle"
+        {
+            float focalLength = 20.0
+            float2 clippingRange = (1, 20000)
+            double3 xformOp:translate = (150, -170, 25)
+            float3 xformOp:rotateXYZ = (84, 0, 40)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+    }
+
+    def Scope "SpawnPoints" (
+        doc = "Vehicle spawn poses (+X = travel direction). spawn:type = entry (street on-ramp) or loop (seeded on a simulation loop)."
+    )
+    {
+        def Xform "SP_25448202_0"
+        {
+            custom string spawn:type = "entry"
+            custom string lane:id = "25448202_0"
+            custom string lane:roadName = "motorway_link"
+            double3 xformOp:translate = (-694.719, -76.928, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 12.15)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_25448214_0"
+        {
+            custom string spawn:type = "entry"
+            custom string lane:id = "25448214_0"
+            custom string lane:roadName = "San Pedro"
+            double3 xformOp:translate = (-383.192, -105.434, 0.666)
+            float3 xformOp:rotateXYZ = (0, 0, 131.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_25448217_0"
+        {
+            custom string spawn:type = "entry"
+            custom string lane:id = "25448217_0"
+            custom string lane:roadName = "San Pedro"
+            double3 xformOp:translate = (-420.421, -80.244, 0.681)
+            float3 xformOp:rotateXYZ = (0, 0, 44.53)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_25448297_0"
+        {
+            custom string spawn:type = "entry"
+            custom string lane:id = "25448297_0"
+            custom string lane:roadName = "motorway_link"
+            double3 xformOp:translate = (392.157, -293.052, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, -29.78)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_48118016_0"
+        {
+            custom string spawn:type = "entry"
+            custom string lane:id = "48118016_0"
+            custom string lane:roadName = "motorway_link"
+            double3 xformOp:translate = (170.307, 696.772, 6.739)
+            float3 xformOp:rotateXYZ = (0, 0, -130.18)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_186076413_0"
+        {
+            custom string spawn:type = "entry"
+            custom string lane:id = "186076413_0"
+            custom string lane:roadName = "Santa Monica Freeway;Harbor Freeway"
+            double3 xformOp:translate = (640.525, -344.286, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, 158.79)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_186076413_1"
+        {
+            custom string spawn:type = "entry"
+            custom string lane:id = "186076413_1"
+            custom string lane:roadName = "Santa Monica Freeway;Harbor Freeway"
+            double3 xformOp:translate = (641.849, -340.874, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, 158.79)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_1020818512_0"
+        {
+            custom string spawn:type = "entry"
+            custom string lane:id = "1020818512_0"
+            custom string lane:roadName = "Pasadena"
+            double3 xformOp:translate = (62.474, -199.403, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, 146.66)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_1020818512_1"
+        {
+            custom string spawn:type = "entry"
+            custom string lane:id = "1020818512_1"
+            custom string lane:roadName = "Pasadena"
+            double3 xformOp:translate = (64.538, -196.381, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, 146.67)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_1024747695_0"
+        {
+            custom string spawn:type = "entry"
+            custom string lane:id = "1024747695_0"
+            custom string lane:roadName = "motorway_link"
+            double3 xformOp:translate = (399.809, -316.025, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, 35.80)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_0_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_0"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-159.837, 1280.605, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 180.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_0_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_0"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-1192.395, 1280.551, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, -178.67)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_0_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_0"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-1362.68, 348.267, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_1_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_1"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-159.837, 1284.265, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 180.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_1_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_1"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-1192.462, 1284.211, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, -178.67)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_1_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_1"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-1366.34, 348.267, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_2_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_2"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-159.837, 1287.925, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 180.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_2_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_2"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-1192.528, 1287.87, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, -178.67)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_2_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_2"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-1370, 348.267, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_3_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_3"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-159.837, 1291.585, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 180.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_3_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_3"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-1192.595, 1291.53, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, -178.67)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_3_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_3"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-1373.66, 348.267, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_4_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_4"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-159.837, 1295.245, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 180.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_4_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_4"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-1192.661, 1295.189, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, -178.67)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NW_4_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000001_4"
+            custom string lane:roadName = "Sim Loop NW"
+            double3 xformOp:translate = (-1377.32, 348.267, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_0_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_0"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (325.723, -1362.68, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_0_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_0"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (979.831, -1355.889, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 16.47)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_0_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_0"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (1104.257, -762.358, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 94.39)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_1_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_1"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (325.723, -1366.34, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_1_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_1"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (980.844, -1359.406, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 16.47)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_1_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_1"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (1107.908, -762.103, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 94.39)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_2_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_2"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (325.723, -1370, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_2_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_2"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (981.857, -1362.923, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 16.47)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_2_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_2"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (1111.559, -761.848, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 94.39)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_3_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_3"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (325.723, -1373.66, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_3_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_3"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (982.871, -1366.44, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 16.47)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_3_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_3"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (1115.21, -761.594, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 94.39)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_4_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_4"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (325.723, -1377.32, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_4_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_4"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (983.884, -1369.957, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 16.47)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SE_4_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000004_4"
+            custom string lane:roadName = "Sim Loop SE"
+            double3 xformOp:translate = (1118.861, -761.339, 14.65)
+            float3 xformOp:rotateXYZ = (0, 0, 94.39)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_0_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_0"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (1252.68, 215.483, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_0_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_0"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (1252.68, 1062.459, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_0_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_0"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (530.537, 1252.68, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 180.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_1_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_1"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (1256.34, 215.483, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_1_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_1"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (1256.34, 1062.459, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_1_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_1"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (530.537, 1256.34, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 180.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_2_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_2"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (1260, 215.483, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_2_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_2"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (1260, 1062.459, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_2_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_2"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (530.537, 1260, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 180.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_3_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_3"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (1263.66, 215.483, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_3_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_3"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (1263.66, 1062.459, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_3_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_3"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (530.537, 1263.66, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 180.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_4_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_4"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (1267.32, 215.483, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_4_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_4"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (1267.32, 1062.459, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_NE_4_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000007_4"
+            custom string lane:roadName = "Sim Loop NE"
+            double3 xformOp:translate = (530.537, 1267.32, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 180.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_0_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_0"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-1252.68, -590.702, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_0_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_0"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-1004.733, -1159.072, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_0_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_0"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-252.067, -1159.072, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_1_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_1"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-1256.34, -590.702, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_1_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_1"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-1004.733, -1162.732, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_1_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_1"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-252.067, -1162.732, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_2_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_2"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-1260, -590.702, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_2_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_2"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-1004.733, -1166.392, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_2_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_2"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-252.067, -1166.392, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_3_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_3"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-1263.66, -590.702, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_3_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_3"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-1004.733, -1170.052, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_3_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_3"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-252.067, -1170.052, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_4_30"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_4"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-1267.32, -590.702, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_4_55"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_4"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-1004.733, -1173.712, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "SP_LOOP_SW_4_80"
+        {
+            custom string spawn:type = "loop"
+            custom string lane:id = "9000000012_4"
+            custom string lane:roadName = "Sim Loop SW"
+            double3 xformOp:translate = (-252.067, -1173.712, 7.65)
+            float3 xformOp:rotateXYZ = (0, 0, 0.00)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+    }
+
+    def Scope "DespawnPoints" (
+        doc = "Lane ends where vehicles leave the simulation (street off-ramps)."
+    )
+    {
+        def Xform "DP_27767423_0"
+        {
+            custom string spawn:type = "exit"
+            custom string lane:id = "27767423_0"
+            custom string lane:roadName = "motorway_link"
+            double3 xformOp:translate = (137.457, 327.683, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, 74.84)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "DP_31290544_0"
+        {
+            custom string spawn:type = "exit"
+            custom string lane:id = "31290544_0"
+            custom string lane:roadName = "motorway_link"
+            double3 xformOp:translate = (578.357, -411.989, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, -38.14)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "DP_31290544_1"
+        {
+            custom string spawn:type = "exit"
+            custom string lane:id = "31290544_1"
+            custom string lane:roadName = "motorway_link"
+            double3 xformOp:translate = (576.097, -414.868, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, -38.14)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "DP_148356733_0"
+        {
+            custom string spawn:type = "exit"
+            custom string lane:id = "148356733_0"
+            custom string lane:roadName = "Adams Boulevard"
+            double3 xformOp:translate = (-87.159, -695.592, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.18)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "DP_148356733_1"
+        {
+            custom string spawn:type = "exit"
+            custom string lane:id = "148356733_1"
+            custom string lane:roadName = "Adams Boulevard"
+            double3 xformOp:translate = (-90.819, -695.58, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, -90.18)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "DP_148356775_0"
+        {
+            custom string spawn:type = "exit"
+            custom string lane:id = "148356775_0"
+            custom string lane:roadName = "Washington Boulevard"
+            double3 xformOp:translate = (-425.133, 68.011, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, 157.28)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "DP_148356775_1"
+        {
+            custom string spawn:type = "exit"
+            custom string lane:id = "148356775_1"
+            custom string lane:roadName = "Washington Boulevard"
+            double3 xformOp:translate = (-423.698, 71.378, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, 157.28)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "DP_404032796_0"
+        {
+            custom string spawn:type = "exit"
+            custom string lane:id = "404032796_0"
+            custom string lane:roadName = "motorway_link"
+            double3 xformOp:translate = (134.716, 328.926, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, 58.81)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+        def Xform "DP_404032796_1"
+        {
+            custom string spawn:type = "exit"
+            custom string lane:id = "404032796_1"
+            custom string lane:roadName = "motorway_link"
+            double3 xformOp:translate = (137.847, 327.03, 0.65)
+            float3 xformOp:rotateXYZ = (0, 0, 58.81)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+        }
+    }
+}

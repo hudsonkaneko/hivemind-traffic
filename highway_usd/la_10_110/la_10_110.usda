@@ -1,0 +1,32 @@
+#usda 1.0
+(
+    doc = """I-10 (Santa Monica Fwy) / I-110 (Harbor Fwy) interchange, Los Angeles.
+    Medium-fidelity 1:1 replica generated from OpenStreetMap (c) OpenStreetMap contributors, ODbL.
+    Z-up, metres. Freeway decks/ramps are drivable colliders; see README.md."""
+    defaultPrim = "World"
+    metersPerUnit = 1
+    upAxis = "Z"
+    customLayerData = {
+        double originLatitude = 34.038114
+        double originLongitude = -118.274017
+        double levelHeight = 7.0
+        double minClearance = 6.4
+        string generated = "2026-11-09 14:53"
+        int freewayRoadways = 149
+        int lanes = 341
+        int spawnPoints = 70
+        int despawnPoints = 9
+        int piers = 1360
+        int signPanels = 38
+        int simLoops = 4
+        int circulatingLanes = 296
+    }
+    subLayers = [
+        @./layers/sim.usda@,
+        @./layers/lanegraph.usda@,
+        @./layers/roads.usda@,
+        @./layers/context.usda@,
+        @./signs.usda@
+    ]
+)
+
