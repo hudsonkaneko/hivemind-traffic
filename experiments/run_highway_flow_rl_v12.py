@@ -47,7 +47,7 @@ base = previous.base
 SOURCES = ('experiments/run_highway_flow_rl_v12.py', 'environments/highway_flow_rl_v12_env.py',
            'traffic/highway_flow_rl_v12_rewards.py', 'traffic/highway_flow_rl_v12_contract.py',
            'policies/highway_flow_v12.py', 'scripts/prepare_highway_flow_rl_v12.py',
-           'scripts/build_la_10_110_corridors.py')
+           'scripts/build_la_10_110_corridors.py', 'scripts/build_la_10_110_corridors_exact.py')
 OBSERVATION_SIZE, STATE_SIZE = flow12.OBSERVATION_SIZE, flow12.STATE_SIZE
 CHECKPOINT_SCHEMA = 'highway_flow_rl_checkpoint_v12'
 

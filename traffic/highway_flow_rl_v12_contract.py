@@ -25,6 +25,14 @@ Changes against round 16:
 - learning: buffered PPO with the shield-consistency loss and an anchor to the warm start
   outside active merge targets (experiments/run_highway_flow_rl_v12.py);
 - budget and stop rules below.
+
+Round 19 (user decision, November 18, 2026: "dont need to verify, just use that road
+for the training" ... "the exusting 3d model we have") changes only the LA roads: the
+corridors are rebuilt by scripts/build_la_10_110_corridors_exact.py to follow the model
+exactly. There is no invented acceleration lane: the ramp joins the right lane at the
+model's merge point as a SUMO yield link, and the lane speeds are the model's (65 mph
+mainline, 45 mph ramp; vehicles stay capped at 60 mph). Rows, seeds, rewards and
+training settings are round 18's. Its budget fits the remaining study budget.
 """
 from copy import deepcopy
 import json
@@ -57,6 +65,28 @@ LA_CORRIDORS = {
         network='outputs/highway-flow-rl/v12/la-corridors-01/la-110-sb-adams-onramp/network.net.xml',
         network_sha256='dffc3282177cd7272a89bee3567d7db472b672dfb97f7d571d31ebfbcaa81e05'),
 }
+# Round 19: the same two sites, built to follow the model exactly (layout v2, no added lane).
+LA_CORRIDORS_EXACT = {
+    'la-110-nb-pasadena-onramp': dict(short='nb-pasadena-model', direction='CA-110 northbound', through_lanes=3,
+        network='outputs/highway-flow-rl/v12/la-corridors-exact-01/la-110-nb-pasadena-onramp/network.net.xml',
+        network_sha256='e60ef9fd95c9ff55591247847180800d558dc067ec87a97bea854146c18bd845'),
+    'la-110-sb-adams-onramp': dict(short='sb-adams-model', direction='CA-110 southbound', through_lanes=3,
+        network='outputs/highway-flow-rl/v12/la-corridors-exact-01/la-110-sb-adams-onramp/network.net.xml',
+        network_sha256='3b627eb47524e85a63f7ad43f548f72fbb39853cf15a446f9b7371ffee09cc76'),
+}
+LAYOUTS = dict(
+    modeled_auxiliary=dict(corridors=LA_CORRIDORS, speed_limit_mph=60, geometry_version='la_10_110_corridor_v1',
+        geometry_note='real CA-110 through lanes from the LA I-10/I-110 model; modeled 250 m auxiliary lane '
+                      '(the model has none); OSM-derived, ODbL',
+        visibility_assumption='SUMO default sensing on the cut corridor; not surveyed sight distance'),
+    model_exact=dict(corridors=LA_CORRIDORS_EXACT, speed_limit_mph=65,
+        geometry_version='la_10_110_corridor_v2_model_exact',
+        geometry_note='CA-110 through lanes and on-ramp exactly as in the LA I-10/I-110 model (no acceleration '
+                      'lane; the ramp yields where the model joins it to the right lane); model speed limits '
+                      '65 mph mainline and 45 mph ramp, vehicles capped at 60 mph; OSM-derived, ODbL',
+        visibility_assumption='declared 100 m yield-link visibility, as the existing I-110 corridor; '
+                              'the model has no sight-distance data'),
+)
 LA_SPEED_LIMIT_M_S = 26.8224   # 60 mph: the corridors' mainline speed and the global safety ceiling
 LA_HORIZON_STEPS = 800
 
@@ -108,6 +138,11 @@ ROUNDS = {
                  max_pooled_intervention_fraction=.05, intervention_source='per-case development gate value (5%)',
                  checked_at='every periodic validation; collisions stop the run at any episode')),
 }
+# Shared ledger after round 18: 6,022,217 decisions, 51,887.8 s, 164 diagnostic episodes.
+# Round 19 declares 200,000 decisions and 3,600 s, inside what remains; nothing is raised.
+ROUNDS[19] = dict(deepcopy(ROUNDS[18]), learning_profile='merge_v12_r19_target_band_la_model_exact',
+                  layout='model_exact',
+                  budget=dict(STUDY_BUDGET, per_round_decisions=200000, per_round_wall_seconds=3600))
 V11_ONLY = ('v11_projection', 'v11_training')
 
 
@@ -118,19 +153,18 @@ def reference_config():
     return json.loads(path.read_text())
 
 
-def la_row(spec, split):
+def la_row(spec, split, layout='modeled_auxiliary'):
     corridor, task, density, controlled, total, difficulty, communication, loss, missed, seed = spec
-    site = LA_CORRIDORS[corridor]
+    roads = LAYOUTS[layout]
+    site = roads['corridors'][corridor]
     focus = '-focused' if task == 'merge' and controlled == 1 else ''
     gap = '-missed-gap' if missed else ''
     prefix = 'la' if split == 'train' else 'v12-val-la'
     case = dict(id=f'{prefix}-{site["short"]}-{task}{focus}{gap}-{controlled}of{total}-{density}', split=split,
         network=site['network'], network_sha256=site['network_sha256'], through_lanes=site['through_lanes'],
-        speed_limit_mph=60, task=task, density=density, road_model=MODEL, corridor=corridor,
-        direction=site['direction'], geometry_version='la_10_110_corridor_v1',
-        geometry_note='real CA-110 through lanes from the LA I-10/I-110 model; modeled 250 m auxiliary lane '
-                      '(the model has none); OSM-derived, ODbL',
-        visibility_assumption='SUMO default sensing on the cut corridor; not surveyed sight distance')
+        speed_limit_mph=roads['speed_limit_mph'], task=task, density=density, road_model=MODEL, corridor=corridor,
+        direction=site['direction'], geometry_version=roads['geometry_version'],
+        geometry_note=roads['geometry_note'], visibility_assumption=roads['visibility_assumption'])
     row = dict(case=case, controlled_count=controlled, total_vehicles=total, seed=seed,
                speed_limit_m_s=LA_SPEED_LIMIT_M_S, communication=communication, packet_loss=loss,
                difficulty=difficulty, traffic_mode='initial', horizon_steps=LA_HORIZON_STEPS)
@@ -141,8 +175,8 @@ def la_row(spec, split):
     return row
 
 
-def training_rows(reference):
-    la = [la_row(spec, 'train') for spec in LA_TRAINING]
+def training_rows(reference, layout='modeled_auxiliary'):
+    la = [la_row(spec, 'train', layout) for spec in LA_TRAINING]
     kept = [deepcopy(reference['training_rows'][index]) for index in KEPT_ROUND16_ROWS]
     rows, la_iter, kept_iter = [], iter(la), iter(kept)
     for position in range(len(la) + len(kept)):
@@ -154,6 +188,7 @@ def build_config(round_index, reference=None):
     """The complete configuration for a declared v12 round."""
     reference = deepcopy(reference or reference_config())
     row = ROUNDS[round_index]
+    layout = row.get('layout', 'modeled_auxiliary')
     cfg = {k: v for k, v in reference.items() if k not in V11_ONLY}
     cfg.update(schema=SCHEMA, training_authorized=row['training'], round_index=round_index,
         learning_profile=row['learning_profile'], reward_version=v12.REWARD_VERSION,
@@ -163,8 +198,9 @@ def build_config(round_index, reference=None):
         budget=dict(row['budget']), critic_warmup_decisions=row['critic_warmup_decisions'],
         evaluation_interval_decisions=row['evaluation_interval_decisions'], stop_rules=deepcopy(row['stop_rules']),
         warm_start=dict(WARM_START), parent_config_sha256=REFERENCE_CONFIG['sha256'],
-        training_rows=training_rows(reference),
-        validation_rows=deepcopy(reference['validation_rows']) + [la_row(s, 'validation') for s in LA_VALIDATION],
+        training_rows=training_rows(reference, layout),
+        validation_rows=deepcopy(reference['validation_rows']) + [la_row(s, 'validation', layout)
+                                                                  for s in LA_VALIDATION],
         held_out_authorized=False, development_gates_passed=False,
         publication_branch=PUBLICATION_BRANCH, execution=dict(EXECUTION), road_model=MODEL,
         provenance=dict(parent_config_sha256=REFERENCE_CONFIG['sha256'], parent_round=reference['learning_profile'],
@@ -177,6 +213,12 @@ def build_config(round_index, reference=None):
                       'focused one-AV merges mixed with multi-AV populations.',
         split_note='Held-out demand seeds, not a claim of held-out geometry. The LA validation rows share the '
                    'training corridors with disjoint seeds. Do not tune on held-out results.')
+    if layout == 'model_exact':
+        cfg['authorization'] += (' Round 19, user decision of November 18, 2026: "dont need to verify, just use that '
+                                 'road for the training" ... "the exusting 3d model we have".')
+        cfg['execution'] = dict(EXECUTION, inputs='LA corridors from scripts/build_la_10_110_corridors_exact.py '
+            '(outputs/highway-flow-rl/v12/la-corridors-exact-01, checksums pinned below); round-16 networks and '
+            'the warm start as already staged in this worktree for v11')
     return cfg
 
 

@@ -236,3 +236,58 @@ satellite images of the real road. The current model is built from OpenStreetMap
 and has no acceleration lane at either corridor's on-ramp. Whether the real ramps
 have one, and how long it is, has not been checked. That length decides whether
 merging at mainline speed is possible under the ending-lane rule above.
+
+## Round 19: the LA roads exactly as the model has them
+
+**User decision (November 18, 2026):** "dont need to verify, just use that road for
+the training" ... "the exusting 3d model we have".
+
+[`scripts/build_la_10_110_corridors_exact.py`](../scripts/build_la_10_110_corridors_exact.py)
+rebuilds both corridors from the model's lane graph alone. The v1 builder and its
+networks are unchanged, so round 18 stays reproducible.
+
+**From the model (checked in the build):**
+- **Through lanes.** The three CA-110 lanes and their 3.66 m width. The compiled
+  lanes are within 1.4 cm of the model's lanes.
+- **The ramp.** Its centerline, unchanged (within 6 mm). It ends where the model
+  ends it: at the start of the merge way's right lane, which the model lists as the
+  successor of both the ramp lane and the right lane. **The model has no
+  acceleration lane, so neither do these roads.**
+- **Speed limits.** The model's `speed` values: 29.1 m/s (65 mph) mainline and
+  20.1 m/s (45 mph) ramp. Round 18 had used 60 and 30 mph.
+
+**What SUMO needs that the model does not state:**
+- **The merge.** It is a SUMO junction at the model's merge point. The ramp link
+  yields to the right lane (state `m`), as on the existing I-110 corridor.
+- **Visibility.** The ramp link declares 100 m, the I-110 corridor's value. The
+  environments require one, and the model has no sight-distance data.
+- **Edge split.** The road after the merge is split into four equal edges, because
+  the environments use the edge names sb2–sb5. This changes no geometry.
+- **Speed cap.** Every vehicle in these environments is capped at 60 mph (vType
+  `maxSpeed`), so mainline traffic drives at most 60 mph on the 65 mph road.
+- **Flat junction.** SUMO keeps the junction area at one height (the merge point's).
+  The ramp and mainline climb about 1.7 m into it, so recorded heights step at the
+  junction edge. The traffic models used here ignore grade.
+- **Ramp start.** The traffic generator is unchanged. It places ramp cars 25–55 m
+  before the end of the ramp (`traffic/highway_v05_demand.py`).
+
+**Development smoke check (outside the ledger; no training, not a validation).**
+The round-18 warm start ran on the new roads:
+- **All rows.** Every one of the 18 LA rows reset without error.
+- **Merge episodes.** Four full merge episodes had no collisions.
+- **Merges completed, poorly.** Every merging car completed its merge, but the
+  single-car merges had 35–41% interventions and peak jerk above 50 m/s³.
+- **Why.** The car brakes hard to the yield line, waits there (11 s in the
+  southbound case), then accelerates from a stop. Its speed match was 0.
+
+The policy has only ever merged from an acceleration lane.
+
+**Round 19 = round 18 with the LA rows on these roads.** It keeps the same rows,
+seeds, warm start, rewards, losses, stop rules and validation cases.
+- **Budget:** 200,000 decisions and 3,600 s.
+- **The shared ledger after round 18:** 6,022,217 of 6,230,000 decisions,
+  51,887.8 of 61,200 s, 164 of 168 episodes. Round 19 fits, and nothing is raised.
+
+### Round 19 result
+
+Pending.

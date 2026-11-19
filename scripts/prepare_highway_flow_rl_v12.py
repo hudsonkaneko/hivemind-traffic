@@ -27,7 +27,8 @@ def verify_inputs(cfg):
     for path, checksum in sorted(pins.items()):
         if file_digest(ROOT / path) != checksum:
             raise ValueError(f'Input differs from its pinned checksum: {path}')
-    for ident, site in contract.LA_CORRIDORS.items():
+    layout = contract.ROUNDS[cfg['round_index']].get('layout', 'modeled_auxiliary')
+    for ident, site in contract.LAYOUTS[layout]['corridors'].items():
         manifest = json.loads((ROOT / site['network']).with_name('corridor-manifest.json').read_text())
         if (manifest['id'] != ident or manifest['network_sha256'] != site['network_sha256']
                 or manifest['compiled_checks']['passed'] is not True or manifest['model'] != contract.MODEL):

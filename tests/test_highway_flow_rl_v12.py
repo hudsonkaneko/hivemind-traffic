@@ -297,6 +297,45 @@ def test_round_fits_the_remaining_study_budget(cfg):
     assert cfg['critic_warmup_decisions'] < cfg['evaluation_interval_decisions'] < cfg['budget']['per_round_decisions']
 
 
+
+# --- round 19: the LA rows on the model-exact corridors ----------------------------------
+@pytest.fixture(scope='module')
+def cfg19():
+    return json.loads((ROOT / 'configs/training/highway-flow-rl-v12-round19.json').read_text())
+
+
+def test_round19_config_is_what_the_contract_builds(cfg19):
+    assert cfg19 == contract.build_config(19)
+    assert contract.validate_config(deepcopy(cfg19), require_training=True) == cfg19
+
+
+def test_round19_changes_only_the_la_roads_profile_budget_and_record(cfg, cfg19):
+    changed = {k for k in set(cfg) | set(cfg19) if cfg.get(k) != cfg19.get(k)}
+    assert changed == {'round_index', 'learning_profile', 'training_rows', 'validation_rows', 'budget',
+                       'provenance', 'authorization', 'execution'}
+    for key in ('training_rows', 'validation_rows'):
+        assert len(cfg[key]) == len(cfg19[key])
+        for old, new in zip(cfg[key], cfg19[key]):
+            if old['case'].get('road_model') != 'highway_usd/la_10_110':
+                assert old == new                      # the round-16 rows are untouched
+                continue
+            assert {k: v for k, v in old.items() if k != 'case'} == {k: v for k, v in new.items() if k != 'case'}
+            site = contract.LA_CORRIDORS_EXACT[new['case']['corridor']]
+            assert new['case']['network'] == site['network'] and new['case']['network_sha256'] == site['network_sha256']
+            assert new['case']['geometry_version'] == 'la_10_110_corridor_v2_model_exact'
+            assert new['case']['speed_limit_mph'] == 65 and 'no acceleration lane' in new['case']['geometry_note']
+            assert new['speed_limit_m_s'] == cfg19['safety']['global_speed_ceiling_m_s']
+
+
+def test_round19_fits_what_round18_left_in_the_study_budget(cfg19):
+    spent_decisions, spent_seconds, spent_episodes = 6022217, 51887.8, 164   # shared ledger after round 18
+    budget = cfg19['budget']
+    assert budget['per_round_decisions'] == 200000 <= budget['total_decisions'] - spent_decisions
+    assert budget['per_round_wall_seconds'] == 3600
+    assert budget['per_round_wall_seconds'] <= budget['total_wall_seconds'] - budget['final_reserve_seconds'] - spent_seconds
+    assert spent_episodes + 1 <= budget['max_diagnostic_episodes']         # one preflight episode
+    assert {k: v for k, v in budget.items() if k not in ('per_round_decisions', 'per_round_wall_seconds')} ==         {k: v for k, v in contract.STUDY_BUDGET.items() if k not in ('per_round_decisions', 'per_round_wall_seconds')}
+
 # --- runner wiring -----------------------------------------------------------------
 def test_install_points_the_shared_loop_at_v12_and_keeps_the_canonical_ledger():
     pytest.importorskip('torch')
