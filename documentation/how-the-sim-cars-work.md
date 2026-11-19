@@ -16,7 +16,7 @@ the earlier plans have the measurements.
 | Controlled ("sim") cars | Up to 24 cars driven by the learned policy. All of them share one network | `environments/highway_flow_rl_v14_env.py` and its parents |
 | Policy | A MAPPO actor-critic: one actor for every car, one centralized critic for training | `policies/highway_flow_v12.py`, `policies/mappo.py` |
 | Trainer | PPO with two extra losses that keep requests inside the comfort band | `experiments/run_highway_flow_rl_v12.py` |
-| 3D view | Isaac Sim replays of recorded SUMO motion on the LA model. Kinematic only: no physics control | `scripts/render_i110_merge_replay.py` |
+| 3D view | Isaac Sim replays of recorded SUMO motion on the LA model. Kinematic only: no physics control. With `--road-surface`, cars sit on the model's lane heights instead of SUMO's flat-junction heights | `scripts/render_i110_merge_replay.py` |
 
 SUMO is the world: it moves every car, detects collisions and drives the background
 traffic. The policy only drives the controlled cars.

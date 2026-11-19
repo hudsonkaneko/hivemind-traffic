@@ -4,6 +4,19 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-19 - 3D replays put the cars on the model's road (no more jumping cars)
+
+- In the first v14 3D video the cars jumped up to 1.7 m at the LA merge. The renderer
+  used SUMO's recorded height, and SUMO holds the merge junction at one height
+  (5.56 m) while the model's road climbs about 5% through it. The driving was
+  unaffected; only the drawn height was wrong.
+- New `--road-surface <corridor-manifest.json>` option in
+  `scripts/render_i110_merge_replay.py`. It places each car on the model's own lane
+  heights, taken from the lane-graph lanes the corridor was built from, after checking
+  the network and lane-graph hashes. The largest one-frame height change in the
+  recording falls from 1.71 m to 0.20 m, which is the model's own grade.
+- Renders without the option are unchanged. Details: [v14 plan](highway-merge-training-plan-v14.md).
+
 ## 2026-11-19 - The policy is the only controller of the sim cars (v14, no training yet)
 
 - At the user's direction ("one controller on the car at all times"), v14 turns

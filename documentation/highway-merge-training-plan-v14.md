@@ -229,3 +229,46 @@ u made earlier but in 3d with the sim car. make sure to keep the graph though".
   check, the same case and seed failed two: native emergency braking
   (`native_emergency_or_missing_accounting`, here `main_9`'s stop) and rolling merge
   quality. The cut-in is the behavior that training on the v14 target has to change.
+
+### The cars jumped in the first video (fixed in the renderer)
+
+**User question (November 19):** "why are the cars like jumping".
+
+**Cause: SUMO's flat merge junction, not the driving.** The renderer placed each car at
+SUMO's recorded height (`z`).
+- SUMO holds the merge junction at one height for its whole 43 m: 5.56 m, the
+  model's height at the merge point.
+- The model's road climbs about 5% through that stretch, from 3.9 m.
+- So the SUMO lanes step up to the junction height over their last 0.7 m (mainline) or
+  4.6 m (ramp).
+- In this recording, cars rose up to 1.71 m in one 0.1 s frame. They then floated up
+  to 1.65 m above the model's road until the merge point. The sim car was 1.6 m up at
+  t = 3.1 s; its shadow shows the gap.
+- About 90% of car-frames were within 0.1 m of the model's road. The steps were all
+  at the merge.
+
+The driving is unaffected:
+- SUMO's documentation lists road slope only for the KraussPS car-following model;
+  these cars use Krauss and IDM.
+- The sim cars' acceleration is set directly.
+
+Only the drawn height was wrong. The round-19 notes on the model-exact roads had
+recorded this height step, but the first video did not account for it.
+
+**Fix:** `scripts/render_i110_merge_replay.py --road-surface <corridor-manifest.json>`.
+- **Where the heights come from.** The car heights come from the model lane-graph lanes
+  that the corridor manifest names as the corridor's source.
+- **Hash checks.** The manifest must match the recording's network hash, and the lane
+  graph must match the manifest's hash.
+- **Height rule.** A car takes the height of the two nearest lane centerlines,
+  inverse-square weighted. So a car on a lane sits at that lane's height, and a car
+  changing lanes moves smoothly between the two.
+- **Off-road guard.** A car more than 4 m from every model lane stops the render.
+- **Unchanged:** cars get no pitch or roll, as before. Renders without the option are
+  unchanged.
+- **Result.** The largest one-frame height change in this recording falls from 1.71 m
+  to 0.20 m. That 0.20 m is a car at about 26 m/s on the model's own climb of about 7%
+  just past the merge point.
+
+The re-rendered video is outside Git:
+`outputs/highway-flow-rl/v14/replay-01/3d-with-graph-model-road/3d-with-graph-model-road.mp4`.

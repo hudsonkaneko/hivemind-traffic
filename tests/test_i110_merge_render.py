@@ -9,7 +9,7 @@ import unittest
 
 from scripts.render_i110_merge_replay import (
     author_scene, elevation, road_quads, select_frames, vehicle_path, screenshot_samples,
-    prepared_main_spec, sha256,
+    prepared_main_spec, sha256, read_model_surface, surface_elevation,
 )
 
 
@@ -200,6 +200,55 @@ class PreparedMainReplayTests(unittest.TestCase):
         source.GetRootLayer().Save()
         with self.assertRaisesRegex(ValueError, 'extra transform or scale'):
             author_scene(self.output, self.frames(), self.lanes, 'agent_0', {'agent_0'}, simready_main=self.asset)
+
+
+class ModelSurfaceTests(unittest.TestCase):
+    """Vehicle heights from the road model's lanes instead of SUMO's flat-junction z."""
+
+    def setUp(self):
+        # two lanes 3.66 m apart on a 5% climb, the second 0.2 m higher
+        self.surface = {'a_0': {'points': [(0., 0., 1.), (100., 0., 6.)]},
+                        'a_1': {'points': [(0., 3.66, 1.2), (100., 3.66, 6.2)]}}
+
+    def test_vehicle_on_a_lane_takes_that_lanes_height(self):
+        self.assertAlmostEqual(surface_elevation({'x': 50., 'y': 0.}, self.surface), 3.5, places=2)
+        self.assertAlmostEqual(surface_elevation({'x': 50., 'y': 3.66}, self.surface), 3.7, places=2)
+
+    def test_lane_change_moves_smoothly_between_lanes(self):
+        heights = [surface_elevation({'x': 50., 'y': y}, self.surface) for y in (.5, 1., 1.83, 2.66, 3.16)]
+        self.assertAlmostEqual(heights[2], 3.6)
+        self.assertEqual(heights, sorted(heights))
+        self.assertLess(max(b-a for a, b in zip(heights, heights[1:])), .1)
+
+    def test_off_road_vehicle_raises_but_camera_targets_are_unlimited(self):
+        with self.assertRaisesRegex(ValueError, 'main_3 is 16.34 m from the model road'):
+            surface_elevation({'id': 'main_3', 'x': 50., 'y': 20.}, self.surface)
+        self.assertTrue(3.5 < surface_elevation({'x': 50., 'y': 20.}, self.surface, None) < 3.7)
+
+    def test_corridor_lanes_come_from_the_manifest_and_are_hash_checked(self):
+        with tempfile.TemporaryDirectory() as folder:
+            folder = Path(folder)
+            network, graph = folder/'network.net.xml', folder/'lanegraph.json'
+            network.write_text('<net/>')
+            lanes = [dict(id='10_0', way=10, pts=[[0, 0, 1], [10, 0, 2]]),
+                     dict(id='20_0', way=20, pts=[[10, 0, 2], [20, 0, 3]]),
+                     dict(id='77_0', way=77, pts=[[0, 0, 12], [20, 0, 12]]),   # an overpass in the same x, y
+                     dict(id='5_0', way=5, pts=[[0, -5, 0], [10, 0, 2]])]
+            graph.write_text(json.dumps(dict(lanes=lanes)))
+            manifest = folder/'corridor-manifest.json'
+            manifest.write_text(json.dumps(dict(network_sha256=sha256(network), lanegraph=str(graph),
+                lanegraph_sha256=sha256(graph), lane_graph_ways=dict(upstream=[10], downstream=[20], ramp_lanes=['5_0']))))
+            surface, info = read_model_surface(manifest, network)
+            self.assertEqual(sorted(surface), ['10_0', '20_0', '5_0'])
+            self.assertEqual(info['lanes'], ['10_0', '20_0', '5_0'])
+            self.assertAlmostEqual(surface_elevation({'x': 15., 'y': 0.}, surface), 2.5, places=4)   # not the overpass
+            network.write_text('<net version="other"/>')
+            with self.assertRaisesRegex(ValueError, 'different network'):
+                read_model_surface(manifest, network)
+            network.write_text('<net/>')
+            graph.write_text(json.dumps(dict(lanes=lanes[:2])))
+            with self.assertRaisesRegex(ValueError, 'lane graph changed'):
+                read_model_surface(manifest, network)
 
 
 if __name__ == '__main__':

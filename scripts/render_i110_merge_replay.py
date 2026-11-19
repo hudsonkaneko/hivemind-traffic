@@ -5,7 +5,10 @@ exact network.net.xml; every vehicle pose comes from that recording. Road
 surfaces and illustrative markings are reconstructed from SUMO lane geometry,
 or, with --road-model, the scene is a referenced road USD in the same frame
 (for example highway_usd/la_10_110/la_10_110_flat.usdc) and only the lanes named
-by --modeled-lanes are drawn from the SUMO network, slightly raised.
+by --modeled-lanes are drawn from the SUMO network, slightly raised. Vehicles sit at
+the recorded SUMO z unless --road-surface names the corridor manifest of a corridor
+built from the model's lane graph; then they sit on the model's lane heights, which
+avoids the height steps SUMO's flat junctions put into recorded z.
 """
 from __future__ import annotations
 
@@ -171,6 +174,58 @@ def elevation(vehicle, lanes):
     return nearest[1]
 
 
+def read_model_surface(manifest_path, network_path):
+    """The road model's own lanes for a corridor built from the model's lane graph.
+
+    SUMO keeps a junction at one height (its node's), so recorded z steps where lanes
+    enter it, although the model's road climbs smoothly there. The corridor's
+    corridor-manifest.json names the lane-graph ways it was built from; this returns
+    those lanes' centerlines (x, y, z in the model frame) after checking that the
+    manifest belongs to this network and that the lane graph is unchanged.
+    """
+    manifest_path = Path(manifest_path)
+    manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+    if manifest.get('network_sha256') != sha256(network_path):
+        raise ValueError('The corridor manifest belongs to a different network')
+    graph_path = Path(manifest['lanegraph'])
+    graph_path = graph_path if graph_path.is_absolute() else ROOT/graph_path
+    if sha256(graph_path) != manifest['lanegraph_sha256']:
+        raise ValueError('The model lane graph changed since the corridor was built')
+    ways = manifest['lane_graph_ways']
+    wanted = {*ways['upstream'], *ways['downstream']}
+    graph = json.loads(graph_path.read_text(encoding='utf-8'))
+    surface = {lane['id']: dict(points=[tuple(map(float, p)) for p in lane['pts']])
+               for lane in graph['lanes'] if lane['way'] in wanted or lane['id'] in ways['ramp_lanes']}
+    if not surface or set(ways['ramp_lanes']) - set(surface) or any(len(v['points']) < 2 for v in surface.values()):
+        raise ValueError('The corridor manifest names lanes missing from the model lane graph')
+    info = dict(source='model lane graph', corridor_manifest=str(manifest_path.resolve()),
+                corridor_manifest_sha256=sha256(manifest_path), lanegraph=str(graph_path.resolve()),
+                lanegraph_sha256=manifest['lanegraph_sha256'], lanes=sorted(surface))
+    return surface, info
+
+
+def surface_elevation(vehicle, surface, limit=4.):
+    """Model road height under a vehicle: the two nearest lane centerlines, inverse-square weighted.
+
+    A vehicle centred on a lane takes that lane's height; one changing lanes moves
+    smoothly between the two. Farther than `limit` metres from every lane raises, so a
+    vehicle off the modelled road is never silently placed (limit=None for camera targets).
+    """
+    nearest = []
+    for lane in surface.values():
+        best = (math.inf, 0.)
+        for a, b in zip(lane['points'], lane['points'][1:]):
+            dx, dy = b[0]-a[0], b[1]-a[1]
+            u = max(0., min(1., ((vehicle['x']-a[0])*dx+(vehicle['y']-a[1])*dy)/max(dx*dx+dy*dy, 1e-12)))
+            best = min(best, ((vehicle['x']-a[0]-u*dx)**2+(vehicle['y']-a[1]-u*dy)**2, a[2]+u*(b[2]-a[2])))
+        nearest.append((math.sqrt(best[0]), best[1]))
+    nearest.sort()
+    if limit is not None and nearest[0][0] > limit:
+        raise ValueError(f"{vehicle.get('id', 'point')} is {nearest[0][0]:.2f} m from the model road")
+    weights = [(1./max(d, .01)**2, z) for d, z in nearest[:2]]
+    return sum(w*z for w, z in weights)/sum(w for w, _ in weights)
+
+
 def select_frames(data, start=None, end=None, maximum=300):
     start = data.get('clip_start_time', data['frames'][0]['time']) if start is None else start
     end = data.get('clip_end_time', data['frames'][-1]['time']) if end is None else end
@@ -227,7 +282,7 @@ def road_quads(lane, offset, width, dashed=False):
 
 
 def author_scene(output, frames, lanes, focal, controlled, highlighted=None, *, simready_main=None,
-                 road_model=None, modeled_lanes=()):
+                 road_model=None, modeled_lanes=(), height=None):
     from pxr import Usd, UsdGeom, UsdLux, Gf
 
     def stage(name, root='/World', kind='assembly'):
@@ -326,7 +381,8 @@ def author_scene(output, frames, lanes, focal, controlled, highlighted=None, *, 
             tc = round((frame['time']-frames[0]['time'])*10., 8)
             visibility.Set('inherited' if vehicle else 'invisible', tc)
             if vehicle:
-                position.Set(Gf.Vec3d(vehicle['x'], vehicle['y'], elevation(vehicle, lanes)), tc)
+                z = height(vehicle) if height is not None else elevation(vehicle, lanes)
+                position.Set(Gf.Vec3d(vehicle['x'], vehicle['y'], z), tc)
                 heading.Set(90.-vehicle['heading'], tc)
     motion.GetRootLayer().Save()
 
@@ -371,10 +427,15 @@ def main():
                         help='Road USD in the same frame as the recording (Z-up metres), referenced instead of rebuilt roads')
     parser.add_argument('--modeled-lanes', nargs='*', default=[],
                         help='With --road-model: SUMO lanes absent from the road model, drawn from the network')
+    parser.add_argument('--road-surface', type=Path,
+                        help=('With --road-model: corridor-manifest.json of a corridor built from the model lane graph; '
+                              "vehicles sit on the model's lane heights instead of recorded SUMO z"))
     parser.add_argument('--video-name', default='i110-merge.mp4')
     args = parser.parse_args()
     if args.road_model is not None and not args.road_model.resolve().is_file():
         parser.error('The road model must be an existing USD file')
+    if args.road_surface is not None and (args.road_model is None or not args.road_surface.is_file()):
+        parser.error('--road-surface needs --road-model and an existing corridor manifest')
     recording, output = args.recording.resolve(), args.output.resolve()
     if not Path.cwd().resolve().is_relative_to(ROOT) or not output.is_relative_to(ROOT/'outputs'):
         parser.error('Run inside the checkout; new outputs belong under outputs/')
@@ -395,13 +456,22 @@ def main():
     shutil.copy2(Path(__file__), output/'source'/Path(__file__).name)
     shutil.copy2(recording/'network.net.xml', output/'network.net.xml')
     lanes = read_lanes(output/'network.net.xml')
-    controlled = set(data.get('controlled_ids', ['agent_0', 'agent_1', 'agent_2', 'agent_3']))
+    surface, surface_info = (read_model_surface(args.road_surface, output/'network.net.xml')
+                             if args.road_surface is not None else (None, None))
+
+    def height(vehicle, limit=4.):
+        """Vehicle (or camera target, limit=None) height: the model road, or recorded SUMO z."""
+        return surface_elevation(vehicle, surface, limit) if surface is not None else elevation(vehicle, lanes)
+
+    controlled =set(data.get('controlled_ids', ['agent_0', 'agent_1', 'agent_2', 'agent_3']))
     report = dict(passed=False, training=False, motion_owner='SUMO recorded motion',
                   controller=data.get('controller', 'frozen_learned'),
                   recorded_policy_mode=data.get('policy_mode', 'frozen learned inference'),
                   learned_policy_sha256=data.get('policy_sha256'),
                   limitation='Kinematic visualization, not PhysX control validation or sensor capture. ' + (
                       f'Road from the referenced model {args.road_model.name}; lanes {args.modeled_lanes} drawn from the SUMO network.'
+                      + (" Vehicle heights from the model's lane centerlines, not SUMO z; no pitch or roll."
+                         if surface is not None else '')
                       if args.road_model is not None else
                       'Road reconstructed from recorded SUMO network polylines; markings illustrative.'),
                   source_recording=str(recording), source_recording_sha256=sha256(recording/'recording.json'),
@@ -412,6 +482,7 @@ def main():
                   merge_center=args.merge_center, camera_offset=args.camera_offset, frames=len(frames), start_time=frames[0]['time'],
                   end_time=frames[-1]['time'], fps=args.fps, playback_speed=args.playback_speed,
                   source_pose_interpolation=False, colors={'ramp_controlled':'orange', 'mainline_controlled':'cyan', 'native':'gray'})
+    report['vehicle_heights'] = surface_info or dict(source='recorded SUMO z')
     if args.simready_main is not None:
         report['prepared_main'] = prepared_main_spec(args.simready_main)
         report['colors']['prepared_focal'] = 'original prepared materials; no tint or rescaling'
@@ -446,7 +517,7 @@ def main():
         identities = author_scene(output, frames, lanes, args.focal_agent, controlled, set(args.highlight_agents),
                                   simready_main=args.simready_main,
                                   road_model=None if args.road_model is None else args.road_model.resolve(),
-                                  modeled_lanes=args.modeled_lanes)
+                                  modeled_lanes=args.modeled_lanes, height=height)
         names = ['world.usda', 'environment.usda', 'motion.usda', 'vehicle.usda', 'render.usda']
         if args.simready_main is not None:
             names += ['prepared-main.usda', 'prepared-main-manifest.json']
@@ -476,10 +547,10 @@ def main():
         frame_dir = output/'frames'; frame_dir.mkdir()
         focal_position = None
         first_focal = next(v for f in frames for v in f['vehicles'] if v['id'] == args.focal_agent)
-        camera_position = (first_focal['x'], first_focal['y'], elevation(first_focal, lanes))
+        camera_position = (first_focal['x'], first_focal['y'], height(first_focal, None))
         if args.camera_mode == 'merge-fixed':
             center_vehicle = dict(x=args.merge_center[0], y=args.merge_center[1])
-            camera_position = (*args.merge_center, elevation(center_vehicle, lanes))
+            camera_position = (*args.merge_center, height(center_vehicle, None))
         capture_handles, timings, maximum_pose_error, camera_poses = [], [], 0., []
         for index, frame in enumerate(frames):
             started = time.perf_counter()
@@ -489,7 +560,7 @@ def main():
                 UsdGeom.Imageable(prim).GetVisibilityAttr().Set('inherited' if identity in present else 'invisible')
                 if identity in present:
                     vehicle = present[identity]
-                    expected = (vehicle['x'], vehicle['y'], elevation(vehicle, lanes))
+                    expected = (vehicle['x'], vehicle['y'], height(vehicle))
                     for op in UsdGeom.Xformable(prim).GetOrderedXformOps():
                         if op.GetOpType() == UsdGeom.XformOp.TypeTranslate: op.Set(Gf.Vec3d(*expected))
                         elif op.GetOpType() == UsdGeom.XformOp.TypeRotateZ: op.Set(90.-vehicle['heading'])
@@ -497,7 +568,7 @@ def main():
                     maximum_pose_error = max(maximum_pose_error, max(abs(actual[i]-expected[i]) for i in range(3)))
             if args.camera_mode == 'follow' and args.focal_agent in present:
                 focal = present[args.focal_agent]
-                focal_position = (focal['x'], focal['y'], elevation(focal, lanes))
+                focal_position = (focal['x'], focal['y'], height(focal, None))
                 camera_position = tuple(.65*a+.35*b for a, b in zip(camera_position, focal_position))
             target = Gf.Vec3d(camera_position[0], camera_position[1]-8., camera_position[2])
             eye = target+Gf.Vec3d(*args.camera_offset)
