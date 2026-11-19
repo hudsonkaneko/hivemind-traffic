@@ -4,6 +4,20 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-18 - LA corridors exactly as the 3D model has them; round 19 stopped (v12)
+
+- At the user's direction, rebuilt the LA corridors from the model alone: no invented
+  acceleration lane (the model has none), the ramp unchanged and yielding where the
+  model joins it to the right lane, and the model's 65/45 mph limits. The 3D model
+  itself is unchanged.
+- Round 19 (round 18 on these roads) was stopped by the 5% intervention rule at
+  ~107k decisions (16.5%). No collisions. The best checkpoint stays the round-16
+  policy.
+- The yield-junction merges did not improve. Training them also broke the
+  acceleration-lane merges: the car stopped matching speed, so the v11 rule never
+  let it change lanes.
+- 100,868 study decisions remain. Details: [v12 plan](highway-merge-training-plan-v12.md#round-19-result).
+
 ## 2026-11-18 - Target-speed inputs, band reward and LA I-10/I-110 corridors (v12)
 
 - The user's LA I-10/I-110 3D model is now the primary road. It is committed with

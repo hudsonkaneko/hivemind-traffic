@@ -290,4 +290,39 @@ seeds, warm start, rewards, losses, stop rules and validation cases.
 
 ### Round 19 result
 
-Pending.
+**Stopped by the intervention stop rule at the first periodic validation.** At update
+56, after 106,915 decisions and 936 s, the pooled intervention fraction was 16.5%
+against the 5% limit. There were no collisions. The best checkpoint stays the initial
+validation, the migrated round-16 policy. Nothing was promoted.
+
+| Validation | Gates passed (of 14) | Pooled interventions | Merge speed match | Stable merges |
+|---|---|---|---|---|
+| Initial (round-16 policy on the model-exact roads) | 8 | 2.3% | 0.381 | 12 of 12 |
+| Update 56 | 5 | 16.5% | not computed (run stopped) | 7 of 12 |
+
+**Initial validation (the starting policy on the model's roads):**
+- **LA merges.** All four LA merges fail, on interventions (5–41%), peak jerk
+  (43–58 m/s³) and rolling merge quality (speed match 0–0.65).
+- **The pattern** is the one in the smoke check. The merging car reaches the yield
+  line near the ramp limit, SUMO brakes it at −4.1 m/s² (`native_realization`
+  overrides), it waits, then it accelerates from a stop.
+- **What the target says.** During the approach the gate's target stays at the ramp
+  limit (20.1 m/s), although SUMO does not admit the car. The target does not
+  model SUMO's yield decision.
+- **Other LA cases.** The LA passing case now passes; it failed in round 18. The LA
+  following case fails on native interventions (2.6%).
+
+**Update 56: the acceleration-lane merges broke.**
+- **The three ramp-start cases** passed at the start. Now their merging car never
+  changes lanes: the v11 merge-speed rule blocked its lane change for 1,605–1,817
+  decisions, because the car never held a matched speed. It ends held by SUMO at
+  79% and 93% interventions in the two 180 m-ramp cases.
+- **The I-110 merge** fell from 0.69 to 0.03 speed match.
+- **No LA merge improved.**
+
+Training on yield-junction merges taught slowing near the merge, and the policy also
+did that where an acceleration lane needs speed matching.
+
+**Budget after round 19.** The shared ledger has 6,129,132 of 6,230,000 decisions,
+52,826.6 of 61,200 s and 165 of 168 diagnostic episodes. 100,868 decisions remain,
+so a further round of useful size needs a budget decision from the user.
