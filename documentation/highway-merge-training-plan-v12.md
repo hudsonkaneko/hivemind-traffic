@@ -83,7 +83,7 @@ The environments need the corridor layout described in
 [`traffic/highway_v05_demand.py`](../traffic/highway_v05_demand.py): through lanes,
 an on-ramp, an auxiliary lane, and the lane drop.
 [`scripts/build_la_10_110_corridors.py`](../scripts/build_la_10_110_corridors.py)
-cuts that layout from the model's lane graph at its two real single-lane CA-110
+cuts that layout from the model's lane graph at two single-lane CA-110
 on-ramps:
 
 | Corridor | Direction | Through lanes | Length | Ramp |
@@ -91,20 +91,27 @@ on-ramps:
 | `la-110-nb-pasadena-onramp` | CA-110 northbound | 3 | 814 m | 376 m |
 | `la-110-sb-adams-onramp` | CA-110 southbound | 3 | 877 m | 231 m |
 
-**Real:**
+**Taken from the model, not checked against the real road:**
 - the through-lane centerlines, in the model's own ENU frame, so SUMO coordinates
   are USD coordinates and replays line up with the 3D scene;
-- the 3.66 m lane spacing;
-- the deck elevation;
+- the 3.66 m lane spacing, which the model applies uniformly (its README calls it
+  the Caltrans standard, not a measurement);
+- the deck elevation, which the model's solver computed from OSM bridge/layer tags,
+  not measured;
 - the ramp alignment.
 
-The compiled through lanes stay within 1.4 cm of the model's lanes.
+The compiled through lanes stay within 1.4 cm of the model's lanes. That shows the
+corridors match the model, not that the model matches the road.
 
-**Modeled:** the model joins each ramp straight into the right lane, but the merge
-task needs an acceleration lane. So a 250 m auxiliary lane is added beside the
-right lane, and the last 80 m of the ramp are blended onto it. Speeds are those of
-the earlier I-110 corridor (mainline 60 mph, ramp 30 mph). Each corridor's
-`corridor-manifest.json` lists what is real and what is modeled.
+**Invented, unverified (correction, November 18):** the model joins each ramp
+straight into the right lane. Without checking the real ramps, a 250 m auxiliary
+lane was added beside the right lane, and the last 80 m of the ramp were blended
+onto it. The speeds (mainline 60 mph, ramp 30 mph) were copied from the earlier
+I-110 corridor, not looked up for these sites. These values were assumptions, and
+round 18 was trained on them. They must be verified before further LA training.
+
+Each corridor's `corridor-manifest.json` lists what is taken from the model and
+what is modeled. Its word "real" means "taken from the model".
 
 The networks are built deterministically: a rebuild reproduces the checksums pinned
 in the contract.
@@ -179,7 +186,9 @@ and 3,628 s. There were no collisions, and no stop rule fired.
   (match 0.447).
 - **The LA passing case still fails.**
 
-**Likely cause: the target is a stopping speed near the lane end.**
+**Likely cause: the target is a stopping speed near the lane end.** This is a
+hypothesis: the journal values below are measured, but the mechanism has not been
+tested. It rests on the invented 244 m lane length.
 - `merge_speed_target` keeps the `ending_lane_runway` bound
   ([`highway_flow_rl_v03_rewards.py`](../traffic/highway_flow_rl_v03_rewards.py)):
   the car must be able to finish a 3.1 s maneuver and then stop before its lane
