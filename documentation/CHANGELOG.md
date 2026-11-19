@@ -4,6 +4,21 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-19 - Merge target follows SUMO's yield decision (v13, no training yet)
+
+- New v13 environment: at a yield-junction merge, while SUMO reports the yield link
+  closed (TraCI `getNextLinks`), the merge target is capped by a stop at the line. It
+  uses the form and constants of v03's `unseen_yield_stop`. Everything else, including
+  acceleration-lane merges, is v12's. The same target feeds the actor inputs, the
+  band and tracking rewards, and the gate's speed match.
+- Development smoke check outside the ledger: 14 cases with the round-19 starting
+  policy. Driving is identical; the non-LA cases are unchanged. On the four LA merges,
+  the share of decisions in band rose from 0.00–0.22 to 0.22–0.46.
+- Still open: once SUMO releases a car from the line, the target jumps to 13.8–26.8 m/s
+  while the car accelerates from standstill, and no decision is in band after the
+  release. No round is declared; 100,868 study decisions remain. Details:
+  [v13 plan](highway-merge-training-plan-v13.md).
+
 ## 2026-11-18 - LA corridors exactly as the 3D model has them; round 19 stopped (v12)
 
 - At the user's direction, rebuilt the LA corridors from the model alone: no invented
