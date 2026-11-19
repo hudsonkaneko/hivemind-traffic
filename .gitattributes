@@ -61,3 +61,6 @@ documentation/evidence/highway-flow-preparation-v01/** -text -whitespace
 # Flow preparation manifests identify exact checked-out runtime bytes.
 *highway_flow*.py text eol=lf
 configs/training/highway-flow-v01.json text eol=crlf
+# Pinned training configurations: their recorded SHA-256 is of these checkout bytes.
+configs/training/highway-flow-rl-v11-round16.json text eol=lf
+configs/training/highway-flow-rl-v12-round18.json text eol=crlf
