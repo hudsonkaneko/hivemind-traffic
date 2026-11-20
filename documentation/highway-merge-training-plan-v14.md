@@ -540,3 +540,97 @@ configuration** (pinned by checksum) with only these changes:
 Everything else is round 19's: the 20 training rows (with round 20's seed offset), the
 14 validation cases, the warm start (the round-16 policy), the rewards, the anchor and
 shield losses, the optimizer and the intervention and merge-floor stop rules.
+
+**Preflight:** passed (`outputs/highway-flow-rl/v14/round-20-preflight`, 2.8 s). The
+drive limit was live (5 of 64 decisions limited, steepest grade 6.5%), and every car
+held SUMO modes 96/0.
+
+### Round 20 result
+
+**Completed with no stop rule triggered, and no improvement over the start.**
+- **Training:** 194,856 decisions and 2,148.2 s, in 112 episodes (33,763 of them
+  critic-only warm-up). Learning stopped when the next complete episode no longer
+  fit the 200,000-decision budget.
+- **Best checkpoint:** still the initial validation, i.e. the migrated round-16
+  policy. Nothing was promoted.
+
+| Validation | Gates (of 14) | Pooled interventions | Merge speed match | In band | Drive-limited decisions | Collisions |
+|---|---|---|---|---|---|---|
+| Initial | 8 | 0.86% | 0.485 | 0.53 | 147 | 2 (case 10) |
+| Update 31 (~50k) | 8 | 0.70% | 0.381 | 0.38 | 108 | 2 (case 10) |
+| Update 56 (~100k) | 8 | 1.54% | 0.319 | 0.29 | 306 | 2 (case 10) |
+| Update 91 (~150k) | 8 | 1.60% | 0.337 | 0.23 | 305 | 2 (case 10) |
+| Final | 7 | 1.54% | 0.245 | 0.15 | 204 | 2 (case 10) |
+
+**What the drive limit changed at the start.** With the limit on, the starting policy
+fails the 120 m ramp-start case (case 4), which it passed with the limit off. The road
+there is flat, but the Americano's drive gives at most about 1.73 m/s² at that speed.
+The car runs out of ramp and brakes for the lane end (53 overrides). It fails on jerk,
+interventions and headway.
+
+**Better by the end:**
+- **Southbound focused LA merge (case 11).**
+  - worst-car interventions 27.3% → 18.5%;
+  - merge speed match 0 → 0.70;
+  - `drive_grade` filters 60 → 43.
+- **120 m ramp (case 4).** Interventions 12.7% → 6.0%. The `drive_grade` filters
+  fell from 54 to 0: the policy now asks only for what the drive gives. The case still
+  fails.
+
+**Worse by the end:**
+- **I-110 merge (case 0).** Speed match 0.48 → 0.12; interventions 1.3% → 10.7%; it
+  now also fails on peak jerk.
+- **4-lane 180 m ramp start (case 7).** Pass → fail, on peak jerk; speed match 0.94 →
+  0.47.
+- **LA 8-car merges.**
+  - Northbound (case 8): speed match 0.62 → 0.18.
+  - Southbound (case 9): 0.49 → 0.00. Its `drive_grade` filters rose from 25 to 153,
+    so on that case the policy learned to ask for more than the drive gives, not less.
+
+**Safety.**
+- Validation case 10 (the focused northbound LA merge) collides at every validation,
+  as at the start: 2 collisions. No other case collided, so the regression rule never
+  fired.
+- 2 of the 112 training episodes had a collision:
+  - update 7, in the critic-only warm-up, on the focused northbound merge;
+  - update 75, on the northbound 8-of-24 merge.
+
+**Physics check** (`outputs/highway-flow-rl/v14/physics-02-round20`; charged: 1
+episode, 54.9 s). Round 20's final policy drove the PhysX Americano on the same
+southbound case and seed as `physics-01`, with the drive limit on as trained.
+
+| Southbound focused merge, seed 6950004, PhysX | Round-16 policy, no limit (`physics-01`) | Round-16 policy + limit (development run) | Round 20 final, limit on |
+|---|---|---|---|
+| Collisions | 0 | 0 | 0 |
+| Interventions | 33.6% | 32.9% | 25.5% |
+| Peak jerk (m/s³) | 14.1 | 9.8 | 5.5 |
+| Commanded vs PhysX acceleration, mean error (m/s²) | 0.090 | 0.026 | 0.020 |
+| Decisions at the torque limit | 59 | 7 | 0 |
+| Stable merge | failed | failed | failed |
+
+- **The stable merge still fails.** It is marked failed at the end of its 8 s window,
+  not earlier, so it did not fail on a collision, headway or emergency.
+- **Likely cause (inferred).** 13 of the 83 decisions after the merge entry had
+  overrides (16%; the window allows 5%). All 13 are unattributed acceleration
+  shortfalls at 5.9–7.3 s, on the crest described above. The recorder does not save
+  the window's failure reason, so this is inferred, not read.
+- The video is `physics-with-graph/physics-with-graph.mp4` in the run folder.
+
+**What it means.**
+- **Where it trained on the southbound ramp, the policy learned to ask for what the car
+  can do.** Under physics, that merge is now much smoother: peak jerk 5.5 against the
+  gate's 5, and no torque saturation.
+- **But PPO again made other merges worse.** This time the I-110 merge, one ramp-start
+  case and both LA 8-car merges degraded; in round 19 it was the ramp-start cases. Two
+  rounds in a row, this training setup improved the case it targeted and degraded
+  others.
+- **Not established: why the multi-car merges degrade.**
+  - One mismatch was found. The v14 yield-entry target rises at +1.5 m/s² whatever
+    the drive ceiling is, and on the southbound ramp that ceiling is about
+    1.1–1.4 m/s². So the target pulls ahead there, by about 0.1–0.4 m/s each second.
+  - That is too small, by itself, to explain the southbound 8-car in-band share
+    falling from 0.46 to 0.01.
+
+**Budget after round 20.** The shared ledger has 6,323,988 of 6,330,000 decisions
+(6,012 left), 55,145.6 of 61,200 s and 169 of 170 diagnostic episodes. No further round
+fits without another budget decision.

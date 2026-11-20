@@ -30,8 +30,13 @@ how it is rewarded and graded.
   cross, and rises no faster than the car can accelerate after a stop.
 - **Results.** The best checkpoint is still the round-16 policy (8 of 14 development
   gates on the model-exact roads; 9 of 14 with SUMO's checks off). All LA merge cases
-  still fail. Nothing has been trained on v14 yet, and there has been no held-out
-  evaluation.
+  still fail. There has been no held-out evaluation.
+- **Round 20 (v14 with the drive limit) trained without improving overall:** 8 → 7
+  gates.
+  - It made the southbound LA merge physically smoother: under PhysX, peak jerk
+    14.1 → 5.5 m/s³.
+  - It made other merges worse.
+  - Nothing was promoted, and 6,012 study decisions remain.
 - **Physics drive (videos and checks; training stays in SUMO).** The policy can drive
   a PhysX car (the Americano) on the LA model's own deck colliders. A low-level
   controller turns each command into torque and steering, and the car's pose is
@@ -39,7 +44,7 @@ how it is rewarded and graded.
   collision. But it can't make the acceleration the policy asks for up the ramp's
   grade, so v14's intervention count rises from 1.4% to 33.6%. See the v14 plan's
   physics-drive section and `scripts/record_highway_flow_v14_physics.py`.
-- **Drive limit (optional, for the next v14 training).** v14 can cap each controlled
+- **Drive limit (on in round 20).** v14 can cap each controlled
   car's acceleration at what the Americano's drive gives on the road model's grade
   (`traffic/road_grade.py`; checked against PhysX within 0.02 ± 0.04 m/s²). SUMO training
   then sees the same limit as the physics car.

@@ -4,6 +4,28 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-19 - Round 20: v14 trained with the drive limit (no improvement; nothing promoted)
+
+- At the user's direction ("Yes, raise it"), the study budget was raised by 100,000
+  decisions (to 6,330,000) and 2 diagnostic episodes (to 170).
+- Round 20 trained on it: `traffic/highway_flow_rl_v14_contract.py`,
+  `configs/training/highway-flow-rl-v14-round20.json`. It is round 19's configuration
+  plus:
+  - the v14 environment, with the drive limit on;
+  - validation every 50,000 decisions;
+  - a collision rule that stops on a regression against the round's own initial
+    validation. The starting policy already collides in one case, so "any collision"
+    would stop every round.
+- **Result:** 194,856 decisions; no stop rule fired.
+  - Gates 8 → 7 of 14; merge speed match 0.485 → 0.245.
+  - The best checkpoint is still the round-16 policy.
+- **Improved:** the southbound focused LA merge.
+  - In SUMO: interventions 27% → 19%, speed match 0 → 0.70.
+  - Under physics (PhysX Americano): peak jerk 14.1 → 5.5 m/s³, no torque saturation.
+- **Worse:** the I-110 merge, one ramp-start case and both LA 8-car merges.
+- **Unchanged:** the focused northbound LA merge still collides.
+- 6,012 decisions remain. Details: [v14 plan](highway-merge-training-plan-v14.md).
+
 ## 2026-11-19 - v14 can limit acceleration to what the car's drive gives on the road's grade (no training)
 
 - At the user's direction ("Yes, build it"), `traffic/road_grade.py` gives v14 an

@@ -44,7 +44,7 @@ Every 0.1 s, for each controlled car:
      26.82 m/s, 60 mph).
    - **Following ceiling:** keeps a safe gap to the car ahead in its lane.
    - **Lane-end ceiling:** stops before a lane that ends, at up to 4.5 m/s².
-   - **Drive ceiling (optional, off unless a configuration turns it on):** no more than
+   - **Drive ceiling (optional; on in round 20's configuration):** no more than
      the prepared Americano's drive can deliver on the road's grade, less 0.1 m/s² of
      headroom. Up the southbound LA ramp that is about 1.0–1.4 m/s² instead of 2.0.
      - The grade comes from the 3D model, at the steepest point the car reaches within 0.2 s.
@@ -170,9 +170,17 @@ which the car gets as an input and is rewarded for following.
   - a "shield" loss (weight 50) for requests outside the comfort band;
   - an "anchor" loss (weight 10) that keeps behavior away from merges close to the
     starting policy.
-- **Budget:** a shared ledger caps decisions and wall time across all rounds. A
-  round stops early on any collision, on more than 5% interventions at a validation,
-  or on a fall in merge speed match.
+- **Budget:** a shared ledger caps decisions and wall time across all rounds.
+- **Stop rules.** A round stops early on more than 5% interventions at a validation, or
+  on a fall in merge speed match.
+  - Until round 19, any collision in any episode also stopped it.
+  - From round 20 (v14), a periodic validation stops it when it is a safety
+    regression against the round's own starting validation: a case collides that did
+    not at the start, or there are more collisions in total. The v14 starting policy
+    already collides in one validation case, so the old rule would stop every round
+    before it trains.
+  - Collisions in training episodes cost −20 and are recorded, but do not stop the
+    round.
 
 ## How it is rewarded (per car, every 0.1 s)
 
@@ -228,8 +236,13 @@ The 14 validation cases are:
 - **With SUMO's checks off and no retraining:** 9 of 14 gates. All four LA merges
   fail; one crashes.
 - **v14's target** now tells the car to let mainline traffic pass at yield lines.
-- **Not yet trained.** Nothing has been trained on v14. Training on it is the next
-  step, and has to teach the car to follow that target.
+- **Round 20** trained v14 with the drive limit on (194,856 decisions).
+  - It did not improve overall: 7 of 14 gates at the end, and merge speed match fell
+    from 0.485 to 0.245.
+  - It taught the southbound focused merge to ask for what the car can do. Under
+    physics, that merge's peak jerk fell from 14.1 to 5.5 m/s³.
+  - Other merges got worse.
+  - The round-16 policy is still the best.
 - **Physics check:** with the policy driving a PhysX car on the LA model, the
   southbound merge has no collision. But the stable merge fails on interventions:
   - the car can't make the 1.6–1.7 m/s² the policy asks for up the ramp's grade;
