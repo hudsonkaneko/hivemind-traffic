@@ -4,6 +4,29 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-19 - The policy drives a PhysX car on the LA model (physics drive; no training)
+
+- At the user's direction ("Yes, policy drives it"), a saved policy can now drive one
+  car with rigid-body physics instead of SUMO's kinematics. The car is the prepared
+  Americano under PhysX at 120 Hz, on the LA model's own deck colliders; the model file
+  is not modified. SUMO keeps the background traffic, and the car's physics pose is
+  mirrored back into SUMO each 0.1 s. Training stays in SUMO.
+- New pieces:
+  - `environments/highway_flow_rl_v14_physical_env.py` (the SUMO shadow);
+  - `traffic/physical_controller.py` (torque and steering from each command);
+  - `traffic/physical_drive.py` (reference paths);
+  - `traffic/physics_link.py` (the local link to Isaac Sim);
+  - `scripts/physics_drive_server.py` (the Isaac Sim side);
+  - `scripts/run_physics_drive_stage1.py` (scripted check);
+  - `scripts/record_highway_flow_v14_physics.py` (policy recording).
+  - `scripts/compose_highway_flow_3d_graph.py --physics-log` adds a commanded vs
+    measured acceleration strip to the video.
+- On the southbound LA merge the physics car merges with no collision. But up the
+  ramp's grade it can't make the 1.6–1.7 m/s² the policy asks for (about 1.37 at
+  700 Nm per front wheel). The crest into the mainline unloads its drive wheels. So
+  v14's interventions rise from 1.4% to 33.6%, peak jerk from 4.0 to 14.1 m/s³, and
+  the stable merge fails. Details: [v14 plan](highway-merge-training-plan-v14.md).
+
 ## 2026-11-19 - 3D replays put the cars on the model's road (no more jumping cars)
 
 - In the first v14 3D video the cars jumped up to 1.7 m at the LA merge. The renderer

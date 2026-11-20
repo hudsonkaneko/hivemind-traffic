@@ -26,13 +26,14 @@ SOURCES = ('experiments/run_highway_flow_rl_v14.py', 'environments/highway_flow_
            'traffic/highway_flow_rl_v14_rewards.py')
 
 
-def env_for(cfg, row, directory):
+def env_for(cfg, row, directory, env_class=None, **extra):
+    """The v14 environment of a row; env_class/extra select a subclass such as the physical one."""
     from environments.highway_flow_rl_v14_env import HighwayFlowRLV14Env
     case = row['case']
     network = base.project_path(case['network'])
     if file_digest(network) != case['network_sha256']:
         raise ValueError('Frozen network changed')
-    env = HighwayFlowRLV14Env(network, directory,
+    env = (env_class or HighwayFlowRLV14Env)(network, directory, **extra,
         controlled_count=row['controlled_count'], total_vehicles=row['total_vehicles'],
         horizon=row['horizon_steps'], communication=row['communication'], packet_loss=row['packet_loss'],
         through_lanes=case['through_lanes'], task=case['task'], density=case['density'],

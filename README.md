@@ -32,6 +32,13 @@ how it is rewarded and graded.
   gates on the model-exact roads; 9 of 14 with SUMO's checks off). All LA merge cases
   still fail. Nothing has been trained on v14 yet, and there has been no held-out
   evaluation.
+- **Physics drive (videos and checks; training stays in SUMO).** The policy can drive
+  a PhysX car (the Americano) on the LA model's own deck colliders. A low-level
+  controller turns each command into torque and steering, and the car's pose is
+  mirrored back into SUMO. On the southbound merge it reaches the mainline without a
+  collision. But it can't make the acceleration the policy asks for up the ramp's
+  grade, so v14's intervention count rises from 1.4% to 33.6%. See the v14 plan's
+  physics-drive section and `scripts/record_highway_flow_v14_physics.py`.
 
 **Version history of the merge line** (each plan records its rounds, failures and
 evidence):

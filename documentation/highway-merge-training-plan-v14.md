@@ -272,3 +272,152 @@ recorded this height step, but the first video did not account for it.
 
 The re-rendered video is outside Git:
 `outputs/highway-flow-rl/v14/replay-01/3d-with-graph-model-road/3d-with-graph-model-road.mp4`.
+
+## Physics drive: the policy drives a PhysX car (development)
+
+**User decision (November 19):** "Yes, policy drives it". The 3D videos above are
+kinematic replays: each car is drawn at its recorded SUMO pose. Here the policy's car
+is driven by rigid-body physics on the LA model instead. Training stays in SUMO.
+
+**How the loop works** (two processes on this machine, one 0.1 s decision at a time):
+- **SUMO side (the traffic venv).** SUMO, the v14 environment and the policy run as in
+  training. [`environments/highway_flow_rl_v14_physical_env.py`](../environments/highway_flow_rl_v14_physical_env.py)
+  intercepts the v14 commands for the physics car (`setAcceleration`, `changeLane`).
+  Each decision it sends the commanded acceleration and a reference path to the
+  physics side. The path is the lane centerline, or a smoothstep blend between the two
+  lanes during a lane change ([`traffic/physical_drive.py`](../traffic/physical_drive.py)).
+- **Physics side (Isaac Sim's Python).** [`scripts/physics_drive_server.py`](../scripts/physics_drive_server.py)
+  runs PhysX at 120 Hz, 12 steps per decision.
+  - **Car.** The prepared Americano (`vehicles/sim_ready/americano-i7-ev/v14`, provisional
+    physics: 1,800 kg, front-wheel drive, raycast suspension).
+  - **Road.** The LA model `la_10_110_flat.usdc`, referenced unchanged. The stage adds
+    three overrides on top and never writes to the model file:
+    - the model's own physics scene is switched off;
+    - its 154 asphalt deck colliders are added to the car's ground group;
+    - asphalt gets a friction entry in the car's tire table (0.75).
+  - **Controller.** A low-level controller ([`traffic/physical_controller.py`](../traffic/physical_controller.py))
+    turns the decision into drive torque, brake torque and steering:
+    - speed: feedforward plus feedback, with a grade term and a learned resistance bias;
+    - steering: Stanley-style at the front bumper, plus curvature feedforward with
+      understeer and rear-slip terms computed from the asset's tire stiffness.
+  - **Limits.** 700 Nm drive per front wheel and 1,500 Nm brake per wheel. These are the
+    values the project's earlier Americano probe scripts used. The vehicle package
+    itself declares no torque limit.
+- **Shadow.** The car's physics pose goes back into SUMO each decision (`moveToXY`,
+  readback error 0 m). So the background traffic, the policy's observations and v14's
+  checks all see where the physics car really is.
+- **Link.** A local socket on 127.0.0.1 with a per-run token and length-prefixed JSON
+  ([`traffic/physics_link.py`](../traffic/physics_link.py)).
+- **What is not physics.** Background cars are SUMO's and are drawn at their SUMO
+  poses. Only the policy's car is physics-driven.
+
+### Stage 1: scripted commands on the empty road
+
+[`scripts/run_physics_drive_stage1.py`](../scripts/run_physics_drive_stage1.py) runs the
+southbound Adams corridor (`mlk_on` to `sb5`) with no traffic. A fixed schedule of
+accelerations (+2, hold 60 mph, −3, +1, 0 m/s²) and three lane changes goes through the
+same path builder, link and controller. Run `outputs/test-runs/physics-stage1-06-rendered`
+(uncharged development check):
+
+| Measure | Result |
+|---|---|
+| Length | 261 decisions, to 26.1 s; top speed 26.81 m/s (60 mph) |
+| Acceleration error, decisions under the torque limit | mean 0.066 m/s² |
+| Acceleration error, all decisions | mean 0.167, max 1.39 m/s² |
+| Decisions at the torque limit | 91 of 261 |
+| Lateral error outside lane changes | mean 0.046 m, max 0.20 m |
+| Lane changes (v14 completion rule) | 3 of 3: 3.5 s, 4.8 s, 4.7 s (SUMO's own: 3 s) |
+| Path error during lane changes | max 0.14 m |
+| Shadow placement error | 0 m |
+| Wheels off the deck | 4 decisions, 10.2–10.5 s (all four at 10.3 s) |
+
+Rendering at 10 Hz did not change the physics: rendered and unrendered runs gave the
+same lane-change times and statistics.
+
+**What Stage 1 found:**
+- **The car cannot reach +2 m/s² on the ramp.** The ramp climbs about 5%. With 700 Nm
+  per front wheel, the car measured about 1.3 m/s² at 23 m/s, with the drive torque at
+  its limit.
+- **The ramp-to-mainline join has a crest.** The physics pitch and vertical speed show
+  the deck going from about +7.5% to −7.5% within about 11 m (not measured on the mesh
+  itself). At 26.6 m/s the car left the deck for about 0.2 s.
+- **The tires lag about one decision on command reversals.** For example, −3 m/s²
+  commanded gave −1.8 in the first decision. The asset's tire longitudinal stiffness is
+  low (5,000).
+- **Largest steady lateral error: 0.20 m.** It occurs at a 3° corner in SUMO's ramp
+  polyline (t ≈ 6 s).
+
+### Stage 2: the policy drives, with traffic, and the video
+
+[`scripts/record_highway_flow_v14_physics.py`](../scripts/record_highway_flow_v14_physics.py)
+runs the same episode as the 3D recording above:
+- round 19's southbound focused LA merge, seed 6950004, 16 cars, 1 controlled;
+- round 19's best checkpoint, deterministic, not retrained;
+- the policy's car physics-driven.
+
+An uncharged development run without rendering (`outputs/test-runs/physics-stage2-01`)
+and the charged recording with 10 Hz rendering (`outputs/highway-flow-rl/v14/physics-01`)
+gave identical results.
+
+| | SUMO drives (3D recording above) | PhysX drives |
+|---|---|---|
+| Collisions | 0 | 0 |
+| Merge entry / lateral merge | 5.5 s / 5.5 s | 5.8 s / 6.1 s |
+| Stable merge | passed (13.6 s) | **failed** at 14.1 s: 9 of 81 window decisions flagged, over the 5% cap |
+| Target band | 119 of 133 decisions | 122 of 139 decisions (0.878) |
+| Interventions | 1.4% | **33.6%** (76 of 226 decisions) |
+| Peak jerk | 4.0 m/s³ | **14.1 m/s³** (at 6.5 s, the crest) |
+| `main_9`'s hardest braking | −9.0 m/s² at 4.1 s | −9.0 m/s² at 4.3 s |
+| Car's speed at 3.0 s | 15.7 m/s | 14.7 m/s |
+
+Physics side of the PhysX run:
+- acceleration error, mean 0.090 m/s² overall and 0.028 under the torque limit;
+- 59 decisions at the drive-torque limit;
+- lateral path error at most 0.12 m;
+- no wheel left the deck;
+- pitch up to 0.087 rad.
+
+**Why the v14 numbers differ: the car cannot do what SUMO's car can.** v14 flags a
+decision (`native_realization_unattributed`) when the car's realized acceleration
+differs from the applied command. Under physics, those 74 flags break down as:
+- **59: at the torque limit, 0.6–6.4 s.** The policy asks for 1.6–1.7 m/s² up the
+  ramp. The car gives about 1.37, with the drive torque at 700 Nm per front wheel.
+  From 5.6 to 6.4 s the climb to the mainline steepens to about 8.7% (physics pitch
+  0.087 rad), and the car drops to 0.74–1.2 m/s².
+- **5: the crest, 6.5–6.9 s.** Over the crest the front (driven) wheels unload, with
+  front suspension compression down to 0.028 m. They then grip again:
+  - measured acceleration goes 0.74 → 2.15 → 1.30 m/s² against about 1.1–1.75
+    commanded;
+  - that swing is the 14.1 m/s³ jerk.
+- **10: small mismatches of 0.05–0.35 m/s² at other times** (0.2, 0.5, 14.9, 15.3 and
+  19.1–19.6 s).
+
+SUMO's road is flat to its car model, and its cars reach whatever acceleration is
+commanded up to their limit, so the policy never met the grade.
+
+**The cut-in is unchanged.** The policy still enters in front of `main_9`, and
+`main_9` still stops hard. That is a policy behavior, not a physics one.
+
+**Video** (outside Git): `outputs/highway-flow-rl/v14/physics-01/physics-with-graph/physics-with-graph.mp4`.
+- The title says PHYSICS, and that the other cars are drawn at SUMO poses.
+- Below the speed/target graph, a second strip shows the commanded acceleration (after
+  v14's limits) against the acceleration PhysX measured, with ticks where the torque
+  limit was reached.
+
+**Ledger.** The recording was charged as one preparation episode and 108.2 s. Totals now:
+- 167 of 168 episodes;
+- 52,939.6 of 61,200 s;
+- decisions unchanged at 6,129,132 of 6,230,000.
+
+The development runs (Stage 1 and the Stage 2 check) were not charged: they test the
+physics integration and train or select nothing.
+
+**What this means for running the policy on the 3D road:**
+- the car's real acceleration limit depends on grade and speed, and the policy does not
+  know it;
+- the ramp's crest into the mainline unloads the drive wheels.
+
+Training can stay in SUMO if SUMO's acceleration ceiling for the controlled car follows
+the model's grade and the car's torque. That needs the grade along each corridor, which
+the model's lane graph has, and a grade-aware ceiling in the v14 limits. It has not
+been built.

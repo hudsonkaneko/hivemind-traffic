@@ -17,6 +17,7 @@ the earlier plans have the measurements.
 | Policy | A MAPPO actor-critic: one actor for every car, one centralized critic for training | `policies/highway_flow_v12.py`, `policies/mappo.py` |
 | Trainer | PPO with two extra losses that keep requests inside the comfort band | `experiments/run_highway_flow_rl_v12.py` |
 | 3D view | Isaac Sim replays of recorded SUMO motion on the LA model. Kinematic only: no physics control. With `--road-surface`, cars sit on the model's lane heights instead of SUMO's flat-junction heights | `scripts/render_i110_merge_replay.py` |
+| Physics drive (videos and checks only, not training) | The policy drives one PhysX car (the Americano) on the LA model's deck colliders. A low-level controller turns each 0.1 s command into torque and steering, and the car's physics pose is mirrored back into SUMO. Background cars stay SUMO's | `scripts/record_highway_flow_v14_physics.py`, `scripts/physics_drive_server.py` |
 
 SUMO is the world: it moves every car, detects collisions and drives the background
 traffic. The policy only drives the controlled cars.
@@ -223,3 +224,9 @@ The 14 validation cases are:
 - **v14's target** now tells the car to let mainline traffic pass at yield lines.
 - **Not yet trained.** Nothing has been trained on v14. Training on it is the next
   step, and has to teach the car to follow that target.
+- **Physics check:** with the policy driving a PhysX car on the LA model, the
+  southbound merge has no collision. But the stable merge fails on interventions:
+  - the car can't make the 1.6–1.7 m/s² the policy asks for up the ramp's grade;
+  - the crest into the mainline unloads its drive wheels.
+
+  SUMO's cars ignore grade. See the v14 plan's physics-drive section.
