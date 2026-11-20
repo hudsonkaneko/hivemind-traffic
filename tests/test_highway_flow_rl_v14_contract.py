@@ -1,0 +1,132 @@
+"""V14 round-20 contract and the runner's collision regression rule (no SUMO, no training)."""
+from copy import deepcopy
+import json
+from pathlib import Path
+
+import pytest
+
+from experiments import run_highway_flow_rl_v14 as runner14
+from experiments.run_highway_flow_rl_v06 import StopRuleTriggered
+from traffic import highway_flow_rl_v12_contract as v12c
+from traffic import highway_flow_rl_v14_contract as contract
+from traffic import highway_flow_rl_v14_rewards as v14
+from traffic.road_grade import DRIVE_LIMIT, validate_drive_limit
+
+ROOT = Path(__file__).resolve().parents[1]
+DECLARED = {'authorization', 'base_config', 'budget', 'evaluation_interval_decisions', 'execution', 'learning_profile',
+            'provenance', 'reward_version', 'round_index', 'schema', 'stop_rules', 'v14_control', 'v14_drive_limit',
+            'v14_settings'}
+
+
+@pytest.fixture(scope='module')
+def round20():
+    return contract.build_config(20)
+
+
+@pytest.fixture(scope='module')
+def round19():
+    return json.loads((ROOT / contract.BASE_CONFIG['path']).read_text(encoding='utf-8'))
+
+
+def test_round20_is_round19_plus_only_the_declared_changes(round20, round19):
+    changed = {key for key in set(round19) | set(round20) if round19.get(key) != round20.get(key)}
+    assert changed == DECLARED
+    assert round20['schema'] == 'highway_flow_rl_v14' and round20['round_index'] == 20
+    assert round20['training_authorized'] is True and round20['held_out_authorized'] is False
+    assert round20['reward_version'] == v14.REWARD_VERSION
+    assert round20['v14_settings'] == v14.SETTINGS and round20['v14_control'] == v14.CONTROL
+    assert validate_drive_limit(round20['v14_drive_limit']) == DRIVE_LIMIT
+    assert round20['evaluation_interval_decisions'] == 50000
+    assert round20['execution']['output_root'] == 'outputs/highway-flow-rl/v14'
+    for key in ('training_rows', 'validation_rows', 'warm_start', 'optimizer', 'v12_training', 'v12_settings',
+                'critic_warmup_decisions', 'seed'):
+        assert round20[key] == round19[key]
+
+
+def test_budget_raise_is_decisions_and_two_diagnostic_episodes_only(round20, round19):
+    before, after = round19['budget'], round20['budget']
+    assert {k for k in before if before[k] != after[k]} == {'total_decisions', 'max_diagnostic_episodes'}
+    assert after['total_decisions'] == before['total_decisions'] + 100000 == 6330000
+    assert after['max_diagnostic_episodes'] == before['max_diagnostic_episodes'] + 2 == 170
+    assert after['per_round_decisions'] == 200000 and after['per_round_wall_seconds'] == 3600
+    assert after['total_wall_seconds'] == 61200
+
+
+def test_collision_rule_is_restated_as_a_regression_check(round20, round19):
+    before, after = round19['stop_rules'], round20['stop_rules']
+    assert before['any_collision'] is True and after['any_collision'] is False
+    assert 'collision_regression' in after
+    kept = ('max_pooled_intervention_fraction', 'relative_merge_floor', 'merge_speed_match_floor', 'merge_floor_action')
+    assert all(after[key] == before[key] for key in kept)
+
+
+def test_validate_config_requires_the_declared_round(round20, round19):
+    assert contract.validate_config(deepcopy(round20), require_training=True)
+    for change in (dict(evaluation_interval_decisions=100000), dict(budget=dict(round20['budget'], total_decisions=7e6)),
+                   dict(v14_drive_limit=None), dict(stop_rules=dict(round20['stop_rules'], any_collision=True))):
+        with pytest.raises(ValueError):
+            contract.validate_config(dict(deepcopy(round20), **change))
+    assert contract.validate_config(deepcopy(round19)) == round19      # evaluation and recordings
+    with pytest.raises(ValueError, match='trains only declared v14 rounds'):
+        contract.validate_config(deepcopy(round19), require_training=True)
+
+
+def test_written_configuration_is_the_contracts(round20):
+    path = ROOT / 'configs/training/highway-flow-rl-v14-round20.json'
+    assert json.loads(path.read_text(encoding='utf-8')) == round20
+
+
+def _report(case, collisions, drive=None):
+    report = dict(case_id=case, collisions=collisions)
+    if drive:
+        report['v14_drive_limit'] = drive
+    return report
+
+
+def _initial(output, collisions):
+    output.mkdir(parents=True, exist_ok=True)
+    reports = [_report(f'case-{i}', n) for i, n in enumerate(collisions)]
+    (output / 'initial-validation.json').write_text(json.dumps(dict(summary={}, reports=reports)))
+
+
+def _result(collisions):
+    return dict(summary={}, reports=[_report(f'case-{i}', n) for i, n in enumerate(collisions)])
+
+
+def test_collision_regression_stops_only_on_new_or_more_collisions(tmp_path, round20):
+    _initial(tmp_path, [0, 2, 0])
+    same = _result([0, 2, 0])
+    runner14.collision_regression(round20, tmp_path, 'periodic-validation-00010', same)
+    assert same['summary']['collision_regression']['regressed'] is False
+    fewer = _result([0, 1, 0])
+    runner14.collision_regression(round20, tmp_path, 'periodic-validation-00011', fewer)
+    assert fewer['summary']['collision_regression']['regressed'] is False
+    for collisions in ([1, 2, 0], [0, 3, 0], [0, 0, 1]):
+        with pytest.raises(StopRuleTriggered, match='collision regression'):
+            runner14.collision_regression(round20, tmp_path, 'periodic-validation-00012', _result(collisions))
+    final = _result([0, 0, 1])                                      # recorded, never a stop outside periodic checks
+    runner14.collision_regression(round20, tmp_path, 'final-validation', final)
+    assert final['summary']['collision_regression']['new_colliding_cases'] == ['02 case-2']
+
+
+def test_collision_regression_needs_an_initial_validation_and_the_rule(tmp_path, round20, round19):
+    result = _result([3])
+    runner14.collision_regression(round20, tmp_path, 'periodic-validation-00001', result)
+    assert 'collision_regression' not in result['summary']
+    _initial(tmp_path, [0])
+    runner14.collision_regression(round19, tmp_path, 'periodic-validation-00001', result)
+    assert 'collision_regression' not in result['summary']
+
+
+def test_drive_limit_summary_pools_cases():
+    drive = dict(decisions=10, limited=2, max_grade=.07, min_ceiling_m_s2=1.1, settings={}, road_grade={})
+    summary = runner14.drive_limit_summary([_report('a', 0, drive), _report('b', 0), _report('c', 0, dict(drive, limited=0))])
+    assert summary['decisions'] == 20 and summary['limited'] == 2 and summary['limited_fraction'] == .1
+    assert set(summary['per_case']) == {'00 a', '02 c'}
+    assert runner14.drive_limit_summary([_report('b', 0)]) is None
+
+
+def test_runner_sources_include_the_contract():
+    assert 'traffic/highway_flow_rl_v14_contract.py' in runner14.SOURCES
+    assert 'scripts/prepare_highway_flow_rl_v14.py' in runner14.SOURCES
+    assert v12c.ROUNDS[contract.BASE_ROUND]['budget']['per_round_decisions'] == 200000

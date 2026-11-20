@@ -502,5 +502,41 @@ the deck. A grade limit cannot remove this. It would take a speed limit over the
 (a vertical-curvature limit) or traction control in the low-level controller. Neither
 is built.
 
-**Training.** No v14 configuration exists yet. A v14 round would turn the limit on with
-`v14_drive_limit` and still needs the user's budget decision.
+**Training.** Round 20 (below) turns the limit on with `v14_drive_limit`.
+
+## Round 20: v14 with the drive limit
+
+**User decision (November 19, 2026):** "Yes, raise it": raise the study budget so a v14
+round can train with the drive limit on.
+
+[`traffic/highway_flow_rl_v14_contract.py`](../traffic/highway_flow_rl_v14_contract.py)
+declares it, and [`scripts/prepare_highway_flow_rl_v14.py`](../scripts/prepare_highway_flow_rl_v14.py)
+writes `configs/training/highway-flow-rl-v14-round20.json`. **Round 20 is round 19's
+configuration** (pinned by checksum) with only these changes:
+- **Environment:** v14. The policy is the only controller, and yield-entry targets
+  check crossing gaps.
+- **Drive limit on.** LA rows take the grade from the road model. Every other network
+  has no road model and counts as flat, where the drive ceiling is 1.71–1.80 m/s².
+- **Collision rule.**
+  - Round 19 stopped at any collision in any episode. The v14 starting policy already
+    collides in validation case 10 (the focused northbound LA merge), so that rule would
+    stop round 20 at its initial validation.
+  - Round 20 instead stops at a periodic validation that is a **safety regression**
+    against its own initial validation: a case collides that did not collide at the
+    start, or the validation has more collisions in total.
+  - Training-rollout collisions keep their −20 reward and are recorded in
+    `updates/*.json`; they do not stop the run by themselves.
+- **Periodic validation every 50,000 decisions** instead of 100,000. Round 19's
+  acceleration-lane merges had already broken by its first check at 106,915 decisions,
+  so checking twice as often keeps a checkpoint from before such a break.
+- **Budget:**
+  - total decisions raised by 100,000 to 6,330,000, so a round-19-sized round of
+    200,000 decisions fits (100,868 remained);
+  - diagnostic episodes raised by 2 to 170, for this round's preflight and one physics
+    recording of its result;
+  - wall time is not raised. 8,260.4 s remain, enough for the preflight, a 3,600 s
+    round and the recording.
+
+Everything else is round 19's: the 20 training rows (with round 20's seed offset), the
+14 validation cases, the warm start (the round-16 policy), the rewards, the anchor and
+shield losses, the optimizer and the intervention and merge-floor stop rules.
