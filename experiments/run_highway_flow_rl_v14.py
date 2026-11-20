@@ -23,16 +23,33 @@ _v12_install = v12runner.install   # kept, so callers may point v12runner.instal
 OUTPUT_ROOT = ROOT / 'outputs/highway-flow-rl/v14'
 NATIVE_MODES = dict(speed=v14.CONTROL['speed_mode'], lane_change=v14.CONTROL['lane_change_mode'])
 SOURCES = ('experiments/run_highway_flow_rl_v14.py', 'environments/highway_flow_rl_v14_env.py',
-           'traffic/highway_flow_rl_v14_rewards.py')
+           'traffic/highway_flow_rl_v14_rewards.py', 'traffic/road_grade.py')
+
+
+def road_model_manifest(case, network):
+    """The corridor manifest that ties a case's network to its road model, or None for a network without one."""
+    if not case.get('road_model'):
+        return None
+    manifest = network.parent / 'corridor-manifest.json'
+    if not manifest.is_file():
+        raise ValueError(f"Case {case['id']} declares a road model but has no corridor manifest")
+    return manifest
 
 
 def env_for(cfg, row, directory, env_class=None, **extra):
-    """The v14 environment of a row; env_class/extra select a subclass such as the physical one."""
+    """The v14 environment of a row; env_class/extra select a subclass such as the physical one.
+
+    A configuration with v14_drive_limit (traffic.road_grade.DRIVE_LIMIT) turns the drive limit on,
+    with the case's road model for the grade; extra drive_limit=... does the same for one run.
+    """
     from environments.highway_flow_rl_v14_env import HighwayFlowRLV14Env
     case = row['case']
     network = base.project_path(case['network'])
     if file_digest(network) != case['network_sha256']:
         raise ValueError('Frozen network changed')
+    drive_limit = extra.pop('drive_limit', cfg.get('v14_drive_limit'))
+    if drive_limit is not None:
+        extra.update(drive_limit=drive_limit, road_model_manifest=road_model_manifest(case, network))
     env = (env_class or HighwayFlowRLV14Env)(network, directory, **extra,
         controlled_count=row['controlled_count'], total_vehicles=row['total_vehicles'],
         horizon=row['horizon_steps'], communication=row['communication'], packet_loss=row['packet_loss'],

@@ -39,6 +39,10 @@ how it is rewarded and graded.
   collision. But it can't make the acceleration the policy asks for up the ramp's
   grade, so v14's intervention count rises from 1.4% to 33.6%. See the v14 plan's
   physics-drive section and `scripts/record_highway_flow_v14_physics.py`.
+- **Drive limit (optional, for the next v14 training).** v14 can cap each controlled
+  car's acceleration at what the Americano's drive gives on the road model's grade
+  (`traffic/road_grade.py`; checked against PhysX within 0.02 ± 0.04 m/s²). SUMO training
+  then sees the same limit as the physics car.
 
 **Version history of the merge line** (each plan records its rounds, failures and
 evidence):

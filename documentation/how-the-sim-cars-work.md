@@ -44,6 +44,12 @@ Every 0.1 s, for each controlled car:
      26.82 m/s, 60 mph).
    - **Following ceiling:** keeps a safe gap to the car ahead in its lane.
    - **Lane-end ceiling:** stops before a lane that ends, at up to 4.5 m/s².
+   - **Drive ceiling (optional, off unless a configuration turns it on):** no more than
+     the prepared Americano's drive can deliver on the road's grade, less 0.1 m/s² of
+     headroom. Up the southbound LA ramp that is about 1.0–1.4 m/s² instead of 2.0.
+     - The grade comes from the 3D model, at the steepest point the car reaches within 0.2 s.
+     - Networks without a road model count as flat.
+     - The policy sees this ceiling in its observation, like the others.
    - **Comfort rate limit:** the request can move at most 0.4 m/s² per step from the
      measured acceleration, which is 4 m/s³ of jerk. Hard braking (−4.5) and
      ceilings below the band are exempt.

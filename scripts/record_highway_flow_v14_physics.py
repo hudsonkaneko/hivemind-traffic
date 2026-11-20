@@ -46,6 +46,7 @@ from policies.highway_flow_v12 import FlowModelV12  # noqa: E402
 from traffic import highway_flow_rl_v14_rewards as v14  # noqa: E402
 from traffic.highway_flow_contract import file_digest  # noqa: E402
 from traffic.physics_link import RemoteDriver, server_command  # noqa: E402
+from traffic.road_grade import DRIVE_LIMIT  # noqa: E402
 
 CONFIG = 'configs/training/highway-flow-rl-v12-round19.json'
 CASE_INDEX = 11              # v12-val-la-sb-adams-model-merge-focused-1of16-medium, seed 6950004
@@ -75,6 +76,8 @@ def main(argv=None):
     parser.add_argument('--config', default=CONFIG)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--render-hz', type=int, default=10, choices=[0, 10])
+    parser.add_argument('--drive-limit', action='store_true',
+                        help="v14's grade-aware drive limit (traffic/road_grade.py) on the policy's commands")
     parser.add_argument('--development', action='store_true',
                         help='uncharged physics-integration check; output under outputs/test-runs')
     args = parser.parse_args(argv)
@@ -101,8 +104,9 @@ def main(argv=None):
     manifest = network.parent / 'corridor-manifest.json'
     driver = RemoteDriver(server_command(output / 'isaac', network=network, manifest=manifest, render_hz=args.render_hz),
                           log_path=output / 'isaac-server.log', cwd=ROOT)
+    limit = dict(drive_limit=DRIVE_LIMIT) if args.drive_limit else {}
     base.env_for = lambda cfg_, row_, directory: runner14.env_for(
-        cfg_, row_, directory, env_class=HighwayFlowRLV14PhysicalEnv, driver=driver)
+        cfg_, row_, directory, env_class=HighwayFlowRLV14PhysicalEnv, driver=driver, **limit)
     ledger = (contextlib.nullcontext(None) if args.development else
               base.LedgerSession(cfg, 'visual_recording', output, fingerprint, started=started, episodes=1))
     with ledger as session:
@@ -144,6 +148,7 @@ def main(argv=None):
             target_band=report.get('v12_metrics'), collisions=report.get('collisions'),
             teleports=report.get('teleports'), intervention_fraction=report.get('intervention_fraction'),
             peak_abs_jerk=report.get('peak_abs_jerk'), physical_steps=report.get('physical_steps'),
+            drive_limit=report.get('v14_drive_limit'),
             physics=physics_summary(server_report and server_report.get('report'), log),
             recording=(output / 'episode/recording.json').relative_to(ROOT).as_posix(),
             ledger=(dict(command='visual_recording', category='preparation', episodes=1, training_decisions=0)

@@ -13,10 +13,27 @@ After the scored horizon, cars still on the road are handed to native SUMO for t
 accounting, as in every earlier version; v14 restores speed mode 31 for that drain, which
 is never counted as a learned merge or route success.
 Observation widths, rewards, weights and gate thresholds are v12's.
+
+Optional drive limit (user decision, November 19, 2026: "Yes, build it"; off unless the
+constructor gets drive_limit=traffic.road_grade.DRIVE_LIMIT): SUMO's cars ignore grade, the
+physics car does not. With the limit on, every controlled car's acceleration ceiling also
+holds the force balance of the prepared Americano at full drive torque on the steepest road
+grade it reaches within 0.2 s, less 0.1 m/s^2 of headroom (traffic/road_grade.py). The
+grade is the road model's, for cases that declare one (road_model_manifest); other
+networks are flat. The bound joins the existing ones everywhere they are used: the applied
+command, the unsafe-request reward, the override causes ('drive_grade') and the ceiling
+feature of the observation, whose width does not change.
 """
+from contextlib import contextmanager
 from copy import deepcopy
 
+import numpy as np
+
+from environments import highway_environment_v05 as _v05_module
+from environments import highway_flow_env as _flow_module
 from environments.highway_flow_rl_v12_env import HighwayFlowRLV12Env
+from environments.highway_stage1_env import acceleration_constraints as _base_constraints
+from traffic.road_grade import RoadGrade, validate_drive_limit
 from traffic import highway_flow_rl_v06_rewards as v06
 from traffic import highway_flow_rl_v14_rewards as v14
 from traffic.highway_flow_context import flow_context
@@ -27,9 +44,66 @@ NATIVE_DRAIN_SPEED_MODE = 31  # SUMO default, the mode every earlier version dra
 
 
 class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
-    def __init__(self, *args, v14_settings=None, **kwargs):
+    def __init__(self, *args, v14_settings=None, drive_limit=None, road_model_manifest=None, **kwargs):
         self.v14_settings = v14.validate_settings(v14_settings or v14.SETTINGS)
+        self.drive_limit = None if drive_limit is None else validate_drive_limit(drive_limit)
+        if self.drive_limit is None and road_model_manifest is not None:
+            raise ValueError('A road model for the grade needs the drive limit on')
+        self.road_grade = (None if self.drive_limit is None else
+                           RoadGrade(args[0], road_model_manifest, spec=self.drive_limit['vehicle']))
+        self._drive_patched = False
+        self.drive_stats = dict(decisions=0, limited=0, max_grade=-np.inf, min_ceiling_m_s2=np.inf)
         super().__init__(*args, **kwargs)
+
+    # --- optional drive limit -------------------------------------------------------------
+    def _drive_bound(self, state):
+        limit = self.drive_limit
+        info = self.road_grade.ceiling(state['lane_id'], state['lane_position'], state['speed'],
+                                       headroom_m_s2=limit['headroom_m_s2'], lookahead_s=limit['lookahead_s'])
+        stats = self.drive_stats
+        stats['max_grade'] = max(stats['max_grade'], info['limiting_grade'])
+        stats['min_ceiling_m_s2'] = min(stats['min_ceiling_m_s2'], info['ceiling_m_s2'])
+        return info['ceiling_m_s2']
+
+    @contextmanager
+    def _drive_limited(self):
+        """The v05 step and the flow observations read acceleration_constraints from their modules;
+        while this env runs, both see the same constraints plus the drive bound."""
+        if self.road_grade is None or self._drive_patched:
+            yield
+            return
+        modules = (_v05_module, _flow_module)
+        if any(module.acceleration_constraints is not _base_constraints for module in modules):
+            raise RuntimeError('acceleration_constraints is already replaced')
+
+        def constraints(state, front, merge_distance):
+            bounds, ceiling = _base_constraints(state, front, merge_distance)
+            drive = self._drive_bound(state)
+            return dict(bounds, drive_grade=drive), float(np.clip(min(ceiling, drive), -4.5, 2.))
+
+        self._drive_patched = True
+        for module in modules:
+            module.acceleration_constraints = constraints
+        try:
+            yield
+        finally:
+            for module in modules:
+                module.acceleration_constraints = _base_constraints
+            self._drive_patched = False
+
+    def _observations(self):
+        with self._drive_limited():
+            return super()._observations()
+
+    def step(self, actions):
+        with self._drive_limited():
+            result = super().step(actions)
+        if self.road_grade is not None:
+            for info in result[4].values():
+                if isinstance(info, dict) and 'drive_grade' in (info.get('acceleration_bounds') or {}):
+                    self.drive_stats['decisions'] += 1
+                    self.drive_stats['limited'] += int('drive_grade' in (info.get('override_causes') or ()))
+        return result
 
     # --- control: one controller ------------------------------------------------------
     def reset(self, seed=None, options=None):
@@ -56,6 +130,7 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
     # --- target ---------------------------------------------------------------------------
     def _reset_v06(self):
         super()._reset_v06()
+        self.drive_stats = dict(decisions=0, limited=0, max_grade=-np.inf, min_ceiling_m_s2=np.inf)
         self._v14_cache, self._ramp = {}, {}
         self.v14_metrics = dict(yield_decisions=0, crossing_changed_target=0, crossing_limited_plans=0,
                                 ramp_decisions=0, ramp_limited=0, hook_mismatch=0, per_car={})
@@ -148,4 +223,8 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
             v14_scope=('v12 environment and terms; SUMO checks off for controlled cars (the policy and '
                        "the environment's own limits drive them); yield-entry targets check crossing gaps "
                        'and change at most +1.5/-2.0 m/s^2'))
+        if self.road_grade is not None:
+            stats = {k: (None if isinstance(v, float) and not np.isfinite(v) else v) for k, v in self.drive_stats.items()}
+            result['v14_drive_limit'] = dict(settings=deepcopy(self.drive_limit), road_grade=deepcopy(self.road_grade.info),
+                                             **stats)
         return result

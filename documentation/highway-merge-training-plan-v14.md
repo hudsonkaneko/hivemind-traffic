@@ -421,3 +421,86 @@ Training can stay in SUMO if SUMO's acceleration ceiling for the controlled car 
 the model's grade and the car's torque. That needs the grade along each corridor, which
 the model's lane graph has, and a grade-aware ceiling in the v14 limits. It has not
 been built.
+
+### Drive limit: SUMO's car gets the physics car's grade-limited acceleration
+
+**User decision (November 19):** "Yes, build it" (a grade-aware acceleration limit).
+
+**What it is.** [`traffic/road_grade.py`](../traffic/road_grade.py) adds a drive ceiling
+to v14's acceleration bounds. It is off by default, so earlier v14 runs are unchanged.
+It is turned on by `drive_limit=DRIVE_LIMIT` on the environment, or by `v14_drive_limit`
+in a configuration.
+- **The ceiling** is the force balance of the prepared Americano at full drive torque:
+
+  a_max = (2·700 N·m / r − 4·0.25·v / r² − m·g·sin θ) / (m + 4·1.225 / r²)
+
+  with m = 1,800 kg and r = 0.401728 m. The mass, radius, wheel inertia and wheel
+  damping are the vehicle package's values. The 700 N·m is the physics drive's torque
+  limit. The ceiling uses the steepest grade the car reaches within 0.2 s, and keeps
+  0.1 m/s² of headroom below it.
+- **The grade** is the road model's height under the two axles.
+  - It comes from the same hash-checked lane-graph lanes as the `--road-surface`
+    renderer, sampled every 0.5 m along every lane of the corridor network once.
+  - Profiles match the renderer's heights to 0.6 mm.
+  - Inside every lane, the SUMO centerlines are within 0.03 m of the model's lanes.
+  - Networks without a road model count as flat. The synthetic and curriculum
+    networks have no elevation at all.
+  - The old I-110 network has SUMO heights but no road model to check them against.
+    It also counts as flat. Its SUMO heights are not used, because SUMO holds each
+    junction at one height.
+- **Where the bound applies.** It joins the existing ceilings everywhere they are used:
+  - the applied command;
+  - the unsafe-request reward;
+  - the override causes (`drive_grade`);
+  - the ceiling feature the policy observes. The observation width does not change.
+
+**Checked against PhysX.** Over 137 decisions where the PhysX car was at its drive
+limit for the whole 0.1 s, with all wheels down (Stage 1 and the physics recording):
+- measured minus predicted was −0.017 ± 0.042 m/s²;
+- the model's grade matched the PhysX chassis pitch on the collider mesh within
+  +0.0011 ± 0.0034 rad;
+- with the 0.1 m/s² headroom, one of the 137 fell short by more than v14's 0.05 m/s²
+  realization tolerance (5.8 s, where the ramp steepens into the junction).
+
+**Same southbound episode, round 19's policy (not retrained), uncharged development runs:**
+
+| | SUMO | SUMO + drive limit | PhysX | PhysX + drive limit |
+|---|---|---|---|---|
+| Collisions | 0 | 0 | 0 | 0 |
+| Interventions | 1.4% | 27.3% | 33.6% | 32.9% |
+| `drive_grade` / unattributed realization flags | — / 0 | 60 / 0 | — / 74 | 59 / 23 |
+| Stable merge | passed | failed (intervention fraction) | failed | failed |
+| Peak jerk (m/s³) | 4.0 | 4.0 | 14.1 | 9.8 |
+| PhysX acceleration error, mean | — | — | 0.090 | 0.026 |
+| PhysX decisions at the torque limit | — | — | 59 | 7 |
+
+**What the table shows:**
+- **SUMO with the limit now predicts the physics outcome.** The interventions are of
+  the same size and the stable merge fails for the same reason. The difference is that
+  the limited requests are now attributed (`drive_grade`) and done as filtered, instead
+  of the car silently falling short.
+- **Under physics, the commands are now ones the car can carry out.** On the whole climb
+  (0.6–5.5 s) there is no unattributed shortfall left.
+- **The other LA corridor barely changes.** On the northbound 8-car merge the limit
+  binds on 8 of 1,968 decisions. Interventions go from 0.3% to 0.6%, and all four
+  merging cars still pass.
+- **The northbound focused merge** crashes at 3.5 s with or without the limit (the
+  crash recorded above).
+
+**What it does not cover: the crest at the southbound junction.** The model's lane graph
+was checked along the car's path:
+- through the junction lane the road climbs at 3.2–3.6%;
+- at the start of `sb2` the grade between the axles steps to 7.5% and holds about 7% for
+  about 11 m;
+- within about 8 m it then turns to −5%.
+
+At 19 m/s, cresting a 12-point grade change over about 8 m takes roughly half the
+weight off the wheels (about 5 m/s² of upward curvature acceleration). The driven front
+wheels unload and then grip again, which causes the remaining shortfalls (5.6–7.2 s) and
+the 9.8 m/s³ jerk peak. At Stage 1's 26.6 m/s the same crest exceeds g, and the car left
+the deck. A grade limit cannot remove this. It would take a speed limit over the crest
+(a vertical-curvature limit) or traction control in the low-level controller. Neither
+is built.
+
+**Training.** No v14 configuration exists yet. A v14 round would turn the limit on with
+`v14_drive_limit` and still needs the user's budget decision.

@@ -4,6 +4,23 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-19 - v14 can limit acceleration to what the car's drive gives on the road's grade (no training)
+
+- At the user's direction ("Yes, build it"), `traffic/road_grade.py` gives v14 an
+  optional drive ceiling. It is the prepared Americano's force balance at full drive
+  torque on the road model's grade, less 0.1 m/s² of headroom. It is off by default,
+  and on with `drive_limit=DRIVE_LIMIT` or a configuration's `v14_drive_limit`.
+- The grade comes from the road model's lane graph under the car's axles. Networks
+  without a road model count as flat.
+- Checked against PhysX: on 137 decisions at full drive torque, the ceiling was off by
+  −0.017 ± 0.042 m/s².
+- With the limit on, the southbound episode behaves in SUMO as it did under physics:
+  27.3% interventions, now attributed to `drive_grade`. Under physics the car carries
+  out its commands up the climb (mean error 0.026 m/s², down from 0.090).
+- The crest where the southbound ramp joins the mainline (+7% to −5% within about 8 m
+  in the model) still unloads the drive wheels. A grade limit can't remove that.
+  Details: [v14 plan](highway-merge-training-plan-v14.md).
+
 ## 2026-11-19 - The policy drives a PhysX car on the LA model (physics drive; no training)
 
 - At the user's direction ("Yes, policy drives it"), a saved policy can now drive one
