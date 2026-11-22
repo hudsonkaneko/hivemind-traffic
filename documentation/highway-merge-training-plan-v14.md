@@ -634,3 +634,94 @@ southbound case and seed as `physics-01`, with the drive limit on as trained.
 **Budget after round 20.** The shared ledger has 6,323,988 of 6,330,000 decisions
 (6,012 left), 55,145.6 of 61,200 s and 169 of 170 diagnostic episodes. No further round
 fits without another budget decision.
+
+### Why round 20's cars stopped (diagnosis, no training)
+
+**User questions (November 19–21, 2026):** "why did interventions go up by so much",
+then "Yes, design a fix". Pooled interventions went 0.86% → 1.54% (222 → 416). Almost all
+of the rise comes from cars that braked to a full stop on open road:
+- **at standstill, still asking to brake:** `native_realization_unattributed` 1 → 141
+  (SUMO cannot slow a stopped car, so the command is not realized);
+- **climbing back from a stop up the southbound ramp:** `drive_grade` in case 9 25 → 153.
+
+Method: round 20's saved validation observations were fed back through its saved
+actors. They reproduce the recorded requests (2,456 of 2,550 decisions in case 9, and
+every decision of the braking onset).
+
+**Cause: a feedback loop in the actor.**
+- Each acceleration request is mostly the car's own previous request and acceleration
+  (actor inputs 1 and 5; the request is 0.5–1.0 × the previous one) plus a small
+  correction from what the car sees. With those two inputs zeroed, the southbound lead
+  car (case 9) asks for only −0.1 to −0.3 m/s², instead of building up to −4.2.
+- On that ramp the round-16 actor has two settling points from a neutral start:
+  **+1.13 m/s²** (it accelerates) and −3.46. From update 56 on, only about −3.8 to −4.0
+  is left. A −0.25 m/s² shift in the correction moved it across.
+- In the I-110 merge (case 0) and the 4-lane ramp (case 7), the settling point moved
+  from −0.02…+0.28 m/s² to −0.36…−1.74 m/s².
+- The cars braked while their merge target was 14–20 m/s and nothing was ahead.
+
+**Why training did not correct it:**
+- v06's avoidable-braking cost never applies during a pending merge: its diagnostic
+  requires a target with no obligations, and every pending merge carries
+  `merge_or_yield` (acceleration lanes also `ending_lane`).
+- The v12 band cost is capped at 4 per decision once a car is 9 m/s below target. That
+  cap explains weak recovery once stopped, not the onset. (The actor does see its own
+  speed separately, so it can tell a stop from a crawl.)
+- The v12 target inputs are nearly unused. After round 20 their first-layer weights
+  are 0.03–0.09, against a median of 1.43 for the other inputs. Round 20 started from
+  the round-16 actor, where they were zero.
+
+**Not established:** why the correction drifted downward. One untested candidate is the
+drive limit in southbound training (1,217 of 40,882 decisions clipped, each charged as
+an intervention).
+
+## Round 21: the stop fix
+
+**User decision (November 21, 2026):** "Yes, build and train". The choice noted that it
+implies raising the decision budget.
+
+**The fix** ([`traffic/highway_flow_rl_v14_stop_fix.py`](../traffic/highway_flow_rl_v14_stop_fix.py);
+optional in the v14 environment, off unless `stop_fix=` is given; reward version
+`highway_flow_rl_merge_v14_merge_braking`):
+- **`merge_braking`.** v06's avoidable-braking cost, with its formula and thresholds,
+  for the decisions v06 leaves out:
+  - a pending merge whose target carries only `merge_or_yield` and/or `ending_lane`;
+  - the target at least 0.5 m/s above the car's speed (the target already slows the car
+    for merge gaps, the ending-lane runway, the unseen-yield stop and v14's crossing
+    check);
+  - a safety ceiling of at least 0.2 m/s², no own-lane leader within 1.5 s, and no
+    crossing deficit in the yield-entry plan;
+  - cost 0.25 × min(1, (−0.2 − request) / 2) per decision, for requests below −0.2 m/s².
+  Decisions without obligations stay v06's, so nothing is charged twice.
+- **`target_band_tail`.** Past v12's cap the band keeps a quarter of its slope. A stopped
+  car with a 20.1 m/s target costs 5.54 per decision instead of 4.
+- **Stop counts in every v14 report (`v14_stops`).** Stopped decisions, those asking to
+  brake (and their overrides), and free-road stops: below 0.1 m/s, no own-lane leader
+  within 20 m, and an eligible target of at least 5 m/s. The intervention metric is
+  unchanged.
+
+**Offline and development checks (uncharged):**
+
+| Check | Result |
+|---|---|
+| `merge_braking` replayed over round 20's initial validation | 0 charges |
+| …over its final validation | 588 charges (−55.9), mostly in the decisions before the stops |
+| Case 8 (northbound 8-car), which never stops | 83 new charges. They are the same drift: a car braking 10.5 → 4.2 m/s on the ramp, and later 14.4 → 2.6 m/s, while its target is 11–20 m/s |
+| Live SUMO run of round 20's case 9, with the fix on and round 20's final actor | reproduces the trace (198 overrides, same causes); 98 `merge_braking` and 314 tail charges, 57 free-road stopped decisions, as in the replay |
+
+**Round 21 is round 20's configuration** (same rows, seeds, warm start, optimizer,
+drive limit and validation cases), with only:
+- the stop fix on (`v14_stop_fix`) and its reward version;
+- **a free-road stop rule** at every periodic validation. It stops when free-road
+  stopped decisions exceed both 20 and twice this round's initial validation. Round 20
+  had 0, 0, 25, 64 and 180, so this rule would have stopped it at update 56;
+- **budget:** total decisions raised by 200,000, to 6,530,000 (6,012 remained). Wall time
+  (6,054.4 s left: a 3,600 s round and the 900 s final reserve) and diagnostic episodes
+  (one left, for the preflight) are not raised. No physics recording of the result fits
+  without another episode.
+
+**Risks:**
+- The merge target can be wrong at a yield line. The new cost would then discourage a
+  real yield. It is at most 0.25 per decision, against 20 for a collision, and plans
+  with a crossing deficit are exempt.
+- The feedback loop itself stays in the actor; the cost pushes against the drift.

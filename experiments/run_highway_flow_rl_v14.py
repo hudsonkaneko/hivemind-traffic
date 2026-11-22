@@ -1,4 +1,4 @@
-"""V14 runner: the v12 loop with the v14 environment, policy-only SUMO modes and round 20's rules.
+"""V14 runner: the v12 loop with the v14 environment, policy-only SUMO modes and rounds 20-21's rules.
 
 install() points the shared v12 loop at the v14 environment, requires SUMO speed mode 96 and
 lane change mode 0 on every controlled car at every decision, validates configurations against
@@ -8,7 +8,9 @@ for training. main() runs the shared loop (preflight / evaluate / train).
 
 Round 20's stop rules replace "any collision" with a collision regression check at every
 periodic validation, against this round's own initial validation (collision_regression).
-Every validation summary also reports the drive limit's use (v14_drive_limit).
+Every validation summary also reports the drive limit's use (v14_drive_limit) and the stopped
+decisions (v14_stops). Round 21 adds a free-road stop regression check at every periodic
+validation (free_road_stop_regression) and turns the stop fix on (v14_stop_fix).
 No training happens on import.
 """
 from __future__ import annotations
@@ -34,7 +36,8 @@ OUTPUT_ROOT = ROOT / contract.OUTPUT_ROOT
 NATIVE_MODES = dict(speed=v14.CONTROL['speed_mode'], lane_change=v14.CONTROL['lane_change_mode'])
 SOURCES = ('experiments/run_highway_flow_rl_v14.py', 'environments/highway_flow_rl_v14_env.py',
            'traffic/highway_flow_rl_v14_rewards.py', 'traffic/highway_flow_rl_v14_contract.py',
-           'traffic/road_grade.py', 'scripts/prepare_highway_flow_rl_v14.py')
+           'traffic/road_grade.py', 'scripts/prepare_highway_flow_rl_v14.py',
+           'traffic/highway_flow_rl_v14_stop_fix.py')
 
 
 def road_model_manifest(case, network):
@@ -52,6 +55,8 @@ def env_for(cfg, row, directory, env_class=None, **extra):
 
     A configuration with v14_drive_limit (traffic.road_grade.DRIVE_LIMIT) turns the drive limit on,
     with the case's road model for the grade; extra drive_limit=... does the same for one run.
+    A configuration with v14_stop_fix (traffic.highway_flow_rl_v14_stop_fix.SETTINGS) turns the stop
+    fix on; extra stop_fix=... does the same for one run.
     """
     from environments.highway_flow_rl_v14_env import HighwayFlowRLV14Env
     case = row['case']
@@ -61,6 +66,9 @@ def env_for(cfg, row, directory, env_class=None, **extra):
     drive_limit = extra.pop('drive_limit', cfg.get('v14_drive_limit'))
     if drive_limit is not None:
         extra.update(drive_limit=drive_limit, road_model_manifest=road_model_manifest(case, network))
+    stop_fix = extra.pop('stop_fix', cfg.get('v14_stop_fix'))
+    if stop_fix is not None:
+        extra['stop_fix'] = stop_fix
     env = (env_class or HighwayFlowRLV14Env)(network, directory, **extra,
         v14_settings=cfg.get('v14_settings'),
         controlled_count=row['controlled_count'], total_vehicles=row['total_vehicles'],
@@ -113,12 +121,56 @@ def drive_limit_summary(reports):
                                      min_ceiling_m_s2=v['min_ceiling_m_s2']) for case, v in per_case.items()})
 
 
+STOP_KEYS = ('decisions', 'stopped', 'asking_to_brake', 'asking_to_brake_overrides', 'free_road')
+
+
+def stops_summary(reports):
+    """Pooled v14_stops of a validation: stopped decisions, those asking to brake, free-road stops."""
+    per_case = {f"{index:02d} {r['case_id']}": r['v14_stops'] for index, r in enumerate(reports) if r.get('v14_stops')}
+    if not per_case:
+        return None
+    result = {key: sum(v[key] for v in per_case.values()) for key in STOP_KEYS}
+    result['per_case'] = {case: {key: v[key] for key in STOP_KEYS} for case, v in per_case.items()
+                          if v['stopped'] or v['free_road']}
+    return result
+
+
+def free_road_stop_regression(cfg, output, label, result):
+    """Stop a periodic validation whose free-road stops exceed both the rule's minimum and its factor
+    times this round's initial validation."""
+    rule = cfg['stop_rules'].get('free_road_stop_regression')
+    stops = result['summary'].get('v14_stops')
+    if rule is None or stops is None:
+        return
+    initial_path = output / 'initial-validation.json'
+    if not initial_path.is_file():
+        return
+    initial = (json.loads(initial_path.read_text())['summary'].get('v14_stops') or {}).get('free_road')
+    if initial is None:
+        return
+    limit = max(rule['minimum'], rule['factor'] * initial)
+    regressed = stops['free_road'] > limit
+    result['summary']['free_road_stop_regression'] = dict(initial_free_road=initial, free_road=stops['free_road'],
+                                                          limit=limit, regressed=regressed)
+    if label.startswith('periodic-validation') and regressed:
+        raise StopRuleTriggered(f"{label}: {stops['free_road']} free-road stopped decisions, above {limit:g} "
+                                f'(initial validation {initial})')
+
+
 def evaluate(cfg, output, label, model, deadline, **kwargs):
-    """v12's evaluation (intervention and merge-floor rules) plus the collision regression rule."""
+    """v12's evaluation (intervention and merge-floor rules) plus the collision and free-road stop rules."""
     result = _v12_evaluate(cfg, output, label, model, deadline, **kwargs)
     result['summary']['v14_drive_limit'] = drive_limit_summary(result['reports'])
+    result['summary']['v14_stops'] = stops_summary(result['reports'])
     try:
+        stopped = None
+        try:
+            free_road_stop_regression(cfg, output, label, result)
+        except StopRuleTriggered as error:
+            stopped = error
         collision_regression(cfg, output, label, result)
+        if stopped is not None:
+            raise stopped
     finally:
         base.save(output / f'{label}.json', result)
     return result

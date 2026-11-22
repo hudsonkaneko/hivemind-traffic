@@ -1,10 +1,12 @@
-"""V14 launch contract: round 20 (documentation/highway-merge-training-plan-v14.md).
+"""V14 launch contract: rounds 20 and 21 (documentation/highway-merge-training-plan-v14.md).
 
 User decisions, November 19, 2026:
 - "one controller on the car at all times" ... "Yes, policy only": v14, SUMO's own checks
   off for controlled cars (traffic/highway_flow_rl_v14_rewards.py);
 - "Yes, build it": the optional grade-aware drive limit (traffic/road_grade.py);
 - "Yes, raise it": raise the study budget so a v14 round can train with the drive limit on.
+User decision, November 21, 2026 ("Yes, build and train", after "why did interventions go up
+by so much" and "Yes, design a fix"): round 21, the stop fix, with the decision budget raised.
 The standing autonomy decision of November 17 ("continue monitoring and modifting training
 and changing rewards or weights ...") covers the round's settings. Held-out evaluation was
 never authorized and stays off.
@@ -32,12 +34,25 @@ Round 20 changes against round 19:
   lane merges had broken by its first check at 106,915 decisions; checking twice as often
   keeps a checkpoint from before such a break;
 - budget, below.
+
+Round 21 changes against round 20 (same rows, seeds, warm start, optimizer, drive limit and
+validation cases, so the two rounds are a matched comparison):
+- the stop fix on (traffic/highway_flow_rl_v14_stop_fix.py, reward version
+  highway_flow_rl_merge_v14_merge_braking): merge_braking, v06's avoidable-braking cost for
+  pending merges whose target needs no slowing, and target_band_tail, the band's slope past
+  v12's cap. Round 20's actors braked to a stop on open road while their merge target was
+  14-20 m/s; v06's cost never applied during a pending merge;
+- a free-road stop rule at every periodic validation (free_road_stop_regression): stop when
+  free-road stopped decisions exceed both 20 and twice this round's initial validation. Round
+  20 had 0, 0, 25, 64 and 180; this rule would have stopped it at update 56;
+- budget, below.
 """
 from copy import deepcopy
 import json
 
 from traffic import highway_flow_rl_v12_contract as v12c
 from traffic import highway_flow_rl_v14_rewards as v14
+from traffic import highway_flow_rl_v14_stop_fix as stop_fix
 from traffic.highway_flow_contract import file_digest
 from traffic.road_grade import DRIVE_LIMIT
 
@@ -68,10 +83,44 @@ STOP_RULES = dict(deepcopy(v12c.ROUNDS[BASE_ROUND]['stop_rules']), any_collision
                      '(validation case 10), so "any collision" would stop the round before it trains',
     checked_at='every periodic validation (interventions, relative merge floor, collision regression)')
 
+# Shared ledger before round 21: 6,323,988 of 6,330,000 training decisions, 55,145.6 of 61,200 s
+# and 169 of 170 diagnostic episodes. User decision "Yes, build and train" (November 21, 2026),
+# whose choice said it implies raising the decision budget: total decisions +200,000 to
+# 6,530,000, so a 200,000-decision round fits. Wall time (6,054.4 s remain: the 3,600 s round and
+# the 900 s final reserve) and diagnostic episodes (one left, for this round's preflight) are not
+# raised.
+ROUND21_BUDGET = dict(STUDY_BUDGET, total_decisions=6530000)
+
+ROUND21_STOP_RULES = dict(deepcopy(STOP_RULES),
+    free_road_stop_regression=dict(minimum=20, factor=2., scope='every periodic validation',
+        stops_when="free-road stopped decisions exceed both the minimum and factor x this round's initial "
+                   'validation',
+        definition='speed before the decision below 0.1 m/s, no own-lane leader within 20 m and an eligible '
+                   'target of at least 5 m/s (traffic.highway_flow_rl_v14_stop_fix.STOP_SETTINGS)',
+        source='round 20 validations: 0, 0, 25, 64 and 180 free-road stopped decisions (initial, updates 31, '
+               '56 and 91, final)'),
+    checked_at='every periodic validation (interventions, relative merge floor, collision regression, '
+               'free-road stops)')
+
+ROUND20_AUTHORIZATION = (
+    ' Round 20, user decisions of November 19, 2026: "Yes, policy only" (v14), "Yes, build it" '
+    '(the drive limit) and "Yes, raise it" (the study budget). This round trains; held-out '
+    'evaluation stays unauthorized.')
+
 ROUNDS = {
     20: dict(learning_profile='merge_v14_r20_policy_only_drive_limit', training=True, base_round=BASE_ROUND,
              budget=STUDY_BUDGET, evaluation_interval_decisions=50000, stop_rules=STOP_RULES,
              v14_drive_limit=json.loads(json.dumps(DRIVE_LIMIT))),
+    21: dict(learning_profile='merge_v14_r21_stop_fix', training=True, base_round=BASE_ROUND,
+             parent_profile='merge_v14_r20_policy_only_drive_limit',
+             budget=ROUND21_BUDGET, evaluation_interval_decisions=50000, stop_rules=ROUND21_STOP_RULES,
+             v14_drive_limit=json.loads(json.dumps(DRIVE_LIMIT)),
+             reward_version=stop_fix.REWARD_VERSION,
+             v14_stop_fix=dict(stop_fix.SETTINGS, obligations=list(stop_fix.SETTINGS['obligations'])),
+             authorization=ROUND20_AUTHORIZATION + (
+                 ' Round 21, user decision of November 21, 2026: "Yes, build and train" (the stop fix, the '
+                 'free-road stop rule and 200,000 more training decisions). This round trains; held-out '
+                 'evaluation stays unauthorized.')),
 }
 
 
@@ -95,18 +144,17 @@ def build_config(round_index):
     parent = cfg['learning_profile']
     cfg.update(schema=SCHEMA, training_authorized=row['training'], round_index=round_index,
         base_config=dict(BASE_CONFIG),
-        learning_profile=row['learning_profile'], reward_version=v14.REWARD_VERSION,
+        learning_profile=row['learning_profile'], reward_version=row.get('reward_version', v14.REWARD_VERSION),
         v14_settings=dict(v14.SETTINGS), v14_control=dict(v14.CONTROL),
         v14_drive_limit=deepcopy(row['v14_drive_limit']), budget=dict(row['budget']),
         evaluation_interval_decisions=row['evaluation_interval_decisions'],
         stop_rules=deepcopy(row['stop_rules']),
         execution=dict(cfg['execution'], output_root=OUTPUT_ROOT),
-        provenance=dict(cfg['provenance'], parent_round=parent, round=row['learning_profile'],
+        provenance=dict(cfg['provenance'], parent_round=row.get('parent_profile', parent), round=row['learning_profile'],
                         evidence='documentation/highway-merge-training-plan-v14.md'),
-        authorization=cfg['authorization'] + (
-            ' Round 20, user decisions of November 19, 2026: "Yes, policy only" (v14), "Yes, build it" '
-            '(the drive limit) and "Yes, raise it" (the study budget). This round trains; held-out '
-            'evaluation stays unauthorized.'))
+        authorization=cfg['authorization'] + row.get('authorization', ROUND20_AUTHORIZATION))
+    if 'v14_stop_fix' in row:
+        cfg['v14_stop_fix'] = deepcopy(row['v14_stop_fix'])
     return cfg
 
 

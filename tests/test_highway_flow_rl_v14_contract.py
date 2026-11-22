@@ -130,3 +130,102 @@ def test_runner_sources_include_the_contract():
     assert 'traffic/highway_flow_rl_v14_contract.py' in runner14.SOURCES
     assert 'scripts/prepare_highway_flow_rl_v14.py' in runner14.SOURCES
     assert v12c.ROUNDS[contract.BASE_ROUND]['budget']['per_round_decisions'] == 200000
+
+
+# --- round 21: the stop fix -----------------------------------------------------------------
+ROUND21_DECLARED = {'authorization', 'budget', 'learning_profile', 'provenance', 'reward_version', 'round_index',
+                    'stop_rules', 'v14_stop_fix'}
+
+
+@pytest.fixture(scope='module')
+def round21():
+    return contract.build_config(21)
+
+
+def test_round21_is_round20_plus_only_the_stop_fix(round21, round20):
+    from traffic import highway_flow_rl_v14_stop_fix as stop_fix
+    changed = {key for key in set(round20) | set(round21) if round20.get(key) != round21.get(key)}
+    assert changed == ROUND21_DECLARED
+    assert round21['round_index'] == 21 and round21['training_authorized'] is True
+    assert round21['held_out_authorized'] is False
+    assert round21['reward_version'] == stop_fix.REWARD_VERSION != v14.REWARD_VERSION
+    assert stop_fix.validate_settings(round21['v14_stop_fix']) == stop_fix.SETTINGS
+    assert round21['provenance']['parent_round'] == round20['learning_profile']
+    assert round21['authorization'].startswith(round20['authorization'])
+    for key in ('training_rows', 'validation_rows', 'warm_start', 'seed', 'optimizer', 'v14_drive_limit',
+                'evaluation_interval_decisions', 'v12_settings', 'v06_reward_weights', 'reward_weights'):
+        assert round21[key] == round20[key]
+
+
+def test_round21_budget_raises_training_decisions_only(round21, round20):
+    before, after = round20['budget'], round21['budget']
+    assert {k for k in before if before[k] != after[k]} == {'total_decisions'}
+    assert after['total_decisions'] == before['total_decisions'] + 200000 == 6530000
+    assert after['max_diagnostic_episodes'] == 170 and after['total_wall_seconds'] == 61200
+
+
+def test_round21_adds_the_free_road_stop_rule(round21, round20):
+    before, after = round20['stop_rules'], round21['stop_rules']
+    assert {k for k in set(before) | set(after) if before.get(k) != after.get(k)} == {
+        'free_road_stop_regression', 'checked_at'}
+    rule = after['free_road_stop_regression']
+    assert rule['minimum'] == 20 and rule['factor'] == 2.
+
+
+def test_round21_validation_and_written_configuration(round21):
+    assert contract.validate_config(deepcopy(round21), require_training=True)
+    for change in (dict(v14_stop_fix=None), dict(reward_version=v14.REWARD_VERSION),
+                   dict(budget=dict(round21['budget'], total_decisions=7000000))):
+        with pytest.raises(ValueError):
+            contract.validate_config(dict(deepcopy(round21), **change))
+    path = ROOT / 'configs/training/highway-flow-rl-v14-round21.json'
+    assert json.loads(path.read_text(encoding='utf-8')) == round21
+
+
+def _stops(free_road, stopped=None):
+    return dict(decisions=100, stopped=free_road if stopped is None else stopped, asking_to_brake=0,
+                asking_to_brake_overrides=0, free_road=free_road)
+
+
+def _stop_initial(output, free_road):
+    output.mkdir(parents=True, exist_ok=True)
+    (output / 'initial-validation.json').write_text(json.dumps(dict(summary=dict(v14_stops=_stops(free_road)),
+                                                                    reports=[])))
+
+
+def test_free_road_stop_regression_threshold(tmp_path, round21):
+    _stop_initial(tmp_path, 0)
+    ok = dict(summary=dict(v14_stops=_stops(20)), reports=[])
+    runner14.free_road_stop_regression(round21, tmp_path, 'periodic-validation-00031', ok)
+    assert ok['summary']['free_road_stop_regression'] == dict(initial_free_road=0, free_road=20, limit=20, regressed=False)
+    with pytest.raises(StopRuleTriggered, match='free-road stopped decisions'):
+        runner14.free_road_stop_regression(round21, tmp_path, 'periodic-validation-00056',
+                                           dict(summary=dict(v14_stops=_stops(25)), reports=[]))
+    final = dict(summary=dict(v14_stops=_stops(180)), reports=[])
+    runner14.free_road_stop_regression(round21, tmp_path, 'final-validation', final)   # recorded, not a stop
+    assert final['summary']['free_road_stop_regression']['regressed'] is True
+    _stop_initial(tmp_path, 15)                                                      # factor 2 x initial binds
+    runner14.free_road_stop_regression(round21, tmp_path, 'periodic-validation-00091',
+                                       dict(summary=dict(v14_stops=_stops(30)), reports=[]))
+
+
+def test_free_road_stop_rule_needs_the_rule_and_counts(tmp_path, round20, round21):
+    _stop_initial(tmp_path, 0)
+    result = dict(summary=dict(v14_stops=_stops(500)), reports=[])
+    runner14.free_road_stop_regression(round20, tmp_path, 'periodic-validation-00001', result)
+    assert 'free_road_stop_regression' not in result['summary']
+    (tmp_path / 'initial-validation.json').write_text(json.dumps(dict(summary={}, reports=[])))
+    runner14.free_road_stop_regression(round21, tmp_path, 'periodic-validation-00001', result)
+    assert 'free_road_stop_regression' not in result['summary']
+
+
+def test_stops_summary_pools_cases():
+    reports = [dict(case_id='a', v14_stops=_stops(3, 5)), dict(case_id='b'), dict(case_id='c', v14_stops=_stops(0, 0))]
+    summary = runner14.stops_summary(reports)
+    assert summary['free_road'] == 3 and summary['stopped'] == 5 and summary['decisions'] == 200
+    assert set(summary['per_case']) == {'00 a'}
+    assert runner14.stops_summary([dict(case_id='b')]) is None
+
+
+def test_runner_sources_include_the_stop_fix():
+    assert 'traffic/highway_flow_rl_v14_stop_fix.py' in runner14.SOURCES

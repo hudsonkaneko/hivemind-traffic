@@ -23,6 +23,13 @@ grade is the road model's, for cases that declare one (road_model_manifest); oth
 networks are flat. The bound joins the existing ones everywhere they are used: the applied
 command, the unsafe-request reward, the override causes ('drive_grade') and the ceiling
 feature of the observation, whose width does not change.
+
+Optional stop fix (user decision, November 21, 2026: "Yes, build and train"; off unless the
+constructor gets stop_fix=traffic.highway_flow_rl_v14_stop_fix.SETTINGS): two reward terms,
+merge_braking (v06's avoidable-braking cost for pending merges whose target needs no slowing) and
+target_band_tail (the band's slope past v12's cap), and the reward version
+highway_flow_rl_merge_v14_merge_braking. Every v14 environment also measures stopped decisions,
+those asking to brake, and free-road stops (report field v14_stops); measuring changes no reward.
 """
 from contextlib import contextmanager
 from copy import deepcopy
@@ -36,6 +43,7 @@ from environments.highway_stage1_env import acceleration_constraints as _base_co
 from traffic.road_grade import RoadGrade, validate_drive_limit
 from traffic import highway_flow_rl_v06_rewards as v06
 from traffic import highway_flow_rl_v14_rewards as v14
+from traffic import highway_flow_rl_v14_stop_fix as stop_fix_module
 from traffic.highway_flow_context import flow_context
 from traffic.highway_flow_rl_v03_rewards import map_evidence
 from traffic.highway_flow_rl_v04_rewards import gap_plan as v04_gap_plan
@@ -44,8 +52,9 @@ NATIVE_DRAIN_SPEED_MODE = 31  # SUMO default, the mode every earlier version dra
 
 
 class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
-    def __init__(self, *args, v14_settings=None, drive_limit=None, road_model_manifest=None, **kwargs):
+    def __init__(self, *args, v14_settings=None, drive_limit=None, road_model_manifest=None, stop_fix=None, **kwargs):
         self.v14_settings = v14.validate_settings(v14_settings or v14.SETTINGS)
+        self.stop_fix = None if stop_fix is None else stop_fix_module.validate_settings(stop_fix)
         self.drive_limit = None if drive_limit is None else validate_drive_limit(drive_limit)
         if self.drive_limit is None and road_model_manifest is not None:
             raise ValueError('A road model for the grade needs the drive limit on')
@@ -134,6 +143,10 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
         self._v14_cache, self._ramp = {}, {}
         self.v14_metrics = dict(yield_decisions=0, crossing_changed_target=0, crossing_limited_plans=0,
                                 ramp_decisions=0, ramp_limited=0, hook_mismatch=0, per_car={})
+        self.v14_stops = dict(decisions=0, stopped=0, asking_to_brake=0, asking_to_brake_overrides=0,
+                              free_road=0, per_car={})
+        self.v14_stop_fix_metrics = dict(merge_braking_charged=0, merge_braking=0., band_tail_charged=0,
+                                         target_band_tail=0., per_car={})
 
     def _v14_target(self, agent, state, context, preview):
         """One target per car and simulation time, shared by both hooks."""
@@ -212,17 +225,54 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
     def _extra_rewards(self, agent, info, snapshot, audit, state, merge_active):
         terms = super()._extra_rewards(agent, info, snapshot, audit, state, merge_active)
         info['v14_audit'] = deepcopy((snapshot.get('target') or {}).get('v14'))
+        speed = snapshot['ego_state']['speed']
+        front = ((snapshot['context'].get('corridors') or {}).get('own') or {}).get('front')
+        sample = stop_fix_module.stop_sample(speed, audit['requested'], front, snapshot['target'],
+                                             info.get('native_realization_changed'))
+        car = self.v14_stops['per_car'].setdefault(agent, dict(stopped=0, asking_to_brake=0,
+                                                              asking_to_brake_overrides=0, free_road=0))
+        self.v14_stops['decisions'] += 1
+        for row in (self.v14_stops, car):
+            for key, value in sample.items():
+                row[key] += value
+        info['v14_stop'] = sample
+        if self.stop_fix is not None:
+            extra = dict(
+                merge_braking=stop_fix_module.merge_braking(snapshot['target'], speed, audit['requested'],
+                    info['feasible_acceleration_ceiling'], front, snapshot.get('gap_plan'), merge_active,
+                    self.stop_fix),
+                target_band_tail=stop_fix_module.target_band_tail(snapshot['target'], state['speed'] if state else None,
+                    merge_active, self.v12_settings, self.stop_fix))
+            if extra['merge_braking'] != 0. and terms.get('avoidable_braking', 0.) != 0.:
+                raise ValueError('Braking would be charged twice')
+            metrics = self.v14_stop_fix_metrics
+            fixed = metrics['per_car'].setdefault(agent, dict(merge_braking_charged=0, merge_braking=0.,
+                                                              band_tail_charged=0, target_band_tail=0.))
+            for row in (metrics, fixed):
+                row['merge_braking_charged'] += int(extra['merge_braking'] != 0.)
+                row['merge_braking'] += extra['merge_braking']
+                row['band_tail_charged'] += int(extra['target_band_tail'] != 0.)
+                row['target_band_tail'] += extra['target_band_tail']
+            totals = self.v06_metrics['reward_terms']
+            for key, value in extra.items():
+                totals[key] = totals.get(key, 0.) + value
+            terms.update(extra)
         return terms
 
     def report(self):
         result = super().report()
-        result.update(schema='highway_flow_rl_merge_env_v14', reward_version=v14.REWARD_VERSION,
-            objective_version=v14.REWARD_VERSION, v14_settings=dict(self.v14_settings),
+        version = v14.REWARD_VERSION if self.stop_fix is None else stop_fix_module.REWARD_VERSION
+        result.update(schema='highway_flow_rl_merge_env_v14', reward_version=version,
+            objective_version=version, v14_settings=dict(self.v14_settings),
+            v14_stops=deepcopy(self.v14_stops), v14_stop_settings=dict(stop_fix_module.STOP_SETTINGS),
             v14_control=dict(v14.CONTROL, **deepcopy(getattr(self, 'v14_control', {}))),
             v14_metrics=deepcopy(self.v14_metrics),
             v14_scope=('v12 environment and terms; SUMO checks off for controlled cars (the policy and '
                        "the environment's own limits drive them); yield-entry targets check crossing gaps "
                        'and change at most +1.5/-2.0 m/s^2'))
+        if self.stop_fix is not None:
+            result['v14_stop_fix'] = dict(settings=dict(self.stop_fix, obligations=list(self.stop_fix['obligations'])),
+                                          **deepcopy(self.v14_stop_fix_metrics))
         if self.road_grade is not None:
             stats = {k: (None if isinstance(v, float) and not np.isfinite(v) else v) for k, v in self.drive_stats.items()}
             result['v14_drive_limit'] = dict(settings=deepcopy(self.drive_limit), road_grade=deepcopy(self.road_grade.info),
