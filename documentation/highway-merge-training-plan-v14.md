@@ -725,3 +725,90 @@ drive limit and validation cases), with only:
   real yield. It is at most 0.25 per decision, against 20 for a collision, and plans
   with a crossing deficit are exempt.
 - The feedback loop itself stays in the actor; the cost pushes against the drift.
+
+### Round 21 result
+
+**Completed with no stop rule triggered. It is the first v14 round that did not make
+other merges worse.**
+- **Training:** 193,714 decisions and 2,126.8 s, in 112 episodes (32,312 decisions of
+  critic-only warm-up). Learning stopped when the next complete episode no longer fit
+  the 200,000-decision budget.
+- **Free-road stop rule:** never fired. Free-road stopped decisions were 0, 0, 3, 0
+  and 0 against a limit of 20. Round 20 had 0, 0, 25, 64 and 180.
+
+| Validation | Gates (of 14) | Pooled interventions | Merge speed match | In band | Stable merges (of 12) | Free-road stops | Collisions |
+|---|---|---|---|---|---|---|---|
+| Initial | 8 | 0.86% | 0.485 | 0.53 | 9 | 0 | 2 (case 10) |
+| Update 32 (~50k) | 8 | 0.77% | 0.464 | 0.42 | 9 | 0 | 2 (case 10) |
+| Update 56 (~100k) | 8 | 0.88% | 0.354 | 0.29 | 9 | 3 | 2 (case 10) |
+| Update 91 (~150k) | 8 | 0.61% | 0.471 | 0.47 | 9 | 0 | 2 (case 10) |
+| Final | 8 | 0.46% | 0.461 | 0.34 | 10 | 0 | 2 (case 10) |
+| *Round 20 final* | *7* | *1.54%* | *0.245* | *0.15* | *8* | *180* | *2 (case 10)* |
+
+The initial validation is round 20's exactly: same starting policy, rows and seeds.
+The largest peak jerk across cases fell from 44.7 to 30.4 m/s³. Drive-limited decisions
+fell from 147 to 64.
+
+**By case, start → round 21 final (round 20 final in brackets):**
+
+| Case | Change | Gate |
+|---|---|---|
+| 0, I-110 merge | Speed match 0.48 → 0.45 (0.12); interventions 4 → 4 (68) | Still fails on rolling merge quality |
+| 4, 120 m ramp start | Interventions 111 → 46 (53); `drive_grade` filters 54 → 3 (0); peak jerk 44.7 → 30.4 | Still fails |
+| 7, 4-lane 180 m ramp start | Unchanged: passes, speed match 0.94 (round 20 broke it: fail, 0.47) | Passes |
+| 8, northbound LA 8-car merge | Interventions 12 → 0 (17); speed match 0.62 → 0.50 (0.18) | Still fails |
+| 9, southbound LA 8-car merge | Worst-car interventions 9.6% → 1.7% (20.8%); `drive_grade` filters 25 → 7 (153); speed match 0.49 → 0.23 (0.00) | No longer fails on comfort and control. Still fails on rolling merge quality and on one background car's emergency braking |
+| 10, focused northbound LA merge | Unchanged | Still collides (2 cars), as at the start |
+| 11, focused southbound LA merge | Speed match 0 → 0.74 (0.70); worst-car interventions 27.3% → 24.0% (18.5%); `drive_grade` filters 60 → 54 (43) | Its merge is now stable. It still fails on interventions, rolling merge quality and native-emergency accounting |
+
+**Update 56 dip.** At update 56, case 9 relapsed:
+- 107 interventions, 3 free-road stopped decisions, speed match 0 and peak jerk 57.1;
+- it recovered by update 91.
+
+**Best checkpoint: update 56, by the runner's rank.**
+- **What the rank uses:** safety events come first. Then come failed cases, completed
+  routes, quality merges, seconds stopped before merging, and worst-car interventions.
+- **Why update 56 ranks first:** case 9's one background emergency braking did not
+  happen there. That event is `main_11` on `sb1_0` at 6.3–6.6 s, at 9 m/s². It is
+  missing exactly when that case was at its worst.
+- **The final policy ranks second.** It still ranks above the starting policy:
+  - stopped before merging, 0.4 s against 1.1 s;
+  - worst-car interventions, 24.0% against 27.3%.
+- **The final policy is better than update 56 on everything in the table above, and on
+  peak jerk (30.4 against 57.1).** Their worst-car interventions are about the same:
+  24.0% against 23.6%.
+- Neither is promoted. This is development validation only, and there is no held-out
+  evaluation.
+
+**Training rollouts.**
+- **Free-road stops still occur.** The rollouts use sampled actions and had 1,707
+  free-road stopped decisions in 112 episodes. 615 of them were on one training case,
+  `train-4-lane-ramp120-merge-focused-1-ramp-started` (6 episodes).
+- **Not diagnosed:** why. Round 20 did not measure stops in training, so there is
+  nothing to compare.
+- **New terms charged in training:** `merge_braking` −460.5 and `target_band_tail`
+  −4,852.0. In validation they were small: up to 34 `merge_braking` decisions per
+  validation.
+- **One training episode collided** (update 12, during the critic-only warm-up, on the
+  southbound LA 4-of-16 merge): `agent_0` and `agent_1`, twice.
+
+**What it means.**
+- **The fix did what it was for.** Deterministic validation had no free-road stops.
+  The cases round 20 broke kept most of their starting behavior: cases 0, 7 and 8.
+  Case 9 kept part of it.
+- **Not established: how much of this comes from the stop fix.** The two rounds differ
+  only in the stop fix and the stop rule, and the rule never fired. But this is one run
+  per round, and PPO trajectories diverge once the rewards differ, so run-to-run
+  variance is not ruled out.
+- **Still failing:** every LA merge case. The gate count did not move (8 of 14), and
+  merge speed match ended a little below the start. Speed match was lost on the 8-car
+  merges (cases 8 and 9) and gained on the focused southbound merge (case 11).
+- **No physics check.** No diagnostic episode is left to record round 21's policy on
+  the PhysX car.
+
+**Budget after round 21.** The shared ledger has:
+- decisions: 6,517,702 of 6,530,000 (12,298 left);
+- wall time: 57,275.2 of 61,200 s (3,924.8 s left);
+- diagnostic episodes: 170 of 170.
+
+No further round or recording fits without another budget decision.

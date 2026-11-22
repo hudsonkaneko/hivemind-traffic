@@ -181,6 +181,10 @@ which the car gets as an input and is rewarded for following.
     before it trains.
   - Collisions in training episodes cost −20 and are recorded, but do not stop the
     round.
+  - From round 21, a periodic validation also stops it on free-road stops. These are
+    decisions taken stopped, with no leader within 20 m and a target of at least
+    5 m/s. The limit is more than 20, and more than twice the round's starting
+    validation.
 
 ## How it is rewarded (per car, every 0.1 s)
 
@@ -195,9 +199,11 @@ which the car gets as an input and is rewarded for following.
 | Speed error against the target | up to −0.3 |
 | Jerk | Huber, −0.09 scale; excess over 5 m/s³ up to −1.5 |
 | Avoidable braking | up to −0.25 |
+| Merge braking (from round 21) | up to −0.25, for braking during a pending merge whose target is above the car's speed, with a free road |
 | Gap preparation (merging cars) | 2 × change in the plan's readiness score |
 | Merge tracking | up to −1.0 (−0.25 per 2 m/s off the target, capped at 4) |
 | Target band (v12) | 0 inside ±1.8 m/s of the target, down to −4 outside |
+| Band tail (from round 21) | past the band's cap, a quarter of its slope again (a stopped car with a 20.1 m/s target: −5.54 in all, not −4) |
 | Merge quality | +5 once if the merge passes the quality check, plus up to +5 once graded by speed match and calmness |
 | Post-merge override | −1 each, in the 8 s after merging |
 
@@ -232,17 +238,25 @@ The 14 validation cases are:
 
 ## Where it stands
 
-- **Best policy:** the round-16 policy (migrated into v12).
-- **With SUMO's checks off and no retraining:** 9 of 14 gates. All four LA merges
-  fail; one crashes.
+- **Best checkpoint** (development validation, by the runner's rank): round 21's
+  update 56. It ranks first on one fewer background emergency braking. Round 21's
+  final policy ranks second and is better on most other measures. Neither is
+  promoted. The round-16 policy (migrated into v12) was the best until round 21.
+- **The round-16 policy with SUMO's checks off and no retraining:** 9 of 14 gates.
+  All four LA merges fail; one crashes.
 - **v14's target** now tells the car to let mainline traffic pass at yield lines.
 - **Round 20** trained v14 with the drive limit on (194,856 decisions).
   - It did not improve overall: 7 of 14 gates at the end, and merge speed match fell
     from 0.485 to 0.245.
   - It taught the southbound focused merge to ask for what the car can do. Under
     physics, that merge's peak jerk fell from 14.1 to 5.5 m/s³.
-  - Other merges got worse.
-  - The round-16 policy is still the best.
+  - Other merges got worse, and some cars braked to a stop on open road.
+- **Round 21** added the stop fix (193,714 decisions).
+  - Still 8 of 14 gates. Interventions fell from 0.86% to 0.46%, stable merges rose
+    from 9 to 10 of 12, and validation had no free-road stops.
+  - Merge speed match 0.485 → 0.461.
+  - Its checkpoints rank above the round-16 policy on development validation. Nothing
+    is promoted.
 - **Physics check:** with the policy driving a PhysX car on the LA model, the
   southbound merge has no collision. But the stable merge fails on interventions:
   - the car can't make the 1.6–1.7 m/s² the policy asks for up the ramp's grade;

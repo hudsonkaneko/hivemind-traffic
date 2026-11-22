@@ -4,6 +4,41 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-21 - Round 21: the stop fix (fewer interventions, no free-road stops; still 8 of 14 gates)
+
+- **Why round 20's cars stopped (diagnosis).** Its saved actors were re-run on its
+  validation traces:
+  - each acceleration request mostly repeats the car's previous request and
+    acceleration;
+  - a small shift in the correction became steady braking, so cars stopped on open
+    road with merge targets of 14–20 m/s;
+  - v06's avoidable-braking cost never applies during a pending merge;
+  - v12's band cost stops growing once a car is 9 m/s below its target.
+- **The fix.** At the user's direction ("Yes, build and train"),
+  `traffic/highway_flow_rl_v14_stop_fix.py` adds two reward terms (reward version
+  `highway_flow_rl_merge_v14_merge_braking`):
+  - `merge_braking`: v06's avoidable-braking cost for pending merges whose target
+    needs no slowing;
+  - `target_band_tail`: a quarter of the band's slope past its cap.
+- **Measurement.** Every v14 report now counts stopped and free-road stopped decisions.
+- **Round 21** (`configs/training/highway-flow-rl-v14-round21.json`) is round 20's
+  configuration plus:
+  - the stop fix;
+  - a free-road stop rule;
+  - 200,000 more study decisions (to 6,530,000).
+- **Result:** 193,714 decisions; no stop rule fired; free-road stops in validation 0
+  at the end (round 20: 180).
+  - Interventions 0.86% → 0.46% (round 20: 1.54%).
+  - Stable merges 9 → 10 of 12; peak jerk 44.7 → 30.4 m/s³.
+  - Merge speed match 0.485 → 0.461 (round 20: 0.245).
+  - Gates 8 → 8 of 14: all LA merge cases still fail, and the focused northbound LA
+    merge still collides.
+- **Ranking.** The runner's rank picks update 56, on one fewer background emergency
+  braking. The final policy ranks second, above the round-16 start. Nothing is
+  promoted, and there is no held-out evaluation.
+- **Budget left:** 12,298 decisions and no diagnostic episodes. Details:
+  [v14 plan](highway-merge-training-plan-v14.md).
+
 ## 2026-11-19 - Round 20: v14 trained with the drive limit (no improvement; nothing promoted)
 
 - At the user's direction ("Yes, raise it"), the study budget was raised by 100,000
