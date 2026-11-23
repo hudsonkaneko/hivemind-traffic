@@ -812,3 +812,119 @@ fell from 147 to 64.
 - diagnostic episodes: 170 of 170.
 
 No further round or recording fits without another budget decision.
+
+## Round 22: a drive-aware reward target
+
+**User decision (November 22, 2026):** "Yes, raise it", to "Raise the study budget for
+round 22 and a physics check?".
+
+### Why the LA merges fail rolling merge quality
+
+Every case that fails in round 21's final validation fails `rolling_merge_quality`. That
+gate needs at least 90% of a case's merging cars to qualify. A car qualifies when, among
+other conditions, its speed is within 2 m/s of the merge target for 90% of the 16 s window
+around its lateral merge. In the LA 8-car merges (cases 8 and 9), the misses are almost all
+cars below their target. Read from round 21's final action journals
+([`scripts/summarize_highway_flow_rl_v11.py`](../scripts/summarize_highway_flow_rl_v11.py)):
+
+| Case, car | Window samples | Below target | Above | Speed match |
+|---|---|---|---|---|
+| 8, `agent_6` | 124 | 111 | 0 | 0.10 |
+| 8, `agent_3` | 161 | 80 | 0 | 0.50 |
+| 9, `agent_5` | 142 | 128 | 0 | 0.10 |
+| 9, `agent_0` | 161 | 98 | 4 | 0.36 |
+
+**The target runs away from the car.** At a yield entry, v14's reachable target
+(`traffic.highway_flow_rl_v14_rewards.reachable`):
+- starts at min(plan, speed + 1.5 m/s² × 3 s), so up to 4.5 m/s above the car;
+- then rises at 1.5 m/s², from the larger of its previous value and the car's speed.
+
+With the drive limit on, the car gives 1.0–1.4 m/s² on the southbound ramp and up to
+2.0 m/s² (the environment's cap) on the northbound one. A car 4.5 m/s below a target rising
+at 1.5 m/s² closes the gap at best at (a − 1.5) m/s², where a is its acceleration:
+- at the 2.0 cap, it stays outside the 2 m/s band for at least the first 5 s;
+- at 1.0–1.4 m/s², the gap grows until the target stops rising.
+
+**Two cars cannot qualify, whatever the policy does.** Case 8's `agent_6` and case 9's
+`agent_5` start 4.5 m/s below their targets. Their targets never fall back to the car's
+speed, so they do not depend on how the car drives. A car that accelerated from the first
+decision would match at most:
+
+| Car | At the 2.0 m/s² cap the whole time | At the logged drive ceilings (approximate) | Needed |
+|---|---|---|---|
+| Case 8, `agent_6` | 63% | about 56% | 90% |
+| Case 9, `agent_5` | 79% | about 37% | 90% |
+
+The ceiling column replays the ceilings logged along the policy's own path. A faster car
+would be elsewhere on the ramp, so that column is approximate. Each of these cases has
+fewer than ten merging cars, so one car that cannot qualify fails the case. **Cases 8 and
+9 cannot pass rolling merge quality at these seeds**, whatever the policy does.
+
+**The policy also asks for less than the car can do.** On the southbound ramp, case 9's
+`agent_5` asked for 0.1–0.7 m/s² against a 1.3 m/s² drive ceiling. On the northbound ramp,
+case 8's `agent_6` asked for about 1.5 against 2.0. A target the car cannot follow gives the
+band cost no in-band reference: on that ramp the car is out of the band whatever it asks for.
+
+### The change
+
+[`traffic/highway_flow_rl_v14_drive_target.py`](../traffic/highway_flow_rl_v14_drive_target.py),
+optional in the v14 environment (off unless `drive_target=` is given; reward version
+`highway_flow_rl_merge_v14_drive_target`). Only at yield entries; every other merge keeps
+v12's target exactly.
+- **Start:** the reward target starts at min(plan, the car's speed), with no lead.
+- **Rise:** min(1.5 m/s², the drive ceiling at the car's lane position and speed). That is
+  the same `traffic.road_grade` bound the applied command gets. The rise starts from the
+  larger of the previous target and the car's speed, so a car slower than its drive allows
+  still falls behind.
+- **Fall:** v14's 2.0 m/s². The occupied-lane and map ceilings still apply at once.
+
+**It feeds:** the four actor target inputs; the band, tracking and speed-error rewards; and
+the stop fix's `merge_braking` and band tail.
+
+**It does not feed the gate.** These keep v14's target:
+- the gate's speed match (rolling merge quality);
+- the merge-quality payments graded on the gate's window (v04's `quality_merge` and v10's
+  graded quality, 5.0 each);
+- the free-road stop measurement.
+
+So gate counts stay comparable with rounds 20 and 21. Each report also grades every merging
+car's rolling merge quality on the drive-aware target (`v14_drive_target.quality_merges`).
+Each validation summary adds that diagnostic gate count (`v14_drive_target`) next to the
+gate. Whether the gate itself should use the drive-aware target is a decision for the user.
+
+**Development check (uncharged):** `outputs/test-runs/drive-target-check-01-case09`. It ran
+case 9 in SUMO with the round-22 configuration and the round-16 starting actor:
+- **Gate:** identical to round 21's initial validation of the same case: the same failures,
+  overrides, quality merges, stable merges, stops and native emergencies. The starting
+  actor's target-input weights are zero, so its actions do not depend on the target.
+- **`agent_5`:** the reward target starts at 11.99 m/s, the car's speed, against the gate's
+  16.49, and rises at 1.28–1.35 m/s². Speed match is 0.94 on the drive-aware target and
+  0.19 on the gate's.
+- **`agent_0`:** 0.89 against 0.80.
+- **Band cost:** −6.6 against −209.9.
+
+### Round 22's configuration
+
+Round 22 is round 21's configuration: the same rows, seeds, warm start (the round-16
+policy), optimizer, drive limit, stop fix, stop rules and validation cases. Only these change:
+- the drive-aware target and its reward version;
+- **budget:** total decisions +200,000, to 6,730,000 (12,298 remained), and diagnostic
+  episodes +2, to 172, for this round's preflight and one physics recording of its result.
+  Wall time is not raised: 3,924.8 s remain. That covers the preflight, a round of round
+  21's length (2,126.8 s), the recording and the 900 s final reserve.
+
+**Risks:**
+- **The official gate count can hardly move.** Cases 8 and 9 cannot pass rolling merge
+  quality at these seeds, so a better gate count has to come from other cases. The
+  diagnostic count shows what the drive-aware target would grade.
+- **Less band pressure where the car already follows its drive.** On the southbound ramp,
+  the starting actor is nearly in band with the new target. A car slower than its drive
+  still falls behind the target and pays the band cost.
+- **Following the new target can cost a borderline car the gate.**
+  - On the northbound ramp the drive allows up to 2.0 m/s², but the new target rises at
+    1.5. A car that follows it stays as far below the gate's target as it started.
+  - Case 8's `agent_3` also starts 4.5 m/s below the gate's target. It can qualify only by
+    accelerating near the cap: its bound is 91% at 2.0 m/s², and about 89% at the logged
+    ceilings.
+  - The merge-quality payments still grade on the gate's target, so they still reward
+    closing that gap.

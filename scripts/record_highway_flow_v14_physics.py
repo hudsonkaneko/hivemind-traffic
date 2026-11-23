@@ -133,7 +133,8 @@ def main(argv=None):
         stable = (report.get('stable_merge') or {}).get('per_agent') or {}
         summary = dict(schema='highway_flow_rl_v14_physics_recording_v01', case_id=row['case']['id'], seed=row['seed'],
             road_model=row['case'].get('road_model'), corridor=row['case'].get('corridor'),
-            environment='v14 physical', reward_version=v14.REWARD_VERSION, control=dict(v14.CONTROL),
+            environment='v14 physical', reward_version=report.get('reward_version', v14.REWARD_VERSION),
+            control=dict(v14.CONTROL),
             motion=('agent cars: Isaac Sim PhysX rigid-body vehicle (Americano v14, provisional physics) on the '
                     "LA model's deck colliders, driven by the low-level controller; other cars: SUMO poses (kinematic)"),
             checkpoint=checkpoint.relative_to(ROOT).as_posix(), checkpoint_sha256=file_digest(checkpoint),

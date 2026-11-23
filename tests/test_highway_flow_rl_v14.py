@@ -112,6 +112,9 @@ def _env(monkeypatch, context=None):
     env._v14_cache, env._ramp = {}, {}
     env.v14_metrics = dict(yield_decisions=0, crossing_changed_target=0, crossing_limited_plans=0,
                            ramp_decisions=0, ramp_limited=0, hook_mismatch=0, per_car={})
+    env.drive_target, env.road_grade, env._drive_ramp = None, None, {}
+    env.v14_drive_target_metrics = dict(decisions=0, below_gate=0, above_gate=0, gate_minus_target_m_s=0.,
+                                        per_car={})
     calls = []
 
     def target_stub(state, context, preview):
@@ -160,6 +163,36 @@ def test_acceleration_lane_merges_keep_v12s_target(monkeypatch):
     plan = v04.gap_plan(env.states['agent_0'], env.flow_contexts['agent_0'])
     assert target == dict(eligible=True, target_m_s=min(20.1, plan['target_m_s']))
     assert env._ramp == {} and env.v14_metrics['ramp_decisions'] == 0
+
+
+def test_drive_target_feeds_rewards_and_actor_while_the_gate_keeps_v14s_target(monkeypatch):
+    from traffic import highway_flow_rl_v14_drive_target as drive
+    context = deepcopy(CRASH_CONTEXT)
+    context['entry']['rear'] = None                    # nothing to yield to: the plan wants 20.1 m/s
+    env, module, _ = _env(monkeypatch, context=context)
+    env.drive_target = dict(drive.SETTINGS)
+    speed = env.states['agent_0']['speed']
+    actor, _, _ = env.current_target('agent_0')
+    reward, _ = env._reward_target('agent_0', env.states['agent_0'], env.flow_contexts['agent_0'], None)
+    gate = env._reference_targets['agent_0']
+    assert reward is actor and gate is not actor
+    assert gate['target_m_s'] == pytest.approx(min(20.1, speed + 4.5))      # v14: up to 4.5 m/s above the car
+    assert actor['target_m_s'] == pytest.approx(min(20.1, speed))            # drive target: the car's speed
+    assert actor['v14']['drive_target'] == dict(gate_target_m_s=gate['target_m_s'], rise_m_s2=1.5,
+                                                drive_ceiling_m_s2=None, ramp_started=True)
+    env.time = 1.1                                     # next decision: the drive ramp rises at 1.5 m/s^2 (no drive limit)
+    actor, _, _ = env.current_target('agent_0')
+    assert actor['target_m_s'] == pytest.approx(min(20.1, speed + .15))
+    assert env.v14_drive_target_metrics['decisions'] == 2 and env.v14_drive_target_metrics['below_gate'] == 2
+    env.time = 1.2
+    env.road_grade = SimpleNamespace(ceiling=lambda *a, **k: dict(ceiling_m_s2=1.2))
+    env.drive_limit = dict(headroom_m_s2=.1, lookahead_s=(0., .2))
+    env.states['agent_0'].setdefault('lane_id', 'ramp_0')
+    env.states['agent_0'].setdefault('lane_position', 0.)
+    before = actor['target_m_s']
+    actor, _, _ = env.current_target('agent_0')
+    assert actor['target_m_s'] == pytest.approx(min(20.1, before + .12))     # capped by the drive ceiling
+    assert actor['v14']['drive_target']['rise_m_s2'] == pytest.approx(1.2)
 
 
 def test_reset_hands_every_controlled_car_to_the_policy_and_drain_restores_native(monkeypatch):

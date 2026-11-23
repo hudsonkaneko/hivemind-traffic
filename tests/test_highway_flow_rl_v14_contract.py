@@ -229,3 +229,69 @@ def test_stops_summary_pools_cases():
 
 def test_runner_sources_include_the_stop_fix():
     assert 'traffic/highway_flow_rl_v14_stop_fix.py' in runner14.SOURCES
+
+
+# --- round 22: the drive-aware reward target ------------------------------------------------
+ROUND22_DECLARED = {'authorization', 'budget', 'learning_profile', 'provenance', 'reward_version', 'round_index',
+                    'v14_drive_target'}
+
+
+@pytest.fixture(scope='module')
+def round22():
+    return contract.build_config(22)
+
+
+def test_round22_is_round21_plus_only_the_drive_target(round22, round21):
+    from traffic import highway_flow_rl_v14_drive_target as drive_target
+    changed = {key for key in set(round21) | set(round22) if round21.get(key) != round22.get(key)}
+    assert changed == ROUND22_DECLARED
+    assert round22['round_index'] == 22 and round22['training_authorized'] is True
+    assert round22['held_out_authorized'] is False
+    assert round22['reward_version'] == drive_target.REWARD_VERSION != round21['reward_version']
+    assert drive_target.validate_settings(round22['v14_drive_target']) == drive_target.SETTINGS
+    assert round22['provenance']['parent_round'] == round21['learning_profile']
+    assert round22['authorization'].startswith(round21['authorization'])
+    for key in ('training_rows', 'validation_rows', 'warm_start', 'seed', 'optimizer', 'v14_drive_limit',
+                'v14_stop_fix', 'stop_rules', 'evaluation_interval_decisions', 'v12_settings',
+                'v06_reward_weights', 'reward_weights'):
+        assert round22[key] == round21[key]
+
+
+def test_round22_budget_raises_decisions_and_two_diagnostic_episodes(round22, round21):
+    before, after = round21['budget'], round22['budget']
+    assert {k for k in before if before[k] != after[k]} == {'total_decisions', 'max_diagnostic_episodes'}
+    assert after['total_decisions'] == before['total_decisions'] + 200000 == 6730000
+    assert after['max_diagnostic_episodes'] == before['max_diagnostic_episodes'] + 2 == 172
+    assert after['total_wall_seconds'] == 61200
+
+
+def test_round22_validation_and_written_configuration(round22):
+    assert contract.validate_config(deepcopy(round22), require_training=True)
+    for change in (dict(v14_drive_target=None), dict(reward_version=round22['reward_version'] + 'x'),
+                   dict(budget=dict(round22['budget'], max_diagnostic_episodes=180))):
+        with pytest.raises(ValueError):
+            contract.validate_config(dict(deepcopy(round22), **change))
+    path = ROOT / 'configs/training/highway-flow-rl-v14-round22.json'
+    assert json.loads(path.read_text(encoding='utf-8')) == round22
+
+
+def test_drive_target_summary_regrades_only_rolling_merge_quality():
+    gates = [dict(passed=False, failures=['native_emergency_or_missing_accounting', 'rolling_merge_quality']),
+             dict(passed=False, failures=['rolling_merge_quality']),
+             dict(passed=True, failures=[])]
+    quality = lambda *flags: {f'agent_{i}': dict(qualified=f, speed_match_fraction=.95 if f else .4)
+                              for i, f in enumerate(flags)}
+    reports = [dict(case_id='a', task='merge', stable_merge=dict(targets=2), v14_drive_target=dict(quality_merges=quality(True, True))),
+               dict(case_id='b', task='merge', stable_merge=dict(targets=2), v14_drive_target=dict(quality_merges=quality(True, True))),
+               dict(case_id='c', task='cruise')]
+    result = runner14.drive_target_summary(reports, gates)
+    assert result['gates_passed'] == 2      # b now passes; a keeps its emergency failure; c keeps its pass
+    assert result['per_case']['00 a']['failures'] == ['native_emergency_or_missing_accounting']
+    assert result['per_case']['01 b']['passed'] is True and result['per_case']['01 b']['gate_passed'] is False
+    reports[1]['v14_drive_target']['quality_merges'] = quality(True, False)
+    assert runner14.drive_target_summary(reports, gates)['gates_passed'] == 1
+    assert runner14.drive_target_summary([dict(case_id='c', task='cruise')], gates[2:]) is None
+
+
+def test_runner_sources_include_the_drive_target():
+    assert 'traffic/highway_flow_rl_v14_drive_target.py' in runner14.SOURCES
