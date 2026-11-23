@@ -207,6 +207,11 @@ which the car gets as an input and is rewarded for following.
 | Merge quality | +5 once if the merge passes the quality check, plus up to +5 once graded by speed match and calmness |
 | Post-merge override | −1 each, in the 8 s after merging |
 
+From round 22, at yield lines the target used by the inputs and by the per-step
+rewards above starts at the car's speed. It rises no faster than min(1.5 m/s², what the
+drive gives). The gate below, and the merge-quality payments, keep v14's target. That
+target starts up to 4.5 m/s above the car and rises at 1.5 m/s².
+
 ## How it is graded (validation gates)
 
 A validation case passes only if all of these hold:
@@ -223,7 +228,11 @@ A validation case passes only if all of these hold:
   - at most 1 s stopped;
   - jerk ≤ 5;
   - no neighbor braking harder than 3 m/s²;
-  - within 2 m/s of the target for 90% of the 8 s after merging.
+  - within 2 m/s of the target for 90% of the 16 s from 8 s before the merge to
+    8 s after it.
+  - With the drive limit on, two LA 8-car merge cases cannot meet this at their seeds,
+    whatever the policy does. One car in each starts 4.5 m/s below a target that rises
+    faster than the car can accelerate (round 22's finding).
 - **Cruise and passing:** near the legal speed, no avoidable braking, and passing
   cases must pass.
 
@@ -257,6 +266,10 @@ The 14 validation cases are:
   - Merge speed match 0.485 → 0.461.
   - Its checkpoints rank above the round-16 policy on development validation. Nothing
     is promoted.
+- **Round 22** made the reward target drive-aware at yield lines (50,678 decisions).
+  - The free-road stop rule stopped it at its first check: the southbound 8-car merge's
+    cars braked to a stop on an open ramp again. Gates 8 → 7.
+  - Why is not established.
 - **Physics check:** with the policy driving a PhysX car on the LA model, the
   southbound merge has no collision. But the stable merge fails on interventions:
   - the car can't make the 1.6–1.7 m/s² the policy asks for up the ramp's grade;

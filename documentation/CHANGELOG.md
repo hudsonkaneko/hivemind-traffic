@@ -4,6 +4,38 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-22 - Round 22: a drive-aware reward target (stopped at its first check; 7 of 14 gates)
+
+- **Why the LA merges fail rolling merge quality.** Every case that fails round 21's
+  final validation fails that gate.
+  - At yield lines v14's target starts up to 4.5 m/s above the car and rises at
+    1.5 m/s². With the drive limit the car gives 1.0–1.4 m/s² on the southbound ramp.
+  - One car in each LA 8-car merge case could match at most 63% and 79% of its window
+    even at the 2.0 m/s² cap (90% needed). So cases 8 and 9 cannot pass that gate at
+    their seeds, whatever the policy does.
+- **The change.** At the user's direction ("Yes, raise it"),
+  `traffic/highway_flow_rl_v14_drive_target.py` (reward version
+  `highway_flow_rl_merge_v14_drive_target`):
+  - at yield lines, the reward target and the actor's target inputs start at the car's
+    speed and rise at most min(1.5 m/s², the drive ceiling);
+  - the gate, the merge-quality payments and the free-road stop measurement keep v14's
+    target;
+  - validation summaries add a diagnostic gate count on the new target.
+- **Round 22** (`configs/training/highway-flow-rl-v14-round22.json`) is round 21's
+  configuration plus the drive-aware target. The budget rose by 200,000 study decisions
+  (to 6,730,000) and 2 diagnostic episodes (to 172).
+- **Result:** the free-road stop rule stopped it at update 31 (50,678 decisions).
+  - The initial validation reproduced rounds 20 and 21's exactly.
+  - At update 31, in the southbound 8-car merge, cars braked to a stop on an open ramp
+    (21 free-road stopped decisions). The 4-lane ramp-start case broke too.
+  - Gates 8 → 7; interventions 0.86% → 1.54%; merge speed match 0.485 → 0.265.
+  - The 120 m ramp-start case improved: overrides 111 → 0, peak jerk 44.7 → 3.5.
+  - Why the southbound case broke is not established.
+- **No physics recording:** the round produced nothing better than its start. Nothing
+  is promoted, and there is no held-out evaluation.
+- **Budget left:** 161,620 decisions, 3,306.7 s and one diagnostic episode. Details:
+  [v14 plan](highway-merge-training-plan-v14.md#round-22-result).
+
 ## 2026-11-21 - Round 21: the stop fix (fewer interventions, no free-road stops; still 8 of 14 gates)
 
 - **Why round 20's cars stopped (diagnosis).** Its saved actors were re-run on its

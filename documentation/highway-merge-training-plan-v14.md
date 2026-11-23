@@ -928,3 +928,84 @@ policy), optimizer, drive limit, stop fix, stop rules and validation cases. Only
     ceilings.
   - The merge-quality payments still grade on the gate's target, so they still reward
     closing that gap.
+
+### Round 22 result
+
+**Stopped by the free-road stop rule at its first periodic validation.** At update 31
+(50,678 decisions, 615.4 s), validation had 21 free-road stopped decisions, against a
+limit of 20 (the initial validation had 0). The rule did its job. The round used about a
+quarter of its decision budget.
+
+| Validation | Gates (of 14) | Pooled interventions | Merge speed match | Stable merges (of 12) | Free-road stops | Collisions |
+|---|---|---|---|---|---|---|
+| Initial | 8 | 0.86% | 0.485 | 9 | 0 | 2 (case 10) |
+| Update 31 (~50k) | 7 | 1.54% | 0.265 | 7 | 21 | 2 (case 10) |
+| *Round 21, update 32 (~50k)* | *8* | *0.77%* | *0.464* | *9* | *0* | *2 (case 10)* |
+
+- **The initial validation is rounds 20 and 21's exactly**, case by case: the same
+  overrides, collisions, quality merges, stable merges, override causes and peak jerk. The
+  starting actor ignores its target inputs, so the change touched only the rewards.
+- **Diagnostic gate count on the drive-aware target:** 8 at the start and 7 at update 31,
+  the same as the gate. At the start, case 8's `agent_6` and `agent_3` match their
+  drive-aware targets 100% of the window (0.15 and 0.83 on the gate's), but case 8 still
+  fails through `agent_2` (0.77) and `agent_0` (0.73).
+- **The target changed only on yield entries:** cases 0 and 8–11. Cases 4 and 7 changed
+  only through the shared policy's training.
+
+**By case, update 31 against round 21's update 32:**
+- **Case 9 (southbound 8-car) broke.**
+  - `agent_5` and `agent_0` brake from their first decisions, building to about −4 m/s².
+  - They stop on the open ramp at 4.5–5.8 s while both targets are 11–20 m/s (21
+    free-road stopped decisions), then climb back up the ramp at the drive limit.
+  - 222 overrides, 197 of them `drive_grade`; speed match 0; peak jerk 28.0.
+- **Case 7 (4-lane 180 m ramp start) broke:** pass → fail.
+  - The car ran out of ramp and stopped at the lane end.
+  - 84 stopped decisions (none free-road); 26 `lane_end` and 82 unattributed overrides;
+    peak jerk 32.4.
+- **Case 4 (120 m ramp start) improved.**
+  - Overrides 111 → 0; `drive_grade` filters 54 → 0; peak jerk 44.7 → 3.5.
+  - It now fails only on rolling merge quality (speed match 0.28).
+  - Its target did not change, so this is the shared policy, not the new target.
+- **Case 8 (northbound 8-car):** speed match 0.62 → 0.38.
+- **Cases 10 and 11:** unchanged from the start.
+
+**Why case 9 broke: not established.** It is round 20's failure again: from spawn the
+actor's request settles into its braking branch.
+- **One candidate:** at spawn the drive-aware target equals the car's speed, so the first
+  second of braking costs little:
+  - the band is free within ±1.8 m/s;
+  - `merge_braking` needs the target 0.5 m/s above the car's speed. In case 9 at update 31
+    it started charging at 0.7 s.
+  - With v14's target, 4.5 m/s above the car, that braking was charged from the first
+    decision.
+- **Against it:** the training rollouts of updates 1–31 were alike in both rounds:
+  - 265 against 249 free-road stopped decisions;
+  - `merge_braking` charged on 1,589 against 1,335 decisions.
+- This is one run per round, so run-to-run variance is not ruled out.
+
+**Best checkpoint:** still the initial validation, the round-16 policy. Update 31 ranks
+lower (7 failed cases). Nothing is promoted, and there is no held-out evaluation.
+
+**Physics check: not recorded.**
+- **Nothing new to record.** The round produced no policy better than its start. That
+  start, the round-16 policy with the drive limit, already drove the PhysX car on the
+  southbound focused merge in the round-20 development run.
+- **The last diagnostic episode is unused.**
+- **Recording round 21's final policy needs a recorder change.** A recording is charged
+  under its checkpoint's own round configuration, and round 21's episode cap (170) is
+  already spent.
+
+**Budget after round 22.** The shared ledger has:
+- decisions: 6,568,380 of 6,730,000 (161,620 left);
+- wall time: 57,893.3 of 61,200 s (3,306.7 s left);
+- diagnostic episodes: 171 of 172.
+
+**What it means.**
+- **The drive-aware target did not get a clean test.** The round stopped at a quarter of
+  its decisions, and the break was in a case where the new target applies.
+- **Two findings stand regardless:**
+  - cases 8 and 9 cannot pass rolling merge quality at these seeds under the gate's
+    current target;
+  - the actor's braking branch is still there: a round-16 start can fall into it within
+    50,000 decisions.
+- **Whether the gate should grade the drive-aware target is still the user's decision.**
