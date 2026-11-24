@@ -212,6 +212,12 @@ rewards above starts at the car's speed. It rises no faster than min(1.5 m/s², 
 drive gives). The gate below, and the merge-quality payments, keep v14's target. That
 target starts up to 4.5 m/s above the car and rises at 1.5 m/s².
 
+In round 23, from a car's first yield-entry decision, the gate and the reward both use a
+reference instead. It starts at the car's speed and moves toward the road target at
+−2.0 to min(1.5 m/s², what the drive gives), with at most 2.5 m/s³ jerk. It restarts
+from the car's speed after a yield. The reward target is that reference, capped by the
+leader and lane-end bounds.
+
 ## How it is graded (validation gates)
 
 A validation case passes only if all of these hold:
@@ -233,6 +239,8 @@ A validation case passes only if all of these hold:
   - With the drive limit on, two LA 8-car merge cases cannot meet this at their seeds,
     whatever the policy does. One car in each starts 4.5 m/s below a target that rises
     faster than the car can accelerate (round 22's finding).
+  - In round 23, a yield-entry car matches if it is within 2 m/s of the span between
+    the reference above and the road target.
 - **Cruise and passing:** near the legal speed, no avoidable braking, and passing
   cases must pass.
 
@@ -269,6 +277,11 @@ The 14 validation cases are:
 - **Round 22** made the reward target drive-aware at yield lines (50,678 decisions).
   - The free-road stop rule stopped it at its first check: the southbound 8-car merge's
     cars braked to a stop on an open ramp again. Gates 8 → 7.
+  - Why is not established.
+- **Round 23** made the merge-quality gate followable at yield entries (102,770
+  decisions).
+  - Gates held at 8 of 14. The speed-match floor stopped it at its second check: the
+    southbound 8-car merge's cars braked to a stop again.
   - Why is not established.
 - **Physics check:** with the policy driving a PhysX car on the LA model, the
   southbound merge has no collision. But the stable merge fails on interventions:

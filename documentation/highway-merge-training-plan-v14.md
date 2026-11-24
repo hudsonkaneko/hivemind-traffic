@@ -1247,3 +1247,91 @@ fix, stop rules and validation cases are unchanged.
   - In case 9 one emergency remains whichever target is followed.
 - **No reward term charges a cut-in.** That is still the main cause of the LA emergencies.
   The policy has to learn to follow the yield from the tracking and band terms alone.
+
+### Round 23 result
+
+**Stopped by the merge speed-match floor at its second periodic validation.** At update 56
+(102,770 decisions, 1,078.1 s), validation's merge speed match was 0.399, below the floor of
+0.412 (the initial 0.662 minus 0.25). The round used about half its decision budget.
+
+| Validation | Gates (of 14) | Gates on v14's target (diagnostic) | Pooled interventions | Merge speed match: follow gate | Merge speed match: v14's target | Stable merges (of 12) | Free-road stops | Collisions |
+|---|---|---|---|---|---|---|---|---|
+| Initial | 8 | 8 | 0.86% | 0.662 | 0.485 | 9 | 0 | 2 (case 10) |
+| Update 31 (~50k) | 8 | 8 | 0.73% | 0.557 | 0.389 | 9 | 0 | 2 (case 10) |
+| Update 56 (~103k) | 8 | 8 | 1.38% | 0.399 | 0.272 | 6 | 14 | 2 (case 10) |
+| *Round 21, update 56* | *8* | *8* | *0.88%* | *–* | *0.354* | *9* | *3* | *2 (case 10)* |
+| *Round 21, update 91* | *8* | *8* | *0.61%* | *–* | *0.471* | *9* | *0* | *2 (case 10)* |
+
+- **The same six cases fail in every validation:** 00, 04, 08, 09, 10 and 11.
+- **The free-road stop rule did not fire:** 14 free-road stopped decisions, under its limit
+  of 20.
+- **The pooled match counts a merge target with no stable merge as 0,** so two failed
+  merges in case 9 lower it by about 0.16.
+
+**By case, update 56 against the initial validation:**
+- **Case 9 (southbound 8-car) broke again.**
+  - Both merging cars stop: `agent_5` for 13 decisions (12 of them free-road) and
+    `agent_0` for 12 (2 free-road).
+  - 212 overrides, 185 of them `drive_grade`; interventions 8.4%.
+  - Both stable merges fail on intervention fraction (`agent_5` 108 of 336 decisions,
+    `agent_0` 45 of 395), so neither has a speed match.
+  - Its cut-in emergency is gone (1 → 0). Peak jerk is 25.7.
+  - It had started to slip by update 31: `agent_5`'s speed match fell from 0.98 to 0.34,
+    with a raw-request jerk failure.
+- **Case 8 (northbound 8-car) lost a stable merge.**
+  - Its cut-in emergency is also gone (1 → 0).
+  - `agent_0` was overridden on 28 of 327 decisions (8.6%; the limit is 5%): 15
+    `drive_grade`, 7 `comfort_rate_limit` and 6 `following`. Its stable merge fails.
+  - The case's peak jerk rose from 4.2 to 52.8, a raw-request jerk failure.
+  - Speed match on the follow gate for the other three cars: `agent_6` 0.83, `agent_2`
+    0.87, `agent_3` 0.64 (1.0, 0.81 and 1.0 at the start).
+- **Case 10:** 2 native emergencies, one of them by a controlled car (1 background
+  emergency at the start). Its 2 collisions are unchanged.
+- **Case 4:** overrides 111 → 61 and peak jerk 44.7 → 33.3. It still fails.
+- **Cases 0 and 11:** about unchanged (case 0's speed match 0.58 → 0.57).
+
+**Round 21 dipped at the same update, but less, and recovered.**
+- On v14's target its match went 0.485 → 0.354 at update 56, with case 9 at 107
+  overrides and 1 of 2 stable merges. By update 91 it was back to 0.471.
+- Its floor, from its initial 0.485, was 0.235, so it kept training. Round 23's floor is
+  higher because its initial match on the follow gate is higher.
+- On v14's target round 23 fell further, to 0.272. Whether it would have recovered is not
+  known.
+
+**Training rollouts do not show more braking than round 21.** Over updates 1–56:
+- free-road stopped decisions: 345 against round 21's 897;
+- interventions: 1.51% against 2.06%;
+- `merge_braking`: −244.3 against −245.1;
+- the follow reference restarted 40 times.
+
+**Why case 9 broke: not established.** It is the failure of rounds 20 and 22 again.
+- **One candidate:** a reward target that starts at the car's own speed, as round 22's did.
+  - The follow reference starts at the car's speed. It restarts there when the road target
+    comes back up after dropping below it.
+  - In case 9 at update 56 it restarted 6 times (1 at the start). The road target was below
+    the reference on 66 decisions (13 at the start).
+  - So a car that slows down gets a reward target near its own speed.
+- **Against it:** the rollouts above. This is also one run per round.
+
+**Best checkpoint:** still the initial validation, the round-16 policy. Updates 31 and 56
+tie it on gates (8) but have a lower speed match. Nothing is promoted, and there is no
+held-out evaluation.
+
+**Physics check: not recorded.** No policy better than the start was produced, and no
+diagnostic episodes are left.
+
+**Budget after round 23.** The shared ledger has:
+- decisions: 6,671,150 of 6,730,000 (58,850 left, about 30% of a round);
+- wall time: 58,974.0 of 61,200 s (2,226.0 s left, including the 900 s final reserve);
+- diagnostic episodes: 172 of 172.
+
+**What it means.**
+- **The follow gate does what the checks showed at the start.** The gate count is the
+  same, and the start's speed match is 0.662 instead of 0.485.
+- **Training on it improved no gate in 102,770 decisions.** Speed match fell on both
+  targets, and case 9's merging cars fell back into the braking branch.
+- **Case 9's braking branch is the obstacle every v14 round has hit.** It broke in rounds
+  20, 22 and 23, and dipped in round 21. It has appeared under three different reward
+  targets, so changing the target alone has not removed it.
+- **No round of this length fits in the remaining budget.** Any further training needs a
+  budget decision from the user.

@@ -50,7 +50,15 @@ how it is rewarded and graded.
   - It found that the two LA 8-car merge cases cannot pass the merge-quality gate at
     their seeds as the gate's target stands. That target starts 4.5 m/s above the car
     and rises faster than the drive allows.
-  - Nothing is promoted. 161,620 study decisions and one diagnostic episode remain.
+  - Nothing is promoted.
+- **Round 23 (a merge-quality gate a car can follow) was stopped at its second check.**
+  At yield entries the gate now grades a reference that starts at the car's speed and
+  moves at what the drive allows. A scripted car that follows it passes the one-car LA
+  merges. Slow, lazy and stopped cars still fail.
+  - Gates held at 8 of 14. The merge speed-match floor stopped it at update 56 (102,770
+    decisions): the southbound 8-car merge's cars braked to a stop again.
+  - Nothing is promoted. 58,850 study decisions and no diagnostic episodes remain, so
+    any further round needs a budget decision.
 - **Physics drive (videos and checks; training stays in SUMO).** The policy can drive
   a PhysX car (the Americano) on the LA model's own deck colliders. A low-level
   controller turns each command into torque and steering, and the car's pose is
@@ -58,7 +66,7 @@ how it is rewarded and graded.
   collision. But it can't make the acceleration the policy asks for up the ramp's
   grade, so v14's intervention count rises from 1.4% to 33.6%. See the v14 plan's
   physics-drive section and `scripts/record_highway_flow_v14_physics.py`.
-- **Drive limit (on in rounds 20–22).** v14 can cap each controlled
+- **Drive limit (on in rounds 20–23).** v14 can cap each controlled
   car's acceleration at what the Americano's drive gives on the road model's grade
   (`traffic/road_grade.py`; checked against PhysX within 0.02 ± 0.04 m/s²). SUMO training
   then sees the same limit as the physics car.

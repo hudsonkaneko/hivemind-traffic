@@ -4,6 +4,36 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-24 - Round 23: the followable merge-quality gate (stopped at its second check; 8 of 14 gates)
+
+- **Stopped by the merge speed-match floor** at update 56 (102,770 decisions, 1,078.1 s).
+  Validation's speed match on the follow gate was 0.399, below the floor of 0.412.
+- **Gates held at 8 of 14 throughout,** with the same six cases failing. The diagnostic
+  count on v14's target was also 8. Speed match:
+  - on the follow gate: 0.662 at the start, 0.557 at update 31, 0.399 at update 56;
+  - on v14's target: 0.485, 0.389, 0.272.
+- **Case 9 (southbound 8-car) fell back into the braking branch,** as in rounds 20 and 22.
+  - Both merging cars stopped (14 free-road stopped decisions, under the rule's limit of
+    20).
+  - 212 overrides, 185 of them `drive_grade`. Both stable merges failed.
+- **Case 8 lost a stable merge:** `agent_0` was overridden on 8.6% of its decisions.
+  - The case's peak jerk rose from 4.2 to 52.8.
+  - The cut-in emergencies in cases 8 and 9 were gone at update 56.
+- **Round 21 dipped at the same update** (0.354 on v14's target) and recovered by update 91
+  (0.471). Round 23 fell further (0.272). Whether it would have recovered is not known.
+- **Why case 9 broke is not established.** One candidate is a reward target that starts at
+  the car's own speed, as in round 22. Against it, training rollouts had fewer free-road
+  stops than round 21's (345 against 897 over updates 1–56).
+- **Best checkpoint:** still the round-16 starting policy. Nothing is promoted; no held-out
+  evaluation; no physics recording (no diagnostic episodes left).
+- **Budget left on the shared ledger:**
+  - 58,850 decisions (about 30% of a round);
+  - 2,226.0 s, including the 900 s final reserve;
+  - no diagnostic episodes.
+
+  Any further round needs a budget decision from the user.
+- Details: `documentation/highway-merge-training-plan-v14.md`, "Round 23 result".
+
 ## 2026-11-24 - Round 23 declared: a merge-quality gate target a car can follow
 
 - **Why.** Traces of the scripted follower show three ways the gate's target at yield
