@@ -1104,3 +1104,146 @@ It is a measurement only and drives nothing in training.
   charges for forcing a mainline car to brake hard.
 - **Changing how the gate grades merge speed is the user's decision.** No round 23 has
   been started.
+
+## Round 23: a followable merge-quality gate
+
+**User decision (November 24, 2026):** "yes redesign", to "Should I redesign the
+merge-quality gate's target so a car can actually follow it?". The proposal was:
+- after a yield and at ramp start, the target restarts from the car's speed and rises no
+  faster than the drive allows;
+- first, check with the scripted follower that the LA cases become passable and that a
+  stopped or crawling car still fails;
+- then train round 23 within the remaining budget.
+
+### What the follower's traces show
+
+These traces come from `v14-follower-check-04-*`: the follower on round 22's drive-aware
+target, read from its action journals. Even that target, whose start lead was removed,
+cannot be followed. Graded on it, the follower matches only 0.29–0.51 in cases 8, 10
+and 11. There are three causes:
+
+1. **Start.** At the first yield-entry decision the target is the plan's speed at once.
+   - Case 11: 5.0 m/s, with the car at 11.05.
+2. **End of a yield.** The target turns from falling to rising within one decision.
+   - Case 11, 1.4–1.8 s: it rises from the car's speed while the car is still braking at
+     3.5–4.0 m/s².
+   - The 3.4 m/s gap this opens never closes. Target and car both rise at the southbound
+     drive's 1.25–1.30 m/s².
+3. **After the line** (not in the November 23 note). The gate goes back to v12's road
+   target, which jumps toward the speed limit. This happens once the ramp target meets the
+   plan, or after one decision without an eligible target.
+   - Case 10: 12.9 → 25.5 m/s between 5.9 and 6.5 s.
+   - Case 8, `agent_2`: 12.7 → 22.6 m/s in 1.2 s.
+
+### The follow gate
+
+[`traffic/highway_flow_rl_v14_follow_gate.py`](../traffic/highway_flow_rl_v14_follow_gate.py)
+is optional in the v14 environment (off unless `follow_gate=` is given; reward version
+`highway_flow_rl_merge_v14_follow_gate`). It cannot be combined with the drive-aware
+target. Each merging car gets a reference speed from its first yield-entry decision:
+- **Start:** the car's own speed and measured acceleration. The occupied-lane/map ceiling
+  applies at once, as in v14.
+- **Motion:** the reference moves toward the plan/road target.
+  - Its acceleration stays between −2.0 m/s² and min(1.5 m/s², the drive ceiling): v14's
+    rates, with round 22's drive cap.
+  - Its acceleration changes by at most 2.5 m/s³. The car's comfort rate limit is
+    4 m/s³ (0.4 m/s² per decision).
+  - It reaches the target without overshooting.
+- **Restart:** if the road target was below the reference and comes back to or above it,
+  and the car is slower, the reference restarts from the car's speed and acceleration. A
+  yield or a slower leader is over, so the car is not held to a speed it was told to leave.
+- **Duration:** the whole merge window. It ends once the car's merge quality has been
+  graded and the reference is within 0.1 m/s of the road target.
+
+**The gate's speed match.** The car's speed must lie within 2 m/s of the span between the
+reference and the road target (v04 used 2 m/s of the target alone).
+- A car slower than the reference by more than 2 m/s does not match. Neither does a car
+  faster than the road target by more than 2 m/s.
+- The span covers a car yielding as deep as the plan asks, and one accelerating toward the
+  road target faster than the reference.
+- The other merge-quality conditions are unchanged: stops ≤ 1 s, |jerk| ≤ 5 m/s³,
+  overrides ≤ 5%, neighbor braking no harder than −3 m/s². So are the other gates.
+
+**The reward target and the actor's target inputs** are the reference, capped at once by
+the road target's leader and lane-end bounds.
+- The cap keeps the reward from favoring closing on a leader faster than its bound allows.
+- The capped value lies inside the gate's span: the cap is never below the road target. It
+  was inside in every follow-gate decision of the development runs.
+- **Payments:** the merge-quality payments (v04's `quality_merge`, v10's graded quality)
+  follow the gate, as they did before round 22.
+
+**What stays as it was:**
+- **Cars without a yield entry** keep v12's target for the gate and for the reward,
+  exactly as before.
+- **Comparability with rounds 20–22:** each report also grades every merging car on v14's
+  target (`v14_follow_gate.v14_gate_quality_merges`). Each validation summary adds that
+  diagnostic gate count (`v14_follow_gate`) next to the gate.
+
+### Development checks (uncharged)
+
+All checks use SUMO with the round-23 configuration and code. Outputs are in
+`outputs/test-runs/v14-follow-gate-02-*`. The first prototype runs are
+`v14-followable-01` to `-03`.
+
+**Scripted drivers** use the follower rule above, keep their lane, and drive every
+controlled car. The table gives each merging car's speed match on the new gate (0.9
+needed):
+
+| Driver | Case 8 (NB 8-car) | Case 9 (SB 8-car) | Case 10 (NB 1-car) | Case 11 (SB 1-car) |
+|---|---|---|---|---|
+| Follows the reward target | 0.94–1.0; fails comfort | 1.0; one native emergency | **passes every gate** | **passes every gate** |
+| Yields as deep as the plan (follows v14's target) | 0.93–1.0; fails comfort | 1.0; one native emergency | **passes every gate** (0.99) | **passes every gate** |
+| Drives at 75% of the reward target | 0.06–0.15 | 0.05–0.16 | 0.36 | 0.23 |
+| Accelerates at most 0.6 m/s² | 0.20–0.89 | 0.22–0.44 | 0.32 | 0.30 |
+
+- **Case 8's comfort failures come from the scripted driver, not the target:**
+  - two cars reach 49–60 m/s³ jerk when the environment's safety limit cuts in;
+  - one car follows at a 1.1 s headway.
+- **Case 9's emergency** (`main_11`, 6.2 s) stays whichever target is followed. It was
+  there on November 23 as well.
+- **Stopped and crawling cars fail.** In the prototype, a car that crawls at 3 m/s or
+  stops never completes its merge in cases 8–11, so it fails stable merge and merge
+  quality.
+
+**The round-16 starting policy on all 14 validation cases** (`v14-follow-gate-02-policy-*`):
+- **Same pass/fail per case as round 22's initial validation: 8 of 14.** Its overrides,
+  collisions and native emergencies are identical too. The starting actor's target-input
+  weights are zero, so the new target inputs do not change its actions.
+- **Speed match changes only for yield-entry cars:**
+  - case 0: 0.48 → 0.58;
+  - case 8: `agent_6` 0.15 → 1.0, `agent_3` 0.83 → 1.0, `agent_2` 0.75 → 0.81,
+    `agent_0` 0.73 → 0.73;
+  - case 9: `agent_5` 0.19 → 0.98, `agent_0` 0.80 → 0.96.
+- **The diagnostic on v14's target reproduces round 22's initial validation** car by car,
+  to three decimals.
+
+**What it leaves.** Under the new gate the LA cases fail on what the policy does, no longer
+on a target it cannot follow:
+- cut-in native emergencies in cases 8–11;
+- collisions in case 10;
+- comfort and overrides in cases 9 and 11;
+- case 8's `agent_0` and `agent_2`, at 0.73 and 0.81.
+
+### Round 23's configuration
+
+Round 23 is round 22's configuration with the follow gate instead of the drive-aware
+target. The rows, seeds, warm start (the round-16 policy), optimizer, drive limit, stop
+fix, stop rules and validation cases are unchanged.
+
+**Budget: not raised.** Left on the shared ledger:
+- 161,620 decisions, about 81% of a full round; the runner stops at the total;
+- 3,306.7 s, with the 900 s final reserve kept;
+- one diagnostic episode, for this round's preflight. So no physics recording of the
+  result fits without a budget decision.
+
+**Risks:**
+- **Gate counts are not directly comparable with rounds 20–22.** The diagnostic count on
+  v14's target is reported next to the gate for that comparison.
+- **The speed match is wider for yield-entry cars.** In the development runs the span
+  contained v14's target in 98.4–98.8% of follow-gate decisions (4,321 decisions). The
+  stop, jerk, override, neighbor-braking, emergency and collision gates are unchanged.
+- **The reward target now yields more gently** (at most 2.0 m/s², with a jerk limit).
+  - In cases 10 and 11 a car that follows it causes no emergency.
+  - In case 9 one emergency remains whichever target is followed.
+- **No reward term charges a cut-in.** That is still the main cause of the LA emergencies.
+  The policy has to learn to follow the yield from the tracking and band terms alone.

@@ -58,6 +58,21 @@ stop rules and validation cases):
   ramp (1.0-1.4 m/s^2). The gate, the merge-quality payments and the free-road stop measurement
   keep v14's target, so gate counts stay comparable with rounds 20 and 21;
 - budget, below.
+
+Round 23 changes against round 22 (same rows, seeds, warm start, optimizer, drive limit, stop fix,
+stop rules and validation cases):
+- the follow gate on instead of the drive-aware target (traffic/highway_flow_rl_v14_follow_gate.py,
+  reward version highway_flow_rl_merge_v14_follow_gate). After round 22 a scripted car that follows
+  v14's gate target matched it in only 15-66% of the window in all four LA merge cases (0.9 needed):
+  at yield entries the target starts at the plan's speed, turns from falling to rising in one
+  decision, and after the line returns to v12's road target, which jumps toward the speed limit.
+  From a car's first yield-entry decision the gate now grades a reference that starts at the car's
+  speed, moves toward the plan/road target at bounded acceleration and jerk, restarts from the car's
+  speed after a yield and lasts through the merge window; a car matches within 2 m/s of the span
+  between the reference and the road target. The reward target and the actor target inputs are the
+  reference capped by the road target's leader and lane-end bounds; the merge-quality payments follow
+  the gate. Validation summaries keep a diagnostic count on v14's target for comparison;
+- budget: not raised (the remaining 161,620 decisions, 3,306.7 s and one diagnostic episode).
 """
 from copy import deepcopy
 import json
@@ -66,6 +81,7 @@ from traffic import highway_flow_rl_v12_contract as v12c
 from traffic import highway_flow_rl_v14_rewards as v14
 from traffic import highway_flow_rl_v14_stop_fix as stop_fix
 from traffic import highway_flow_rl_v14_drive_target as drive_target
+from traffic import highway_flow_rl_v14_follow_gate as follow_gate
 from traffic.highway_flow_contract import file_digest
 from traffic.road_grade import DRIVE_LIMIT
 
@@ -123,6 +139,12 @@ ROUND21_STOP_RULES = dict(deepcopy(STOP_RULES),
 # recording and the 900 s final reserve.
 ROUND22_BUDGET = dict(ROUND21_BUDGET, total_decisions=6730000, max_diagnostic_episodes=172)
 
+# Shared ledger before round 23: 6,568,380 of 6,730,000 training decisions, 57,893.3 of 61,200 s and
+# 171 of 172 diagnostic episodes. The budget is not raised: the round trains within the remaining
+# 161,620 decisions (the runner stops at the total) and keeps the 900 s final reserve; the last
+# diagnostic episode is this round's preflight, so no physics recording of its result fits.
+ROUND23_BUDGET = dict(ROUND22_BUDGET)
+
 ROUND20_AUTHORIZATION = (
     ' Round 20, user decisions of November 19, 2026: "Yes, policy only" (v14), "Yes, build it" '
     '(the drive limit) and "Yes, raise it" (the study budget). This round trains; held-out '
@@ -131,6 +153,11 @@ ROUND21_AUTHORIZATION = ROUND20_AUTHORIZATION + (
     ' Round 21, user decision of November 21, 2026: "Yes, build and train" (the stop fix, the '
     'free-road stop rule and 200,000 more training decisions). This round trains; held-out '
     'evaluation stays unauthorized.')
+
+ROUND22_AUTHORIZATION = ROUND21_AUTHORIZATION + (
+    ' Round 22, user decision of November 22, 2026: "Yes, raise it" (200,000 more training '
+    'decisions and 2 more diagnostic episodes, for round 22 and a physics check). This round '
+    'trains; held-out evaluation stays unauthorized.')
 
 ROUNDS = {
     20: dict(learning_profile='merge_v14_r20_policy_only_drive_limit', training=True, base_round=BASE_ROUND,
@@ -150,10 +177,18 @@ ROUNDS = {
              reward_version=drive_target.REWARD_VERSION,
              v14_stop_fix=dict(stop_fix.SETTINGS, obligations=list(stop_fix.SETTINGS['obligations'])),
              v14_drive_target=dict(drive_target.SETTINGS),
-             authorization=ROUND21_AUTHORIZATION + (
-                 ' Round 22, user decision of November 22, 2026: "Yes, raise it" (200,000 more training '
-                 'decisions and 2 more diagnostic episodes, for round 22 and a physics check). This round '
-                 'trains; held-out evaluation stays unauthorized.')),
+             authorization=ROUND22_AUTHORIZATION),
+    23: dict(learning_profile='merge_v14_r23_follow_gate', training=True, base_round=BASE_ROUND,
+             parent_profile='merge_v14_r22_drive_target',
+             budget=ROUND23_BUDGET, evaluation_interval_decisions=50000, stop_rules=ROUND21_STOP_RULES,
+             v14_drive_limit=json.loads(json.dumps(DRIVE_LIMIT)),
+             reward_version=follow_gate.REWARD_VERSION,
+             v14_stop_fix=dict(stop_fix.SETTINGS, obligations=list(stop_fix.SETTINGS['obligations'])),
+             v14_follow_gate=dict(follow_gate.SETTINGS, reward_caps=list(follow_gate.SETTINGS['reward_caps'])),
+             authorization=ROUND22_AUTHORIZATION + (
+                 ' Round 23, user decision of November 24, 2026: "yes redesign" (a merge-quality gate target '
+                 'a car can follow, checked with a scripted follower, then round 23 within the remaining '
+                 'budget). This round trains; held-out evaluation stays unauthorized.')),
 }
 
 
@@ -190,6 +225,8 @@ def build_config(round_index):
         cfg['v14_stop_fix'] = deepcopy(row['v14_stop_fix'])
     if 'v14_drive_target' in row:
         cfg['v14_drive_target'] = deepcopy(row['v14_drive_target'])
+    if 'v14_follow_gate' in row:
+        cfg['v14_follow_gate'] = deepcopy(row['v14_follow_gate'])
     return cfg
 
 

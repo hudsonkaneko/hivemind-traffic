@@ -115,6 +115,9 @@ def _env(monkeypatch, context=None):
     env.drive_target, env.road_grade, env._drive_ramp = None, None, {}
     env.v14_drive_target_metrics = dict(decisions=0, below_gate=0, above_gate=0, gate_minus_target_m_s=0.,
                                         per_car={})
+    env.follow_gate, env._follow, env._v14_old_gate, env.quality_results = None, {}, {}, {}
+    env.v14_follow_gate_metrics = dict(decisions=0, started=0, restarts=0, ended=0, reward_capped=0,
+                                       road_target_below=0, per_car={})
     calls = []
 
     def target_stub(state, context, preview):
@@ -193,6 +196,89 @@ def test_drive_target_feeds_rewards_and_actor_while_the_gate_keeps_v14s_target(m
     actor, _, _ = env.current_target('agent_0')
     assert actor['target_m_s'] == pytest.approx(min(20.1, before + .12))     # capped by the drive ceiling
     assert actor['v14']['drive_target']['rise_m_s2'] == pytest.approx(1.2)
+
+
+def test_follow_gate_starts_at_the_car_speed_and_grades_a_band(monkeypatch):
+    from traffic import highway_flow_rl_v14_follow_gate as follow
+    env, module, _ = _env(monkeypatch)
+    env.follow_gate = dict(follow.SETTINGS)
+    state = env.states['agent_0']
+    state['acceleration'] = 0.
+    reward, plan = env._reward_target('agent_0', state, env.flow_contexts['agent_0'], None)
+    gate, old = env._reference_targets['agent_0'], env._v14_old_gate['agent_0']
+    actor, _, _ = env.current_target('agent_0')
+    assert actor is reward and gate is not reward
+    assert old['target_m_s'] < 4. and old['v14']['yield_entry']              # v14's gate target: the plan at once
+    assert gate['target_m_s'] == reward['target_m_s'] == 9.                  # the follow gate: the car's speed
+    audit = gate['follow_gate']
+    assert audit['started'] and audit['lower_m_s'] == pytest.approx(old['target_m_s']) and audit['upper_m_s'] == 9.
+    snapshot = dict(target=reward)
+    for after, accepted in ((9.5, 9.), (2., old['target_m_s']), (12., 9.)):
+        state['speed'] = after
+        assert env._acceptance_target('agent_0', snapshot)['target_m_s'] == pytest.approx(accepted)
+    state['speed'] = 9.
+    env.follow_gate = None
+    assert env._acceptance_target('agent_0', snapshot) is gate                # off: v05's reference target
+    env.follow_gate = dict(follow.SETTINGS)
+    assert env.v14_follow_gate_metrics['started'] == 1 and env.v14_follow_gate_metrics['road_target_below'] == 1
+
+
+def test_follow_reference_lasts_through_the_window_and_ends_after_grading(monkeypatch):
+    from traffic import highway_flow_rl_v14_follow_gate as follow
+    env, module, _ = _env(monkeypatch)
+    env.follow_gate = dict(follow.SETTINGS)
+    env.states['agent_0'].update(acceleration=0., speed=9.)
+    env.current_target('agent_0')
+    past = deepcopy(CRASH_CONTEXT)
+    past['entry'].update(entry_active=False, rear=None)                     # past the line: the plan wants 20.1
+    env.flow_contexts['agent_0'] = past
+    values = []
+    for step in range(1, 40):
+        env.time = 1. + .1 * step
+        target, _, _ = env.current_target('agent_0')
+        values.append(target['target_m_s'])
+        env.states['agent_0']['speed'] = target['target_m_s']
+    assert 'agent_0' in env._follow and 'follow_gate' in target              # still the reference, not v12's 20.1
+    rises = [b - a for a, b in zip(values, values[1:])]
+    assert max(rises) <= 1.5 * .1 + 1e-9 and values[-1] < 20.1
+    env.quality_results['agent_0'] = dict(qualified=True)                    # the window has been graded
+    env._follow['agent_0'].update(value=20.05, slope=0.)
+    env.time += .1
+    target, _, _ = env.current_target('agent_0')
+    assert target['follow_gate']['ended'] and 'agent_0' not in env._follow
+    env.time += .1
+    plain, _, _ = env.current_target('agent_0')
+    assert 'follow_gate' not in plain
+
+
+def test_follow_gate_caps_the_reward_at_the_leader_bound_and_skips_ineligible_decisions(monkeypatch):
+    from traffic import highway_flow_rl_v14_follow_gate as follow
+    env, module, _ = _env(monkeypatch)
+    env.follow_gate = dict(follow.SETTINGS)
+    env.states['agent_0'].update(acceleration=0., speed=9.)
+    env._follow['agent_0'] = dict(time=.9, value=12., slope=0., below=False)
+    leader = dict(eligible=True, target_m_s=7., bounds=[dict(reason='occupied_leader', ceiling_m_s=7.)])
+    monkeypatch.setattr(module.v14, 'merge_speed_target', lambda state, context, preview: (leader, dict(), None))
+    monkeypatch.setattr(module.v14, 'yield_entry', lambda context: False)
+    reward, _ = env._reward_target('agent_0', env.states['agent_0'], env.flow_contexts['agent_0'], None)
+    gate = env._reference_targets['agent_0']
+    assert reward['target_m_s'] == 7. and gate['target_m_s'] == pytest.approx(12. - 2.5 * .1 * .1)
+    assert env.v14_follow_gate_metrics['reward_capped'] == 1
+    env.time = 1.1
+    off = dict(eligible=False, target_m_s=None, reasons=['unknown_map_or_occupancy'])
+    monkeypatch.setattr(module.v14, 'merge_speed_target', lambda state, context, preview: (off, dict(), None))
+    target, _, _ = env.current_target('agent_0')
+    assert target is off and env._follow['agent_0']['time'] == 1.         # kept, moves on at the next eligible decision
+
+
+def test_follow_gate_and_drive_target_are_separate_rounds():
+    pytest.importorskip('torch')
+    from environments import highway_flow_rl_v14_env as module
+    from traffic import highway_flow_rl_v14_drive_target as drive
+    from traffic import highway_flow_rl_v14_follow_gate as follow
+    with pytest.raises(ValueError):
+        module.HighwayFlowRLV14Env('unused.net.xml', 'unused', drive_target=dict(drive.SETTINGS),
+                                   follow_gate=dict(follow.SETTINGS))
 
 
 def test_reset_hands_every_controlled_car_to_the_policy_and_drain_restores_native(monkeypatch):

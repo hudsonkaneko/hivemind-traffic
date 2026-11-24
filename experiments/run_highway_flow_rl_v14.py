@@ -1,4 +1,4 @@
-"""V14 runner: the v12 loop with the v14 environment, policy-only SUMO modes and rounds 20-22's rules.
+"""V14 runner: the v12 loop with the v14 environment, policy-only SUMO modes and rounds 20-23's rules.
 
 install() points the shared v12 loop at the v14 environment, requires SUMO speed mode 96 and
 lane change mode 0 on every controlled car at every decision, validates configurations against
@@ -13,6 +13,9 @@ decisions (v14_stops). Round 21 adds a free-road stop regression check at every 
 validation (free_road_stop_regression) and turns the stop fix on (v14_stop_fix). Round 22 turns the
 drive-aware reward target on (v14_drive_target); its validation summaries add a diagnostic gate
 count with rolling merge quality graded on that target (v14_drive_target), next to the gate.
+Round 23 turns the follow gate on (v14_follow_gate): the gate grades a followable reference; its
+validation summaries add a diagnostic gate count with rolling merge quality graded on v14's target
+(v14_follow_gate), so counts stay comparable with rounds 20-22.
 No training happens on import.
 """
 from __future__ import annotations
@@ -39,7 +42,8 @@ NATIVE_MODES = dict(speed=v14.CONTROL['speed_mode'], lane_change=v14.CONTROL['la
 SOURCES = ('experiments/run_highway_flow_rl_v14.py', 'environments/highway_flow_rl_v14_env.py',
            'traffic/highway_flow_rl_v14_rewards.py', 'traffic/highway_flow_rl_v14_contract.py',
            'traffic/road_grade.py', 'scripts/prepare_highway_flow_rl_v14.py',
-           'traffic/highway_flow_rl_v14_stop_fix.py', 'traffic/highway_flow_rl_v14_drive_target.py')
+           'traffic/highway_flow_rl_v14_stop_fix.py', 'traffic/highway_flow_rl_v14_drive_target.py',
+           'traffic/highway_flow_rl_v14_follow_gate.py')
 
 
 def road_model_manifest(case, network):
@@ -59,7 +63,8 @@ def env_for(cfg, row, directory, env_class=None, **extra):
     with the case's road model for the grade; extra drive_limit=... does the same for one run.
     A configuration with v14_stop_fix (traffic.highway_flow_rl_v14_stop_fix.SETTINGS) turns the stop
     fix on; extra stop_fix=... does the same for one run. A configuration with v14_drive_target
-    (traffic.highway_flow_rl_v14_drive_target.SETTINGS) turns the drive-aware reward target on.
+    (traffic.highway_flow_rl_v14_drive_target.SETTINGS) turns the drive-aware reward target on, and one
+    with v14_follow_gate (traffic.highway_flow_rl_v14_follow_gate.SETTINGS) the follow gate.
     """
     from environments.highway_flow_rl_v14_env import HighwayFlowRLV14Env
     case = row['case']
@@ -75,6 +80,9 @@ def env_for(cfg, row, directory, env_class=None, **extra):
     drive_target = extra.pop('drive_target', cfg.get('v14_drive_target'))
     if drive_target is not None:
         extra['drive_target'] = drive_target
+    follow_gate = extra.pop('follow_gate', cfg.get('v14_follow_gate'))
+    if follow_gate is not None:
+        extra['follow_gate'] = follow_gate
     env = (env_class or HighwayFlowRLV14Env)(network, directory, **extra,
         v14_settings=cfg.get('v14_settings'),
         controlled_count=row['controlled_count'], total_vehicles=row['total_vehicles'],
@@ -170,25 +178,37 @@ def drive_target_summary(reports, gates):
     rule (qualified merges / stable-merge targets >= 0.9) to the environment's v14_drive_target
     quality_merges. Cases without the drive target keep their gate result.
     """
-    if not any(r.get('v14_drive_target') for r in reports):
+    return regraded_summary(reports, gates, 'v14_drive_target', 'quality_merges',
+                            'diagnostic: rolling merge quality on the drive-aware target; not the gate')
+
+
+def follow_gate_summary(reports, gates):
+    """Diagnostic only: the gate count with rolling merge quality graded on v14's target (rounds 20-22's
+    gate), next to the follow gate's count; as drive_target_summary, from v14_follow_gate's
+    v14_gate_quality_merges."""
+    return regraded_summary(reports, gates, 'v14_follow_gate', 'v14_gate_quality_merges',
+                            "diagnostic: rolling merge quality on v14's target (rounds 20-22's gate); not the gate")
+
+
+def regraded_summary(reports, gates, key, field, scope):
+    if not any(r.get(key) for r in reports):
         return None
     per_case, passed = {}, 0
     for index, (report, gate) in enumerate(zip(reports, gates)):
         failures = list(gate['failures'])
-        diagnostic = report.get('v14_drive_target')
+        diagnostic = report.get(key)
         if diagnostic is not None and report.get('task') == 'merge':
             targets = (report.get('stable_merge') or {}).get('targets', 0)
-            qualified = sum(r['qualified'] for r in diagnostic['quality_merges'].values())
+            qualified = sum(r['qualified'] for r in diagnostic[field].values())
             failures = [f for f in failures if f != 'rolling_merge_quality']
             if targets <= 0 or qualified / targets < .9:
                 failures.append('rolling_merge_quality')
             per_case[f"{index:02d} {report['case_id']}"] = dict(
                 passed=not failures, failures=failures, qualified=qualified, targets=targets,
                 gate_passed=gate['passed'],
-                speed_match={car: round(r['speed_match_fraction'], 3) for car, r in diagnostic['quality_merges'].items()})
+                speed_match={car: round(r['speed_match_fraction'], 3) for car, r in diagnostic[field].items()})
         passed += int(not failures)
-    return dict(gates_passed=passed, cases=len(reports), per_case=per_case,
-                scope='diagnostic: rolling merge quality on the drive-aware target; not the gate')
+    return dict(gates_passed=passed, cases=len(reports), per_case=per_case, scope=scope)
 
 
 def evaluate(cfg, output, label, model, deadline, **kwargs):
@@ -197,6 +217,7 @@ def evaluate(cfg, output, label, model, deadline, **kwargs):
     result['summary']['v14_drive_limit'] = drive_limit_summary(result['reports'])
     result['summary']['v14_stops'] = stops_summary(result['reports'])
     result['summary']['v14_drive_target'] = drive_target_summary(result['reports'], result['summary']['case_gates'])
+    result['summary']['v14_follow_gate'] = follow_gate_summary(result['reports'], result['summary']['case_gates'])
     try:
         stopped = None
         try:

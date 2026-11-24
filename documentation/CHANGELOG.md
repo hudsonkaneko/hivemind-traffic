@@ -4,6 +4,40 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-24 - Round 23 declared: a merge-quality gate target a car can follow
+
+- **Why.** Traces of the scripted follower show three ways the gate's target at yield
+  entries runs away from a car that follows it:
+  - it starts at the plan's speed at once (case 11: 5.0 m/s with the car at 11.05);
+  - it turns from falling to rising in one decision, while the car is still braking hard;
+  - after the line, or after one decision without a target, it goes back to v12's road
+    target, which jumps toward the speed limit (case 10: 12.9 → 25.5 m/s in 0.6 s).
+- **The change.** At the user's direction ("yes redesign"),
+  `traffic/highway_flow_rl_v14_follow_gate.py` (reward version
+  `highway_flow_rl_merge_v14_follow_gate`). From a car's first yield-entry decision, the
+  gate grades a reference that:
+  - starts at the car's speed;
+  - moves toward the plan/road target at −2.0 to min(1.5, drive) m/s², with at most
+    2.5 m/s³ jerk;
+  - restarts from the car's speed after a yield;
+  - lasts through the merge window.
+
+  A car matches within 2 m/s of the span between the reference and the road target. The
+  reward target and the actor inputs are the reference, capped by leader and lane-end
+  bounds. The other gate conditions are unchanged. Validation summaries keep a diagnostic
+  count on v14's target, for comparison with rounds 20–22.
+- **Checks (SUMO, uncharged).**
+  - A scripted car that follows the new target passes every gate in the one-car LA cases
+    (10, 11). In cases 8 and 9 it matches speed (0.94–1.0); case 9 keeps one cut-in
+    emergency, and case 8 fails on the scripted driver's own jerk and headway.
+  - Cars at 75% of the target, or limited to 0.6 m/s², fail speed match (0.05–0.89).
+    Stopped and crawling cars never complete their merge.
+  - The round-16 starting policy keeps 8 of 14 gates, with the same pass/fail in every
+    case as under the old gate.
+- **Round 23** (`configs/training/highway-flow-rl-v14-round23.json`) is round 22's
+  configuration with the follow gate instead of the drive-aware target. The budget is not
+  raised: 161,620 decisions, 3,306.7 s and one diagnostic episode (its preflight) remain.
+
 ## 2026-11-23 - After round 22: the LA merge-quality gate is out of reach for a car that follows its target
 
 At the user's direction ("save it then continue troubleshooting"), the last diagnostic

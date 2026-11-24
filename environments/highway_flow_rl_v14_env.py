@@ -39,6 +39,17 @@ merge_braking and band-tail terms. The gate's speed match, the merge-quality pay
 the gate's window (v04's quality_merge, v10's graded quality) and the free-road stop measurement
 keep v14's target. The report (v14_drive_target) also grades each merging car's rolling merge
 quality on the drive-aware target, as a diagnostic only.
+
+Optional follow gate (round 23; user decision, November 24, 2026: "yes redesign"; off unless the
+constructor gets follow_gate=traffic.highway_flow_rl_v14_follow_gate.SETTINGS; not with the drive
+target): from a car's first yield-entry decision, the gate grades a reference that starts at the
+car's speed, moves toward the plan/road target at bounded acceleration and jerk, restarts from the
+car's speed after a yield, and lasts through the merge window. The speed match accepts speeds within
+2 m/s of the span between the reference and the road target (_acceptance_target). The reward target
+and the actor target inputs are the reference capped at once by the road target's leader and
+lane-end bounds. The merge-quality payments follow the gate, as they did before round 22. The report
+(v14_follow_gate) also grades each merging car's rolling merge quality on v14's target, as a
+diagnostic, so gate counts stay comparable with rounds 20-22.
 """
 from contextlib import contextmanager
 from copy import deepcopy
@@ -54,6 +65,7 @@ from traffic import highway_flow_rl_v06_rewards as v06
 from traffic import highway_flow_rl_v14_rewards as v14
 from traffic import highway_flow_rl_v14_stop_fix as stop_fix_module
 from traffic import highway_flow_rl_v14_drive_target as drive_target_module
+from traffic import highway_flow_rl_v14_follow_gate as follow_module
 from traffic.highway_flow_context import flow_context
 from traffic.highway_flow_rl_v03_rewards import map_evidence
 from traffic.highway_flow_rl_v04_rewards import gap_plan as v04_gap_plan, quality_merge_eligible
@@ -63,10 +75,13 @@ NATIVE_DRAIN_SPEED_MODE = 31  # SUMO default, the mode every earlier version dra
 
 class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
     def __init__(self, *args, v14_settings=None, drive_limit=None, road_model_manifest=None, stop_fix=None,
-                 drive_target=None, **kwargs):
+                 drive_target=None, follow_gate=None, **kwargs):
         self.v14_settings = v14.validate_settings(v14_settings or v14.SETTINGS)
         self.stop_fix = None if stop_fix is None else stop_fix_module.validate_settings(stop_fix)
         self.drive_target = None if drive_target is None else drive_target_module.validate_settings(drive_target)
+        self.follow_gate = None if follow_gate is None else follow_module.validate_settings(follow_gate)
+        if self.drive_target is not None and self.follow_gate is not None:
+            raise ValueError('The drive target and the follow gate are separate rounds')
         self.drive_limit = None if drive_limit is None else validate_drive_limit(drive_limit)
         if self.drive_limit is None and road_model_manifest is not None:
             raise ValueError('A road model for the grade needs the drive limit on')
@@ -162,12 +177,17 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
         self._drive_ramp, self._drive_quality_history, self._drive_quality_results = {}, {}, {}
         self.v14_drive_target_metrics = dict(decisions=0, below_gate=0, above_gate=0, gate_minus_target_m_s=0.,
                                              per_car={})
+        self._follow, self._v14_old_gate = {}, {}
+        self._old_gate_quality_history, self._old_gate_quality_results = {}, {}
+        self.v14_follow_gate_metrics = dict(decisions=0, started=0, restarts=0, ended=0, reward_capped=0,
+                                            road_target_below=0, per_car={})
 
     def _v14_target(self, agent, state, context, preview):
         """One target per car and simulation time, shared by both hooks.
 
-        Returns the reward target: v14's, or with the drive target on, the drive-aware one. The
-        gate's target (v14's in both cases) is cached alongside it (_v14_gate_target).
+        Returns the reward target: v14's, the drive-aware one (drive target on) or the capped follow
+        reference (follow gate on). The gate's target (v14's, or the follow reference) is cached
+        alongside it (_v14_gate_target), and so is v14's own (gate_v14).
         """
         desired, plan, ceiling = v14.merge_speed_target(state, context, preview)
         cached = self._v14_cache.get(agent)
@@ -195,11 +215,68 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
             else:
                 self._ramp[agent] = dict(time=self.time, value=value)
             self._count(agent, state, context, desired, plan, value, active)
-        gate = target
+        gate = gate_v14 = target
         if self.drive_target is not None:
             target = self._drive_aware(agent, state, desired, plan, ceiling, active, eligible, gate)
-        self._v14_cache[agent] = dict(time=self.time, desired=desired, target=target, gate=gate, plan=plan)
+        elif self.follow_gate is not None:
+            gate, target = self._follow_targets(agent, state, desired, ceiling, active, eligible, gate_v14)
+        self._v14_cache[agent] = dict(time=self.time, desired=desired, target=target, gate=gate,
+                                      gate_v14=gate_v14, plan=plan)
         return target, plan
+
+    def _follow_targets(self, agent, state, desired, ceiling, active, eligible, fallback):
+        """The follow gate's (gate target, reward target) of a car (traffic.highway_flow_rl_v14_follow_gate).
+
+        Cars that have not reached a yield entry keep v14's target for both; so does a decision whose
+        road target is not eligible (the reference is kept and moves on at the next eligible one).
+        """
+        settings = self.follow_gate
+        reference = self._follow.get(agent)
+        if (reference is None and not (eligible and active)) or not eligible:
+            return fallback, fallback
+        drive = None
+        if self.road_grade is not None:
+            limit = self.drive_limit
+            drive = self.road_grade.ceiling(state['lane_id'], state['lane_position'], state['speed'],
+                                            headroom_m_s2=limit['headroom_m_s2'],
+                                            lookahead_s=limit['lookahead_s'])['ceiling_m_s2']
+        rise = follow_module.rise_rate(drive, settings)
+        acceleration = state.get('acceleration', 0.)
+        road = desired['target_m_s']
+        started, restarted = reference is None, False
+        if started:
+            reference = follow_module.start(state['speed'], acceleration, ceiling, rise, self.time, settings)
+        else:
+            reference, restarted = follow_module.advance(reference, road, ceiling, rise, state['speed'],
+                                                         acceleration, self.time, settings)
+        lower, upper = follow_module.band(reference['value'], road)
+        cap = follow_module.reward_cap(desired, settings)
+        reward_value = reference['value'] if cap is None else min(reference['value'], cap)
+        graded = agent in self.quality_results
+        ended = graded and abs(reference['value'] - road) <= settings['end_tolerance_m_s']
+        if ended:
+            self._follow.pop(agent, None)
+        else:
+            self._follow[agent] = reference
+        audit = dict(road_target_m_s=road, reference_m_s=reference['value'], lower_m_s=lower, upper_m_s=upper,
+                     slope_m_s2=reference['slope'], rise_m_s2=rise, drive_ceiling_m_s2=drive, ceiling_m_s=ceiling,
+                     reward_cap_m_s=cap, yield_entry=active, started=started, restarted=restarted, ended=ended,
+                     v14_gate_m_s=fallback['target_m_s'] if fallback.get('eligible') else None)
+        gate, target = deepcopy(desired), deepcopy(desired)
+        gate['target_m_s'], target['target_m_s'] = reference['value'], reward_value
+        gate['follow_gate'] = target['follow_gate'] = audit
+        target['v14'] = deepcopy(fallback.get('v14')) or dict(desired_m_s=road, ceiling_m_s=ceiling, yield_entry=active)
+        metrics = self.v14_follow_gate_metrics
+        car = metrics['per_car'].setdefault(agent, dict(decisions=0, started=0, restarts=0, ended=0, reward_capped=0,
+                                                        road_target_below=0))
+        for row in (metrics, car):
+            row['decisions'] += 1
+            row['started'] += int(started)
+            row['restarts'] += int(restarted)
+            row['ended'] += int(ended)
+            row['reward_capped'] += int(reward_value < reference['value'] - 1e-9)
+            row['road_target_below'] += int(road < reference['value'] - 1e-9)
+        return gate, target
 
     def _drive_aware(self, agent, state, desired, plan, ceiling, active, eligible, gate):
         """The drive-aware reward target (traffic.highway_flow_rl_v14_drive_target), on its own ramp."""
@@ -266,13 +343,28 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
     def _reward_target(self, agent, state, context, preview):
         target, plan = self._v14_target(agent, state, context, preview)
         # The gate's speed match grades v14's target (the same as the reward target unless the drive
-        # target is on).
+        # target is on), or with the follow gate on, the follow reference's band.
         self._reference_targets[agent] = self._v14_gate_target(agent, target)
+        if self.follow_gate is not None:
+            cached = self._v14_cache.get(agent)
+            self._v14_old_gate[agent] = (cached['gate_v14'] if cached is not None and
+                                         abs(cached['time'] - self.time) < 1e-9 else target)
         run = self._required_run.get(agent)
         if run is None:
             run = int(bool(plan.get('required')))
             self._required_run[agent] = run
         return target, v06.blend_potential(plan, run)
+
+    def _acceptance_target(self, agent, snapshot):
+        """The gate's speed-match target. With the follow gate on and a follow band, the point of the band
+        nearest the car's speed after the decision, so v04's |speed - target| <= 2 m/s is the band check."""
+        reference = super()._acceptance_target(agent, snapshot)
+        audit = (reference or {}).get('follow_gate') if self.follow_gate is not None else None
+        state = self.states.get(agent)
+        if audit is None or state is None or not reference.get('eligible'):
+            return reference
+        return dict(reference, target_m_s=follow_module.acceptance(state['speed'], audit['lower_m_s'],
+                                                                   audit['upper_m_s']))
 
     def _successor_plan(self, agent, state):
         if not state:
@@ -333,27 +425,36 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
     def _update_merge_metrics(self, agents, infos, rewards, terminated, truncated):
         """Diagnostic only: each merging car's rolling merge quality graded on the drive-aware target,
         with v04's own samples, window and rule (rewards and the gate are unchanged)."""
-        before = dict(self.quality_results) if self.drive_target is not None else None
+        diagnostic = self.drive_target is not None or self.follow_gate is not None
+        before = dict(self.quality_results) if diagnostic else None
         super()._update_merge_metrics(agents, infos, rewards, terminated, truncated)
-        if self.drive_target is None:
-            return
+        if self.drive_target is not None:
+            self._diagnostic_quality(agents, before, lambda agent: self._v02_pre_action[agent]['target'],
+                                     self._drive_quality_history, self._drive_quality_results)
+        elif self.follow_gate is not None:
+            self._diagnostic_quality(agents, before, lambda agent: self._v14_old_gate.get(agent),
+                                     self._old_gate_quality_history, self._old_gate_quality_results)
+
+    def _diagnostic_quality(self, agents, before, target_of, histories, results):
+        """Diagnostic only: rolling merge quality of each merging car with the speed match graded on
+        target_of(agent) (|speed - target| <= 2 m/s), with v04's own samples, window and rule."""
         for agent in agents:
             history = self.quality_history.get(agent)
             if not history:
                 continue
-            target = self._v02_pre_action[agent]['target']
+            target = target_of(agent)
             state = self.states.get(agent)
             speed = state['speed'] if state else None
             sample = dict(history[-1], speed_match=bool(speed is not None and target and target.get('eligible')
                                                         and abs(speed - target['target_m_s']) <= 2.))
-            own = self._drive_quality_history.setdefault(agent, [])
+            own = histories.setdefault(agent, [])
             own.append(sample)
             tracker = self.merge_trackers.get(agent)
             completed_at = tracker.merge_complete_time_s if tracker else None
             own[:] = [r for r in own if r['time_s'] >= (completed_at if completed_at is not None else self.time) - 8.]
             result = self.quality_results.get(agent)
             if result is not None and result is not before.get(agent):
-                self._drive_quality_results[agent] = dict(
+                results[agent] = dict(
                     qualified=bool(self.approach_stops.get(agent, 0.) <= 1. + 1e-8 and quality_merge_eligible(own)),
                     samples=len(own), speed_match_fraction=sum(r['speed_match'] for r in own) / len(own),
                     gate_qualified=result['qualified'], gate_speed_match_fraction=result['speed_match_fraction'])
@@ -361,6 +462,7 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
     def report(self):
         result = super().report()
         version = (drive_target_module.REWARD_VERSION if self.drive_target is not None else
+                   follow_module.REWARD_VERSION if self.follow_gate is not None else
                    v14.REWARD_VERSION if self.stop_fix is None else stop_fix_module.REWARD_VERSION)
         result.update(schema='highway_flow_rl_merge_env_v14', reward_version=version,
             objective_version=version, v14_settings=dict(self.v14_settings),
@@ -375,6 +477,12 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
                 quality_merges=deepcopy(self._drive_quality_results), **deepcopy(self.v14_drive_target_metrics),
                 scope=('reward target and actor target inputs at yield entries; quality_merges is a diagnostic '
                        'grading of the gate window on this target, not the gate'))
+        if self.follow_gate is not None:
+            result['v14_follow_gate'] = dict(settings=dict(self.follow_gate, reward_caps=list(self.follow_gate['reward_caps'])),
+                v14_gate_quality_merges=deepcopy(self._old_gate_quality_results), **deepcopy(self.v14_follow_gate_metrics),
+                scope=("the gate's speed match, the reward target and the actor target inputs from each car's first "
+                       'yield-entry decision; v14_gate_quality_merges is a diagnostic grading of the gate window on '
+                       "v14's target, not the gate"))
         if self.stop_fix is not None:
             result['v14_stop_fix'] = dict(settings=dict(self.stop_fix, obligations=list(self.stop_fix['obligations'])),
                                           **deepcopy(self.v14_stop_fix_metrics))

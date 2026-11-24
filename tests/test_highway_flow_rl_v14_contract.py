@@ -295,3 +295,60 @@ def test_drive_target_summary_regrades_only_rolling_merge_quality():
 
 def test_runner_sources_include_the_drive_target():
     assert 'traffic/highway_flow_rl_v14_drive_target.py' in runner14.SOURCES
+
+
+# --- round 23: the follow gate ---------------------------------------------------------------
+ROUND23_DECLARED = {'authorization', 'learning_profile', 'provenance', 'reward_version', 'round_index',
+                    'v14_drive_target', 'v14_follow_gate'}
+
+
+@pytest.fixture(scope='module')
+def round23():
+    return contract.build_config(23)
+
+
+def test_round23_is_round22_with_the_follow_gate_instead_of_the_drive_target(round23, round22):
+    from traffic import highway_flow_rl_v14_follow_gate as follow_gate
+    changed = {key for key in set(round22) | set(round23) if round22.get(key) != round23.get(key)}
+    assert changed == ROUND23_DECLARED
+    assert 'v14_drive_target' not in round23
+    assert round23['round_index'] == 23 and round23['training_authorized'] is True
+    assert round23['held_out_authorized'] is False
+    assert round23['reward_version'] == follow_gate.REWARD_VERSION != round22['reward_version']
+    assert follow_gate.validate_settings(round23['v14_follow_gate']) == follow_gate.SETTINGS
+    assert round23['provenance']['parent_round'] == round22['learning_profile']
+    assert round23['authorization'].startswith(round22['authorization'])
+    assert '"yes redesign"' in round23['authorization']
+    for key in ('training_rows', 'validation_rows', 'warm_start', 'seed', 'optimizer', 'v14_drive_limit',
+                'v14_stop_fix', 'stop_rules', 'evaluation_interval_decisions', 'v12_settings',
+                'v06_reward_weights', 'reward_weights', 'budget'):
+        assert round23[key] == round22[key]
+
+
+def test_round23_validation_and_written_configuration(round23):
+    assert contract.validate_config(deepcopy(round23), require_training=True)
+    for change in (dict(v14_follow_gate=None), dict(reward_version=round23['reward_version'] + 'x'),
+                   dict(v14_follow_gate=dict(round23['v14_follow_gate'], jerk_m_s3=4.)),
+                   dict(budget=dict(round23['budget'], total_decisions=6930000))):
+        with pytest.raises(ValueError):
+            contract.validate_config(dict(deepcopy(round23), **change))
+    path = ROOT / 'configs/training/highway-flow-rl-v14-round23.json'
+    assert json.loads(path.read_text(encoding='utf-8')) == round23
+
+
+def test_follow_gate_summary_regrades_on_v14s_target():
+    gates = [dict(passed=True, failures=[]), dict(passed=False, failures=['rolling_merge_quality'])]
+    quality = lambda *flags: {f'agent_{i}': dict(qualified=f, speed_match_fraction=.95 if f else .4)
+                              for i, f in enumerate(flags)}
+    reports = [dict(case_id='a', task='merge', stable_merge=dict(targets=1), v14_follow_gate=dict(v14_gate_quality_merges=quality(False))),
+               dict(case_id='b', task='merge', stable_merge=dict(targets=1), v14_follow_gate=dict(v14_gate_quality_merges=quality(True)))]
+    result = runner14.follow_gate_summary(reports, gates)
+    assert result['gates_passed'] == 1 and result['per_case']['00 a']['failures'] == ['rolling_merge_quality']
+    assert result['per_case']['01 b']['passed'] and not result['per_case']['01 b']['gate_passed']
+    assert "v14's target" in result['scope']
+    assert runner14.follow_gate_summary([dict(case_id='c', task='cruise')], gates[:1]) is None
+    assert runner14.drive_target_summary(reports, gates) is None
+
+
+def test_runner_passes_the_follow_gate_and_records_its_source():
+    assert 'traffic/highway_flow_rl_v14_follow_gate.py' in runner14.SOURCES
