@@ -4,6 +4,31 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-23 - After round 22: the LA merge-quality gate is out of reach for a car that follows its target
+
+At the user's direction ("save it then continue troubleshooting"), the last diagnostic
+episode is kept, and these were development checks only: SUMO, no training, not charged.
+Details are in the v14 plan's "After round 22: troubleshooting".
+- **Round 22's case-9 stop is the round-16 actor's own braking loop.**
+  - Given round 21's target inputs, the update-31 actor still brakes both cars to a stop.
+  - Scored on the same states, the round-16 actor asks for nearly the same braking
+    (within 0.1–0.3 m/s²).
+  - Round 22's weights moved less than 1%.
+- **The LA native emergencies are our cars cutting in at the junction.** In case 11 the
+  merge target says yield for 1.5 s, while the actor accelerates at the drive limit. The
+  car then enters 10.6 m ahead of a mainline car closing at 9.4 m/s.
+  - No reward term charges for this.
+  - The neighbor-braking sample misses it inside the junction.
+- **A scripted car that follows the merge target** (a measurement, not a controller):
+  - it removes the collisions and native emergencies in the one-car LA cases (10, 11);
+  - it matches only 15–66% of the merge-quality window in all four LA merge cases (90%
+    needed). Around a yield, the gate's target falls below the car, jumps up while the car
+    is still braking, and then rises from its own value faster than the southbound drive
+    allows.
+- **What it means:** under the current gate, a target-following policy cannot pass more
+  than 10 of 14 cases. How the gate grades merge speed is the user's decision. No
+  round 23 has started.
+
 ## 2026-11-22 - Round 22: a drive-aware reward target (stopped at its first check; 7 of 14 gates)
 
 - **Why the LA merges fail rolling merge quality.** Every case that fails round 21's

@@ -1009,3 +1009,98 @@ lower (7 failed cases). Nothing is promoted, and there is no held-out evaluation
   - the actor's braking branch is still there: a round-16 start can fall into it within
     50,000 decisions.
 - **Whether the gate should grade the drive-aware target is still the user's decision.**
+
+## After round 22: troubleshooting (November 23)
+
+**User decision (November 23, 2026):** "uhh save it then continue troubleshooting". The
+last diagnostic episode is kept for a round-23 preflight. No round 23 has started.
+
+Every check below is a development check: SUMO only, no training, not charged to the
+study ledger. Outputs are under `outputs/test-runs/` in the Claude worktree:
+`r22-target-input-check-*`, `r22-basin-check-01-case09` and `v14-follower-check-01` to `-05`.
+
+### Round 22's case-9 stop is the round-16 actor's own braking loop
+
+- **The new target inputs are not the trigger.** Round 22's update-31 actor (`last.pt`)
+  was run on case 9 twice:
+  - with round 22's inputs it reproduces the validation exactly: 222 overrides, and both
+    cars stop;
+  - with round 21's v14 inputs it brakes the same way. `agent_5` stops at 4.7 s, and the
+    run has 257 overrides.
+- **The round-16 actor is already at the tipping point.** Here update 31 drives, and the
+  round-16 actor is scored on the same observations at every decision. Its requests are
+  within 0.1–0.3 m/s² of update 31's. At 2.2 s, for example, it asks for −3.75 m/s² where
+  update 31 asks for −3.89. These are round 20's two settling points again.
+- **The weights hardly moved.** Each actor layer is less than 1% (relative norm) from the
+  round-16 actor, which is less than round 21's final. Why training moved them toward
+  braking is still not established.
+
+### The LA native emergencies are cut-ins by our merging cars
+
+Each LA merge case (8–11) has one native emergency. Every time, it is a background car on
+the mainline right lane braking at 9 m/s².
+- **In cases 10 and 11 (one car) the merging car had just reached the junction:**
+  358.7 m along the northbound ramp, and 192.2 m along the 192.85 m southbound ramp.
+- **In case 9 a merging car was 3.5 m into the merge lane.** Case 8 was not traced.
+- **Case 11 at round 21's final** (the start policy behaves the same way):
+  - from 0.2 to 1.6 s the v14 target says yield (5.0 → 2.4 m/s), because `main_9` is
+    approaching;
+  - the actor accelerates at the drive limit (+1.3 m/s²) instead;
+  - at 1.7 s stopping is no longer possible within the plan's braking allowance, so the
+    target switches to crossing (13 m/s, crossing deficit 1.8);
+  - the car enters 10.6 m ahead of `main_9`, which is closing at 9.4 m/s, and `main_9`
+    emergency-brakes.
+- **The reward does not see it.**
+  - No term charges a forced emergency brake: after the switch the merging car's
+    tracking cost is about 0.05 per decision, and it earns the +5 merge payment.
+  - The per-step neighbor-braking sample misses `main_9` inside the junction. It reads
+    +0.27 m/s² while SUMO logs −9.
+- **Controlled cars do not yield natively.** They run with SUMO speed mode 96, so only
+  the policy can yield.
+
+### A car that follows the v14 target (measurement only)
+
+A scripted follower drove every controlled car to check whether the gates can be reached.
+It is a measurement only and drives nothing in training.
+- **Its rule:** request k × (target − speed), kept within ±0.35 m/s² of the measured
+  acceleration and below the feasible ceiling the actor sees; k = 1 or 3 /s.
+- **Target:** v14's gate target, or round 22's drive-aware target where one exists.
+- **Lanes:** it always keeps its lane.
+
+| Case | Round 21 final fails | Follower fails | Worst merging car's speed match (90% needed) |
+|---|---|---|---|
+| 8 (NB 8-car) | native emergency, merge quality | merge quality; native emergency and 1–2 overrides in some runs | 0.21–0.46 |
+| 9 (SB 8-car) | native emergency, merge quality | native emergency (`main_11`, 6.0 s), merge quality | 0.29–0.34 |
+| 10 (NB 1-car) | 2 collisions, native emergency, comfort, stable merge, merge quality | merge quality only | 0.31–0.66 |
+| 11 (SB 1-car) | native emergency, comfort, merge quality | merge quality only | 0.15–0.18 |
+
+- **Following the plan's yield removes the collisions and native emergencies in cases 10
+  and 11.**
+  - In case 11 the follower brakes at about −3 m/s² to 6.6 m/s and lets `main_9` pass.
+  - It then enters behind `main_9` with 69 m to the next car.
+- **Case 9 keeps one emergency even when the plan is followed.** So its crossing check is
+  not enough there.
+- **Rolling merge quality is out of reach in all four cases, even for the follower.**
+  Graded on the drive-aware target instead, case 9's cars match 100%, but cases 8, 10 and
+  11 still fail.
+- **Why the gate's target cannot be followed in the yield cases:**
+  1. At spawn it is 3.8–5.0 m/s while the car is at 9–11 m/s.
+  2. When the mainline car passes (1.2–2.2 s), it jumps up while the car is still braking
+     hard.
+  3. It then rises at 1.5 m/s² from its own value rather than the car's speed.
+
+  On the southbound ramp, where the drive gives 1.3 m/s², it stays 3–4 m/s ahead until it
+  reaches 26.8 m/s. On the northbound ramp the car catches up after about 5.5 s.
+- **Not tested:** cases 0 and 4 need a lane change that the follower does not make.
+
+### What it means
+
+- **No policy that follows its target can pass the merge-quality gate in the four LA
+  merge cases.** The gate's target is not followable there within the comfort and drive
+  limits. So a policy that learns to follow its target cannot raise the count above 10 of
+  14 under this gate. I have not shown that no driving at all could pass.
+- **Even so, the merge plan's yield works.** Following it removes the collisions and
+  emergencies in the one-car LA cases. The policy does not follow it, and no reward term
+  charges for forcing a mainline car to brake hard.
+- **Changing how the gate grades merge speed is the user's decision.** No round 23 has
+  been started.
