@@ -4,6 +4,30 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-25 - Plan v15 proposed: rules first, learning on top
+
+- **Proposal only:** nothing built, trained or authorized. At the user's request for a
+  "completely revised" plan that reconsiders tools and training methods and uses the video
+  review.
+- **Controller:** one controller per car, always on, in two levels.
+  - A rule executor drives every decision: IDM, a dilemma-zone commit-or-yield rule,
+    MOBIL's gap safety test and lane changes, a stuck rule and a curvature cap.
+  - A learned policy chooses the maneuver every 0.5–1 s.
+- **Training:**
+  1. qualify a rule expert;
+  2. behaviour cloning with perturbed starts;
+  3. DAgger;
+  4. MAPPO anchored to the imitation policy, with 3 training seeds.
+- **Tools:**
+  - libsumo instead of TraCI (not installed yet; speed to be measured);
+  - 16–24 parallel SUMO processes;
+  - a flat v15 environment instead of building on v14;
+  - a 14-case × 5-seed benchmark with event counts and free checkpoint screens.
+- **Not recommended now:** GPU-batched simulators (GPUDrive, Waymax) and Isaac Lab for
+  traffic training.
+- **Seven decisions for the user,** listed at the end of the plan. Details:
+  `documentation/highway-merge-training-plan-v15.md`.
+
 ## 2026-11-25 - After round 24: the updates make stopped merging cars stay stopped
 
 - **Development checks only** (no training, not charged), at the user's direction
