@@ -16,6 +16,9 @@ count with rolling merge quality graded on that target (v14_drive_target), next 
 Round 23 turns the follow gate on (v14_follow_gate): the gate grades a followable reference; its
 validation summaries add a diagnostic gate count with rolling merge quality graded on v14's target
 (v14_follow_gate), so counts stay comparable with rounds 20-22.
+Round 24 turns the cut-in charge (v14_cut_in) and drive saturation (v14_drive_saturation) on and
+validates every case at three seeds (v14_validation); its validation summaries add each case's passes
+across its seeds (v14_seeds) and the cut-in charges (v14_cut_in).
 No training happens on import.
 """
 from __future__ import annotations
@@ -43,7 +46,8 @@ SOURCES = ('experiments/run_highway_flow_rl_v14.py', 'environments/highway_flow_
            'traffic/highway_flow_rl_v14_rewards.py', 'traffic/highway_flow_rl_v14_contract.py',
            'traffic/road_grade.py', 'scripts/prepare_highway_flow_rl_v14.py',
            'traffic/highway_flow_rl_v14_stop_fix.py', 'traffic/highway_flow_rl_v14_drive_target.py',
-           'traffic/highway_flow_rl_v14_follow_gate.py')
+           'traffic/highway_flow_rl_v14_follow_gate.py', 'traffic/highway_flow_rl_v14_cut_in.py',
+           'traffic/highway_flow_rl_v14_saturation.py')
 
 
 def road_model_manifest(case, network):
@@ -83,6 +87,10 @@ def env_for(cfg, row, directory, env_class=None, **extra):
     follow_gate = extra.pop('follow_gate', cfg.get('v14_follow_gate'))
     if follow_gate is not None:
         extra['follow_gate'] = follow_gate
+    for key in ('cut_in', 'drive_saturation'):
+        value = extra.pop(key, cfg.get(f'v14_{key}'))
+        if value is not None:
+            extra[key] = value
     env = (env_class or HighwayFlowRLV14Env)(network, directory, **extra,
         v14_settings=cfg.get('v14_settings'),
         controlled_count=row['controlled_count'], total_vehicles=row['total_vehicles'],
@@ -130,9 +138,12 @@ def drive_limit_summary(reports):
         return None
     decisions = sum(v['decisions'] for v in per_case.values())
     limited = sum(v['limited'] for v in per_case.values())
+    saturated = sum(v.get('saturated', 0) for v in per_case.values())
     return dict(decisions=decisions, limited=limited, limited_fraction=limited / decisions if decisions else None,
-                per_case={case: dict(decisions=v['decisions'], limited=v['limited'], max_grade=v['max_grade'],
-                                     min_ceiling_m_s2=v['min_ceiling_m_s2']) for case, v in per_case.items()})
+                saturated=saturated,
+                per_case={case: dict(decisions=v['decisions'], limited=v['limited'], saturated=v.get('saturated', 0),
+                                     max_grade=v['max_grade'], min_ceiling_m_s2=v['min_ceiling_m_s2'])
+                          for case, v in per_case.items()})
 
 
 STOP_KEYS = ('decisions', 'stopped', 'asking_to_brake', 'asking_to_brake_overrides', 'free_road')
@@ -211,9 +222,43 @@ def regraded_summary(reports, gates, key, field, scope):
     return dict(gates_passed=passed, cases=len(reports), per_case=per_case, scope=scope)
 
 
+def seeds_summary(cfg, reports, gates):
+    """Each validation case's gate passes across its seeds (round 24's multi-seed validation), or None."""
+    declared = cfg.get('v14_validation')
+    if not declared:
+        return None
+    cases = declared['cases']
+    per_case = {}
+    for index, (report, gate) in enumerate(zip(reports, gates)):
+        key = f"{index % cases:02d} {report['case_id']}"
+        row = per_case.setdefault(key, dict(passed=0, seeds=0, by_seed={}))
+        row['passed'] += int(gate['passed'])
+        row['seeds'] += 1
+        row['by_seed'][str(report['seed'])] = gate['failures']
+    complete = [row for row in per_case.values() if row['seeds'] == declared['seeds_per_case']]
+    return dict(rows_passed=sum(int(g['passed']) for g in gates), rows=len(gates),
+                cases_passed_at_every_seed=sum(row['passed'] == row['seeds'] for row in complete),
+                cases_passed_at_own_seed=sum(int(g['passed']) for g in gates[:cases]),
+                cases=cases, seeds_per_case=declared['seeds_per_case'], per_case=per_case)
+
+
+def cut_in_summary(reports):
+    per_case = {f"{index:02d} {r['case_id']}": r['v14_cut_in'] for index, r in enumerate(reports) if r.get('v14_cut_in')}
+    if not per_case:
+        return None
+    return dict(charged=sum(v['charged'] for v in per_case.values()),
+                excess_m_s2=sum(v['excess_m_s2'] for v in per_case.values()),
+                cut_in=sum(v['cut_in'] for v in per_case.values()),
+                per_case={case: dict(charged=v['charged'], excess_m_s2=round(v['excess_m_s2'], 3),
+                                     followers=sorted({e['follower'] for e in v['events']}))
+                          for case, v in per_case.items() if v['charged']})
+
+
 def evaluate(cfg, output, label, model, deadline, **kwargs):
     """v12's evaluation (intervention and merge-floor rules) plus the collision and free-road stop rules."""
     result = _v12_evaluate(cfg, output, label, model, deadline, **kwargs)
+    result['summary']['v14_seeds'] = seeds_summary(cfg, result['reports'], result['summary']['case_gates'])
+    result['summary']['v14_cut_in'] = cut_in_summary(result['reports'])
     result['summary']['v14_drive_limit'] = drive_limit_summary(result['reports'])
     result['summary']['v14_stops'] = stops_summary(result['reports'])
     result['summary']['v14_drive_target'] = drive_target_summary(result['reports'], result['summary']['case_gates'])

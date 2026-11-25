@@ -1461,3 +1461,151 @@ speed, acceleration and leader after each decision.
      scale the action range to what the drive allows.
 - **None of these was trained or graded end to end.** Each needs a declared round and a
   budget decision.
+
+## Round 24: multi-seed validation, a cut-in charge and drive saturation
+
+**User decision (November 25, 2026):** "All three", to "Should round 24 test all three
+changes, multi-seed validation only, or a different set?". The three changes are the ones
+listed under "What it means for the budget" above.
+
+### The changes
+
+1. **Multi-seed validation.**
+   - Each of the 14 validation cases runs at its own seed (rows 0–13, as in rounds 20–23)
+     and at two added seeds, 6952001 and 6952002 (rows 14–27 and 28–41).
+   - The added seeds are new. They are not the diagnosis's 6951001–6951011, which the two
+     other changes were designed on. They are disjoint from every training and held-out
+     seed (a test checks this).
+   - The stop rules and the best-checkpoint rank use all 42 rows. Summaries add each
+     case's passes across its seeds (`v14_seeds`).
+   - The free-road stop rule's minimum goes from 20 to 60 decisions, for three times the
+     rows. Its factor of 2 against the round's initial validation is unchanged.
+2. **A cut-in charge**
+   ([`traffic/highway_flow_rl_v14_cut_in.py`](../traffic/highway_flow_rl_v14_cut_in.py),
+   reward term `cut_in`, reward version `highway_flow_rl_merge_v14_cut_in`).
+   - After each step, every background car that brakes harder than 3 m/s² charges the car
+     ahead of it, when that car is one of ours within 40 m by SUMO's leader. The charge is
+     0.25 per m/s² of the excess per decision, the weight of v06's avoidable braking.
+   - **Measured on the diagnosis traces** (`cutin-probe-01`, cases 8–11, 6 seeds, the
+     starting policy and the plan followers):
+     - it charges 11 of the 12 runs with a native emergency, 19.8–81.2 m/s² per episode;
+     - it is at most 22.4 on the 41 runs without one. That is the plan follower's slow
+       entry, which made a car brake at 5.8–8.4 m/s²;
+     - the 40 m limit removes every spawn transient (cars braking at 4.5 m/s² at 0.3 s,
+       with our car 55–127 m ahead);
+     - it misses case 9, seed 6951003, where the car braking hard was our own `agent_1`.
+   - **Our own cars do not count as followers.** Their braking is their own policy's.
+     Counting them would add 19.0–31.9 on three runs without an emergency, and would still
+     miss seed 6951003.
+   - **The follower need not be closing.** SUMO's emergency braking goes on after the
+     follower has slowed below our car. In case 11, `main_9` braked at 9 m/s² 2.8–4 m
+     behind `agent_0` while 0.8 m/s slower.
+3. **Drive saturation**
+   ([`traffic/highway_flow_rl_v14_saturation.py`](../traffic/highway_flow_rl_v14_saturation.py)).
+   - An override whose only cause is the drive bound is applied as before: the car gets
+     full drive on that grade.
+   - It no longer counts as an intervention. That covers the reward term, the override
+     counts, the per-car and merge intervention fractions, and the merge-quality samples.
+     It is counted in `v14_drive_limit.saturated` instead.
+   - A clip with any other cause as well is still an intervention: the comfort rate limit,
+     a following-gap or speed bound, a lane refusal, or a native change.
+   - v05's `unsafe_request` term still charges a request above the ceiling,
+     0.5 × excess / 4.5 per decision.
+
+The training rows, seeds, warm start (the round-16 policy), optimizer, drive limit, stop
+fix, follow gate and the other stop rules are round 23's.
+
+### Development checks (uncharged)
+
+These are SUMO runs with round 24's code and configuration. There is no training and no
+ledger charge. Outputs are `outputs/test-runs/r24-*` in the Claude worktree.
+
+**Case 9's bias test again.** The starting policy runs at case 9's validation seed. A
+constant is added to the merging cars' acceleration requests:
+
+| Added (m/s²) | Round 23's rules | Round 24's rules |
+|---|---|---|
+| −0.2 | 1 of 2 stable merges; 147 overrides, 118 of them grade clips | **2 of 2**; 31 overrides; fails comfort, merge quality and raw-request jerk |
+| 0 | 2 of 2; 29 overrides; fails the emergency, comfort and merge quality | **2 of 2; 4 overrides; fails only the native emergency** |
+| +0.1 | 0 of 2; 77 overrides, 74 grade clips | **2 of 2; 3 overrides; only the emergency** |
+| +0.2 | 0 of 2; 83 overrides, 78 grade clips | **2 of 2; 5 overrides; only the emergency** |
+| +0.3 | 0 of 2 | 1 of 2: `agent_5` fails on 37 following and 12 speed-ceiling overrides |
+
+- **The stable-merge window widens** from 0.15 m/s² (−0.15 to 0) to at least 0.4 m/s²
+  (−0.2 to +0.2).
+- **Round 23's failure at −0.2 was also grade clips.** The diagnosis said that `agent_5`
+  stops and fails there. It does stop (the same 18 free-road stopped decisions; the
+  policy's actions are unchanged), but under round 24's rule it completes its stable merge.
+- **What remains in case 9 is the cut-in.** `main_11`'s native emergency happens from 0 to
+  +0.3 and is charged on every one of those runs (4.2–12.7 of reward).
+
+**The starting policy on all 42 rows:**
+
+| Rows | Passed | Merge speed match |
+|---|---|---|
+| 0–13 (own seeds) | 8 of 14 | 0.742 |
+| 14–27 (seed 6952001) | 6 of 14 | 0.336 |
+| 28–41 (seed 6952002) | 5 of 14 | 0.579 |
+| **All 42** | **19 of 42** | **0.537** |
+
+- **Rows 0–13 pass the same 8 cases as round 23's initial validation.** Their overrides
+  drop where grade clips were counted:
+  - case 4: 111 to 57;
+  - case 8: 12 to 4;
+  - case 9: 29 to 4;
+  - case 11: 62 to 2.
+- **Cases 9 and 11 now fail only on their native emergency,** which the cut-in charge
+  targets.
+- **4 cases pass at all three seeds:** 01 and 02 (v05 cruise and passing), 03 (I-110
+  following) and 05 (60 mph cruise). No merge case passes at all three. Cases 08–11 pass
+  at none.
+- **This becomes round 24's baseline for its stop rules:**
+  - free-road stops: 43, so the rule's limit is max(60, 2 × 43) = 86;
+  - collisions: 6 in rows 10, 22 and 38 (case 10 at its own seed and at 6952002, case 8 at
+    6952001);
+  - native emergencies: 7 rows, all LA merges;
+  - the relative merge floor: 0.537 − 0.25 = 0.287.
+- **Cut-in charges:** 279.9 m/s² over 8 rows (−70.0 of reward).
+  - Every row with a native emergency is charged except row 38, where the follower
+    collided with `agent_0`. The collision term charges that.
+  - Two rows without an emergency are charged: row 36 (case 8 at 6952002, 13.0) and row
+    24 (case 10 at 6952001, 0.7).
+- **Drive clips:** 730, of which 688 were saturations; 94% of the drive limit's clips no
+  longer count as interventions.
+- **Time:** 412.7 s of episode time for the 42 rows, run as three parallel blocks. Rounds
+  21–23 took about 120 s for 14 rows. Rows 0–13 took 131.9 s here, so the cut-in lookups
+  and the parallel processes add about 8–12% per row.
+
+**A training rollout** on the southbound 8-of-24 merge row (120 decisions) gives a finite
+batch with the `cut_in` term (−0.13) and reward version `highway_flow_rl_merge_v14_cut_in`.
+
+**Tests:** `tests/test_highway_flow_rl_v14_round24.py` and the other v14 tests pass, 88 in
+total. Across the whole suite, 2 tests fail locally,
+`test_highway_merge_cutin_v07.py::test_sparse_five_lane_missed_gap_keeps_a_blocker_without_reseeding`
+and
+`test_highway_merge_recovery_v08.py::test_seeded_cutins_are_real_adjacent_spawn_pairs`.
+Both fail because the test writes outside `outputs/`, which the environment refuses. Both
+need locally generated networks that a clean CI clone does not have. Neither touches
+round 24's code.
+
+### Round 24's budget: needs a user decision
+
+A 42-row validation takes about 413 s. Round 24 runs five of them: initial, three periodic
+(every 50,000 decisions) and final.
+
+- **Estimated time:** about 3,800 s for 200,000 decisions. That is about 1,720 s of
+  training at round 21's 130 decisions/s plus 12% (the upper end of the overhead), and
+  2,065 s of validation.
+- **What's left on the shared ledger:** 58,850 decisions, 2,226.0 s and no diagnostic
+  episode. A round cannot start.
+- **Proposed raise:**
+  - training decisions +141,150, to 6,871,150, so exactly 200,000 remain;
+  - wall time +3,500 s, to 64,700 s;
+  - the per-round limit from 3,600 to 4,800 s. Learning must end 900 s before the round's
+    limit, so 3,600 s would stop training near 150,000 decisions;
+  - diagnostic episodes +2, to 174, for the preflight and one physics recording of the
+    result. Earlier recordings cost 55–108 s.
+- **A cheaper alternative:** keep 3,600 s per round and validate every 100,000 decisions.
+  That is +141,150 decisions, +2,300 s and +2 episodes. It gives one periodic check
+  instead of three. Round 19 broke its acceleration-lane merges by 106,915 decisions,
+  which is why round 20 moved to 50,000.

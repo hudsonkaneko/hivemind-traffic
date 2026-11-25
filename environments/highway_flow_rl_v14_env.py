@@ -50,6 +50,16 @@ and the actor target inputs are the reference capped at once by the road target'
 lane-end bounds. The merge-quality payments follow the gate, as they did before round 22. The report
 (v14_follow_gate) also grades each merging car's rolling merge quality on v14's target, as a
 diagnostic, so gate counts stay comparable with rounds 20-22.
+
+Optional cut-in charge (round 24; user decision, November 25, 2026: "All three"; off unless the
+constructor gets cut_in=traffic.highway_flow_rl_v14_cut_in.SETTINGS): after each step, every background
+vehicle braking below -3 m/s^2 whose SUMO leader within 40 m is one of our cars charges that car 0.25 per
+m/s^2 of the excess (reward term cut_in; report field v14_cut_in).
+
+Optional drive saturation (round 24, the same decision; off unless the constructor gets
+drive_saturation=traffic.highway_flow_rl_v14_saturation.SETTINGS, with the drive limit on): an override
+whose only cause is drive_grade is applied as before but not counted as an intervention (reward term,
+override counts, intervention fractions, merge samples); it is counted in v14_drive_limit.saturated.
 """
 from contextlib import contextmanager
 from copy import deepcopy
@@ -66,6 +76,8 @@ from traffic import highway_flow_rl_v14_rewards as v14
 from traffic import highway_flow_rl_v14_stop_fix as stop_fix_module
 from traffic import highway_flow_rl_v14_drive_target as drive_target_module
 from traffic import highway_flow_rl_v14_follow_gate as follow_module
+from traffic import highway_flow_rl_v14_cut_in as cut_in_module
+from traffic import highway_flow_rl_v14_saturation as saturation_module
 from traffic.highway_flow_context import flow_context
 from traffic.highway_flow_rl_v03_rewards import map_evidence
 from traffic.highway_flow_rl_v04_rewards import gap_plan as v04_gap_plan, quality_merge_eligible
@@ -75,8 +87,13 @@ NATIVE_DRAIN_SPEED_MODE = 31  # SUMO default, the mode every earlier version dra
 
 class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
     def __init__(self, *args, v14_settings=None, drive_limit=None, road_model_manifest=None, stop_fix=None,
-                 drive_target=None, follow_gate=None, **kwargs):
+                 drive_target=None, follow_gate=None, cut_in=None, drive_saturation=None, **kwargs):
         self.v14_settings = v14.validate_settings(v14_settings or v14.SETTINGS)
+        self.cut_in = None if cut_in is None else cut_in_module.validate_settings(cut_in)
+        self.drive_saturation = (None if drive_saturation is None else
+                                 saturation_module.validate_settings(drive_saturation))
+        if self.drive_saturation is not None and drive_limit is None:
+            raise ValueError('Drive saturation needs the drive limit on')
         self.stop_fix = None if stop_fix is None else stop_fix_module.validate_settings(stop_fix)
         self.drive_target = None if drive_target is None else drive_target_module.validate_settings(drive_target)
         self.follow_gate = None if follow_gate is None else follow_module.validate_settings(follow_gate)
@@ -88,7 +105,9 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
         self.road_grade = (None if self.drive_limit is None else
                            RoadGrade(args[0], road_model_manifest, spec=self.drive_limit['vehicle']))
         self._drive_patched = False
-        self.drive_stats = dict(decisions=0, limited=0, max_grade=-np.inf, min_ceiling_m_s2=np.inf)
+        self.drive_stats = dict(decisions=0, limited=0, saturated=0, max_grade=-np.inf, min_ceiling_m_s2=np.inf)
+        self._cut_in_step = {}
+        self.v14_cut_in_metrics = dict(decisions=0, charged=0, excess_m_s2=0., cut_in=0., per_car={}, events=[])
         super().__init__(*args, **kwargs)
 
     # --- optional drive limit -------------------------------------------------------------
@@ -137,8 +156,10 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
         if self.road_grade is not None:
             for info in result[4].values():
                 if isinstance(info, dict) and 'drive_grade' in (info.get('acceleration_bounds') or {}):
+                    saturated = info.get('drive_saturation') is not None
                     self.drive_stats['decisions'] += 1
-                    self.drive_stats['limited'] += int('drive_grade' in (info.get('override_causes') or ()))
+                    self.drive_stats['limited'] += int(saturated or 'drive_grade' in (info.get('override_causes') or ()))
+                    self.drive_stats['saturated'] += int(saturated)
         return result
 
     # --- control: one controller ------------------------------------------------------
@@ -166,7 +187,9 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
     # --- target ---------------------------------------------------------------------------
     def _reset_v06(self):
         super()._reset_v06()
-        self.drive_stats = dict(decisions=0, limited=0, max_grade=-np.inf, min_ceiling_m_s2=np.inf)
+        self.drive_stats = dict(decisions=0, limited=0, saturated=0, max_grade=-np.inf, min_ceiling_m_s2=np.inf)
+        self._cut_in_step = {}
+        self.v14_cut_in_metrics = dict(decisions=0, charged=0, excess_m_s2=0., cut_in=0., per_car={}, events=[])
         self._v14_cache, self._ramp = {}, {}
         self.v14_metrics = dict(yield_decisions=0, crossing_changed_target=0, crossing_limited_plans=0,
                                 ramp_decisions=0, ramp_limited=0, hook_mismatch=0, per_car={})
@@ -420,11 +443,54 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
             for key, value in extra.items():
                 totals[key] = totals.get(key, 0.) + value
             terms.update(extra)
+        if self.cut_in is not None:
+            excess, events = self._cut_in_step.get(agent, (0., []))
+            value = -self.cut_in['weight'] * excess
+            metrics = self.v14_cut_in_metrics
+            car = metrics['per_car'].setdefault(agent, dict(decisions=0, charged=0, excess_m_s2=0., cut_in=0.))
+            for row in (metrics, car):
+                row['decisions'] += 1
+                row['charged'] += int(excess > 0.)
+                row['excess_m_s2'] += excess
+                row['cut_in'] += value
+            for event in events:
+                metrics['events'].append(dict(event, time_s=round(self.time, 2), car=agent))
+            totals = self.v06_metrics['reward_terms']
+            totals['cut_in'] = totals.get('cut_in', 0.) + value
+            info['v14_cut_in'] = dict(excess_m_s2=excess, followers=[e['follower'] for e in events]) if events else None
+            terms['cut_in'] = value
         return terms
+
+    def _drive_saturation_exempt(self, agent, info, rewards):
+        """An override caused only by the drive bound: applied as before, not counted as an intervention."""
+        term = info['reward_terms'].get('intervention', 0.)
+        rewards[agent] -= term
+        info['reward_terms']['intervention'] = 0.
+        stats = self.stats
+        stats['reward_terms']['intervention'] = stats['reward_terms'].get('intervention', 0.) - term
+        stats['overrides'] -= 1
+        for name in info['override_causes']:
+            stats['override_causes'][name] -= 1
+            if stats['override_causes'][name] <= 0:
+                del stats['override_causes'][name]
+        info['drive_saturation'] = dict(causes=list(info['override_causes']),
+                                        requested_m_s2=info['requested_acceleration'],
+                                        applied_m_s2=info['applied_acceleration'])
+        info['override'], info['override_causes'] = False, []
 
     def _update_merge_metrics(self, agents, infos, rewards, terminated, truncated):
         """Diagnostic only: each merging car's rolling merge quality graded on the drive-aware target,
-        with v04's own samples, window and rule (rewards and the gate are unchanged)."""
+        with v04's own samples, window and rule (rewards and the gate are unchanged).
+
+        Round 24 first, before any inner metric reads the step's infos: drive saturations stop counting as
+        interventions, and the cut-in charges of the step just simulated are found (paid in _extra_rewards)."""
+        if self.drive_saturation is not None:
+            for agent in agents:
+                if saturation_module.saturated(infos[agent], self.drive_saturation):
+                    self._drive_saturation_exempt(agent, infos[agent], rewards)
+        if self.cut_in is not None:
+            controlled = [agent for agent in agents if agent in self.states]
+            self._cut_in_step = cut_in_module.charges(self.conn, self.states, controlled, self.cut_in)
         diagnostic = self.drive_target is not None or self.follow_gate is not None
         before = dict(self.quality_results) if diagnostic else None
         super()._update_merge_metrics(agents, infos, rewards, terminated, truncated)
@@ -461,7 +527,8 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
 
     def report(self):
         result = super().report()
-        version = (drive_target_module.REWARD_VERSION if self.drive_target is not None else
+        version = (cut_in_module.REWARD_VERSION if self.cut_in is not None else
+                   drive_target_module.REWARD_VERSION if self.drive_target is not None else
                    follow_module.REWARD_VERSION if self.follow_gate is not None else
                    v14.REWARD_VERSION if self.stop_fix is None else stop_fix_module.REWARD_VERSION)
         result.update(schema='highway_flow_rl_merge_env_v14', reward_version=version,
@@ -490,4 +557,13 @@ class HighwayFlowRLV14Env(HighwayFlowRLV12Env):
             stats = {k: (None if isinstance(v, float) and not np.isfinite(v) else v) for k, v in self.drive_stats.items()}
             result['v14_drive_limit'] = dict(settings=deepcopy(self.drive_limit), road_grade=deepcopy(self.road_grade.info),
                                              **stats)
+            if self.drive_saturation is not None:
+                result['v14_drive_limit']['saturation'] = dict(
+                    settings=dict(self.drive_saturation, causes=list(self.drive_saturation['causes'])),
+                    scope=('overrides caused only by the drive bound: applied, counted in saturated, not counted as '
+                           'interventions; limited counts every drive-bound clip, saturated or not'))
+        if self.cut_in is not None:
+            result['v14_cut_in'] = dict(settings=dict(self.cut_in), **deepcopy(self.v14_cut_in_metrics),
+                scope=('per decision: background vehicles braking below braking_m_s2 whose SUMO leader within '
+                       'max_gap_m is one of our cars; that car pays weight x the excess (reward term cut_in)'))
         return result

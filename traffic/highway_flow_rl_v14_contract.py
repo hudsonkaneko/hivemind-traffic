@@ -73,6 +73,22 @@ stop rules and validation cases):
   reference capped by the road target's leader and lane-end bounds; the merge-quality payments follow
   the gate. Validation summaries keep a diagnostic count on v14's target for comparison;
 - budget: not raised (the remaining 161,620 decisions, 3,306.7 s and one diagnostic episode).
+
+Round 24 changes against round 23 (same training rows, seeds, warm start, optimizer, drive limit, stop
+fix and follow gate), user decision of November 25, 2026: "All three", after the diagnosis "After round
+23" (documentation/highway-merge-training-plan-v14.md):
+- multi-seed validation: the 14 validation cases at their own seeds (rows 0-13, as in rounds 20-23), then
+  at two added seeds (rows 14-27 and 28-41). On 5 other seeds the round-16 starting policy passed on
+  average 4.2 of 14 cases, against 8 at the validation seeds;
+- the cut-in charge (traffic/highway_flow_rl_v14_cut_in.py, reward version
+  highway_flow_rl_merge_v14_cut_in): every traced LA native emergency was a background car braking
+  behind one of our merging cars, and no reward term saw it;
+- drive saturation (traffic/highway_flow_rl_v14_saturation.py): an override caused only by the drive
+  bound is applied but no longer counted as an intervention. Case 9's stable merges passed only in a
+  0.15 m/s^2 window, with grade clips counted as interventions on its upper side;
+- the free-road stop rule's minimum from 20 to 60 decisions, for three times the validation rows (its
+  factor of 2 against this round's initial validation is unchanged);
+- budget, below.
 """
 from copy import deepcopy
 import json
@@ -82,6 +98,8 @@ from traffic import highway_flow_rl_v14_rewards as v14
 from traffic import highway_flow_rl_v14_stop_fix as stop_fix
 from traffic import highway_flow_rl_v14_drive_target as drive_target
 from traffic import highway_flow_rl_v14_follow_gate as follow_gate
+from traffic import highway_flow_rl_v14_cut_in as cut_in
+from traffic import highway_flow_rl_v14_saturation as saturation
 from traffic.highway_flow_contract import file_digest
 from traffic.road_grade import DRIVE_LIMIT
 
@@ -145,6 +163,32 @@ ROUND22_BUDGET = dict(ROUND21_BUDGET, total_decisions=6730000, max_diagnostic_ep
 # diagnostic episode is this round's preflight, so no physics recording of its result fits.
 ROUND23_BUDGET = dict(ROUND22_BUDGET)
 
+# Round 24's validation: each case at its own seed and at these two. They are new: not the diagnosis's
+# 6951001-6951011 (the cut-in charge and the saturation rule were designed on those runs), and disjoint
+# from every training seed (9,100,000 and up) and the held-out seeds (8,500,000-8,500,005).
+ROUND24_VALIDATION_SEEDS = (6952001, 6952002)
+ROUND24_VALIDATION = dict(seeds_per_case=1 + len(ROUND24_VALIDATION_SEEDS), cases=14,
+    added_seeds=list(ROUND24_VALIDATION_SEEDS),
+    rows='0-13: each case at its own seed (as in rounds 20-23); 14-27 and 28-41: the same cases at the added seeds',
+    source='after round 23 the round-16 starting policy passed on average 4.2 of 14 cases on 5 other seeds, '
+           'against 8 at the validation seeds')
+
+
+def multi_seed_rows(rows, seeds=ROUND24_VALIDATION_SEEDS):
+    """The validation rows at their own seeds, then the same rows at each added seed."""
+    result = deepcopy(rows)
+    for seed in seeds:
+        for row in rows:
+            added = deepcopy(row)
+            added['seed'] = seed
+            result.append(added)
+    return result
+
+
+ROUND24_STOP_RULES = dict(deepcopy(ROUND21_STOP_RULES),
+    free_road_stop_regression=dict(deepcopy(ROUND21_STOP_RULES['free_road_stop_regression']), minimum=60,
+        minimum_source='round 21\'s 20 decisions for 14 validation rows, times 3 for round 24\'s 42 rows'))
+
 ROUND20_AUTHORIZATION = (
     ' Round 20, user decisions of November 19, 2026: "Yes, policy only" (v14), "Yes, build it" '
     '(the drive limit) and "Yes, raise it" (the study budget). This round trains; held-out '
@@ -190,6 +234,29 @@ ROUNDS = {
                  'a car can follow, checked with a scripted follower, then round 23 within the remaining '
                  'budget). This round trains; held-out evaluation stays unauthorized.')),
 }
+ROUND23_AUTHORIZATION = ROUNDS[23]['authorization']
+
+# Round 24's budget: PENDING the user's budget decision; until then it is round 23's (the remaining
+# 58,850 decisions, 2,226.0 s and no diagnostic episode), which does not fit a round. Proposed
+# (documentation/highway-merge-training-plan-v14.md, "Round 24's budget"): total decisions +141,150 to
+# 6,871,150, wall time +3,500 s to 64,700 s, 4,800 s per round (five 42-row validations of about 413 s
+# each) and diagnostic episodes +2 to 174 (the preflight and one physics recording).
+ROUND24_BUDGET = dict(ROUND23_BUDGET)
+
+ROUNDS[24] = dict(learning_profile='merge_v14_r24_multi_seed_cut_in', training=True, base_round=BASE_ROUND,
+    parent_profile='merge_v14_r23_follow_gate',
+    budget=ROUND24_BUDGET, evaluation_interval_decisions=50000, stop_rules=ROUND24_STOP_RULES,
+    v14_drive_limit=json.loads(json.dumps(DRIVE_LIMIT)),
+    reward_version=cut_in.REWARD_VERSION,
+    v14_stop_fix=dict(stop_fix.SETTINGS, obligations=list(stop_fix.SETTINGS['obligations'])),
+    v14_follow_gate=dict(follow_gate.SETTINGS, reward_caps=list(follow_gate.SETTINGS['reward_caps'])),
+    v14_cut_in=dict(cut_in.SETTINGS),
+    v14_drive_saturation=dict(saturation.SETTINGS, causes=list(saturation.SETTINGS['causes'])),
+    v14_validation=deepcopy(ROUND24_VALIDATION),
+    authorization=ROUND23_AUTHORIZATION + (
+        ' Round 24, user decision of November 25, 2026: "All three" (multi-seed validation, a cut-in charge '
+        'and grade-only clips not counted as interventions). This round trains; held-out evaluation stays '
+        'unauthorized.'))
 
 
 def base_config():
@@ -227,6 +294,12 @@ def build_config(round_index):
         cfg['v14_drive_target'] = deepcopy(row['v14_drive_target'])
     if 'v14_follow_gate' in row:
         cfg['v14_follow_gate'] = deepcopy(row['v14_follow_gate'])
+    for key in ('v14_cut_in', 'v14_drive_saturation'):
+        if key in row:
+            cfg[key] = deepcopy(row[key])
+    if 'v14_validation' in row:
+        cfg['v14_validation'] = deepcopy(row['v14_validation'])
+        cfg['validation_rows'] = multi_seed_rows(cfg['validation_rows'], tuple(row['v14_validation']['added_seeds']))
     return cfg
 
 

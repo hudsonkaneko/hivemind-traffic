@@ -4,6 +4,34 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-25 - Round 24 designed: three seeds per case, a cut-in charge and drive saturation (budget pending)
+
+- **User decision:** "All three", for the three changes the round-23 diagnosis supported.
+  Not trained yet. The budget raise is the user's decision.
+- **Multi-seed validation.** Each of the 14 cases runs at its own seed and at two new seeds,
+  6952001 and 6952002, giving 42 rows.
+  - The free-road stop rule's minimum goes from 20 to 60 for the three times as many rows.
+- **Cut-in charge** (`traffic/highway_flow_rl_v14_cut_in.py`). A background car braking
+  harder than 3 m/s² behind one of our cars, within 40 m, charges that car 0.25 per m/s²
+  of the excess.
+  - On the diagnosis traces it charges 11 of 12 runs with a native emergency, and at most
+    22.4 on the 41 without one.
+- **Drive saturation** (`traffic/highway_flow_rl_v14_saturation.py`). A clip caused only by
+  the grade-limited drive is applied but no longer counts as an intervention.
+  - Case 9's stable merges now pass with the merging cars' requests shifted anywhere from
+    −0.2 to +0.2 m/s². Before, the window was −0.15 to 0.
+  - At the validation seed, case 9 and case 11 fail only on their cut-in emergency.
+- **Starting policy, all 42 rows (uncharged):** 19 of 42 pass.
+  - At their own seeds: 8 of 14, the same cases as before.
+  - Only 4 cases pass at all three seeds; no merge case does.
+  - A 42-row validation takes about 413 s.
+- **Budget requested:**
+  - +141,150 decisions;
+  - +3,500 s of wall time;
+  - a 4,800 s per-round limit;
+  - +2 diagnostic episodes.
+- Details: `documentation/highway-merge-training-plan-v14.md`, "Round 24".
+
 ## 2026-11-24 - After round 23: one seed per case, a narrow case-9 window, and the cut-ins
 
 - **Development checks only** (SUMO, no training, not charged), at the user's direction
