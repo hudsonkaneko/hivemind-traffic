@@ -4,10 +4,49 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-25 - After round 24: the updates make stopped merging cars stay stopped
+
+- **Development checks only** (no training, not charged), at the user's direction
+  ("Diagnose the stops"). Saved traces were fed back through the saved actors, and SUMO
+  ran rows 37 and 39 (cases 9 and 11 at seed 6952002).
+- **Correction:** round 24 made 3 actor updates, not 14. Its 14 PPO episodes are merged 4
+  per update, and the last 2 were still buffered.
+- **In merge states, the round-16 starting actor works like a latch.**
+  - Its request follows its measured acceleration (0.46–0.88 per m/s²) and its previous
+    request (0.11–0.15), and hardly its speed (at most 0.006 per m/s).
+  - So it brakes to about −3.9 m/s² or climbs to the drive limit, and small offsets
+    decide which.
+- **The 3 updates lowered case 9's merge-target requests by 0.04–0.10 m/s²,** most at
+  standstill. Other decisions are unchanged (the anchor holds them).
+  - A stopped car's settling request fell from about +0.13 to +0.01–0.04 m/s². It is
+    positive in 39–54% of standstill states, against 74% before.
+  - So stopped cars now stay stopped, for up to 4 s in case 9.
+- **Swapping the starting actor back in on merge-target decisions alone removes the extra
+  stops:** row 37 goes from 44 to 5, and row 39 from 35 to 22 (the start's level).
+  - Low-speed decisions (1 m/s or less) carry about half of case 9's extra stops and most
+    of case 11's.
+  - A uniform offset does not reproduce the stops: −0.02 to −0.12 m/s² on the starting
+    actor gives 1–9 in row 37.
+- **The round-21 braking charge misses a held car.** It charges requests below
+  −0.2 m/s², and a held car asks for 0 to −0.16.
+- **The shield-consistency loss pushes these requests down.**
+  - Since round 20 its ceiling includes the uphill drive limit. LA ramp decisions above
+    that band made 98% or more of the shield loss in each PPO batch.
+  - Its gradient lowers case 9's merge requests most at standstill.
+  - In round 19 (no drive limit), sampled merge requests were never above the shield's
+    ceiling; in round 24, 7% were.
+  - How much PPO itself adds is not established: the batches' critics were not saved.
+- **What it supports (each the user's decision):**
+  - take the drive limit out of the shield's ceiling;
+  - charge free-road stopped decisions directly;
+  - anchor slow merge decisions to the starting actor.
+- Details: `documentation/highway-merge-training-plan-v14.md`, "After round 24:
+  diagnosis".
+
 ## 2026-11-25 - Round 24: stopped at its first check by the free-road stop rule (19 of 42 rows)
 
 - **Stopped by the free-road stop rule** at update 32: 51,226 decisions, 1,218.7 s, and
-  14 actor updates (18 episodes were critic-only).
+  3 actor updates from 14 PPO episodes (18 episodes were critic-only).
   - Validation had 101 free-road stopped decisions, above the limit of 86.
   - The new stops are southbound LA merges at seed 6952002: case 9's `agent_0` (1 → 44)
     and case 11's `agent_0` (22 → 35).

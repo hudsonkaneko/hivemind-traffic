@@ -1698,10 +1698,126 @@ recording was made: the round produced nothing better than its start.
 - **Drive saturation removed most of the counted interventions** (688 of 730 drive clips
   at the start). It did not stop the southbound cars from braking to a stop under
   training.
-- **At weight 0.25, the cut-in charge did not teach the cars to yield in 14 actor
-  updates.** The PPO episodes saw little of it: 4.2 m/s² in all, against 54.8 in the
-  critic-only episodes.
+- **At weight 0.25, the cut-in charge did not teach the cars to yield in 3 actor
+  updates** (from 14 PPO episodes). The PPO episodes saw little of it: 4.2 m/s² in all,
+  against 54.8 in the critic-only episodes.
 - **Four of the last five rounds ended the same way:** after a few PPO updates from the
   round-16 policy, the southbound LA merges brake to a stop. Round 21 is the exception.
   Changing the reward target (22), the gate (23), or adding cut-in and saturation (24)
   has not changed that. Why the updates move the actor there is not established.
+
+## After round 24: diagnosis (November 25)
+
+The user asked for this ("Diagnose the stops") in answer to: should I find out why training
+makes the southbound merges stop, using uncharged checks only? Nothing here trained or was
+charged to the ledger. Two kinds of check:
+- saved validation and training traces fed back through the saved actors (no SUMO, no
+  optimizer steps);
+- SUMO runs of rows 37 and 39 (cases 9 and 11 at seed 6952002), in
+  `outputs/test-runs/r24-shift-01` and `r24-hybrid-01` in this worktree.
+
+The probe reproduces the recorded requests: the median difference on the initial validation
+is 0.000 m/s².
+
+### A correction: round 24 made 3 actor updates, not 14
+
+The round's 32 numbered "updates" are episodes. Training merges 4 episodes per PPO update,
+so its 14 episodes after the critic warmup made 3 actor updates. They came after episodes
+22, 26 and 30, with 13, 147 and 150 optimizer steps. Episodes 31 and 32 were still
+buffered. The round-24 records above and in the CHANGELOG and roadmaps said "14 actor
+updates"; they are corrected.
+
+### In merge states, the starting actor works like a latch
+
+On case 9's saved merge-target decisions (row 37, both cars), the starting actor's request:
+- follows its measured acceleration: 0.46–0.88 m/s² per m/s² of it, most at low speed;
+- adds 0.11–0.15 m/s² per m/s² of its previous request;
+- hardly depends on its own speed: at most 0.006 m/s² per m/s.
+
+So once it starts braking it escalates to about −3.9 m/s², and once it accelerates it
+climbs to the drive limit. Small offsets decide which.
+
+Both actors start braking case 9's `agent_0` from about 13.5 m/s, 77 m before the line.
+Both bring it to a standstill 27–34 m before the line more than once. The starting actor
+pulls away at once each time; update 32 holds it for up to 4 s.
+
+### What the three updates changed
+
+- **Case 9's merge-target decisions:** requests are 0.04–0.10 m/s² lower. The drop is largest at
+  standstill: −0.09 to −0.10 below 0.1 m/s, against −0.04 to −0.05 above 4 m/s.
+- **Decisions without a merge target:** unchanged (−0.001 m/s²). The anchor holds them.
+- **The loop gains did not change:** 0.87 → 0.88 at standstill.
+- **A stopped car's settling request fell.** With its previous request fed back and no
+  measured acceleration, the request a stopped car settles on fell from about +0.13 to
+  +0.01–0.04 m/s². It is positive, so the car pulls away, in 39–54% of case 9's standstill
+  states, against 74% for the starting actor.
+
+### The stops come from the merge-target decisions, half or more at low speed
+
+SUMO runs mixing the two actors only on merge-target decisions (free-road stopped
+decisions):
+
+| Run | Row 37 (case 9) | Row 39 (case 11) |
+|---|---|---|
+| Starting actor | 1 | 22 |
+| Update 32 | 44 | 35 |
+| Update 32, with the starting actor on every merge-target decision | 5 | 22 |
+| Update 32, with the starting actor at 1 m/s or less | 21 | 20 |
+| Update 32, with the starting actor at 0.1 m/s or less | 25 | 24 |
+| Starting actor, with update 32 at 1 m/s or less | 18 | 32 |
+| Starting actor, with update 32 at 0.1 m/s or less | 18 | 31 |
+
+- **The low-speed decisions carry about half of case 9's extra stops and most of case
+  11's.** The rest of case 9's come from merge-target decisions at speed.
+- **It is not an average offset.** Subtracting 0.02–0.12 m/s² from every merge-target
+  request of the starting actor gives 1–9 stops in row 37, not 44. Adding 0.055 m/s² to
+  update 32's still gives 36 (row 39: 30).
+- **The braking charge added in round 21 does not see a held car.** It charges requests
+  below −0.2 m/s², and a held car asks for 0 to −0.16 m/s². In the 14 PPO episodes, 32
+  of the 89 free-road stopped decisions asked for between −0.2 and 0 m/s² (sampled) and
+  were not charged. 38 asked for less and were charged, and 19 asked to accelerate.
+
+### Where the downward push comes from: the shield, at least in part
+
+The shield-consistency loss (weight 50) holds the actor's mean request inside a band:
+from measured − 0.35 up to the lowest of measured + 0.35, ceiling − 0.05 and the speed-limit
+ramp (m/s²). Since round 20 the uphill drive limit is part of the ceiling input.
+
+- **LA ramp decisions produced 98% or more of the shield loss** in each of the three PPO
+  batches. Southbound decisions produced 35%, 98% and 99%, and Pasadena northbound most of
+  the rest of the first.
+- **On those decisions above the band, the ceiling bound was the binding one in 52–97% of
+  cases.** On the southbound merge-target decisions it was 71–97%.
+- **The shield's gradient at the starting actor lowers case 9's merge-target requests.**
+  It lowers them most at standstill: per unit step, −12.2 below 0.1 m/s against −5.4 to
+  −9.5 above it. That is roughly the shape of the measured change.
+- **Timing.** In round 19, before the drive limit, sampled requests on merge-target
+  decisions were never above ceiling − 0.05 (0% of 12,797), and the ceiling was under
+  1.9 m/s² in 6% of them. In round 24 the figures are 7% and 88%.
+  - The stops that ended rounds 20, 22, 23 and 24 all came after round 20 added the drive
+    limit to the ceiling.
+  - Round 24 removed round 20's other change (grade clips counted as interventions), and
+    the stops stayed.
+- **Not established: how much PPO adds.**
+  - On the logged first minibatch of each update, PPO's actor gradient had cosine −0.89,
+    +0.28 and +0.56 with the shield's.
+  - The critics that scored these batches were not saved, so PPO's push cannot be replayed
+    or separated.
+
+### What it supports (each the user's decision)
+
+- **Take the drive limit out of the shield's ceiling.**
+  - Keep the rate band, the speed-limit ramp, and the following and lane-end ceilings.
+  - Since round 24, asking past the drive limit costs nothing, and the environment clips it
+    anyway.
+  - The trainer needs the ceiling without the drive bound, so the collector would have to
+    save it with each decision.
+- **Charge a held car.** Charge free-road stopped decisions directly, whatever the request,
+  so PPO is paid to pull away. The definition is the stop rule's own: under 0.1 m/s, no
+  leader within 20 m, and a target of at least 5 m/s.
+- **Hold slow merge decisions to the starting actor.** This extends the anchor to
+  merge-target decisions under 1 m/s. It blocks the drift where it does the damage, but
+  also blocks learning there.
+- **Budget:** 148,774 decisions, 4,504.3 s and one diagnostic episode remain. That is enough
+  for one short round, whose preflight would use the last episode. A round of the usual
+  length needs a raise.
