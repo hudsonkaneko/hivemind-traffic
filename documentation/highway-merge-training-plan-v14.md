@@ -1335,3 +1335,129 @@ diagnostic episodes are left.
   targets, so changing the target alone has not removed it.
 - **No round of this length fits in the remaining budget.** Any further training needs a
   budget decision from the user.
+
+## After round 23: diagnosis (November 24)
+
+**User questions (November 24, 2026):** "would raising budget help?", then "Diagnose
+first", for case 9's braking and the LA cut-ins.
+
+Every check below is a development check: SUMO only, no training, not charged to the
+study ledger. Outputs are under `outputs/test-runs/` in the Claude worktree:
+`case9-probe-01` and `-02`, `cutin-probe-01` and `seed-probe-01`.
+- **Policies:** the round-16 starting policy and round 23's checkpoints at updates 31 and
+  56. The checks rerun round 23's configuration.
+- **Reproduction:** the starting policy on case 9 matches round 23's initial validation
+  exactly (29 overrides, both stable merges, the `main_11` emergency at 6.3 s).
+- **Other seeds:** 6951001–6951011 were my choice, not designed validation seeds. They
+  change the traffic on the same roads. In the 8-car cases that also changes the number
+  of merging cars (1–3).
+
+### The validation count is one seed per case
+
+The starting policy was run on 5 other seeds for every validation case (11 for case 9).
+
+| Case | Validation seed | Other seeds passed |
+|---|---|---|
+| 01 v05 cruise, 03 I-110 following | pass | 5 of 5 |
+| 02 v05 passing, 05 60 mph cruise | pass | 4 of 5 |
+| 07 4-lane 180 m ramp start, 12 LA following | pass | 1 of 5 |
+| 06 2-lane 180 m ramp start, 13 LA passing | pass | 0 of 5 |
+| 04 120 m ramp start | fail | 1 of 5 |
+| 00 I-110 merge, 08–11 LA merges | fail | 0 of 5 |
+
+- **On average 4.2 of 14 cases pass per set of other seeds, against 8 at the validation
+  seeds.**
+- **Only the cruise, following and passing cases on the v05 and I-110 roads are robust.**
+- **Most other-seed failures are rolling merge quality, raw-request jerk and per-car
+  comfort/control.**
+- **So "8 of 14, unchanged" in rounds 20–23 says little about progress either way.** One
+  case gained or lost is often within seed luck.
+
+### Case 9: the stable merges pass in a narrow window
+
+- **The reward is not the cause.** Under round 23's reward, the lead merging car
+  (`agent_5`) scores +166 when it merges and −374 when it brakes to a stop (update 56).
+  Rounds 21 and 22 rank the two the same way.
+- **Training does meet the braking.**
+  - Training episodes brake to a stop on many merge rows. The southbound 8-car training
+    row stopped in all 3 of its round-23 episodes.
+  - But 56 updates are 56 episodes across 20 rows, about 3 per row, and only 38 of them
+    updated the actor.
+- **Other seeds.**
+  - The starting policy completes every stable merge on 3 of 12 seeds. It has free-road
+    stops on 4 of the 11 other seeds, and 2 have collisions.
+  - Update 56 completes every stable merge on 2 of 12 and has free-road stops on 7 of
+    the 11.
+  - No run of any policy passes all of case 9's gates.
+- **Bias test.** At the validation seed, a constant was added to the merging cars'
+  acceleration requests. The starting policy completes both stable merges only from
+  −0.15 to 0 m/s²:
+  - at −0.20 `agent_5` stops and fails;
+  - from +0.05 up at least one merge fails: the cars ask for more than the car can give
+    up the grade.
+    `drive_grade` clips the request, the clip counts as an intervention, and the merges
+    fail on intervention fraction.
+  - Update 56 fails at every bias from +0.05 to +0.5.
+- **The starting policy rides at the grade limit.** At 6.1 s `agent_5` asks for
+  1.005 m/s² against a ceiling of 1.027.
+- **If grade clipping were not counted as an intervention** (a recount of the same runs,
+  not a new run), the starting policy's cars would have 0–0.9% other interventions from
+  +0.05 to +0.2. So that side of the window would no longer fail on interventions.
+  - Update 56's `agent_5` would have 0–0.4% at +0.1 and +0.2.
+  - The other gates were not rechecked under this recount.
+- **What it means:** the stable merges sit between two failure modes about 0.15 m/s²
+  apart. One side is braking into a stop; the other is asking past the grade limit. The
+  training of rounds 20–23 moved the policy by more than that.
+
+### The LA emergencies are cut-ins, and following the plan avoids them in the one-car cases
+
+Cases 8–11 were run on 6 seeds each with the starting policy and with the scripted car
+that follows v14's target (the plan's yields). TraCI recorded every vehicle's lane,
+speed, acceleration and leader after each decision.
+
+| | Starting policy | Plan follower |
+|---|---|---|
+| Runs with a native emergency (of 24) | 7 | 3 |
+| One-car cases (10, 11) passing every gate (of 12) | 0 | 7 |
+| 8-car cases (8, 9) with an emergency (of 12) | 3 | 3 |
+
+- **Attribution.**
+  - Every emergency whose leader could be traced is a car braking behind one of our
+    merging cars on junction lane `:n1_0_0`.
+  - Gaps were 0.3–30 m, with the merging car 1.8–14.5 m/s slower.
+  - One follower emergency (case 9, seed 6951005) was not attributed by this method.
+- **No reward term charges a cut-in.** The neighbor-braking sample missed the junction
+  car in the round-22 troubleshooting; that was not rechecked here.
+- **A candidate charge, measured.** Per decision: a car whose leader within 80 m is one
+  of our cars brakes harder than −3 m/s². That car is charged the excess.
+  - It fires on every attributed emergency where the braking car is a background car
+    (19.8–84.5 m/s²·decisions per episode). As defined it skips our own cars, so it
+    misses case 9 seed 6951003, where the braking car was our `agent_1`.
+  - It is small elsewhere (at most 7.1), with three kinds of exception:
+    - **spawn transients at 0.3–0.6 s,** with the leader 55–126 m ahead. A gap or
+      entry-time condition would exclude them.
+    - **two plan-follower runs (10.4 and 22.4).** The follower entered the mainline at
+      8.5 m/s, 37 m ahead of a car at 19.5–20.9 m/s, which braked at 5.8–8.4 m/s². That
+      is a real hard brake, so the plan's crossing check accepts gaps a slow entry cannot
+      use.
+    - **update 56 in case 8 (26.6):** `main_4` braked at 8.9 m/s², just under SUMO's
+      emergency level of 9, behind `agent_0`. `agent_0` had entered on the junction 16.9 m
+      ahead and kept braking. That is a near-emergency the gate does not see.
+
+### What it means for the budget
+
+- **More decisions of the same training are unlikely to help.** Rounds 20 and 21 ran to
+  their final validations and stayed at 7–8. The case-9 window is narrower than the
+  drift between periodic checks.
+- **A gate count from one seed per case cannot show progress.** The starting policy's 8
+  is about 4 on other seeds.
+- **Changes that the diagnosis supports, each the user's decision:**
+  1. **Validate on several seeds per case** (for example 3), so a round's result
+     outlasts seed luck. This costs validation time.
+  2. **Charge cut-ins** with the follower-braking measure above, gated on gap or entry
+     time.
+  3. **Decide whether a request above the grade limit is an intervention.** Now it is
+     counted. The alternative is to clip it as full throttle without counting it, or to
+     scale the action range to what the drive allows.
+- **None of these was trained or graded end to end.** Each needs a declared round and a
+  budget decision.

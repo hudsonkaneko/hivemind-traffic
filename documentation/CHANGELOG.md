@@ -4,6 +4,38 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-24 - After round 23: one seed per case, a narrow case-9 window, and the cut-ins
+
+- **Development checks only** (SUMO, no training, not charged), at the user's direction
+  ("Diagnose first").
+- **The validation count is one seed per case.** On 5 other seeds per case, the starting
+  policy passes on average 4.2 of 14, against 8 at the validation seeds.
+  - Cases 06 and 13 pass on none of those seeds; cases 07 and 12 on 1 of 5.
+  - So "8 of 14, unchanged" in rounds 20–23 says little about progress.
+- **Case 9's stable merges pass in a window about 0.15 m/s² wide.** At the validation
+  seed, the starting policy completes both only with its merging cars' requests shifted
+  by −0.15 to 0 m/s².
+  - Lower, a car brakes to a stop.
+  - Higher, the cars ask past the grade limit. `drive_grade` clips the request, and the
+    clip counts as an intervention.
+  - Update 56 has no working shift. The reward is not the cause: it scores braking far
+    below merging (−374 against +166).
+- **The LA emergencies are cut-ins.** Every attributed one is a car braking behind one of
+  our merging cars on the junction (gaps 0.3–30 m, closing 1.8–14.5 m/s).
+  - Following the plan's yields removes them in the one-car cases: 0 of 12 runs, with 7
+    of 12 passing every gate. The starting policy had 4 emergencies and no full passes.
+  - In the 8-car cases it still causes 3 of 12.
+- **A candidate cut-in charge was measured:** a car braking harder than −3 m/s² behind
+  one of our cars. It flags every attributed background-car emergency and a
+  near-emergency at 8.9 m/s². It needs a gap or entry-time condition for spawn
+  transients.
+- **What it supports (each the user's decision):**
+  - validate on several seeds per case;
+  - charge cut-ins;
+  - decide whether a request past the grade limit is an intervention.
+- Details: `documentation/highway-merge-training-plan-v14.md`, "After round 23:
+  diagnosis".
+
 ## 2026-11-24 - Round 23: the followable merge-quality gate (stopped at its second check; 8 of 14 gates)
 
 - **Stopped by the merge speed-match floor** at update 56 (102,770 decisions, 1,078.1 s).
