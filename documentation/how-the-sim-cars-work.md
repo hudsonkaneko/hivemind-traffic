@@ -218,6 +218,13 @@ reference instead. It starts at the car's speed and moves toward the road target
 from the car's speed after a yield. The reward target is that reference, capped by the
 leader and lane-end bounds.
 
+Round 24 added two things:
+- **A cut-in charge.** When a background car brakes harder than 3 m/s² with one of our cars
+  ahead of it within 40 m, that car pays 0.25 per m/s² of the excess, every decision.
+- **Drive saturation.** A request clipped only because the car can't accelerate that hard
+  on the grade is still clipped, but it no longer counts as an intervention. The
+  unsafe-request term still charges the excess.
+
 ## How it is graded (validation gates)
 
 A validation case passes only if all of these hold:
@@ -241,6 +248,8 @@ A validation case passes only if all of these hold:
     faster than the car can accelerate (round 22's finding).
   - In round 23, a yield-entry car matches if it is within 2 m/s of the span between
     the reference above and the road target.
+  - From round 24, each of the 14 validation cases runs at its own seed and at two more
+    (42 rows). Rows 0–13 are the cases at their own seeds, as before.
 - **Cruise and passing:** near the legal speed, no avoidable braking, and passing
   cases must pass.
 
@@ -283,6 +292,12 @@ The 14 validation cases are:
   - Gates held at 8 of 14. The speed-match floor stopped it at its second check: the
     southbound 8-car merge's cars braked to a stop again.
   - Why is not established.
+- **Round 24** validated every case at three seeds, charged cut-ins, and stopped counting
+  grade-only clips as interventions (51,226 decisions).
+  - Before training, 19 of 42 rows passed, 8 of 14 at the cases' own seeds.
+  - The free-road stop rule stopped it at its first check: southbound LA merges braked
+    to a stop again, and cut-ins grew. Rows passed held at 19.
+  - Why the updates do this is not established.
 - **Physics check:** with the policy driving a PhysX car on the LA model, the
   southbound merge has no collision. But the stable merge fails on interventions:
   - the car can't make the 1.6–1.7 m/s² the policy asks for up the ramp's grade;

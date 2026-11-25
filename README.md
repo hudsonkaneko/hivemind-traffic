@@ -57,8 +57,17 @@ how it is rewarded and graded.
   merges. Slow, lazy and stopped cars still fail.
   - Gates held at 8 of 14. The merge speed-match floor stopped it at update 56 (102,770
     decisions): the southbound 8-car merge's cars braked to a stop again.
-  - Nothing is promoted. 58,850 study decisions and no diagnostic episodes remain, so
-    any further round needs a budget decision.
+  - Nothing is promoted.
+- **Round 24 (three seeds per case, a cut-in charge, drive saturation) was stopped at its
+  first check.** Each validation case now runs at three seeds (42 rows). A car that makes
+  a background car brake hard behind it is charged. A clip caused only by the drive on a
+  grade no longer counts as an intervention.
+  - Before training, the round-16 policy passes 19 of 42 rows. Only 4 cases pass at all
+    three seeds, and no merge case does.
+  - The free-road stop rule stopped it at update 32 (51,226 decisions). The southbound
+    LA merges braked to a stop again (43 → 101 free-road stopped decisions), and cut-ins
+    grew. Rows passed held at 19.
+  - Nothing is promoted. 148,774 study decisions and one diagnostic episode remain.
 - **Physics drive (videos and checks; training stays in SUMO).** The policy can drive
   a PhysX car (the Americano) on the LA model's own deck colliders. A low-level
   controller turns each command into torque and steering, and the car's pose is
@@ -66,7 +75,7 @@ how it is rewarded and graded.
   collision. But it can't make the acceleration the policy asks for up the ramp's
   grade, so v14's intervention count rises from 1.4% to 33.6%. See the v14 plan's
   physics-drive section and `scripts/record_highway_flow_v14_physics.py`.
-- **Drive limit (on in rounds 20–23).** v14 can cap each controlled
+- **Drive limit (on in rounds 20–24).** v14 can cap each controlled
   car's acceleration at what the Americano's drive gives on the road model's grade
   (`traffic/road_grade.py`; checked against PhysX within 0.02 ± 0.04 m/s²). SUMO training
   then sees the same limit as the physics car.

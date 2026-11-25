@@ -1642,3 +1642,66 @@ round 24: the full round, or the cheaper option?".
     still a gate, and `v14_drive_limit.saturated` is reported so this shows.
   - **Stop rules see three times the rows.** A new colliding row at any of the three
     seeds stops the round.
+
+### Round 24 result
+
+**Stopped by the free-road stop rule at its first periodic validation.** At update 32
+(51,226 decisions, 1,218.7 s), validation had 101 free-road stopped decisions, above the
+limit of 86 (twice the initial 43). 18 of the 32 episodes were critic-only, so the actor
+was updated on 14.
+
+| Validation | Rows passed (of 42) | Own seeds (of 14) | Cases at all 3 seeds | Merge speed match | Free-road stops | Collisions | Rows with a native emergency | Cut-in excess (m/s²) | Pooled interventions | Drive saturations |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Initial | 19 | 8 | 4 | 0.537 | 43 | 6 | 7 | 279.9 | 0.68% | 688 |
+| Update 32 (~51k) | 19 | 8 | 4 | 0.492 | **101** | 4 | 7 | **422.4** | 0.67% | 558 |
+
+- **The initial validation reproduced the uncharged check exactly** (19 of 42, 0.537, 43
+  free-road stops, 6 collisions, −70.0 of cut-in reward).
+- **The new free-road stops are southbound LA merges at seed 6952002:**
+  - row 37 (case 9, 8 cars): `agent_0`, 1 → 44;
+  - row 39 (case 11, 1 car): `agent_0`, 22 → 35;
+  - row 24 (case 10 at 6952001): 5 → 7.
+
+  It is the same southbound braking that ended rounds 20, 22 and 23.
+- **The cut-in charge did not reduce cut-ins; they grew by half:**
+  - row 23 (case 9 at 6952001): 60.5 → 165.5;
+  - case 9 at its own seed: 50.7 → 78.3;
+  - case 8 at its own seed: 19.8 → 35.6.
+- **Case 9's lead car slowed.** At its own seed, `agent_5`'s speed match fell from 0.98 to
+  0.26. Case 9 now also fails merge quality and raw-request jerk.
+- **Two rows swapped,** so the count is unchanged:
+  - row 20 (case 6, 2-lane 180 m ramp start, at 6952001) went from pass to fail, with
+    0 → 160 overrides;
+  - row 35 (case 7, 4-lane 180 m ramp start, at 6952002) went from fail to pass.
+- **Better:**
+  - row 22 (case 8 at 6952001) no longer collides and lost its emergency. Row 36 (case 8
+    at 6952002) gained one;
+  - row 21's overrides fell from 93 to 0, and row 23's from 70 to 18.
+- **Best checkpoint:** the initial validation's, so `best.pt` is the round-16 starting
+  policy.
+
+**Training episodes** (stochastic, 32 complete episodes over the 20 training rows):
+- free-road stops: 112 in the 18 critic-only episodes, 89 in the 14 PPO episodes;
+- cut-in excess: 54.8 critic-only, 4.2 PPO;
+- collisions: 2, both critic-only.
+- **The starting actor's own rollouts stop.** The southbound 1-car row stopped for 31
+  free-road decisions and the 240 m ramp-start row for 68, before any actor update.
+
+**Budget:** charged 1,218.7 s and 51,226 decisions. Left on the shared ledger: 148,774
+decisions, 4,504.3 s (with the 900 s final reserve) and one diagnostic episode. No physics
+recording was made: the round produced nothing better than its start.
+
+**What it means:**
+- **Multi-seed validation did its job.** The count held at 19 of 42 while the merge speed
+  match, free-road stops and cut-ins got worse. One seed per case would have shown "8 of
+  14, unchanged" here too.
+- **Drive saturation removed most of the counted interventions** (688 of 730 drive clips
+  at the start). It did not stop the southbound cars from braking to a stop under
+  training.
+- **At weight 0.25, the cut-in charge did not teach the cars to yield in 14 actor
+  updates.** The PPO episodes saw little of it: 4.2 m/s² in all, against 54.8 in the
+  critic-only episodes.
+- **Four of the last five rounds ended the same way:** after a few PPO updates from the
+  round-16 policy, the southbound LA merges brake to a stop. Round 21 is the exception.
+  Changing the reward target (22), the gate (23), or adding cut-in and saturation (24)
+  has not changed that. Why the updates move the actor there is not established.

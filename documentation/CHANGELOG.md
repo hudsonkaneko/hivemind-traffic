@@ -4,6 +4,31 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-25 - Round 24: stopped at its first check by the free-road stop rule (19 of 42 rows)
+
+- **Stopped by the free-road stop rule** at update 32: 51,226 decisions, 1,218.7 s, and
+  14 actor updates (18 episodes were critic-only).
+  - Validation had 101 free-road stopped decisions, above the limit of 86.
+  - The new stops are southbound LA merges at seed 6952002: case 9's `agent_0` (1 → 44)
+    and case 11's `agent_0` (22 → 35).
+- **Validation, initial to update 32:**
+  - 19 of 42 rows passed at both, 8 of 14 at the cases' own seeds, and 4 cases at all
+    three seeds;
+  - merge speed match 0.537 → 0.492;
+  - collisions 6 → 4.
+- **Cut-ins grew instead of shrinking:** excess braking 279.9 → 422.4 m/s². At its own
+  seed, case 9's lead car's speed match fell from 0.98 to 0.26.
+- **The initial validation reproduced the uncharged check exactly.**
+  - Drive saturation took 688 of 730 drive clips out of the intervention count.
+- **Four of the last five rounds ended the same way:** after a few PPO updates from the
+  round-16 policy, the southbound LA merges brake to a stop. Why the updates move the
+  actor there is not established.
+- `best.pt` is the starting policy. No physics recording was made, nothing is promoted,
+  and there is no held-out evaluation.
+- **Ledger:** 6,722,376 of 6,871,150 decisions, 60,195.7 of 64,700 s, and 173 of 174
+  diagnostic episodes.
+- Details: `documentation/highway-merge-training-plan-v14.md`, "Round 24 result".
+
 ## 2026-11-25 - Round 24 declared: three seeds per case, a cut-in charge and drive saturation
 
 - **User decisions:** "All three", for the three changes the round-23 diagnosis supported,
