@@ -69,3 +69,4 @@ configs/training/highway-flow-rl-v14-round20.json text eol=crlf
 configs/training/highway-flow-rl-v14-round21.json text eol=lf
 configs/training/highway-flow-rl-v14-round22.json text eol=lf
 configs/training/highway-flow-rl-v14-round23.json text eol=lf
+configs/training/highway-flow-rl-v14-round24.json text eol=lf

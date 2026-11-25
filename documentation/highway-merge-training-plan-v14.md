@@ -1609,3 +1609,36 @@ A 42-row validation takes about 413 s. Round 24 runs five of them: initial, thre
   That is +141,150 decisions, +2,300 s and +2 episodes. It gives one periodic check
   instead of three. Round 19 broke its acceleration-lane merges by 106,915 decisions,
   which is why round 20 moved to 50,000.
+
+**User decision (November 25, 2026):** "approve full", to "Approve the budget raise for
+round 24: the full round, or the cheaper option?".
+
+### Round 24's configuration
+
+`configs/training/highway-flow-rl-v14-round24.json` is `build_config(24)`. It is round
+23's configuration plus the changes above and the budget.
+
+- **Budget:**
+  - training decisions 6,871,150, so exactly 200,000 remain for this round;
+  - wall time 64,700 s, 4,800 s per round, with the 900 s final reserve kept;
+  - diagnostic episodes 174: this round's preflight and one physics recording of its
+    result.
+- **Unchanged from round 23:** the training rows and seeds, the warm start (the round-16
+  policy) and optimizer, the drive limit, the stop fix and the follow gate. Periodic
+  validation stays every 50,000 decisions. The intervention, relative merge floor and
+  collision regression rules stay as they were.
+- **Stop-rule baselines** come from this round's own initial validation. The uncharged
+  check above expects them to be:
+  - 43 free-road stops, for a limit of 86;
+  - 6 collisions;
+  - a merge speed match of 0.537, for a floor of 0.287.
+- **Risks:**
+  - **The cut-in weight is a first choice.** 0.25 is v06's avoidable-braking weight. It
+    has not been trained, so it may be too weak to change the cut-ins or strong enough to
+    make the cars hold back at the line. The free-road stop rule and the merge floor
+    watch for the second.
+  - **Asking past the drive is now cheap.** Only `unsafe_request`, at 0.5 × excess / 4.5,
+    charges it. A policy could learn to floor the request on grades. Raw-request jerk is
+    still a gate, and `v14_drive_limit.saturated` is reported so this shows.
+  - **Stop rules see three times the rows.** A new colliding row at any of the three
+    seeds stops the round.

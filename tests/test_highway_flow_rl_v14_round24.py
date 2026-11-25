@@ -1,5 +1,7 @@
 """V14 round 24: multi-seed validation, the cut-in charge and drive saturation (no SUMO, no training)."""
 from copy import deepcopy
+import json
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -10,8 +12,9 @@ from traffic import highway_flow_rl_v14_contract as contract
 from traffic import highway_flow_rl_v14_cut_in as cut_in
 from traffic import highway_flow_rl_v14_saturation as saturation
 
-ROUND24_DECLARED = {'authorization', 'learning_profile', 'provenance', 'reward_version', 'round_index',
+ROUND24_DECLARED = {'authorization', 'budget', 'learning_profile', 'provenance', 'reward_version', 'round_index',
                     'stop_rules', 'v14_cut_in', 'v14_drive_saturation', 'v14_validation', 'validation_rows'}
+ROOT = Path(__file__).resolve().parents[1]
 
 
 @pytest.fixture(scope='module')
@@ -34,7 +37,7 @@ def test_round24_is_round23_plus_only_the_declared_changes(round24, round23):
     assert saturation.validate_settings(round24['v14_drive_saturation']) == saturation.SETTINGS
     assert round24['provenance']['parent_round'] == round23['learning_profile']
     assert round24['authorization'].startswith(round23['authorization'])
-    assert '"All three"' in round24['authorization']
+    assert '"All three"' in round24['authorization'] and '"approve full"' in round24['authorization']
     for key in ('training_rows', 'warm_start', 'seed', 'optimizer', 'v14_drive_limit', 'v14_stop_fix',
                 'v14_follow_gate', 'evaluation_interval_decisions', 'v12_settings', 'v06_reward_weights',
                 'reward_weights', 'gae', 'v12_training'):
@@ -70,6 +73,21 @@ def test_free_road_stop_minimum_scales_with_the_rows_only(round24, round23):
     assert rule['minimum'] == 60 and old['minimum'] == 20 and rule['factor'] == old['factor'] == 2.
     assert {k: v for k, v in round24['stop_rules'].items() if k != 'free_road_stop_regression'} == \
            {k: v for k, v in round23['stop_rules'].items() if k != 'free_road_stop_regression'}
+
+
+def test_round24_budget_is_the_approved_full_raise_only(round24, round23):
+    budget, old = round24['budget'], round23['budget']
+    changed = {key for key in set(budget) | set(old) if budget.get(key) != old.get(key)}
+    assert changed == {'total_decisions', 'total_wall_seconds', 'per_round_wall_seconds', 'max_diagnostic_episodes'}
+    assert budget['total_decisions'] == old['total_decisions'] + 141150 == 6871150
+    assert budget['total_wall_seconds'] == old['total_wall_seconds'] + 3500 == 64700
+    assert budget['per_round_wall_seconds'] == 4800 and budget['max_diagnostic_episodes'] == 174
+    assert budget['per_round_decisions'] == 200000 and budget['final_reserve_seconds'] == 900
+
+
+def test_written_configuration_is_the_contracts(round24):
+    path = ROOT / 'configs/training/highway-flow-rl-v14-round24.json'
+    assert json.loads(path.read_text(encoding='utf-8')) == round24
 
 
 def test_round24_validates_and_rejects_changes(round24):

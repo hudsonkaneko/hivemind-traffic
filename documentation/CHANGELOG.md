@@ -4,10 +4,10 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
-## 2026-11-25 - Round 24 designed: three seeds per case, a cut-in charge and drive saturation (budget pending)
+## 2026-11-25 - Round 24 declared: three seeds per case, a cut-in charge and drive saturation
 
-- **User decision:** "All three", for the three changes the round-23 diagnosis supported.
-  Not trained yet. The budget raise is the user's decision.
+- **User decisions:** "All three", for the three changes the round-23 diagnosis supported,
+  then "approve full" for the budget raise below.
 - **Multi-seed validation.** Each of the 14 cases runs at its own seed and at two new seeds,
   6952001 and 6952002, giving 42 rows.
   - The free-road stop rule's minimum goes from 20 to 60 for the three times as many rows.
@@ -25,11 +25,12 @@ authority for historical measurements and failures.
   - At their own seeds: 8 of 14, the same cases as before.
   - Only 4 cases pass at all three seeds; no merge case does.
   - A 42-row validation takes about 413 s.
-- **Budget requested:**
-  - +141,150 decisions;
-  - +3,500 s of wall time;
+- **Budget raised:**
+  - +141,150 decisions, to 6,871,150;
+  - +3,500 s of wall time, to 64,700 s;
   - a 4,800 s per-round limit;
-  - +2 diagnostic episodes.
+  - +2 diagnostic episodes, to 174.
+- **Configuration:** `configs/training/highway-flow-rl-v14-round24.json`.
 - Details: `documentation/highway-merge-training-plan-v14.md`, "Round 24".
 
 ## 2026-11-24 - After round 23: one seed per case, a narrow case-9 window, and the cut-ins

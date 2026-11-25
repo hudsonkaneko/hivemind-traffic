@@ -88,7 +88,7 @@ fix and follow gate), user decision of November 25, 2026: "All three", after the
   0.15 m/s^2 window, with grade clips counted as interventions on its upper side;
 - the free-road stop rule's minimum from 20 to 60 decisions, for three times the validation rows (its
   factor of 2 against this round's initial validation is unchanged);
-- budget, below.
+- budget, below (user decision of November 25, 2026: "approve full").
 """
 from copy import deepcopy
 import json
@@ -236,12 +236,15 @@ ROUNDS = {
 }
 ROUND23_AUTHORIZATION = ROUNDS[23]['authorization']
 
-# Round 24's budget: PENDING the user's budget decision; until then it is round 23's (the remaining
-# 58,850 decisions, 2,226.0 s and no diagnostic episode), which does not fit a round. Proposed
-# (documentation/highway-merge-training-plan-v14.md, "Round 24's budget"): total decisions +141,150 to
-# 6,871,150, wall time +3,500 s to 64,700 s, 4,800 s per round (five 42-row validations of about 413 s
-# each) and diagnostic episodes +2 to 174 (the preflight and one physics recording).
-ROUND24_BUDGET = dict(ROUND23_BUDGET)
+# Shared ledger before round 24: 6,671,150 of 6,730,000 training decisions, 58,974.0 of 61,200 s and 172
+# of 172 diagnostic episodes, which does not fit a round. User decision "approve full" (November 25,
+# 2026), to the full raise proposed in documentation/highway-merge-training-plan-v14.md ("Round 24's
+# budget"): total decisions +141,150 to 6,871,150, so exactly 200,000 remain; wall time +3,500 s to
+# 64,700 s; 4,800 s per round, for five 42-row validations of about 413 s each (learning must end 900 s
+# before the round's limit); diagnostic episodes +2 to 174, for this round's preflight and one physics
+# recording of its result.
+ROUND24_BUDGET = dict(ROUND23_BUDGET, total_decisions=6871150, total_wall_seconds=64700,
+                      per_round_wall_seconds=4800, max_diagnostic_episodes=174)
 
 ROUNDS[24] = dict(learning_profile='merge_v14_r24_multi_seed_cut_in', training=True, base_round=BASE_ROUND,
     parent_profile='merge_v14_r23_follow_gate',
@@ -254,9 +257,10 @@ ROUNDS[24] = dict(learning_profile='merge_v14_r24_multi_seed_cut_in', training=T
     v14_drive_saturation=dict(saturation.SETTINGS, causes=list(saturation.SETTINGS['causes'])),
     v14_validation=deepcopy(ROUND24_VALIDATION),
     authorization=ROUND23_AUTHORIZATION + (
-        ' Round 24, user decision of November 25, 2026: "All three" (multi-seed validation, a cut-in charge '
-        'and grade-only clips not counted as interventions). This round trains; held-out evaluation stays '
-        'unauthorized.'))
+        ' Round 24, user decisions of November 25, 2026: "All three" (multi-seed validation, a cut-in charge '
+        'and grade-only clips not counted as interventions) and "approve full" (141,150 more training '
+        'decisions, 3,500 s more wall time, 4,800 s per round and 2 more diagnostic episodes, for round 24 '
+        'and a physics recording). This round trains; held-out evaluation stays unauthorized.'))
 
 
 def base_config():
