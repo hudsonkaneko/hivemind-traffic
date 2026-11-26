@@ -1,0 +1,1171 @@
+{
+ "authorization": "User decision of November 26, 2026, relayed by the main Claude session: \"Recommended size\" (plan v15 Phase 3 at the recommended size: at most 2,700,000 decisions and 3,000 s of clock time as Phase 3's own allowance; IDM only, SUMO only, development rows only for evaluation, held-out rows never built or run; at most 16 workers at below-normal priority).",
+ "backend": "libsumo",
+ "backgrounds": [
+  "idm"
+ ],
+ "batches": [
+  {
+   "expected_decisions": 175310,
+   "name": "dagger-3-rollouts",
+   "tasks": [
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 400,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 401,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 402,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 403,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 404,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 405,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 406,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 407,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 408,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 409,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 410,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 411,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 412,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 413,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 414,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 415,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 416,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 417,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 418,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 419,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 20
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 420,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 421,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 422,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 423,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 424,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 425,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 426,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 427,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 428,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 429,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 430,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 431,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 432,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 433,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 434,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 435,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 436,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 437,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 438,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 439,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 21
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 440,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 441,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 442,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 443,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 444,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 445,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 446,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 447,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 448,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 449,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 450,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 451,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 452,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 453,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 454,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 455,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 456,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 457,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 458,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 459,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 22
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 460,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 461,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 462,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 463,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 464,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 465,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 466,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 467,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 468,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 469,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 470,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 471,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 472,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 473,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 474,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 475,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 476,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 477,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 478,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 479,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 23
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 480,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 481,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 482,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 483,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 484,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 485,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 486,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 487,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 488,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 489,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 490,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 491,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 492,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 493,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 494,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 495,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 496,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 497,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 498,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "driver": "l2:1ed58a743f9697cb",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "row": 499,
+     "row_set": "v15-training",
+     "sample_seed": 3,
+     "seed_set": 24
+    },
+    {
+     "decisions": 191,
+     "driver": "l2:rule-v3",
+     "mode": "validate",
+     "parity": true,
+     "report_sha": "ed17062a918ebefdb02992e50dcd7d93370879e6e1d75340e7aa816e01420605",
+     "row": 52,
+     "row_set": "v15-development",
+     "source": "outputs/highway-merge-v15/phase-2/run-03/results.jsonl, rule:expert-v3",
+     "trace_sha": "bb4f9d9aa3a9b689d3c6763521347a95843cd0e5c6cd74cb94b08ff27cc76f31"
+    }
+   ]
+  },
+  {
+   "evaluate_fits": true,
+   "expected_decisions": 136691,
+   "learners_from_fits": [
+    "dagger-3-refit"
+   ],
+   "name": "dagger-3-evaluation",
+   "tasks": []
+  }
+ ],
+ "benchmark": {
+  "cases": [
+   "v05-validation-i110-merge",
+   "v05-val-0-cruise",
+   "v05-val-0-passing",
+   "v05-validation-i110-following",
+   "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "v02-development-60mph-cruise",
+   "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "v12-val-la-sb-adams-model-passing-4of16-medium"
+  ],
+  "development_rows": 70,
+  "development_seeds": [
+   6952001,
+   6952002,
+   6952003,
+   6952004,
+   6952005
+  ],
+  "held_out_rows": 42,
+  "held_out_seeds": [
+   6953001,
+   6953002,
+   6953003
+  ],
+  "held_out_status": "reserved; never run; final candidate only, with the user's authorization",
+  "row_order": "row 14 * k + c is case c at development seed k",
+  "schema": "highway_merge_v15_benchmark_v01",
+  "source": "v14 round 24 validation rows 0-13"
+ },
+ "charge": {
+  "decisions_left": 1306799,
+  "estimate_source": {
+   "cost_ratio": 1.053965345807136,
+   "cost_ratios": {
+    "dagger": 1.053965345807136,
+    "learner_validate": 1.0,
+    "rule_collect": 1.036138931281885,
+    "source": "outputs/highway-merge-v15/phase-3/checks/cost-01/check.json"
+   },
+   "decisions_per_clock_second": 1300,
+   "development_evaluation": 136291,
+   "development_source": "learner l2:1ed58a743f9697cb in step dagger-2",
+   "fit_seconds": {
+    "clone": 35.0,
+    "dagger": 40.0
+   },
+   "per_training_set": 34864,
+   "per_training_set_source": "measured in step data (10 seed sets)",
+   "start_seconds": 15.0
+  },
+  "expected_clock_seconds": 328.0,
+  "expected_decisions": 312001,
+  "expected_episodes": 173,
+  "expected_fit_seconds": 40.0,
+  "guard_margin": 0.05,
+  "phase_allowance": 2700000,
+  "phase_decisions_used": 1393201,
+  "phase_seconds_used": 955.25,
+  "phase_time_cap": 3000.0,
+  "reserve_seconds": 555,
+  "seconds_left": 2044.75,
+  "study_seconds_left": 3056.905,
+  "total_wall_seconds": 64700
+ },
+ "dagger_stop": "at least 3 iterations (plan v15 Stage 3: 3-5), then stop at the first whose re-baselined pass count is not above the best so far; at most 5; or when the next will not fit the cap",
+ "data_split": {
+  "held_back_seed_sets": [
+   8,
+   9
+  ],
+  "rule": "whole seed sets"
+ },
+ "fit_settings": {
+  "batch": 1024,
+  "epochs": 30,
+  "lr": 0.001,
+  "max_samples_per_epoch": 200000,
+  "threads": 1,
+  "weight_decay": 0.0001
+ },
+ "fits": [
+  {
+   "data_steps": [
+    "data",
+    "dagger-1",
+    "dagger-2",
+    "dagger-3"
+   ],
+   "name": "dagger-3-refit",
+   "seed": 2
+  }
+ ],
+ "held_out": "not built, not run",
+ "inputs": {
+  "best_so_far": "l2:5aebbf7d8a40d2b9",
+  "data_index": "0414213dc415aa1cf0b25651365a20cedb2ab4dcb3116b4e8f1c15bc81911216",
+  "refit_seed": 2,
+  "rollout_learner": "l2:1ed58a743f9697cb",
+  "rollout_learner_step": "dagger-2",
+  "seed_sets": [
+   20,
+   21,
+   22,
+   23,
+   24
+  ]
+ },
+ "level2": {
+  "excluded_inputs": [
+   1,
+   5
+  ],
+  "executor_inputs": [
+   "entry_active",
+   "committed",
+   "dilemma",
+   "mandatory_left",
+   "mandatory_right"
+  ],
+  "expert": "rule:expert-v3",
+  "gaps": 4,
+  "mixing": {
+   "learner_probability": 0.7,
+   "segment_decisions": 5
+  },
+  "offsets": [
+   -2.0,
+   -1.0,
+   0.0,
+   1.0,
+   2.0
+  ],
+  "perturbation": {
+   "late_commit_share": 0.5,
+   "pulse_base_s": 0.6,
+   "pulse_offsets": [
+    -2.0,
+    -1.0,
+    1.0,
+    2.0
+   ],
+   "pulse_probability": 0.02,
+   "pulse_span_s": 0.8,
+   "slow_distance_m": [
+    40.0,
+    150.0
+   ],
+   "slow_hold_s": [
+    0.5,
+    2.0
+   ],
+   "slow_max_s": 8.0,
+   "slow_speeds": [
+    0.0,
+    2.0,
+    5.0
+   ],
+   "version": "p1"
+  },
+  "rule": "l2:rule-v3",
+  "sampling": {
+   "event_after_perturbation_s": 3.0,
+   "event_speed_m_s": 5.0,
+   "routine_every": 5,
+   "stopped_m_s": 0.5,
+   "waiting_weight": 0.25
+  },
+  "settings_digest": "ded23aba10a5006516dfde35139d02db67749dd37e6685b430c31c98d9ce3d49",
+  "sources": {
+   "experiments/v15_level2_train.py": "a92550fa7b4b9cc92c66142c2a779b5a30bb21649b230bc2ab0c87d24b349c43",
+   "experiments/v15_pool.py": "d7905c9fd7017f09655beef21de8e80f304c2eead5e7045fa9219bb72ed294e7",
+   "traffic/v15_level2.py": "4f3213edb387a598ec3b9b9e555dc818e2a8348b3dd65955b07d8f3466393094",
+   "traffic/v15_rule_expert.py": "9018ba3a239d6f2e79255f5a8f2ffacb2ce5c5f24f0b0ff1928f39d755eb6571",
+   "traffic/v15_training_rows.py": "4c2427b4a36931f16d6f4033956f99e8452703acd30a58a7e71d5ac7103553ae"
+  }
+ },
+ "parity": {
+  "decisions": 191,
+  "driver": "l2:rule-v3",
+  "report_sha": "ed17062a918ebefdb02992e50dcd7d93370879e6e1d75340e7aa816e01420605",
+  "row": 52,
+  "source": "outputs/highway-merge-v15/phase-2/run-03/results.jsonl, rule:expert-v3",
+  "trace_sha": "bb4f9d9aa3a9b689d3c6763521347a95843cd0e5c6cd74cb94b08ff27cc76f31"
+ },
+ "phase": "3",
+ "priority": "below_normal",
+ "round_index": 24,
+ "schema": "highway_merge_v15_phase3_v01",
+ "selection": "most passes on the 70 development rows under the frozen re-baselined gates (experiments/v15_regrade.py, all three rules), then round 24's recorded gates, then the earliest; never held-back loss",
+ "simulator": "SUMO (libsumo); no physics",
+ "step": "dagger-3",
+ "stop_checks": {
+  "dagger_rollouts": "any collision in a DAgger rollout episode on a training row (the learner mixed with the expert) stops Phase 3; other events there (free-road stops, cut-ins, emergencies) are reported. User decision of November 26, 2026 (\"Yes, continue\"; \"continue with data\"), recorded by the main session in the master",
+  "expert_on_training_rows": "any collision, or a free-road stop in an unperturbed episode",
+  "learner_on_development_rows": "any collision or free-road stop, or a cut-in or emergency in a one-car LA case",
+  "one_car_la_cases": [
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium"
+  ]
+ },
+ "training_rows": {
+  "cases": [
+   "la-nb-pasadena-model-merge-4of16-medium",
+   "i110-merge",
+   "la-sb-adams-model-merge-focused-1of16-medium",
+   "la-nb-pasadena-model-following-4of16-dense",
+   "train-4-lane-ramp120-merge-focused-1-ramp-started",
+   "la-sb-adams-model-merge-8of24-medium",
+   "la-nb-pasadena-model-merge-focused-1of16-medium",
+   "i110-following",
+   "la-sb-adams-model-passing-4of16-medium",
+   "la-nb-pasadena-model-merge-focused-missed-gap-1of8-medium",
+   "train-3-lane-ramp240-merge-focused-3-ramp-started",
+   "la-sb-adams-model-merge-4of16-medium",
+   "train-2-lane-passing",
+   "la-nb-pasadena-model-cruise-8of16-medium",
+   "la-sb-adams-model-following-8of16-dense",
+   "i110-merge-focused-8",
+   "la-nb-pasadena-model-merge-8of24-medium",
+   "train-4-lane-cruise",
+   "la-sb-adams-model-merge-focused-1of24-dense",
+   "train-3-lane-ramp240-missed-gap"
+  ],
+  "schema": "highway_merge_v15_training_rows_v01",
+  "seed_rule": "row 20 k + i: training row i at seed 9700000 + 1000 k + i",
+  "seed_sets": 40,
+  "source": "v14 round 24 training_rows"
+ },
+ "workers": 16
+}
