@@ -4,6 +4,21 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-26 - Plan v15 Phase 4 proposed: anchored RL on Level 2
+
+- **Proposal only;** nothing built, run or charged. The user asked for it: "do the relabel fix first
+  then work on the phase 4 budget".
+- **Room:** Phase 4 can gain only on the 8 development rows the starting policy fails, all on rolling
+  merge quality. Level 2's gap can't shorten a yield-entry wait; whether its offsets or lane intent
+  can fix any of the 8 isn't checked.
+- **Step A** (no raise): a probe of 5 scripted Level 2 variants on those 8 rows, and the relabel
+  configuration at 2 more fit seeds: about 360,000 decisions and 290 s.
+- **Step B** (sized after the probe): anchored MAPPO at 3 training seeds. Recommended: at most
+  9,200,000 decisions and 5,700 s, with the study total raised by about 4,100 s. Minimum: at most
+  4,900,000 decisions and 3,100 s, with a raise of about 1,500 s.
+- **Recommended:** approve step A, then decide step B on its result. Details are in plan v15, "Phase 4
+  proposal", and decision 9.
+
 ## 2026-11-26 - Plan v15 Phase 3 relabel: the learned Level 2 matches the expert
 
 - **User decision,** typed in the Claude side session: "do the relabel fix first then work on the

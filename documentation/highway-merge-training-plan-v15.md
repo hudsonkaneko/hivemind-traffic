@@ -21,8 +21,10 @@ shared ledger needs the user's approval of its resolved configuration first, as 
     [The relabel step](#the-relabel-step-november-26). It ran at one training seed only.
   - No learner showed a new kind of failure.
   - Only Level 2 was trained, by imitation; Level 1, the rule executor, is unchanged.
-- **Next:** Phase 4 (anchored MAPPO) needs its own budget, with 2,518.9 s of study time left. The
-  held-out check (Stage 5) needs your authorization. Nothing more runs until you decide.
+- **Next:** a [Phase 4 proposal](#phase-4-proposal-november-26-anchored-rl-on-level-2-for-your-approval)
+  waits for you (decision 9). It starts with a small probe and a seed check that fit in the 2,518.9 s
+  of study time left; Phase 4's training needs a raise of the study total. The held-out check
+  (Stage 5) needs your authorization. Nothing more runs until you decide.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -1267,10 +1269,169 @@ lock, development rows only.
 
 ### What's next (your decision)
 
-- **Phase 4** (anchored MAPPO on Level 2, at 3 training seeds) needs its own budget and a raise of
-  the study total. The proposal estimated it can't be paid for from what's left.
+- **Phase 4** (anchored MAPPO on Level 2, at 3 training seeds): see the
+  [Phase 4 proposal](#phase-4-proposal-november-26-anchored-rl-on-level-2-for-your-approval) and
+  decision 9.
 - **The held-out check** (Stage 5) needs your authorization.
 - Nothing more runs until you decide.
+
+## Phase 4 proposal (November 26): anchored RL on Level 2, for your approval
+
+**Proposal only.** Nothing here has been built or run, and nothing is charged until you approve it.
+The user asked for it on November 26: "do the relabel fix first then work on the phase 4 budget".
+All runs would be SUMO (libsumo), not physics, with IDM background only. The held-out rows are never
+built or run.
+
+**What Phase 4 does** (Stage 4): MAPPO trains Level 2 only (the gap, lane intent and speed offset).
+It starts from the Phase 3 policy and is held close to it. Level 1, the rule executor, is unchanged.
+- **Starting point and anchor:** the relabel learner `l2:bc7c050f6d3da3ce`, at 62 of 70 re-baselined
+  and 54 recorded, the expert's numbers.
+- **Exit check:** beat the Phase 3 policy across 3 training seeds on the 70 development rows, with no
+  safety event worse.
+
+### How much room there is
+
+Phase 4 can only gain on the 8 rows that the expert and the starting policy both fail: rows 0, 8, 9,
+14, 22, 24, 37 and 38. All 8 fail one gate, rolling merge quality: speed match of at least 0.9 from
+8 s before the merge completes to the stable merge.
+- **Phase 2's audit** put them down to:
+  - following headway on rows 0, 9, 14 and 24 (Level 1's following, not changed);
+  - yield-entry waits on rows 8, 22, 37 and 38, where samples before the stop line are graded by
+    design.
+- **What Level 2 can do there** (from the code, `traffic/v15_level2.py`):
+  - **the gap** can only make a car wait longer, never enter earlier, so it can't shorten a
+    yield-entry wait;
+  - **a speed offset** (−2 to +2 m/s) changes the target speed, but never raises it above the larger
+    of the plan's target and the free-road target;
+  - **a lane intent** can move a car away from a slow leader, inside the mask and MOBIL's safety
+    test.
+- **Not checked:** whether any Level 2 choice can lift those rows' speed match to 0.9. If none can,
+  Phase 4 can't meet its exit check on these rows, however long it trains. The reward below doesn't
+  target speed match directly either.
+- **So the proposal starts small:** a probe and a seed check (step A) before the training spend
+  (step B).
+
+### Built first (uncharged)
+
+- **For step A:** scripted Level 2 variants as pool drivers: the rule's choices with a constant
+  offset of −2, −1, +1 or +2 m/s, or with the gap one car later than the rule's.
+- **For step B:**
+  - **a stochastic Level 2 pool driver.** It samples the three choices from the network and holds
+    them for 0.5 s (5 decisions). For each car it records the inputs, the choices and their
+    log-probabilities, the centralized state and the event rewards;
+  - **a Level 2 PPO trainer** (plain PyTorch, CPU, one thread, deterministic):
+    - the Phase 3 network as the actor;
+    - a centralized critic of the existing `MaskedPopulationCritic` design, on the v15 environment's
+      state;
+    - a KL term toward the Phase 3 policy that decays slowly;
+  - **the reward's event terms,** each logged:
+    - progress and merges completed;
+    - cut-ins, emergencies and collisions;
+    - stuck and comfort events;
+    - a cooperation term for gaps opened.
+
+    Their weights go in the resolved configuration before anything is charged;
+  - **stop rules and screens:** free-road stops, collision regression, a speed-match floor, and the
+    checkpoint screens;
+  - **a Phase 4 ledger category,** with its own allowance as Phases 1–3 had. v14's training-decision
+    total has 148,774 left.
+- **Tests,** the uncharged code checks on v14-validation rows 0 and 4, and an uncharged cost check of
+  the stochastic driver and one PPO update.
+
+### What the estimate is built from
+
+Measured in Phase 3:
+- **One seed set of the 20 training rows:** about 34,800 decisions (step 1: 34,864). At one Level 2
+  action per car every 0.5 s, that is about 7,000 Level 2 actions.
+- **Training row 17** (the 12-car cruise) makes about 11,200 decisions per episode, a third of each
+  seed set, and takes about 72 s on one worker.
+  - So no rollout batch finishes in much under 75 s.
+  - A batch of 5 seed sets (100 episodes) costs little more clock time than one: DAgger's three
+    rollout batches made 173,205–174,237 decisions in 76.7–103.8 s.
+- **A development-row evaluation:** 135,630–136,503 decisions in 67.6–98.5 s.
+- **The relabel configuration's seed check** would repeat the final check's cost: 276,036 decisions
+  and 201.7 s for 2 refits and 2 evaluations.
+
+Not measured:
+- **A PPO update with a critic.** The estimate allows 10 s per update on about 35,000 Level 2 actions
+  (a cloning fit runs at about 1.1 s per pass over 160,000 samples). The uncharged cost check measures
+  it.
+- **How many updates** anchored PPO needs to change anything. Nothing here measures that; it is the
+  main uncertainty in step B's size.
+
+### Step A: the probe and the seed check (no raise needed)
+
+| Part | Work | Episodes | Decisions (estimate) | Clock time (estimate) |
+|---|---|---|---|---|
+| Probe | The 5 scripted variants on the 8 failing development rows | 40 | ~84,000 | ~90 s |
+| Seed check | The relabel configuration refit at fit seeds 4 and 5, each evaluated on the 70 rows | 140 | ~276,000 | ~200 s |
+| **Total** | Two runs, each with its canary and parity row | **~184** | **~360,000** | **~290 s** |
+
+- **What it tells you:**
+  - **The probe:** whether any simple Level 2 choice passes any of the 8 failing rows. If none does,
+    I'd recommend skipping step B and going to Stage 5. RL could still find a state-dependent choice
+    that the constant variants miss, so a negative probe is a strong hint, not proof.
+  - **The seed check:** Phase 3's baseline across 3 seeds, which step B's exit check needs.
+- **Charge:** the seed check from Phase 3's unused allowance (577,318 decisions and 1,506.7 s). The
+  probe as Phase 4's first segment, with its own allowance of at most 100,000 decisions and 150 s.
+  Both use study time: about 2,230 s would be left.
+- **Repeated looks:** the probe is another look at 8 development rows. It trains nothing.
+
+### Step B: anchored MAPPO, sized after the probe
+
+Each training seed starts from the Phase 3 policy. Each iteration rolls out the current policy on 5
+new seed sets of the training rows (100 episodes), then makes one PPO update.
+
+| Size | Work | Episodes | Decisions (estimate) | Clock time (estimate) |
+|---|---|---|---|---|
+| **Recommended** | 3 training seeds × 12 iterations; each seed evaluated on the 70 rows after iterations 4, 8 and 12 | ~4,280 | ~7.6 million | ~4,500 s |
+| **Minimum** | 3 training seeds × 6 iterations; evaluated after iterations 3 and 6 | ~2,250 | ~4.0 million | ~2,400 s |
+
+How the recommended size adds up:
+- rollouts: 36 × ~174,000 decisions and ~92 s;
+- updates: 36 × ~10 s;
+- evaluations: 9 × ~136,500 decisions and ~80 s;
+- canaries, parity rows and start-up: ~110,000 decisions and ~100 s.
+
+The minimum size is the same with 18 rollouts, 18 updates and 6 evaluations.
+
+- **Proposed caps** (the estimate plus about 20% in decisions and 25% in time):
+  - **Recommended:** at most 9,200,000 decisions and 5,700 s.
+  - **Minimum:** at most 4,900,000 decisions and 3,100 s.
+- **The study total needs a raise either way.**
+  - After step A about 2,230 s would be left.
+  - Stage 5 needs some too. Running the held-out rows once costs about 82,000 decisions per driver
+    on 42 rows. A physics drive took 55–108 s each in v14, and only 1 of 174 diagnostic episodes is
+    left. I'd keep about 600 s for it.
+  - So: **recommended**, a raise of about 4,100 s (from 64,700 to about 68,800 s); **minimum**, about
+    1,500 s (to about 66,200 s).
+- **Selection:** by closed-loop pass rate on the 70 development rows under the frozen re-baselined
+  gates, then the recorded gates, never by training reward. A change is accepted only if it beats
+  Phase 3 across the 3 seeds, with no safety event worse.
+- **Same settings as Phases 1–3:**
+  - at most 16 workers at below-normal priority, with nothing heavy alongside;
+  - the shared lock;
+  - each run's resolved configuration and expected charge in the coordination master before it
+    runs.
+- **Stop and report if:**
+  - the next run won't fit;
+  - the lock is held;
+  - a canary or parity check mismatches;
+  - tests fail;
+  - a trained policy collides, stops on a free road, or causes a cut-in or emergency in a one-car LA
+    case;
+  - the uncharged cost check puts the chosen size over its cap.
+- **Why the minimum is weaker:** with 6 iterations per seed, a policy that changes slowly (as the
+  anchor intends) may not move off the Phase 3 policy at all. Then step B would spend about 2,400 s to
+  confirm the start.
+
+### My recommendation
+
+1. Approve **step A now** (about 360,000 decisions and 290 s, no raise).
+2. Decide on step B after the probe. If the probe finds no room, skip step B and go to Stage 5 with
+   the Phase 3 policy.
+
+That keeps the large spend behind evidence that it can pay off.
 
 ## Decisions for you
 
@@ -1323,6 +1484,17 @@ relayed by the main Claude session.
    **Decided: recommended,** on November 26 ("Recommended size", relayed by the main Claude
    session). Phase 3 used 1,983,565 decisions and 1,385.7 s; see
    [Phase 3 result](#phase-3-result-november-26).
+   The user then approved the relabel step on November 26 ("do the relabel fix first then work on
+   the phase 4 budget"). With it, Phase 3 used 2,122,682 decisions and 1,493.3 s.
+9. **Phase 4** (proposed on November 26; see
+   [Phase 4 proposal](#phase-4-proposal-november-26-anchored-rl-on-level-2-for-your-approval)).
+   - **Step A:** the probe (5 scripted Level 2 variants on the 8 failing development rows) and the
+     relabel configuration's seed check: about 360,000 decisions and 290 s, with no raise.
+   - **Step B:** anchored MAPPO, sized after the probe.
+     - **Recommended:** at most 9,200,000 decisions and 5,700 s, with the study total raised by
+       about 4,100 s.
+     - **Minimum:** at most 4,900,000 decisions and 3,100 s, with a raise of about 1,500 s.
+   - **Or skip Phase 4** and go to Stage 5 (it needs your authorization, and diagnostic episodes).
 
 ## What carries over from v14
 
