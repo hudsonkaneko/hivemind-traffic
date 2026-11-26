@@ -395,17 +395,17 @@ def run(step):
                         if session.elapsed() + FIT_S['dagger'] * 2 > session.allowed_seconds:
                             raise L.BudgetExceeded(f'No time left for fit {spec["name"]}')
                         started = time.perf_counter()
-                        net, report = _fit(step, spec, None)
+                        net, fit_report = _fit(step, spec, None)
                         driver = pool.publish_level2(net.state_dict())
                         seconds = time.perf_counter() - started
-                        report.update(driver=driver, fit_clock_seconds=seconds)
-                        fit_reports.append(report)
+                        fit_report.update(driver=driver, fit_clock_seconds=seconds)
+                        fit_reports.append(fit_report)
                         learners[spec['name']] = driver
                         session.segment['fits'] += 1
                         session.segment['fit_seconds'] += seconds
-                        log(dict(fit=spec['name'], driver=driver, seed=spec['seed'], samples=report['samples'],
-                                 seconds=round(seconds, 2), held_back={k: v['accuracy'] for k, v in report['held_back'].items()}
-                                 if report['held_back'] else None, elapsed_seconds=session.elapsed()))
+                        log(dict(fit=spec['name'], driver=driver, seed=spec['seed'], samples=fit_report["samples"],
+                                 seconds=round(seconds, 2), held_back={k: v['accuracy'] for k, v in fit_report["held_back"].items()}
+                                 if fit_report["held_back"] else None, elapsed_seconds=session.elapsed()))
                     (out / 'fits.json').write_text(json.dumps(fit_reports, indent=1))
                 tasks = list(batch['tasks'])
                 if batch.get('evaluate_fits'):
