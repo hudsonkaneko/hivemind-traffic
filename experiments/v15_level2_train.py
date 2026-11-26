@@ -16,6 +16,12 @@ weights. Nothing here simulates; the caller charges the fit's clock time to its 
   later DAgger refits) the passes run on, over fresh permutations, for the same number of updates, so a refit's
   clock time stays near a cloning fit's (about 1.2 s per pass over 170,000 samples on one thread, measured on
   November 26 on synthetic data: about 35 s for 30 passes).
+- **Gap labels** (`relabel_gap`): 'rule' trains on the recorded label, the number of stream cars the rule's
+  plan lets pass (capped at 3). 'smallest' trains on 0 wherever the gap applies. Level 1 enters at the first
+  acceptable gap at or after the choice, so every choice from 0 up to the recorded label gives the rule's
+  plan, and the recorded label is the largest of them: a learner's error upward adds waiting (plan v15,
+  "Diagnosis of rows 52 and 66"). 0 is the smallest, and gives the rule's plan in every state. The sample
+  files are not changed; the relabel is applied when they are loaded for a fit.
 """
 from __future__ import annotations
 
@@ -24,6 +30,7 @@ import time
 
 FIT = dict(epochs=30, batch=1024, lr=1e-3, weight_decay=1e-4, threads=1, max_samples_per_epoch=200_000)
 FIELDS = ('x', 'lane', 'gap', 'offset', 'lane_valid', 'gap_valid', 'weight')
+GAP_LABELS = ('rule', 'smallest')
 
 
 def load(paths):
@@ -33,6 +40,19 @@ def load(paths):
     if not parts:
         raise ValueError('No sample files')
     return {name: torch.cat([part[name] for part in parts]) for name in FIELDS}
+
+
+def relabel_gap(data, gap_label='rule'):
+    """The dataset with the gap labels `gap_label` asks for (see the module notes); `data` is not changed.
+
+    'rule' returns `data` itself. 'smallest' returns a new dict whose gap label is 0 wherever the gap applies
+    and -1 (no gap choice) elsewhere, as recorded; every other field is the same tensor."""
+    if gap_label not in GAP_LABELS:
+        raise ValueError(f'Unknown gap label {gap_label!r}; expected one of {GAP_LABELS}')
+    if gap_label == 'rule':
+        return data
+    import torch
+    return dict(data, gap=torch.where(data['gap_valid'], torch.zeros_like(data['gap']), data['gap']))
 
 
 def _loss(net, batch, reduction='mean'):

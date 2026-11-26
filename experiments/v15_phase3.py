@@ -16,19 +16,27 @@ User decision, November 26, 2026 (relayed by the main Claude session, recorded i
   step 1 puts the remaining steps over the cap.
 Not authorized: raising the study total, Phase 4, Krauss runs, held-out evaluation, merging to main.
 
+User decision, November 26, 2026, typed in the Claude side session after the diagnosis of rows 52 and 66:
+"do the relabel fix first then work on the phase 4 budget". The relabel step refits the selected learner's
+data at its fit seed with the gap labelled 0 (experiments/v15_level2_train.relabel_gap) and evaluates it on
+the 70 development rows, inside Phase 3's allowance, under the same rules and stop checks.
+
 usage (from the checkout root, with .venv-traffic's Python):
   python experiments/v15_phase3.py check NAME           the uncharged code checks on v14-validation rows 0 and 4
   python experiments/v15_phase3.py resolve STEP         write configs/evaluation/v15-phase3-STEP.json (no simulation)
   python experiments/v15_phase3.py run STEP             check the pinned configuration, take the lock, run (charged)
   python experiments/v15_phase3.py report STEP          rebuild the step's report (and the re-baselined verdicts)
 
-STEP is data, clone, dagger-1 ... dagger-5 or final; each writes outputs/highway-merge-v15/phase-3/STEP.
+STEP is data, clone, dagger-1 ... dagger-5, final or relabel; each writes outputs/highway-merge-v15/phase-3/STEP.
 - data: the rule Level 2 ('l2:rule-v3', which reproduces expert v3 exactly) collects on the 20 training rows at
   seed sets 0-9 (200 episodes; row i of set k perturbed when k + i is odd). Sets 8 and 9 are held back.
 - clone: 3 fits (fit seeds 1-3) on sets 0-7, each evaluated on the 70 development rows.
 - dagger-j: the latest learner rolls out on 5 new seed sets (10 + 5 (j - 1) onwards) acting with probability
   0.7, the rule labels every state; a refit on everything so far (the best clone's fit seed), evaluated.
 - final: the selected learner's data refit at fit seeds 4 and 5, each evaluated.
+- relabel: the selected learner's data and fit seed again, with the gap labelled 0 wherever it applies (the
+  smallest choice that gives the rule's plan, in place of the largest), evaluated. Only the gap labels differ
+  from the selected learner's fit, so the two are a matched pair.
 Every run also re-runs 'l2:rule-v3' on development row 52 and its report and trace hashes must equal Phase 2
 run 3's record of expert v3 there (parity), and every batch has a canary on another worker.
 Selection is by closed-loop pass rate on the development rows under the frozen re-baselined gates
@@ -61,7 +69,7 @@ MARGIN = 0.05
 DATA_SETS, HELD_BACK = tuple(range(10)), (8, 9)
 DAGGER_ITERATIONS, DAGGER_MINIMUM, DAGGER_SETS = 5, 3, 5
 CLONE_SEEDS, FINAL_SEEDS = (1, 2, 3), (4, 5)
-STEPS = ('data', 'clone') + tuple(f'dagger-{j}' for j in range(1, DAGGER_ITERATIONS + 1)) + ('final',)
+STEPS = ('data', 'clone') + tuple(f'dagger-{j}' for j in range(1, DAGGER_ITERATIONS + 1)) + ('final', 'relabel')
 CHECK_ROW_IDS = (0, 4)
 PHASE2_RUN3 = 'outputs/highway-merge-v15/phase-2/run-03'
 PARITY_ROW = 52
@@ -87,6 +95,10 @@ AUTHORIZATION = ('User decision of November 26, 2026, relayed by the main Claude
                  '(plan v15 Phase 3 at the recommended size: at most 2,700,000 decisions and 3,000 s of clock time '
                  'as Phase 3\'s own allowance; IDM only, SUMO only, development rows only for evaluation, '
                  'held-out rows never built or run; at most 16 workers at below-normal priority).')
+RELABEL_AUTHORIZATION = ('Relabel step: user decision of November 26, 2026, typed in the Claude side session: "do the '
+                         'relabel fix first then work on the phase 4 budget" (one refit of the selected learner\'s data '
+                         'at its fit seed with the gap labelled 0, evaluated on the 70 development rows, inside Phase '
+                         '3\'s allowance).')
 
 
 def config_path(step):
@@ -258,6 +270,23 @@ def resolve(step):
                         expected_decisions=round(per_set * len(sets) + parity['decisions'] + 800)),
                    dict(name=f'dagger-{j}-evaluation', learners_from_fits=[fits[0]['name']], evaluate_fits=True, tasks=[],
                         expected_decisions=round(dev_decisions + 400))]
+    elif step == 'relabel':
+        if not (out_dir('final') / 'report.json').is_file():
+            raise ValueError('The relabel step needs the final check first')
+        history = _learner_history()
+        _no_open_failures(history + _report('final')['learners'])
+        selected = _best(history)
+        chosen = json.loads((out_dir('final') / 'resolved-config.json').read_text())['inputs']['selected']
+        if chosen != selected['id']:
+            raise ValueError(f'The selected learner is {selected["id"]}, but the final check refit {chosen}')
+        data_steps = selected['data_steps']
+        fits = [dict(name='relabel-refit', seed=selected['fit_seed'], data_steps=data_steps, gap_label='smallest')]
+        inputs = dict(selected=selected['id'], selected_step=selected['step'], selected_fit_seed=selected['fit_seed'],
+                      selected_passed=dict(rebaselined=selected['rebaselined_passed'], recorded=selected['recorded_passed']),
+                      gap_label='smallest', data_index=_index_sha(data_steps))
+        batches = [dict(name='relabel-evaluation', learners_from_fits=[fits[0]['name']], evaluate_fits=True,
+                        tasks=[dict(parity, row_set=DEV, mode='validate', parity=True)],
+                        expected_decisions=round(dev_decisions + parity['decisions'] + 800))]
     else:   # final
         history = _learner_history()
         _no_open_failures(history)
@@ -270,9 +299,10 @@ def resolve(step):
                         tasks=[dict(parity, row_set=DEV, mode='validate', parity=True)],
                         expected_decisions=round(len(fits) * dev_decisions + parity['decisions'] + 800))]
     expected = sum(b['expected_decisions'] for b in batches)
-    fit_seconds = sum(FIT_S['clone' if step in ('clone', 'final') else 'dagger'] for _ in fits)
+    fit_seconds = sum(FIT_S['clone' if step in ('clone', 'final', 'relabel') else 'dagger'] for _ in fits)
     ratios = cost_ratios()
-    kind = dict(data='rule_collect', clone='learner_validate', final='learner_validate').get(step, 'dagger')
+    kind = dict(data='rule_collect', clone='learner_validate', final='learner_validate',
+                relabel='learner_validate').get(step, 'dagger')
     clock = START_S + expected * PER_DECISION_S * ratios[kind] + fit_seconds + 10. * len(batches)
     phase, totals = _ledger_phase3()
     decisions_left, seconds_left = ALLOWANCE - phase['decisions'], TIME_CAP - phase['seconds']
@@ -311,7 +341,8 @@ def resolve(step):
                                          decisions_per_clock_second=1300, start_seconds=START_S, fit_seconds=FIT_S,
                                          cost_ratio=ratios[kind], cost_ratios=ratios),
                     total_wall_seconds=cfg['budget']['total_wall_seconds']),
-        authorization=AUTHORIZATION, held_out='not built, not run', simulator='SUMO (libsumo); no physics')
+        authorization=AUTHORIZATION + (' ' + RELABEL_AUTHORIZATION if step == 'relabel' else ''),
+        held_out='not built, not run', simulator='SUMO (libsumo); no physics')
 
 
 def _index_sha(steps):
@@ -349,9 +380,12 @@ def _fit(step, spec, log):
     from experiments import v15_level2_train as T
     files = _data_files(spec['data_steps'])
     train, held = _split(files)
-    data, held_data = T.load([f['path'] for f in train]), (T.load([f['path'] for f in held]) if held else None)
+    gap_label = spec.get('gap_label', 'rule')
+    data = T.relabel_gap(T.load([f['path'] for f in train]), gap_label)
+    held_data = T.relabel_gap(T.load([f['path'] for f in held]), gap_label) if held else None
     net, report = T.fit(data, seed=spec['seed'], held_back=held_data, log=log)
-    report.update(name=spec['name'], data_steps=spec['data_steps'], train_files=len(train), held_back_files=len(held))
+    report.update(name=spec['name'], data_steps=spec['data_steps'], train_files=len(train), held_back_files=len(held),
+                  gap_label=gap_label)
     return net, report
 
 

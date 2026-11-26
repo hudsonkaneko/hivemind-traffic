@@ -163,6 +163,45 @@ def test_invalid_choices_carry_no_loss():
     assert report['train']['gap']['samples'] == 0 and report['train']['gap']['loss'] is None
 
 
+def test_the_smallest_gap_label_is_zero_where_the_gap_applies_and_leaves_the_data_alone():
+    data = _dataset(600)
+    recorded = data['gap'].clone()
+    assert T.relabel_gap(data, 'rule') is data
+    out = T.relabel_gap(data, 'smallest')
+    assert torch.equal(data['gap'], recorded)                                 # the input is not changed
+    assert (out['gap'][data['gap_valid']] == 0).all()
+    assert torch.equal(out['gap'][~data['gap_valid']], recorded[~data['gap_valid']])
+    assert all(out[k] is data[k] for k in T.FIELDS if k != 'gap')
+    with pytest.raises(ValueError):
+        T.relabel_gap(data, 'largest')
+    _, report = T.fit(out, seed=0, settings=dict(T.FIT, epochs=3, batch=100))
+    assert report['train']['gap']['accuracy'] == 1.
+
+
+def test_gap_zero_gives_the_rules_plan_whatever_the_rule_waits_for():
+    rng = random.Random(11)
+    for _ in range(3000):
+        stop, speed, stream = rng.uniform(1, 150), rng.uniform(0, 25), _stream(rng)
+        label = L.gap_index(len(v3.select_gap(stop, speed, stream, 5., 20.)['waited_for']))
+        rule = L.select_gap_from(stop, speed, stream, 5., 20., skip=label)
+        assert L.select_gap_from(stop, speed, stream, 5., 20., skip=0) == rule
+
+
+def test_phase3_fits_relabel_the_gap_only_when_the_spec_asks(monkeypatch):
+    from experiments import v15_phase3 as phase3
+    files = [dict(path='a', seed_set=0, decisions=1), dict(path='b', seed_set=phase3.HELD_BACK[0], decisions=1)]
+    monkeypatch.setattr(phase3, '_data_files', lambda steps: files)
+    monkeypatch.setattr(T, 'load', lambda paths: _dataset(300, seed=len(paths[0])))
+    seen = []
+    monkeypatch.setattr(T, 'fit', lambda data, seed, held_back, log: seen.append((data, held_back)) or (None, {}))
+    _, report = phase3._fit('relabel', dict(name='r', seed=1, data_steps=['data'], gap_label='smallest'), None)
+    data, held = seen[-1]
+    assert report['gap_label'] == 'smallest'
+    assert (data['gap'][data['gap_valid']] == 0).all() and (held['gap'][held['gap_valid']] == 0).all()
+    _, report = phase3._fit('final', dict(name='f', seed=4, data_steps=['data']), None)
+    assert report['gap_label'] == 'rule' and (seen[-1][0]['gap'][seen[-1][0]['gap_valid']] > 0).any()
+
+
 def test_phase3_segments_pass_the_ledger_totals(tmp_path):
     from experiments.run_highway_flow_rl_v05 import LEDGER_SCHEMA
     book = dict(schema=LEDGER_SCHEMA, inherited_seconds=0., segments=[
