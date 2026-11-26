@@ -1,0 +1,207 @@
+"""v15 Phase 3: the Level 2 split, the learned Level 2, the trainer and the training rows."""
+import importlib.util
+import json
+import random
+import shutil
+import uuid
+from pathlib import Path
+
+import pytest
+import torch
+
+from experiments import v15_level2_train as T
+from experiments import v15_ledger as ledger
+from experiments import v15_pool as pool
+from traffic import highway_flow_rl_v14_contract as contract
+from traffic import v15_benchmark as bench
+from traffic import v15_level2 as L
+from traffic import v15_rule_expert as v3
+from traffic import v15_training_rows as training
+
+ROOT = Path(__file__).resolve().parents[1]
+HAS_LIBSUMO = importlib.util.find_spec('libsumo') is not None
+
+
+def _stream(rng):
+    return [(rng.uniform(-50, 300), rng.uniform(0, 30), f'c{j}',
+             None if rng.random() < .5 else (rng.uniform(1, 3), rng.uniform(3, 6), rng.uniform(.8, 2), rng.uniform(1, 3)))
+            for j in range(rng.randint(0, 6))]
+
+
+def test_gap_selection_with_a_minimum_gap_is_v3s_up_to_its_own_count():
+    rng = random.Random(7)
+    later = 0
+    for _ in range(3000):
+        stop, speed, stream = rng.uniform(1, 150), rng.uniform(0, 25), _stream(rng)
+        plan = v3.select_gap(stop, speed, stream, 5., 20.)
+        assert L.select_gap_from(stop, speed, stream, 5., 20.) == plan
+        for skip in range(len(plan['waited_for']) + 1):
+            assert L.select_gap_from(stop, speed, stream, 5., 20., skip=skip) == plan
+        waited = L.select_gap_from(stop, speed, stream, 5., 20., skip=len(plan['waited_for']) + 1)
+        assert len(waited['waited_for']) >= len(plan['waited_for'])          # a later gap only ever waits longer
+        later += waited != plan
+    assert later > 0
+
+
+def test_a_later_gap_is_still_judged_by_the_safety_test():
+    rng = random.Random(3)
+    for _ in range(2000):
+        stop, speed, stream = rng.uniform(1, 150), rng.uniform(0, 25), _stream(rng)
+        for skip in range(4):
+            plan = L.select_gap_from(stop, speed, stream, 5., 20., skip=skip)
+            if plan['rear'] is not None:
+                assert plan['response'] >= -v3.SETTINGS['entry_safe_m_s2'] and plan['gap_at_entry'] > 0
+                assert len(plan['waited_for']) >= skip
+
+
+def test_gap_choice_caps_at_three_and_offsets_never_pass_the_free_road_target():
+    assert [L.gap_index(w) for w in range(6)] == [0, 1, 2, 3, 3, 3]
+    assert L.apply_offset(20., 0., 26.) == 20.
+    assert L.apply_offset(20., 2., 26.) == 22. and L.apply_offset(25.5, 2., 26.) == 26.
+    assert L.apply_offset(27., 2., 26.) == 27.                     # never above the larger of the two
+    assert L.apply_offset(1., -2., 26.) == 0.
+
+
+def test_inputs_leave_out_own_acceleration_and_previous_request():
+    observation = list(range(121))
+    executor = dict(entry_active=1., committed=0., dilemma=0., mandatory_left=1., mandatory_right=0.)
+    row = L.features(observation, executor)
+    assert len(row) == L.INPUT_SIZE == 124
+    assert 1 not in row[:119] and 5 not in row[:119] and row[:2] == [0., 2.] and row[-5:] == [1., 0., 0., 1., 0.]
+
+
+def test_level2_net_heads_and_choice():
+    torch.manual_seed(0)
+    net = L.build_net()
+    lane, gap, offset = net(torch.zeros(2, L.INPUT_SIZE))
+    assert lane.shape == (2, 3) and gap.shape == (2, 4) and offset.shape == (2, 5)
+    choice = L.net_choice(net, [0.] * L.INPUT_SIZE)
+    assert choice['lane'] in L.LANES and 0 <= choice['gap'] < L.GAPS and choice['offset'] in L.OFFSETS
+
+
+def test_level2_tasks_validate_collect_only_with_rule_labels_and_perturb_only_the_rule():
+    rule = L.RULE_DRIVER
+    pool.Task('v15-training', 0, rule, mode='collect', label_with=rule, perturb='p1')
+    pool.Task('v15-training', 0, 'l2:0123456789abcdef', mode='collect', label_with=rule, sample_seed=1)
+    pool.Task('v15-development', 0, 'l2:0123456789abcdef')
+    for bad in (dict(driver=rule, mode='collect'), dict(driver=rule, label_with=rule),
+                dict(driver='l2:0123456789abcdef', mode='collect', label_with=rule, perturb='p1'),
+                dict(driver=rule, mode='collect', label_with=rule, perturb='p2'),
+                dict(driver='policy:abc', perturb='p1'), dict(driver='l2:xyz', mode='collect', label_with=rule)):
+        with pytest.raises(ValueError):
+            pool.Task(**{**dict(row_set='v15-training', row=0), **bad})
+
+
+def test_perturbation_enters_the_key_only_when_set():
+    row = dict(case=dict(id='case-a'), seed=11)
+    plain = pool.key_fields(pool.Task('v14-validation', 3, 'policy:abc'), 24, row)
+    assert 'perturb' not in plain
+    a = pool.Task('v15-training', 3, L.RULE_DRIVER, mode='collect', label_with=L.RULE_DRIVER)
+    b = pool.Task('v15-training', 3, L.RULE_DRIVER, mode='collect', label_with=L.RULE_DRIVER, perturb='p1')
+    assert pool.task_key(pool.key_fields(a, 24, row)) != pool.task_key(pool.key_fields(b, 24, row))
+
+
+@pytest.fixture(scope='module')
+def round24():
+    return contract.build_config(24)
+
+
+def test_training_rows_are_round24s_twenty_at_new_disjoint_seeds(round24):
+    rows = training.rows(round24)
+    assert len(rows) == 20 * training.SETS
+    for k in (0, 7, 39):
+        for i in range(20):
+            row = rows[training.index(k, i)]
+            assert row['seed'] == 9_700_000 + 1000 * k + i
+            assert dict(row, seed=round24['training_rows'][i]['seed']) == round24['training_rows'][i]
+    seeds = {r['seed'] for r in rows}
+    used = set()
+    for round_index in range(1, 25):
+        for critic in (False, True):
+            for cursor in range(400):
+                base = round24['training_rows'][cursor % 20]['seed'] + 1000 * (cursor // 20)
+                used.add(base + 10000 * (round_index - 1) + (50000 if critic else 0))
+    used |= set(bench.DEVELOPMENT_SEEDS) | set(bench.HELD_OUT_SEEDS) | set(bench.V02_HELD_OUT) | set(bench.V14_DIAGNOSIS)
+    used |= {r['seed'] for r in round24['validation_rows']} | {r['seed'] for r in round24['held_out_rows']}
+    assert not seeds & used and min(seeds) >= bench.TRAINING_SEEDS_FROM
+    with pytest.raises(ValueError):
+        training.seed(40, 0)
+
+
+def _dataset(n, seed=0):
+    g = torch.Generator().manual_seed(seed)
+    return dict(x=torch.rand(n, L.INPUT_SIZE, generator=g) * 2 - 1, lane=torch.randint(0, 3, (n,), generator=g),
+                gap=torch.randint(-1, 4, (n,), generator=g), offset=torch.full((n,), 2),
+                lane_valid=torch.rand(n, generator=g) > .1, gap_valid=torch.rand(n, generator=g) > .5,
+                weight=torch.ones(n))
+
+
+def test_the_fit_is_deterministic_and_learns_a_simple_rule():
+    data = _dataset(3000)
+    data['lane'] = (data['x'][:, 0] > 0).long() + 1                 # lane 0 or +1 by the first input
+    settings = dict(T.FIT, epochs=8, batch=256)
+    a, report = T.fit(data, seed=3, held_back=data, settings=settings)
+    b, _ = T.fit(data, seed=3, settings=settings)
+    assert all(torch.equal(x, y) for x, y in zip(a.state_dict().values(), b.state_dict().values()))
+    assert report['train']['lane']['accuracy'] > .95 and report['train']['offset']['accuracy'] == 1.
+    c, _ = T.fit(data, seed=4, settings=settings)
+    assert not all(torch.equal(x, y) for x, y in zip(a.state_dict().values(), c.state_dict().values()))
+
+
+def test_the_fit_caps_its_updates_on_large_data():
+    settings = dict(T.FIT, epochs=2, batch=100, max_samples_per_epoch=1000)
+    _, small = T.fit(_dataset(800), seed=0, settings=settings)
+    _, large = T.fit(_dataset(5000), seed=0, settings=settings)
+    assert small['steps'] == 2 * 8 and large['steps'] == 2 * 10
+
+
+def test_invalid_choices_carry_no_loss():
+    data = _dataset(500)
+    data['gap_valid'][:] = False
+    data['gap'][:] = -1
+    _, report = T.fit(data, seed=0, settings=dict(T.FIT, epochs=1, batch=100))
+    assert report['train']['gap']['samples'] == 0 and report['train']['gap']['loss'] is None
+
+
+def test_phase3_segments_pass_the_ledger_totals(tmp_path):
+    from experiments.run_highway_flow_rl_v05 import LEDGER_SCHEMA
+    book = dict(schema=LEDGER_SCHEMA, inherited_seconds=0., segments=[
+        dict(command=ledger.COMMAND, category='preparation', v15_phase='3', status='complete', charged_seconds=120.,
+             decisions=300_000, episodes=0, evaluation_episodes=1, training_episodes=200, fits=0, fit_seconds=0.),
+        dict(command=ledger.COMMAND, category='preparation', v15_phase='3', status='complete', charged_seconds=400.,
+             decisions=400_000, episodes=0, evaluation_episodes=211, training_episodes=0, fits=3, fit_seconds=90.5)])
+    totals = ledger.totals(book)
+    assert totals['v15']['3'] == dict(segments=2, decisions=700_000, seconds=520., evaluation_episodes=212,
+                                      training_episodes=200, fits=3, fit_seconds=90.5)
+    assert totals['total_decisions'] == 0          # the v05 training-decision total is untouched
+
+
+def _networks_present(rows):
+    validation = contract.build_config(24)['validation_rows']
+    return all((ROOT / validation[i]['case']['network']).is_file() for i in rows)
+
+
+@pytest.mark.skipif(not HAS_LIBSUMO, reason='libsumo is not installed in this environment')
+@pytest.mark.timeout(900)
+def test_the_split_reproduces_expert_v3_and_collects_labelled_samples():
+    rows = (4,)
+    if not _networks_present(rows):
+        pytest.skip('the frozen networks are not in this checkout (outputs/ is not in Git)')
+    out = ROOT / 'outputs' / 'test-runs' / f'pytest-v15-level2-{uuid.uuid4().hex[:8]}'
+    try:
+        with pool.WorkerPool(2, out, priority='below_normal') as workers:
+            tasks = [pool.Task('v14-validation', 4, v3.DRIVER), pool.Task('v14-validation', 4, L.RULE_DRIVER),
+                     pool.Task('v14-validation', 4, L.RULE_DRIVER, mode='collect', label_with=L.RULE_DRIVER),
+                     pool.Task('v14-validation', 4, L.RULE_DRIVER, mode='collect', label_with=L.RULE_DRIVER, perturb='p1')]
+            batch = workers.run(tasks)
+        expert, split, collect, perturbed = batch.records
+        assert batch.canary['matched']
+        assert (split['report_sha'], split['trace_sha']) == (expert['report_sha'], expert['trace_sha'])
+        assert collect['trace_sha'] == expert['trace_sha'] and collect['level2_samples'] > 0
+        assert perturbed['level2']['acted']['perturbed'] > 0
+        samples = torch.load(collect['samples'], weights_only=False)
+        assert samples['x'].shape[1] == L.INPUT_SIZE and int(samples['offset'].unique().item()) == L.OFFSETS.index(0.)
+        index = [json.loads(line) for line in (out / 'dataset' / 'index.jsonl').read_text().splitlines()]
+        assert len(index) == 2
+    finally:
+        shutil.rmtree(out, ignore_errors=True)

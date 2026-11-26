@@ -1,0 +1,2043 @@
+{
+ "authorization": "User decision of November 26, 2026, relayed by the main Claude session: \"Recommended size\" (plan v15 Phase 3 at the recommended size: at most 2,700,000 decisions and 3,000 s of clock time as Phase 3's own allowance; IDM only, SUMO only, development rows only for evaluation, held-out rows never built or run; at most 16 workers at below-normal priority).",
+ "backend": "libsumo",
+ "backgrounds": [
+  "idm"
+ ],
+ "batches": [
+  {
+   "expected_decisions": 32991,
+   "name": "data-set-0",
+   "tasks": [
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 0,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 1,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 2,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 3,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 4,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 5,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 6,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 7,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 8,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 9,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 10,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 11,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 12,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 13,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 14,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 15,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 16,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 17,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 18,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 19,
+     "row_set": "v15-training",
+     "seed_set": 0
+    },
+    {
+     "decisions": 191,
+     "driver": "l2:rule-v3",
+     "mode": "validate",
+     "parity": true,
+     "report_sha": "ed17062a918ebefdb02992e50dcd7d93370879e6e1d75340e7aa816e01420605",
+     "row": 52,
+     "row_set": "v15-development",
+     "source": "outputs/highway-merge-v15/phase-2/run-03/results.jsonl, rule:expert-v3",
+     "trace_sha": "bb4f9d9aa3a9b689d3c6763521347a95843cd0e5c6cd74cb94b08ff27cc76f31"
+    }
+   ]
+  },
+  {
+   "expected_decisions": 288800,
+   "name": "data-sets-1-9",
+   "tasks": [
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 20,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 21,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 22,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 23,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 24,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 25,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 26,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 27,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 28,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 29,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 30,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 31,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 32,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 33,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 34,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 35,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 36,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 37,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 38,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 39,
+     "row_set": "v15-training",
+     "seed_set": 1
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 40,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 41,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 42,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 43,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 44,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 45,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 46,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 47,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 48,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 49,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 50,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 51,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 52,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 53,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 54,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 55,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 56,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 57,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 58,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 59,
+     "row_set": "v15-training",
+     "seed_set": 2
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 60,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 61,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 62,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 63,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 64,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 65,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 66,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 67,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 68,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 69,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 70,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 71,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 72,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 73,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 74,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 75,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 76,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 77,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 78,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 79,
+     "row_set": "v15-training",
+     "seed_set": 3
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 80,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 81,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 82,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 83,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 84,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 85,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 86,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 87,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 88,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 89,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 90,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 91,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 92,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 93,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 94,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 95,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 96,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 97,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 98,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 99,
+     "row_set": "v15-training",
+     "seed_set": 4
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 100,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 101,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 102,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 103,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 104,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 105,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 106,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 107,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 108,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 109,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 110,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 111,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 112,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 113,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 114,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 115,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 116,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 117,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 118,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 119,
+     "row_set": "v15-training",
+     "seed_set": 5
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 120,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 121,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 122,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 123,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 124,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 125,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 126,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 127,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 128,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 129,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 130,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 131,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 132,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 133,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 134,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 135,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 136,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 137,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 138,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 139,
+     "row_set": "v15-training",
+     "seed_set": 6
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 140,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 141,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 142,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 143,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 144,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 145,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 146,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 147,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 148,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 149,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 150,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 151,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 152,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 153,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 154,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 155,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 156,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 157,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 158,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 159,
+     "row_set": "v15-training",
+     "seed_set": 7
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 160,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 161,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 162,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 163,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 164,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 165,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 166,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 167,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 168,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 169,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 170,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 171,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 172,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 173,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 174,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 175,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 176,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 177,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 178,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 179,
+     "row_set": "v15-training",
+     "seed_set": 8
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 180,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 181,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 182,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 183,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 184,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 185,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 186,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 187,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 188,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 189,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 190,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 191,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 192,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 193,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 194,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 195,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 196,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 197,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": "p1",
+     "row": 198,
+     "row_set": "v15-training",
+     "seed_set": 9
+    },
+    {
+     "driver": "l2:rule-v3",
+     "label_with": "l2:rule-v3",
+     "mode": "collect",
+     "perturb": null,
+     "row": 199,
+     "row_set": "v15-training",
+     "seed_set": 9
+    }
+   ]
+  }
+ ],
+ "benchmark": {
+  "cases": [
+   "v05-validation-i110-merge",
+   "v05-val-0-cruise",
+   "v05-val-0-passing",
+   "v05-validation-i110-following",
+   "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "v02-development-60mph-cruise",
+   "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "v12-val-la-sb-adams-model-passing-4of16-medium"
+  ],
+  "development_rows": 70,
+  "development_seeds": [
+   6952001,
+   6952002,
+   6952003,
+   6952004,
+   6952005
+  ],
+  "held_out_rows": 42,
+  "held_out_seeds": [
+   6953001,
+   6953002,
+   6953003
+  ],
+  "held_out_status": "reserved; never run; final candidate only, with the user's authorization",
+  "row_order": "row 14 * k + c is case c at development seed k",
+  "schema": "highway_merge_v15_benchmark_v01",
+  "source": "v14 round 24 validation rows 0-13"
+ },
+ "charge": {
+  "decisions_left": 2700000,
+  "estimate_source": {
+   "cost_ratio": 1.036138931281885,
+   "cost_ratios": {
+    "dagger": 1.053965345807136,
+    "learner_validate": 1.0,
+    "rule_collect": 1.036138931281885,
+    "source": "outputs/highway-merge-v15/phase-3/checks/cost-01/check.json"
+   },
+   "decisions_per_clock_second": 1300,
+   "development_evaluation": 135428,
+   "development_source": "expert v3, Phase 2 run 3",
+   "fit_seconds": {
+    "clone": 35.0,
+    "dagger": 40.0
+   },
+   "per_training_set": 32000,
+   "per_training_set_source": "proposal estimate (round 24 training episodes)",
+   "start_seconds": 15.0
+  },
+  "expected_clock_seconds": 291.5,
+  "expected_decisions": 321791,
+  "expected_episodes": 203,
+  "expected_fit_seconds": 0,
+  "guard_margin": 0.05,
+  "phase_allowance": 2700000,
+  "phase_decisions_used": 0,
+  "phase_seconds_used": 0.0,
+  "phase_time_cap": 3000.0,
+  "reserve_seconds": 496,
+  "seconds_left": 3000.0,
+  "study_seconds_left": 4012.155,
+  "total_wall_seconds": 64700
+ },
+ "dagger_stop": "at least 3 iterations (plan v15 Stage 3: 3-5), then stop at the first whose re-baselined pass count is not above the best so far; at most 5; or when the next will not fit the cap",
+ "data_split": {
+  "held_back_seed_sets": [
+   8,
+   9
+  ],
+  "rule": "whole seed sets"
+ },
+ "fit_settings": {
+  "batch": 1024,
+  "epochs": 30,
+  "lr": 0.001,
+  "max_samples_per_epoch": 200000,
+  "threads": 1,
+  "weight_decay": 0.0001
+ },
+ "fits": [],
+ "held_out": "not built, not run",
+ "inputs": {},
+ "level2": {
+  "excluded_inputs": [
+   1,
+   5
+  ],
+  "executor_inputs": [
+   "entry_active",
+   "committed",
+   "dilemma",
+   "mandatory_left",
+   "mandatory_right"
+  ],
+  "expert": "rule:expert-v3",
+  "gaps": 4,
+  "mixing": {
+   "learner_probability": 0.7,
+   "segment_decisions": 5
+  },
+  "offsets": [
+   -2.0,
+   -1.0,
+   0.0,
+   1.0,
+   2.0
+  ],
+  "perturbation": {
+   "late_commit_share": 0.5,
+   "pulse_base_s": 0.6,
+   "pulse_offsets": [
+    -2.0,
+    -1.0,
+    1.0,
+    2.0
+   ],
+   "pulse_probability": 0.02,
+   "pulse_span_s": 0.8,
+   "slow_distance_m": [
+    40.0,
+    150.0
+   ],
+   "slow_hold_s": [
+    0.5,
+    2.0
+   ],
+   "slow_max_s": 8.0,
+   "slow_speeds": [
+    0.0,
+    2.0,
+    5.0
+   ],
+   "version": "p1"
+  },
+  "rule": "l2:rule-v3",
+  "sampling": {
+   "event_after_perturbation_s": 3.0,
+   "event_speed_m_s": 5.0,
+   "routine_every": 5,
+   "stopped_m_s": 0.5,
+   "waiting_weight": 0.25
+  },
+  "settings_digest": "ded23aba10a5006516dfde35139d02db67749dd37e6685b430c31c98d9ce3d49",
+  "sources": {
+   "experiments/v15_level2_train.py": "a92550fa7b4b9cc92c66142c2a779b5a30bb21649b230bc2ab0c87d24b349c43",
+   "experiments/v15_pool.py": "d7905c9fd7017f09655beef21de8e80f304c2eead5e7045fa9219bb72ed294e7",
+   "traffic/v15_level2.py": "4f3213edb387a598ec3b9b9e555dc818e2a8348b3dd65955b07d8f3466393094",
+   "traffic/v15_rule_expert.py": "9018ba3a239d6f2e79255f5a8f2ffacb2ce5c5f24f0b0ff1928f39d755eb6571",
+   "traffic/v15_training_rows.py": "4c2427b4a36931f16d6f4033956f99e8452703acd30a58a7e71d5ac7103553ae"
+  }
+ },
+ "parity": {
+  "decisions": 191,
+  "driver": "l2:rule-v3",
+  "report_sha": "ed17062a918ebefdb02992e50dcd7d93370879e6e1d75340e7aa816e01420605",
+  "row": 52,
+  "source": "outputs/highway-merge-v15/phase-2/run-03/results.jsonl, rule:expert-v3",
+  "trace_sha": "bb4f9d9aa3a9b689d3c6763521347a95843cd0e5c6cd74cb94b08ff27cc76f31"
+ },
+ "phase": "3",
+ "priority": "below_normal",
+ "round_index": 24,
+ "schema": "highway_merge_v15_phase3_v01",
+ "selection": "most passes on the 70 development rows under the frozen re-baselined gates (experiments/v15_regrade.py, all three rules), then round 24's recorded gates, then the earliest; never held-back loss",
+ "simulator": "SUMO (libsumo); no physics",
+ "step": "data",
+ "stop_checks": {
+  "expert_on_training_rows": "any collision, or a free-road stop in an unperturbed episode",
+  "learner_on_development_rows": "any collision or free-road stop, or a cut-in or emergency in a one-car LA case",
+  "one_car_la_cases": [
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium"
+  ]
+ },
+ "training_rows": {
+  "cases": [
+   "la-nb-pasadena-model-merge-4of16-medium",
+   "i110-merge",
+   "la-sb-adams-model-merge-focused-1of16-medium",
+   "la-nb-pasadena-model-following-4of16-dense",
+   "train-4-lane-ramp120-merge-focused-1-ramp-started",
+   "la-sb-adams-model-merge-8of24-medium",
+   "la-nb-pasadena-model-merge-focused-1of16-medium",
+   "i110-following",
+   "la-sb-adams-model-passing-4of16-medium",
+   "la-nb-pasadena-model-merge-focused-missed-gap-1of8-medium",
+   "train-3-lane-ramp240-merge-focused-3-ramp-started",
+   "la-sb-adams-model-merge-4of16-medium",
+   "train-2-lane-passing",
+   "la-nb-pasadena-model-cruise-8of16-medium",
+   "la-sb-adams-model-following-8of16-dense",
+   "i110-merge-focused-8",
+   "la-nb-pasadena-model-merge-8of24-medium",
+   "train-4-lane-cruise",
+   "la-sb-adams-model-merge-focused-1of24-dense",
+   "train-3-lane-ramp240-missed-gap"
+  ],
+  "schema": "highway_merge_v15_training_rows_v01",
+  "seed_rule": "row 20 k + i: training row i at seed 9700000 + 1000 k + i",
+  "seed_sets": 40,
+  "source": "v14 round 24 training_rows"
+ },
+ "workers": 16
+}

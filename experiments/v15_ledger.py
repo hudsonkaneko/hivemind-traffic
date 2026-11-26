@@ -24,6 +24,17 @@ How a v15 evaluation run is written to the ledger:
 - **While running**, the segment is charged its whole time reservation, as v05's sessions are; at the
   end, its elapsed clock time. A segment left 'running' (a killed process) stops every runner until it
   is reconciled by hand, as for any other run.
+
+Phase 3 (imitation; user decision of November 26, 2026, "Recommended size": at most 2,700,000 decisions and
+3,000 s of clock time as Phase 3's own allowance) uses the same segments with v15_phase '3', plus:
+- **v15_work**: what the segment did, any of 'collect' (training-row episodes that record Level 2 samples),
+  'fit' (training a Level 2 network in the learner process) and 'evaluation' (development rows);
+- **training_episodes** for the training-row episodes (not evaluation_episodes, not diagnostic episodes),
+  and **fits** and **fit_seconds**. A fit runs inside the session, so its clock time is part of the charge;
+- category 'preparation' and evaluation_only false, so the ledger's own totals check still accepts every
+  segment and the v05 training-decision total (counted from 'training' segments only) is untouched.
+Phase 3's time cap is applied by its runner (experiments/v15_phase3.py): each run's reservation is at most
+what is left of the 3,000 s.
 """
 from __future__ import annotations
 
@@ -82,6 +93,14 @@ def totals(ledger):
         phase['decisions'] += decisions
         phase['seconds'] += float(segment['charged_seconds'])
         phase['evaluation_episodes'] += int(segment.get('evaluation_episodes', 0))
+        for name in ('training_episodes', 'fits'):          # Phase 3 segments only
+            if name in segment:
+                value = segment[name]
+                if type(value) is not int or value < 0:
+                    raise ValueError(f'Invalid v15 {name}')
+                phase[name] = phase.get(name, 0) + value
+        if 'fit_seconds' in segment:
+            phase['fit_seconds'] = phase.get('fit_seconds', 0.) + float(_number(segment['fit_seconds'], 'fit seconds'))
     result['v15'] = v15
     return result
 

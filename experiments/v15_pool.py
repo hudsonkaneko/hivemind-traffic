@@ -29,6 +29,11 @@ only: nothing here trains or updates a policy, and nothing is charged.
   plan follower (traffic/v15_plan_follower.py, 'rule:plan-follower-v1') or the Phase 2 rule expert
   (traffic/v15_rule_expert.py, 'rule:expert-v3'; run 1's 'rule:expert-v1' and run 2's 'rule:expert-v2' are kept
   byte for byte in traffic/v15_rule_expert_v1.py and traffic/v15_rule_expert_v2.py so those runs can be repeated).
+  Phase 3 adds the Level 2 drivers (traffic/v15_level2.py): 'l2:rule-v3', v3 split into its executor and the rule
+  Level 2, and 'l2:<hash>', a published Level 2 network (publish_level2) with the same executor. They validate,
+  or collect Level 2 samples labelled by the rule ('l2:rule-v3' as label_with): the rule's own data, with
+  optional perturbations (Task.perturb), or DAgger rollouts of a network. Their samples are written to
+  level2.pt in the episode directory and hashed like any other samples.
 - **Background drivers.** The v14 demand writer gives every background car one of three IDM
   profiles (traffic/highway_v05_demand.py, PROFILES; checked in the routes files of round 24's
   validation). 'idm' is that recorded traffic; 'krauss' rewrites those three vTypes to SUMO's
@@ -62,7 +67,7 @@ if str(ROOT) not in sys.path:
 
 OUTPUT_ROOT = ROOT / 'outputs'
 SCHEMA = 'highway_merge_v15_pool_v01'
-ROW_SETS = ('v14-validation', 'v14-training', 'v15-development')   # never the held-out rows
+ROW_SETS = ('v14-validation', 'v14-training', 'v15-development', 'v15-training')   # never the held-out rows
 BACKGROUNDS = ('idm', 'krauss')
 MODES = ('validate', 'collect')
 BACKGROUND_PROFILES = ('native_cautious', 'native_balanced', 'native_attentive')
@@ -93,12 +98,26 @@ class Task:
     sample_seed: int = 0             # collect: which draw (for example the iteration)
     label_with: str | None = None    # a driver whose deterministic actions label the visited states
     run: str = 'default'             # who asked; recorded, not part of the key
+    perturb: str | None = None       # Level 2 rule data only: the perturbation version (traffic/v15_level2)
 
     def __post_init__(self):
         if self.row_set not in ROW_SETS:
             raise ValueError(f'Unknown row set {self.row_set!r}; expected one of {ROW_SETS}')
         if self.background not in BACKGROUNDS or self.mode not in MODES:
             raise ValueError(f'Unknown background {self.background!r} or mode {self.mode!r}')
+        if is_level2(self.driver):
+            from traffic import v15_level2 as level2
+            if self.mode == 'collect' and self.label_with != level2.RULE_DRIVER:
+                raise ValueError(f'Level 2 samples are labelled by {level2.RULE_DRIVER}')
+            if self.mode == 'validate' and (self.label_with is not None or self.perturb is not None):
+                raise ValueError('A Level 2 validation has no labels and no perturbations')
+            if self.perturb is not None and (self.driver != level2.RULE_DRIVER
+                                             or self.perturb != level2.PERTURBATION['version']):
+                raise ValueError(f'Perturbations are for {level2.RULE_DRIVER} only, version '
+                                 f'{level2.PERTURBATION["version"]}')
+            return
+        if self.perturb is not None:
+            raise ValueError('Only Level 2 rule data takes perturbations')
         if self.driver in RULE_DRIVERS:
             if self.mode != 'validate':
                 raise ValueError(f'{self.driver} validates only: it has no sampled actions to collect')
@@ -106,6 +125,15 @@ class Task:
             raise ValueError(f'Unknown driver {self.driver!r}: a published policy (policy:<hash>) or one of {RULE_DRIVERS}')
         if self.label_with and not self.label_with.startswith('policy:'):
             raise ValueError('Labels come from published policies; the rule expert labels in Phase 2')
+
+
+def is_level2(driver):
+    """A Level 2 driver: 'l2:rule-v3' or a published Level 2 network 'l2:<16 hex>'."""
+    if not isinstance(driver, str) or not driver.startswith('l2:'):
+        return False
+    from traffic import v15_level2
+    name = driver.split(':', 1)[1]
+    return driver == v15_level2.RULE_DRIVER or (len(name) == 16 and all(c in '0123456789abcdef' for c in name))
 
 
 def set_priority(priority):
@@ -134,9 +162,12 @@ def set_priority(priority):
 
 def key_fields(task, round_index, row):
     """Everything that decides a result. Not the run name, not the worker."""
-    return dict(round=round_index, row_set=task.row_set, row=task.row, case=row['case']['id'], seed=row['seed'],
-                driver=task.driver, background=task.background, mode=task.mode,
-                sample_seed=task.sample_seed if task.mode == 'collect' else 0, label_with=task.label_with)
+    fields = dict(round=round_index, row_set=task.row_set, row=task.row, case=row['case']['id'], seed=row['seed'],
+                  driver=task.driver, background=task.background, mode=task.mode,
+                  sample_seed=task.sample_seed if task.mode == 'collect' else 0, label_with=task.label_with)
+    if task.perturb is not None:          # only when set, so every earlier key is unchanged
+        fields['perturb'] = task.perturb
+    return fields
 
 
 def task_key(fields):
@@ -240,6 +271,9 @@ def _row_set(cfg, name):
     if name == 'v15-development':
         from traffic import v15_benchmark
         return v15_benchmark.development_rows(cfg)
+    if name == 'v15-training':
+        from traffic import v15_training_rows
+        return v15_training_rows.rows(cfg)
     raise ValueError(name)
 
 
@@ -262,8 +296,16 @@ def _worker_setup(backend, round_index, policy_dir):
               rows={name: _row_set(cfg, name) for name in ROW_SETS}, round_index=round_index)
 
 
-def _driver(driver):
-    """The actor for a driver id: a published policy, or a rule driver reading the live environment."""
+def _driver(driver, task=None, key=None):
+    """The actor for a driver id: a published policy, a rule driver reading the live environment, or a
+    Level 2 driver (built per task: its mixing and perturbations are seeded by the task key)."""
+    if is_level2(driver):
+        from traffic import v15_level2
+        net = None if driver == v15_level2.RULE_DRIVER else _level2_net(driver)
+        collect = task is not None and task.mode == 'collect'
+        return v15_level2.Level2Driver(lambda: _W.get('env'), net=net, collect=collect,
+                                       perturb=task.perturb if task is not None else None,
+                                       seed=torch_seed(key) if key else 0)
     if driver in RULE_DRIVERS:
         from traffic import v15_plan_follower, v15_rule_expert, v15_rule_expert_v1, v15_rule_expert_v2
         if driver == v15_plan_follower.DRIVER:
@@ -288,6 +330,21 @@ def _policy(driver):
         if state_hash(model.state_dict()) != driver.split(':', 1)[1]:
             raise ValueError(f'Published weights do not match {driver}')
         cached = _W['policies'][driver] = model
+    return cached
+
+
+def _level2_net(driver):
+    import torch
+    cached = _W['policies'].get(driver)
+    if cached is None:
+        from traffic import v15_level2
+        net = v15_level2.build_net()
+        saved = torch.load(_W['policy_dir'] / f'{driver.split(":", 1)[1]}.pt', map_location='cpu', weights_only=False)
+        net.load_state_dict(saved)
+        net.eval()
+        if state_hash(net.state_dict()) != driver.split(':', 1)[1]:
+            raise ValueError(f'Published weights do not match {driver}')
+        cached = _W['policies'][driver] = net
     return cached
 
 
@@ -351,8 +408,11 @@ def _execute(task, attempt, out):
     started = time.perf_counter()
     base.env_for = env_for
     try:
-        actor = _driver(task.driver)
-        if task.mode == 'collect':
+        actor = _driver(task.driver, task, key)
+        if is_level2(task.driver):          # deterministic to the episode loop; samples come from the actor
+            with torch.no_grad():
+                report, batch = base.episode(cfg, row, directory, actor)
+        elif task.mode == 'collect':
             report, batch = base.episode(cfg, row, directory, actor, collect=True)
         else:
             with torch.no_grad():
@@ -375,7 +435,15 @@ def _execute(task, attempt, out):
                   report_sha=_sha(_strip(report)), trace_sha=_sha(_strip(trace)),
                   passed=bool(gate['passed']), failures=list(gate['failures']), events=events['events'],
                   intervention_fraction=report.get('intervention_fraction'), directory=str(directory))
-    if batch is not None:
+    if is_level2(task.driver):
+        record['level2'] = actor.stats
+        level2 = actor.sample_batch() if task.mode == 'collect' else None
+        if level2 is not None:
+            record['samples_sha'] = _tensor_sha(level2)
+            record['samples'] = str(directory / 'level2.pt')
+            record['sample_bytes'] = _save(level2, directory / 'level2.pt')
+            record['level2_samples'] = int(level2['x'].shape[0])
+    elif batch is not None:
         compact = _compact(batch)
         if task.label_with:
             compact['labels'] = _labels(task.label_with, compact['local_obs'])
@@ -488,6 +556,10 @@ class WorkerPool:
 
     def key(self, task):
         return task_key(key_fields(task, self.round_index, self.rows[task.row_set][task.row]))
+
+    def publish_level2(self, state_dict):
+        """Make Level 2 network weights available to every worker; returns the driver id 'l2:<hash>'."""
+        return 'l2:' + self.publish(state_dict).split(':', 1)[1]
 
     def publish(self, state_dict):
         """Make weights available to every worker; returns the driver id 'policy:<hash>'."""
