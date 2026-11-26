@@ -91,7 +91,7 @@ def resolve(step):
     parity = dict(driver=v15_level2.RULE_DRIVER, row=P3.PARITY_ROW, report_sha=run3[P3.PARITY_ROW]['report_sha'],
                   trace_sha=run3[P3.PARITY_ROW]['trace_sha'], decisions=run3[P3.PARITY_ROW]['decisions'],
                   source=f'{P3.PHASE2_RUN3}/results.jsonl, {P3.EXPERT}')
-    per_row = {r: run3[r]['decisions'] for r in rows}
+    per_row = {str(r): run3[r]['decisions'] for r in rows}      # string keys, as the pinned JSON holds them
     longest = max(per_row.values())
     # Two batches: the variants that can lengthen an episode (slower, or a later gap) first, so the second batch is
     # checked against the measured decisions before it is dispatched (the allowance is a hard cap)
@@ -179,7 +179,9 @@ def run(step):
                              intended_episodes=charge['expected_episodes'], workers=config['workers'],
                              priority=config['priority'], authorization=config['authorization'],
                              round_index=config['round_index']) as session:
-        session.segment.update(phase4_step=step, v15_work=['evaluation'])
+        # training_episodes: experiments/v15_phase3._add moves training-row episodes there (none here); the probe's
+        # first attempt failed without it, after its first batch was charged
+        session.segment.update(phase4_step=step, v15_work=['evaluation'], training_episodes=0)
         with P.WorkerPool(config['workers'], out, backend=config['backend'], round_index=config['round_index'],
                           priority=config['priority']) as pool:
             session.segment['worker_priorities'] = sorted(set(pool.worker_priorities.values()))
@@ -272,8 +274,12 @@ def report(step):
     run3 = P3._run3()
     expert_match = speed_matches(ROOT / P3.PHASE2_RUN3, [run3[r] for r in rows], R.RULES)
     probes = {}
+    not_run = []
     for probe in sorted(config['level2']['probes']):
         mine = sorted((r for r in records if r['fields']['driver'] == probe), key=lambda r: r['fields']['row'])
+        if not mine:
+            not_run.append(probe)           # a run that stopped before the probe's batch
+            continue
         if [r['fields']['row'] for r in mine] != rows:
             raise ValueError(f'{probe} has no record for every probed row')
         g = drivers[probe]
@@ -298,7 +304,7 @@ def report(step):
     parity_rows = [r for r in records if r['fields']['driver'] == config['parity']['driver']]
     result = dict(
         schema=SCHEMA + '_report', step=step, simulator='SUMO (libsumo); no physics', background=P3.BACKGROUND,
-        rows=rows, start_policy=config['start_policy'], probes=probes, rows_with_room=room,
+        rows=rows, start_policy=config['start_policy'], probes=probes, probes_not_run=not_run, rows_with_room=room,
         expert_speed_match=expert_match, best_probe_speed_match={r: dict(probe=best[r][1], worst_car=best[r][0])
                                                                  for r in rows},
         gate=SPEED_MATCH_GATE, regrade_parity=parity,
