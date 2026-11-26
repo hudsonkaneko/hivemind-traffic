@@ -4,6 +4,23 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-26 - Plan v15 Phase 3 relabel: the learned Level 2 matches the expert
+
+- **User decision,** typed in the Claude side session: "do the relabel fix first then work on the
+  phase 4 budget".
+- **Ran:** one refit of the selected learner's data at its fit seed, with the gap labelled 0 (the
+  smallest choice that gives the rule's plan) in place of the rule's count of waited-for cars.
+  Evaluated on the 70 development rows: SUMO (libsumo), IDM, 16 workers at below-normal priority.
+  The held-out rows were not built or run.
+- **Result:** 62 of 70 re-baselined and 54 recorded, the expert's numbers exactly (paired: 0.0
+  points, p = 1). It gains rows 52 and 66 over the selected learner and loses none. It drives the
+  expert's identical trace on 64 rows; on the other 6 a lane-intent choice differs and the verdict is
+  the same. No new kind of failure. One training seed only.
+- **New:** `relabel_gap` in `experiments/v15_level2_train.py` (the sample files are unchanged), the
+  `relabel` step in `experiments/v15_phase3.py`, and 3 tests (119 v15 tests pass).
+- **Ledger:** 139,117 decisions and 107.6 s, inside Phase 3's allowance. Phase 3: 2,122,682 of
+  2,700,000 decisions and 1,493.3 of 3,000 s. Study time: 62,181.1 of 64,700 s (2,518.9 s left).
+
 ## 2026-11-26 - Plan v15 Phase 3: a learned Level 2 imitates the rule expert
 
 - **Trained:** Level 2 only, a small network, by supervised imitation of expert v3's Level 2

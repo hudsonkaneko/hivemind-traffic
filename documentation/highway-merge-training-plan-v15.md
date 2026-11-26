@@ -16,11 +16,13 @@ shared ledger needs the user's approval of its resolved configuration first, as 
   see [Phase 3 result](#phase-3-result-november-26).
   - The learned Level 2 passes 60 of 70 development rows re-baselined (51–52 under round 24's gates)
     at each of 3 training seeds. The expert passes 62 (54).
+  - **After the relabel fix** (the gap labelled 0; you approved it on November 26), one refit passes
+    62 (54), the expert's numbers, on the same rows; see
+    [The relabel step](#the-relabel-step-november-26). It ran at one training seed only.
   - No learner showed a new kind of failure.
   - Only Level 2 was trained, by imitation; Level 1, the rule executor, is unchanged.
-- **Next:** Phase 4 (anchored MAPPO) needs its own budget and a raise of the study total, with
-  2,626.5 s left. The held-out check (Stage 5) needs your authorization. Nothing more runs until you
-  decide.
+- **Next:** Phase 4 (anchored MAPPO) needs its own budget, with 2,518.9 s of study time left. The
+  held-out check (Stage 5) needs your authorization. Nothing more runs until you decide.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -1093,6 +1095,7 @@ development rows, with no new kind of failure.
 | DAgger 3 | Rollouts of DAgger 2's refit, then a refit | 314,328 | 228.8 s | 59/48 |
 | Final check | DAgger 1's data refit at seeds 4 and 5 | 276,036 | 201.7 s | 60/52, 60/52 |
 | **Total** | 505 training and 572 evaluation episodes; 8 fits (255.5 s) | **1,983,565** | **1,385.7 s** | |
+| Relabel (added November 26) | DAgger 1's data refit at seed 2, with the gap labelled 0 ([below](#the-relabel-step-november-26)) | 139,117 | 107.6 s | **62/54** |
 
 - **Selected:** DAgger 1's refit, `l2:5aebbf7d8a40d2b9`. Selection was by most re-baselined passes,
   then recorded passes, and never by held-back loss.
@@ -1179,6 +1182,46 @@ only, so nothing was simulated or charged. Both rows are
 
   Until then, the learned gap choice can only add waiting compared with the expert.
 
+### The relabel step (November 26)
+
+The user approved it in this side session: "do the relabel fix first then work on the phase 4
+budget". Its configuration and expected charge were recorded in the master before it ran. Same
+settings as the other steps: SUMO (libsumo), IDM, 16 workers at below-normal priority, the shared
+lock, development rows only.
+
+- **What ran:** one refit of the selected learner's data (step 1 plus DAgger 1, 178,746 samples) at
+  its fit seed 2, evaluated on the 70 development rows.
+  - The gap label is 0 wherever the gap applies; the lane and offset labels are unchanged.
+  - Only the gap labels differ from `l2:5aebbf7d8a40d2b9`'s fit, so the two are a matched pair.
+  - The recorded sample files are unchanged. `relabel_gap` in `experiments/v15_level2_train.py`
+    applies the relabel when they're loaded. Configuration: `configs/evaluation/v15-phase3-relabel.json`
+    (sha256 `da83cfef…`).
+- **Result:** `l2:bc7c050f6d3da3ce` scores **62 of 70 re-baselined** (79–94%) and **54 recorded**
+  (66–85%), the expert's numbers exactly.
+  - **Paired with the expert:** 62 rows both pass, none only one, 8 neither; 0.0 points (−4.9 to
+    +4.9), p = 1.
+  - **Paired with the selected learner:** it also passes rows 52 and 66, and loses none.
+  - **Failing rows:** the expert's 8 (0, 8, 9, 14, 22, 24, 37 and 38), all on rolling merge quality.
+  - **Events:** no collision, free-road stop or emergency. The cut-ins are on rows 28 and 37, as the
+    expert's are.
+- **How close it is to the expert:**
+  - it drives the expert's identical trace (the same trace hash) on 64 of the 70 rows, where the
+    selected learner did on 52;
+  - on the other 6 (rows 2, 13, 30, 41, 43 and 69), the first difference is a lane-intent choice, and
+    each row's verdict is the expert's;
+  - its lane intent differs from the rule's at 0.6% of decisions, and its offset never;
+  - held back, it copies lane intent at 99.7% and the gap and offset at 100%.
+- **What it means:**
+  - The learned gap choice is now always 0, so the car takes the rule's gap every time. The gap still
+    differs from the rule's recorded label at 50% of the 4,292 gap decisions, but each of those
+    choices is 0 where the rule's count is higher, which gives the same plan. That is by design.
+  - Learning when skipping a gap helps is left to Phase 4.
+  - **Not checked:** other training seeds. With a constant gap, only the lane and offset choices can
+    vary with the seed.
+- **Charge:** 139,117 decisions (3,487 of them the canary), 72 evaluation episodes and 107.6 s of
+  clock time (34.4 s of it the fit). The estimate was 137,494 decisions and 165.8 s. The canary and
+  the parity row matched, and the lock was released.
+
 ### The stop point, the fixes and a ledger correction
 
 - **Step 1 stopped at a stop point:** the expert had 18 free-road stops in 17 perturbed training
@@ -1209,14 +1252,17 @@ only, so nothing was simulated or charged. Both rows are
 
 | | Before Phase 3 | After |
 |---|---|---|
-| Study time | 60,687.8 of 64,700 s (4,012.2 s left) | 62,073.5 of 64,700 s (2,626.5 s left) |
+| Study time | 60,687.8 of 64,700 s (4,012.2 s left) | 62,181.1 of 64,700 s (2,518.9 s left) |
 | Training decisions | 6,722,376 of 6,871,150 | unchanged |
-| Phase 3 decisions | 0 of 2,700,000 | 1,983,565 (716,435 unused) |
-| Phase 3 clock time | 0 of 3,000 s | 1,385.7 s (1,614.3 s unused) |
+| Phase 3 decisions | 0 of 2,700,000 | 2,122,682 (577,318 unused) |
+| Phase 3 clock time | 0 of 3,000 s | 1,493.3 s (1,506.7 s unused) |
 | Diagnostic episodes | 173 of 174 | unchanged |
 
-- **Segments:** seven Phase 3 `v15_evaluation` segments, all category preparation. Six are complete,
-  and DAgger 1's first attempt failed (corrected as above).
+- **The "After" column includes the relabel step.** Without it: 62,073.5 s of study time, and
+  1,983,565 decisions and 1,385.7 s for Phase 3.
+- **Segments:** eight Phase 3 `v15_evaluation` segments, all category preparation. Seven are
+  complete, and DAgger 1's first attempt failed (corrected as above). In all: 505 training and 644
+  evaluation episodes, and 9 fits (289.9 s).
 - **The lock:** released.
 
 ### What's next (your decision)
