@@ -107,6 +107,8 @@ class Task:
             raise ValueError(f'Unknown background {self.background!r} or mode {self.mode!r}')
         if is_level2(self.driver):
             from traffic import v15_level2 as level2
+            if self.driver in level2.PROBES and self.mode != 'validate':
+                raise ValueError(f'{self.driver} validates only (a Phase 4 step A probe)')
             if self.mode == 'collect' and self.label_with != level2.RULE_DRIVER:
                 raise ValueError(f'Level 2 samples are labelled by {level2.RULE_DRIVER}')
             if self.mode == 'validate' and (self.label_with is not None or self.perturb is not None):
@@ -128,12 +130,13 @@ class Task:
 
 
 def is_level2(driver):
-    """A Level 2 driver: 'l2:rule-v3' or a published Level 2 network 'l2:<16 hex>'."""
+    """A Level 2 driver: 'l2:rule-v3', a probe (traffic/v15_level2.PROBES) or a published network 'l2:<16 hex>'."""
     if not isinstance(driver, str) or not driver.startswith('l2:'):
         return False
     from traffic import v15_level2
     name = driver.split(':', 1)[1]
-    return driver == v15_level2.RULE_DRIVER or (len(name) == 16 and all(c in '0123456789abcdef' for c in name))
+    return driver == v15_level2.RULE_DRIVER or driver in v15_level2.PROBES \
+        or (len(name) == 16 and all(c in '0123456789abcdef' for c in name))
 
 
 def set_priority(priority):
@@ -301,11 +304,12 @@ def _driver(driver, task=None, key=None):
     Level 2 driver (built per task: its mixing and perturbations are seeded by the task key)."""
     if is_level2(driver):
         from traffic import v15_level2
-        net = None if driver == v15_level2.RULE_DRIVER else _level2_net(driver)
+        probe = driver if driver in v15_level2.PROBES else None
+        net = None if driver == v15_level2.RULE_DRIVER or probe else _level2_net(driver)
         collect = task is not None and task.mode == 'collect'
         return v15_level2.Level2Driver(lambda: _W.get('env'), net=net, collect=collect,
                                        perturb=task.perturb if task is not None else None,
-                                       seed=torch_seed(key) if key else 0)
+                                       seed=torch_seed(key) if key else 0, probe=probe)
     if driver in RULE_DRIVERS:
         from traffic import v15_plan_follower, v15_rule_expert, v15_rule_expert_v1, v15_rule_expert_v2
         if driver == v15_plan_follower.DRIVER:

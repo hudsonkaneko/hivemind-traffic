@@ -246,6 +246,60 @@ def test_the_split_reproduces_expert_v3_and_collects_labelled_samples():
         shutil.rmtree(out, ignore_errors=True)
 
 
+def test_probes_change_one_choice_of_the_rules_and_validate_only():
+    label = dict(lane=1, reason='rule', gap=1, waited=1, offset=0.)
+    assert L.probe_choice(label, L.PROBES['l2:probe-offset-m2']) == dict(label, offset=-2.)
+    assert L.probe_choice(label, L.PROBES['l2:probe-gap-p1']) == dict(label, gap=2)
+    assert L.probe_choice(dict(label, gap=3, waited=5), L.PROBES['l2:probe-gap-p1'])['gap'] == 3     # Level 2's largest
+    assert L.probe_choice(dict(label, gap=None), L.PROBES['l2:probe-gap-p1'])['gap'] is None
+    with pytest.raises(ValueError):
+        L.probe_choice(label, dict(offset=3.))
+    assert sorted(L.PROBES) == ['l2:probe-gap-p1', 'l2:probe-offset-m1', 'l2:probe-offset-m2', 'l2:probe-offset-p1',
+                                'l2:probe-offset-p2']
+    for probe in L.PROBES:
+        assert pool.is_level2(probe)
+        pool.Task('v15-development', 0, probe)
+        with pytest.raises(ValueError):
+            pool.Task('v15-training', 0, probe, mode='collect', label_with=L.RULE_DRIVER)
+    driver = L.Level2Driver(lambda: None, probe='l2:probe-offset-p1')
+    assert driver.stats['acted'] == dict(rule=0, learner=0, perturbed=0, probe=0)
+    assert 'probe' not in L.Level2Driver(lambda: None).stats['acted']
+    for bad in (dict(probe='l2:probe-offset-p3'), dict(probe='l2:probe-gap-p1', collect=True),
+                dict(probe='l2:probe-gap-p1', net=L.build_net())):
+        with pytest.raises(ValueError):
+            L.Level2Driver(lambda: None, **bad)
+    from experiments import v15_phase3 as phase3
+    phase3._check_policies(ROOT, [dict(row_set=phase3.DEV, row=0, driver=p) for p in L.PROBES])   # no weights needed
+
+
+def test_probe_events_under_the_stop_rule_stop_step_a():
+    from experiments import v15_phase3 as phase3
+    from experiments import v15_phase4 as phase4
+    phase4._stop_on_probe_events(dict(probes={'l2:probe-gap-p1': dict(new_failures=[])}))
+    with pytest.raises(phase3.StopAndAsk):
+        phase4._stop_on_probe_events(dict(probes={'l2:probe-gap-p1': dict(new_failures=[]),
+                                                  'l2:probe-offset-p2': dict(new_failures=[dict(row=24, cut_ins=1)])}))
+
+
+def test_a_probe_drives_the_rules_executor_with_its_change():
+    rows = (4,)
+    if not _networks_present(rows):
+        pytest.skip('the frozen networks are not in this checkout (outputs/ is not in Git)')
+    out = ROOT / 'outputs' / 'test-runs' / f'pytest-v15-probe-{uuid.uuid4().hex[:8]}'
+    try:
+        with pool.WorkerPool(2, out, priority='below_normal') as workers:
+            batch = workers.run([pool.Task('v14-validation', 4, L.RULE_DRIVER),
+                                 pool.Task('v14-validation', 4, 'l2:probe-offset-m2')])
+        rule, probe = batch.records
+        assert batch.canary['matched'] and probe['level2']['acted']['probe'] == probe['level2']['decisions'] > 0
+        assert probe['trace_sha'] != rule['trace_sha']
+        steps = [json.loads(line) for d in (out / 'episodes').iterdir() if d.name == probe['key'][:16]
+                 for line in next(d.rglob('level2.jsonl')).read_text().splitlines()]
+        assert steps and all(s['level2']['acted']['offset'] == -2. and s['level2']['actor'] == 'probe' for s in steps)
+    finally:
+        shutil.rmtree(out, ignore_errors=True)
+
+
 def test_phase3_rollout_collisions_and_open_learner_failures_stop_the_run():
     from types import SimpleNamespace
     from experiments import v15_phase3 as phase3

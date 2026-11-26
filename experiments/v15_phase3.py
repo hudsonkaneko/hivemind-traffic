@@ -21,13 +21,19 @@ User decision, November 26, 2026, typed in the Claude side session after the dia
 data at its fit seed with the gap labelled 0 (experiments/v15_level2_train.relabel_gap) and evaluates it on
 the 70 development rows, inside Phase 3's allowance, under the same rules and stop checks.
 
+User decision, November 26, 2026, typed in the Claude side session: "Yes, run step A" (plan v15 decision 9,
+Phase 4 step A). Its seed check is the relabel-seeds step: the relabel configuration refit at fit seeds 4 and
+5, each evaluated on the 70 development rows, from Phase 3's unused allowance. Its probe runs in
+experiments/v15_phase4.py.
+
 usage (from the checkout root, with .venv-traffic's Python):
   python experiments/v15_phase3.py check NAME           the uncharged code checks on v14-validation rows 0 and 4
   python experiments/v15_phase3.py resolve STEP         write configs/evaluation/v15-phase3-STEP.json (no simulation)
   python experiments/v15_phase3.py run STEP             check the pinned configuration, take the lock, run (charged)
   python experiments/v15_phase3.py report STEP          rebuild the step's report (and the re-baselined verdicts)
 
-STEP is data, clone, dagger-1 ... dagger-5, final or relabel; each writes outputs/highway-merge-v15/phase-3/STEP.
+STEP is data, clone, dagger-1 ... dagger-5, final, relabel or relabel-seeds; each writes
+outputs/highway-merge-v15/phase-3/STEP.
 - data: the rule Level 2 ('l2:rule-v3', which reproduces expert v3 exactly) collects on the 20 training rows at
   seed sets 0-9 (200 episodes; row i of set k perturbed when k + i is odd). Sets 8 and 9 are held back.
 - clone: 3 fits (fit seeds 1-3) on sets 0-7, each evaluated on the 70 development rows.
@@ -37,6 +43,8 @@ STEP is data, clone, dagger-1 ... dagger-5, final or relabel; each writes output
 - relabel: the selected learner's data and fit seed again, with the gap labelled 0 wherever it applies (the
   smallest choice that gives the rule's plan, in place of the largest), evaluated. Only the gap labels differ
   from the selected learner's fit, so the two are a matched pair.
+- relabel-seeds: the relabel step's data and gap labels at fit seeds 4 and 5, each evaluated (Phase 3's
+  baseline across 3 seeds for Phase 4).
 Every run also re-runs 'l2:rule-v3' on development row 52 and its report and trace hashes must equal Phase 2
 run 3's record of expert v3 there (parity), and every batch has a canary on another worker.
 Selection is by closed-loop pass rate on the development rows under the frozen re-baselined gates
@@ -69,7 +77,7 @@ MARGIN = 0.05
 DATA_SETS, HELD_BACK = tuple(range(10)), (8, 9)
 DAGGER_ITERATIONS, DAGGER_MINIMUM, DAGGER_SETS = 5, 3, 5
 CLONE_SEEDS, FINAL_SEEDS = (1, 2, 3), (4, 5)
-STEPS = ('data', 'clone') + tuple(f'dagger-{j}' for j in range(1, DAGGER_ITERATIONS + 1)) + ('final', 'relabel')
+STEPS = ('data', 'clone') + tuple(f'dagger-{j}' for j in range(1, DAGGER_ITERATIONS + 1)) + ('final', 'relabel', 'relabel-seeds')
 CHECK_ROW_IDS = (0, 4)
 PHASE2_RUN3 = 'outputs/highway-merge-v15/phase-2/run-03'
 PARITY_ROW = 52
@@ -99,6 +107,11 @@ RELABEL_AUTHORIZATION = ('Relabel step: user decision of November 26, 2026, type
                          'relabel fix first then work on the phase 4 budget" (one refit of the selected learner\'s data '
                          'at its fit seed with the gap labelled 0, evaluated on the 70 development rows, inside Phase '
                          '3\'s allowance).')
+STEP_A_AUTHORIZATION = ('Phase 4 step A: user decision of November 26, 2026, typed in the Claude side session: "Yes, '
+                        'run step A" (plan v15 decision 9: the probe of 5 scripted Level 2 variants on the 8 failing '
+                        'development rows and the relabel configuration refit at fit seeds 4 and 5, about 360,000 '
+                        'decisions and 290 s, with no raise of the study total; the seed check from Phase 3\'s unused '
+                        'allowance, the probe as Phase 4\'s first segment with at most 100,000 decisions and 150 s).')
 
 
 def config_path(step):
@@ -287,6 +300,24 @@ def resolve(step):
         batches = [dict(name='relabel-evaluation', learners_from_fits=[fits[0]['name']], evaluate_fits=True,
                         tasks=[dict(parity, row_set=DEV, mode='validate', parity=True)],
                         expected_decisions=round(dev_decisions + parity['decisions'] + 800))]
+    elif step == 'relabel-seeds':
+        if not (out_dir('relabel') / 'report.json').is_file():
+            raise ValueError('The seed check needs the relabel step first')
+        relabel = json.loads((out_dir('relabel') / 'resolved-config.json').read_text())
+        relabelled = _report('relabel')['learners']
+        _no_open_failures(relabelled)
+        spec = relabel['fits'][0]
+        data_index = _index_sha(spec['data_steps'])
+        if data_index != relabel['inputs']['data_index']:
+            raise ValueError('The relabel step\'s data have changed since it ran')
+        fits = [dict(name=f'relabel-seed-{s}', seed=s, data_steps=spec['data_steps'], gap_label=spec['gap_label'])
+                for s in FINAL_SEEDS]
+        inputs = dict(relabel=relabelled[0]['id'], relabel_fit_seed=spec['seed'], gap_label=spec['gap_label'],
+                      relabel_passed=dict(rebaselined=relabelled[0]['rebaselined_passed'],
+                                          recorded=relabelled[0]['recorded_passed']), data_index=data_index)
+        batches = [dict(name='relabel-seed-evaluations', learners_from_fits=[f['name'] for f in fits], evaluate_fits=True,
+                        tasks=[dict(parity, row_set=DEV, mode='validate', parity=True)],
+                        expected_decisions=round(len(fits) * dev_decisions + parity['decisions'] + 800))]
     else:   # final
         history = _learner_history()
         _no_open_failures(history)
@@ -299,10 +330,10 @@ def resolve(step):
                         tasks=[dict(parity, row_set=DEV, mode='validate', parity=True)],
                         expected_decisions=round(len(fits) * dev_decisions + parity['decisions'] + 800))]
     expected = sum(b['expected_decisions'] for b in batches)
-    fit_seconds = sum(FIT_S['clone' if step in ('clone', 'final', 'relabel') else 'dagger'] for _ in fits)
+    fit_seconds = sum(FIT_S['clone' if step in ('clone', 'final', 'relabel', 'relabel-seeds') else 'dagger'] for _ in fits)
     ratios = cost_ratios()
     kind = dict(data='rule_collect', clone='learner_validate', final='learner_validate',
-                relabel='learner_validate').get(step, 'dagger')
+                relabel='learner_validate', **{'relabel-seeds': 'learner_validate'}).get(step, 'dagger')
     clock = START_S + expected * PER_DECISION_S * ratios[kind] + fit_seconds + 10. * len(batches)
     phase, totals = _ledger_phase3()
     decisions_left, seconds_left = ALLOWANCE - phase['decisions'], TIME_CAP - phase['seconds']
@@ -341,7 +372,8 @@ def resolve(step):
                                          decisions_per_clock_second=1300, start_seconds=START_S, fit_seconds=FIT_S,
                                          cost_ratio=ratios[kind], cost_ratios=ratios),
                     total_wall_seconds=cfg['budget']['total_wall_seconds']),
-        authorization=AUTHORIZATION + (' ' + RELABEL_AUTHORIZATION if step == 'relabel' else ''),
+        authorization=AUTHORIZATION + (' ' + RELABEL_AUTHORIZATION if step in ('relabel', 'relabel-seeds') else '')
+        + (' ' + STEP_A_AUTHORIZATION if step == 'relabel-seeds' else ''),
         held_out='not built, not run', simulator='SUMO (libsumo); no physics')
 
 
@@ -567,6 +599,7 @@ def _check_policies(out, tasks):
     from traffic import v15_level2
     missing = sorted({t['driver'] for t in tasks
                       if str(t['driver']).startswith('l2:') and t['driver'] != v15_level2.RULE_DRIVER
+                      and t['driver'] not in v15_level2.PROBES
                       and not (Path(out) / 'policies' / f'{t["driver"].split(":", 1)[1]}.pt').is_file()})
     if missing:
         raise FileNotFoundError(f'No published weights in {Path(out) / "policies"} for {missing}; nothing was dispatched')

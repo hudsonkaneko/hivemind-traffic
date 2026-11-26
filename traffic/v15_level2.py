@@ -40,6 +40,10 @@ Modes (traffic/v15_level2 drivers in experiments/v15_pool.py):
   probability MIXING['learner_probability'] (0.7) and the expert otherwise, and the expert labels every
   state either way. The expert's choice is computed on the same simulated step, so labelling adds compute,
   not simulated decisions.
+- validate with a probe (PROBES; plan v15 Phase 4 step A, user decision of November 26, 2026, "Yes, run
+  step A"): the rule's choices with one fixed change at every decision for every car, a constant speed
+  offset or the gap one car later than the rule's (within Level 2's choices, 0-3). The probes validate only;
+  they ask whether any simple Level 2 choice changes a row the rule fails.
 
 Samples (collect): features, labels, masks and weights, one per kept car-decision (SAMPLING): every
 decision near an event (an active yield entry, a lane-change candidate or mandatory change, a perturbation
@@ -64,6 +68,9 @@ from traffic.v15_rule_expert import (AGENTS, SETTINGS, _speed, background_respon
                                      mobil_incentive, normalized, run_up)
 
 RULE_DRIVER = 'l2:rule-v3'
+PROBES = {'l2:probe-offset-m2': dict(offset=-2.), 'l2:probe-offset-m1': dict(offset=-1.),
+          'l2:probe-offset-p1': dict(offset=1.), 'l2:probe-offset-p2': dict(offset=2.),
+          'l2:probe-gap-p1': dict(gap=1)}
 PREFIX = 'l2:'
 SCHEMA = 'highway_merge_v15_level2_v01'
 GAPS = 4                                   # 0: ahead of the nearest; 1-3: behind the 1st, 2nd or 3rd
@@ -126,6 +133,19 @@ def select_gap_from(stop, speed, stream, length=5., cap=20., safe=None, skip=0, 
                 waited_for=waited)
 
 
+def probe_choice(label, probe):
+    """The rule's choice (`label`) with a probe's fixed change: its offset, or its gap a number of cars later
+    (capped at GAPS - 1, the largest Level 2 choice). Lane intent is the rule's."""
+    choice = dict(label)
+    if 'offset' in probe:
+        if probe['offset'] not in OFFSETS:
+            raise ValueError(f'Offset {probe["offset"]} is not a Level 2 choice {OFFSETS}')
+        choice['offset'] = probe['offset']
+    if 'gap' in probe and label['gap'] is not None:
+        choice['gap'] = min(label['gap'] + int(probe['gap']), GAPS - 1)
+    return choice
+
+
 def apply_offset(target, offset, free_road):
     """The plan's target plus a Level 2 offset; a positive offset stops at max(target, free road)."""
     if offset == 0.:
@@ -180,14 +200,18 @@ class Level2Driver(v3.RuleExpert):
     """Level 1 (v3's executor) with an explicit Level 2: the rule's, a network's, or DAgger's mixture.
 
     net: None for the rule Level 2, else a Level2Net. collect: record samples (labels are always the rule's).
-    perturb: None or PERTURBATION['version'] (rule only). seed: the task's seed (mixing and perturbations)."""
+    perturb: None or PERTURBATION['version'] (rule only). seed: the task's seed (mixing and perturbations).
+    probe: None or a PROBES id (the rule with one fixed change; validate only)."""
 
-    def __init__(self, env_source, *, net=None, collect=False, perturb=None, seed=0, record=True):
+    def __init__(self, env_source, *, net=None, collect=False, perturb=None, seed=0, record=True, probe=None):
         super().__init__(env_source, record=record)
         if perturb is not None and (perturb != PERTURBATION['version'] or net is not None or not collect):
             raise ValueError('Perturbations are for the rule Level 2\'s collected data only')
         if net is None and collect is False and perturb is not None:
             raise ValueError('Perturbations need collect')
+        if probe is not None and (probe not in PROBES or net is not None or collect or perturb is not None):
+            raise ValueError(f'A probe is one of {sorted(PROBES)}, on the rule Level 2, validating only')
+        self.probe = PROBES[probe] if probe is not None else None
         self.net, self.collect, self.perturb = net, bool(collect), perturb
         self.mixing = net is not None and self.collect
         self._rule_rng = random.Random(seed ^ _RULE_SEED)
@@ -196,6 +220,8 @@ class Level2Driver(v3.RuleExpert):
         self.stats = dict(decisions=0, acted=dict(rule=0, learner=0, perturbed=0),
                           disagree=dict(lane=0, gap=0, offset=0), compared=dict(lane=0, gap=0, offset=0),
                           pulses=0, slow_events=0)
+        if self.probe is not None:          # only for a probe, so every other driver's stats are unchanged
+            self.stats['acted']['probe'] = 0
         self._count, self._mix, self._pulse, self._slow, self._last_perturb, self._last_gap = {}, {}, {}, {}, {}, {}
 
     def _new_episode(self, env):
@@ -399,6 +425,8 @@ class Level2Driver(v3.RuleExpert):
             choice, slow_cap, perturbed = self._perturbed(env, agent, state, flow, label)
             if perturbed:
                 actor = 'perturbed'
+        elif self.probe is not None:
+            actor, choice = 'probe', probe_choice(label, self.probe)
         skip = choice.get('skip', choice['gap'] if choice['gap'] is not None else 0)
 
         # Level 1 executes the choice
