@@ -119,6 +119,16 @@ def test_attempt_names_never_reuse_an_existing_directory(tmp_path):
     assert pool.free_attempt(tmp_path, 'canary') == 'canary'
 
 
+def test_priority_is_set_and_read_back_in_a_separate_process():
+    import subprocess
+    import sys
+    script = 'from experiments.v15_pool import set_priority; print(set_priority("below_normal"))'
+    done = subprocess.run([sys.executable, '-c', script], cwd=ROOT, capture_output=True, text=True, timeout=120)
+    assert done.returncode == 0 and done.stdout.strip() == 'below_normal'
+    with pytest.raises(ValueError):
+        pool.set_priority('realtime')
+
+
 def test_pool_outputs_must_stay_inside_project_outputs(tmp_path):
     with pytest.raises(ValueError):
         pool.WorkerPool(1, tmp_path / 'pool')
@@ -144,6 +154,9 @@ def test_pool_canary_trainer_parity_and_worker_independent_sampling():
             assert workers.publish(model.state_dict()) == driver
             validation = workers.run([pool.Task('v14-validation', r, driver) for r in (8, 9)])
             assert validation.canary['matched'] and validation.canary['different_worker']
+            canary_record = next(r for r in validation.records if r['key'] == validation.canary['key'])
+            assert validation.canary_decisions == canary_record['decisions'] > 0
+            assert validation.charged_decisions == validation.decisions + validation.canary_decisions
             if TRAINER_RECORD.is_file():
                 reports = json.loads(TRAINER_RECORD.read_text())['reports']
                 for record in validation.records:

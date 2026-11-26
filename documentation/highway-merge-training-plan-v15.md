@@ -5,8 +5,9 @@ shared ledger needs the user's approval of its resolved configuration first, as 
 
 **Status (November 25, 2026):** the user decided all seven questions at the end of this plan.
 Phase 0 (tools only, no training, nothing charged) passed its exit check; see
-[Phase 0 result](#phase-0-result-november-25). Phase 1's budget is approved, but Phase 1
-hasn't started. Nothing has been trained under this plan.
+[Phase 0 result](#phase-0-result-november-25). Phase 1 (baselines, evaluation only, charged)
+ran and met its exit check; see [Phase 1 result](#phase-1-result-november-25). Phase 2's budget
+still needs the user. Nothing has been trained under this plan.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -486,6 +487,9 @@ one run; 24 workers come from the rerun after the repeated-key fix.
 
 ### What Phase 1 needs
 
+All of this was built, decided and recorded before Phase 1 ran; see
+[Phase 1 result](#phase-1-result-november-25).
+
 - **The plan follower as a pool driver.** It exists only as scratch scripts from round 23's
   check (copies in `outputs/test-runs/v15-p0/scratch-copies/`).
   - It reads the follow gate's reference (`traffic/highway_flow_rl_v14_follow_gate.py`) from the
@@ -509,6 +513,178 @@ one run; 24 workers come from the rerun after the repeated-key fix.
   - On 42 rows the round-16 policy makes 79,981 decisions, so the 70 rows should be about
     133,000 decisions per driver. That's an estimate, not a measurement.
   - From the sweep, 24 libsumo workers need well under a minute per 42 rows.
+
+## Phase 1 result (November 25)
+
+**Exit check met:** pass rates with 95% intervals for the three baselines on the development rows.
+- **Evaluation only:** no training and no update. All runs are SUMO (libsumo), not physics.
+- **Background:** IDM only.
+- **Held out:** the held-out rows were not built or run.
+
+**User decisions**, relayed by the main Claude session and recorded in the coordination master:
+- **"Yes, all four":**
+  1. commit Phase 0;
+  2. raise the decision allowance for Phase 1 only, sized to its resolved charge and at most
+     400,000, with the time cap unchanged;
+  3. IDM background only;
+  4. score the plan follower on the 60 rows without cases 0 and 4.
+- **The launch:** "start phjase one after those modifications have been made".
+- **The CPU limit:** "don't use all cpu cores i need some to do other tasks". So the run used 16
+  workers, and the workers and the learner ran at below-normal priority.
+
+### What was built
+
+- **The plan follower** (`traffic/v15_plan_follower.py`, driver `rule:plan-follower-v1`,
+  validation only). It is round 23's rule:
+  - it requests 3/s × (target − speed), within −4 to 2 m/s²;
+  - it stays below the acceleration ceiling the actor observes, minus 0.05;
+  - it stays within 0.35 m/s² of the measured acceleration;
+  - it never changes lanes.
+
+  Its target is v14's own ramped merge target, the `gate_v14` entry of the environment's
+  per-car target cache. Off the merge it uses the free-road speed.
+  **Correction to Phase 0's note above:** it reads v14's target, not the follow gate's reference.
+- **The evaluation ledger writer** (`experiments/v15_ledger.py`):
+  - **Lock:** it takes the shared `active.lock` with exclusive create and never overrides
+    another run's lock.
+  - **Charge:** clock time against the study total, and every decision across workers (canary
+    reruns included) against the phase's own allowance.
+  - **Records:** summed worker time, simulated time, the worker count and the process priority.
+  - **Compatibility:** its segment is a `preparation` segment (command `v15_evaluation`,
+    `evaluation_only`), so the ledger's own totals check and every existing runner still read the
+    ledger.
+  - **Episodes:** they go in `evaluation_episodes`, not the diagnostic-episode count.
+- **The statistics** (`traffic/v15_stats.py`):
+  - **Pass rates:** Wilson score intervals.
+  - **Paired differences:** Newcombe's hybrid score interval, with the corrected phi (ad − bc
+    reduced by n/2 when positive). Without the correction, two drivers that agree on every row
+    get a zero-width interval.
+  - **Coverage, measured by simulation** (2,000 tables each at n = 60–70): about 95% where
+    drivers disagree often; 97–100% (conservative) where they rarely do.
+  - **Tests:** an exact McNemar test.
+- **The runner** (`experiments/v15_phase1.py`) and its pinned configuration
+  (`configs/evaluation/v15-phase1.json`, sha256 `a37fdaf9…`). The run refuses to start if what it
+  resolves differs from the pinned file.
+- **The pool:**
+  - it accepts rule drivers for validation;
+  - it counts the canary's rerun decisions;
+  - it sets and checks each worker's process priority.
+- **Tests:** 79 v15 tests pass, the SUMO end-to-end ones included. One of them runs the whole
+  charged path (lock, session, pool, canary, parity, ledger segment, report) against a temporary
+  ledger.
+
+### The run
+
+Five batches, one per development seed. Each batch ran every driver on that seed's 14 rows
+(the follower on 12), with the cheapest short row as the canary. 16 workers, below-normal
+priority, started at 23:23 (America/Los_Angeles).
+
+| Batch | Seed | Clock time | Decisions (expected) | Canary | Parity rows |
+|---|---|---|---|---|---|
+| 0 | 6952001 | 39.5 s | 80,315 (77,687) | matched, other worker | 14 of 14 identical |
+| 1 | 6952002 | 34.7 s | 78,483 (79,071) | matched, other worker | 14 of 14 identical |
+| 2 | 6952003 | 35.2 s | 80,582 (77,183) | matched, other worker | — |
+| 3 | 6952004 | 34.6 s | 76,400 (77,183) | matched, other worker | — |
+| 4 | 6952005 | 35.0 s | 78,358 (77,183) | matched, other worker | — |
+
+- **Total:** 185.3 s of clock time; 2,231.1 s of summed worker time; 26,220 s simulated.
+- **Decisions:** 395,240, against 388,307 expected (+1.8%). 1,102 of them are canary reruns.
+- **Episodes:** 205.
+- **Parity:** development rows 0–27 are round 24's validation rows 14–41. The round-16 policy's
+  reports and per-decision traces there are identical to Phase 0's.
+
+### Pass rates
+
+| Driver | Rows passed | Pass rate (95% Wilson) | Decisions |
+|---|---|---|---|
+| Round-16 policy | 33 of 70 | 47% (36–59%) | 134,530 |
+| Round 21's final policy | 31 of 70 | 44% (33–56%) | 135,760 |
+| Plan follower | 21 of 60 | 35% (24–48%) | 123,848 |
+
+On the follower's 60 rows, the round-16 policy passes 29 and round 21's final policy 27.
+
+| Case | Round 16 | Round 21 final | Plan follower |
+|---|---|---|---|
+| 0. i110 merge | 0/5 | 0/5 | not scored |
+| 1. Cruise | 3/5 | 3/5 | 3/5 |
+| 2. Passing | 5/5 | 5/5 | 4/5 |
+| 3. i110 following | 5/5 | 5/5 | 0/5 |
+| 4. 2-lane ramp 120 | 4/5 | 4/5 | not scored |
+| 5. 60 mph cruise | 3/5 | 4/5 | 5/5 |
+| 6. 2-lane ramp 180 | 3/5 | 2/5 | 0/5 |
+| 7. 4-lane ramp 180 | 1/5 | 1/5 | 0/5 |
+| 8. LA NB 8-car merge | 0/5 | 0/5 | 2/5 |
+| 9. LA SB 8-car merge | 1/5 | 1/5 | 1/5 |
+| 10. LA NB 1-car merge | 3/5 | 1/5 | 3/5 |
+| 11. LA SB 1-car merge | 1/5 | 1/5 | 2/5 |
+| 12. LA NB following | 2/5 | 2/5 | 1/5 |
+| 13. LA SB passing | 2/5 | 2/5 | 0/5 |
+
+Paired differences use the same rows, seeds and background for both drivers:
+
+| First vs second | Rows | Both pass | First only | Second only | Neither | Difference (95%) | McNemar p |
+|---|---|---|---|---|---|---|---|
+| Round 21 final vs round 16 | 70 | 30 | 1 | 3 | 36 | −2.9 pts (−8.9 to +3.3) | 0.625 |
+| Plan follower vs round 16 | 60 | 16 | 5 | 13 | 26 | −13.3 pts (−26.4 to +0.5) | 0.096 |
+| Plan follower vs round 21 final | 60 | 15 | 6 | 12 | 27 | −10.0 pts (−23.3 to +4.0) | 0.238 |
+
+Failing gates and events (rows with at least one; totals in brackets):
+
+| | Round 16 (70 rows) | Round 21 final (70) | Plan follower (60) |
+|---|---|---|---|
+| Per-car route comfort or control | 24 | 24 | 38 |
+| Rolling merge quality | 23 | 29 | 19 |
+| Raw request jerk | 24 | 22 | 0 |
+| Stable merge | 7 | 7 | 11 |
+| Native emergency | 4 | 5 | 1 |
+| Override episodes | 40 (94) | 35 (79) | 30 (190) |
+| Stops / free-road stops | 11 / 5 | 14 / 7 | 14 / 0 |
+| Cut-ins | 8 (10) | 10 (11) | 3 (3) |
+| Collisions | 2 | 2 | 1 |
+
+### What it shows
+
+- **Round 21's final policy is not distinguishable from the round-16 policy.** Only 4 of 70 rows
+  differ (1 against 3).
+- **The plan follower passes fewer rows than the round-16 policy, but not significantly.** On
+  the same 60 rows it passes 21 against 29, so 8 fewer: −13.3 points (−26.4 to +0.5), p = 0.096.
+- **Where the follower loses:** all of case 3 (i110 following, 0 of 5 against 5 of 5), both
+  ramp-180 cases (0 of 10 against 4 of 10) and case 13 (0 of 5 against 2 of 5).
+- **Where it gains:** case 5 (5 of 5 against 3 of 5), case 8 (2 of 5 against 0 of 5) and case 11
+  (2 of 5 against 1 of 5).
+- **It has fewer safety events but more overrides.**
+  - Fewer rows with emergencies (1 against 4–5), cut-ins (3 against 8–10) and free-road stops
+    (0 against 5–7).
+  - Override episodes reach 190 in 30 rows, against 79–94.
+  - Its most common failing gate is per-car route comfort or control: 38 of 60 rows, against 24
+    of 70 for each policy.
+  - In round 23's check, case 8's comfort failures came from jerk when the environment's safety
+    limit cut in. That was not checked here.
+- **No driver passes case 0** (i110 merge): 0 of 5 for both policies. The follower isn't scored
+  there.
+- **Caveat:** rows of one case share its network and traffic setting and differ only in seed.
+  Pooled intervals that treat the 70 rows as independent are narrower than the case structure
+  justifies, and per-case intervals on 5 rows are wide.
+- **For Phase 2:**
+  - The rule expert has to beat the round-16 policy's 33 of 70.
+  - A lane-keeping target follower is not that expert as it stands: it can't change lanes, and
+    it fails comfort or control on most rows.
+  - Phase 2's budget still needs the user.
+
+### Ledger
+
+| | Before | After |
+|---|---|---|
+| Study time | 60,195.7 of 64,700 s | 60,381.0 of 64,700 s (4,319.0 s left) |
+| Training decisions | 6,722,376 of 6,871,150 | unchanged |
+| Phase 1 evaluation decisions | 0 of 400,000 | 395,240 of 400,000; the rest isn't carried over |
+| Diagnostic episodes | 173 of 174 | unchanged |
+
+- **The segment:** one `v15_evaluation` segment, complete, charged 185.3 s, recording 205
+  evaluation episodes, 16 workers and below-normal priority.
+- **The lock:** released.
+- **Outputs:** `outputs/highway-merge-v15/phase-1/run-01` in this worktree (not in Git), with
+  `report.md`, `report.json`, `charge.json`, `phase1-log.jsonl` and the results table.
 
 ## Decisions for you
 

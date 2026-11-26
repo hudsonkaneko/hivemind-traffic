@@ -1,0 +1,1615 @@
+{
+ "authorization": "User decisions of November 25, 2026, relayed by the main Claude session: plan v15 decision 6 (Phase 1 approved, about 210 evaluation episodes), \"use clock time\", then \"Yes, all four\" (Phase 1 decision allowance at most 400,000, time cap unchanged, IDM only, the follower on 60 rows) and \"start phjase one after those modifications have been made\". Evaluation only; no held-out rows.",
+ "backend": "libsumo",
+ "backgrounds": [
+  "idm"
+ ],
+ "batches": [
+  {
+   "canary": {
+    "driver": "round-16",
+    "expected": 453,
+    "row": 10
+   },
+   "expected_decisions": 77687,
+   "seed": 6952001,
+   "tasks": [
+    {
+     "driver": "round-16",
+     "row": 10
+    },
+    {
+     "driver": "round-16",
+     "row": 0
+    },
+    {
+     "driver": "round-21-final",
+     "row": 0
+    },
+    {
+     "driver": "round-16",
+     "row": 1
+    },
+    {
+     "driver": "round-21-final",
+     "row": 1
+    },
+    {
+     "driver": "plan-follower",
+     "row": 1
+    },
+    {
+     "driver": "round-16",
+     "row": 2
+    },
+    {
+     "driver": "round-21-final",
+     "row": 2
+    },
+    {
+     "driver": "plan-follower",
+     "row": 2
+    },
+    {
+     "driver": "round-16",
+     "row": 3
+    },
+    {
+     "driver": "round-21-final",
+     "row": 3
+    },
+    {
+     "driver": "plan-follower",
+     "row": 3
+    },
+    {
+     "driver": "round-16",
+     "row": 4
+    },
+    {
+     "driver": "round-21-final",
+     "row": 4
+    },
+    {
+     "driver": "round-16",
+     "row": 5
+    },
+    {
+     "driver": "round-21-final",
+     "row": 5
+    },
+    {
+     "driver": "plan-follower",
+     "row": 5
+    },
+    {
+     "driver": "round-16",
+     "row": 6
+    },
+    {
+     "driver": "round-21-final",
+     "row": 6
+    },
+    {
+     "driver": "plan-follower",
+     "row": 6
+    },
+    {
+     "driver": "round-16",
+     "row": 7
+    },
+    {
+     "driver": "round-21-final",
+     "row": 7
+    },
+    {
+     "driver": "plan-follower",
+     "row": 7
+    },
+    {
+     "driver": "round-16",
+     "row": 8
+    },
+    {
+     "driver": "round-21-final",
+     "row": 8
+    },
+    {
+     "driver": "plan-follower",
+     "row": 8
+    },
+    {
+     "driver": "round-16",
+     "row": 9
+    },
+    {
+     "driver": "round-21-final",
+     "row": 9
+    },
+    {
+     "driver": "plan-follower",
+     "row": 9
+    },
+    {
+     "driver": "round-21-final",
+     "row": 10
+    },
+    {
+     "driver": "plan-follower",
+     "row": 10
+    },
+    {
+     "driver": "round-16",
+     "row": 11
+    },
+    {
+     "driver": "round-21-final",
+     "row": 11
+    },
+    {
+     "driver": "plan-follower",
+     "row": 11
+    },
+    {
+     "driver": "round-16",
+     "row": 12
+    },
+    {
+     "driver": "round-21-final",
+     "row": 12
+    },
+    {
+     "driver": "plan-follower",
+     "row": 12
+    },
+    {
+     "driver": "round-16",
+     "row": 13
+    },
+    {
+     "driver": "round-21-final",
+     "row": 13
+    },
+    {
+     "driver": "plan-follower",
+     "row": 13
+    }
+   ]
+  },
+  {
+   "canary": {
+    "driver": "round-16",
+    "expected": 72,
+    "row": 24
+   },
+   "expected_decisions": 79071,
+   "seed": 6952002,
+   "tasks": [
+    {
+     "driver": "round-16",
+     "row": 24
+    },
+    {
+     "driver": "round-16",
+     "row": 14
+    },
+    {
+     "driver": "round-21-final",
+     "row": 14
+    },
+    {
+     "driver": "round-16",
+     "row": 15
+    },
+    {
+     "driver": "round-21-final",
+     "row": 15
+    },
+    {
+     "driver": "plan-follower",
+     "row": 15
+    },
+    {
+     "driver": "round-16",
+     "row": 16
+    },
+    {
+     "driver": "round-21-final",
+     "row": 16
+    },
+    {
+     "driver": "plan-follower",
+     "row": 16
+    },
+    {
+     "driver": "round-16",
+     "row": 17
+    },
+    {
+     "driver": "round-21-final",
+     "row": 17
+    },
+    {
+     "driver": "plan-follower",
+     "row": 17
+    },
+    {
+     "driver": "round-16",
+     "row": 18
+    },
+    {
+     "driver": "round-21-final",
+     "row": 18
+    },
+    {
+     "driver": "round-16",
+     "row": 19
+    },
+    {
+     "driver": "round-21-final",
+     "row": 19
+    },
+    {
+     "driver": "plan-follower",
+     "row": 19
+    },
+    {
+     "driver": "round-16",
+     "row": 20
+    },
+    {
+     "driver": "round-21-final",
+     "row": 20
+    },
+    {
+     "driver": "plan-follower",
+     "row": 20
+    },
+    {
+     "driver": "round-16",
+     "row": 21
+    },
+    {
+     "driver": "round-21-final",
+     "row": 21
+    },
+    {
+     "driver": "plan-follower",
+     "row": 21
+    },
+    {
+     "driver": "round-16",
+     "row": 22
+    },
+    {
+     "driver": "round-21-final",
+     "row": 22
+    },
+    {
+     "driver": "plan-follower",
+     "row": 22
+    },
+    {
+     "driver": "round-16",
+     "row": 23
+    },
+    {
+     "driver": "round-21-final",
+     "row": 23
+    },
+    {
+     "driver": "plan-follower",
+     "row": 23
+    },
+    {
+     "driver": "round-21-final",
+     "row": 24
+    },
+    {
+     "driver": "plan-follower",
+     "row": 24
+    },
+    {
+     "driver": "round-16",
+     "row": 25
+    },
+    {
+     "driver": "round-21-final",
+     "row": 25
+    },
+    {
+     "driver": "plan-follower",
+     "row": 25
+    },
+    {
+     "driver": "round-16",
+     "row": 26
+    },
+    {
+     "driver": "round-21-final",
+     "row": 26
+    },
+    {
+     "driver": "plan-follower",
+     "row": 26
+    },
+    {
+     "driver": "round-16",
+     "row": 27
+    },
+    {
+     "driver": "round-21-final",
+     "row": 27
+    },
+    {
+     "driver": "plan-follower",
+     "row": 27
+    }
+   ]
+  },
+  {
+   "canary": {
+    "driver": "round-16",
+    "expected": 187,
+    "row": 38
+   },
+   "expected_decisions": 77183,
+   "seed": 6952003,
+   "tasks": [
+    {
+     "driver": "round-16",
+     "row": 38
+    },
+    {
+     "driver": "round-16",
+     "row": 28
+    },
+    {
+     "driver": "round-21-final",
+     "row": 28
+    },
+    {
+     "driver": "round-16",
+     "row": 29
+    },
+    {
+     "driver": "round-21-final",
+     "row": 29
+    },
+    {
+     "driver": "plan-follower",
+     "row": 29
+    },
+    {
+     "driver": "round-16",
+     "row": 30
+    },
+    {
+     "driver": "round-21-final",
+     "row": 30
+    },
+    {
+     "driver": "plan-follower",
+     "row": 30
+    },
+    {
+     "driver": "round-16",
+     "row": 31
+    },
+    {
+     "driver": "round-21-final",
+     "row": 31
+    },
+    {
+     "driver": "plan-follower",
+     "row": 31
+    },
+    {
+     "driver": "round-16",
+     "row": 32
+    },
+    {
+     "driver": "round-21-final",
+     "row": 32
+    },
+    {
+     "driver": "round-16",
+     "row": 33
+    },
+    {
+     "driver": "round-21-final",
+     "row": 33
+    },
+    {
+     "driver": "plan-follower",
+     "row": 33
+    },
+    {
+     "driver": "round-16",
+     "row": 34
+    },
+    {
+     "driver": "round-21-final",
+     "row": 34
+    },
+    {
+     "driver": "plan-follower",
+     "row": 34
+    },
+    {
+     "driver": "round-16",
+     "row": 35
+    },
+    {
+     "driver": "round-21-final",
+     "row": 35
+    },
+    {
+     "driver": "plan-follower",
+     "row": 35
+    },
+    {
+     "driver": "round-16",
+     "row": 36
+    },
+    {
+     "driver": "round-21-final",
+     "row": 36
+    },
+    {
+     "driver": "plan-follower",
+     "row": 36
+    },
+    {
+     "driver": "round-16",
+     "row": 37
+    },
+    {
+     "driver": "round-21-final",
+     "row": 37
+    },
+    {
+     "driver": "plan-follower",
+     "row": 37
+    },
+    {
+     "driver": "round-21-final",
+     "row": 38
+    },
+    {
+     "driver": "plan-follower",
+     "row": 38
+    },
+    {
+     "driver": "round-16",
+     "row": 39
+    },
+    {
+     "driver": "round-21-final",
+     "row": 39
+    },
+    {
+     "driver": "plan-follower",
+     "row": 39
+    },
+    {
+     "driver": "round-16",
+     "row": 40
+    },
+    {
+     "driver": "round-21-final",
+     "row": 40
+    },
+    {
+     "driver": "plan-follower",
+     "row": 40
+    },
+    {
+     "driver": "round-16",
+     "row": 41
+    },
+    {
+     "driver": "round-21-final",
+     "row": 41
+    },
+    {
+     "driver": "plan-follower",
+     "row": 41
+    }
+   ]
+  },
+  {
+   "canary": {
+    "driver": "round-16",
+    "expected": 187,
+    "row": 52
+   },
+   "expected_decisions": 77183,
+   "seed": 6952004,
+   "tasks": [
+    {
+     "driver": "round-16",
+     "row": 52
+    },
+    {
+     "driver": "round-16",
+     "row": 42
+    },
+    {
+     "driver": "round-21-final",
+     "row": 42
+    },
+    {
+     "driver": "round-16",
+     "row": 43
+    },
+    {
+     "driver": "round-21-final",
+     "row": 43
+    },
+    {
+     "driver": "plan-follower",
+     "row": 43
+    },
+    {
+     "driver": "round-16",
+     "row": 44
+    },
+    {
+     "driver": "round-21-final",
+     "row": 44
+    },
+    {
+     "driver": "plan-follower",
+     "row": 44
+    },
+    {
+     "driver": "round-16",
+     "row": 45
+    },
+    {
+     "driver": "round-21-final",
+     "row": 45
+    },
+    {
+     "driver": "plan-follower",
+     "row": 45
+    },
+    {
+     "driver": "round-16",
+     "row": 46
+    },
+    {
+     "driver": "round-21-final",
+     "row": 46
+    },
+    {
+     "driver": "round-16",
+     "row": 47
+    },
+    {
+     "driver": "round-21-final",
+     "row": 47
+    },
+    {
+     "driver": "plan-follower",
+     "row": 47
+    },
+    {
+     "driver": "round-16",
+     "row": 48
+    },
+    {
+     "driver": "round-21-final",
+     "row": 48
+    },
+    {
+     "driver": "plan-follower",
+     "row": 48
+    },
+    {
+     "driver": "round-16",
+     "row": 49
+    },
+    {
+     "driver": "round-21-final",
+     "row": 49
+    },
+    {
+     "driver": "plan-follower",
+     "row": 49
+    },
+    {
+     "driver": "round-16",
+     "row": 50
+    },
+    {
+     "driver": "round-21-final",
+     "row": 50
+    },
+    {
+     "driver": "plan-follower",
+     "row": 50
+    },
+    {
+     "driver": "round-16",
+     "row": 51
+    },
+    {
+     "driver": "round-21-final",
+     "row": 51
+    },
+    {
+     "driver": "plan-follower",
+     "row": 51
+    },
+    {
+     "driver": "round-21-final",
+     "row": 52
+    },
+    {
+     "driver": "plan-follower",
+     "row": 52
+    },
+    {
+     "driver": "round-16",
+     "row": 53
+    },
+    {
+     "driver": "round-21-final",
+     "row": 53
+    },
+    {
+     "driver": "plan-follower",
+     "row": 53
+    },
+    {
+     "driver": "round-16",
+     "row": 54
+    },
+    {
+     "driver": "round-21-final",
+     "row": 54
+    },
+    {
+     "driver": "plan-follower",
+     "row": 54
+    },
+    {
+     "driver": "round-16",
+     "row": 55
+    },
+    {
+     "driver": "round-21-final",
+     "row": 55
+    },
+    {
+     "driver": "plan-follower",
+     "row": 55
+    }
+   ]
+  },
+  {
+   "canary": {
+    "driver": "round-16",
+    "expected": 187,
+    "row": 66
+   },
+   "expected_decisions": 77183,
+   "seed": 6952005,
+   "tasks": [
+    {
+     "driver": "round-16",
+     "row": 66
+    },
+    {
+     "driver": "round-16",
+     "row": 56
+    },
+    {
+     "driver": "round-21-final",
+     "row": 56
+    },
+    {
+     "driver": "round-16",
+     "row": 57
+    },
+    {
+     "driver": "round-21-final",
+     "row": 57
+    },
+    {
+     "driver": "plan-follower",
+     "row": 57
+    },
+    {
+     "driver": "round-16",
+     "row": 58
+    },
+    {
+     "driver": "round-21-final",
+     "row": 58
+    },
+    {
+     "driver": "plan-follower",
+     "row": 58
+    },
+    {
+     "driver": "round-16",
+     "row": 59
+    },
+    {
+     "driver": "round-21-final",
+     "row": 59
+    },
+    {
+     "driver": "plan-follower",
+     "row": 59
+    },
+    {
+     "driver": "round-16",
+     "row": 60
+    },
+    {
+     "driver": "round-21-final",
+     "row": 60
+    },
+    {
+     "driver": "round-16",
+     "row": 61
+    },
+    {
+     "driver": "round-21-final",
+     "row": 61
+    },
+    {
+     "driver": "plan-follower",
+     "row": 61
+    },
+    {
+     "driver": "round-16",
+     "row": 62
+    },
+    {
+     "driver": "round-21-final",
+     "row": 62
+    },
+    {
+     "driver": "plan-follower",
+     "row": 62
+    },
+    {
+     "driver": "round-16",
+     "row": 63
+    },
+    {
+     "driver": "round-21-final",
+     "row": 63
+    },
+    {
+     "driver": "plan-follower",
+     "row": 63
+    },
+    {
+     "driver": "round-16",
+     "row": 64
+    },
+    {
+     "driver": "round-21-final",
+     "row": 64
+    },
+    {
+     "driver": "plan-follower",
+     "row": 64
+    },
+    {
+     "driver": "round-16",
+     "row": 65
+    },
+    {
+     "driver": "round-21-final",
+     "row": 65
+    },
+    {
+     "driver": "plan-follower",
+     "row": 65
+    },
+    {
+     "driver": "round-21-final",
+     "row": 66
+    },
+    {
+     "driver": "plan-follower",
+     "row": 66
+    },
+    {
+     "driver": "round-16",
+     "row": 67
+    },
+    {
+     "driver": "round-21-final",
+     "row": 67
+    },
+    {
+     "driver": "plan-follower",
+     "row": 67
+    },
+    {
+     "driver": "round-16",
+     "row": 68
+    },
+    {
+     "driver": "round-21-final",
+     "row": 68
+    },
+    {
+     "driver": "plan-follower",
+     "row": 68
+    },
+    {
+     "driver": "round-16",
+     "row": 69
+    },
+    {
+     "driver": "round-21-final",
+     "row": 69
+    },
+    {
+     "driver": "plan-follower",
+     "row": 69
+    }
+   ]
+  }
+ ],
+ "benchmark": {
+  "cases": [
+   "v05-validation-i110-merge",
+   "v05-val-0-cruise",
+   "v05-val-0-passing",
+   "v05-validation-i110-following",
+   "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "v02-development-60mph-cruise",
+   "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "v12-val-la-sb-adams-model-passing-4of16-medium"
+  ],
+  "development_rows": 70,
+  "development_seeds": [
+   6952001,
+   6952002,
+   6952003,
+   6952004,
+   6952005
+  ],
+  "held_out_rows": 42,
+  "held_out_seeds": [
+   6953001,
+   6953002,
+   6953003
+  ],
+  "held_out_status": "reserved; never run; final candidate only, with the user's authorization",
+  "row_order": "row 14 * k + c is case c at development seed k",
+  "schema": "highway_merge_v15_benchmark_v01",
+  "source": "v14 round 24 validation rows 0-13"
+ },
+ "charge": {
+  "allowance_cap": 400000,
+  "clock_estimate": "5 batches of 40 tasks at 16 workers, below-normal priority; Phase 0: 42 rows in 33.7 s at 16 workers, the 2,000-step cruise rows setting each batch's time; the user's own load lengthens it",
+  "decision_allowance": 400000,
+  "decision_ratios": {
+   "plan-follower": 1.0474676357029298,
+   "round-16": 1.0,
+   "round-21-final": 1.0023640661938533
+  },
+  "estimate_sources": {
+   "follower": "v14-follow-gate-02-v14 / -policy, cases 8-11, agent_transitions",
+   "follower_counts": {
+    "follower": 4612,
+    "policy": 4403
+   },
+   "round16": "outputs/test-runs/v15-p0/pool-2/w24/results.jsonl (rows 0-27); case means over 3 measured seeds (rows 28-69)",
+   "round21": "outputs/highway-flow-rl/v14/round-21/final-validation.json / outputs/highway-flow-rl/v14/round-21/initial-validation.json agent_transitions"
+  },
+  "expected_clock_seconds": 300.0,
+  "expected_decisions": 388307,
+  "expected_episodes": 205,
+  "guard_margin": 0.05,
+  "reserve_seconds": 900.0,
+  "total_wall_seconds": 64700
+ },
+ "drivers": {
+  "plan-follower": {
+   "id": "rule:plan-follower-v1",
+   "not_scored_cases": [
+    "v05-validation-i110-merge",
+    "ramp-eval-train-2-lane-ramp120-ramp-started"
+   ],
+   "rows": [
+    1,
+    2,
+    3,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    17,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    29,
+    30,
+    31,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    43,
+    44,
+    45,
+    47,
+    48,
+    49,
+    50,
+    51,
+    52,
+    53,
+    54,
+    55,
+    57,
+    58,
+    59,
+    61,
+    62,
+    63,
+    64,
+    65,
+    66,
+    67,
+    68,
+    69
+   ],
+   "settings": {
+    "ceiling_input": 43,
+    "ceiling_margin_m_s2": 0.05,
+    "ceiling_scale_m_s2": 4.5,
+    "free_road_m_s": 26.8224,
+    "gain_per_s": 3.0,
+    "rate_m_s2": 0.35,
+    "request_max_m_s2": 2.0,
+    "request_min_m_s2": -4.0
+   }
+  },
+  "round-16": {
+   "id": "policy:f0b11fa577b33763",
+   "rows": "all 70",
+   "source": {
+    "path": "outputs/highway-flow-rl/v11/round-16/candidates/checkpoint-02.pt",
+    "sha256": "651d20fecaec4d6361f91ad00c103e4f3be6198fb64a8a87871d306aa553bed7"
+   }
+  },
+  "round-21-final": {
+   "id": "policy:ec0d18c96d8a1844",
+   "rows": "all 70",
+   "source": {
+    "path": "outputs/highway-flow-rl/v14/round-21/last.pt",
+    "sha256": "1e292cb13d71aa3edffb1a76993d4532126f45cdd866e7d1a09ed931bc05caf5"
+   }
+  }
+ },
+ "held_out": "not built, not run",
+ "mode": "validate",
+ "paired": [
+  [
+   "round-21-final",
+   "round-16",
+   "all 70 rows"
+  ],
+  [
+   "plan-follower",
+   "round-16",
+   "the 60 follower rows"
+  ],
+  [
+   "plan-follower",
+   "round-21-final",
+   "the 60 follower rows"
+  ]
+ ],
+ "parity": {
+  "rows": {
+   "0": {
+    "phase0_row": 14,
+    "report_sha": "b4a01251d91fccc86abee60d7d8699d4ec86e80db2471e88740838028797edb8",
+    "trace_sha": "5ca0472a3df7eaae0fce513cec6dd2f1cd9b2922b87d1a00b5764923609f0829"
+   },
+   "1": {
+    "phase0_row": 15,
+    "report_sha": "5bbe46b9e849b90611abce2b9e45229103632f459cf9b02b9552dddafe7c2da9",
+    "trace_sha": "6c5b469d88aaf00ff429012fb28f078a346996e57726ae73d9175007ef4c168f"
+   },
+   "10": {
+    "phase0_row": 24,
+    "report_sha": "372880760c3bbeed622a7f37aaf6d43ef6879a752ac1abf45298a3b8785a094e",
+    "trace_sha": "853e7666d58de3ede481dfffa059dddefedbe5b9c15573dfe03bc0944d945434"
+   },
+   "11": {
+    "phase0_row": 25,
+    "report_sha": "bc207ad61c1e962a99f977a1afbddb9be0990bfa8f2addb93ffcbf048710871a",
+    "trace_sha": "88131f3d1c1333a70b1ba4dac1fe2f6bfb11cab16385a1f918a2f149740e957d"
+   },
+   "12": {
+    "phase0_row": 26,
+    "report_sha": "8109ccdb1c2ae86739d1f22153a198cce84d2c3e2e55c95e3297cbb3ebb477c3",
+    "trace_sha": "4daf9e17ab8808a834e77022f3022e739b93dcc93f44c04270828e808807bc85"
+   },
+   "13": {
+    "phase0_row": 27,
+    "report_sha": "284da80994e68a9b3dc7f18ce71ab26aea1a1457be433f8572b45ecd1b6ef219",
+    "trace_sha": "8849c8b425b465a63632794b56569df5fcaf6427ebef4fa2f01ba949ac3010ee"
+   },
+   "14": {
+    "phase0_row": 28,
+    "report_sha": "bd21997f2adc5c91f90d43fc13cab6d5191fc51d4eaf55ea22cb2cff5c9d1387",
+    "trace_sha": "aff38a049dd4925ad52c2e6b98f799de3fcb020f15f79186c2bb47fe94e20ab8"
+   },
+   "15": {
+    "phase0_row": 29,
+    "report_sha": "de7ac0bd2ce21a1732aa789b2ac8168ce52efebfe9f8d5736cf3905bd58e98f1",
+    "trace_sha": "7f358d086d01cc3434199e579fa3faab4ebf0742172bcefe31e0595095ad0705"
+   },
+   "16": {
+    "phase0_row": 30,
+    "report_sha": "8112708778fdcdd935afc83900be163728de1d5ced7a6cbbe8c50eadc7fbe1be",
+    "trace_sha": "0d03bfaf3964d88fa2efd6181fb2bd25890cb865d5ace7cb9271de0ecf95626a"
+   },
+   "17": {
+    "phase0_row": 31,
+    "report_sha": "e3eac4a267dd3ee230c1b6d09e151f6074160a23ac6321f42d60348b06d4f2ce",
+    "trace_sha": "f3b4d110c009eeeded0b5149b9d8079067ea474321bc69e1e353484109932368"
+   },
+   "18": {
+    "phase0_row": 32,
+    "report_sha": "c71f998858e86eb944fac8aa809f6bf2de3dd5578eb4f08c3f02e97006759970",
+    "trace_sha": "b4da73bf93cf77c4304bfaabd8bb2b38a65aac5bbb7ad396bfd3efc848b2f25a"
+   },
+   "19": {
+    "phase0_row": 33,
+    "report_sha": "8e68cada0a5b3754f88db0ede918ab52b7d7756b9dcfbd55da38c5d9754c6262",
+    "trace_sha": "0d5ddd0ff64fc1462372ee26bc1e1da15a4fdbf93922cf2fd9d68e1e81ceac0d"
+   },
+   "2": {
+    "phase0_row": 16,
+    "report_sha": "d7cd6004104a22cf5a3444232758aa20e3b1bc963e83b84148f11f74c1332c9d",
+    "trace_sha": "d17513a7df6de148d597256544ac937404ceff722e45c651068327111aa40299"
+   },
+   "20": {
+    "phase0_row": 34,
+    "report_sha": "7a021c5ec539a56b0ae15122f54d615a334deac22f3271a112a6183b1c2e264e",
+    "trace_sha": "96ccf178e239cbee6d3447e53fb7d48b8124373dbc5622da11b5b051733710aa"
+   },
+   "21": {
+    "phase0_row": 35,
+    "report_sha": "f0e25322073783da4983028a0d9dda8b9e3ce51124ec528e6411b1dba4da7130",
+    "trace_sha": "c9f47a9ac443663644465fb09aad6cb33219bc26f8d35ee00942c599f8fdb4e7"
+   },
+   "22": {
+    "phase0_row": 36,
+    "report_sha": "f8b21bf850048291f5fef206c30d733812926a7580c4e6911abb35619bbde31e",
+    "trace_sha": "55bb06172782abfe7cb0bb4d185d01ade0f69787ec7dc2574e9389eeea40333c"
+   },
+   "23": {
+    "phase0_row": 37,
+    "report_sha": "c545928730c81a9436e45284e28166b99d24370d782fb2c77e364755ea7276a3",
+    "trace_sha": "7071cce944ccea1e3221e7dca2cb17c8f1893928a3a42e7a45ad515cf9b3b4e2"
+   },
+   "24": {
+    "phase0_row": 38,
+    "report_sha": "7aa2ed359855257735c1a9ad67aa33f5215e0fb4909565067b0b9b4318d40161",
+    "trace_sha": "8fda32415b8cab1a73f11d4bd603a92e14e4627d2d2c61d2bb1f22a8e767bc4e"
+   },
+   "25": {
+    "phase0_row": 39,
+    "report_sha": "ab2cf27242197f9802b36ede29890aae87328716c6408b19fc4603e45e403deb",
+    "trace_sha": "e813aae751f5c3244c8456db7846aef0c9e3e1df7d6024a1139770e389f2038f"
+   },
+   "26": {
+    "phase0_row": 40,
+    "report_sha": "24b334955173122d7ba7fa0adf71fb90935822847e3836b93e7a6e988164c551",
+    "trace_sha": "75c14180b6e4b2b63f36bceb25ff88967d2c6dde122aa2ad3739f7eb7972fd3d"
+   },
+   "27": {
+    "phase0_row": 41,
+    "report_sha": "a972b7886b7bdeaa8f578aa777d8e8fb3c73e39f8ecf889c964fc7c60727f7df",
+    "trace_sha": "1faf2eb05607fe48f407d818fc208f9d018e42533a961c6d3c2e7d113de507a7"
+   },
+   "3": {
+    "phase0_row": 17,
+    "report_sha": "2b0a4ed3cdfbbb6542a2ec0677001f120138bbac5f3e3d8a3bd2ffdf88ec8767",
+    "trace_sha": "8c9180a6b61b01affd265ced314f5fbd41f20f2795500993dce39ca8c596da62"
+   },
+   "4": {
+    "phase0_row": 18,
+    "report_sha": "7f4deb54ec88d47b876f41aa551fc87a9569d858903ea693c12b35e7ec976e6c",
+    "trace_sha": "78dfa7e79357729b69a8fd6e6f5bb210592b89b7133fa4c04eec647dff407494"
+   },
+   "5": {
+    "phase0_row": 19,
+    "report_sha": "9a835e0ae1c2c8f33f25ca6185db398e61ff9ddad73eef78310e29abba766d6d",
+    "trace_sha": "854d78d0a3172ced39b2d503010c972feeec81bf62c01bc90dfd4c2abb6c227b"
+   },
+   "6": {
+    "phase0_row": 20,
+    "report_sha": "8bb2f9756458778f6557e2259a8b5e9771085bccb1aca4e0694b7b8d3db2eb95",
+    "trace_sha": "01779829dd01b6fd4e74de2a53cde4072ddd031f2a982e7657fd698395909f45"
+   },
+   "7": {
+    "phase0_row": 21,
+    "report_sha": "b93019045f737cea91dafaa644218e6bf8add1a24de40671caf6bc1cd7c64dcd",
+    "trace_sha": "b24260758aa79b11fdd6daa5a978b4e09d2714ea321f8736c656e4bd158eed33"
+   },
+   "8": {
+    "phase0_row": 22,
+    "report_sha": "0c1524b12fdaa0e39da36e45f096432a8ce33aaa2e80947d708bc90e08913adb",
+    "trace_sha": "af6d4106de36fc4345041eb7893b4b1c8c0122dccba2d5bf4974ebd47bcc3a2e"
+   },
+   "9": {
+    "phase0_row": 23,
+    "report_sha": "c9ade35b2899b505a22bc4948932f063b723431bdf2c27bdbdf00a711d249a73",
+    "trace_sha": "972a11356e00b6e2c97f7de1d98f12e649fa27b3e8d3769342ad507112a064ce"
+   }
+  },
+  "source": "outputs/test-runs/v15-p0/pool-2/w24/results.jsonl"
+ },
+ "pass_definition": "experiments/run_highway_flow_rl_v05.ruled_gates(report)[\"passed\"] (v14 round 24 gates), as recorded by experiments/v15_pool.py",
+ "phase": "1",
+ "priority": "below_normal",
+ "round_index": 24,
+ "row_set": "v15-development",
+ "rows": [
+  {
+   "case": "v05-validation-i110-merge",
+   "horizon_steps": 800,
+   "row": 0,
+   "seed": 6952001
+  },
+  {
+   "case": "v05-val-0-cruise",
+   "horizon_steps": 2000,
+   "row": 1,
+   "seed": 6952001
+  },
+  {
+   "case": "v05-val-0-passing",
+   "horizon_steps": 2000,
+   "row": 2,
+   "seed": 6952001
+  },
+  {
+   "case": "v05-validation-i110-following",
+   "horizon_steps": 800,
+   "row": 3,
+   "seed": 6952001
+  },
+  {
+   "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "horizon_steps": 2000,
+   "row": 4,
+   "seed": 6952001
+  },
+  {
+   "case": "v02-development-60mph-cruise",
+   "horizon_steps": 2000,
+   "row": 5,
+   "seed": 6952001
+  },
+  {
+   "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 6,
+   "seed": 6952001
+  },
+  {
+   "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 7,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 8,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 9,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 10,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 11,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "horizon_steps": 800,
+   "row": 12,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-passing-4of16-medium",
+   "horizon_steps": 800,
+   "row": 13,
+   "seed": 6952001
+  },
+  {
+   "case": "v05-validation-i110-merge",
+   "horizon_steps": 800,
+   "row": 14,
+   "seed": 6952002
+  },
+  {
+   "case": "v05-val-0-cruise",
+   "horizon_steps": 2000,
+   "row": 15,
+   "seed": 6952002
+  },
+  {
+   "case": "v05-val-0-passing",
+   "horizon_steps": 2000,
+   "row": 16,
+   "seed": 6952002
+  },
+  {
+   "case": "v05-validation-i110-following",
+   "horizon_steps": 800,
+   "row": 17,
+   "seed": 6952002
+  },
+  {
+   "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "horizon_steps": 2000,
+   "row": 18,
+   "seed": 6952002
+  },
+  {
+   "case": "v02-development-60mph-cruise",
+   "horizon_steps": 2000,
+   "row": 19,
+   "seed": 6952002
+  },
+  {
+   "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 20,
+   "seed": 6952002
+  },
+  {
+   "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 21,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 22,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 23,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 24,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 25,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "horizon_steps": 800,
+   "row": 26,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-passing-4of16-medium",
+   "horizon_steps": 800,
+   "row": 27,
+   "seed": 6952002
+  },
+  {
+   "case": "v05-validation-i110-merge",
+   "horizon_steps": 800,
+   "row": 28,
+   "seed": 6952003
+  },
+  {
+   "case": "v05-val-0-cruise",
+   "horizon_steps": 2000,
+   "row": 29,
+   "seed": 6952003
+  },
+  {
+   "case": "v05-val-0-passing",
+   "horizon_steps": 2000,
+   "row": 30,
+   "seed": 6952003
+  },
+  {
+   "case": "v05-validation-i110-following",
+   "horizon_steps": 800,
+   "row": 31,
+   "seed": 6952003
+  },
+  {
+   "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "horizon_steps": 2000,
+   "row": 32,
+   "seed": 6952003
+  },
+  {
+   "case": "v02-development-60mph-cruise",
+   "horizon_steps": 2000,
+   "row": 33,
+   "seed": 6952003
+  },
+  {
+   "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 34,
+   "seed": 6952003
+  },
+  {
+   "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 35,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 36,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 37,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 38,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 39,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "horizon_steps": 800,
+   "row": 40,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-passing-4of16-medium",
+   "horizon_steps": 800,
+   "row": 41,
+   "seed": 6952003
+  },
+  {
+   "case": "v05-validation-i110-merge",
+   "horizon_steps": 800,
+   "row": 42,
+   "seed": 6952004
+  },
+  {
+   "case": "v05-val-0-cruise",
+   "horizon_steps": 2000,
+   "row": 43,
+   "seed": 6952004
+  },
+  {
+   "case": "v05-val-0-passing",
+   "horizon_steps": 2000,
+   "row": 44,
+   "seed": 6952004
+  },
+  {
+   "case": "v05-validation-i110-following",
+   "horizon_steps": 800,
+   "row": 45,
+   "seed": 6952004
+  },
+  {
+   "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "horizon_steps": 2000,
+   "row": 46,
+   "seed": 6952004
+  },
+  {
+   "case": "v02-development-60mph-cruise",
+   "horizon_steps": 2000,
+   "row": 47,
+   "seed": 6952004
+  },
+  {
+   "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 48,
+   "seed": 6952004
+  },
+  {
+   "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 49,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 50,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 51,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 52,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 53,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "horizon_steps": 800,
+   "row": 54,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-passing-4of16-medium",
+   "horizon_steps": 800,
+   "row": 55,
+   "seed": 6952004
+  },
+  {
+   "case": "v05-validation-i110-merge",
+   "horizon_steps": 800,
+   "row": 56,
+   "seed": 6952005
+  },
+  {
+   "case": "v05-val-0-cruise",
+   "horizon_steps": 2000,
+   "row": 57,
+   "seed": 6952005
+  },
+  {
+   "case": "v05-val-0-passing",
+   "horizon_steps": 2000,
+   "row": 58,
+   "seed": 6952005
+  },
+  {
+   "case": "v05-validation-i110-following",
+   "horizon_steps": 800,
+   "row": 59,
+   "seed": 6952005
+  },
+  {
+   "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "horizon_steps": 2000,
+   "row": 60,
+   "seed": 6952005
+  },
+  {
+   "case": "v02-development-60mph-cruise",
+   "horizon_steps": 2000,
+   "row": 61,
+   "seed": 6952005
+  },
+  {
+   "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 62,
+   "seed": 6952005
+  },
+  {
+   "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 63,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 64,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 65,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 66,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 67,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "horizon_steps": 800,
+   "row": 68,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-passing-4of16-medium",
+   "horizon_steps": 800,
+   "row": 69,
+   "seed": 6952005
+  }
+ ],
+ "schema": "highway_merge_v15_phase1_v01",
+ "workers": 16
+}

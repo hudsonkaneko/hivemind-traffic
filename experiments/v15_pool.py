@@ -25,6 +25,9 @@ only: nothing here trains or updates a policy, and nothing is charged.
   background model, into one results table (`results.jsonl`); `paired_table` lines them up.
 - **Interleaved runs:** `interleave` merges several runs' tasks row by row, so the 3 training runs
   of a setup share one pool and are compared on identical rows.
+- **Drivers.** A published policy ('policy:<hash>'), or a rule driver: so far only the plan
+  follower (traffic/v15_plan_follower.py, 'rule:plan-follower-v1'), which validates only. The rule
+  expert comes in Phase 2.
 - **Background drivers.** The v14 demand writer gives every background car one of three IDM
   profiles (traffic/highway_v05_demand.py, PROFILES; checked in the routes files of round 24's
   validation). 'idm' is that recorded traffic; 'krauss' rewrites those three vTypes to SUMO's
@@ -32,8 +35,9 @@ only: nothing here trains or updates a policy, and nothing is charged.
   stays as configured (Krauss in round 24).
 
 Budget (user decision of November 25, "use clock time"): a run charges its elapsed clock time,
-however many workers it uses, and every decision across workers. Each batch records its clock
-time, the summed worker time, the summed simulated time and the worker count.
+however many workers it uses, and every decision across workers, the canaries' re-runs included
+(BatchResult.charged_decisions). Each batch records its clock time, the summed worker time, the summed
+simulated time and the worker count. The pool itself charges nothing: experiments/v15_ledger.py does.
 """
 from __future__ import annotations
 
@@ -62,17 +66,27 @@ BACKGROUNDS = ('idm', 'krauss')
 MODES = ('validate', 'collect')
 BACKGROUND_PROFILES = ('native_cautious', 'native_balanced', 'native_attentive')
 VOLATILE = ('episode_directory',)
+RULE_DRIVERS = ('rule:plan-follower-v1',)   # traffic/v15_plan_follower.DRIVER
+# Process priority of the workers (and, set by the caller, the learner). User direction, November 25, 2026,
+# relayed by the main Claude session: "don't use all cpu cores i need some to do other tasks"; so at most
+# 16 workers and below-normal priority. Priority and worker count do not change results.
+PRIORITIES = ('normal', 'below_normal')
+_WINDOWS_PRIORITY = {'normal': 0x20, 'below_normal': 0x4000}   # NORMAL_ / BELOW_NORMAL_PRIORITY_CLASS
 
 
 class CanaryMismatch(RuntimeError):
-    """A task re-run on another worker gave a different result."""
+    """A task re-run on another worker gave a different result. `result` is the batch, for charging."""
+
+    def __init__(self, message, result=None):
+        super().__init__(message)
+        self.result = result
 
 
 @dataclass(frozen=True)
 class Task:
     row_set: str
     row: int
-    driver: str                      # 'policy:<hash>' from WorkerPool.publish
+    driver: str                      # 'policy:<hash>' from WorkerPool.publish, or one of RULE_DRIVERS
     background: str = 'idm'
     mode: str = 'validate'           # 'validate': deterministic actor; 'collect': sampled actions + samples
     sample_seed: int = 0             # collect: which draw (for example the iteration)
@@ -84,8 +98,37 @@ class Task:
             raise ValueError(f'Unknown row set {self.row_set!r}; expected one of {ROW_SETS}')
         if self.background not in BACKGROUNDS or self.mode not in MODES:
             raise ValueError(f'Unknown background {self.background!r} or mode {self.mode!r}')
-        if not self.driver.startswith('policy:') or (self.label_with and not self.label_with.startswith('policy:')):
-            raise ValueError('Drivers are published policies (policy:<hash>); the rule driver comes in Phase 2')
+        if self.driver in RULE_DRIVERS:
+            if self.mode != 'validate':
+                raise ValueError(f'{self.driver} validates only: it has no sampled actions to collect')
+        elif not self.driver.startswith('policy:'):
+            raise ValueError(f'Unknown driver {self.driver!r}: a published policy (policy:<hash>) or one of {RULE_DRIVERS}')
+        if self.label_with and not self.label_with.startswith('policy:'):
+            raise ValueError('Labels come from published policies; the rule expert labels in Phase 2')
+
+
+def set_priority(priority):
+    """Set this process's scheduling priority ('normal' or 'below_normal'); returns the priority read back.
+
+    On Windows, processes this one starts afterwards inherit a below-normal class."""
+    if priority not in PRIORITIES:
+        raise ValueError(f'Unknown priority {priority!r}; expected one of {PRIORITIES}')
+    if os.name == 'nt':
+        import ctypes
+        from ctypes import wintypes
+        kernel32 = ctypes.WinDLL('kernel32', use_last_error=True)
+        kernel32.GetCurrentProcess.restype = wintypes.HANDLE
+        kernel32.SetPriorityClass.argtypes = (wintypes.HANDLE, wintypes.DWORD)
+        kernel32.GetPriorityClass.argtypes = (wintypes.HANDLE,)
+        kernel32.GetPriorityClass.restype = wintypes.DWORD
+        handle = kernel32.GetCurrentProcess()
+        if not kernel32.SetPriorityClass(handle, _WINDOWS_PRIORITY[priority]):
+            raise OSError(ctypes.get_last_error(), 'SetPriorityClass failed')
+        read = kernel32.GetPriorityClass(handle)
+        return next((name for name, value in _WINDOWS_PRIORITY.items() if value == read), hex(read))
+    if priority == 'below_normal' and os.nice(0) < 10:
+        os.nice(10 - os.nice(0))
+    return 'below_normal' if os.nice(0) >= 10 else 'normal'
 
 
 def key_fields(task, round_index, row):
@@ -218,6 +261,16 @@ def _worker_setup(backend, round_index, policy_dir):
               rows={name: _row_set(cfg, name) for name in ROW_SETS}, round_index=round_index)
 
 
+def _driver(driver):
+    """The actor for a driver id: a published policy, or a rule driver reading the live environment."""
+    if driver in RULE_DRIVERS:
+        from traffic import v15_plan_follower
+        if driver != v15_plan_follower.DRIVER:
+            raise ValueError(f'No implementation for {driver}')
+        return v15_plan_follower.PlanFollower(lambda: _W.get('env'))
+    return _policy(driver)
+
+
 def _policy(driver):
     import torch
     cached = _W['policies'].get(driver)
@@ -280,7 +333,7 @@ def _execute(task, attempt, out):
     original_env_for = base.env_for
 
     def env_for(*args, **kwargs):
-        env = original_env_for(*args, **kwargs)
+        env = _W['env'] = original_env_for(*args, **kwargs)
         if task.background != 'idm':
             write = env._write_demand
 
@@ -294,13 +347,15 @@ def _execute(task, attempt, out):
     started = time.perf_counter()
     base.env_for = env_for
     try:
+        actor = _driver(task.driver)
         if task.mode == 'collect':
-            report, batch = base.episode(cfg, row, directory, _policy(task.driver), collect=True)
+            report, batch = base.episode(cfg, row, directory, actor, collect=True)
         else:
             with torch.no_grad():
-                report, batch = base.episode(cfg, row, directory, _policy(task.driver))
+                report, batch = base.episode(cfg, row, directory, actor)
     finally:
         base.env_for = original_env_for
+        _W.pop('env', None)
     seconds = time.perf_counter() - started
     report = json.loads(json.dumps(report, default=str))
     (directory / 'report.json').write_text(json.dumps(report, sort_keys=True))
@@ -335,11 +390,12 @@ def _save(batch, path):
     return len(data)
 
 
-def _worker_main(worker, inbox, outbox, backend, round_index, policy_dir):
+def _worker_main(worker, inbox, outbox, backend, round_index, policy_dir, priority='normal'):
     try:
+        read = set_priority(priority)
         _worker_setup(backend, round_index, policy_dir)
         _W['worker'] = worker
-        outbox.put(('ready', worker, os.getpid()))
+        outbox.put(('ready', worker, os.getpid(), read))
     except BaseException:
         outbox.put(('failed', worker, traceback.format_exc()))
         return
@@ -369,18 +425,27 @@ class BatchResult:
     simulated_tasks: int = 0          # tasks simulated in this batch (the canary's re-run not counted)
     reused_tasks: int = 0             # tasks given an existing result with the same key
     repeats: dict | None = None       # reuse=False: re-runs of known keys, which must match
+    canary_decisions: int = 0         # the canary's re-run (simulated driving, so charged)
+
+    @property
+    def charged_decisions(self):
+        """Every decision this batch simulated, across workers: its tasks and the canary's re-run."""
+        return self.decisions + self.canary_decisions
 
 
 class WorkerPool:
     """N worker processes, each owning one SUMO simulation at a time, and the learner's side of the loop."""
 
-    def __init__(self, workers, out, *, backend='libsumo', round_index=24, start_timeout_s=600):
+    def __init__(self, workers, out, *, backend='libsumo', round_index=24, start_timeout_s=600, priority='normal'):
         self.out = Path(out).resolve()
         if not self.out.is_relative_to(OUTPUT_ROOT):
             raise ValueError('Pool outputs must stay inside project outputs')
         self.out.mkdir(parents=True, exist_ok=True)
         (self.out / 'policies').mkdir(exist_ok=True)
         self.backend, self.round_index, self.size = backend, round_index, int(workers)
+        if priority not in PRIORITIES:
+            raise ValueError(f'Unknown priority {priority!r}; expected one of {PRIORITIES}')
+        self.priority, self.worker_priorities = priority, {}
         from traffic import highway_flow_rl_v14_contract as contract
         self.cfg = contract.build_config(round_index)
         self.rows = {name: _row_set(self.cfg, name) for name in ROW_SETS}
@@ -391,7 +456,7 @@ class WorkerPool:
         for worker in range(self.size):
             inbox = context.Queue()
             process = context.Process(target=_worker_main, daemon=True,
-                                      args=(worker, inbox, self.outbox, backend, round_index, str(self.out / 'policies')))
+                                      args=(worker, inbox, self.outbox, backend, round_index, str(self.out / 'policies'), priority))
             process.start()
             self.inboxes.append(inbox)
             self.processes.append(process)
@@ -401,9 +466,15 @@ class WorkerPool:
             if message[0] == 'failed':
                 self.close()
                 raise RuntimeError(f'Worker {message[1]} failed to start:\n{message[2]}')
+            self.worker_priorities[message[1]] = message[3]
+            if message[3] != priority:
+                self.close()
+                raise RuntimeError(f'Worker {message[1]} runs at {message[3]} priority, not {priority}')
             ready += 1
         self.start_seconds = time.perf_counter() - started
         self._ticket = 0
+        # Set by a charged run (experiments/v15_ledger.py) to its ledger segment; recorded on every batch.
+        self.charged_by = None
         # Results this pool directory already holds, by key (the first recorded attempt of each).
         self._known = {}
         if (self.out / 'results.jsonl').is_file():
@@ -505,12 +576,14 @@ class WorkerPool:
                              worker_seconds=sum(r['seconds'] for r in simulated) + (canary_record or {}).get('seconds', 0.),
                              simulated_seconds=sum(r['simulated_seconds'] for r in simulated),
                              decisions=sum(r['decisions'] for r in simulated), workers=self.size,
-                             simulated_tasks=len(simulated), reused_tasks=len(tasks) - len(simulated), repeats=repeats)
+                             simulated_tasks=len(simulated), reused_tasks=len(tasks) - len(simulated), repeats=repeats,
+                             canary_decisions=int((canary_record or {}).get('decisions', 0)))
         self._record(result, simulated, known_before, results_table, dataset)
         if check is not None and not check['matched']:
-            raise CanaryMismatch(f'Canary {check["key"][:16]} differs on worker {check["canary_worker"]}: {check["mismatched"]}')
+            raise CanaryMismatch(f'Canary {check["key"][:16]} differs on worker {check["canary_worker"]}: '
+                                 f'{check["mismatched"]}', result)
         if repeats is not None and not repeats['matched']:
-            raise CanaryMismatch(f'Re-runs differ from their stored results: {repeats["mismatched"]}')
+            raise CanaryMismatch(f'Re-runs differ from their stored results: {repeats["mismatched"]}', result)
         return result
 
     def _record(self, result, simulated, known_before, results_table, dataset):
@@ -519,11 +592,14 @@ class WorkerPool:
                 for record in simulated:
                     handle.write(json.dumps({k: v for k, v in record.items() if k != 'directory'}, sort_keys=True) + '\n')
             with open(self.out / 'batches.jsonl', 'a', encoding='utf-8') as handle:
-                handle.write(json.dumps(dict(schema=SCHEMA, workers=result.workers, tasks=len(result.records),
+                handle.write(json.dumps(dict(schema=SCHEMA, workers=result.workers, priority=self.priority,
+                    tasks=len(result.records),
                     simulated_tasks=result.simulated_tasks, reused_tasks=result.reused_tasks,
                     clock_seconds=result.clock_seconds, worker_seconds=result.worker_seconds,
-                    simulated_seconds=result.simulated_seconds, decisions=result.decisions, canary=result.canary,
-                    repeats=result.repeats, charged=False, training=False)) + '\n')
+                    simulated_seconds=result.simulated_seconds, decisions=result.decisions,
+                    canary_decisions=result.canary_decisions, canary=result.canary,
+                    repeats=result.repeats, charged=self.charged_by is not None, charged_by=self.charged_by,
+                    training=False)) + '\n')
         if dataset:
             labelled = [r for r in simulated if r['key'] not in known_before
                         and r['fields']['label_with'] and r.get('samples')]

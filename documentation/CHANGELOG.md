@@ -4,6 +4,43 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-25 - Plan v15 Phase 1: baselines on the 70 development rows
+
+- **Evaluation only, charged:** no training and no update. All runs are SUMO (libsumo), not
+  physics. IDM background only; the held-out rows were not built or run.
+- **User decisions,** relayed by the main Claude session:
+  - "Yes, all four": a Phase 1 decision allowance of at most 400,000, IDM only, and the plan
+    follower scored on the 60 rows without cases 0 and 4;
+  - "start phjase one after those modifications have been made";
+  - "don't use all cpu cores i need some to do other tasks", so 16 workers at below-normal
+    priority.
+- **New:**
+  - the plan follower as a pool driver (`traffic/v15_plan_follower.py`);
+  - an evaluation ledger writer with the shared lock (`experiments/v15_ledger.py`);
+  - Wilson intervals, Newcombe's paired interval and the exact McNemar test (`traffic/v15_stats.py`);
+  - the Phase 1 runner (`experiments/v15_phase1.py`) and its pinned configuration
+    (`configs/evaluation/v15-phase1.json`);
+  - in the pool: rule drivers, charged canary decisions, and worker priority.
+  - 79 v15 tests pass.
+- **The run:** 185.3 s of clock time for 205 episodes and 395,240 decisions (388,307 expected).
+  - Every canary matched on another worker.
+  - The round-16 policy's 28 rows shared with Phase 0 are identical to Phase 0's.
+- **Pass rates** (95% Wilson):
+  - the round-16 policy, 33 of 70 (47%, 36–59%);
+  - round 21's final policy, 31 of 70 (44%, 33–56%);
+  - the plan follower, 21 of 60 (35%, 24–48%).
+- **Paired differences:**
+  - round 21 against round 16: −2.9 points (−8.9 to +3.3);
+  - the follower against round 16 on the same 60 rows: −13.3 points (−26.4 to +0.5),
+    p = 0.096.
+  The follower has fewer emergencies and cut-ins but more overrides, and fails comfort or
+  control on 38 of its 60 rows.
+- **Ledger:**
+  - study time 60,381.0 of 64,700 s;
+  - Phase 1 decisions 395,240 of its 400,000 allowance;
+  - training decisions and diagnostic episodes unchanged.
+- **Details:** plan v15, "Phase 1 result".
+
 ## 2026-11-25 - Plan v15 Phase 0: libsumo, a worker pool and the v15 tools
 
 - **Tools only:** no training, nothing charged, and the ledger untouched. All runs are SUMO,
