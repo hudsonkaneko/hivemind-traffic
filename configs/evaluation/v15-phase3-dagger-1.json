@@ -969,7 +969,7 @@
   "source": "v14 round 24 validation rows 0-13"
  },
  "charge": {
-  "decisions_left": 1936731,
+  "decisions_left": 1752655,
   "estimate_source": {
    "cost_ratio": 1.053965345807136,
    "cost_ratios": {
@@ -995,12 +995,12 @@
   "expected_fit_seconds": 40.0,
   "guard_margin": 0.05,
   "phase_allowance": 2700000,
-  "phase_decisions_used": 763269,
-  "phase_seconds_used": 515.609,
+  "phase_decisions_used": 947345,
+  "phase_seconds_used": 523.672,
   "phase_time_cap": 3000.0,
   "reserve_seconds": 555,
-  "seconds_left": 2484.391,
-  "study_seconds_left": 3496.546,
+  "seconds_left": 2476.328,
+  "study_seconds_left": 3488.483,
   "total_wall_seconds": 64700
  },
  "dagger_stop": "at least 3 iterations (plan v15 Stage 3: 3-5), then stop at the first whose re-baselined pass count is not above the best so far; at most 5; or when the next will not fit the cap",

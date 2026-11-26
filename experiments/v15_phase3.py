@@ -397,6 +397,7 @@ def run(step):
                           priority=config['priority']) as pool:
             session.segment['worker_priorities'] = sorted(set(pool.worker_priorities.values()))
             pool.charged_by = f'cost-ledger {L.COMMAND} phase 3 step {step}, started_at_unix {session.segment["started_at_unix"]}'
+            _bring_learner(pool, config)
             expected_so_far = charged_so_far = 0
             fitted = False
             for index, batch in enumerate(config['batches']):
@@ -507,6 +508,22 @@ def _expert_checks(result, tasks):
             problems.append(dict(row=t['row'], perturbed=False, free_road_stops=events['free_road_stops']))
     if problems:
         raise StopAndAsk(f'The expert on training rows: {problems}')
+
+
+def _bring_learner(pool, config):
+    """Publish a DAgger step's rollout learner (fitted in an earlier step's run) to this run's workers.
+
+    Workers load policies from their own run's policies/ folder, so the earlier step's file is re-published here;
+    the id is the hash of the weights, so a mismatch stops the run before anything is simulated."""
+    import torch
+    learner = (config.get('inputs') or {}).get('rollout_learner')
+    if not learner:
+        return None
+    source = out_dir(config['inputs']['rollout_learner_step']) / 'policies' / f'{learner.split(":", 1)[1]}.pt'
+    published = pool.publish_level2(torch.load(source, map_location='cpu', weights_only=False))
+    if published != learner:
+        raise ValueError(f'{source} holds {published}, not the rollout learner {learner}')
+    return published
 
 
 def _rollout_checks(result, tasks):

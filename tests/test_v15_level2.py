@@ -219,3 +219,21 @@ def test_phase3_rollout_collisions_and_open_learner_failures_stop_the_run():
     phase3._no_open_failures([dict(id='l2:a', step='clone', new_failures=[])])
     with pytest.raises(phase3.StopAndAsk):
         phase3._no_open_failures([dict(id='l2:a', step='clone', new_failures=[dict(row=1, collisions=1)])])
+
+
+def test_phase3_publishes_an_earlier_steps_rollout_learner_and_checks_its_hash(monkeypatch, tmp_path):
+    from types import SimpleNamespace
+    from experiments import v15_phase3 as phase3
+    torch.manual_seed(0)
+    state = L.build_net().state_dict()
+    learner = 'l2:' + pool.state_hash(state)
+    (tmp_path / 'clone' / 'policies').mkdir(parents=True)
+    torch.save(state, tmp_path / 'clone' / 'policies' / f'{learner[3:]}.pt')
+    monkeypatch.setattr(phase3, 'out_dir', lambda step: tmp_path / step)
+    published = []
+    fake = SimpleNamespace(publish_level2=lambda s: published.append(s) or 'l2:' + pool.state_hash(s))
+    assert phase3._bring_learner(fake, dict(inputs=dict(rollout_learner=learner, rollout_learner_step='clone'))) == learner
+    assert phase3._bring_learner(fake, dict(inputs={})) is None and len(published) == 1
+    with pytest.raises(ValueError):
+        phase3._bring_learner(SimpleNamespace(publish_level2=lambda s: 'l2:0000'),
+                              dict(inputs=dict(rollout_learner=learner, rollout_learner_step='clone')))
