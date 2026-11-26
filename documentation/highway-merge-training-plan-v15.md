@@ -21,10 +21,14 @@ shared ledger needs the user's approval of its resolved configuration first, as 
     [The relabel step](#the-relabel-step-november-26). It ran at one training seed only.
   - No learner showed a new kind of failure.
   - Only Level 2 was trained, by imitation; Level 1, the rule executor, is unchanged.
-- **Next:** a [Phase 4 proposal](#phase-4-proposal-november-26-anchored-rl-on-level-2-for-your-approval)
-  waits for you (decision 9). It starts with a small probe and a seed check that fit in the 2,518.9 s
-  of study time left; Phase 4's training needs a raise of the study total. The held-out check
-  (Stage 5) needs your authorization. Nothing more runs until you decide.
+- **Phase 4 step A** (you approved it on November 26) ran and stopped at its stop rule; see
+  [Phase 4 step A result](#phase-4-step-a-result-november-26).
+  - **The seed check:** the relabel configuration scores 62 (54) at all 3 fit seeds.
+  - **The probe** found room on 2 of the 8 failing rows (9 and 37), under the re-baselined gates
+    only. Its slower variants stopped on a free road on 3 rows, so its second batch was not run.
+- **Next:** step B of decision 9 waits for you. My recommendation is to finish the probe first (no
+  raise) and skip step B if it finds no new row. The held-out check (Stage 5) needs your
+  authorization. Study time left: 2,274.5 s. Nothing more runs until you decide.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -1277,6 +1281,10 @@ lock, development rows only.
 
 ## Phase 4 proposal (November 26): anchored RL on Level 2, for your approval
 
+**Step A approved on November 26** ("Yes, run step A", decision 9) and run; it stopped at its stop
+rule. See [Phase 4 step A result](#phase-4-step-a-result-november-26). Step B isn't approved. The
+proposal is kept below as written.
+
 **Proposal only.** Nothing here has been built or run, and nothing is charged until you approve it.
 The user asked for it on November 26: "do the relabel fix first then work on the phase 4 budget".
 All runs would be SUMO (libsumo), not physics, with IDM background only. The held-out rows are never
@@ -1433,6 +1441,161 @@ The minimum size is the same with 18 rollouts, 18 updates and 6 evaluations.
 
 That keeps the large spend behind evidence that it can pay off.
 
+## Phase 4 step A result (November 26)
+
+**User decision,** typed in the Claude side session: "Yes, run step A". The main Claude session also
+relayed "Yes, approve step A".
+- **Settings:** as decision 9 describes. SUMO (libsumo), not physics, with IDM background, 16 workers
+  at below-normal priority, under the shared lock.
+- **Rows:** development rows only. The held-out rows were not built or run.
+- **Nothing was trained by RL.**
+
+**Step A stopped at its stop rule** after the probe's first batch. Scripted variants stopped on a
+free road on 3 rows, one of them a one-car LA case. The second batch (offsets +1 and +2) wasn't run,
+and nothing was retuned.
+
+### The seed check
+
+- **Ran:** the relabel configuration refit at fit seeds 4 and 5, each evaluated on the 70 development
+  rows (`configs/evaluation/v15-phase3-relabel-seeds.json`, sha256 `4d1d3165…`).
+- **Result:** both score 62 of 70 re-baselined and 54 recorded: `l2:85ae5076488ee598` at seed 4 and
+  `l2:dc004c196a2efbfb` at seed 5.
+  - Each fails the expert's 8 rows and no others, with no new kind of failure.
+  - Their cut-ins are on rows 28 and 37, as the expert's are.
+  - They drive the expert's identical trace on 66 and 65 rows.
+- **So the relabel configuration scores 62 (54) at all 3 fit seeds** (2, 4 and 5). That is Phase 4's
+  baseline.
+- **Charged** from Phase 3's unused allowance:
+  - 274,702 decisions (3,487 of them the canary), against 273,997 expected;
+  - 142 evaluation episodes;
+  - 196.7 s of clock time (73.7 s of it the 2 fits), against 305.8 s expected.
+
+  The canary and the parity row matched.
+
+### The probe
+
+**What ran:** the scripted variants on the 8 development rows that the starting policy
+`l2:bc7c050f6d3da3ce` and the expert both fail (0, 8, 9, 14, 22, 24, 37 and 38).
+- **Each variant** is the rule's Level 2 choices with one change, for every car and the whole
+  episode.
+- **Configuration:** `configs/evaluation/v15-phase4-probe.json`.
+- **Checks:** the canary and the parity row (52) matched.
+
+| Variant | Passes, re-baselined | Passes, recorded | Stop-rule events | Other events |
+|---|---|---|---|---|
+| Gap +1 (one car later) | row 37 | none | none | none |
+| Offset −1 m/s | row 9 | none | a free-road stop on row 37 | 2 stops in traffic on row 8; a cut-in on row 37 (the expert has it too) |
+| Offset −2 m/s | none | none | free-road stops on rows 9, 37 and 38 (row 38 is a one-car LA case) | 4 stops in traffic on row 8; a cut-in on row 37; 2 new failure kinds on row 14 (per-car route comfort or control, raw request jerk) |
+| Offsets +1 and +2 | not run | not run | not run | not run |
+
+No probe episode had a collision or an emergency.
+
+**Rows with room** (a variant passes the row under the re-baselined gates): rows 9 and 37.
+- **Row 9:** offset −1 lifts all 3 failing cars' speed match to 1.0, with no events. The expert's
+  worst car there scores 0.870.
+- **Row 37:** gap +1 lifts agent_0's speed match to 0.907, just over the gate's 0.9 (the expert's:
+  0.894), with no events. The expert's cut-in on that row doesn't happen.
+- **Recorded gates:** no variant passes any row under them.
+- **Speed match of 0.9 isn't enough on its own.** On rows 14 and 24 a failing car reaches it, and
+  both rows still fail rolling merge quality:
+  - row 14: 1.0 with offset −1;
+  - row 24: 0.938, the expert's own.
+
+  Which other part of that gate fails isn't checked.
+- **The other rows' best worst-car speed match:**
+
+  | Row | Probe best | Expert |
+  |---|---|---|
+  | 0 | 0.323 | 0.323 |
+  | 8 | 0.894 | 0.731 |
+  | 22 | 0.882 | 0.851 |
+  | 38 | 0.727 | 0.727 |
+
+**The free-road stops,** from each car's Level 2 trace:
+
+| Variant, row | Car | Stopped for | Where it stopped |
+|---|---|---|---|
+| Offset −1, row 37 | agent_0 | 6.4 s | 6.7 m short of the yield entry's stop line; waiting for 1 main-road car and 2 controlled cars |
+| Offset −2, row 37 | agent_0 | 7.5 s | 7.3 m short, waiting for the same 3; no leader in its lane |
+| Offset −2, row 38 | agent_0 | 6.8 s | 11.9 m short, waiting for 3 main-road cars |
+| Offset −2, row 9 | agent_6 | 4.9 s | 50.5 m short, 43 m behind a ramp car; waiting for 2 main-road cars |
+
+- **In each,** Level 1's executor set the target to 0 at a yield entry it hadn't committed to. The
+  event classifier counts it as a free-road stop because no leader was close ahead.
+- **My reading,** not verified beyond these traces: a slower approach reaches the entry later, misses
+  the gap the rule takes, and waits at the line.
+- **Not checked:** why row 9's car stopped 50 m back.
+- **The starting policy** has none of these events on these rows; its only event there is the row 37
+  cut-in.
+
+### The stop, a crash and a configuration hash correction
+
+- **The stop:** the first batch's free-road stops met the stop rule, so the second batch (offsets +1
+  and +2) wasn't dispatched. Nothing was retuned.
+- **A crash first:**
+  - After the first batch was charged, the runner failed while recording it: `KeyError:
+    'training_episodes'`. Phase 3's batch accounting needs that field, and the Phase 4 segment lacked
+    it.
+  - The batch's 25 results were all written. The segment is recorded as failed with its real counts
+    (below), and the lock was released.
+  - The stop rule would have stopped the run at that point anyway.
+  - Fixed, uncharged, in `1f57be7`, with the two changes below. 122 v15 tests pass.
+- **Hash correction:** the master's probe entry cites sha256 `44ec066f…`. That was the hash of the
+  configuration as resolved, with integer row keys, before it was written.
+  - The pinned file holds the keys as strings. Its hash is
+    `3c622365fffa03ba8a974d4edd0888d03fbc7c4d37b25c2838c06195d4b7b41a`: the one the run checked and the
+    ledger records. The content is the same.
+  - The resolve step now prints the pinned file's hash. As for every v15 configuration, it is the
+    sha256 of the configuration's canonical JSON (sorted keys), not of the file's bytes.
+- **The report** now covers a run that stopped before a batch, and lists the variants not run.
+
+### Ledger
+
+| | Before step A | After |
+|---|---|---|
+| Study time | 62,181.1 of 64,700 s (2,518.9 s left) | 62,425.5 of 64,700 s (2,274.5 s left) |
+| Phase 3 decisions | 2,122,682 of 2,700,000 | 2,397,384 (302,616 unused) |
+| Phase 3 clock time | 1,493.3 of 3,000 s | 1,690.0 s (1,310.0 s unused) |
+| Phase 4 decisions | none | 58,001 of step A's 100,000 |
+| Phase 4 clock time | none | 47.7 of step A's 150 s |
+
+- **Segments:** two `v15_evaluation` segments, both category preparation.
+  - **The seed check:** Phase 3, complete.
+  - **The probe:** Phase 4's first segment, failed as above. It charged 58,001 decisions (3,487 of
+    them the canary), 26 evaluation episodes and 47.7 s; its first batch expected 53,968 decisions.
+- **The lock:** released.
+
+### Step B: my recommendation
+
+- **What the probe says about room:** at most 2 of the 8 rows (9 and 37), and only under the
+  re-baselined gates.
+  - The choices that reach row 9 (slower offsets) also cause the stop-rule events.
+  - A policy that took both rows and lost none would score 64 of 70 re-baselined. On this evidence
+    the recorded score would stay at 54.
+- **My recommendation:** don't start step B on this. Two cheaper steps first:
+  1. **Finish the probe:** offsets +1 and +2 on the 8 rows, with no raise.
+     - Projected from the first batch, it needs about 40,800 decisions, against the 41,999 left in
+       step A's allowance. That's 36,118 expected, times the first batch's measured 1.075, plus the
+       runner's 5% margin.
+     - It would take about 45 s (an estimate) of the 102.3 s left.
+     - It needs a small uncharged change, so that it runs only that batch.
+     - The stop rule stopped step A, so it needs your say-so.
+  2. **Then decide:** if the probe finds no new row, skip step B and go to Stage 5 with
+     `l2:bc7c050f6d3da3ce`. If it does, run step B at the recommended size.
+- **The sizes, if you want step B anyway.** Each keeps about 600 s for Stage 5.
+
+  | Size | Phase 4 allowance | Study total raise |
+  |---|---|---|
+  | Recommended (3 seeds × 12 iterations) | 9,200,000 decisions and 5,700 s | about 4,030 s (to about 68,730 s) |
+  | Minimum (3 seeds × 6 iterations) | 4,900,000 decisions and 3,100 s | about 1,430 s (to about 66,130 s) |
+
+  If the probe is finished first, each raise grows by about 50 s.
+- **Settle one rule before step B.** Its stop rule stops on a trained policy's free-road stop.
+  - I'd read "trained policy" as each evaluated checkpoint.
+  - The probe shows that slower approaches produce exactly these stops at yield entries, and
+    exploration will try slower approaches.
+  - So the rule should say whether it also covers the training rollouts.
+
 ## Decisions for you
 
 Decisions 1–7 were decided on November 25, 2026, relayed by the main Claude session and recorded
@@ -1495,6 +1658,12 @@ relayed by the main Claude session.
        about 4,100 s.
      - **Minimum:** at most 4,900,000 decisions and 3,100 s, with a raise of about 1,500 s.
    - **Or skip Phase 4** and go to Stage 5 (it needs your authorization, and diagnostic episodes).
+
+   **Step A decided: yes,** on November 26 ("Yes, run step A"). It stopped at its stop rule after the
+   probe's first batch; see [Phase 4 step A result](#phase-4-step-a-result-november-26).
+   - **Step B is open.** Its raises are now about 4,030 s (recommended) and about 1,430 s (minimum).
+   - **My recommendation:** finish the probe first (no raise), then skip step B unless it finds a new
+     row.
 
 ## What carries over from v14
 

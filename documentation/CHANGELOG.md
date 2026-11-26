@@ -4,6 +4,32 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-26 - Plan v15 Phase 4 step A: the seed check holds; the probe stops at its stop rule
+
+- **User decision,** typed in the Claude side session: "Yes, run step A". SUMO (libsumo), IDM, 16
+  workers at below-normal priority, under the shared lock. Development rows only; the held-out rows
+  were not built or run.
+- **Seed check:** the relabel configuration at fit seeds 4 and 5 scores 62 of 70 re-baselined and 54
+  recorded, as at seed 2. It fails only the expert's 8 rows, with no new kind of failure. Charged from
+  Phase 3's allowance: 274,702 decisions and 196.7 s.
+- **Probe, first batch** (gap +1, offsets −1 and −2 on the 8 failing rows):
+  - **Room:** row 9 passes re-baselined with offset −1, and row 37 with gap +1. No row passes the
+    recorded gates.
+  - **Stop rule:** free-road stops on rows 9, 37 and 38 with offset −2, and on row 37 with offset −1.
+    Row 38 is a one-car LA case. The stopping cars wait short of a yield entry's stop line.
+  - **So the second batch** (offsets +1 and +2) wasn't run, and nothing was retuned.
+- **A runner crash** after the first batch was charged (`KeyError: 'training_episodes'`). The
+  segment is recorded as failed with its real counts: 58,001 decisions and 47.7 s, of Phase 4's step
+  A allowance of 100,000 and 150 s.
+  - **Fixed,** uncharged, in `1f57be7`: the field, plus the two changes below. 122 v15 tests pass.
+  - **Hash:** the configuration's sha256 is `3c622365…`, not the master's `44ec066f…` (integer row
+    keys). The resolve step now prints the pinned file's hash.
+  - **The report** now covers a partial run.
+- **Study time:** 62,425.5 of 64,700 s (2,274.5 s left).
+- **Recommended next:** finish the probe (no raise), then skip step B unless it finds a new row. Step
+  B's raises are now about 4,030 s (recommended) and about 1,430 s (minimum). Details are in plan
+  v15, "Phase 4 step A result".
+
 ## 2026-11-26 - Plan v15 Phase 4 proposed: anchored RL on Level 2
 
 - **Proposal only;** nothing built, run or charged. The user asked for it: "do the relabel fix first
