@@ -25,9 +25,10 @@ only: nothing here trains or updates a policy, and nothing is charged.
   background model, into one results table (`results.jsonl`); `paired_table` lines them up.
 - **Interleaved runs:** `interleave` merges several runs' tasks row by row, so the 3 training runs
   of a setup share one pool and are compared on identical rows.
-- **Drivers.** A published policy ('policy:<hash>'), or a rule driver: so far only the plan
-  follower (traffic/v15_plan_follower.py, 'rule:plan-follower-v1'), which validates only. The rule
-  expert comes in Phase 2.
+- **Drivers.** A published policy ('policy:<hash>'), or a rule driver, which validates only: the
+  plan follower (traffic/v15_plan_follower.py, 'rule:plan-follower-v1') or the Phase 2 rule expert
+  (traffic/v15_rule_expert.py, 'rule:expert-v3'; run 1's 'rule:expert-v1' and run 2's 'rule:expert-v2' are kept
+  byte for byte in traffic/v15_rule_expert_v1.py and traffic/v15_rule_expert_v2.py so those runs can be repeated).
 - **Background drivers.** The v14 demand writer gives every background car one of three IDM
   profiles (traffic/highway_v05_demand.py, PROFILES; checked in the routes files of round 24's
   validation). 'idm' is that recorded traffic; 'krauss' rewrites those three vTypes to SUMO's
@@ -66,7 +67,7 @@ BACKGROUNDS = ('idm', 'krauss')
 MODES = ('validate', 'collect')
 BACKGROUND_PROFILES = ('native_cautious', 'native_balanced', 'native_attentive')
 VOLATILE = ('episode_directory',)
-RULE_DRIVERS = ('rule:plan-follower-v1',)   # traffic/v15_plan_follower.DRIVER
+RULE_DRIVERS = ('rule:plan-follower-v1', 'rule:expert-v1', 'rule:expert-v2', 'rule:expert-v3')   # follower, expert v1-v3
 # Process priority of the workers (and, set by the caller, the learner). User direction, November 25, 2026,
 # relayed by the main Claude session: "don't use all cpu cores i need some to do other tasks"; so at most
 # 16 workers and below-normal priority. Priority and worker count do not change results.
@@ -264,10 +265,13 @@ def _worker_setup(backend, round_index, policy_dir):
 def _driver(driver):
     """The actor for a driver id: a published policy, or a rule driver reading the live environment."""
     if driver in RULE_DRIVERS:
-        from traffic import v15_plan_follower
-        if driver != v15_plan_follower.DRIVER:
-            raise ValueError(f'No implementation for {driver}')
-        return v15_plan_follower.PlanFollower(lambda: _W.get('env'))
+        from traffic import v15_plan_follower, v15_rule_expert, v15_rule_expert_v1, v15_rule_expert_v2
+        if driver == v15_plan_follower.DRIVER:
+            return v15_plan_follower.PlanFollower(lambda: _W.get('env'))
+        for module in (v15_rule_expert, v15_rule_expert_v1, v15_rule_expert_v2):
+            if driver == module.DRIVER:
+                return module.RuleExpert(lambda: _W.get('env'))
+        raise ValueError(f'No implementation for {driver}')
     return _policy(driver)
 
 

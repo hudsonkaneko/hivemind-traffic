@@ -4,6 +4,46 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-26 - Plan v15 Phase 2: the rule expert qualifies, and the gates are re-baselined
+
+- **Evaluation only, charged:** no training and no update. All runs are SUMO (libsumo), not
+  physics. IDM background only; the held-out rows were not built or run.
+- **User decision,** relayed by the main Claude session: "Yes, approve 5 runs" (at most 725,000
+  decisions, charged by clock time). 16 workers at below-normal priority, as in Phase 1.
+- **New:**
+  - the rule expert, Level 1 with the rule Level 2 (`traffic/v15_rule_expert.py`, now v3), with
+    v1 and v2 kept byte for byte (`traffic/v15_rule_expert_v1.py`, `traffic/v15_rule_expert_v2.py`);
+  - the Phase 2 runner (`experiments/v15_phase2.py`) and one pinned configuration per run
+    (`configs/evaluation/v15-phase2-run-01.json` to `-03.json`);
+  - the gate re-baseline (`experiments/v15_regrade.py`), which re-grades rolling merge quality
+    offline from the recorded traces;
+  - 90 v15 tests pass.
+- **Runs** (70 development rows each; round 24's gates, then re-baselined):
+  - v1: 50 of 70, with 1 collision and 2 cut-ins in one-car LA cases, so not qualified;
+  - v2: 52 of 70, then 59; every Stage 1 target met, so the expert qualified;
+  - v3: 54 of 70 (77%, 66–85%), then 62 of 70 (89%, 79–94%); every target met again.
+  - The round-16 policy: 33 of 70, then 36.
+  - v3 against round 16, re-baselined: +37.1 points (+24.2 to +48.6), p = 2.2e-7.
+- **Gate audit** of run 2's failing rows. There were three gate-side faults:
+  - acceleration-lane merges graded against a target that jumps at completion;
+  - ineligible samples counted as misses;
+  - the yield-entry reference rising while the car waits.
+
+  The driver-side faults were lane-change leaders (fixed in v3), a following headway of 1.8 s
+  against the gate's 1.5 s (not changed), and gentle braking (v3 coasts).
+- **Re-baseline (decision 3), done once and frozen:**
+  - three rules (R1 every merge, R2 restart at the stop line, R3 eligible samples only);
+  - parity first, reproducing every recorded verdict and step;
+  - every other gate unchanged.
+- **Correction:** the run 2 audit put row 69 down to a background cut-in. v2 had also lost its
+  source-lane leader there, and v3 passes the row.
+- **Ledger:**
+  - 3 of the 5 runs, 405,363 of 725,000 decisions, 306.8 s of clock time;
+  - study time 60,687.8 of 64,700 s;
+  - the unused runs and decisions aren't carried over.
+- **Stopped after Phase 2:** Phase 3 has no budget.
+- **Details:** plan v15, "Phase 2 result".
+
 ## 2026-11-25 - Plan v15 Phase 1: baselines on the 70 development rows
 
 - **Evaluation only, charged:** no training and no update. All runs are SUMO (libsumo), not

@@ -3,11 +3,16 @@
 Proposed by Claude on November 25, 2026, after v14 round 24. Every phase that charges the
 shared ledger needs the user's approval of its resolved configuration first, as before.
 
-**Status (November 25, 2026):** the user decided all seven questions at the end of this plan.
-Phase 0 (tools only, no training, nothing charged) passed its exit check; see
-[Phase 0 result](#phase-0-result-november-25). Phase 1 (baselines, evaluation only, charged)
-ran and met its exit check; see [Phase 1 result](#phase-1-result-november-25). Phase 2's budget
-still needs the user. Nothing has been trained under this plan.
+**Status (November 26, 2026):** the user decided all seven questions at the end of this plan.
+- **Phase 0** (tools only, no training, nothing charged) passed its exit check; see
+  [Phase 0 result](#phase-0-result-november-25).
+- **Phase 1** (baselines, evaluation only, charged) ran and met its exit check; see
+  [Phase 1 result](#phase-1-result-november-25).
+- **Phase 2** (the rule expert, evaluation only, charged; the user approved up to 5 runs) met its
+  exit check in 3 runs; see [Phase 2 result](#phase-2-result-november-26).
+  - The rule expert v3 passes 54 of 70 development rows under round 24's gates and 62 of 70 under
+    the gate re-baseline, now frozen. Round 16 passes 33 and 36.
+- **Phase 3** has no budget yet. Nothing has been trained under this plan.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -686,6 +691,196 @@ Failing gates and events (rows with at least one; totals in brackets):
 - **Outputs:** `outputs/highway-merge-v15/phase-1/run-01` in this worktree (not in Git), with
   `report.md`, `report.json`, `charge.json`, `phase1-log.jsonl` and the results table.
 
+## Phase 2 result (November 26)
+
+**Exit check met:** all four Stage 1 targets met from run 2 on, and every failing gate explained
+(gate side or driver side) in the audit below. The expert qualified, so the gates were re-baselined
+once (decision 3) and are now frozen.
+- **Evaluation only:** no training and no update. All runs are SUMO (libsumo), not physics.
+- **Background:** IDM only.
+- **Held out:** the held-out rows were not built or run.
+
+**User decision,** relayed by the main Claude session and recorded in the coordination master:
+"Yes, approve 5 runs". That allows:
+- at most 5 full runs of the rule expert on the 70 development rows;
+- at most 725,000 decisions in all;
+- clock time charged against the study total, with every run on benchmark rows charged.
+
+Uncharged 1–2-row code checks ran on v14-validation rows only. The settings were as in Phase 1:
+16 workers at below-normal priority, the shared lock, and each run's configuration and expected
+charge in the master before it ran. Phase 3 has no budget, so Phase 2 ends here.
+
+### What was built
+
+- **The rule expert** (`traffic/v15_rule_expert.py`), Level 1 with the rule Level 2. It drives every
+  controlled car through the same normalized action a policy uses, so every environment limit and
+  intervention count still applies. It validates only. Each version is kept byte for byte so its run
+  can be repeated: v1 in `traffic/v15_rule_expert_v1.py`, v2 in `traffic/v15_rule_expert_v2.py`.
+  - **v1:** IDM following with a free-road term, the rate band and ceiling, the stuck rule, the
+    curvature cap, MOBIL lane changes, the dilemma rule at ending lanes.
+  - **v2,** from run 1's failures:
+    - following-bound anticipation;
+    - projected leaders through junctions;
+    - gap selection at yield entries, judged at the stop line with SUMO's IDM and each mainline
+      car's own parameters;
+    - a new-leader test for lane changes.
+  - **v3,** from run 2's gate audit:
+    - lane-change leaders by lane identity;
+    - coasting for small gap corrections.
+- **The Phase 2 runner** (`experiments/v15_phase2.py`) and one pinned configuration per run
+  (`configs/evaluation/v15-phase2-run-0N.json`). Each run is 2 batches with canaries, plus the
+  round-16 parity task on development row 24.
+- **The gate re-baseline** (`experiments/v15_regrade.py`), below.
+- **Tests:** 90 v15 tests pass.
+
+### The runs
+
+Each run: the 70 development rows in 2 batches, 73 episodes, 16 workers at below-normal priority.
+In every run both canaries matched on another worker, and the round-16 parity row matched its
+Phase 1 record.
+
+| Run | Driver | Round 24's gates (recorded) | Re-baselined | Stage 1 targets | Charge |
+|---|---|---|---|---|---|
+| 1 | v1 | 50 of 70, 71% (60–81%) | not re-graded (before the re-baseline) | 2 of 4: 1 collision; 2 cut-ins in one-car LA cases | 132,879 decisions, 90.4 s |
+| 2 | v2 | 52 of 70, 74% (63–83%) | 59 of 70, 84% (74–91%) | all 4 | 136,365 decisions, 111.6 s |
+| 3 | v3 | 54 of 70, 77% (66–85%) | 62 of 70, 89% (79–94%) | all 4 | 136,119 decisions, 104.8 s |
+
+95% Wilson intervals. The fourth target is a pass rate above round 16's 33 of 70.
+
+- **Paired with the round-16 policy's Phase 1 record** (same rows):
+  - run 1, recorded: +24.3 points (+12.8 to +34.7);
+  - run 2: +27.1 (+13.9 to +38.9) recorded, +32.9 (+20.3 to +44.1) re-baselined;
+  - run 3: +30.0 (+16.4 to +42.0) recorded, p = 4.9e-5; +37.1 (+24.2 to +48.6) re-baselined,
+    p = 2.2e-7. Re-baselined: both pass 35, v3 only 27, round-16 only 1, neither 7.
+- **Run 1** failed per-car checks on 16 rows (25 peak-jerk failures), raw request jerk on 15 and
+  merge quality on 12, with 1 collision. That led to v2.
+- **Run 2** met every target. Its failing rows were audited (below) and the gates re-baselined.
+- **Run 3** fails only rolling merge quality (16 rows recorded, 8 re-baselined). There are no
+  per-car or raw request jerk failures. Against v2 on the same rows, v3 also passes rows 4, 43
+  and 69 and loses none: 62 against 59 re-baselined (+4.3 points, −1.8 to +11.3, p = 0.25), and
+  54 against 52 recorded. That's too few rows to show the difference is real.
+  - **Row 4:** during the lane change v2's lowest request was −3.9 m/s². v3's was −1.5 m/s², and
+    R1 then grades the merge as passing.
+  - **Row 43:** the small gap correction coasts, so the avoidable braking event is gone.
+  - **Row 69, a correction to the run 2 audit,** which put it down to a background cut-in:
+    - v2 lost its source-lane leader during the lane change. It had no IDM leader at 16.5 s, and
+      the environment's bound then took acceleration from −1.9 to −3.3 m/s² (jerk 14.6 m/s³).
+    - v3 kept that car as a leader and braked steadily at about −1.6 m/s² (peak jerk 3.0).
+- **SUMO's "junction collision" warning** at the top of the run 2 and run 3 logs comes from the
+  round-16 parity task on row 24. That task reproduces round-16's Phase 1 record of the row,
+  collision included. The expert had no collision in runs 2 or 3.
+- **Still failing for v3 after the re-baseline** (merge quality on 8 rows), for the causes the
+  audit found:
+  - following headway on rows 0, 9, 14 and 24 (driver side, not changed);
+  - yield-entry waits on rows 8, 22, 37 and 38, where samples before the stop line are still
+    graded by design.
+
+### Gate audit (run 2)
+
+Each failing row was read from each decision's record and the map and scene at the failure.
+
+- **Gate side:**
+  - **Acceleration-lane merges** (rows 4, 20, 21, 34, 48, and part of rows 0 and 14):
+    - v14's target returns to the road target at once at the merge completion (row 4: 15.9 →
+      22.35 m/s; row 20: 6.8 → 24.6 m/s).
+    - At the 2.0 m/s² comfort cap a car needs 3–8 s to come within 2 m/s.
+    - Round 23's follow gate fixed this for yield entries only.
+  - **Ineligible targets count as misses** whatever the car does: 32 of 161 samples for row 0's
+    agent_0.
+  - **Yield entries** (rows 8, 22, 37, 38, 39, 53, 67): the follow reference keeps rising toward the
+    gap planner's target while the car waits for a gap its own test rejects. Once 2 m/s behind, a car
+    limited by the same drive ceiling can't catch up.
+    - Row 53: the expert held for main_0 (22 m/s), which passed the junction about 0.5 s before our
+      car crossed.
+    - The reference had restarted 2 s earlier and rose at the 1.32 m/s² drive ceiling.
+    - Our car stayed 3.4–3.8 m/s behind for the whole window.
+- **Driver side:**
+  - **Lane-change leaders** (rows 4 and 14). After the lane switch mid-maneuver, v2 took its
+    "target-lane leader" from the lane beyond the target.
+    - Row 4 braked 0.8 s for a car alongside at a 0.0 m gap and lost 3 m/s.
+    - Row 14 dropped the slow car in its ending source lane. That car then merged into the same lane,
+      and the environment's bound clamped at −4.5 m/s² (jerk 42.9 m/s³).
+    - Fixed in v3.
+  - **Following headway** (rows 0, 9, 14 and 24; row 43's avoidable braking).
+    - Behind a slower leader, the gate's target is the speed whose 1.5 s + 2.5 m gap equals the
+      current gap. The per-car check needs a 1.5 s minimum headway.
+    - So the gates accept gaps from 1.5 s × speed up to about 1.5 s × speed + 5.5 m. The expert keeps
+      1.8 s + 4 m.
+    - Not changed: run 2's per-car minimum headways are 1.60–1.70 s on 5 cars, so a 1.5 s setting
+      would likely fail the headway check. Row 43's gentle braking became coasting in v3.
+  - **Row 69:** put down to a background car that cut in about 10 m ahead from the far lane during
+    our lane change, and not addressed. **Corrected after run 3:** v2 had also lost its
+    source-lane leader there, and v3 passes the row (see [The runs](#the-runs)).
+
+### Gate re-baseline (decision 3), frozen
+
+`experiments/v15_regrade.py` (sha256 `515c3b7c…`) re-grades only the speed match inside rolling merge
+quality, offline from the recorded action journals. Nothing is simulated and nothing is charged.
+Every other gate and per-car check is round 24's installed gates, unchanged.
+
+- **Parity first.** With no rule, it reproduces:
+  - every recorded verdict (271 episodes of run 2 and Phase 1);
+  - every step's speed match (69,813 steps);
+  - every graded car's window and fraction (141 cars).
+
+  It also rebuilds every follow reference exactly from its recorded inputs. A mismatch stops it.
+- **R1, every merge:** a merge without a yield entry is also graded on the follow gate's reference
+  band. The reference starts at the car's speed at the window's first eligible decision.
+- **R2, restart at the stop line:** a yield entry's reference also restarts from the car's speed when
+  it crosses the stop line. Samples before the crossing are still graded.
+- **R3, eligible samples only:** the speed-match fraction counts only samples with an eligible
+  target. They stay in every other check, and fewer than half the window eligible does not qualify.
+- **Not changed:** following behind a slower leader.
+
+| Driver | Recorded | R1 alone | R2 alone | R3 alone | All three |
+|---|---|---|---|---|---|
+| Expert v2 (run 2) | 52 of 70 | 55 | 55 | 53 | 59 of 70 |
+| Expert v3 (run 3) | 54 of 70 | 58 | 57 | 55 | 62 of 70 |
+| Round-16 policy (Phase 1) | 33 of 70 | 35 | 33 | 34 | 36 of 70 |
+| Round 21's final policy (Phase 1) | 31 of 70 | 31 | 31 | 31 | 31 of 70 |
+| Plan follower (Phase 1) | 21 of 60 | 21 | 21 | 21 | 21 of 60 |
+
+- **Rows that changed:**
+  - v2: 20, 34 and 48 (R1), 21 (R3), and 39, 53 and 67 (R2);
+  - v3: the same, plus 4 (R1);
+  - round-16: 35 and 49 (R1), and 21 (R3).
+- **Parity** held on all three re-grades: every verdict and step was reproduced, and the largest
+  rebuilt-reference difference was 0.0.
+- **Outputs:** `outputs/highway-merge-v15/phase-2/rebaseline` (v2) and
+  `outputs/highway-merge-v15/phase-2/run-03/rebaseline` (v3), not in Git.
+
+**Frozen:** from here, the v15 benchmark's gates are round 24's installed gates, with rolling merge
+quality re-graded by this module at this hash. Every later run reports both verdicts. Changing the
+gates again needs you.
+
+### Ledger
+
+| | Before Phase 2 | After |
+|---|---|---|
+| Study time | 60,381.0 of 64,700 s | 60,687.8 of 64,700 s (4,012.2 s left) |
+| Training decisions | 6,722,376 of 6,871,150 | unchanged |
+| Phase 2 evaluation decisions | 0 of 725,000 | 405,363 of 725,000; the rest isn't carried over |
+| Phase 2 runs | 0 of 5 | 3 of 5; the other 2 aren't carried over |
+| Diagnostic episodes | 173 of 174 | unchanged |
+
+- **Segments:** three `v15_evaluation` segments, all complete, charged 90.4 s, 111.6 s and
+  104.8 s (306.8 s), recording 219 evaluation episodes.
+- **Uncharged:** the 1–2-row code checks on v14-validation rows, the test suite, and the
+  re-grades, which simulate nothing.
+- **The lock:** released.
+
+### Why Phase 2 stopped at 3 runs
+
+- The expert qualified in run 2.
+- v3 fixed the driver-side faults the audit found and lost no row.
+- What's left is either graded on purpose by the frozen gates (waits before the stop line) or a
+  headway trade-off that would likely fail the 1.5 s headway check.
+- More runs would only tune against the 70 development rows, and the held-out rows can't check
+  that.
+
+**The qualified expert is v3** (`rule:expert-v3`, module sha256 `9018ba3a…`). Phase 3 has no
+budget, so nothing more runs until you approve one.
+
 ## Decisions for you
 
 All seven were decided on November 25, 2026, relayed by the main Claude session and recorded
@@ -705,6 +900,8 @@ main session's recommendations.
    **Decided: once,** after the rule expert qualifies (Phase 2), on the 70 development rows.
    When the expert fails a gate, check whether the gate or the driver is wrong. The gates are
    frozen before any learning, and the held-out seeds stay untouched.
+   **Done on November 26** after run 2, and frozen: `experiments/v15_regrade.py` (sha256
+   `515c3b7c…`); see [Phase 2 result](#phase-2-result-november-26).
 4. **Installing libsumo** into `.venv-traffic` (never into Isaac's Python).
    **Done in Phase 0:** libsumo 1.27.1, with sumo-data 1.27.1 pinned, in `.venv-traffic` only.
 5. **Ledger treatment** of parallel runs.
@@ -716,8 +913,10 @@ main session's recommendations.
    **Phase 1 approved:** about 210 evaluation episodes (the round-16 policy, round 21's final
    policy and the plan follower, each on the 70 rows), charged by clock time. It starts only
    after Phase 0 passes its exit check, and once the Phase 0 result, Phase 1's resolved
-   configuration and its expected charge are in the coordination master. The Phase 2 and
-   Phase 3–4 budgets still need you; Phases 3–4 will be sized from Phase 0's throughput.
+   configuration and its expected charge are in the coordination master.
+   **Phase 2 approved on November 26:** "Yes, approve 5 runs", at most 725,000 decisions,
+   charged by clock time. 3 runs were used. The Phase 3–4 budgets still need you; they will be
+   sized from Phase 0's throughput.
 7. **v14's open question** (diagnose the southbound stops, or stop there): close it in favour
    of this plan?
    **Decided: closed in favour of v15.** No round 25 and no further v14 diagnosis.

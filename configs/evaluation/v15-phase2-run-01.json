@@ -1,0 +1,948 @@
+{
+ "authorization": "User decision of November 25, 2026, relayed by the main Claude session: \"Yes, approve 5 runs\" (at most 5 full runs of the v15 rule expert on the 70 development rows, at most 725,000 decisions, clock time charged; settings as Phase 1). Evaluation only; no held-out rows.",
+ "backend": "libsumo",
+ "backgrounds": [
+  "idm"
+ ],
+ "baseline": {
+  "decisions": 134530,
+  "id": "policy:f0b11fa577b33763",
+  "passed": {
+   "0": false,
+   "1": true,
+   "10": false,
+   "11": false,
+   "12": false,
+   "13": true,
+   "14": false,
+   "15": true,
+   "16": true,
+   "17": true,
+   "18": true,
+   "19": true,
+   "2": true,
+   "20": false,
+   "21": false,
+   "22": false,
+   "23": false,
+   "24": false,
+   "25": false,
+   "26": false,
+   "27": false,
+   "28": false,
+   "29": false,
+   "3": true,
+   "30": true,
+   "31": true,
+   "32": true,
+   "33": true,
+   "34": false,
+   "35": false,
+   "36": false,
+   "37": false,
+   "38": true,
+   "39": false,
+   "4": false,
+   "40": true,
+   "41": true,
+   "42": false,
+   "43": false,
+   "44": true,
+   "45": true,
+   "46": true,
+   "47": false,
+   "48": true,
+   "49": false,
+   "5": true,
+   "50": false,
+   "51": true,
+   "52": true,
+   "53": true,
+   "54": false,
+   "55": false,
+   "56": false,
+   "57": true,
+   "58": true,
+   "59": true,
+   "6": true,
+   "60": true,
+   "61": false,
+   "62": true,
+   "63": true,
+   "64": false,
+   "65": false,
+   "66": true,
+   "67": false,
+   "68": true,
+   "69": false,
+   "7": false,
+   "8": false,
+   "9": false
+  },
+  "rows": "all 70",
+  "source": "outputs/highway-merge-v15/phase-1/run-01/results.jsonl"
+ },
+ "batches": [
+  {
+   "canary": {
+    "driver": "expert",
+    "expected": 491,
+    "row": 10
+   },
+   "expected_decisions": 29771,
+   "seeds": [
+    6952001
+   ],
+   "tasks": [
+    {
+     "driver": "expert",
+     "row": 10
+    },
+    {
+     "driver": "expert",
+     "row": 0
+    },
+    {
+     "driver": "expert",
+     "row": 1
+    },
+    {
+     "driver": "expert",
+     "row": 2
+    },
+    {
+     "driver": "expert",
+     "row": 3
+    },
+    {
+     "driver": "expert",
+     "row": 4
+    },
+    {
+     "driver": "expert",
+     "row": 5
+    },
+    {
+     "driver": "expert",
+     "row": 6
+    },
+    {
+     "driver": "expert",
+     "row": 7
+    },
+    {
+     "driver": "expert",
+     "row": 8
+    },
+    {
+     "driver": "expert",
+     "row": 9
+    },
+    {
+     "driver": "expert",
+     "row": 11
+    },
+    {
+     "driver": "expert",
+     "row": 12
+    },
+    {
+     "driver": "expert",
+     "row": 13
+    },
+    {
+     "driver": "round-16",
+     "row": 24
+    }
+   ]
+  },
+  {
+   "canary": {
+    "driver": "expert",
+    "expected": 78,
+    "row": 24
+   },
+   "expected_decisions": 116812,
+   "seeds": [
+    6952002,
+    6952003,
+    6952004,
+    6952005
+   ],
+   "tasks": [
+    {
+     "driver": "expert",
+     "row": 24
+    },
+    {
+     "driver": "expert",
+     "row": 14
+    },
+    {
+     "driver": "expert",
+     "row": 15
+    },
+    {
+     "driver": "expert",
+     "row": 16
+    },
+    {
+     "driver": "expert",
+     "row": 17
+    },
+    {
+     "driver": "expert",
+     "row": 18
+    },
+    {
+     "driver": "expert",
+     "row": 19
+    },
+    {
+     "driver": "expert",
+     "row": 20
+    },
+    {
+     "driver": "expert",
+     "row": 21
+    },
+    {
+     "driver": "expert",
+     "row": 22
+    },
+    {
+     "driver": "expert",
+     "row": 23
+    },
+    {
+     "driver": "expert",
+     "row": 25
+    },
+    {
+     "driver": "expert",
+     "row": 26
+    },
+    {
+     "driver": "expert",
+     "row": 27
+    },
+    {
+     "driver": "expert",
+     "row": 28
+    },
+    {
+     "driver": "expert",
+     "row": 29
+    },
+    {
+     "driver": "expert",
+     "row": 30
+    },
+    {
+     "driver": "expert",
+     "row": 31
+    },
+    {
+     "driver": "expert",
+     "row": 32
+    },
+    {
+     "driver": "expert",
+     "row": 33
+    },
+    {
+     "driver": "expert",
+     "row": 34
+    },
+    {
+     "driver": "expert",
+     "row": 35
+    },
+    {
+     "driver": "expert",
+     "row": 36
+    },
+    {
+     "driver": "expert",
+     "row": 37
+    },
+    {
+     "driver": "expert",
+     "row": 38
+    },
+    {
+     "driver": "expert",
+     "row": 39
+    },
+    {
+     "driver": "expert",
+     "row": 40
+    },
+    {
+     "driver": "expert",
+     "row": 41
+    },
+    {
+     "driver": "expert",
+     "row": 42
+    },
+    {
+     "driver": "expert",
+     "row": 43
+    },
+    {
+     "driver": "expert",
+     "row": 44
+    },
+    {
+     "driver": "expert",
+     "row": 45
+    },
+    {
+     "driver": "expert",
+     "row": 46
+    },
+    {
+     "driver": "expert",
+     "row": 47
+    },
+    {
+     "driver": "expert",
+     "row": 48
+    },
+    {
+     "driver": "expert",
+     "row": 49
+    },
+    {
+     "driver": "expert",
+     "row": 50
+    },
+    {
+     "driver": "expert",
+     "row": 51
+    },
+    {
+     "driver": "expert",
+     "row": 52
+    },
+    {
+     "driver": "expert",
+     "row": 53
+    },
+    {
+     "driver": "expert",
+     "row": 54
+    },
+    {
+     "driver": "expert",
+     "row": 55
+    },
+    {
+     "driver": "expert",
+     "row": 56
+    },
+    {
+     "driver": "expert",
+     "row": 57
+    },
+    {
+     "driver": "expert",
+     "row": 58
+    },
+    {
+     "driver": "expert",
+     "row": 59
+    },
+    {
+     "driver": "expert",
+     "row": 60
+    },
+    {
+     "driver": "expert",
+     "row": 61
+    },
+    {
+     "driver": "expert",
+     "row": 62
+    },
+    {
+     "driver": "expert",
+     "row": 63
+    },
+    {
+     "driver": "expert",
+     "row": 64
+    },
+    {
+     "driver": "expert",
+     "row": 65
+    },
+    {
+     "driver": "expert",
+     "row": 66
+    },
+    {
+     "driver": "expert",
+     "row": 67
+    },
+    {
+     "driver": "expert",
+     "row": 68
+    },
+    {
+     "driver": "expert",
+     "row": 69
+    }
+   ]
+  }
+ ],
+ "benchmark": {
+  "cases": [
+   "v05-validation-i110-merge",
+   "v05-val-0-cruise",
+   "v05-val-0-passing",
+   "v05-validation-i110-following",
+   "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "v02-development-60mph-cruise",
+   "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "v12-val-la-sb-adams-model-passing-4of16-medium"
+  ],
+  "development_rows": 70,
+  "development_seeds": [
+   6952001,
+   6952002,
+   6952003,
+   6952004,
+   6952005
+  ],
+  "held_out_rows": 42,
+  "held_out_seeds": [
+   6953001,
+   6953002,
+   6953003
+  ],
+  "held_out_status": "reserved; never run; final candidate only, with the user's authorization",
+  "row_order": "row 14 * k + c is case c at development seed k",
+  "schema": "highway_merge_v15_benchmark_v01",
+  "source": "v14 round 24 validation rows 0-13"
+ },
+ "charge": {
+  "clock_estimate": "2 batches (15 and 56 tasks plus a canary each) at 16 workers, below-normal priority; Phase 1 ran a 41-task batch in about 35 s, set by the 2,000-step cruise rows",
+  "estimate_source": {
+   "kind": "Phase 1 round-16 counts x the plan follower's ratio on its 60 rows",
+   "path": "outputs/highway-merge-v15/phase-1/run-01/results.jsonl",
+   "ratio": 1.0848,
+   "round16_decisions": 134530
+  },
+  "expected_clock_seconds": 150.0,
+  "expected_decisions": 146583,
+  "expected_episodes": 73,
+  "guard_margin": 0.05,
+  "max_runs": 5,
+  "phase_allowance": 725000,
+  "reserve_seconds": 600.0,
+  "total_wall_seconds": 64700
+ },
+ "expert": {
+  "id": "rule:expert-v1",
+  "settings": {
+   "background_accel_m_s2": 2.0,
+   "background_decel_m_s2": 4.5,
+   "background_min_gap_m": 2.5,
+   "background_tau_s": 1.75,
+   "ceiling_input": 43,
+   "ceiling_margin_m_s2": 0.05,
+   "ceiling_scale_m_s2": 4.5,
+   "curve_decel_m_s2": 1.0,
+   "curve_lookahead_m": 150.0,
+   "curve_step_m": 5.0,
+   "curve_window_m": 20.0,
+   "dilemma_m_s2": 3.5,
+   "free_gain_per_s": 2.0,
+   "free_max_m_s2": 1.8,
+   "free_min_m_s2": -3.0,
+   "free_road_m_s": 26.8224,
+   "idm_comfort_m_s2": 2.0,
+   "idm_max_m_s2": 1.8,
+   "idm_min_gap_m": 4.0,
+   "idm_range_m": 200.0,
+   "idm_time_gap_s": 1.8,
+   "lane_end_margin_m": 6.0,
+   "lane_end_start_m_s2": 2.0,
+   "lateral_m_s2": 2.5,
+   "mobil_politeness": 0.3,
+   "mobil_safe_m_s2": 2.5,
+   "mobil_threshold_m_s2": 0.2,
+   "moving_m_s": 1.0,
+   "pass_range_m": 100.0,
+   "pass_slower_m_s": 2.0,
+   "pull_away_m_s2": 0.6,
+   "rate_m_s2": 0.3,
+   "speed_margin_m_s": 0.3,
+   "stuck_after_s": 1.0,
+   "stuck_free_m": 20.0,
+   "stuck_speed_m_s": 0.1,
+   "stuck_target_m_s": 5.0
+  },
+  "source": {
+   "path": "traffic/v15_rule_expert.py",
+   "sha256": "1b395252c717e85392d9f44f5a7b7d2ebb22e507fb9c1c1a6611839fa5662861"
+  }
+ },
+ "held_out": "not built, not run",
+ "mode": "validate",
+ "parity": {
+  "driver": "policy:f0b11fa577b33763",
+  "report_sha": "7aa2ed359855257735c1a9ad67aa33f5215e0fb4909565067b0b9b4318d40161",
+  "row": 24,
+  "source": "outputs/highway-merge-v15/phase-1/run-01/results.jsonl",
+  "trace_sha": "8fda32415b8cab1a73f11d4bd603a92e14e4627d2d2c61d2bb1f22a8e767bc4e"
+ },
+ "pass_definition": "experiments/run_highway_flow_rl_v05.ruled_gates(report)[\"passed\"] (v14 round 24 gates), as recorded by experiments/v15_pool.py",
+ "phase": "2",
+ "priority": "below_normal",
+ "round_index": 24,
+ "row_set": "v15-development",
+ "rows": [
+  {
+   "case": "v05-validation-i110-merge",
+   "horizon_steps": 800,
+   "row": 0,
+   "seed": 6952001
+  },
+  {
+   "case": "v05-val-0-cruise",
+   "horizon_steps": 2000,
+   "row": 1,
+   "seed": 6952001
+  },
+  {
+   "case": "v05-val-0-passing",
+   "horizon_steps": 2000,
+   "row": 2,
+   "seed": 6952001
+  },
+  {
+   "case": "v05-validation-i110-following",
+   "horizon_steps": 800,
+   "row": 3,
+   "seed": 6952001
+  },
+  {
+   "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "horizon_steps": 2000,
+   "row": 4,
+   "seed": 6952001
+  },
+  {
+   "case": "v02-development-60mph-cruise",
+   "horizon_steps": 2000,
+   "row": 5,
+   "seed": 6952001
+  },
+  {
+   "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 6,
+   "seed": 6952001
+  },
+  {
+   "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 7,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 8,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 9,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 10,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 11,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "horizon_steps": 800,
+   "row": 12,
+   "seed": 6952001
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-passing-4of16-medium",
+   "horizon_steps": 800,
+   "row": 13,
+   "seed": 6952001
+  },
+  {
+   "case": "v05-validation-i110-merge",
+   "horizon_steps": 800,
+   "row": 14,
+   "seed": 6952002
+  },
+  {
+   "case": "v05-val-0-cruise",
+   "horizon_steps": 2000,
+   "row": 15,
+   "seed": 6952002
+  },
+  {
+   "case": "v05-val-0-passing",
+   "horizon_steps": 2000,
+   "row": 16,
+   "seed": 6952002
+  },
+  {
+   "case": "v05-validation-i110-following",
+   "horizon_steps": 800,
+   "row": 17,
+   "seed": 6952002
+  },
+  {
+   "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "horizon_steps": 2000,
+   "row": 18,
+   "seed": 6952002
+  },
+  {
+   "case": "v02-development-60mph-cruise",
+   "horizon_steps": 2000,
+   "row": 19,
+   "seed": 6952002
+  },
+  {
+   "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 20,
+   "seed": 6952002
+  },
+  {
+   "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 21,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 22,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 23,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 24,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 25,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "horizon_steps": 800,
+   "row": 26,
+   "seed": 6952002
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-passing-4of16-medium",
+   "horizon_steps": 800,
+   "row": 27,
+   "seed": 6952002
+  },
+  {
+   "case": "v05-validation-i110-merge",
+   "horizon_steps": 800,
+   "row": 28,
+   "seed": 6952003
+  },
+  {
+   "case": "v05-val-0-cruise",
+   "horizon_steps": 2000,
+   "row": 29,
+   "seed": 6952003
+  },
+  {
+   "case": "v05-val-0-passing",
+   "horizon_steps": 2000,
+   "row": 30,
+   "seed": 6952003
+  },
+  {
+   "case": "v05-validation-i110-following",
+   "horizon_steps": 800,
+   "row": 31,
+   "seed": 6952003
+  },
+  {
+   "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "horizon_steps": 2000,
+   "row": 32,
+   "seed": 6952003
+  },
+  {
+   "case": "v02-development-60mph-cruise",
+   "horizon_steps": 2000,
+   "row": 33,
+   "seed": 6952003
+  },
+  {
+   "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 34,
+   "seed": 6952003
+  },
+  {
+   "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 35,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 36,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 37,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 38,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 39,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "horizon_steps": 800,
+   "row": 40,
+   "seed": 6952003
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-passing-4of16-medium",
+   "horizon_steps": 800,
+   "row": 41,
+   "seed": 6952003
+  },
+  {
+   "case": "v05-validation-i110-merge",
+   "horizon_steps": 800,
+   "row": 42,
+   "seed": 6952004
+  },
+  {
+   "case": "v05-val-0-cruise",
+   "horizon_steps": 2000,
+   "row": 43,
+   "seed": 6952004
+  },
+  {
+   "case": "v05-val-0-passing",
+   "horizon_steps": 2000,
+   "row": 44,
+   "seed": 6952004
+  },
+  {
+   "case": "v05-validation-i110-following",
+   "horizon_steps": 800,
+   "row": 45,
+   "seed": 6952004
+  },
+  {
+   "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "horizon_steps": 2000,
+   "row": 46,
+   "seed": 6952004
+  },
+  {
+   "case": "v02-development-60mph-cruise",
+   "horizon_steps": 2000,
+   "row": 47,
+   "seed": 6952004
+  },
+  {
+   "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 48,
+   "seed": 6952004
+  },
+  {
+   "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 49,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 50,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 51,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 52,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 53,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "horizon_steps": 800,
+   "row": 54,
+   "seed": 6952004
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-passing-4of16-medium",
+   "horizon_steps": 800,
+   "row": 55,
+   "seed": 6952004
+  },
+  {
+   "case": "v05-validation-i110-merge",
+   "horizon_steps": 800,
+   "row": 56,
+   "seed": 6952005
+  },
+  {
+   "case": "v05-val-0-cruise",
+   "horizon_steps": 2000,
+   "row": 57,
+   "seed": 6952005
+  },
+  {
+   "case": "v05-val-0-passing",
+   "horizon_steps": 2000,
+   "row": 58,
+   "seed": 6952005
+  },
+  {
+   "case": "v05-validation-i110-following",
+   "horizon_steps": 800,
+   "row": 59,
+   "seed": 6952005
+  },
+  {
+   "case": "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "horizon_steps": 2000,
+   "row": 60,
+   "seed": 6952005
+  },
+  {
+   "case": "v02-development-60mph-cruise",
+   "horizon_steps": 2000,
+   "row": 61,
+   "seed": 6952005
+  },
+  {
+   "case": "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 62,
+   "seed": 6952005
+  },
+  {
+   "case": "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "horizon_steps": 2000,
+   "row": 63,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 64,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "horizon_steps": 800,
+   "row": 65,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 66,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "horizon_steps": 800,
+   "row": 67,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "horizon_steps": 800,
+   "row": 68,
+   "seed": 6952005
+  },
+  {
+   "case": "v12-val-la-sb-adams-model-passing-4of16-medium",
+   "horizon_steps": 800,
+   "row": 69,
+   "seed": 6952005
+  }
+ ],
+ "run": 1,
+ "schema": "highway_merge_v15_phase2_v01",
+ "targets": {
+  "collisions": 0,
+  "free_road_stops": 0,
+  "one_car_la_cases": [
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium"
+  ],
+  "one_car_la_cut_in_emergencies": 0,
+  "pass_rate": "above the round-16 policy's 33 of 70 on the same rows"
+ },
+ "workers": 16
+}

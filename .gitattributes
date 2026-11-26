@@ -70,3 +70,8 @@ configs/training/highway-flow-rl-v14-round21.json text eol=lf
 configs/training/highway-flow-rl-v14-round22.json text eol=lf
 configs/training/highway-flow-rl-v14-round23.json text eol=lf
 configs/training/highway-flow-rl-v14-round24.json text eol=lf
+# v15 Phase 2: the run configurations and the frozen gate re-baseline pin these exact LF bytes.
+experiments/v15_regrade.py text eol=lf
+traffic/v15_rule_expert.py text eol=lf
+traffic/v15_rule_expert_v1.py text eol=lf
+traffic/v15_rule_expert_v2.py text eol=lf
