@@ -1,0 +1,385 @@
+{
+ "authorization": "User decision of November 26, 2026, relayed by the main Claude session: \"Recommended size\" (plan v15 Phase 3 at the recommended size: at most 2,700,000 decisions and 3,000 s of clock time as Phase 3's own allowance; IDM only, SUMO only, development rows only for evaluation, held-out rows never built or run; at most 16 workers at below-normal priority). Phase 4 step A: user decision of November 26, 2026, typed in the Claude side session: \"Yes, run step A\" (plan v15 decision 9: the probe of 5 scripted Level 2 variants on the 8 failing development rows and the relabel configuration refit at fit seeds 4 and 5, about 360,000 decisions and 290 s, with no raise of the study total; the seed check from Phase 3's unused allowance, the probe as Phase 4's first segment with at most 100,000 decisions and 150 s).",
+ "backend": "libsumo",
+ "backgrounds": [
+  "idm"
+ ],
+ "batches": [
+  {
+   "drivers": [
+    "l2:probe-gap-p1",
+    "l2:probe-offset-m1",
+    "l2:probe-offset-m2"
+   ],
+   "expected_decisions": 53968,
+   "name": "probe-slower",
+   "tasks": [
+    {
+     "driver": "l2:probe-gap-p1",
+     "row": 0,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m1",
+     "row": 0,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m2",
+     "row": 0,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-gap-p1",
+     "row": 8,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m1",
+     "row": 8,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m2",
+     "row": 8,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-gap-p1",
+     "row": 9,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m1",
+     "row": 9,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m2",
+     "row": 9,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-gap-p1",
+     "row": 14,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m1",
+     "row": 14,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m2",
+     "row": 14,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-gap-p1",
+     "row": 22,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m1",
+     "row": 22,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m2",
+     "row": 22,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-gap-p1",
+     "row": 24,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m1",
+     "row": 24,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m2",
+     "row": 24,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-gap-p1",
+     "row": 37,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m1",
+     "row": 37,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m2",
+     "row": 37,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-gap-p1",
+     "row": 38,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m1",
+     "row": 38,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-m2",
+     "row": 38,
+     "row_set": "v15-development"
+    },
+    {
+     "decisions": 191,
+     "driver": "l2:rule-v3",
+     "mode": "validate",
+     "parity": true,
+     "report_sha": "ed17062a918ebefdb02992e50dcd7d93370879e6e1d75340e7aa816e01420605",
+     "row": 52,
+     "row_set": "v15-development",
+     "source": "outputs/highway-merge-v15/phase-2/run-03/results.jsonl, rule:expert-v3",
+     "trace_sha": "bb4f9d9aa3a9b689d3c6763521347a95843cd0e5c6cd74cb94b08ff27cc76f31"
+    }
+   ]
+  },
+  {
+   "drivers": [
+    "l2:probe-offset-p1",
+    "l2:probe-offset-p2"
+   ],
+   "expected_decisions": 36118,
+   "name": "probe-faster",
+   "tasks": [
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 0,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 0,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 8,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 8,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 9,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 9,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 14,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 14,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 22,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 22,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 24,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 24,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 37,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 37,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 38,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 38,
+     "row_set": "v15-development"
+    }
+   ]
+  }
+ ],
+ "benchmark": {
+  "cases": [
+   "v05-validation-i110-merge",
+   "v05-val-0-cruise",
+   "v05-val-0-passing",
+   "v05-validation-i110-following",
+   "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "v02-development-60mph-cruise",
+   "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "v12-val-la-sb-adams-model-passing-4of16-medium"
+  ],
+  "development_rows": 70,
+  "development_seeds": [
+   6952001,
+   6952002,
+   6952003,
+   6952004,
+   6952005
+  ],
+  "held_out_rows": 42,
+  "held_out_seeds": [
+   6953001,
+   6953002,
+   6953003
+  ],
+  "held_out_status": "reserved; never run; final candidate only, with the user's authorization",
+  "row_order": "row 14 * k + c is case c at development seed k",
+  "schema": "highway_merge_v15_benchmark_v01",
+  "source": "v14 round 24 validation rows 0-13"
+ },
+ "charge": {
+  "decisions_left": 100000,
+  "estimate_source": {
+   "decisions_per_clock_second": 1300,
+   "decisions_per_worker_second": 140,
+   "longest_episode_decisions": 3487,
+   "per_row": "expert v3's decisions on each row, Phase 2 run 3",
+   "start_seconds": 15.0
+  },
+  "expected_clock_seconds": 104.3,
+  "expected_decisions": 90086,
+  "expected_episodes": 43,
+  "guard_margin": 0.05,
+  "phase_allowance": 100000,
+  "phase_decisions_used": 0,
+  "phase_seconds_used": 0.0,
+  "phase_time_cap": 150.0,
+  "reserve_seconds": 150.0,
+  "seconds_left": 150.0,
+  "study_seconds_left": 2322.123,
+  "total_wall_seconds": 64700
+ },
+ "expert_decisions": {
+  "0": 3487,
+  "8": 2671,
+  "9": 3102,
+  "14": 3074,
+  "22": 2158,
+  "24": 290,
+  "37": 2480,
+  "38": 397
+ },
+ "held_out": "not built, not run",
+ "level2": {
+  "gaps": 4,
+  "offsets": [
+   -2.0,
+   -1.0,
+   0.0,
+   1.0,
+   2.0
+  ],
+  "probes": {
+   "l2:probe-gap-p1": {
+    "gap": 1
+   },
+   "l2:probe-offset-m1": {
+    "offset": -1.0
+   },
+   "l2:probe-offset-m2": {
+    "offset": -2.0
+   },
+   "l2:probe-offset-p1": {
+    "offset": 1.0
+   },
+   "l2:probe-offset-p2": {
+    "offset": 2.0
+   }
+  },
+  "rule": "l2:rule-v3",
+  "settings_digest": "ded23aba10a5006516dfde35139d02db67749dd37e6685b430c31c98d9ce3d49",
+  "sources": {
+   "experiments/v15_pool.py": "e1c95cfc82f48aed02dfdff6fe2655ec992d0b2e51f34dd09104dd6b1cc77012",
+   "experiments/v15_regrade.py": "515c3b7cccdf8598f18a9449341e7bf57dd12a4052d3e67ee42dfe3a86f0932d",
+   "traffic/v15_level2.py": "7a1c1066f68eef06efb88ba7b70e4705ebbd19bd312d7d713237517758bc01e2",
+   "traffic/v15_rule_expert.py": "9018ba3a239d6f2e79255f5a8f2ffacb2ce5c5f24f0b0ff1928f39d755eb6571"
+  }
+ },
+ "parity": {
+  "decisions": 191,
+  "driver": "l2:rule-v3",
+  "report_sha": "ed17062a918ebefdb02992e50dcd7d93370879e6e1d75340e7aa816e01420605",
+  "row": 52,
+  "source": "outputs/highway-merge-v15/phase-2/run-03/results.jsonl, rule:expert-v3",
+  "trace_sha": "bb4f9d9aa3a9b689d3c6763521347a95843cd0e5c6cd74cb94b08ff27cc76f31"
+ },
+ "phase": "4",
+ "priority": "below_normal",
+ "reading": "a row has room if any probe passes it under the frozen re-baselined gates; the failing cars' speed match is reported against the gate's 0.9 and against expert v3's",
+ "round_index": 24,
+ "rows": [
+  0,
+  8,
+  9,
+  14,
+  22,
+  24,
+  37,
+  38
+ ],
+ "rows_rule": "the development rows the starting policy fails under the frozen re-baselined gates; expert v3 fails the same rows (Phase 2 run 3 and its rebaseline)",
+ "schema": "highway_merge_v15_phase4_v01",
+ "simulator": "SUMO (libsumo); no physics",
+ "start_policy": {
+  "id": "l2:bc7c050f6d3da3ce",
+  "rebaselined_passed": 62,
+  "recorded_passed": 54,
+  "step": "relabel"
+ },
+ "step": "probe",
+ "stop_checks": {
+  "any_driver": "a canary or parity mismatch stops the run; so does any probe collision or free-road stop, or a probe cut-in or emergency in a one-car LA case: the probes count as drivers for the stop rule, the event is reported to the user and nothing is retuned (the main session's relay of the user's \"Yes, approve step A\", November 26, 2026). The probe is one batch, so the stop comes after its charge and report",
+  "one_car_la_cases": [
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium"
+  ]
+ },
+ "workers": 16
+}

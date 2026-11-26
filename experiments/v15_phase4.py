@@ -44,6 +44,7 @@ ALLOWANCE, TIME_CAP = 100_000, 150.          # step A's probe: Phase 4's own all
 START_STEP = 'relabel'                       # the starting policy's Phase 3 step
 SPEED_MATCH_GATE = 0.9
 AUTHORIZATION = P3.AUTHORIZATION + ' ' + P3.STEP_A_AUTHORIZATION
+SLOWER = ('l2:probe-gap-p1', 'l2:probe-offset-m1', 'l2:probe-offset-m2')   # can lengthen an episode
 STOP_RULE = ('a canary or parity mismatch stops the run; so does any probe collision or free-road stop, or a probe '
              'cut-in or emergency in a one-car LA case: the probes count as drivers for the stop rule, the event is '
              'reported to the user and nothing is retuned (the main session\'s relay of the user\'s "Yes, approve '
@@ -90,14 +91,25 @@ def resolve(step):
     parity = dict(driver=v15_level2.RULE_DRIVER, row=P3.PARITY_ROW, report_sha=run3[P3.PARITY_ROW]['report_sha'],
                   trace_sha=run3[P3.PARITY_ROW]['trace_sha'], decisions=run3[P3.PARITY_ROW]['decisions'],
                   source=f'{P3.PHASE2_RUN3}/results.jsonl, {P3.EXPERT}')
-    tasks = [dict(row_set=P3.DEV, row=r, driver=d) for r in rows for d in probes]
-    tasks.append(dict(parity, row_set=P3.DEV, mode='validate', parity=True))
     per_row = {r: run3[r]['decisions'] for r in rows}
-    expected = round(len(probes) * sum(per_row.values()) + parity['decisions'] + 800)
     longest = max(per_row.values())
+    # Two batches: the variants that can lengthen an episode (slower, or a later gap) first, so the second batch is
+    # checked against the measured decisions before it is dispatched (the allowance is a hard cap)
+    batches = []
+    for name, group in (('probe-slower', SLOWER), ('probe-faster', tuple(p for p in probes if p not in SLOWER))):
+        tasks = [dict(row_set=P3.DEV, row=r, driver=d) for r in rows for d in group]
+        extra = 800
+        if not batches:
+            tasks.append(dict(parity, row_set=P3.DEV, mode='validate', parity=True))
+            extra += parity['decisions']
+        batches.append(dict(name=name, drivers=list(group), tasks=tasks,
+                            expected_decisions=round(len(group) * sum(per_row.values()) + extra)))
+    if sorted(d for b in batches for d in b['drivers']) != probes:
+        raise ValueError('Every probe runs exactly once')
+    expected = sum(b['expected_decisions'] for b in batches)
     # 16 workers at about 1,300-2,200 decisions per second of clock time (Phase 3); no batch is shorter than its
     # longest episode, at about 140 decisions per worker-second (DAgger 1's rollouts)
-    clock = P3.START_S + max(expected * P3.PER_DECISION_S, longest / 140.) + 10.
+    clock = P3.START_S + sum(max(b['expected_decisions'] * P3.PER_DECISION_S, longest / 140.) + 10. for b in batches)
     phase, totals = _ledger_phase4()
     decisions_left, seconds_left = ALLOWANCE - phase['decisions'], TIME_CAP - phase['seconds']
     study_left = cfg['budget']['total_wall_seconds'] - totals['total']
@@ -113,11 +125,12 @@ def resolve(step):
                           recorded_passed=start['recorded_passed']),
         rows=rows, rows_rule='the development rows the starting policy fails under the frozen re-baselined gates; '
                              'expert v3 fails the same rows (Phase 2 run 3 and its rebaseline)',
-        expert_decisions=per_row, tasks=tasks, parity=parity,
+        expert_decisions=per_row, batches=batches, parity=parity,
         reading=f'a row has room if any probe passes it under the frozen re-baselined gates; the failing cars\' '
                 f'speed match is reported against the gate\'s {SPEED_MATCH_GATE} and against expert v3\'s',
         stop_checks=dict(any_driver=STOP_RULE, one_car_la_cases=list(P3.ONE_CAR_LA)),
-        charge=dict(expected_decisions=expected, expected_episodes=len(tasks) + 1, expected_clock_seconds=round(clock, 1),
+        charge=dict(expected_decisions=expected, expected_episodes=sum(len(b['tasks']) + 1 for b in batches),
+                    expected_clock_seconds=round(clock, 1),
                     reserve_seconds=reserve, phase_allowance=ALLOWANCE, phase_time_cap=TIME_CAP,
                     phase_decisions_used=phase['decisions'], phase_seconds_used=round(phase['seconds'], 3),
                     decisions_left=decisions_left, seconds_left=round(seconds_left, 3),
@@ -148,6 +161,9 @@ def run(step):
         raise ValueError(f'Step {step} has already run ({out})')
     if P.set_priority(config['priority']) != config['priority']:
         raise RuntimeError(f'The learner does not run at {config["priority"]} priority')
+    from traffic import highway_flow_rl_v14_contract as contract
+    from traffic import v15_benchmark
+    dev_rows = v15_benchmark.development_rows(contract.build_config(P3.ROUND_INDEX))
     out.mkdir(parents=True, exist_ok=True)
     (out / 'resolved-config.json').write_text(json.dumps(config, indent=1, sort_keys=True))
     log_path = out / 'phase4-log.jsonl'
@@ -157,7 +173,6 @@ def run(step):
             handle.write(json.dumps(entry) + '\n')
         print(json.dumps(entry), flush=True)
 
-    tasks = config['tasks']
     with L.EvaluationSession(phase='4', output=out, config_sha256=sha, expected_decisions=charge['expected_decisions'],
                              decision_allowance=ALLOWANCE, expected_clock_seconds=charge['expected_clock_seconds'],
                              reserve_seconds=charge['reserve_seconds'], total_wall_seconds=charge['total_wall_seconds'],
@@ -169,37 +184,47 @@ def run(step):
                           priority=config['priority']) as pool:
             session.segment['worker_priorities'] = sorted(set(pool.worker_priorities.values()))
             pool.charged_by = f'cost-ledger {L.COMMAND} phase 4 step {step}, started_at_unix {session.segment["started_at_unix"]}'
-            P3._check_policies(out, tasks)
-            projected = charge['expected_decisions'] * (1 + P3.MARGIN)
-            session.check_next(projected)
-            pool_tasks = [P3._task(P, t, f'phase4-{step}') for t in tasks]
-            try:
-                result = pool.run(pool_tasks)
-            except P.CanaryMismatch as error:
-                if error.result is not None:
-                    P3._add(session, error.result, pool_tasks)
-                else:
-                    session.charge_estimate(projected, f'probe: {error}')
-                raise
-            except BaseException as error:
-                session.charge_estimate(projected, f'probe failed before reporting: {type(error).__name__}')
-                raise
-            P3._add(session, result, pool_tasks)
-            parity = None
-            for t, record in zip(tasks, result.records):
-                if t.get('parity'):
-                    parity = (record['report_sha'], record['trace_sha']) == (config['parity']['report_sha'],
-                                                                             config['parity']['trace_sha'])
-            log(dict(batch=0, name='probe', tasks=len(pool_tasks), simulated=result.simulated_tasks,
-                     clock_seconds=result.clock_seconds, worker_seconds=result.worker_seconds,
-                     decisions=result.decisions, canary_decisions=result.canary_decisions,
-                     expected_decisions=charge['expected_decisions'], canary=result.canary, parity_matched=parity,
-                     elapsed_seconds=session.elapsed(), charged_decisions_so_far=session.segment['decisions']))
-            if result.simulated_tasks and (result.canary is None or not result.canary['matched']):
-                raise P.CanaryMismatch(f'Probe: canary {result.canary}')
-            if parity is False:
-                raise P3.ParityMismatch(f'Probe: l2:rule-v3 on development row {P3.PARITY_ROW} differs from Phase 2 run '
-                                        f'3\'s expert v3')
+            expected_so_far = charged_so_far = 0
+            for index, batch in enumerate(config['batches']):
+                tasks = batch['tasks']
+                P3._check_policies(out, tasks)
+                ratio = max(1., charged_so_far / expected_so_far) if expected_so_far else 1.
+                projected = batch['expected_decisions'] * ratio * (1 + P3.MARGIN)
+                session.check_next(projected)
+                pool_tasks = [P3._task(P, t, f'phase4-{step}:{batch["name"]}') for t in tasks]
+                try:
+                    result = pool.run(pool_tasks)
+                except P.CanaryMismatch as error:
+                    if error.result is not None:
+                        P3._add(session, error.result, pool_tasks)
+                    else:
+                        session.charge_estimate(projected, f'batch {index}: {error}')
+                    raise
+                except BaseException as error:
+                    session.charge_estimate(projected, f'batch {index} failed before reporting: {type(error).__name__}')
+                    raise
+                P3._add(session, result, pool_tasks)
+                expected_so_far += batch['expected_decisions']
+                charged_so_far += result.charged_decisions
+                parity = None
+                for t, record in zip(tasks, result.records):
+                    if t.get('parity'):
+                        parity = (record['report_sha'], record['trace_sha']) == (config['parity']['report_sha'],
+                                                                                 config['parity']['trace_sha'])
+                log(dict(batch=index, name=batch['name'], tasks=len(pool_tasks), simulated=result.simulated_tasks,
+                         clock_seconds=result.clock_seconds, worker_seconds=result.worker_seconds,
+                         decisions=result.decisions, canary_decisions=result.canary_decisions,
+                         expected_decisions=batch['expected_decisions'], canary=result.canary, parity_matched=parity,
+                         elapsed_seconds=session.elapsed(), charged_decisions_so_far=session.segment['decisions']))
+                if result.simulated_tasks and (result.canary is None or not result.canary['matched']):
+                    raise P.CanaryMismatch(f'Batch {index}: canary {result.canary}')
+                if parity is False:
+                    raise P3.ParityMismatch(f'Batch {index}: l2:rule-v3 on development row {P3.PARITY_ROW} differs from '
+                                            f'Phase 2 run 3\'s expert v3')
+                found = P3._new_failures([r for t, r in zip(tasks, result.records) if not t.get('parity')], dev_rows)
+                if found and index + 1 < len(config['batches']):
+                    raise P3.StopAndAsk(f'Batch {index}: probe events under the stop rule (charged; the next batch was '
+                                        f'not dispatched; nothing retuned): {found}')
     segment = session.segment
     summary = {k: segment[k] for k in ('status', 'charged_seconds', 'clock_seconds', 'decisions', 'canary_decisions',
                                        'evaluation_episodes', 'worker_seconds', 'simulated_seconds', 'workers', 'batches',
