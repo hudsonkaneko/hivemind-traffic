@@ -12,7 +12,9 @@ shared ledger needs the user's approval of its resolved configuration first, as 
   exit check in 3 runs; see [Phase 2 result](#phase-2-result-november-26).
   - The rule expert v3 passes 54 of 70 development rows under round 24's gates and 62 of 70 under
     the gate re-baseline, now frozen. Round 16 passes 33 and 36.
-- **Phase 3** has no budget yet. Nothing has been trained under this plan.
+- **Phase 3** (imitation) has a proposed budget that needs you; see
+  [Phase 3 proposal](#phase-3-proposal-november-26-imitation-for-your-approval) and decision 8.
+  Nothing has been trained under this plan.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -881,12 +883,127 @@ gates again needs you.
 **The qualified expert is v3** (`rule:expert-v3`, module sha256 `9018ba3a…`). Phase 3 has no
 budget, so nothing more runs until you approve one.
 
+## Phase 3 proposal (November 26): imitation, for your approval
+
+**Proposal only.** Nothing here has been built or run, and nothing is charged until you approve a
+budget. The user asked for it on November 26: "Yes, size it" and "Yes, draft it". All runs would be
+SUMO (libsumo), not physics, with IDM background only. The held-out rows are never built or run.
+
+**What Phase 3 does** (Stages 2 and 3): a learned Level 2 learns to copy the rule expert v3's Level 2
+choices, first by behaviour cloning and then by DAgger.
+- **Level 2's choices:** the gap, commit or wait, a target-speed offset and lane intent.
+- **Level 1,** the rule executor, is the same in every run.
+- **Exit check:** close to the expert on the 70 development rows, with no new kind of failure.
+- **The expert's scores there:** 54 of 70 under round 24's gates and 62 of 70 re-baselined.
+
+### Built first (uncharged)
+
+- **A Level 2 interface.** v3 is split into its executor and a rule Level 2 with explicit outputs.
+  The split must reproduce v3's per-decision traces exactly on the uncharged check rows (v14-validation
+  rows 0 and 4).
+- **Level 2 inputs without privileged state:**
+  - today's local fields and V2V messages;
+  - the executor's state (committed or not, and the chosen gap).
+
+  The expert keeps reading the environment's own state, but the learner doesn't.
+- **Training rows:** round 24's 20 training rows (`training_rows` in
+  `configs/training/highway-flow-rl-v14-round24.json`) at new seeds in the training range (9,100,000
+  and up). Each seed is checked unused, as Phase 0 did, and none is a development or held-out seed.
+- **Perturbations and balance,** as Stage 2 describes:
+  - some episodes start slow, stopped or braking near the merge;
+  - random speed offsets, and late commits for 0.6 + 0.8u s, with the expert's recovery as the label;
+  - samples where a stopped car stays stopped are down-weighted, but every "stopped on a free road,
+    so go" label is kept.
+- **The learning pieces:**
+  - a plain-PyTorch trainer (CPU, one thread);
+  - the learned Level 2 as a pool driver;
+  - DAgger mixing: the learner acts with probability 0.7 and the expert labels every state.
+- **A ledger category for Phase 3's segments** (training as well as evaluation), passing the ledger's
+  totals check.
+- **Tests,** and 1–2-row code checks on v14-validation rows only. These are uncharged, as in Phase 2.
+
+### What the estimate is built from
+
+- **The expert's cost:** about 145 decisions per worker-second (run 3: 135,428 decisions in 937.4
+  worker-seconds).
+- **Pool throughput:** Phase 2 ran about 1,300 decisions per second of clock time at 16 workers
+  (136,119 in 104.8 s).
+- **A development-row evaluation:** 132,879–136,365 decisions and 90.4–111.6 s in Phase 2's three
+  runs.
+- **The 20 training rows:**
+  - at most 79,200 decisions per seed (controlled cars × horizon steps);
+  - round 24's 32 training episodes averaged 1,601 decisions, so about 32,000 per seed;
+  - the 12-car 4-lane cruise row alone made 11,299.
+- **Data size:** about 6,400 Level 2 samples per seed, at one sample per car every 0.5 s.
+- **A fit:** one epoch of 160,000 samples took 1.1 s on one CPU thread. That was a synthetic timing
+  of a small network (two layers of 256) on random data; no policy was trained.
+- **Not measured:** what a DAgger rollout costs per decision, with the learner acting and the expert
+  labelling. The estimate assumes 1.3 times the expert's cost, and the uncharged check measures it.
+
+### Recommended size and estimated charge
+
+| Step | Work | Episodes | Decisions (estimate) | Clock time (estimate) |
+|---|---|---|---|---|
+| 1. Data | The expert on the 20 training rows at 10 new seeds, half of the episodes perturbed | 200 | ~320,000 | ~250 s |
+| 2. Cloning | 3 fits at different training seeds, each evaluated on the 70 development rows | 210 | ~408,000 | ~420 s |
+| 3. DAgger | Up to 4 iterations from the best fit. Each: 5 new seeds of rollouts at 0.7 (100 episodes), a refit on all the data, and an evaluation (70) | up to 680 | ~1,184,000 | ~1,220 s |
+| 4. Final check | The final data refit at 2 more training seeds, each evaluated | 140 | ~272,000 | ~290 s |
+| Overheads | Worker start-up, canaries and a parity task (expert v3 against its run 3 record) in each of about 14 runs | ~42 | ~20,000 | ~210 s |
+| **Total** | | **~1,270** | **~2.2 million** | **~2,400 s** |
+
+### Minimum option
+
+| Step | Work | Episodes | Decisions (estimate) | Clock time (estimate) |
+|---|---|---|---|---|
+| 1. Data | The expert on the 20 training rows at 5 new seeds, half perturbed | 100 | ~160,000 | ~125 s |
+| 2. Cloning | 1 fit, evaluated on the 70 development rows | 70 | ~136,000 | ~140 s |
+| 3. DAgger | 3 iterations, the plan's minimum. Each: 3 new seeds of rollouts at 0.7 (60 episodes), a refit and an evaluation (70) | 390 | ~696,000 | ~690 s |
+| Overheads | About 8 runs | ~24 | ~12,000 | ~120 s |
+| **Total** | | **~580** | **~1.0 million** | **~1,100 s** |
+
+The minimum option has less data and a single training seed, and it has no final check. So it can't
+tell a gain from chance: two fits from the same data can drive differently (Stage 2). Phase 4's test
+is to beat Phase 3 across seeds, and the recommended size gives it that baseline.
+
+- **Selection:** by closed-loop pass rate on the 70 development rows, never by held-back loss
+  (Stage 2). The frozen re-baselined verdicts are reported with the recorded ones.
+- **Early stop:** DAgger stops when that pass rate stops rising.
+- **Repeated looks:** every evaluation is another look at the same 70 rows. Only the held-out check
+  (Stage 5, which needs your authorization) can show how much of a result carries over.
+
+### Proposed budget
+
+- **Recommended:** at most 2,700,000 decisions and 3,000 s of study time. That is the estimate plus
+  about 20% in decisions and 25% in time. It leaves at least 1,012 s of the 4,012.2 s of study time
+  left.
+- **Minimum:** at most 1,200,000 decisions and 1,400 s, leaving at least 2,612 s.
+- **Either way:**
+  - it is Phase 3's own allowance, as Phases 1 and 2 had, since v14's training-decision total has
+    only 148,774 left;
+  - clock time is charged against the study total, as before.
+- **The same settings as Phases 1 and 2:**
+  - at most 16 workers at below-normal priority, with nothing heavy alongside;
+  - the shared lock;
+  - each run's resolved configuration and expected charge in the coordination master before it runs.
+- **Stop and report if:**
+  - the next step's charge won't fit;
+  - the lock is held;
+  - a canary or parity check mismatches;
+  - tests fail;
+  - a learned policy shows a new kind of failure: a collision, a free-road stop, or a cut-in or
+    emergency in a one-car LA case. First find out whether the learner or the gate is wrong, as in
+    Phase 2.
+
+**After Phase 3,** about 1,000–1,600 s of study time would be left at the recommended size, or about
+2,600–2,900 s at the minimum. Neither can pay for Phase 4 (MAPPO at 3 training seeds), so Phase 4 will
+need its own budget and a raise of the study total. Nothing is asked for that now.
+
 ## Decisions for you
 
-All seven were decided on November 25, 2026, relayed by the main Claude session and recorded
+Decisions 1–7 were decided on November 25, 2026, relayed by the main Claude session and recorded
 in the coordination master. Phase 0 started on "tell the other session to start phase 0";
 decision 5 was "use clock time"; decisions 1–3, 6 and 7 were "Yes, all five", accepting the
-main session's recommendations.
+main session's recommendations. Decision 8 is new and still open.
 
 1. **The two-level controller.** Does a rule executor with a learned maneuver policy fit your
    "one controller, policy only" direction?
@@ -920,6 +1037,15 @@ main session's recommendations.
 7. **v14's open question** (diagnose the southbound stops, or stop there): close it in favour
    of this plan?
    **Decided: closed in favour of v15.** No round 25 and no further v14 diagnosis.
+8. **Phase 3's budget** (proposed on November 26; see
+   [Phase 3 proposal](#phase-3-proposal-november-26-imitation-for-your-approval)).
+   - **Recommended:** at most 2,700,000 decisions and 3,000 s of the 4,012.2 s of study time left
+     (estimate: about 1,270 episodes, 2.2 million decisions and 2,400 s).
+   - **Minimum:** at most 1,200,000 decisions and 1,400 s (estimate: about 580 episodes,
+     1.0 million decisions and 1,100 s), with a single training seed.
+   - Either is Phase 3's own allowance, with the settings of Phases 1 and 2.
+
+   **Not decided yet.**
 
 ## What carries over from v14
 

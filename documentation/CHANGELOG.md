@@ -4,6 +4,24 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-26 - Plan v15 Phase 3 proposed: imitation of the rule expert
+
+- **Proposal only:** nothing built, trained, run or charged. The user asked for it: "Yes, size it"
+  and "Yes, draft it".
+- **Work:** a learned Level 2 copies expert v3's Level 2 choices.
+  - First, behaviour cloning on round 24's 20 training rows at new seeds, with perturbations.
+  - Then up to 4 DAgger iterations, with the learner acting with probability 0.7.
+  - Level 1, the rule executor, stays the same in every run.
+- **Estimate,** built from Phase 2's measured throughput and round 24's training episodes:
+  - recommended size: about 1,270 episodes, 2.2 million decisions and 2,400 s of clock time, with
+    3 training seeds;
+  - minimum option: about 580 episodes, 1.0 million decisions and 1,100 s, with 1 seed.
+- **Proposed budget** (decision 8, open). Either size would be Phase 3's own allowance, with the
+  settings of Phases 1 and 2:
+  - recommended: at most 2,700,000 decisions and 3,000 s of the 4,012.2 s of study time left;
+  - minimum: at most 1,200,000 decisions and 1,400 s.
+- **Details:** plan v15, "Phase 3 proposal".
+
 ## 2026-11-26 - Plan v15 Phase 2: the rule expert qualifies, and the gates are re-baselined
 
 - **Evaluation only, charged:** no training and no update. All runs are SUMO (libsumo), not
