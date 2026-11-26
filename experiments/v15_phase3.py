@@ -423,6 +423,7 @@ def run(step):
                 if batch.get('evaluate_fits'):
                     drivers = [learners[name] for name in batch['learners_from_fits']]
                     tasks = P.interleave(*[[dict(row_set=DEV, row=r, driver=d) for r in range(70)] for d in drivers]) + tasks
+                _check_policies(out, tasks)
                 ratio = max(1., charged_so_far / expected_so_far) if expected_so_far else 1.
                 projected = batch['expected_decisions'] * ratio * (1 + MARGIN)
                 session.check_next(projected)
@@ -524,6 +525,17 @@ def _bring_learner(pool, config):
     if published != learner:
         raise ValueError(f'{source} holds {published}, not the rollout learner {learner}')
     return published
+
+
+def _check_policies(out, tasks):
+    """Every learned driver's weights must be in this run's policies/ folder before a charged batch is dispatched
+    (DAgger 1's first attempt dispatched 100 tasks whose learner was not there; the batch was charged its estimate)."""
+    from traffic import v15_level2
+    missing = sorted({t['driver'] for t in tasks
+                      if str(t['driver']).startswith('l2:') and t['driver'] != v15_level2.RULE_DRIVER
+                      and not (Path(out) / 'policies' / f'{t["driver"].split(":", 1)[1]}.pt').is_file()})
+    if missing:
+        raise FileNotFoundError(f'No published weights in {Path(out) / "policies"} for {missing}; nothing was dispatched')
 
 
 def _rollout_checks(result, tasks):

@@ -237,3 +237,14 @@ def test_phase3_publishes_an_earlier_steps_rollout_learner_and_checks_its_hash(m
     with pytest.raises(ValueError):
         phase3._bring_learner(SimpleNamespace(publish_level2=lambda s: 'l2:0000'),
                               dict(inputs=dict(rollout_learner=learner, rollout_learner_step='clone')))
+
+
+def test_phase3_refuses_to_dispatch_a_learner_whose_weights_are_not_published(tmp_path):
+    from experiments import v15_phase3 as phase3
+    (tmp_path / 'policies').mkdir()
+    (tmp_path / 'policies' / '0123456789abcdef.pt').write_bytes(b'x')
+    rule = dict(row_set=phase3.TRAIN, row=0, driver=L.RULE_DRIVER)
+    present = dict(row_set=phase3.TRAIN, row=1, driver='l2:0123456789abcdef', label_with=L.RULE_DRIVER)
+    phase3._check_policies(tmp_path, [rule, present])
+    with pytest.raises(FileNotFoundError):
+        phase3._check_policies(tmp_path, [rule, present, dict(present, driver='l2:fedcba9876543210')])
