@@ -1113,7 +1113,8 @@ development rows, with no new kind of failure.
   - It fails all 8 of the expert's failing rows, plus rows 52 and 66, both
     `la-nb-pasadena-model-merge-focused-1of16-medium`.
   - Rows 52 and 66 fail at all 3 training seeds, on rolling merge quality.
-  - Why hasn't been checked.
+  - The cause is one over-long gap choice at the first decision; see
+    [Diagnosis of rows 52 and 66](#diagnosis-of-rows-52-and-66-uncharged).
 - **DAgger added no closed-loop passes here.** The refits scored 60, 59 and 59 after cloning's best
   of 60, while held-back gap accuracy rose from 0.72 to 0.76. Apart from those 2 rows, the remaining
   failures are the expert's own.
@@ -1127,6 +1128,56 @@ development rows, with no new kind of failure.
     in a one-car LA case;
   - the learners' cut-ins are on rows 28 and 37, where the expert also cuts in;
   - the 300 DAgger rollout episodes had no collision.
+
+### Diagnosis of rows 52 and 66 (uncharged)
+
+The user asked for it on November 26 ("Yes, diagnose"). It uses the recorded traces and level2 logs
+only, so nothing was simulated or charged. Both rows are
+`la-nb-pasadena-model-merge-focused-1of16-medium`: one controlled car (`agent_0`) at a yield entry.
+
+- **What fails:** rolling merge quality, which this one car must pass.
+  - **Expert:** it merges at once (graded window from 0.2 s) and matches the speed reference at 100%
+    of the window.
+  - **Learners:** every one of the 8 merges 14–16 s later (windows 14.2–30.1 s and 15.7–31.7 s) and
+    matches only 0.869 and 0.727, below the gate's 0.9.
+  - The car's other checks pass: no stop in the window, jerk at most 3, no override.
+  - On row 38 (the same case at another seed) the expert also waits, and it fails with exactly the
+    learners' numbers.
+- **The cause is the first decision, at t = 0.1 s.**
+  - The rule's label is gap 0 (take the first acceptable gap), and the learner chooses gap 3 (let 3
+    stream cars pass).
+  - The car then slows to wait. From t = 0.2 s, the rule's own label for that new state is 3 as well.
+  - So one early choice commits the car to the long wait.
+  - All 8 learners (3 cloning fits, 3 DAgger refits, 2 final refits) drive identical traces on both
+    rows. More fits or more DAgger iterations of this kind would not change it.
+- **Why only over-long choices matter.**
+  - The executor takes the first acceptable gap at or after the chosen one. So any choice at or below
+    the rule's label gives the expert's own plan. This is tested on 3,000 random streams
+    (`tests/test_v15_level2.py`).
+  - In the selected learner's 4,901 gap decisions on the 70 development rows, 2,970 equal the label.
+  - 677 are below it; in 670 of those the executor's plan lets the same number of cars pass as the
+    rule's.
+  - 1,254 (26%), in 19 rows, are above it; only these can change the driving. A first-decision choice
+    of 3 against a label of 0 also happens on rows 25, 50, 51 and 64, which still pass.
+- **Why the learner chooses 3 there.**
+  - On round 24's training row for this case (row 6), the rule's first-decision label is mixed across
+    the 25 seeds in the data: 0 in 11 and 3 in 12.
+  - The car's speed and distance to the stop line overlap between the two groups (about 36–52 m), so
+    the stream cars' positions decide it.
+  - The learner gets those training seeds right, but not development seeds 6952004 and 6952005.
+  - Not checked: whether its 124 inputs carry enough about the stream cars to tell the cases apart.
+    The input layout spans several environment versions.
+- **A design fault in the labels** (mine, from the build):
+  - The label is the number of cars the rule's plan lets pass, `min(len(waited_for), 3)`. That is the
+    largest of the choices that all give the expert's plan, so every error upward changes the driving.
+  - The smallest such choice, 0 (no extra car), would give the expert's gap behaviour exactly in every
+    state. The gap would then be left for Phase 4 to learn when skipping a gap helps.
+- **Ways to fix it** (each needs a charged development-row evaluation, so each needs you):
+  1. relabel the gap as 0 and refit on the same data (no new rollouts);
+  2. keep the labels but penalise choices above the label more than choices below it;
+  3. give Level 2 the stream cars' arrival times as inputs, if they are missing.
+
+  Until then, the learned gap choice can only add waiting compared with the expert.
 
 ### The stop point, the fixes and a ledger correction
 

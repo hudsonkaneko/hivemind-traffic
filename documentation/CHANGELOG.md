@@ -28,7 +28,11 @@ authority for historical measurements and failures.
   - no new kind of failure.
   - DAgger added no closed-loop passes over cloning's best (60).
   - The learner loses rows 52 and 66 (one-car LA merge-focused, on rolling merge quality) and gains
-    none. Why hasn't been checked.
+    none.
+  - **Diagnosis** (uncharged, from the recorded traces): one over-long gap choice at the first
+    decision, 3 where the rule picks 0. The gap labels are the largest of the equivalent choices,
+    so only errors upward change the driving. Relabelling as 0 would fix that; it needs a charged
+    evaluation. Details are in plan v15, "Diagnosis of rows 52 and 66".
 - **Stop point:** step 1's expert had 18 free-road stops, all during injected slow-downs. The user
   chose to continue.
 - **Fixes:** a crash in the report; DAgger now starts from the best cloning fit; learner weights are
