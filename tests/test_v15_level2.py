@@ -205,3 +205,17 @@ def test_the_split_reproduces_expert_v3_and_collects_labelled_samples():
         assert len(index) == 2
     finally:
         shutil.rmtree(out, ignore_errors=True)
+
+
+def test_phase3_rollout_collisions_and_open_learner_failures_stop_the_run():
+    from types import SimpleNamespace
+    from experiments import v15_phase3 as phase3
+    tasks = [dict(row_set=phase3.TRAIN, row=3), dict(row_set=phase3.DEV, row=52, parity=True)]
+    calm = SimpleNamespace(records=[dict(events=dict(collisions=0, free_road_stops=2, cut_ins=1)), dict(events={})])
+    phase3._rollout_checks(calm, tasks)                       # other rollout events are reported, not stop points
+    crash = SimpleNamespace(records=[dict(events=dict(collisions=1)), dict(events={})])
+    with pytest.raises(phase3.StopAndAsk):
+        phase3._rollout_checks(crash, tasks)
+    phase3._no_open_failures([dict(id='l2:a', step='clone', new_failures=[])])
+    with pytest.raises(phase3.StopAndAsk):
+        phase3._no_open_failures([dict(id='l2:a', step='clone', new_failures=[dict(row=1, collisions=1)])])

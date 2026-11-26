@@ -241,8 +241,12 @@ def resolve(step):
         history = _learner_history()
         if not history:
             raise ValueError('DAgger needs the cloning step first')
-        latest, best = history[-1], _best(history)
+        _no_open_failures(history)
+        best = _best(history)
         clone_best = _best([h for h in history if h['step'] == 'clone'])
+        latest = clone_best if j == 1 else history[-1]
+        if j > 1 and latest['step'] != f'dagger-{j - 1}':
+            raise ValueError(f'DAgger iteration {j} needs iteration {j - 1}\'s refit first')
         sets = tuple(range(10 + DAGGER_SETS * (j - 1), 10 + DAGGER_SETS * j))
         tasks = [dict(row_set=TRAIN, row=v15_training_rows.index(k, i), driver=latest['id'], mode='collect',
                       label_with=v15_level2.RULE_DRIVER, sample_seed=j, seed_set=k) for k in sets for i in range(20)]
@@ -256,6 +260,7 @@ def resolve(step):
                         expected_decisions=round(dev_decisions + 400))]
     else:   # final
         history = _learner_history()
+        _no_open_failures(history)
         selected = _best(history)
         data_steps = selected['data_steps']
         fits = [dict(name=f'final-seed-{s}', seed=s, data_steps=data_steps) for s in FINAL_SEEDS]
@@ -294,7 +299,8 @@ def resolve(step):
                     'next will not fit the cap',
         stop_checks=dict(expert_on_training_rows='any collision, or a free-road stop in an unperturbed episode',
                          learner_on_development_rows='any collision or free-road stop, or a cut-in or emergency in a '
-                                                     'one-car LA case', one_car_la_cases=list(ONE_CAR_LA)),
+                                                     'one-car LA case', one_car_la_cases=list(ONE_CAR_LA),
+                         dagger_rollouts=ROLLOUT_RULE),
         charge=dict(expected_decisions=expected, expected_episodes=episodes, expected_clock_seconds=round(clock, 1),
                     expected_fit_seconds=fit_seconds, reserve_seconds=reserve, phase_allowance=ALLOWANCE,
                     phase_time_cap=TIME_CAP, phase_decisions_used=phase['decisions'],
@@ -323,6 +329,11 @@ def _index_sha(steps):
 
 class ParityMismatch(RuntimeError):
     """The parity task differs from Phase 2 run 3's record of expert v3."""
+
+
+ROLLOUT_RULE = ('any collision in a DAgger rollout episode on a training row (the learner mixed with the expert) stops '
+                'Phase 3; other events there (free-road stops, cut-ins, emergencies) are reported. User decision of '
+                'November 26, 2026 ("Yes, continue"; "continue with data"), recorded by the main session in the master')
 
 
 class StopAndAsk(RuntimeError):
@@ -446,6 +457,8 @@ def run(step):
                                          f'Phase 2 run 3\'s expert v3')
                 if step == 'data':
                     _expert_checks(result, tasks)
+                elif step.startswith('dagger-'):
+                    _rollout_checks(result, tasks)
     segment = session.segment
     summary = {k: segment[k] for k in ('status', 'charged_seconds', 'clock_seconds', 'decisions', 'canary_decisions',
                                        'evaluation_episodes', 'training_episodes', 'fits', 'fit_seconds', 'worker_seconds',
@@ -494,6 +507,22 @@ def _expert_checks(result, tasks):
             problems.append(dict(row=t['row'], perturbed=False, free_road_stops=events['free_road_stops']))
     if problems:
         raise StopAndAsk(f'The expert on training rows: {problems}')
+
+
+def _rollout_checks(result, tasks):
+    """Stop and ask on any collision in a DAgger rollout episode (ROLLOUT_RULE). Every controlled car there is mixed."""
+    problems = [dict(row=t['row'], collisions=record['events']['collisions'])
+                for t, record in zip(tasks, result.records)
+                if t['row_set'] == TRAIN and record['events'].get('collisions', 0)]
+    if problems:
+        raise StopAndAsk(f'A DAgger rollout collided on training rows: {problems}')
+
+
+def _no_open_failures(history):
+    """Refuse to resolve a later step while an evaluated learner has a stop-point failure on development rows."""
+    failing = [dict(id=h['id'], step=h['step'], new_failures=h['new_failures']) for h in history if h.get('new_failures')]
+    if failing:
+        raise StopAndAsk(f'A learner has a stop-point failure on development rows; ask before going on: {failing}')
 
 
 # --------------------------------------------------------------------------- report
