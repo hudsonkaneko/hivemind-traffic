@@ -12,9 +12,15 @@ shared ledger needs the user's approval of its resolved configuration first, as 
   exit check in 3 runs; see [Phase 2 result](#phase-2-result-november-26).
   - The rule expert v3 passes 54 of 70 development rows under round 24's gates and 62 of 70 under
     the gate re-baseline, now frozen. Round 16 passes 33 and 36.
-- **Phase 3** (imitation) has a proposed budget that needs you; see
-  [Phase 3 proposal](#phase-3-proposal-november-26-imitation-for-your-approval) and decision 8.
-  Nothing has been trained under this plan.
+- **Phase 3** (imitation; the user approved the recommended size) met its exit check, by my reading;
+  see [Phase 3 result](#phase-3-result-november-26).
+  - The learned Level 2 passes 60 of 70 development rows re-baselined (51–52 under round 24's gates)
+    at each of 3 training seeds. The expert passes 62 (54).
+  - No learner showed a new kind of failure.
+  - Only Level 2 was trained, by imitation; Level 1, the rule executor, is unchanged.
+- **Next:** Phase 4 (anchored MAPPO) needs its own budget and a raise of the study total, with
+  2,626.5 s left. The held-out check (Stage 5) needs your authorization. Nothing more runs until you
+  decide.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -885,6 +891,9 @@ budget, so nothing more runs until you approve one.
 
 ## Phase 3 proposal (November 26): imitation, for your approval
 
+**Approved on November 26** ("Recommended size", decision 8) and run; see
+[Phase 3 result](#phase-3-result-november-26). The proposal is kept below as written.
+
 **Proposal only.** Nothing here has been built or run, and nothing is charged until you approve a
 budget. The user asked for it on November 26: "Yes, size it" and "Yes, draft it". All runs would be
 SUMO (libsumo), not physics, with IDM background only. The held-out rows are never built or run.
@@ -1019,12 +1028,160 @@ is to beat Phase 3 across seeds, and the recommended size gives it that baseline
 2,600–2,900 s at the minimum. Neither can pay for Phase 4 (MAPPO at 3 training seeds), so Phase 4 will
 need its own budget and a raise of the study total. Nothing is asked for that now.
 
+## Phase 3 result (November 26)
+
+**Exit check met, by my reading.** The selected learned Level 2 is close to the expert on the 70
+development rows, with no new kind of failure.
+- **Re-baselined (the frozen gates):** 60 of 70, against the expert's 62. Paired with the expert,
+  60 rows both pass, 2 only the expert, and none only the learner: −2.9 points (−9.3 to +2.8),
+  McNemar p = 0.5.
+- **Recorded (round 24's gates):** 51 of 70, against the expert's 54.
+- **"Close"** has no number in the plan, so calling this close is my judgement.
+
+**How it ran:**
+- **Training:** only Level 2 was trained, a small network (124 inputs, two layers of 256), by
+  supervised imitation of expert v3's Level 2 choices. Level 1, the rule executor, is the same in
+  every run. No reward and no PPO.
+- **Simulator:** SUMO (libsumo), not physics, with IDM background only.
+- **Held out:** the held-out rows were not built or run.
+
+**User decisions,** relayed by the main Claude session and recorded in the coordination master:
+- **Decision 8:** "Recommended size", at most 2,700,000 decisions and 3,000 s as Phase 3's own
+  allowance.
+- **After step 1 stopped at a stop point** (below): "Yes, continue", and "continue with data" typed
+  in the side session, keeping all the data. The stop rules were restated with that answer:
+  - an expert free-road stop that begins during an injected slow-down is reported, not a stop point;
+  - any collision in a DAgger rollout stops Phase 3.
+
+**Settings as in Phases 1 and 2:**
+- uncharged 1–2-row code checks on v14-validation rows only;
+- 16 workers at below-normal priority and the shared lock;
+- each step's resolved configuration and expected charge in the master before it ran.
+
+### What was built
+
+- **`traffic/v15_level2.py`** splits expert v3 into its executor and a rule Level 2 with explicit
+  choices:
+  - **the gap:** how many stream cars (0–3) to let pass. The executor takes the first gap at or after
+    it that passes its safety test, so a choice can only make a car wait longer;
+  - **the lane intent,** requested only inside the mask and MOBIL's safety test;
+  - **a target-speed offset** from −2 to +2 m/s. The expert's is always 0.
+
+  The split drives the identical trace to `rule:expert-v3`. The file also holds the learned Level 2,
+  the perturbations (`p1`), the DAgger mixing and the sampling.
+- **The learned Level 2's 124 inputs:** the 121-field observation without own acceleration and own
+  previous request, plus the executor's state and two map facts. The previous gap choice is left
+  out, because copying it locks a waiting car into waiting.
+- **`traffic/v15_training_rows.py`:** round 24's 20 training rows at new seeds,
+  9,700,000 + 1000 k + i, disjoint from every earlier seed.
+- **`experiments/v15_level2_train.py`:** the plain-PyTorch trainer. CPU, one thread, deterministic,
+  AdamW, 30 passes at batch 1024.
+- **`experiments/v15_phase3.py`:** the runner, with one pinned configuration per step
+  (`configs/evaluation/v15-phase3-*.json`). Changes to `experiments/v15_pool.py` and
+  `experiments/v15_ledger.py`.
+- **Tests:** 116 v15 tests pass.
+
+### The steps
+
+| Step | Work | Decisions | Clock time | Re-baselined / recorded, of 70 |
+|---|---|---|---|---|
+| 1. Data | The expert on the 20 training rows at 10 seed sets, half perturbed: 200 episodes, 163,972 samples | 350,758 | 257.3 s | Stop point (below) |
+| 2. Cloning | 3 fits, at seeds 1–3 | 412,511 | 258.3 s | 59/49, **60/50**, 59/51 |
+| DAgger 1, attempt 1 | Failed before any learner episode (below) | 191 | 8.1 s | — |
+| DAgger 1 | Rollouts of cloning seed 2 (100 episodes, learner at 0.7), then a refit at seed 2 | 314,757 | 210.5 s | **60/51** |
+| DAgger 2 | Rollouts of DAgger 1's refit, then a refit | 314,984 | 221.0 s | 59/49 |
+| DAgger 3 | Rollouts of DAgger 2's refit, then a refit | 314,328 | 228.8 s | 59/48 |
+| Final check | DAgger 1's data refit at seeds 4 and 5 | 276,036 | 201.7 s | 60/52, 60/52 |
+| **Total** | 505 training and 572 evaluation episodes; 8 fits (255.5 s) | **1,983,565** | **1,385.7 s** | |
+
+- **Selected:** DAgger 1's refit, `l2:5aebbf7d8a40d2b9`. Selection was by most re-baselined passes,
+  then recorded passes, and never by held-back loss.
+- **DAgger stopped after 3 iterations,** under the approved rule: at least 3, then stop at the first
+  that isn't above the best so far.
+- **The final check:** I read "the final data refit at 2 more training seeds" as a refit on the
+  selected configuration's data (step 1 plus DAgger 1), and recorded that in the master before it ran.
+  - That configuration scores 60 at all 3 training seeds (2, 4 and 5), with the same 10 failing rows.
+    That is Phase 4's baseline across seeds.
+  - The seed 4 and 5 refits score 52 recorded against the selected one's 51. They are a seed check,
+    not a selection.
+- **Checks:** every step's canaries matched, and so did its parity row (expert v3 on development
+  row 52, against Phase 2 run 3).
+
+### What it shows
+
+- **The learner loses 2 rows to the expert and gains none.**
+  - It fails all 8 of the expert's failing rows, plus rows 52 and 66, both
+    `la-nb-pasadena-model-merge-focused-1of16-medium`.
+  - Rows 52 and 66 fail at all 3 training seeds, on rolling merge quality.
+  - Why hasn't been checked.
+- **DAgger added no closed-loop passes here.** The refits scored 60, 59 and 59 after cloning's best
+  of 60, while held-back gap accuracy rose from 0.72 to 0.76. Apart from those 2 rows, the remaining
+  failures are the expert's own.
+- **The gap choice is the hard one to copy.**
+  - Held back, lane intent is copied at 99.6% or better and the offset always (the expert's is
+    always 0). The gap is copied at 0.71–0.76.
+  - On development rows, the learner's gap differs from the rule's at 34–47% of the decisions where
+    a gap applies. The closed-loop result is close anyway; why hasn't been checked.
+- **No new kind of failure:**
+  - on development rows, no learner collided, stopped on a free road, or had a cut-in or emergency
+    in a one-car LA case;
+  - the learners' cut-ins are on rows 28 and 37, where the expert also cuts in;
+  - the 300 DAgger rollout episodes had no collision.
+
+### The stop point, the fixes and a ledger correction
+
+- **Step 1 stopped at a stop point:** the expert had 18 free-road stops in 17 perturbed training
+  episodes, and none in unperturbed ones.
+  - All 18 began during an injected slow-down to 0 m/s. In 13, the car pulled away within 0.5 s of
+    the slow-down ending.
+  - In 5, the expert held the car about 15 m short of the yield entry's stop line for 3.8–9.7 s more,
+    waiting for the stream cars it had chosen to let pass.
+  - The user chose to continue with all the data, keeping the 361 samples from those waits.
+- **The expert on unperturbed training rows:** 50 of 100 under round 24's gates (40–60%), mostly on
+  rolling merge quality. No collision and no free-road stop.
+- **Fixes during the run,** each committed before the next charged step:
+  - a crash in the closing report. It came after step 1's charge had closed, so nothing extra was
+    charged;
+  - DAgger 1 would have rolled out the last cloning fit, not the best one ("Up to 4 iterations from
+    the best fit");
+  - DAgger 1's first attempt failed in 8 s, because the workers couldn't find the cloning learner's
+    weights. The runner now re-publishes the rollout learner into each run with a hash check. It
+    also refuses to dispatch any learned driver whose weights aren't published.
+- **Ledger correction:** that attempt's segment had been charged the runner's estimate for a failed
+  batch, 184,076 decisions (175,310 expected × 1.05). Only the parity episode had run, 191 decisions.
+  - At the main session's request, the segment was corrected openly to 191 decisions, under the
+    lock.
+  - The original value, the reason and the evidence are in its `corrections` list.
+  - Its 8.1 s of clock time stays.
+
+### Ledger
+
+| | Before Phase 3 | After |
+|---|---|---|
+| Study time | 60,687.8 of 64,700 s (4,012.2 s left) | 62,073.5 of 64,700 s (2,626.5 s left) |
+| Training decisions | 6,722,376 of 6,871,150 | unchanged |
+| Phase 3 decisions | 0 of 2,700,000 | 1,983,565 (716,435 unused) |
+| Phase 3 clock time | 0 of 3,000 s | 1,385.7 s (1,614.3 s unused) |
+| Diagnostic episodes | 173 of 174 | unchanged |
+
+- **Segments:** seven Phase 3 `v15_evaluation` segments, all category preparation. Six are complete,
+  and DAgger 1's first attempt failed (corrected as above).
+- **The lock:** released.
+
+### What's next (your decision)
+
+- **Phase 4** (anchored MAPPO on Level 2, at 3 training seeds) needs its own budget and a raise of
+  the study total. The proposal estimated it can't be paid for from what's left.
+- **The held-out check** (Stage 5) needs your authorization.
+- Nothing more runs until you decide.
+
 ## Decisions for you
 
 Decisions 1–7 were decided on November 25, 2026, relayed by the main Claude session and recorded
 in the coordination master. Phase 0 started on "tell the other session to start phase 0";
 decision 5 was "use clock time"; decisions 1–3, 6 and 7 were "Yes, all five", accepting the
-main session's recommendations. Decision 8 is new and still open.
+main session's recommendations. Decision 8 was decided on November 26: "Recommended size",
+relayed by the main Claude session.
 
 1. **The two-level controller.** Does a rule executor with a learned maneuver policy fit your
    "one controller, policy only" direction?
@@ -1066,7 +1223,9 @@ main session's recommendations. Decision 8 is new and still open.
      1.0 million decisions and 1,100 s), with a single training seed.
    - Either is Phase 3's own allowance, with the settings of Phases 1 and 2.
 
-   **Not decided yet.**
+   **Decided: recommended,** on November 26 ("Recommended size", relayed by the main Claude
+   session). Phase 3 used 1,983,565 decisions and 1,385.7 s; see
+   [Phase 3 result](#phase-3-result-november-26).
 
 ## What carries over from v14
 

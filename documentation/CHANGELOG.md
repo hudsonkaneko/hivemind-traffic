@@ -4,6 +4,41 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-26 - Plan v15 Phase 3: a learned Level 2 imitates the rule expert
+
+- **Trained:** Level 2 only, a small network, by supervised imitation of expert v3's Level 2
+  choices: behaviour cloning, then DAgger. Level 1, the rule executor, is unchanged. All runs are
+  SUMO (libsumo), not physics, with IDM background. The held-out rows were not built or run.
+- **User decisions,** relayed by the main Claude session: "Recommended size" (at most 2,700,000
+  decisions and 3,000 s). After step 1's stop point: "Yes, continue" and "continue with data".
+- **New:**
+  - `traffic/v15_level2.py`: the split of expert v3 into its executor and a rule Level 2 with
+    explicit choices (gap, lane intent, speed offset), plus the learned Level 2, perturbations and
+    DAgger mixing;
+  - `traffic/v15_training_rows.py`: round 24's 20 training rows at new disjoint seeds;
+  - `experiments/v15_level2_train.py`: the plain-PyTorch trainer;
+  - `experiments/v15_phase3.py`: the runner, with one pinned configuration per step;
+  - 116 v15 tests pass.
+- **Steps:** data (200 expert episodes), 3 cloning fits, 3 DAgger iterations, and a final check at 2
+  more training seeds.
+- **Result** on the 70 development rows (re-baselined, then recorded):
+  - the selected learner, DAgger 1's refit, scores 60 and 51; the expert scores 62 and 54;
+  - the same configuration scores 60 at all 3 training seeds;
+  - paired with the expert: −2.9 points (−9.3 to +2.8), p = 0.5;
+  - no new kind of failure.
+  - DAgger added no closed-loop passes over cloning's best (60).
+  - The learner loses rows 52 and 66 (one-car LA merge-focused, on rolling merge quality) and gains
+    none. Why hasn't been checked.
+- **Stop point:** step 1's expert had 18 free-road stops, all during injected slow-downs. The user
+  chose to continue.
+- **Fixes:** a crash in the report; DAgger now starts from the best cloning fit; learner weights are
+  re-published into each run and checked before dispatch.
+- **Ledger:** 1,983,565 of 2,700,000 decisions and 1,385.7 s of clock time. Study time is 62,073.5 of
+  64,700 s, with 2,626.5 s left.
+  - DAgger 1's failed first attempt was charged an estimate of 184,076 decisions, and was openly
+    corrected to the 191 that ran.
+- **Details:** plan v15, "Phase 3 result".
+
 ## 2026-11-26 - Plan v15 Phase 3 proposed: imitation of the rule expert
 
 - **Proposal only:** nothing built, trained, run or charged. The user asked for it: "Yes, size it"
