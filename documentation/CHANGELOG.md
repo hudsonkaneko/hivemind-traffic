@@ -4,6 +4,56 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-25 - Plan v15 Phase 0: libsumo, a worker pool and the v15 tools
+
+- **Tools only:** no training, nothing charged, and the ledger untouched. All runs are SUMO,
+  not physics.
+  - The user started it: "tell the other session to start phase 0".
+  - The pool follows their direction: "ok we should run multiple sims and have them work
+    together to improve learning speed and cross references".
+  - Paused once at their request ("pause training for now but note where u left off"), then
+    resumed.
+- **libsumo 1.27.1** is installed in `.venv-traffic` only, with sumo-data pinned to 1.27.1.
+  - `traffic/sumo_coupling.py` switches it in without editing any hash-pinned environment
+    file.
+  - TraCI stays the default and the sumo-gui path.
+- **Parity: identical everywhere.**
+  - On round 24's 42 validation rows, serial TraCI, serial libsumo and 4–24 workers on each
+    backend gave identical reports and per-decision traces.
+  - Serial TraCI also matches round 24's own record.
+  - The worker pool matched serial TraCI at every worker count, and every canary matched.
+- **Throughput:** 24 libsumo workers ran the 42 rows in 34.9 s (2,292 decisions/s), against
+  478.0 s (167/s) for serial TraCI. Serially, libsumo is 1.65× faster.
+- **Worker pool** (`experiments/v15_pool.py`):
+  - One learner and N SUMO workers, in a synchronous collect-then-update loop. Phase 0 ran
+    no update.
+  - A shared labelled dataset for cloning and DAgger.
+  - Results are keyed by row, seed, policy hash and background model, never by worker. A
+    repeated key is simulated once and then reused, or rerun and checked against the stored
+    result.
+  - Every batch reruns a canary task on another worker.
+  - Paired validation under IDM and Krauss background traffic, and interleaved runs.
+  - **Measured:** 42 validation rows in 327.1 s at 1 worker, 90.7 s at 4, 47.1 s at 8, and
+    33.7 s at both 16 and 24. Every count matched serial TraCI, and every canary matched.
+  - **Learner overhead per iteration:** 0.4–1.8 s at 1–16 workers and 4.9–6.8 s at 24. The
+    24-worker figure is unexplained; the 24-worker iterations collect one row with about 6× the
+    median decisions.
+  - **Its bookkeeping** costs about 10% against the plain serial runner.
+- **Flat v15 environment** (`environments/highway_merge_v15_env.py`):
+  - one class, with no v04–v14 environment base class, and zero rewards;
+  - identical to v14 at every decision on 5 rows (11,304 decisions);
+  - about 3× faster than v14 on those rows.
+- **Other tools:**
+  - **event metrics** (`traffic/v15_events.py`);
+  - **free checkpoint screens** (`scripts/v15_checkpoint_screens.py`): settling points,
+    per-input sensitivity, and the training-versus-validation gap;
+  - **the v15 benchmark rows** (`traffic/v15_benchmark.py`): 70 development rows, plus 3
+    held-out seeds per case that are reserved and never run.
+- **Correction to plan v15:** background traffic is already IDM, so the robustness variant is
+  Krauss.
+- **Decisions recorded in plan v15:** all seven, decided on November 25. Details are in
+  `documentation/highway-merge-training-plan-v15.md`, under "Phase 0 result".
+
 ## 2026-11-25 - Plan v15 proposed: rules first, learning on top
 
 - **Proposal only:** nothing built, trained or authorized. At the user's request for a

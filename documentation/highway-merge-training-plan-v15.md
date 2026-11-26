@@ -1,8 +1,12 @@
 # Highway merge plan v15: rules first, learning on top
 
-Proposed by Claude on November 25, 2026, after v14 round 24. **This is a proposal only.
-Nothing in it is built, trained or authorized.** Every phase that charges the shared ledger
-needs the user's approval of its resolved configuration first, as before.
+Proposed by Claude on November 25, 2026, after v14 round 24. Every phase that charges the
+shared ledger needs the user's approval of its resolved configuration first, as before.
+
+**Status (November 25, 2026):** the user decided all seven questions at the end of this plan.
+Phase 0 (tools only, no training, nothing charged) passed its exit check; see
+[Phase 0 result](#phase-0-result-november-25). Phase 1's budget is approved, but Phase 1
+hasn't started. Nothing has been trained under this plan.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -212,6 +216,11 @@ Why this split:
   - the paired difference from the rule expert and from the round-16 policy, on the same rows.
 - **Background traffic:** SUMO's default Krauss drivers, plus an IDM variant (0:58) as a
   robustness check.
+  **Correction (Phase 0):** the background cars are already IDM. The v14 demand writer gives
+  each one of three IDM profiles (`traffic/highway_v05_demand.py`, `PROFILES`), as the routes
+  files of round 24's validation show; only our own cars' native model is Krauss. So the
+  recorded traffic is the IDM case, and the robustness variant is Krauss: the same three
+  profiles with SUMO's Krauss model (`experiments/v15_pool.py`, background `krauss`).
 - **Events first** (10:00). The video counted one stuck car up to 100 times as interventions
   until it counted events. Here each stop counts once, as do each cut-in, emergency,
   collision and override episode. Per-decision fractions stay as secondary numbers.
@@ -262,17 +271,280 @@ Why this split:
 
 Decision and time budgets are deliberately left open until Phase 0 measures throughput.
 
+## Phase 0 result (November 25)
+
+**Tools only.** The user started it with "tell the other session to start phase 0". They
+directed the worker pool with "ok we should run multiple sims and have them work together to
+improve learning speed and cross references".
+- No training and no optimizer update; nothing charged.
+- The ledger and its lock were not touched.
+- Every run is SUMO, not physics.
+- Outputs are in `outputs/test-runs/v15-p0/`, which is not in Git.
+
+**Exit check: passed.** The plan's check is "Same results as serial TraCI on fixed seeds;
+throughput measured".
+- Every backend, worker count and pool batch reproduced serial TraCI exactly.
+- The flat v15 environment reproduced v14 at every decision on the rows tested.
+- Throughput is measured below.
+- All 52 v15 tests pass, the SUMO end-to-end ones included, with none skipped.
+
+**Phase 1 is approved but not started.** It still needs the items under "What Phase 1 needs"
+below, and its resolved configuration and expected charge must be in the coordination master
+first.
+
+### What was built
+
+| File | What it does |
+|---|---|
+| `traffic/sumo_coupling.py` | Switches the v14 environments between TraCI and libsumo 1.27.1 (`HIGHWAYSIM_SUMO_BACKEND`) without editing a hash-pinned file. TraCI stays the default and the sumo-gui path |
+| `experiments/v15_parallel.py` | Runs validation rows serially or across N worker processes. `compare` checks two runs, or a run against a training round's own record, report by report and decision by decision |
+| `experiments/v15_pool.py` | The worker pool, below |
+| `environments/highway_merge_v15_env.py` | The flat v15 environment, below |
+| `traffic/v15_events.py` | Event metrics |
+| `scripts/v15_checkpoint_screens.py` | Settling points, per-input sensitivity, and the training-versus-validation gap |
+| `traffic/v15_benchmark.py` | The benchmark rows |
+
+### Parity: identical everywhere
+
+- **Sweep:** round 24's 42 validation rows (14 cases × 3 seeds), driven by the round-16 policy.
+  - It ran 20 times: serial TraCI, serial libsumo, and 4, 8, 16 and 24 workers on each
+    backend, plus the same on the first 14 rows.
+  - Every run gave identical reports and per-decision traces: 79,981 decisions per 42-row
+    run.
+  - The only field removed before comparing is the episode's own directory.
+- **Trainer's record:** serial TraCI matches round 24's own initial-validation record on all
+  42 rows.
+- **Pool:** its 42-row validation at 1, 4, 8, 16 and 24 workers matched serial TraCI on every
+  row. Every batch's canary matched: on a different worker each time, except at 1 worker,
+  where it reran on the same one.
+
+### Throughput
+
+The sweep below ran from 15:49 to 16:20, before the heavier programs started on this PC. Each run
+includes starting its workers. Each cell gives the clock time and the decisions per second.
+
+| Workers | TraCI, 42 rows | libsumo, 42 rows | TraCI, 14 rows | libsumo, 14 rows |
+|---|---|---|---|---|
+| 1 | 478.0 s (167/s) | 289.1 s (277/s) | 157.9 s (163/s) | 108.9 s (237/s) |
+| 4 | 145.6 s (549/s) | 82.2 s (973/s) | 54.5 s (474/s) | 28.8 s (895/s) |
+| 8 | 91.6 s (873/s) | 44.7 s (1,790/s) | 37.6 s (686/s) | 30.8 s (839/s) |
+| 16 | 52.3 s (1,530/s) | 36.0 s (2,220/s) | 40.8 s (632/s) | 31.6 s (815/s) |
+| 24 | 46.2 s (1,733/s) | 34.9 s (2,292/s) | 38.8 s (664/s) | 26.5 s (975/s) |
+
+- **libsumo vs TraCI:** libsumo is 1.65× faster serially. 24 libsumo workers run the 42 rows
+  13.7× faster than serial TraCI.
+- **Past about 16 workers, the longest row sets the time.** A 2,000-step row takes 18.7 s on
+  its own and about 25 s on a busy machine, plus about 9 s to start the workers.
+- **The 14-row set** has only 14 rows, so it can't use more than 14 workers.
+- **Unexplained gap:** round 24's trainer ran the same 42 rows serially on TraCI in 389 s (122 s
+  for the first 14). Here they took 478 s, and 147.7 s for the first 14 on a re-measure.
+  - Threads are ruled out: the trainer also limits PyTorch to one thread
+    (`experiments/run_highway_flow_rl_v05.py`).
+  - The cause hasn't been found. It doesn't affect parity, and Phase 1 will use libsumo.
+
+### Worker pool (`experiments/v15_pool.py`)
+
+**Design:**
+- **One learner and N SUMO workers.** The loop is synchronous: publish the weights, collect
+  in parallel, then update. That keeps PPO on-policy and reproducible. Phase 0 ran no
+  update.
+- **Keyed results.** Each result is stored under a key built from what decides it: round,
+  row set, row, case, seed, driver (a policy's content hash), background model, mode, and the
+  sampling seed when collecting. The worker that ran it is never part of the key. Collection
+  seeds PyTorch from that key, so samples don't depend on the worker.
+- **Shared labelled dataset.** It serves cloning and DAgger. Collected episodes can carry
+  another driver's labels; they are indexed in `dataset/index.jsonl`.
+- **Repeated keys.** A key is simulated at most once. A later task with the same key reuses the
+  stored result, at no cost. Asked to rerun instead, the pool runs it into a new folder and
+  checks it against the stored result, like the canary.
+  - The first full pool rerun stopped on this: its paired check repeated the validation's
+    round-16 rows under IDM, and the pool then had no rule for a repeated key.
+- **Canary.** Every batch reruns one task on a different worker. A mismatch stops the pool.
+- **Paired validation.** Drivers run on the same rows and seeds, under IDM and Krauss
+  background traffic.
+- **Interleaving.** Several runs share one pool, row by row.
+- **Time records.** Every batch records its clock time, the time summed across workers, the
+  simulated time, the worker count and the decisions, as the clock-time ledger decision
+  needs.
+
+**Measurements:** round 24's 42 validation rows; then 3 learner iterations, each collecting
+min(N, 20) training rows. A learner iteration's overhead is its clock time minus its slowest
+episode: publishing, dispatch, writing and loading samples.
+
+The measurements were taken at 17:44–18:08. Other programs (Isaac Sim's `kit.exe` and
+background tools) used about 2–3.5 of the 32 hardware threads. Worker counts 1–16 come from
+one run; 24 workers come from the rerun after the repeated-key fix.
+
+| Workers | 42-row validation | Decisions/s | Canary | Learner iteration (rows collected) | Overhead per iteration |
+|---|---|---|---|---|---|
+| 1 | 327.1 s | 244 | matched (same worker; there is only one) | 5.6–5.8 s (1) | 0.44–0.49 s |
+| 4 | 90.7 s | 882 | matched on another worker | 9.2–9.4 s (4) | 0.74–0.87 s |
+| 8 | 47.1 s | 1,698 | matched on another worker | 11.5–11.8 s (8) | 0.97–1.11 s |
+| 16 | 33.7 s | 2,376 | matched on another worker | 15.7–17.1 s (16) | 1.65–1.77 s |
+| 24 | 33.7 s | 2,371 | matched on another worker | 45.9–54.4 s (20) | 4.9–6.8 s |
+
+- **Every worker count reproduced serial TraCI on all 42 rows.**
+- **Starting 24 workers** took 6.8 s.
+- **Past 16 workers there's no gain on 42 rows.** The longest row sets the time, as in the
+  sweep.
+- **The 24-worker learner iterations are slow because of one row.** Training row 17
+  (`train-4-lane-cruise`, 11,509 decisions, about 6× the median row) took 41–48 s on its own.
+  The 16-worker iterations collect rows 0–15, so they leave it out.
+- **The 24-worker overhead hasn't been explained.**
+  - It's measured after each episode's own timer stops. That window covers the longest
+    episode's post-processing: reading its trace, extracting events, and compacting, hashing and
+    writing its samples. Row 17's samples are 25 MB of the iteration's 271 MB.
+  - It hasn't been profiled. Phase 3–4 sizing should split such long rows, or balance the rows
+    per iteration.
+- **Interleaving at 24 workers:** 3 runs of the same 8 training rows, each with its own
+  sampling seed. The 24 tasks gave 24 distinct keys in 17.5 s, and the canary matched on another
+  worker.
+- **Paired check at 24 workers:** the round-16 policy and round 21's final policy on validation
+  rows 8 and 9, under IDM and Krauss.
+  - 8 tasks; the canary matched.
+  - The 2 round-16 IDM tasks reused the validation's results.
+  - Neither policy passed any of the 4 pairings. Round 21's final policy collided on row 8 under
+    Krauss only.
+  - This is a tool check on 2 rows, not an evaluation.
+- **The pool's own cost** was measured back to back on the first 14 validation rows, all three
+  identical:
+
+  | Runner | Clock time |
+  |---|---|
+  | `v15_parallel`, serial TraCI | 147.7 s |
+  | `v15_parallel`, serial libsumo | 92.9 s |
+  | The pool at 1 worker | 102.2 s, plus 2.7 s to start |
+
+  The pool's per-episode bookkeeping (hashes, events, gates) costs about 10%.
+- **The first pool attempt** ran at 16:34–16:58 under heavier load: a game used about 6 of the
+  32 threads. Its 1-worker time was 478.6 s. It also matched serial TraCI and its canaries
+  everywhere. The user paused it, and it was replaced by the run above.
+
+### Flat v15 environment
+
+**`HighwayMergeV15Env` is one flat class.** It uses no v04–v14 environment base class.
+- It reuses the v14 scenarios, road networks, limits and messages.
+- It reaches SUMO through `sumo_coupling`.
+- Its rewards are all 0.0. Rewards and gates come later, from the plan's events and the rule
+  expert.
+
+**Parity with v14: identical on every row tested.**
+- **The comparison:** one recorded policy drives round 24's configuration on libsumo. At every
+  decision the test compares, exactly:
+  - the time and the car set;
+  - each car's 121-field observation and the 2,928-field critic state;
+  - every vehicle's state;
+  - the episode ends and the info fields;
+  - the policy's actions.
+
+| Row | Case | Steps | Decisions | v14 | v15 |
+|---|---|---|---|---|---|
+| 8 | LA northbound Pasadena on-ramp merge | 300 | 1,968 | 8.6 s | 2.7 s |
+| 9 | LA southbound Adams on-ramp merge | 341 | 2,173 | 6.8 s | 2.4 s |
+| 0 | I-110 merge | 414 | 2,888 | 11.0 s | 3.7 s |
+| 13 | LA southbound Adams passing | 335 | 1,075 | 9.9 s | 1.2 s |
+| 5 | 60 mph cruise, 5 lanes, packet loss 0.1 (first 400 of 2,000 steps) | 400 | 3,200 | 8.4 s | 2.6 s |
+
+- **Speed:** v15 ran these rows about 3× faster than v14. It skips v14's reward and audit
+  reads; that is the likely reason, but it hasn't been profiled.
+- **Not carried over,** because round 24 doesn't use them: v14's startup rate limit, its drive
+  target and its end-of-episode accounting.
+
+### Events, screens and benchmark rows
+
+- **Events** on round 24's initial validation (42 rows):
+
+  | Event | Episodes | Rows | Per-decision count |
+  |---|---|---|---|
+  | Override | 68 | 27 | 545 decisions |
+  | Free-road stop | 8 | 5 | 43 decisions |
+  | Stop (any) | 19 | 8 | — |
+  | Cut-in | 10 | 8 | — |
+  | Emergency braking | 8 (1 by our car) | 7 | — |
+  | Collision | 3 | 3 | 6 colliding vehicle-steps |
+
+  The longest stop lasted 4.1 s (row 14), 1.1 s of it on a free road. Every stop counts as
+  an event, as decided; the pull-away belongs to the Phase 2 executor.
+- **Settling screen:** the port matches the parent session's round-21 script on all 104 rows
+  it printed.
+- **Per-input sensitivity** on cases 9 and 11:
+  - the measured acceleration (input 1) holds 19–20% of the request's saliency;
+  - with the previous request (input 5), the self-feedback share is 23–24%;
+  - the v12 target inputs (69–72) hold 0% for the round-16 policy and 0.7% for round 24's
+    update 32.
+- **Training versus validation gap** for round 24's starting policy:
+  - its 22 training episodes passed 3 of 22, against 19 of 42 in validation;
+  - they averaged 8.9 override episodes per episode, against 1.6.
+  - Training samples its actions on the training rows, so the gap mixes exploration noise with
+    generalization.
+- **Benchmark rows:**
+  - 70 development rows: each of the 14 cases at seeds 6952001–6952005. Development rows
+    0–27 are round 24's validation rows 14–41.
+  - The cases' own v14 seeds are left out, since rounds 20–23 were judged on them.
+  - Held-out seeds 6953001–6953003 are reserved. The code refuses to build them without an
+    explicit authorization flag, and none was run.
+
+### What Phase 1 needs
+
+- **The plan follower as a pool driver.** It exists only as scratch scripts from round 23's
+  check (copies in `outputs/test-runs/v15-p0/scratch-copies/`).
+  - It reads the follow gate's reference (`traffic/highway_flow_rl_v14_follow_gate.py`) from the
+    environment's internal state.
+  - It can't change lanes, so round 23's check skipped cases 0 and 4. How to score it on those
+    two cases (10 of the 70 rows) needs deciding before launch.
+- **Round 21's final policy** is `outputs/highway-flow-rl/v14/round-21/last.pt`; round 21's
+  summary names it as its checkpoint. The round-16 policy is the warm start of round 24's
+  configuration.
+- **A ledger writer for evaluation runs, using the shared lock.**
+  - It uses the study ledger and `active.lock`, as `experiments/run_highway_flow_rl_v05.py` does.
+  - It charges the clock time and every decision across workers, and records the summed worker
+    time, the simulated time and the worker count.
+  - Its category has to pass the ledger's own totals check.
+- **Whether Krauss runs are included.** The approved ~210 episodes cover one background model.
+  Adding the Krauss variant would double it to ~420, which needs the user.
+- **Wilson intervals and paired differences** for the report. `paired_table` already lines
+  rows up; the interval code isn't written.
+- **Phase 1's resolved configuration and expected charge** go in the coordination master
+  before launch.
+  - On 42 rows the round-16 policy makes 79,981 decisions, so the 70 rows should be about
+    133,000 decisions per driver. That's an estimate, not a measurement.
+  - From the sweep, 24 libsumo workers need well under a minute per 42 rows.
+
 ## Decisions for you
+
+All seven were decided on November 25, 2026, relayed by the main Claude session and recorded
+in the coordination master. Phase 0 started on "tell the other session to start phase 0";
+decision 5 was "use clock time"; decisions 1–3, 6 and 7 were "Yes, all five", accepting the
+main session's recommendations.
 
 1. **The two-level controller.** Does a rule executor with a learned maneuver policy fit your
    "one controller, policy only" direction?
+   **Decided: yes.** A rule executor acts on every decision; a learned maneuver policy acts
+   every 0.5–1 s.
 2. **The stuck rule:** pull away automatically, or only count it?
+   **Decided: pull away automatically.** Every such stop still counts as an event in the
+   metrics and gates. The pull-away is part of the Phase 2 executor; its time threshold isn't
+   set yet.
 3. **Re-baselining the gates** on the 70 rows and the qualified expert.
+   **Decided: once,** after the rule expert qualifies (Phase 2), on the 70 development rows.
+   When the expert fails a gate, check whether the gate or the driver is wrong. The gates are
+   frozen before any learning, and the held-out seeds stay untouched.
 4. **Installing libsumo** into `.venv-traffic` (never into Isaac's Python).
+   **Done in Phase 0:** libsumo 1.27.1, with sumo-data 1.27.1 pinned, in `.venv-traffic` only.
 5. **Ledger treatment** of parallel runs.
+   **Decided: clock time.** Each run charges its elapsed clock time against the time budget,
+   however many SUMO workers it uses. The decision budget still counts every decision across
+   all workers. Every run records its clock time, the summed time across workers and the
+   worker count.
 6. **Budgets** for Phases 1–4.
+   **Phase 1 approved:** about 210 evaluation episodes (the round-16 policy, round 21's final
+   policy and the plan follower, each on the 70 rows), charged by clock time. It starts only
+   after Phase 0 passes its exit check, and once the Phase 0 result, Phase 1's resolved
+   configuration and its expected charge are in the coordination master. The Phase 2 and
+   Phase 3–4 budgets still need you; Phases 3–4 will be sized from Phase 0's throughput.
 7. **v14's open question** (diagnose the southbound stops, or stop there): close it in favour
    of this plan?
+   **Decided: closed in favour of v15.** No round 25 and no further v14 diagnosis.
 
 ## What carries over from v14
 
