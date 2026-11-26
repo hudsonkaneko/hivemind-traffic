@@ -914,6 +914,8 @@ choices, first by behaviour cloning and then by DAgger.
   - random speed offsets, and late commits for 0.6 + 0.8u s, with the expert's recovery as the label;
   - samples where a stopped car stays stopped are down-weighted, but every "stopped on a free road,
     so go" label is kept.
+- **Split by seed:** 2 of the 10 data seeds are held back. Their error is watched for memorizing, but
+  it never chooses a model.
 - **The learning pieces:**
   - a plain-PyTorch trainer (CPU, one thread);
   - the learned Level 2 as a pool driver;
@@ -936,9 +938,16 @@ choices, first by behaviour cloning and then by DAgger.
   - the 12-car 4-lane cruise row alone made 11,299.
 - **Data size:** about 6,400 Level 2 samples per seed, at one sample per car every 0.5 s.
 - **A fit:** one epoch of 160,000 samples took 1.1 s on one CPU thread. That was a synthetic timing
-  of a small network (two layers of 256) on random data; no policy was trained.
-- **Not measured:** what a DAgger rollout costs per decision, with the learner acting and the expert
-  labelling. The estimate assumes 1.3 times the expert's cost, and the uncharged check measures it.
+  of a small network (two layers of 256) on random data. No policy was trained, nothing was
+  simulated, and no code check ran.
+  - At 30 epochs, that is about 15 s on step 1's ~64,000 samples and about 40 s on the ~190,000
+    after 4 DAgger iterations.
+  - The estimates allow 35 s per cloning fit and 40 s per DAgger refit, all charged as clock time.
+- **Expert labelling adds compute, not simulated decisions.** In a DAgger rollout the expert computes
+  its choice on the same simulated step that the learner's choice (or, 30% of the time, its own)
+  drives. Only those car-steps are decisions.
+- **Not measured:** what that extra compute costs. The estimate assumes a DAgger rollout costs 1.3
+  times the expert's cost per decision, and the uncharged check measures it.
 
 ### Recommended size and estimated charge
 
@@ -955,7 +964,7 @@ choices, first by behaviour cloning and then by DAgger.
 
 | Step | Work | Episodes | Decisions (estimate) | Clock time (estimate) |
 |---|---|---|---|---|
-| 1. Data | The expert on the 20 training rows at 5 new seeds, half perturbed | 100 | ~160,000 | ~125 s |
+| 1. Data | The expert on the 20 training rows at 5 new seeds, half perturbed, with 1 seed held back | 100 | ~160,000 | ~125 s |
 | 2. Cloning | 1 fit, evaluated on the 70 development rows | 70 | ~136,000 | ~140 s |
 | 3. DAgger | 3 iterations, the plan's minimum. Each: 3 new seeds of rollouts at 0.7 (60 episodes), a refit and an evaluation (70) | 390 | ~696,000 | ~690 s |
 | Overheads | About 8 runs | ~24 | ~12,000 | ~120 s |
@@ -967,7 +976,13 @@ is to beat Phase 3 across seeds, and the recommended size gives it that baseline
 
 - **Selection:** by closed-loop pass rate on the 70 development rows, never by held-back loss
   (Stage 2). The frozen re-baselined verdicts are reported with the recorded ones.
-- **Early stop:** DAgger stops when that pass rate stops rising.
+- **Stop rule:** DAgger stops at whichever comes first:
+  - the development pass rate stops rising;
+  - 5 iterations are done;
+  - the next iteration won't fit the cap.
+
+  The recommended cap pays for 4 iterations. A 5th runs only if the earlier steps came in under their
+  estimates.
 - **Repeated looks:** every evaluation is another look at the same 70 rows. Only the held-out check
   (Stage 5, which needs your authorization) can show how much of a result carries over.
 
@@ -992,7 +1007,13 @@ is to beat Phase 3 across seeds, and the recommended size gives it that baseline
   - tests fail;
   - a learned policy shows a new kind of failure: a collision, a free-road stop, or a cut-in or
     emergency in a one-car LA case. First find out whether the learner or the gate is wrong, as in
-    Phase 2.
+    Phase 2;
+  - the uncharged check measures DAgger's cost high enough that the chosen size no longer fits its
+    cap. Then re-size before anything is charged;
+  - after step 1, the measured cost per decision puts the remaining steps over the cap;
+  - the expert collides or stops on a free road on any training row in step 1. Its labels there
+    would be wrong, so I'd find out why before cloning. Step 1 also reports the expert's pass rate
+    on the training rows.
 
 **After Phase 3,** about 1,000–1,600 s of study time would be left at the recommended size, or about
 2,600–2,900 s at the minimum. Neither can pay for Phase 4 (MAPPO at 3 training seeds), so Phase 4 will
