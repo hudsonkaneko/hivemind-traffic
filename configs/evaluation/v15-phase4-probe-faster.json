@@ -1,0 +1,256 @@
+{
+ "authorization": "User decision of November 26, 2026, relayed by the main Claude session: \"Recommended size\" (plan v15 Phase 3 at the recommended size: at most 2,700,000 decisions and 3,000 s of clock time as Phase 3's own allowance; IDM only, SUMO only, development rows only for evaluation, held-out rows never built or run; at most 16 workers at below-normal priority). Phase 4 step A: user decision of November 26, 2026, typed in the Claude side session: \"Yes, run step A\" (plan v15 decision 9: the probe of 5 scripted Level 2 variants on the 8 failing development rows and the relabel configuration refit at fit seeds 4 and 5, about 360,000 decisions and 290 s, with no raise of the study total; the seed check from Phase 3's unused allowance, the probe as Phase 4's first segment with at most 100,000 decisions and 150 s). Phase 4 step A, the probe's second batch: user decision of November 26, 2026, relayed by the main Claude session: \"Yes, run batch 2\" (offsets +1 and +2 m/s on development rows 0, 8, 9, 14, 22, 24, 37 and 38 with its canary and parity row, after an uncharged runner change; charged to step A's remaining allowance of 41,999 decisions and 102.3 s; if the projection does not fit before dispatch, stop and ask, and the batch is not trimmed to fit; same settings and stop rule; not authorized: step B, any raise of the study total, the held-out check, Krauss runs, merging to main).",
+ "backend": "libsumo",
+ "backgrounds": [
+  "idm"
+ ],
+ "batches": [
+  {
+   "drivers": [
+    "l2:probe-offset-p1",
+    "l2:probe-offset-p2"
+   ],
+   "expected_decisions": 36309,
+   "name": "probe-faster",
+   "tasks": [
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 0,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 0,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 8,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 8,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 9,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 9,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 14,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 14,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 22,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 22,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 24,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 24,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 37,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 37,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p1",
+     "row": 38,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:probe-offset-p2",
+     "row": 38,
+     "row_set": "v15-development"
+    },
+    {
+     "decisions": 191,
+     "driver": "l2:rule-v3",
+     "mode": "validate",
+     "parity": true,
+     "report_sha": "ed17062a918ebefdb02992e50dcd7d93370879e6e1d75340e7aa816e01420605",
+     "row": 52,
+     "row_set": "v15-development",
+     "source": "outputs/highway-merge-v15/phase-2/run-03/results.jsonl, rule:expert-v3",
+     "trace_sha": "bb4f9d9aa3a9b689d3c6763521347a95843cd0e5c6cd74cb94b08ff27cc76f31"
+    }
+   ]
+  }
+ ],
+ "benchmark": {
+  "cases": [
+   "v05-validation-i110-merge",
+   "v05-val-0-cruise",
+   "v05-val-0-passing",
+   "v05-validation-i110-following",
+   "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "v02-development-60mph-cruise",
+   "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "v12-val-la-sb-adams-model-passing-4of16-medium"
+  ],
+  "development_rows": 70,
+  "development_seeds": [
+   6952001,
+   6952002,
+   6952003,
+   6952004,
+   6952005
+  ],
+  "held_out_rows": 42,
+  "held_out_seeds": [
+   6953001,
+   6953002,
+   6953003
+  ],
+  "held_out_status": "reserved; never run; final candidate only, with the user's authorization",
+  "row_order": "row 14 * k + c is case c at development seed k",
+  "schema": "highway_merge_v15_benchmark_v01",
+  "source": "v14 round 24 validation rows 0-13"
+ },
+ "charge": {
+  "decisions_left": 41999,
+  "estimate_source": {
+   "decisions_per_worker_second": 140,
+   "longest_episode_decisions": 3487,
+   "per_row": "expert v3's decisions on each row, Phase 2 run 3",
+   "rate": "the probe's first batch: charged decisions over expected",
+   "start_seconds": 15.0
+  },
+  "expected_clock_seconds": 52.9,
+  "expected_decisions": 36309,
+  "expected_episodes": 18,
+  "guard_margin": 0.05,
+  "measured_ratio": 1.074729,
+  "phase_allowance": 100000,
+  "phase_decisions_used": 58001,
+  "phase_seconds_used": 47.656,
+  "phase_time_cap": 150.0,
+  "projected_decisions": 40973,
+  "reserve_seconds": 102.344,
+  "seconds_left": 102.344,
+  "study_seconds_left": 2274.467,
+  "total_wall_seconds": 64700
+ },
+ "continues": {
+  "config_sha256": "3c622365fffa03ba8a974d4edd0888d03fbc7c4d37b25c2838c06195d4b7b41a",
+  "first_batch_charged_decisions": 58001,
+  "first_batch_expected_decisions": 53968,
+  "measured_ratio": 1.074729,
+  "output": "outputs/highway-merge-v15/phase-4/probe",
+  "step": "probe",
+  "stopped": "at the stop rule after its first batch (free-road stops by offsets -1 and -2; the segment failed on a KeyError after that batch was charged, fixed in 1f57be7)"
+ },
+ "expert_decisions": {
+  "0": 3487,
+  "14": 3074,
+  "22": 2158,
+  "24": 290,
+  "37": 2480,
+  "38": 397,
+  "8": 2671,
+  "9": 3102
+ },
+ "held_out": "not built, not run",
+ "level2": {
+  "gaps": 4,
+  "offsets": [
+   -2.0,
+   -1.0,
+   0.0,
+   1.0,
+   2.0
+  ],
+  "probes": {
+   "l2:probe-offset-p1": {
+    "offset": 1.0
+   },
+   "l2:probe-offset-p2": {
+    "offset": 2.0
+   }
+  },
+  "rule": "l2:rule-v3",
+  "settings_digest": "ded23aba10a5006516dfde35139d02db67749dd37e6685b430c31c98d9ce3d49",
+  "sources": {
+   "experiments/v15_pool.py": "e1c95cfc82f48aed02dfdff6fe2655ec992d0b2e51f34dd09104dd6b1cc77012",
+   "experiments/v15_regrade.py": "515c3b7cccdf8598f18a9449341e7bf57dd12a4052d3e67ee42dfe3a86f0932d",
+   "traffic/v15_level2.py": "7a1c1066f68eef06efb88ba7b70e4705ebbd19bd312d7d713237517758bc01e2",
+   "traffic/v15_rule_expert.py": "9018ba3a239d6f2e79255f5a8f2ffacb2ce5c5f24f0b0ff1928f39d755eb6571"
+  }
+ },
+ "parity": {
+  "decisions": 191,
+  "driver": "l2:rule-v3",
+  "report_sha": "ed17062a918ebefdb02992e50dcd7d93370879e6e1d75340e7aa816e01420605",
+  "row": 52,
+  "source": "outputs/highway-merge-v15/phase-2/run-03/results.jsonl, rule:expert-v3",
+  "trace_sha": "bb4f9d9aa3a9b689d3c6763521347a95843cd0e5c6cd74cb94b08ff27cc76f31"
+ },
+ "phase": "4",
+ "priority": "below_normal",
+ "reading": "a row has room if any probe passes it under the frozen re-baselined gates; the failing cars' speed match is reported against the gate's 0.9 and against expert v3's",
+ "round_index": 24,
+ "rows": [
+  0,
+  8,
+  9,
+  14,
+  22,
+  24,
+  37,
+  38
+ ],
+ "rows_rule": "the development rows the starting policy fails under the frozen re-baselined gates; expert v3 fails the same rows (Phase 2 run 3 and its rebaseline)",
+ "schema": "highway_merge_v15_phase4_v01",
+ "simulator": "SUMO (libsumo); no physics",
+ "start_policy": {
+  "id": "l2:bc7c050f6d3da3ce",
+  "rebaselined_passed": 62,
+  "recorded_passed": 54,
+  "step": "relabel"
+ },
+ "step": "probe-faster",
+ "stop_checks": {
+  "any_driver": "a canary or parity mismatch stops the run; so does any probe collision or free-road stop, or a probe cut-in or emergency in a one-car LA case (rows 24 and 38 here): it is reported to the user and nothing is retuned. The batch is one pool batch, so the stop comes after its charge and report",
+  "one_car_la_cases": [
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium"
+  ]
+ },
+ "workers": 16
+}

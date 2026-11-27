@@ -22,6 +22,14 @@ usage (from the checkout root, with .venv-traffic's Python):
   python experiments/v15_phase4.py resolve probe     write configs/evaluation/v15-phase4-probe.json (no simulation)
   python experiments/v15_phase4.py run probe         check the pinned configuration, take the lock, run (charged)
   python experiments/v15_phase4.py report probe      rebuild the report (re-baselined verdicts and speed match)
+
+The probe stopped at its stop rule after its first batch (free-road stops by the slower variants). Its second batch
+(offsets +1 and +2) runs alone as step 'probe-faster': user decision of November 26, 2026, relayed by the main Claude
+session, "Yes, run batch 2". It is charged to what is left of step A's allowance and projected at the first batch's
+measured rate; if that projection does not fit, it stops before dispatch (the batch is not trimmed to fit).
+  python experiments/v15_phase4.py resolve probe-faster
+  python experiments/v15_phase4.py run probe-faster
+  python experiments/v15_phase4.py report probe-faster   (also combines the first batch's report)
 """
 from __future__ import annotations
 
@@ -39,12 +47,24 @@ from experiments.v15_phase1 import _file_sha, _json_sha   # noqa: E402
 
 SCHEMA = 'highway_merge_v15_phase4_v01'
 OUT_ROOT = ROOT / 'outputs/highway-merge-v15/phase-4'
-STEPS = ('probe',)
+STEPS = ('probe', 'probe-faster')
 ALLOWANCE, TIME_CAP = 100_000, 150.          # step A's probe: Phase 4's own allowance so far
 START_STEP = 'relabel'                       # the starting policy's Phase 3 step
 SPEED_MATCH_GATE = 0.9
 AUTHORIZATION = P3.AUTHORIZATION + ' ' + P3.STEP_A_AUTHORIZATION
 SLOWER = ('l2:probe-gap-p1', 'l2:probe-offset-m1', 'l2:probe-offset-m2')   # can lengthen an episode
+FASTER = ('l2:probe-offset-p1', 'l2:probe-offset-p2')                       # the probe's second batch
+PROBE_SHA = '3c622365fffa03ba8a974d4edd0888d03fbc7c4d37b25c2838c06195d4b7b41a'  # the pinned probe configuration
+BATCH2_AUTHORIZATION = ('Phase 4 step A, the probe\'s second batch: user decision of November 26, 2026, relayed by '
+                        'the main Claude session: "Yes, run batch 2" (offsets +1 and +2 m/s on development rows 0, 8, '
+                        '9, 14, 22, 24, 37 and 38 with its canary and parity row, after an uncharged runner change; '
+                        'charged to step A\'s remaining allowance of 41,999 decisions and 102.3 s; if the projection '
+                        'does not fit before dispatch, stop and ask, and the batch is not trimmed to fit; same settings '
+                        'and stop rule; not authorized: step B, any raise of the study total, the held-out check, '
+                        'Krauss runs, merging to main).')
+STOP_RULE_FASTER = ('a canary or parity mismatch stops the run; so does any probe collision or free-road stop, or a '
+                    'probe cut-in or emergency in a one-car LA case (rows 24 and 38 here): it is reported to the user '
+                    'and nothing is retuned. The batch is one pool batch, so the stop comes after its charge and report')
 STOP_RULE = ('a canary or parity mismatch stops the run; so does any probe collision or free-road stop, or a probe '
              'cut-in or emergency in a one-car LA case: the probes count as drivers for the stop rule, the event is '
              'reported to the user and nothing is retuned (the main session\'s relay of the user\'s "Yes, approve '
@@ -76,12 +96,110 @@ def _failing_rows():
     return start, rows
 
 
+def _projected(expected_decisions, measured_ratio=1.):
+    """A batch's projected charge: its expected decisions at the measured rate (never below 1) plus the margin."""
+    return expected_decisions * max(1., float(measured_ratio)) * (1 + P3.MARGIN)
+
+
+def _check_fit(charge):
+    """Stop before dispatch when the projected charge or the expected clock time doesn't fit what is left."""
+    from experiments import v15_ledger as L
+    projected = charge.get('projected_decisions', _projected(charge['expected_decisions']))
+    if projected > charge['decisions_left'] or charge['expected_clock_seconds'] > charge['seconds_left']:
+        raise L.BudgetExceeded(f'Projected {projected:,.0f} decisions and {charge["expected_clock_seconds"]} s; '
+                               f'{charge["decisions_left"]:,} decisions and {charge["seconds_left"]} s are left. Stop and '
+                               'ask: the batch is not trimmed to fit')
+
+
+def _probe_segment():
+    """The probe's ledger segment (Phase 4's first), which failed after its first batch was charged."""
+    from experiments import v15_ledger as L
+    ledger = json.loads((L.study_directory() / 'cost-ledger.json').read_text())
+    output = str(out_dir('probe').relative_to(ROOT)).replace('\\', '/')
+    found = [s for s in ledger['segments'] if s.get('v15_phase') == '4' and s.get('output') == output]
+    if len(found) != 1:
+        raise ValueError(f'Expected one ledger segment for {output}, found {len(found)}')
+    return found[0]
+
+
+def _resolve_faster():
+    """The probe's second batch alone, after the first batch stopped at the stop rule (no simulation).
+
+    Its tasks are the pinned probe configuration's second batch, plus the canary and the parity row. The sources,
+    rows and settings must be the first batch's, so the two batches compare.
+    """
+    from experiments import v15_pool as P
+    from traffic import highway_flow_rl_v14_contract as contract
+    from traffic import v15_benchmark, v15_level2
+    first = json.loads(config_path('probe').read_text())
+    if _json_sha(first) != PROBE_SHA:
+        raise ValueError(f'{config_path("probe")} is not the probe configuration that ran ({PROBE_SHA[:8]})')
+    batch = first['batches'][1]
+    if batch['name'] != 'probe-faster' or tuple(batch['drivers']) != FASTER:
+        raise ValueError('The probe configuration\'s second batch is not the faster variants')
+    done = P.read_results(out_dir('probe') / 'results.jsonl')
+    ran = sorted((r['fields']['driver'], r['fields']['row']) for r in done if r['fields']['driver'] in SLOWER)
+    if ran != sorted((d, r) for d in SLOWER for r in first['rows']):
+        raise ValueError('The probe\'s first batch is incomplete')
+    if any(r['fields']['driver'] in FASTER for r in done):
+        raise ValueError('The probe\'s second batch has already run')
+    segment = _probe_segment()
+    if segment['status'] != 'failed' or segment['batches'] != 1:
+        raise ValueError(f'The probe\'s segment is {segment["status"]} with {segment["batches"]} batches')
+    cfg = contract.build_config(P3.ROUND_INDEX)
+    level2 = dict(rule=v15_level2.RULE_DRIVER, offsets=list(v15_level2.OFFSETS), gaps=v15_level2.GAPS,
+                  settings_digest=v15_level2.settings_digest(),
+                  sources={p: _file_sha(ROOT / p) for p in first['level2']['sources']})
+    if {k: first['level2'][k] for k in level2} != level2 or v15_benchmark.manifest(cfg) != first['benchmark']:
+        raise ValueError('The Level 2 sources, settings or benchmark differ from the probe\'s first batch')
+    level2['probes'] = {p: first['level2']['probes'][p] for p in FASTER}
+    parity = first['parity']
+    tasks = list(batch['tasks']) + [dict(parity, row_set=P3.DEV, mode='validate', parity=True)]
+    expected = batch['expected_decisions'] + parity['decisions']
+    measured = segment['decisions'] / first['batches'][0]['expected_decisions']
+    longest = max(first['expert_decisions'].values())
+    clock = P3.START_S + max(expected * P3.PER_DECISION_S, longest / 140.) + 10.
+    phase, totals = _ledger_phase4()
+    decisions_left, seconds_left = ALLOWANCE - phase['decisions'], TIME_CAP - phase['seconds']
+    study_left = cfg['budget']['total_wall_seconds'] - totals['total']
+    reserve = min(round(clock * 1.6 + 30.), round(seconds_left, 3), round(study_left, 3))
+    return dict(
+        schema=SCHEMA, phase='4', step='probe-faster', round_index=first['round_index'], backend=first['backend'],
+        workers=first['workers'], priority=first['priority'], backgrounds=first['backgrounds'],
+        benchmark=first['benchmark'], level2=level2, start_policy=first['start_policy'], rows=first['rows'],
+        rows_rule=first['rows_rule'], expert_decisions=first['expert_decisions'],
+        batches=[dict(name=batch['name'], drivers=list(FASTER), tasks=tasks, expected_decisions=expected)],
+        parity=parity, reading=first['reading'],
+        continues=dict(step='probe', config_sha256=PROBE_SHA, output=segment['output'],
+                       stopped='at the stop rule after its first batch (free-road stops by offsets -1 and -2; the '
+                               'segment failed on a KeyError after that batch was charged, fixed in 1f57be7)',
+                       first_batch_expected_decisions=first['batches'][0]['expected_decisions'],
+                       first_batch_charged_decisions=segment['decisions'], measured_ratio=round(measured, 6)),
+        stop_checks=dict(any_driver=STOP_RULE_FASTER, one_car_la_cases=list(P3.ONE_CAR_LA)),
+        charge=dict(expected_decisions=expected, projected_decisions=round(_projected(expected, measured)),
+                    measured_ratio=round(measured, 6), expected_episodes=len(tasks) + 1,
+                    expected_clock_seconds=round(clock, 1), reserve_seconds=reserve, phase_allowance=ALLOWANCE,
+                    phase_time_cap=TIME_CAP, phase_decisions_used=phase['decisions'],
+                    phase_seconds_used=round(phase['seconds'], 3), decisions_left=decisions_left,
+                    seconds_left=round(seconds_left, 3), study_seconds_left=round(study_left, 3),
+                    guard_margin=P3.MARGIN,
+                    estimate_source=dict(per_row='expert v3\'s decisions on each row, Phase 2 run 3',
+                                         rate='the probe\'s first batch: charged decisions over expected',
+                                         longest_episode_decisions=longest, decisions_per_worker_second=140,
+                                         start_seconds=P3.START_S),
+                    total_wall_seconds=cfg['budget']['total_wall_seconds']),
+        authorization=AUTHORIZATION + ' ' + BATCH2_AUTHORIZATION, held_out='not built, not run',
+        simulator='SUMO (libsumo); no physics')
+
+
 def resolve(step):
     """The probe's resolved configuration and expected charge (no simulation)."""
     from traffic import highway_flow_rl_v14_contract as contract
     from traffic import v15_benchmark, v15_level2
     if step not in STEPS:
         raise ValueError(f'Unknown step {step!r}; expected one of {STEPS}')
+    if step == 'probe-faster':
+        return _resolve_faster()
     if not (P3.out_dir('relabel-seeds') / 'report.json').is_file():
         raise ValueError('Step A runs the seed check (experiments/v15_phase3.py relabel-seeds) first')
     cfg = contract.build_config(P3.ROUND_INDEX)
@@ -142,9 +260,16 @@ def resolve(step):
         authorization=AUTHORIZATION, held_out='not built, not run', simulator='SUMO (libsumo); no physics')
 
 
+def _not_run_yet(step):
+    out = out_dir(step)
+    if (out / 'charge.json').is_file() or (out / 'results.jsonl').is_file():
+        raise ValueError(f'Step {step} has already run ({out}); the probe\'s second batch runs as step probe-faster')
+
+
 def run(step):
     from experiments import v15_ledger as L
     from experiments import v15_pool as P
+    _not_run_yet(step)
     config = json.loads(json.dumps(resolve(step)))
     pinned = json.loads(config_path(step).read_text())
     if config != pinned:
@@ -153,12 +278,8 @@ def run(step):
     charge = config['charge']
     if config['workers'] > 16:
         raise ValueError('At most 16 workers (the user\'s CPU limit)')
-    if charge['expected_decisions'] * (1 + P3.MARGIN) > charge['decisions_left'] or \
-            charge['expected_clock_seconds'] > charge['seconds_left']:
-        raise L.BudgetExceeded(f'Step {step} will not fit what is left of its allowance')
+    _check_fit(charge)
     out = out_dir(step)
-    if (out / 'charge.json').is_file():
-        raise ValueError(f'Step {step} has already run ({out})')
     if P.set_priority(config['priority']) != config['priority']:
         raise RuntimeError(f'The learner does not run at {config["priority"]} priority')
     from traffic import highway_flow_rl_v14_contract as contract
@@ -190,8 +311,9 @@ def run(step):
             for index, batch in enumerate(config['batches']):
                 tasks = batch['tasks']
                 P3._check_policies(out, tasks)
-                ratio = max(1., charged_so_far / expected_so_far) if expected_so_far else 1.
-                projected = batch['expected_decisions'] * ratio * (1 + P3.MARGIN)
+                # the measured rate so far; a continuation starts at its earlier batch's measured rate
+                ratio = charged_so_far / expected_so_far if expected_so_far else charge.get('measured_ratio', 1.)
+                projected = _projected(batch['expected_decisions'], ratio)
                 session.check_next(projected)
                 pool_tasks = [P3._task(P, t, f'phase4-{step}:{batch["name"]}') for t in tasks]
                 try:
@@ -312,9 +434,27 @@ def report(step):
                      (config['parity']['report_sha'], config['parity']['trace_sha'])) for r in parity_rows],
         charge=json.loads((out / 'charge.json').read_text()) if (out / 'charge.json').is_file() else None,
         held_out='not built, not run')
+    if config.get('continues'):
+        result['combined'] = _combined(json.loads((out_dir(config['continues']['step']) / 'report.json').read_text()),
+                                       result)
     (out / 'report.json').write_text(json.dumps(result, indent=1))
     (out / 'report.md').write_text(_markdown(result))
     return result
+
+
+def _combined(earlier, later):
+    """Both batches of the probe together: the variants, the rows with room and the best worst-car speed match."""
+    probes = dict(earlier['probes'], **later['probes'])
+    best = {}
+    for r in later['rows']:
+        options = [(b['worst_car'], b['probe']) for b in (earlier['best_probe_speed_match'][str(r)],
+                                                          later['best_probe_speed_match'][r]) if b['probe']]
+        top = max(options) if options else (None, None)
+        best[r] = dict(probe=top[1], worst_car=top[0])
+    return dict(probes={k: dict(rebaselined_passed=v['rebaselined_passed'], recorded_passed=v['recorded_passed'],
+                                new_failures=v['new_failures']) for k, v in sorted(probes.items())},
+                rows_with_room=sorted(set(earlier['rows_with_room']) | set(later['rows_with_room'])),
+                best_probe_speed_match=best, not_run=sorted(set(earlier['probes_not_run']) - set(later['probes'])))
 
 
 def _acted(records):

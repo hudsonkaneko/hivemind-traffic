@@ -281,6 +281,46 @@ def test_probe_events_under_the_stop_rule_stop_step_a():
                                                   'l2:probe-offset-p2': dict(new_failures=[dict(row=24, cut_ins=1)])}))
 
 
+def test_the_probes_second_batch_runs_alone_at_the_first_batchs_measured_rate(tmp_path, monkeypatch):
+    from experiments import v15_phase4 as phase4
+    assert phase4.STEPS == ('probe', 'probe-faster')
+    assert phase4.FASTER == tuple(sorted(set(L.PROBES) - set(phase4.SLOWER)))
+    # projected at the measured rate (never below the estimate) plus the margin
+    assert phase4._projected(36_309, 58_001 / 53_968) == pytest.approx(36_309 * 58_001 / 53_968 * 1.05)
+    assert phase4._projected(1000, 0.5) == pytest.approx(1050.)
+    charge = dict(expected_decisions=36_309, projected_decisions=40_974, decisions_left=41_999,
+                  expected_clock_seconds=60., seconds_left=102.344)
+    phase4._check_fit(charge)
+    for over in (dict(projected_decisions=42_000), dict(expected_clock_seconds=102.5)):
+        with pytest.raises(ledger.BudgetExceeded):       # stop and ask; the batch is not trimmed to fit
+            phase4._check_fit(dict(charge, **over))
+    # the probe can't run again once its first batch has results; its second batch is its own step
+    monkeypatch.setattr(phase4, 'out_dir', lambda step: tmp_path / step)
+    phase4._not_run_yet('probe')
+    (tmp_path / 'probe').mkdir()
+    (tmp_path / 'probe' / 'results.jsonl').write_text('')
+    with pytest.raises(ValueError):
+        phase4.run('probe')
+    phase4._not_run_yet('probe-faster')
+
+
+def test_the_probes_two_batches_combine():
+    from experiments import v15_phase4 as phase4
+    earlier = dict(probes={'l2:probe-gap-p1': dict(rebaselined_passed=[37], recorded_passed=[], new_failures=[])},
+                   rows_with_room=[37], probes_not_run=['l2:probe-offset-p1'],
+                   best_probe_speed_match={'0': dict(probe='l2:probe-gap-p1', worst_car=0.3),
+                                           '37': dict(probe='l2:probe-gap-p1', worst_car=0.907)})   # read from JSON
+    later = dict(rows=[0, 37], rows_with_room=[0],
+                 probes={'l2:probe-offset-p1': dict(rebaselined_passed=[0], recorded_passed=[0], new_failures=[])},
+                 best_probe_speed_match={0: dict(probe='l2:probe-offset-p1', worst_car=0.95),
+                                         37: dict(probe='l2:probe-offset-p1', worst_car=0.5)})
+    both = phase4._combined(earlier, later)
+    assert both['rows_with_room'] == [0, 37] and both['not_run'] == []
+    assert sorted(both['probes']) == ['l2:probe-gap-p1', 'l2:probe-offset-p1']
+    assert both['best_probe_speed_match'] == {0: dict(probe='l2:probe-offset-p1', worst_car=0.95),
+                                              37: dict(probe='l2:probe-gap-p1', worst_car=0.907)}
+
+
 def test_a_probe_drives_the_rules_executor_with_its_change():
     rows = (4,)
     if not _networks_present(rows):
