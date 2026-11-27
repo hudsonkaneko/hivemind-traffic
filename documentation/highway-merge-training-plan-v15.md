@@ -35,9 +35,11 @@ shared ledger needs the user's approval of its resolved configuration first, as 
   - It passes 61 of 70 re-baselined and 54 recorded. It gains row 37 but loses rows 48 and 50, both
     on headway.
   - So it doesn't join the held-out check, by the reading set before the run.
-- **Next:** the held-out check (Stage 5) with the Phase 3 policy alone, which needs your
-  authorization.
-  - **Study time left:** 2,164.4 s. Nothing more runs until you decide.
+- **Next:** Stage 5, the held-out check and the physics drives, with the Phase 3 policy as the only
+  candidate. It is sized for your approval (decision 10); see
+  [Stage 5 proposal](#stage-5-proposal-november-26-the-held-out-check-and-physics-drives-for-your-approval).
+  - It fits the 2,164.4 s of study time left, with no raise.
+  - Nothing more runs until you decide.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -1802,6 +1804,198 @@ Both fail the headway gate (1.5 s): the faster target brings the car too close t
 - **The +1 variant stays out.** A version that speeds up only in row 37's situation would be a rule
   fitted to one development row.
 
+## Stage 5 proposal (November 26): the held-out check and physics drives, for your approval
+
+**Proposal only.** You asked for it on November 26: "Yes, size it", relayed by the main Claude session.
+Nothing here has been built or run, and nothing is charged until you approve it.
+- **The held-out rows weren't built or opened for this sizing.** Every estimate comes from the
+  development rows and the records of Phases 1–4.
+- **Nothing is trained in Stage 5.** The Phase 3 policy `l2:bc7c050f6d3da3ce` is the only candidate.
+  The +1 offset stays out, by the offset check's reading.
+
+**What Stage 5 does** (from "Stage 5: physics and held-out evaluation" above):
+- **Part 1, SUMO:** the policy drives the 42 reserved held-out rows (the 14 cases at seeds
+  6953001–6953003) once.
+- **Part 2, physics:** expert v3 and the policy each drive the PhysX car on the LA model, on a
+  development row. Each video is labelled physics.
+
+### Part 1: the held-out rows (SUMO)
+
+**Which drivers run the held-out rows:**
+
+| Option | Drivers on the 42 held-out rows | What it can tell you |
+|---|---|---|
+| **Recommended** | The policy, expert v3 and the round-16 policy | The benchmark's full report: pass rates, and the paired differences from expert v3 and from round 16 on the same rows |
+| Middle | The policy and expert v3 | The pass rate, and the paired difference from expert v3 |
+| Minimum | The policy alone | Its pass rate with an interval, compared only with its development numbers |
+
+- **Why I recommend all three:**
+  - **Expert v3 separates two explanations.** The policy matches expert v3 on every development row.
+    A lower held-out pass rate on its own can't tell "the learned Level 2 doesn't carry over" from
+    "the held-out seeds are harder". Expert v3 on the same rows tells them apart.
+  - **Round 16 answers whether v15 beats v14's best** on rows nothing was chosen on. On the
+    development rows, the policy passes 62 against round 16's 36 re-baselined, and 54 against 33
+    recorded.
+  - **The held-out rows are still looked at once:** all three run in one batch.
+- **This needs your yes:** the plan says to run the held-out seeds "once, for the final candidate
+  only", and `traffic/v15_benchmark.held_out_rows` says the same. Expert v3 and round 16 are fixed
+  baselines, not candidates, and nothing is chosen from their results. Running them there still
+  goes beyond that wording.
+
+**Development checks, in the same batch:**
+- **The policy on development row 3:** it must reproduce its Phase 3 result exactly. The pool's
+  canary re-runs the shortest-horizon task that comes first, so this row goes first, and the canary
+  re-runs it on another worker.
+- **The parity row 52** (`l2:rule-v3`): as in Phase 4.
+- **So every held-out row runs exactly once.** No canary falls on a held-out row.
+
+**How the estimate is built:**
+- **Each driver's decisions per case:** the mean over its 5 development seeds, times 3 held-out
+  seeds, summed over the 14 cases.
+- **The range:** each case's fewest and most decisions across its 5 seeds.
+
+| Driver | Decisions on the 70 development rows | Held-out estimate (42 rows) | Range | Source |
+|---|---|---|---|---|
+| The policy | 135,439 | 81,263 | 76,341–88,650 | Phase 3, the relabel step |
+| Expert v3 | 135,428 | 81,257 | 76,335–88,737 | Phase 2, run 3 |
+| Round 16 | 134,530 | 80,718 | 73,569–88,353 | Phase 1 |
+
+- **The development checks:** 6,359 decisions. That is row 3's 3,084 twice (the row and its canary)
+  and the parity row's 191.
+- **Projected:** the expected decisions plus 5%, as in Phase 4.
+- **Clock time:** 15 s to start, plus the decisions at 1,900 per second, plus 10 s. The rate is the
+  Phase 3 relabel step's, the slowest of Phase 3's one-batch evaluations; the offset check used it
+  too, and its own run averaged about 2,220 per second.
+  - No batch is shorter than its longest episode, at 140 decisions per worker-second.
+  - That sets the minimum option's estimate: the policy's longest development row, 6,688 decisions
+    ÷ 140 ≈ 48 s.
+
+| Option | Episodes | Expected decisions | Projected | Range | Clock time | Proposed cap |
+|---|---|---|---|---|---|---|
+| **Recommended** | 129 | 249,597 | 262,077 | 232,604–272,099 | ~156 s | 300,000 decisions and 300 s |
+| Middle | 87 | 168,879 | 177,323 | 159,035–183,746 | ~114 s | 200,000 decisions and 250 s |
+| Minimum | 45 | 87,622 | 92,003 | 82,700–95,009 | ~73 s | 110,000 decisions and 150 s |
+
+- **Episodes:** 42 per driver, plus the 2 development rows and the canary.
+- **Each cap** covers the top of the range plus 5%, and the run's time reservation (its clock time
+  × 1.6 + 30 s).
+- **The charge:** Stage 5's own ledger allowance (phase 5), from the study's time, as Phases 1–4 had.
+
+**Settings, as in Phases 1–4:**
+- SUMO (libsumo), not physics, with IDM background only; no Krauss runs.
+- At most 16 workers at below-normal priority, with nothing heavy alongside.
+- Under the shared lock.
+- The resolved configuration and expected charge go in the coordination master before it runs.
+
+**Built first (uncharged):**
+- **A Stage 5 runner.** It:
+  - builds the held-out rows only when it runs, through `held_out_rows(cfg, authorized=True)` and a
+    held-out row set in the pool (today the pool has none, and `held_out_rows` refuses without
+    authorization);
+  - pins the policy's network hash, expert v3's sources, round 16's hash (`policy:f0b11fa577b33763`),
+    the frozen regrade and the benchmark manifest;
+  - runs one batch with the development checks first;
+  - refuses to run again once any held-out result exists.
+- **Its report:**
+  - each case (3 rows) and the pool, under the re-baselined gates and then the recorded ones;
+  - Wilson intervals, and paired differences with exact McNemar tests (`traffic/v15_stats.py`);
+  - events, and a comparison with the development rows.
+- **Tests** that never build a held-out row: they check the guard and use development rows.
+
+**Stop rules:**
+- **Before dispatch:** stop and ask if the projection doesn't fit the cap, the lock is held, or a
+  test fails. The run is never trimmed to fit.
+- **A canary or parity mismatch:** the run is reported as failed. Nothing is re-run; you decide what
+  comes next.
+- **Events on held-out rows** (collisions, free-road stops, cut-ins, emergencies): they are results.
+  They're reported, and nothing is retuned.
+- **No held-out row is re-run** once its result is written, for any reason.
+
+**Reading, set before the run:**
+- **Holds up as well as its teacher:** the 95% interval of the policy's paired difference from
+  expert v3 (re-baselined) includes 0. There must also be no collision, and no gate failure or event
+  the policy never had on the development rows.
+- **Better than v14's best:** the 95% interval of the paired difference from round 16 is above 0.
+- **These are the study's final numbers for this policy.** Nothing is tuned on them.
+- **The intervals will be wide.** With 42 rows, each row is about 2.4 points. For example, 37 of 42
+  gives 75–95% (Wilson), against 79–94% for the policy's 62 of 70.
+
+### Part 2: the physics drives
+
+- **What:** expert v3 and the policy each drive the PhysX Americano on the LA model, with traffic.
+  - **The row:** development row 11, the southbound Adams focused merge: 1 controlled car among 16
+    cars, seed 6952001. Both pass it in SUMO under both gates.
+  - **Why this row:** it is the corridor of v14's two physics drives (`physics-01` and
+    `physics-02-round20`, round 19's case at seed 6950004), so the results compare.
+- **Physics, not replay:** the controlled car is a PhysX rigid body on the model's deck colliders.
+  Background cars are SUMO's, drawn at their SUMO poses. Each video and report says so.
+- **Not on held-out rows:** those run once, in SUMO, in part 1.
+
+**Built first (uncharged):**
+- **A v15 version of v14's physics adapter.**
+  - The v15 environment drives its cars with `setAcceleration` and `changeLane`. Those are the two
+    commands v14's adapter intercepts (`environments/highway_flow_rl_v14_physical_env.py`).
+  - That adapter is built on the v14 environment. Whether it carries over to v15 unchanged isn't
+    checked.
+- **The physics side as in v14:**
+  - `scripts/physics_drive_server.py`, run in Isaac Sim's Python;
+  - the low-level controller and the link;
+  - the shadow pose sent back into SUMO.
+
+  The LA model is referenced unchanged.
+- **An uncharged development drive without rendering,** in `outputs/test-runs/`, as v14's
+  `physics-stage2-01`. It also measures how long a drive takes.
+
+**Expected charge:** 2 drives, one episode each.
+- **v14's measured drives:** its two recorded drives were charged 108.2 s (226 decisions, rendered
+  at 10 Hz) and 54.9 s.
+- **Row 11 is longer:** its SUMO episode has 462 decisions (80.1 s simulated), about twice
+  `physics-01`'s. So a drive could take about 110–220 s. That isn't measured; the uncharged drive
+  measures it.
+- **Proposed cap:** at most 500 s for both drives, checked against the uncharged drive's time before
+  the first charged one.
+- **How to count the episodes (your decision):** 1 of the 174 diagnostic episodes is left, and two
+  drives need 2.
+  - **Recommended:** count them as Stage 5 evaluation episodes in Stage 5's own allowance, as Phases
+    1–4 count theirs.
+  - **Or:** keep the plan's table ("Diagnostic episodes"), and raise the diagnostic episodes by 1, to
+    175, as v14 did for its recordings.
+  - Their clock time counts in the study total either way.
+
+**What it compares:** for each driver, SUMO against PhysX on row 11, as v14's tables did:
+- the gates and interventions;
+- peak jerk;
+- commanded against PhysX acceleration, and decisions at the torque limit.
+
+There's no pass mark; the plan's exit check is "Recorded and labelled".
+
+**Settings and stop rules:**
+- **The drives run alone,** after part 1, never alongside a SUMO run. Isaac Sim uses the GPU.
+- **Your own Isaac Sim:** if it's open, I'd ask before starting, and never close it.
+- **A collision, or a link or physics failure,** ends that drive. It's reported, and the controller
+  isn't retuned.
+
+### Totals and the study time
+
+| | Recommended | Minimum |
+|---|---|---|
+| Part 1 (SUMO, held-out rows) | At most 300,000 decisions and 300 s (expected ~156 s) | At most 110,000 decisions and 150 s (expected ~73 s) |
+| Part 2 (physics, 2 drives) | At most 500 s | At most 500 s |
+| **Stage 5 at its caps** | **800 s** | **650 s** |
+| **Study time left after, at the caps** | **1,364.4 s** | **1,514.4 s** |
+
+- **It fits.** The study has 2,164.4 s left, so neither option needs a raise of the study total.
+- **The order:** part 1 first, then part 2's build and drives.
+- **Not part of Stage 5:** Krauss runs, Isaac Lab training, and step B.
+
+### My recommendation
+
+1. **Part 1 with all three drivers,** at most 300,000 decisions and 300 s, after its uncharged build.
+2. **Part 2:** its uncharged build and development drive, then the two charged drives, at most 500 s,
+   counted in Stage 5's own allowance.
+
+Together they fit the study time left with no raise.
+
 ## Decisions for you
 
 Decisions 1–7 were decided on November 25, 2026, relayed by the main Claude session and recorded
@@ -1872,7 +2066,17 @@ relayed by the main Claude session.
      Claude session). The +1 offset check ran instead. It scores 61 of 70 re-baselined and 54
      recorded, so it doesn't join Stage 5; see
      [Phase 4 offset check](#phase-4-offset-check-november-26).
-   - **Next:** Stage 5 with the Phase 3 policy, which needs your authorization.
+   - **Next:** Stage 5 with the Phase 3 policy, which needs your authorization; see decision 10.
+10. **Stage 5** (proposed on November 26; see [Stage 5 proposal](#stage-5-proposal-november-26-the-held-out-check-and-physics-drives-for-your-approval)).
+    - **Part 1, the held-out rows in SUMO:**
+      - **Recommended:** the policy, expert v3 and round 16, at most 300,000 decisions and 300 s.
+      - **Middle:** the policy and expert v3, at most 200,000 decisions and 250 s.
+      - **Minimum:** the policy alone, at most 110,000 decisions and 150 s.
+    - **Part 2, the physics drives:** expert v3 and the policy on development row 11.
+      - First an uncharged build and development drive, then two charged drives (at most 500 s).
+      - The episodes are counted as Stage 5 evaluation episodes (recommended), or as diagnostic
+        episodes with a raise of 1.
+    - **No raise of the study total** is needed for any option.
 
 ## What carries over from v14
 

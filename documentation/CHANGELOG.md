@@ -4,6 +4,19 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-26 - Plan v15 Stage 5 proposal: the held-out check and physics drives, sized for approval
+
+- **User request:** "Yes, size it", relayed by the main Claude session. Sizing only: nothing built,
+  run or charged.
+- **The held-out rows weren't built or opened.** The estimates come from the development rows.
+- **Part 1, the held-out rows (SUMO):** the Phase 3 policy as the only candidate.
+  - Recommended: expert v3 and round 16 as baselines in the same batch, about 249,600 decisions and
+    156 s, capped at 300,000 decisions and 300 s.
+  - Minimum: the policy alone, about 87,600 decisions and 73 s.
+- **Part 2, the physics drives:** expert v3 and the policy on development row 11, after an uncharged
+  v15 physics adapter and development drive. Capped at 500 s for both.
+- **Fits** the 2,164.4 s of study time left, with no raise. Details: plan v15, decision 10.
+
 ## 2026-11-26 - Plan v15 Phase 4: the +1 offset check gains row 37 but loses rows 48 and 50; step B skipped
 
 - **User decision:** "Yes, run the check", typed in the Claude side session and also recorded by the
