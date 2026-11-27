@@ -283,7 +283,7 @@ def test_probe_events_under_the_stop_rule_stop_step_a():
 
 def test_the_probes_second_batch_runs_alone_at_the_first_batchs_measured_rate(tmp_path, monkeypatch):
     from experiments import v15_phase4 as phase4
-    assert phase4.STEPS == ('probe', 'probe-faster')
+    assert phase4.STEPS[:2] == ('probe', 'probe-faster')
     assert phase4.FASTER == tuple(sorted(set(L.PROBES) - set(phase4.SLOWER)))
     # projected at the measured rate (never below the estimate) plus the margin
     assert phase4._projected(36_309, 58_001 / 53_968) == pytest.approx(36_309 * 58_001 / 53_968 * 1.05)
@@ -319,6 +319,42 @@ def test_the_probes_two_batches_combine():
     assert sorted(both['probes']) == ['l2:probe-gap-p1', 'l2:probe-offset-p1']
     assert both['best_probe_speed_match'] == {0: dict(probe='l2:probe-offset-p1', worst_car=0.95),
                                               37: dict(probe='l2:probe-gap-p1', worst_car=0.907)}
+
+
+def test_the_offset_check_compares_every_row_with_expert_v3_and_the_phase3_policy(tmp_path, monkeypatch):
+    from experiments import v15_phase4 as phase4
+    assert phase4.STEPS == ('probe', 'probe-faster', 'offset-check')
+    assert phase4.CHECK_DRIVER in phase4.FASTER and phase4.CHECK_DRIVER in L.PROBES
+    # the task the pool's canary re-runs: the shortest horizon, then the first
+    tasks = [dict(row=1), dict(row=3), dict(row=10), dict(row=52)]
+    assert phase4._canary_index(tasks, {1: 900, 3: 800, 10: 800, 52: 800}) == 1
+    expert = {r: dict(rebaselined=r != 2, recorded=r == 0) for r in range(4)}
+    start = {r: dict(rebaselined=r != 2, recorded=r in (0, 1)) for r in range(4)}
+    check = {0: dict(rebaselined=True, recorded=True), 1: dict(rebaselined=False, recorded=False),
+             2: dict(rebaselined=True, recorded=True), 3: dict(rebaselined=True, recorded=False)}
+    s = phase4._check_summary(check, expert, start, [])
+    assert s['rebaselined_passed'] == [0, 2, 3] and s['recorded_passed'] == [0, 2]
+    assert s['vs_expert'] == dict(gained=[2], gained_recorded=[2], lost=[1], lost_recorded=[])
+    assert s['vs_start'] == dict(gained=[2], gained_recorded=[2], lost=[1], lost_recorded=[1])
+    assert not s['joins_stage5']                                   # it loses a row expert v3 passes
+    assert phase4._check_summary(expert, expert, start, [])['joins_stage5']
+    assert not phase4._check_summary(expert, expert, start, [dict(row=0, collisions=1)])['joins_stage5']
+    with pytest.raises(ValueError):
+        phase4._check_summary({0: check[0]}, expert, start, [])
+    # its own allowance: the projection must fit 140,000 decisions and 100 s before dispatch
+    charge = dict(expected_decisions=121_430, projected_decisions=127_502, decisions_left=phase4.CHECK_ALLOWANCE,
+                  expected_clock_seconds=89., seconds_left=phase4.CHECK_TIME_CAP)
+    phase4._check_fit(charge)
+    for over in (dict(projected_decisions=140_001), dict(expected_clock_seconds=100.5)):
+        with pytest.raises(ledger.BudgetExceeded):
+            phase4._check_fit(dict(charge, **over))
+    # it runs once
+    monkeypatch.setattr(phase4, 'out_dir', lambda step: tmp_path / step)
+    phase4._not_run_yet('offset-check')
+    (tmp_path / 'offset-check').mkdir()
+    (tmp_path / 'offset-check' / 'charge.json').write_text('{}')
+    with pytest.raises(ValueError):
+        phase4._not_run_yet('offset-check')
 
 
 def test_a_probe_drives_the_rules_executor_with_its_change():
