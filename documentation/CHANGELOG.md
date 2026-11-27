@@ -4,6 +4,24 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-26 - Plan v15 Phase 4 step A: the probe's second batch; row 37 passes both gates faster
+
+- **User decision,** relayed by the main Claude session: "Yes, run batch 2". It ran as its own step,
+  `probe-faster` (commit `560699f`, 124 v15 tests pass). SUMO (libsumo), IDM, 16 workers at
+  below-normal priority, under the shared lock. Development rows only.
+- **Result** (offsets +1 and +2 m/s on the 8 failing rows):
+  - Both pass row 37 under the re-baselined and the recorded gates (speed match 1.0), with no events.
+    This is the probe's only pass under the recorded gates.
+  - No stop-rule event. On row 24 the faster approach cut agent_0's minimum headway to 1.35 s and
+    1.19 s, under the gate's 1.5 s.
+- **Charged:** 38,632 decisions and 55.7 s, against 40,973 decisions projected. Phase 4: 96,633 of
+  step A's 100,000 decisions and 103.3 of 150 s. Study time: 62,481.2 of 64,700 s (2,218.8 s left).
+- **The full probe:** room on rows 9 and 37 only. Step B's best case is 64 of 70 re-baselined and 55
+  recorded.
+- **Recommended:** skip step B. Check the constant +1 offset on all 70 development rows (about
+  140,000 decisions and 100 s, no raise), then Stage 5. Step B's raises are now about 4,080 s
+  (recommended) and about 1,480 s (minimum). Details are in plan v15, "Phase 4 step A result".
+
 ## 2026-11-26 - Plan v15 Phase 4 step A: the seed check holds; the probe stops at its stop rule
 
 - **User decision,** typed in the Claude side session: "Yes, run step A". SUMO (libsumo), IDM, 16
