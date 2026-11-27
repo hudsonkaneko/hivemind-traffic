@@ -1480,6 +1480,11 @@ and nothing was retuned.
   episode.
 - **Configuration:** `configs/evaluation/v15-phase4-probe.json`.
 - **Checks:** the canary and the parity row (52) matched.
+- **The rows' cases:**
+  - rows 0 and 14: the I-110 merge;
+  - rows 8 and 22: Pasadena northbound, 8 of 16 cars controlled;
+  - rows 9 and 37: Adams southbound, 8 of 16;
+  - rows 24 and 38: Pasadena northbound, 1 of 16. These are the probed rows' one-car LA cases.
 
 | Variant | Passes, re-baselined | Passes, recorded | Stop-rule events | Other events |
 |---|---|---|---|---|
@@ -1502,14 +1507,23 @@ No probe episode had a collision or an emergency.
   - row 24: 0.938, the expert's own.
 
   Which other part of that gate fails isn't checked.
-- **The other rows' best worst-car speed match:**
+- **Speed match of each row's worst failing car**, against the gate's 0.9:
 
-  | Row | Probe best | Expert |
-  |---|---|---|
-  | 0 | 0.323 | 0.323 |
-  | 8 | 0.894 | 0.731 |
-  | 22 | 0.882 | 0.851 |
-  | 38 | 0.727 | 0.727 |
+  | Row | Expert v3 | Gap +1 | Offset −1 | Offset −2 |
+  |---|---|---|---|---|
+  | 0 | 0.323 | 0.323 | 0.285 | 0.087 |
+  | 8 | 0.731 | 0.652 | 0.894 | 0.609 |
+  | 9 | 0.870 | 0.863 | 1.000 (passes) | 0.714 |
+  | 14 | 0.669 | 0.669 | 1.000 | 0.164 |
+  | 22 | 0.851 | 0.851 | 0.882 | 0.683 |
+  | 24 | 0.938 | 0.775 | 0.919 | 0.484 |
+  | 37 | 0.894 | 0.907 (passes) | 0.845 | 0.845 |
+  | 38 | 0.727 | 0.727 | 0.689 | 0.130 |
+
+  - The expert's column is Phase 2 run 3. "Passes" means the row passes under the re-baselined gates.
+  - Offset −1 raises the worst car on 4 rows (8, 9, 14 and 22). Offset −2 lowers it on all 8.
+  - Gap +1 drives the starting policy's identical trace on rows 0, 14, 22 and 38, so the later gap
+    changed nothing there. Why isn't checked.
 
 **The free-road stops,** from each car's Level 2 trace:
 
@@ -1525,8 +1539,22 @@ No probe episode had a collision or an emergency.
 - **My reading,** not verified beyond these traces: a slower approach reaches the entry later, misses
   the gap the rule takes, and waits at the line.
 - **Not checked:** why row 9's car stopped 50 m back.
+- **The same wait in Phase 3:** step 1 found it for the expert after an injected slow-down. The
+  expert held cars about 15 m short of the stop line for 3.8–9.7 s.
 - **The starting policy** has none of these events on these rows; its only event there is the row 37
   cut-in.
+
+**The cut-ins on row 37** (Adams southbound, 8 of 16: not a one-car LA case, so outside the stop
+rule):
+- **What the metric counts:** a background car braking harder than 3.0 m/s² behind a controlled car,
+  within the metric's gap limit. It doesn't record whether a lane change came first.
+- **With offsets −1 and −2:** the same event in both. The ramp car `ramp_1` braked at up to
+  3.05 m/s², 15.1–12.4 m behind agent_0, from 5.0 to 5.4 s (5 charged decisions).
+- **The starting policy's event** has the same pair from 4.9 to 5.7 s: up to 3.21 m/s², 17.5–11.7 m
+  behind, 9 charged decisions. So the offsets made it milder, and gap +1 removed it.
+- **It comes before the free-road stops** (agent_0 stopped from 8.0 s and 7.1 s), so the stops didn't
+  cause it.
+- **Not checked:** what agent_0 was doing at 5 s.
 
 ### The stop, a crash and a configuration hash correction
 
@@ -1538,6 +1566,13 @@ No probe episode had a collision or an emergency.
     it.
   - The batch's 25 results were all written. The segment is recorded as failed with its real counts
     (below), and the lock was released.
+  - **The charge is checked.** The ledger had already added the batch when the error came, so only
+    the field itself (0 here) was missing. No estimate was charged. The segment's figures equal the
+    batch's:
+    - 58,001 decisions (54,514 plus the 3,487 canary);
+    - 26 evaluation episodes (25 plus the canary);
+    - 335.8 worker-seconds and 2,002.5 simulated seconds;
+    - 47.7 s of clock time, to the failure.
   - The stop rule would have stopped the run at that point anyway.
   - Fixed, uncharged, in `1f57be7`, with the two changes below. 122 v15 tests pass.
 - **Hash correction:** the master's probe entry cites sha256 `44ec066f…`. That was the hash of the
