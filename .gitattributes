@@ -80,3 +80,7 @@ traffic/v15_level2.py text eol=lf
 traffic/v15_training_rows.py text eol=lf
 experiments/v15_level2_train.py text eol=lf
 experiments/v15_pool.py text eol=lf
+# Repository cleanup (November 27): a new v15 runner may pin the shared module's exact LF bytes.
+experiments/v15_runner.py text eol=lf
+# Saved results and evidence are generated data: collapsed in GitHub diffs and left out of language statistics.
+documentation/evidence/** linguist-generated=true
