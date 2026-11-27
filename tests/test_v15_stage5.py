@@ -191,3 +191,36 @@ def test_the_resolve_builds_no_held_out_row(monkeypatch):
     assert charge['projected_decisions'] <= stage5.ALLOWANCE and charge['reserve_seconds'] <= stage5.TIME_CAP
     assert [d['id'] for d in config['drivers']] == list(stage5.DRIVERS)
     assert config['held_out']['rows'] == 42 and 'resolve builds none' in config['held_out']['built']
+
+
+def test_the_physics_drives_stop_before_a_drive_that_does_not_fit_and_after_a_failed_part_1(monkeypatch, tmp_path):
+    from experiments import v15_stage5_physics as physics
+    assert physics.ORDER == ('expert', 'policy') and physics.ROW == 11 and physics.TIME_CAP == 500.
+    physics._drive_fits(0., 250., 500.)
+    physics._drive_fits(240., 260., 500.)
+    with pytest.raises(physics.StopAndAsk):
+        physics._drive_fits(260., 250., 500.)
+    monkeypatch.setattr(physics, 'OUT', tmp_path / 'physics')
+    ledger = dict(segments=[])
+    monkeypatch.setattr(stage5, '_ledger_stage5', lambda: (None, None, ledger))
+    with pytest.raises(physics.StopAndAsk):                  # part 1 has not run
+        physics._not_run_yet()
+    ledger['segments'].append(dict(v15_phase='5', stage5_step='held-out', status='failed'))
+    with pytest.raises(physics.StopAndAsk):                  # part 1 failed: the user decides
+        physics._not_run_yet()
+    ledger['segments'][0]['status'] = 'complete'
+    physics._not_run_yet()
+    ledger['segments'].append(dict(v15_phase='5', stage5_step='physics', status='failed'))
+    with pytest.raises(ValueError):                          # the charged drives run once
+        physics._not_run_yet()
+
+
+def test_an_isaac_sim_that_the_run_did_not_start_is_found_and_never_closed(monkeypatch):
+    from experiments import v15_stage5_physics as physics
+    listing = '"python.exe","100","Console","1","10 K"\n"kit.exe","4242","Console","1","900 K"\n'
+    monkeypatch.setattr(physics.subprocess, 'run', lambda *a, **k: SimpleNamespace(stdout=listing))
+    assert physics.isaac_processes() == ['kit.exe:4242']
+    with pytest.raises(RuntimeError):
+        physics._check_no_isaac()
+    monkeypatch.setattr(physics.subprocess, 'run', lambda *a, **k: SimpleNamespace(stdout=listing.splitlines()[0]))
+    physics._check_no_isaac()

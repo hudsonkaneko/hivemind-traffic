@@ -38,8 +38,16 @@ shared ledger needs the user's approval of its resolved configuration first, as 
 - **Stage 5** (you approved the recommended size on November 27: "Approve recommended"; decision 10):
   the held-out check and the physics drives, with the Phase 3 policy as the only candidate; see
   [Stage 5 proposal](#stage-5-proposal-november-26-the-held-out-check-and-physics-drives-for-your-approval).
-  - **Part 1, the held-out check,** is built and its configuration pinned; it runs next. See
+  - **Part 1, the held-out check, ran** (SUMO); see
     [Stage 5 part 1](#stage-5-part-1-november-27-the-held-out-check).
+    - The policy has the same verdict as expert v3 on every held-out row: 34 of 42 re-baselined and
+      29 recorded.
+    - Round 16 passes 25 and 24.
+    - By the reading set before the run, the policy beats v14's best: +21.4 points re-baselined,
+      with a 95% interval of +6.3 to +35.5.
+    - By the same reading, it doesn't "hold up as well as its teacher". The only reason is a stable
+      merge failure on two rows, a failure it never had on the development rows. Expert v3 fails
+      the same two rows the same way.
   - **Part 2, the physics drives,** follows: an uncharged build and development drive, then the two
     charged drives.
 
@@ -2040,6 +2048,73 @@ Its numbers are the proposal's:
 - **Range:** 232,604–272,099 decisions.
 - **Reservation:** 280 s.
 - **Allowance:** 300,000 decisions and 300 s, out of the 2,164.4 s of study time left.
+
+### Result
+
+**Ran** on November 27, under the shared lock (`outputs/highway-merge-v15/stage-5/held-out`).
+- **The run:** one batch of 128 tasks. SUMO (libsumo), IDM, 16 workers at below-normal priority.
+- **The checks all matched:**
+  - the canary re-ran the development check on another worker;
+  - the policy reproduced its Phase 3 record on development row 3;
+  - the parity row matched Phase 2 run 3.
+- **Charged:** 253,863 decisions (3,084 of them the canary), 129 evaluation episodes, and 110.8 s.
+  - Expected: 249,597 decisions and 156.3 s; projected 262,077.
+  - Allowance: 300,000 decisions and 300 s.
+- **Study time:** 62,646.4 of 64,700 s used (2,053.6 s left). The lock was released.
+- **Each held-out row ran once.** None is run again.
+
+**Pass rates on the 42 held-out rows** (95% Wilson intervals):
+
+| Driver | Re-baselined gates | Round 24's recorded gates | On the 70 development rows (re-baselined, recorded) |
+|---|---|---|---|
+| The policy `l2:bc7c050f6d3da3ce` | 34/42 (81%, 67–90%) | 29/42 (69%, 54–81%) | 62, 54 |
+| Expert v3 | 34/42 (81%, 67–90%) | 29/42 (69%, 54–81%) | 62, 54 |
+| Round 16 (v14's best) | 25/42 (60%, 45–73%) | 24/42 (57%, 42–71%) | 36, 33 |
+
+**Paired differences** on the same rows:
+
+| Pair | Gates | Difference | 95% interval | Only the first passes | Only the second passes | McNemar p |
+|---|---|---|---|---|---|---|
+| Policy − expert v3 | Re-baselined | 0 | −6.8 to +6.8 points | 0 | 0 | 1 |
+| Policy − expert v3 | Recorded | 0 | −5.5 to +5.5 points | 0 | 0 | 1 |
+| Policy − round 16 | Re-baselined | +21.4 points | +6.3 to +35.5 | 10 | 1 | 0.012 |
+| Policy − round 16 | Recorded | +11.9 points | −0.8 to +24.0 | 6 | 1 | 0.125 |
+
+- **The policy matches its teacher row for row.**
+  - It has the same verdict as expert v3 on every held-out row, under both gates, with the same
+    failures.
+  - Their traces are identical on 36 of the 42 rows. They differ on rows 2, 13, 16, 20, 27 and
+    36, with the same verdicts.
+- **Where both fail, re-baselined:**
+  - **Rolling merge quality:** rows 0, 6, 14, 20, 22, 28, 36 and 37.
+  - **The stable merge, too:** rows 14 and 28.
+  - **No driver passes case 0** (the v05 I-110 merge; rows 0, 14 and 28) at any held-out seed. On
+    the development rows the policy and expert v3 failed it at 2 of its 5 seeds (rows 0 and 14).
+- **Events:**
+  - **The policy and expert v3:** one cut-in each, on row 36 (the Pasadena 8-of-16 merge), and
+    nothing else: no collision, free-road stop or emergency.
+  - **Round 16:**
+    - a collision and an emergency on row 37;
+    - 11 free-road stops on rows 22, 23 and 24;
+    - a cut-in each in the two focused 1-of-16 LA cases (rows 24 and 25).
+
+  These are results; nothing was retuned.
+- **The intervals are wide.** Each row is about 2.4 points. The three rows of a case share its road
+  and demand and differ only by seed, so they aren't independent, and the pooled intervals are
+  likely narrower than that structure justifies.
+
+**Reading, set before the run:**
+- **Better than v14's best: yes.** Against round 16, re-baselined, the policy is +21.4 points, and
+  the 95% interval (+6.3 to +35.5) lies above 0. Under round 24's recorded gates the interval
+  (−0.8 to +24.0) includes 0.
+- **Holds up as well as its teacher: no, by the rule as written.** Two of its three conditions hold:
+  - the interval against expert v3 includes 0 (the difference is 0);
+  - there's no collision and no new kind of event.
+
+  The third doesn't: the policy fails the stable merge on rows 14 and 28, a gate failure it never
+  had on the development rows. Expert v3 fails the stable merge on the same two rows, and the two
+  drivers' verdicts match on every row.
+- **These are the study's final numbers for this policy.** Nothing is tuned on them.
 
 ## Decisions for you
 

@@ -4,6 +4,24 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-27 - Plan v15 Stage 5 part 1: on the held-out rows the policy matches expert v3 and beats round 16
+
+- **Ran:** the held-out check under the shared lock. SUMO (libsumo), IDM, 16 workers at below-normal
+  priority. Each of the 42 held-out rows ran once.
+  - The canary, the development check and the parity row matched.
+- **Charged:** 253,863 decisions, 129 evaluation episodes and 110.8 s. Study time left: 2,053.6 s.
+- **Result (re-baselined gates):**
+  - The policy and expert v3 each pass 34 of 42, with the same verdict on every row; recorded, 29
+    each.
+  - Round 16 passes 25 (24 recorded).
+  - Policy − round 16: +21.4 points (95% interval +6.3 to +35.5, McNemar p = 0.012). Recorded:
+    +11.9 (−0.8 to +24.0).
+- **Reading set before the run:**
+  - It beats v14's best.
+  - It doesn't "hold up as well as its teacher" as written, only because of the stable-merge
+    failures on rows 14 and 28. Expert v3 shares them.
+- **Next:** part 2, the physics drives.
+
 ## 2026-11-27 - Plan v15 Stage 5 approved; part 1, the held-out check, built and pinned
 
 - **User decision:** "Approve recommended", typed in the Claude side session (plan v15 decision 10).
