@@ -4,6 +4,43 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-27 - Plan v15 ramp driving: the slow merges, written up first for decision (nothing run)
+
+- **Asked:** "Yes, driving first" (relayed by the main session): the ramp-driving problem first, then
+  the physics options. The user asked whether success is judged by a few numbers or by the car's
+  movement.
+- **Written:** "Ramp driving (November 27): the slow merges, for your decision" in plan v15, ahead of
+  the physics options.
+  - **The decisions are renumbered:** 13 to 15 for the ramp driving, 16 to 20 for the physics gap.
+- **Row 11 checked against the saved logs.** The PhysX drive (C2) and the SUMO record drive alike:
+  - it brakes at once to a 5.2 m/s hold for 4 mainline cars;
+  - it commits at 4.8 s and un-commits at 6.2 s;
+  - it queues behind a SUMO ramp car stopped at the line from 10 to 18 s;
+  - it merges at 27.7 s at 11.8 m/s.
+  - PhysX tracked the commands within 0.04 m/s² on the ramp.
+- **How common it is** (saved SUMO development records; no held-out record used): 31 ramp cars on
+  25 rows, the same cars for each driver.
+  - **The policy drives exactly like expert v3.**
+  - **Where mainline cars are coming** (12 cars): expert v3 merges at a median of 24.4 s at
+    10.9 m/s, after 16.1 s below 5 m/s. Round 16 merges at 6.2 s at 19.4 m/s, with SUMO emergencies
+    on 4 of those 9 rows.
+  - **On a clear ramp** (7 cars) the two drive alike.
+- **The causes, read in the code:**
+  - expert v3's gap acceptance at the stop line, judged at a 1.5 m/s² run-up speed;
+  - an immediate hold at the steady arrival speed when no gap is acceptable;
+  - a commit that doesn't force the planned run-up;
+  - SUMO's yield-junction ramps, which have no acceleration lane (whether the real ramps have one
+    wasn't checked).
+- **No gate looks at this movement.** Movement checks M1 to M4 are now proposed, with their
+  thresholds set before any run and their post hoc effects labelled.
+- **Recommended:**
+  - M1, M2 and M4 as reported checks;
+  - a Level 1 change (expert v4), written and replayed offline first, then a 70-row SUMO re-check
+    (about 150 s, no raise);
+  - reporting by situation, on matched rows;
+  - the physics test drives held until the merge logic is settled.
+- **Charged:** nothing.
+
 ## 2026-11-27 - Plan v15 physics gap options: five ways forward, written up for decision (nothing run)
 
 - **Asked:** "Write up the options" (relayed by the main session).

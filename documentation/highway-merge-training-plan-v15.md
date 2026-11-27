@@ -71,10 +71,23 @@ shared ledger needs the user's approval of its resolved configuration first, as 
     - By the reading set before the run, the gap is not closed on row 11 and the corridor is "not
       improved".
   - **Charged:** 462.7 s of the 850 s cap; no collision.
+- **The ramp driving** (you asked on November 27 whether success is judged by numbers or by the
+  car's movement, and chose "Yes, driving first"): written, nothing run; see
+  [Ramp driving](#ramp-driving-november-27-the-slow-merges-for-your-decision).
+  - **The saved SUMO records:** the policy drives exactly like expert v3.
+    - **Where mainline cars are coming** (12 of the 31 ramp cars on the development rows), it brakes
+      early and crawls: a median of 16.1 s below 5 m/s. It merges at a median of 24.4 s, at 10.9 m/s.
+    - **Round 16 merges at 6.2 s at 19.4 m/s,** but with more SUMO emergencies.
+    - **On a clear ramp** the two drive alike.
+    - **No gate looks at this movement.**
+  - **Recommended** (decisions 13 to 15):
+    - movement checks M1, M2 and M4, reported from now on;
+    - a Level 1 change (expert v4), written and replayed offline first, then a 70-row SUMO re-check
+      (about 150 s, no raise).
 - **The options for the physics gap** (you chose "Write up the options" on November 27): written,
   nothing run; see [Physics gap options](#physics-gap-options-november-27-what-next-for-your-decision).
   - **Recommended:** C2 as the default physics controller, and a physics-only torque-limit rule for
-    realization interventions, tested on the 5 northbound rows (decisions 13 to 17).
+    realization interventions, tested on the 5 northbound rows (decisions 16 to 20).
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -2580,10 +2593,316 @@ None of these was authorized:
 The gates are unchanged (decision 12, "keep"). Revisiting them is your decision, now that the
 results are in.
 
+## Ramp driving (November 27): the slow merges, for your decision
+
+**Your decision (relayed by the main session):** "Yes, driving first": write up the ramp-driving
+problem first, then the physics options. Your words included:
+- "looks significantly worse compared to the old versions";
+- "are you measuring success by just a few numerical values? or are you also looking at the actual
+  movement of the vehicle".
+
+**What this is:** a written proposal only.
+- **Nothing ran:** no SUMO, no Isaac Sim, no code or gate change, no charge.
+- **Where the numbers come from:**
+  - the saved development-row records (IDM background, first attempt) of expert v3 (Phase 2 run 3),
+    the policy (Phase 3 relabel) and round 16 (Phase 1 run 1);
+  - the row 11 physics drive with C2;
+  - the code;
+  - offline Python over those logs.
+- **No held-out record was used** for any ramp measure. The physics options below read only the
+  held-out records' total realization-flag and drive-limit counts.
+- **The scripts and their outputs** are in `outputs/highway-merge-v15/ramp-driving/`, outside Git.
+
+### The short answer to your question
+
+- **The pass/fail verdicts are numbers from the gates, and none of them looks at the movement you
+  saw.** (Read in the code.)
+  - **No gate checks the merge speed against the traffic the car joins.** Merge quality's speed
+    match compares the car with the gate's own target speed, within 2 m/s. After a yield entry, that
+    target starts at the car's own speed and rises at a set rate.
+  - **No gate flags slowing or crawling on an open ramp.** A stop counts only below 0.1 m/s.
+    Expert v3's crawls at 0.1–0.7 m/s never counted as stops.
+  - **Rule R2 of the re-baselined gates** restarts that target at the car's own speed when it
+    crosses the stop line. That turned 3 of the slow merges' recorded failures (rows 39, 53 and 67)
+    into passes.
+- **I looked at movement for row 11's physics drive, but not across rows until now.**
+  - Across rows, the slow merges are common and real.
+  - They come from expert v3's merge logic, which the policy copies.
+  - How SUMO models the ramp junction makes them worse.
+- **The comparison with the old versions wasn't matched.** v14's video was on another seed, with a
+  clear ramp (the main session's reading; I didn't find that record to re-check it). On the same
+  rows:
+  - **With a clear ramp,** the policy merges like round 16, in 4–6 s.
+  - **When mainline cars are coming,** round 16 merges about 18 s sooner and about 8 m/s faster.
+    But 4 of those 9 rows recorded a SUMO emergency with round 16.
+  - **On row 11 itself,** round 16 merged later (31.4 s, against the policy's 27.7 s) and stood still
+    for 5.2 s.
+
+### Row 11, checked against the saved logs
+
+Below is the main session's reading of the row 11 drive (PhysX, controller C2). I checked it
+against the drive's Level 1 log and trace, and against the policy's SUMO record of the same row.
+
+| The main session's reading | What the logs show |
+|---|---|
+| From 0 to 3.5 s it brakes from 27 to 10.5 mph on an open ramp | **Confirmed.** 12.11 m/s (27.1 mph) at 0.2 s, 4.68 m/s (10.5 mph) at 3.5 s. The request is at its −3.0 m/s² floor from 1.1 to 2.4 s, with the free term at −3.0. The car decelerates at 2 m/s² or more for 22 decisions from 0.8 s. The leader, ramp_0, is 54–57 m ahead and pulling away (12.1 m/s at the start) |
+| Junction hold 5.1 m/s, waiting for main_10, main_7, main_4 and main_1 | **Close.** The hold is 5.22 m/s at 0.2 s, easing to 4.68 m/s by 3.5 s. It waits for those 4 cars from 0.2 s |
+| Holds about 4.7 m/s from 3.5 to 13 s | **Confirmed** (4.68–4.75 m/s), apart from the commit below |
+| Commits at about 5 s (target 14.35 m/s), up to 13.4 mph | **Commits at 4.8 s** (target 14.57 m/s; 14.35 at 5.0 s). Peak 5.99 m/s (13.4 mph) at 6.5 s |
+| Un-commits at about 7 s and brakes | **Un-commits at 6.2 s.** The request turns negative at 6.5 s and reaches −1.68 m/s² at 7.1 s |
+| From 13 to 18 s the bound term goes negative behind ramp_0, which stands (≤ 0.2 m/s) at the ramp end from about 10 to 18 s; minimum 1.32 m/s at 18 s | **Confirmed.** ramp_0 is at ≤ 0.2 m/s from 10 to 18 s, at the stop line. The bound term is negative from 12.3 to 17.9 s. Minimum 1.32 m/s (3.0 mph) at 18 s |
+| Merges at 27.7 s at 11.6 m/s, while mainline cars do 17–23 m/s | **Merge completion at 27.7 s at 11.8 m/s** (26.4 mph). The 4 mainline cars it waited for passed at 20.8–24.4 m/s (median 21.5). At the merge itself the logs show only ramp cars nearby (ramp_0, 45 m ahead at 18.3 m/s), so 17–23 m/s is neither confirmed nor ruled out |
+| 60 mph at about 40 s | **Confirmed.** 26.78 m/s at 40 s; 26.82 m/s (60 mph) at 41 s |
+| Not physics: PhysX matched the commands within about 0.01 m/s² | **Within 0.04 m/s² on the ramp** (the largest difference in 226 decisions to 22.7 s; none over 0.05). The policy's SUMO record of row 11 drives the same way: merge at 27.7 s at 11.83 m/s |
+| Matched: round 16 in SUMO merged at 31.4 s with 52 stopped decisions, finishing at 49.4 s | **Merge at 31.4 s,** with 52 decisions below 0.1 m/s (5.2 s). Its last record is at 49.7 s (route completed) |
+| Unmatched: v14's videos, seed 6950004, clear ramp, merge at about 6 s | **Not re-checked.** No saved v14 episode with that seed turned up in a quick search |
+
+In SUMO only, the policy also committed briefly from 1.9 to 2.2 s.
+
+### 1. How common it is (saved SUMO records, development rows)
+
+- **The cars:** every car that approaches a ramp's yield entry. That's 31 cars on 25 of the 70
+  development rows, the same cars for each driver.
+- **The policy drives exactly like expert v3** on all 31: the same merge time, merge speed, lowest
+  speed and crawl time. So below, "expert v3" also stands for the policy.
+- **Four situations,** assigned from expert v3's record (the same cars for each driver):
+
+| Situation | Cars | Rows | What happens |
+|---|---|---|---|
+| **Clear** | 7 | 36, 50, 51, 52, 64, 65, 66 | Expert v3 merges within 7 s |
+| **Stream** | 12 | 8, 9, 22, 24, 37, 38, 39, 53, 67 | Our car waits for mainline cars, with no stopped car ahead |
+| **Blocked** | 5 | 9, 10, 11, 23, 25 | A SUMO ramp car ahead stands still for 2 s or more |
+| **I-110 merge case** | 7 | 0, 14, 28, 42, 56 | A case with its own network (see section 3) |
+
+| Situation (cars) | Driver | Merged | Time to merge: median (range) | Merge speed (median) | Lowest ramp speed (median) | Time below 5 m/s (median) | Cars that stopped | Rows passed, recorded |
+|---|---|---|---|---|---|---|---|---|
+| Clear (7) | expert v3 | 7 | 4.5 s (4.4–5.9) | 17.7 m/s | 12.2 m/s | 0 s | 0 | 7 of 7 |
+| | round 16 | 7 | 4.3 s (4.2–5.9) | 18.6 m/s | 12.3 m/s | 0 s | 0 | 3 of 7 |
+| Stream (12) | expert v3 | 12 | 24.4 s (12.9–35.2) | 10.9 m/s | 0.7 m/s | 16.1 s | 0 | 0 of 9 |
+| | round 16 | 10 | 6.2 s (4.4–21.3) | 19.4 m/s | 12.2 m/s | 0 s | 1 | 2 of 9 |
+| Blocked (5) | expert v3 | 5 | 26.6 s (24.4–29.8) | 11.8 m/s | 1.2 m/s | 15.6 s | 0 | 4 of 5 |
+| | round 16 | 5 | 28.7 s (10.9–31.2) | 14.2 m/s | 0.0 m/s | 17.2 s | 4 | 0 of 5 |
+| I-110 (7) | expert v3 | 7 | 35.4 s (26.4–43.1) | 4.2 m/s | 3.5 m/s | 3.9 s | 0 | 3 of 5 |
+| | round 16 | 7 | 39.3 s (20.0–49.8) | 2.4 m/s | 0.0 m/s | 5.6 s | 5 | 0 of 5 |
+
+- **How to read the table:**
+  - Times start at the car's first record.
+  - "Stopped" means below 0.1 m/s, the gates' definition.
+  - "Rows passed" counts each row once, under round 24's gates.
+- **On the stream rows:** expert v3 crawls (a median of 16.1 s below 5 m/s, or 11 mph). It merges at
+  a median of 10.9 m/s (24 mph). Round 16 merges at 19.4 m/s (43 mph).
+- **Round 16's quick merges came with problems:**
+  - It never merged 2 cars, on rows 8 and 24.
+  - Rows 8, 9, 24 and 39 recorded a SUMO native emergency. The failures are read from the records;
+    that round 16's merge caused them is inferred.
+  - It passed rows 38 and 53, which expert v3 failed.
+- **Merge speed against the mainline:** I took the mainline cars that passed the entry in the 10 s
+  before our car left the ramp. That covers 15 of expert v3's cars and 16 of round 16's.
+  - Expert v3 merged a median of 10.4 m/s (23 mph) below them; round 16, 3.7 m/s (8 mph) below.
+  - Which cars count as mainline is inferred from their ids and positions.
+
+### 2. Why expert v3's Level 1 does it
+
+This is read in `traffic/v15_rule_expert.py` (`select_gap`, `entry_options`, `_junction` and
+`decide`), unless it's marked inferred.
+- **How it judges a gap.** At a yield entry it takes the mainline cars approaching the shared lane,
+  in order. It accepts a gap when both of these hold:
+  - the car behind the gap would brake at most 2.0 m/s² (SUMO's IDM, with that car's own
+    parameters) when our car crosses the stop line, at the speed our car would have there;
+  - every car ahead of the gap passed at least 1 s before.
+- **The speed it would have there** is a run-up from its current speed at 1.5 m/s².
+  - A slow car enters slowly.
+  - A mainline car at 21–24 m/s closing on a car entering at 5–14 m/s needs a long gap.
+  - (Inferred: this is why most gaps fail.)
+- **The early slowing.** When no visible gap is acceptable, it plans to arrive 1 s after the last
+  visible car passes. It holds the steady speed that gets it there on time: the distance to the line
+  divided by the time.
+  - **On row 11 at 0.2 s:** 102 m in 19.6 s, so 5.2 m/s. The free term then asks for its −3.0 m/s²
+    floor, wherever the leader is.
+  - **It slows at once,** not when it needs to.
+  - **Slowing lowers its entry speed,** so the next gaps fail too. (Inferred.)
+  - **Its only other option** is a 0.5 m/s crawl, then the run-up. There's nothing in between, such
+    as holding a moderate speed and then running up to cross the line at speed.
+- **The commit and un-commit flip:**
+  - **Commit:** it commits as soon as a gap is acceptable now. Committed, its speed target is the
+    larger of the gate's target and its current speed. So it no longer slows, but nothing makes it
+    run up at the 1.5 m/s² its plan assumed.
+  - **On row 11:** the request may move only 0.3 m/s² from the measured acceleration per decision
+    (jerk ≤ 3 m/s³). It rose in those steps to 1.41 m/s² at 5.3 s. Then
+    the gate's target restarted at the car's own speed at 5.4 s (the trace marks it "restarted").
+    The request fell to 0.35–1.0 m/s².
+  - **Then each re-plan slips.** The planned crossing moved from 11.8 s to 12.1 s. The gap in front
+    of main_4 shrank from 54.5 m to 45.7 m.
+  - **At 6.2 s,** main_4's predicted braking passed the 3.0 m/s² abort limit, so the car
+    un-committed and braked.
+  - **What's read and what's inferred:** each step is in the logs; the chain from the slow run-up
+    to the abort is inferred.
+- **It isn't a physics effect:** the same crawl and flip are in the SUMO record.
+
+### 3. How SUMO models the ramp junction
+
+Read in each case's `network.net.xml` and `routes.rou.xml`:
+- **Every ramp case** joins a one-lane ramp to mainline lane 0 at a junction of type "priority".
+  - **The ramp's connection is minor** ("m": it must yield); the mainline's are major ("M").
+  - **The ramp's visibility** is 100 m.
+- **There's no added lane.** The road after the junction has as many lanes as the road before it:
+  3 in the LA cases and 5 in the I-110 merge case. So there's no acceleration lane in which to match
+  speed.
+- **The junction lane** is 43.3 m long at Adams, 20.9 m at Pasadena and 2.0 m in the I-110 merge
+  case.
+- **The car types set no junction-model or impatience parameters,** so SUMO's defaults apply. I
+  didn't look the default values up.
+- **SUMO's mainline cars ignore a ramp car until it crosses the stop line,** then follow it. This
+  comes from a check recorded in expert v3's code: a mainline car braked at 9 m/s² as a ramp car
+  entered the junction lane at 4.4 m/s. I didn't re-check it.
+- **So the model is a yield junction,** like a side street with a yield sign: a ramp car must find
+  its gap at the line. SUMO's own ramp cars do just that. Row 11's ramp_0 stood still at the line
+  for 8 s.
+
+**Is it realistic?**
+- **Freeway entrances usually have an acceleration lane,** where drivers match speed before they
+  merge. This model has none.
+- **Not checked:** whether the real Adams, Pasadena and I-110 ramps have one. I read no design
+  source either, so "unrealistic" here is an inference, not a checked fact.
+
+**Which rows can be trusted for judging the merge logic:**
+- **Clear (7 cars):** yes; the junction barely matters. But they don't test waiting.
+- **Stream (12 cars):** yes, for comparing drivers under the same model. They're where expert v3
+  differs from round 16. The yield junction limits their realism.
+- **Blocked (5 cars, rows 9, 10, 11, 23 and 25):** not on their own. The stopped SUMO ramp car ahead
+  decides most of the outcome, and that's the yield model, not our driver. Row 11 is one of these,
+  so it's a poor showcase.
+- **The I-110 merge case (7 cars):** every driver is slow there, and round 16 stops 5 of the cars. I
+  didn't examine it further.
+
+### 4. Movement checks, set now, before any run
+
+**Where the thresholds come from.** Each one reuses a value the project already has, or it's marked
+as my choice.
+
+**The close leader,** for M1 and M2. A leader is close if any of these holds:
+- it's within the stop audit's 20 m free gap;
+- the headway is under 3 s;
+- the closing time is under 6 s.
+
+The 3 s and 6 s are twice the per-car gate's minima of 1.5 s headway and 3 s TTC; the factor of 2 is
+my choice.
+
+**The four checks:**
+- **M1, hard braking on an open road:** 2.0 m/s² or more of deceleration for 3 decisions in a row
+  before the merge, with no close leader.
+  - 2.0 m/s² is expert v3's own comfort braking (`idm_comfort_m_s2`).
+  - The 3 decisions are the gate's avoidable-braking count.
+- **M2, crawling on an open ramp:** more than 1 s below 5 m/s before the merge, with no close leader.
+  - 5 m/s is the free-road stop rule's minimum target.
+  - 1 s is the merge-quality gate's stop limit.
+- **M3, merge speed against traffic (report only):** at merge completion, the car's speed is at
+  least the nearby mainline speed minus 2 m/s, the gate's speed-match tolerance. It needs mainline
+  cars in view, so it applies to about half the cars.
+- **M4, accelerate then brake:** on the ramp, the speed rises at least 1 m/s above its lowest point
+  so far, then falls at least 1 m/s again. The 1 m/s is my choice.
+
+**How a car fails:** if M1, M2 or M4 flags it, or if it never merges.
+
+**SUMO and physics alike:** the checks need only the car's own trace and its leader. The row 11
+physics drive (C2) fails M1 (22 decisions), M2 (6.6 s) and M4 (once).
+
+**Their effect on the saved SUMO records** (post hoc: seen after the fact, not a test):
+
+| Situation (cars) | Driver | M1 | M2 | M4 | Fails any |
+|---|---|---|---|---|---|
+| Clear (7) | expert v3 | 0 | 0 | 0 | 0 |
+| | round 16 | 0 | 0 | 0 | 0 |
+| Stream (12) | expert v3 | 11 | 8 | 3 | 11 |
+| | round 16 | 2 | 1 | 3 | 5 |
+| Blocked (5) | expert v3 | 3 | 4 | 4 | 5 |
+| | round 16 | 5 | 4 | 4 | 5 |
+| I-110 (7) | expert v3 | 2 | 4 | 7 | 7 |
+| | round 16 | 5 | 5 | 6 | 6 |
+| **All (31)** | **expert v3 (= the policy)** | **16** | **16** | **14** | **23** |
+| | **round 16** | **12** | **10** | **13** | **16** |
+
+- **Round 16's "fails any"** includes its 2 cars that never merged.
+- **M3 flags 14 of the 15 expert v3 cars it applies to, and 12 of round 16's 16.**
+  - That includes the clear merges with mainline cars in view: here every car leaves the junction
+    below traffic speed.
+  - So it can't tell good driving from bad in this network. I'd report it, not gate on it.
+
+### 5. Fix options for the merge logic
+
+**A. A Level 1 change: a new expert version, v4.**
+- **The changes,** each aimed at one cause above:
+  1. **No early slowing.** With no acceptable gap, keep the current speed until holding would need
+     2.0 m/s² of braking; then slow. It still stays within the leader, curve and stop-line limits.
+  2. **A run-up option.** Hold a moderate speed, then run up at 1.5 m/s² to cross the line as the
+     gap arrives, as fast as that allows. Today the only options are the steady speed or a 0.5 m/s
+     crawl. Your example, "match traffic speed, then take a gap", is as near as this yield junction
+     allows: there's no lane to match speed in before the line.
+  3. **A committed car runs up as planned.** Its target is the planned run-up speed, not the larger
+     of the gate's target and its current speed. The 3.0 m/s² abort stays.
+- **What it changes:**
+  - **Both drivers:** Level 1 is the executor of both expert v3 and the policy, so both change, and
+    so do their driver ids.
+  - **The labels:** the policy's Level 2 labels came from expert v3's choices. If v4 picks gaps
+    differently, a relabel and refit may be needed. That's unknown until the re-check.
+- **Before any run (uncharged):**
+  - the code and its tests;
+  - an offline replay of v4's gap choice over the saved stream rows. `select_gap` needs only
+    recorded inputs; closed-loop effects need SUMO.
+- **The re-check:** a 70-row SUMO run of expert v4, and of the policy on v4. About 271,000
+  decisions and 120–150 s at 16 workers, the plan's estimate for a Level 1 change.
+- **The no-regression rule, set now:**
+  - neither driver loses a development row it passes today, under either gate set (54 recorded,
+    62 re-baselined);
+  - no new event kind, in particular no native emergency and no cut-in;
+  - fewer cars fail the movement checks than today's 23 of 31, and none of the 7 clear cars does;
+  - rows where the change never acts reproduce their traces exactly.
+- **If a relabel and refit are needed:** about 140 s for a fit and its 70-row check (the plan's
+  cloning estimate), plus a labelling run of about 100 s (my estimate).
+- **The held-out check can't follow.** Held-out rows are never re-run, so Stage 5's held-out result
+  wouldn't carry over to v4. Confirming v4 would need new held-out rows (your decision): about 600 s
+  at Stage 5's size.
+- **Cost:**
+  - about 150 s for the re-check alone;
+  - about 900–1,000 s with a refit and new held-out rows, of the 1,414.8 s left.
+  - No raise, but little would be left for the physics drives.
+
+**B. Add acceleration lanes to the SUMO ramp junctions.**
+- **It's the realistic fix,** if the real ramps have them (not checked).
+- **What it changes:** every ramp row's SUMO result, for every driver and baseline.
+- **The 3D model would have to match.** You said not to modify it, so this is your decision only.
+- **The held-out comparison couldn't follow.**
+- **Cost:** unknown. A network rebuild, plus at least 3 baselines re-run at about 100 s each.
+
+**C. Report the movement checks, and change no driver.**
+- **What it changes:** the reports. Every SUMO and physics report adds M1 to M4 for each car.
+- **Cost:** 0 s.
+
+### My recommendation for the ramp driving
+
+1. **Adopt M1, M2 and M4 now, as reported checks,** with M3 reported alongside (decision 13).
+   - Use them in the no-regression rule of any Level 1 change.
+   - **Making them gates for every driver is your decision.** I'd decide that after option A's
+     re-check; the thresholds are already fixed above.
+2. **Take option A in two steps** (decision 14):
+   - **First, uncharged:** write v4, its tests and the offline replay.
+   - **Then, with your go-ahead:** the 70-row SUMO re-check (about 150 s, no raise), under the rule
+     above.
+   - **Not option B now.**
+3. **Report the four situations separately, and compare drivers only on matched rows** (decision 15).
+   - Don't judge the merge logic on the blocked rows alone.
+   - Use a stream row, not row 11, for any future matched video.
+   - Label every video physics or replay.
+4. **Hold the physics test drives** (decision 16) until decision 14 is settled. A Level 1 change
+   would change what they test. C2 as the default (decision 17) doesn't depend on it.
+
 ## Physics gap options (November 27): what next, for your decision
 
 **Your decision (relayed by the main session):** "Write up the options", answering "What next for the
 physics gap?" The other choice offered was "Stop here".
+
+**Order:** this comes after [Ramp driving](#ramp-driving-november-27-the-slow-merges-for-your-decision), as you asked ("Yes, driving first"). Its
+decisions are now 16 to 20.
 
 **What this is:** a written proposal only.
 - **Nothing ran:** no Isaac Sim, no SUMO, no charge.
@@ -2903,13 +3222,14 @@ a grade break.
 | 4. C2 as the default | The server's default controller | No | 0 | Low to moderate | No |
 | 5. Stop here | Nothing; the gap is recorded as a known limit | No | 0 | None | No |
 
-### My recommendation
+### My recommendation for the physics gap
 
-1. **Make C2 the default** (option 4; decision 14). It improved every row on every reported measure,
+1. **Make C2 the default** (option 4; decision 17). It improved every row on every reported measure,
    and it changes no SUMO result.
-2. **For the gate, test the torque-limit rule in physics only** (option 1; decision 13).
+2. **For the gate, test the torque-limit rule in physics only** (option 1; decision 16).
    - **Why this rule:** it has no number to fit.
-   - **When:** chosen now, before any further drive.
+   - **When:** chosen now, before any further drive. Driven only after decision 14 (the merge
+     logic), since a Level 1 change would change what the drives test.
    - **Where:** on the 5 northbound rows.
    - **What gets reported:** the verdicts under today's rule alongside it. The southbound numbers
      above stay post hoc.
@@ -2918,12 +3238,24 @@ a grade break.
      - Otherwise it is not confirmed, and the failure is reported as it is. That includes a failure
        for another reason, such as a first-decision jerk.
    - **If you'd rather not change the gate:** stop here (option 5), with option 4.
-3. **Not options 2 or 3 now** (decisions 15 and 16).
+3. **Not options 2 or 3 now** (decisions 18 and 19).
    - **Option 2** modifies the 3D model, which you said not to do, and the held-out comparison
      couldn't follow it.
    - **Option 3** has no real-vehicle source yet.
-4. **Take an offline look at the first-decision jerk on rows 53 and 67** (decision 17): reading code
+4. **Take an offline look at the first-decision jerk on rows 53 and 67** (decision 20): reading code
    and logs only, uncharged.
+
+### The whole recommendation, in order
+
+1. **The ramp driving first:**
+   - decision 13, the movement checks;
+   - decision 14, option A in two steps;
+   - decision 15, reporting by situation on matched rows.
+2. **Then the physics gap:**
+   - decision 17, C2 as the default, now;
+   - decision 16, the torque-limit test drives, after decision 14;
+   - decisions 18 and 19, no change to the road model or the car;
+   - decision 20, the offline look at the first-decision jerk.
 
 ## Decisions for you
 
@@ -3036,12 +3368,33 @@ relayed by the main Claude session.
     - **What's left:** every southbound row fails only on the stable merge, merge quality, and, on
       rows 53 and 67, per-car jerk.
 
-    **Revisited** in [Physics gap options](#physics-gap-options-november-27-what-next-for-your-decision): decision 13.
+    **Revisited** in [Physics gap options](#physics-gap-options-november-27-what-next-for-your-decision): decision 16.
 
-Decisions 13 to 17 were proposed on November 27, 2026 (see
-[Physics gap options](#physics-gap-options-november-27-what-next-for-your-decision)). Nothing in them has run.
+Decisions 13 to 20 were proposed on November 27, 2026. Nothing in them has run.
+- **Decisions 13 to 15** are the ramp driving (see [Ramp driving](#ramp-driving-november-27-the-slow-merges-for-your-decision)).
+- **Decisions 16 to 20** are the physics gap (see [Physics gap options](#physics-gap-options-november-27-what-next-for-your-decision)).
 
-13. **The physics gate:** what counts as a realization intervention in physics?
+13. **Movement checks:** adopt M1, M2 and M4 as reported checks, with M3 alongside, and use them in
+    the no-regression rule of any Level 1 change (recommended).
+    - **Or also make them gates now,** with the thresholds set in the proposal.
+    - **Or neither.**
+14. **The merge logic:**
+    - **Option A in two steps** (recommended):
+      - **first, uncharged:** expert v4's code, its tests and an offline replay;
+      - **then, with your go-ahead:** a 70-row SUMO re-check of expert v4 and the policy (about
+        271,000 decisions and 150 s, no raise), under the no-regression rule set in the proposal.
+    - **Or option B:** acceleration lanes in the SUMO network. It would modify the 3D model, so it's
+      your decision only.
+    - **Or option C:** report the checks and change no driver.
+    - **New held-out rows** for a changed driver would be a separate decision (about 600 s).
+15. **The ramp rows in reports** (recommended):
+    - report the four situations separately;
+    - compare drivers only on matched rows;
+    - don't judge the merge logic on the blocked rows alone;
+    - use a stream row, not row 11, for any future matched video.
+
+    Or keep today's reporting.
+16. **The physics gate:** what counts as a realization intervention in physics?
     - **The torque-limit rule, tested on the 5 northbound rows** (recommended).
       - **The drives:** C2, unrendered, at most 400 s and 3,000 decisions, counted as evaluation
         episodes in their own allowance.
@@ -3052,12 +3405,12 @@ Decisions 13 to 17 were proposed on November 27, 2026 (see
       drive, and tested the same way.
     - **Or keep the gate and stop here** (option 5).
     - No choice needs a raise.
-14. **C2 as the default physics controller:** yes (recommended) or no.
-15. **The road profile:** leave the 3D model as it is (recommended), or ask me for a smoothing
+17. **C2 as the default physics controller:** yes (recommended) or no.
+18. **The road profile:** leave the 3D model as it is (recommended), or ask me for a smoothing
     proposal, which would modify the model.
-16. **The car's physics parameters:** keep them provisional and labelled so (recommended), or ask me
+19. **The car's physics parameters:** keep them provisional and labelled so (recommended), or ask me
     for a proposal to source them from a real reference vehicle.
-17. **The first-decision jerk on rows 53 and 67:** an offline look, reading code and logs only and
+20. **The first-decision jerk on rows 53 and 67:** an offline look, reading code and logs only and
     uncharged (recommended), or leave it.
 
 ## What carries over from v14
