@@ -1,0 +1,336 @@
+{
+ "authorization": "v15 physics gap: user decision of November 27, 2026, relayed by the main Claude session: \"Yes, as recommended\" (plan v15 decision 11, recommended: C1 and C2 on development row 11 rendered at 10 Hz, then the pick and the current controller on southbound rows 25, 39, 53 and 67 unrendered; 10 drives, at most 850 s and 6,000 decisions, evaluation episodes in their own allowance, no raise of the study total or of the diagnostic episodes; the policy l2:bc7c050f6d3da3ce only; decision 12: keep the gates; not authorized: the northbound rows, Level 1 changes, the road model or LA model, the car's physics parameters, gate changes, held-out rows, installs into Isaac Sim's Python, training, any raise, merging to main).",
+ "backend": "libsumo",
+ "background": "idm",
+ "before_row11": {
+  "file_sha256": "f000195b9715b822f81940f6c20a08e42a4802498a7e78dbd66854699a758925",
+  "flags": 22,
+  "rebaselined": {
+   "failures": [
+    "safety_events_or_missing_counts",
+    "per_car_route_comfort_or_control",
+    "stable_merge",
+    "rolling_merge_quality"
+   ],
+   "passed": false
+  },
+  "recorded": {
+   "failures": [
+    "safety_events_or_missing_counts",
+    "per_car_route_comfort_or_control",
+    "stable_merge",
+    "rolling_merge_quality"
+   ],
+   "passed": false
+  },
+  "summary": "outputs/highway-merge-v15/stage-5/physics/policy/summary.json"
+ },
+ "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+ "charge": {
+  "estimates": {
+   "rendered_seconds": 88.4,
+   "rule": "the measured maxima whatever the row length; before each drive the larger of its estimate and the longest drive so far must fit",
+   "source": {
+    "rendered": [
+     "outputs/highway-merge-v15/stage-5/physics/expert/summary.json",
+     "outputs/highway-merge-v15/stage-5/physics/policy/summary.json"
+    ],
+    "unrendered": "outputs/test-runs/v15-stage5-physics-dev-expert-01/summary.json"
+   },
+   "unrendered_seconds": 70.8
+  },
+  "expected_clock_seconds": 743.2,
+  "expected_decisions": 4444,
+  "expected_episodes": 10,
+  "phase_allowance": 6000,
+  "phase_decisions_used": 0,
+  "phase_seconds_used": 0.0,
+  "reserve_seconds": 850.0,
+  "study_seconds_left": 1877.451,
+  "time_cap": 850.0,
+  "total_wall_seconds": 64700
+ },
+ "controllers": {
+  "c1": {
+   "gains": {
+    "bias_gain": 0.3,
+    "bias_limit_m_s2": 1.0,
+    "bias_pause_hold_s": 0.5,
+    "bias_pause_slope_change": 0.005,
+    "curvature_preview_s": 0.3,
+    "curvature_window_m": 6.0,
+    "grade_preview_s": 0.05,
+    "grade_source": "road",
+    "heading_gain": 1.0,
+    "integral_band_m": 0.2,
+    "lateral_gain": 3.0,
+    "lateral_integral_limit": 2.0,
+    "lateral_soft_speed_m_s": 2.0,
+    "path_smoothing_m": 8.0,
+    "speed_kp": 2.0,
+    "steady_command_m_s2": 0.2,
+    "stop_speed_m_s": 0.3,
+    "wheel_inertia_feedforward": true
+   },
+   "sha256": "e11b706900b87fd8459d54367f802554520e85f214ac8298fd67bab70dd1ccc7"
+  },
+  "c2": {
+   "gains": {
+    "bias_gain": 0.3,
+    "bias_limit_m_s2": 1.0,
+    "bias_pause_hold_s": 0.5,
+    "bias_pause_slope_change": 0.005,
+    "curvature_preview_s": 0.3,
+    "curvature_window_m": 6.0,
+    "grade_preview_s": 0.05,
+    "grade_source": "road",
+    "heading_gain": 1.0,
+    "integral_band_m": 0.2,
+    "lateral_gain": 3.0,
+    "lateral_integral_limit": 2.0,
+    "lateral_soft_speed_m_s": 2.0,
+    "path_smoothing_m": 8.0,
+    "speed_kp": 6.0,
+    "steady_command_m_s2": 0.2,
+    "stop_speed_m_s": 0.3,
+    "wheel_inertia_feedforward": true
+   },
+   "sha256": "06fe48784de932028480a208ff2e13e3266670b4a1ed2dc3774ef0e0dc716c0c"
+  },
+  "stage5": {
+   "gains": {
+    "bias_gain": 0.3,
+    "bias_limit_m_s2": 1.0,
+    "bias_pause_hold_s": 0.0,
+    "bias_pause_slope_change": null,
+    "curvature_preview_s": 0.3,
+    "curvature_window_m": 6.0,
+    "grade_preview_s": 0.0,
+    "grade_source": "pitch",
+    "heading_gain": 1.0,
+    "integral_band_m": 0.2,
+    "lateral_gain": 3.0,
+    "lateral_integral_limit": 2.0,
+    "lateral_soft_speed_m_s": 2.0,
+    "path_smoothing_m": 8.0,
+    "speed_kp": 2.0,
+    "steady_command_m_s2": 0.2,
+    "stop_speed_m_s": 0.3,
+    "wheel_inertia_feedforward": false
+   },
+   "sha256": "30be7540222ac002d0778f5ec3987a36e552d8d96f1975da75945af4af48e8f8"
+  }
+ },
+ "driver": "l2:bc7c050f6d3da3ce",
+ "drives": [
+  {
+   "controller": "c1",
+   "render_hz": 10,
+   "row": 11,
+   "step": "row11"
+  },
+  {
+   "controller": "c2",
+   "render_hz": 10,
+   "row": 11,
+   "step": "row11"
+  },
+  {
+   "controller": "stage5",
+   "render_hz": 0,
+   "row": 25,
+   "step": "southbound"
+  },
+  {
+   "controller": "pick",
+   "render_hz": 0,
+   "row": 25,
+   "step": "southbound"
+  },
+  {
+   "controller": "stage5",
+   "render_hz": 0,
+   "row": 39,
+   "step": "southbound"
+  },
+  {
+   "controller": "pick",
+   "render_hz": 0,
+   "row": 39,
+   "step": "southbound"
+  },
+  {
+   "controller": "stage5",
+   "render_hz": 0,
+   "row": 53,
+   "step": "southbound"
+  },
+  {
+   "controller": "pick",
+   "render_hz": 0,
+   "row": 53,
+   "step": "southbound"
+  },
+  {
+   "controller": "stage5",
+   "render_hz": 0,
+   "row": 67,
+   "step": "southbound"
+  },
+  {
+   "controller": "pick",
+   "render_hz": 0,
+   "row": 67,
+   "step": "southbound"
+  }
+ ],
+ "held_out": "not used: development rows 11, 25, 39, 53 and 67 only",
+ "ideal_checks": {
+  "25": {
+   "decisions": 454,
+   "elapsed_seconds": 8.0,
+   "file_sha256": "de4bd9a50953a2149c0e605fed32cbeddec60c29567b08d0d42924f2d28c738c",
+   "matches_sumo": true,
+   "rebaselined": {
+    "failures": [],
+    "passed": true
+   },
+   "recorded": {
+    "failures": [],
+    "passed": true
+   },
+   "summary": "outputs/test-runs/v15-physics-gap-ideal-row25-01/summary.json",
+   "sumo_decisions": 453
+  },
+  "39": {
+   "decisions": 438,
+   "elapsed_seconds": 5.7,
+   "file_sha256": "3636d87c1d067fd44966820cdecbcef093a8d7461a6f6f4317b42d988a1fa836",
+   "matches_sumo": true,
+   "rebaselined": {
+    "failures": [],
+    "passed": true
+   },
+   "recorded": {
+    "failures": [
+     "rolling_merge_quality"
+    ],
+    "passed": false
+   },
+   "summary": "outputs/test-runs/v15-physics-gap-ideal-row39-01/summary.json",
+   "sumo_decisions": 436
+  },
+  "53": {
+   "decisions": 431,
+   "elapsed_seconds": 5.5,
+   "file_sha256": "c99adeb4d61d81580468d0747a6b53ab6e77d82a6a681f98a336677c60a8b928",
+   "matches_sumo": true,
+   "rebaselined": {
+    "failures": [],
+    "passed": true
+   },
+   "recorded": {
+    "failures": [
+     "rolling_merge_quality"
+    ],
+    "passed": false
+   },
+   "summary": "outputs/test-runs/v15-physics-gap-ideal-row53-01/summary.json",
+   "sumo_decisions": 428
+  },
+  "67": {
+   "decisions": 445,
+   "elapsed_seconds": 5.6,
+   "file_sha256": "99bba300d04b6af3ec2bdf3f0553b61e03f7879c57f9e2fd7ea63e3eab7e27c0",
+   "matches_sumo": true,
+   "rebaselined": {
+    "failures": [],
+    "passed": true
+   },
+   "recorded": {
+    "failures": [
+     "rolling_merge_quality"
+    ],
+    "passed": false
+   },
+   "summary": "outputs/test-runs/v15-physics-gap-ideal-row67-01/summary.json",
+   "sumo_decisions": 443
+  }
+ },
+ "motion": "controlled car: Isaac Sim PhysX rigid-body vehicle (Americano v14, provisional physics) on the LA model's deck colliders, driven by the low-level controller; other cars: SUMO poses (kinematic). Physics, not a replay",
+ "phase": "6",
+ "pick_rule": "on row 11: fewer failed gates, counted over both gate sets (recorded and re-baselined); then fewer realization flags (native_realization_changes); then C1, the smaller change. A drive that ended without a result (a link or physics failure) ranks after one with a result; if neither has one, stop and ask. The pick is not revisited after the other rows.",
+ "priority": "below_normal",
+ "reading": "Row 11: closed if the pick passes both gate sets in PhysX. The southbound corridor (rows 11, 25, 39, 53, 67): closed if the pick passes in PhysX every row the policy passes in SUMO, under each gate set, with no collision; improved if the pick passes more rows than the current controller under the re-baselined gates, loses none under either set (no row the current controller passes and the pick fails), and has no new event kind (no event kind in a pick drive that is not in the current controller's drive on that row); otherwise not improved. A pick drive without a result passes no gate. Reported per row, not gated: the flags and the stable-merge window intervention fraction, peak jerk, overspeed decisions, acceleration error and torque-limit decisions.",
+ "road_model": "highway_usd/la_10_110/la_10_110_flat.usdc (unchanged)",
+ "round_index": 24,
+ "rows": [
+  11,
+  25,
+  39,
+  53,
+  67
+ ],
+ "schema": "highway_merge_v15_physics_gap_v01",
+ "sources": {
+  "environments/highway_flow_rl_v14_physical_env.py": "804156b9b84f4f1d009b2c6a1d78e58f0efef64e9932a46f0407cb50ee6a415a",
+  "experiments/v15_physics_gap.py": "63547a8ba26e85146330cbd73b09fc512806ff298f9383fae9195e34c17341c1",
+  "experiments/v15_pool.py": "50b1168eec920540c0f8fc976400f1fb1fbe32bb1c3879cb0a56fd011ed465aa",
+  "experiments/v15_regrade.py": "515c3b7cccdf8598f18a9449341e7bf57dd12a4052d3e67ee42dfe3a86f0932d",
+  "experiments/v15_stage5_physics.py": "d6b3798ce4ccfa49bd501c1ebe71333b98301fd70ad7f09eba3f93e0eb5544b5",
+  "scripts/physics_drive_server.py": "54cd18b9c844aac9a79cea077bd9f89223a2ec472374dc8b700e914a3fa26d9e",
+  "traffic/physical_controller.py": "0d3164a829cbc1eb036ab7e8d38494d98afb21777b1061e2bafb6364ae30b495",
+  "traffic/physical_drive.py": "b46675d311f8effe953434cec8e3cc773baa7784bfb7c01539f6b90e8fd1f1cf",
+  "traffic/physics_link.py": "c4b96e837ed09908f3e2038cc4dd995a2b6f41ee8869edc9cd2a9acb83098bef",
+  "traffic/v15_level2.py": "7a1c1066f68eef06efb88ba7b70e4705ebbd19bd312d7d713237517758bc01e2",
+  "traffic/v15_rule_expert.py": "9018ba3a239d6f2e79255f5a8f2ffacb2ce5c5f24f0b0ff1928f39d755eb6571"
+ },
+ "stop_rule": "C1 and C2 are frozen before the first drive and nothing is changed after a drive. A collision, or a link or physics failure, ends that drive; a collision with C1 or C2 also stops the rest of the run; it is reported and nothing is retuned. Before each drive: the larger of its estimate (88.4 s rendered, 70.8 s unrendered, the measured maxima) and the longest drive so far must fit what is left of the 850 s, and the larger of its row's SUMO decisions and the most decisions of a drive so far must fit what is left of the 6,000; otherwise stop and ask, never trim. If an Isaac Sim this run did not start is open, stop and ask, never close it. One process at below-normal priority under the shared lock; no SUMO run alongside; never held-out rows.",
+ "sumo": {
+  "11": {
+   "decisions": 462,
+   "key": "4968c4ee4454aa8ec3b8b1bd2d5324353b3f1fe68bad174f5fa56a5ee03a04be",
+   "rebaselined": true,
+   "recorded": true,
+   "report_sha": "4c7918d7120382159dadff1cbcc2ad1712661c11806ea3f3ef196a5301a29f54",
+   "seed": 6952001,
+   "trace_sha": "78b68d624616202cccb53eb18c22d8a02770f29b3bf081452c81989c89bf1741"
+  },
+  "25": {
+   "decisions": 453,
+   "key": "928120b7d5f6a2c7e7978d68ca9d11b712b8ac2239ae80bc3015e48b5541f295",
+   "rebaselined": true,
+   "recorded": true,
+   "report_sha": "b49b83eada4fd6f9acf5f11f80e2027e0ca6651e3a7ccea40f0957a80ef4169f",
+   "seed": 6952002,
+   "trace_sha": "c9f64c2b1245a4e944eb3bcb4dd74a77de6c298afa12a2432c8ae64807375312"
+  },
+  "39": {
+   "decisions": 436,
+   "key": "de0c588e04abe881302aaa7926ca369e3462a29b412262c7888da63d9ac77b13",
+   "rebaselined": true,
+   "recorded": false,
+   "report_sha": "56b22c0e445730f72507966b77d250be883a15386d3de8c6135a7ef415161105",
+   "seed": 6952003,
+   "trace_sha": "a198c29ba2685ffe6fe0fc33c51946f6fcb1fbb42f4d108920c1de677179109a"
+  },
+  "53": {
+   "decisions": 428,
+   "key": "863fb9e1378c22e282b2f75465e1944241552d4e32c9468ee9dd4193be551e6a",
+   "rebaselined": true,
+   "recorded": false,
+   "report_sha": "f3ccb24cb9607f27bec405179ad185bbaa258e63a11bbd643dfc97b457c1f309",
+   "seed": 6952004,
+   "trace_sha": "a07e2cada9fd669a826b8d595e021e5877c8c6ba7371262d0e94a996572e2c28"
+  },
+  "67": {
+   "decisions": 443,
+   "key": "1c20a15296820ac04fb0a25aad30465dcda15da1872e2c67e72fd506c78e07a8",
+   "rebaselined": true,
+   "recorded": false,
+   "report_sha": "ad1efff2457f6db061e314871fbb41bff0e648c918757fe4747a082998c74575",
+   "seed": 6952005,
+   "trace_sha": "0518bbbe190badb0e97a46f1eef15a0696a2b26548dadd875be4067c9564da8a"
+  }
+ }
+}
