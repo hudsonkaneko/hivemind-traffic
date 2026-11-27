@@ -2369,8 +2369,8 @@ graph. That isn't authorized, and it isn't sized here.
   - the controller code and its tests, with no simulator;
   - the ideal-driver check (the physical environment without physics, a SUMO run) on each new row,
     as in Stage 5.
-- **All physics drives are charged.** PhysX repeats exactly, so a practice drive on a row would be
-  that row's result.
+- **All physics drives are charged.** PhysX repeated row 11 exactly in 3 drives (read), so a
+  practice drive on a row would likely be that row's result.
 
 **The options.**
 - **Per-drive estimates:** the measured maxima, 88.4 s rendered and 70.8 s unrendered.
