@@ -4,6 +4,35 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-27 - Plan v15 physics gap options: five ways forward, written up for decision (nothing run)
+
+- **Asked:** "Write up the options" (relayed by the main session).
+- **Written:** "Physics gap options (November 27): what next, for your decision" in plan v15. It
+  covers five options:
+  1. a physics-only rule for realization interventions;
+  2. smoothing the road's vertical profile, which would modify the 3D model;
+  3. the car's provisional physics parameters;
+  4. C2 as the default physics controller;
+  5. stopping here.
+  - **For each option:** what it changes, whether a SUMO result can change, its cost against the
+    1,414.8 s left, the risk of fitting to the 5 southbound rows, and whether it needs a raise.
+  - **New decisions:** 13 to 17.
+- **The offline analysis** (saved outputs only; no simulator):
+  - **The recount:** the 11 PhysX drives recounted under other rules. At today's rule it reproduces
+    every recorded count and verdict.
+    - **The result, post hoc:** with C2, a 0.15 m/s² tolerance, a speed error over 0.1 m/s or the
+      torque-limit rule would pass rows 11 and 25 recorded (as SUMO does) and 11, 25 and 39
+      re-baselined.
+    - **Still failing:** rows 53 and 67 fail on jerk at their second decision, not at the merge.
+  - **The SUMO records:** the policy and expert v3 have no realization flags and no drive-limited
+    decisions in any of their saved records.
+- **Recommended:**
+  - C2 as the default;
+  - the torque-limit rule in physics only, tested on the 5 northbound rows (at most 400 s);
+  - no change to the road model or the car;
+  - an offline look at the first-decision jerk.
+- **Charged:** nothing.
+
 ## 2026-11-27 - Plan v15 physics gap result: controller C2 halves the failed gates in PhysX, but no row passes
 
 - **Approved:** "Yes, as recommended" (decision 11, recommended; decision 12, keep the gates).

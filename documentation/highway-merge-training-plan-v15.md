@@ -71,6 +71,10 @@ shared ledger needs the user's approval of its resolved configuration first, as 
     - By the reading set before the run, the gap is not closed on row 11 and the corridor is "not
       improved".
   - **Charged:** 462.7 s of the 850 s cap; no collision.
+- **The options for the physics gap** (you chose "Write up the options" on November 27): written,
+  nothing run; see [Physics gap options](#physics-gap-options-november-27-what-next-for-your-decision).
+  - **Recommended:** C2 as the default physics controller, and a physics-only torque-limit rule for
+    realization interventions, tested on the 5 northbound rows (decisions 13 to 17).
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -2576,6 +2580,351 @@ None of these was authorized:
 The gates are unchanged (decision 12, "keep"). Revisiting them is your decision, now that the
 results are in.
 
+## Physics gap options (November 27): what next, for your decision
+
+**Your decision (relayed by the main session):** "Write up the options", answering "What next for the
+physics gap?" The other choice offered was "Stop here".
+
+**What this is:** a written proposal only.
+- **Nothing ran:** no Isaac Sim, no SUMO, no charge.
+- **Where the numbers come from:** reading code, configurations and the saved Stage 5 and physics-gap
+  outputs, and offline Python over those logs.
+- **The scripts and their outputs** are in `outputs/highway-merge-v15/physics-gap/options-analysis/`,
+  outside Git.
+
+### Where things stand
+
+With C2, in PhysX (physics, not a replay), no southbound row passes either gate set. Two gates fail:
+- **The stable merge, on every row.** 5 to 8 of the 81 decisions after the merge are realization
+  flags; the limit is 4. Merge quality is scored only after a stable merge, so it fails too.
+- **Per-car jerk, on rows 53 and 67:** 5.28 and 5.13, against a limit of 5.
+
+Two findings from the offline analysis:
+- **Where the flags fall.** 44% to 67% of each drive's flags (5 to 8 per drive) fall on the 2.4% to
+  3.2% of decisions where the road slope changes by more than 0.005 within the decision.
+  - In the stable-merge windows, these are 5 of the 7 flags on row 11, 4 of 7 on row 25, 5 of 8 on
+    row 39, 4 of 8 on row 53 and 3 of 5 on row 67.
+  - The rest fall where the slope barely changes.
+- **The jerk on rows 53 and 67 isn't at the merge.**
+  - **Where it is:** both peaks are at 0.2 s, the episode's second decision. The car starts on the
+    ramp's 4.7% grade there (read from the physics log).
+  - **What happens:** the command is −0.3 m/s². The gate's measure of what the car did is −0.53
+    and −0.51 m/s²; the physics log's own measure is −0.39 and −0.38. In SUMO the same decision
+    realizes −0.3 exactly (jerk 3.0).
+  - **Not explained yet:** why the two measures differ at the first decision isn't investigated.
+    None of the five options below targets it.
+
+### What the saved SUMO records show (read offline)
+
+- **The policy and expert v3 have no realization flags and no drive-limited decisions** in any
+  saved SUMO record.
+  - **The records:** the policy's 70 development episodes (Phase 3's relabel step); the policy's 43
+    and expert v3's 42 held-out episodes (Stage 5 part 1).
+  - **How exactly SUMO carries out the commands:** on the 5 southbound rows, the policy's commands
+    are realized to within 2×10⁻¹⁴ m/s².
+- **The older baselines do have them** (Phase 1's records):
+  - **Round 16's policy:** on the development rows, 314 flags and 992 drive-limited decisions; in the
+    held-out records, 209 flags and 428 drive-limited decisions.
+  - **Round 21's final policy:** on the development rows, 984 flags and 872 drive-limited decisions.
+  - **What these flags are:** SUMO's own logic overriding a command, by 0.05 to 4.3 m/s² (median
+    0.19).
+- **Level 1's drive ceiling does more than clip** (read in the code). It also sets:
+  - how fast the policy's yield-entry target rises, which is one of the policy's inputs;
+  - the re-baselined gate's reference band.
+
+### Option 1: the gate (decision 12, revisited)
+
+**What it would change:** which physics decisions count as realization interventions. The rule would
+apply in the physics environment only. That count feeds three gates:
+- per-car interventions;
+- the stable-merge window;
+- merge quality's override fraction.
+
+**The case, on grounds that don't depend on these results:**
+- **Where 0.05 m/s² comes from:** v05 built it for SUMO, to catch SUMO's own logic overriding a
+  command. SUMO otherwise carries out a command exactly, so in SUMO it is a "was this overridden?"
+  test with a wide margin.
+- **What it means physically in PhysX:** 5 mm/s of speed over one 0.1 s decision, and 0.25 mm of
+  distance.
+- **Measurement resolution:** on calm decisions in the 10 physics-gap drives, the car's own mismatch
+  is mostly far below the threshold.
+  - **"Calm" means:** a steady command, the slope barely changing (under 0.001 in that decision and
+    the one before), over 3 m/s, and no torque limit.
+  - **The spread:** the median is 0.002 to 0.003 m/s², and the 99th percentile is 0.017 to 0.040.
+  - **The worst case:** the largest calm mismatch exceeds 0.05 on 4 of the 10 drives (0.051 to
+    0.068).
+  - **So** the current threshold sits at the edge of the car's own noise.
+- **What a real car does:** Liu et al. ran a field experiment with two vehicles carrying
+  developable automated-driving systems: "Experimental study and modeling of the lower-level
+  controller of automated vehicle" ([arXiv:2210.17160](https://arxiv.org/abs/2210.17160), 2022).
+  - **What they measured:** their Table II gives a delay between the commanded and actual
+    acceleration of 0.78 to 1.08 s, depending on the model fitted.
+  - **Inferred:** a real car's acceleration trails its command by most of a second. A 0.05 m/s² test
+    every 0.1 s would flag most of a real car's changing decisions.
+  - **No published tolerance found:** I found none for this kind of intervention. ISO 15622 (adaptive
+    cruise control) is paywalled and I haven't read it, so nothing here comes from it.
+- **For a cumulative speed error:** the rest of the system works on speed and position.
+  - **Why a short mismatch matters little:** the policy re-plans every 0.1 s from the measured
+    speed, so a mismatch that doesn't build up changes little.
+  - **The window has an anchor:** a trailing 1 s window is on the scale of a real car's response
+    (Liu et al.).
+  - **The threshold doesn't:** I found no independent anchor for it. The only speed tolerance in the
+    gates, merge quality's ±2 m/s band, is far looser.
+  - **The definition used below:** the sum, over the last 10 decisions, of (realized − commanded) ×
+    0.1 s.
+- **A third definition, mine** (not one of decision 12's two choices): a physics decision counts as
+  a realization intervention only if it differs from the command by more than 0.05 m/s² and the
+  low-level controller hit its drive or brake torque limit in that decision.
+  - **Why:** it is the physics analogue of SUMO overriding a command: the car, not the policy,
+    decided the motion.
+  - **What it avoids:** it has no number to choose.
+  - **What it misses:** a controller that tracks badly within its limits. Only per-car jerk and
+    merge quality's speed match would catch that.
+
+**What each rule would do on the saved drives.** This is post hoc, read after seeing the results: a
+recount of the saved traces, with nothing re-run.
+- **The recount is exact at today's rule.** At 0.05 m/s² it reproduces every recorded flag, override,
+  window count and both verdicts on all 11 drives.
+- **The C2 drives:**
+
+| Rule (physics only) | Window flags on rows 11 / 25 / 39 / 53 / 67 | Rows passing, recorded gates | Rows passing, re-baselined gates |
+|---|---|---|---|
+| 0.05 m/s² (today) | 7 / 7 / 8 / 8 / 5 | none | none |
+| 0.10 m/s² | 6 / 3 / 3 / 3 / 2 | 25 | 25, 39 |
+| 0.15 m/s² | 2 / 0 / 1 / 1 / 1 | 11, 25 | 11, 25, 39 |
+| 0.20 to 0.30 m/s², or no realization flags | 0 or 1 | 11, 25 | 11, 25, 39 |
+| Speed error over 1 s above 0.05 m/s | 5 / 6 / 6 / 6 / 6 | none | none |
+| Speed error over 1 s above 0.10 to 0.50 m/s | 0 | 11, 25 | 11, 25, 39 |
+| Torque limit (mine) | 0: C2 never hit its torque limit | 11, 25 | 11, 25, 39 |
+
+- **For comparison, in SUMO** the policy passes rows 11 and 25 under the recorded gates and all 5
+  under the re-baselined gates.
+- **Where the verdicts switch:**
+  - row 11 between 0.10 and 0.15 m/s²;
+  - rows 25 to 67 between 0.05 and 0.10 m/s²;
+  - the speed error between 0.05 and 0.10 m/s.
+  - So any value chosen after reading this table is fitted to these 5 rows.
+- **Rows that still fail:**
+  - **Jerk:** rows 53 and 67 fail per-car on jerk under every rule, at the first-decision transient
+    above.
+  - **Recorded merge quality:** rows 39, 53 and 67 fail it, as they do in SUMO. Its speed-match
+    fraction there is 0, 0 and 0.24.
+- **Merge quality would then be scored** wherever the stable merge passes.
+  - **Under the re-baselined gates,** every C2 row then qualifies.
+  - **Inside the quality window:** peak jerk is 3.1 to 4.75, the override fraction is at most 0.037,
+    and the speed match is at least 0.925.
+- **The current controller** never passes a row under any rule: safety always fails on its overspeed
+  decisions.
+
+**Can a SUMO result change?**
+- **In physics only:** no.
+- **In SUMO too:** nothing would change for the policy or expert v3, which have no flags there. It
+  would change the older baselines' records. For example, a 0.15 tolerance drops 570 of Phase 1's
+  1,302 flags, and 66 of the 209 held-out flags.
+
+**Cost:**
+- **The recount:** nothing.
+- **The rule:** a code change in the physics environment, with tests and CI.
+- **A test on rows that didn't choose it:** the 5 northbound rows (10, 24, 38, 52 and 66), never
+  driven in physics, with C2, unrendered.
+  - **Time:** by the plan's per-drive rule, 5 × 70.8 s = 354 s. The unrendered drives here took 28.5
+    to 33.8 s each.
+  - **Cap:** 400 s and 3,000 decisions. The policy took 1,499 decisions on these rows in SUMO.
+  - **Left after the cap:** at least 1,014.8 s of study time.
+  - **Before the drives:** uncharged ideal-driver checks (SUMO) on those rows.
+
+**Risk of fitting to these 5 rows:**
+- **High** for a tolerance or speed-error threshold picked now.
+- **Lower** for the torque-limit rule, which has no number to pick. But the choice to change the gate
+  at all comes after seeing the failures.
+- **What would make it a result:** the northbound drives, with the reading set before them.
+
+**Raise:** none.
+
+### Option 2: the road data's vertical profile
+
+**What it is (read):** the LA model's README says "Bridge heights are engineered approximations, not
+surveyed values."
+- **How the build makes them:**
+  - the stacking from OpenStreetMap;
+  - design grades of 5% on mainlines and 6.5% on ramps;
+  - a grade-limited envelope;
+  - vertical-curve smoothing.
+- **What is left at the merge:** on row 11, the lane graph's slope still changes by up to 0.027
+  within one decision. That is about 1.3 m of travel at 12.8 m/s.
+
+**What smoothing would change (read):**
+- the deck meshes the car drives on, which are built lane-first from the same profiles;
+- `lanegraph.json`;
+- the road slope the physics server gives C1 and C2;
+- Level 1's drive ceiling (`traffic/road_grade.py`, which reads the lane graph). It bounds the
+  command, sets the rise of the policy's yield-entry target and sets the re-baselined reference band;
+- the SUMO corridors, which are cut from `lanegraph.json` and whose manifests pin its sha.
+
+**Smoothing the lane graph alone** would leave the decks unchanged (inferred). The road the car drives
+on and the road the controller and Level 1 read would then disagree.
+
+**Does it count as modifying the 3D model?** Yes.
+- **Why:** the decks are the model's meshes, and `highway_usd/la_10_110/` is the model package.
+- **So it's your decision only:** you said not to modify the 3D model.
+- **The build scripts aren't here:** the ones the README names (`build_all.py`, `tools/network.py`)
+  aren't in this repository.
+
+**Can a SUMO result change?** Yes.
+- **Why:** the drive ceiling never clipped the policy or expert v3 in SUMO. But it sets the policy's
+  target and the re-baselined band near the breaks, so the policy's SUMO actions can change
+  (inferred from the code).
+- **Formally:** every LA SUMO result would then be on a different road.
+
+**The re-checks it needs:**
+1. **The model:** rebuild it, and rerun its checks (clearance, obstacles, Isaac's spawn check).
+2. **The corridors:** regenerate them and their manifests.
+3. **SUMO:** rerun the development evaluation of the policy and expert v3.
+   - Phase 3's relabel step took 107.6 s for the policy.
+   - Each of Phase 2's three expert runs took 90.4 to 111.6 s.
+4. **Physics:** rerun the southbound physics drives.
+5. **What can't follow:** the held-out comparison, since held-out rows are never re-run. It would
+   stay on the old road.
+
+**Post hoc, an optimistic bound:**
+- **The assumption:** smoothing removes exactly the flags at slope changes, and nothing else.
+- **The windows would then hold** 2, 3, 3, 4 and 2 flags, so the stable merge would pass on every
+  southbound row.
+- **Rows 53 and 67 would still fail on jerk.**
+- **Why it's optimistic:** the car still has to follow the smoothed grade change, and the other
+  flags stay.
+
+**Cost:** about 215 s of SUMO and up to 354 s of physics (estimated), plus the rebuild. That is
+about 570 s of the 1,414.8 s, with no raise.
+
+**Risk of fitting:** medium. How much to smooth would be chosen with these rows in view.
+- **An independent rule:** a design standard would be one. The Caltrans Highway Design Manual sets
+  minimum vertical-curve lengths.
+- **But no numbers here:** I couldn't extract that manual's text, so I give none.
+
+### Option 3: the car's physics parameters
+
+**What's provisional (read):**
+- **The package says so:** `vehicles/sim_ready/americano-i7-ev/v14/model.json` has
+  `provisional_physics: true`, and its scope says "Provisional dynamics".
+- **The mass:** 1,800 kg, which you approved as provisional.
+- **The dimensions:** they come from the mesh scale, not from a manufacturer. I haven't found that
+  this model matches a production car.
+- **The values** (in `assets/vehicle-physics.usda` unless noted):
+  - **Suspension, per wheel:** spring 45,000 N/m, damper 4,500 N·s/m and 0.2 m of travel.
+  - **Tires:**
+    - longitudinal stiffness 5,000;
+    - lateral stiffness graphs (2, 76,500) front and (2, 112,500) rear;
+    - friction-vs-slip flat at 1;
+    - the friction table named `WinterTireFrictionTable` (0.75).
+  - **Wheels:** moment of inertia 1.225 kg·m² and damping 0.25.
+  - **Drive and brakes** (from the drive-limit settings): 700 N·m per front wheel, and 1,500 N·m of
+    brake per wheel.
+- **The v06 documentation:** the other values come from NVIDIA's installed vehicle example. Tire
+  response, steering and braking need reference data and measured acceptance tests.
+
+**What could change the flags:** the suspension and the mass set how the body pitches and heaves over
+a grade break.
+- **My estimate (not from a source):** a ride frequency near 1.6 Hz and a damping ratio near 0.5,
+  taking a quarter of 1,800 kg per corner.
+
+**What it would take to justify the values from a real vehicle, rather than tuning them to pass:**
+1. Pick a real reference vehicle of about this size.
+2. Take its mass, weight distribution and centre-of-gravity height from published specifications.
+3. Take suspension rates and damping from published or measured data, and tire properties from tire
+   test data.
+4. Check the car against measured behaviour, as the v06 audit asked: acceleration, braking and
+   step-steer tests.
+5. Only then re-drive. Values changed until these rows pass would be tuning.
+
+**Can a SUMO result change?** Only through Level 1's drive limit.
+- **What the limit uses:** the car's mass, drive torque, wheel radius and inertia. These are recorded
+  in every SUMO report's drive-limit settings.
+- **Suspension and tires:** changing them alone touches no SUMO result.
+
+**Cost:**
+- **Sourcing the data:** uncharged.
+- **The re-drives:** up to 354 s for the 5 southbound rows.
+- **The earlier results:** every earlier physics result would then be an old-car result.
+
+**Risk of fitting:** high if the values are tuned; low if they're sourced before any drive.
+
+**Raise:** none.
+
+### Option 4: C2 as the default physics controller
+
+**What it would change:** the physics server's `--controller` default, from `stage5` to `c2`.
+- **The change:** one line of code.
+- **The fingerprint test** keeps pinning `stage5`'s commands when it's named.
+- **Earlier physics results** keep the label of the controller they used.
+
+**Can a SUMO result change?** No; the controller runs only in physics.
+
+**Cost:** none in study time; a code change and CI.
+
+**Risk of fitting:** low to moderate.
+- **How it was picked:** on row 11, by a rule set before the drives.
+- **On the 4 other rows** it improved every reported measure:
+  - failed gates and flags;
+  - window and per-car interventions;
+  - overspeed and torque-limit decisions.
+- **Not yet tested:** the northbound rows.
+
+**Raise:** none.
+
+**What it doesn't do:** close the gap by itself.
+
+### Option 5: stop here
+
+**What it would change:**
+- **The SUMO results stand:** Phase 3, and Stage 5's held-out check, where the policy has the same
+  verdicts as expert v3.
+- **The physics gap is recorded as a known limit.** In PhysX, with C2, none of the 5 southbound rows
+  passes the gates as they stand.
+- **What's left:**
+  - realization flags at the merge, 44% to 67% of them at grade breaks;
+  - a first-decision jerk on rows 53 and 67.
+
+**Can a SUMO result change?** No.
+
+**Cost:** none; the 1,414.8 s stay unused.
+
+**Risk of fitting:** none.
+
+**Raise:** none.
+
+### The options side by side
+
+| Option | What changes | SUMO results can change | Study time, of 1,414.8 s | Risk of fitting to these 5 rows | Raise |
+|---|---|---|---|---|---|
+| 1. A physics-only realization rule | What counts as a realization intervention in physics | No | 0 to recount; about 354 s (cap 400 s) for a northbound test | High for a number picked now; lower for the torque-limit rule | No |
+| 2. Smooth the road profile | The 3D model, the lane graph, the drive ceiling and the corridors | Yes | About 570 s plus a rebuild; the held-out check can't follow | Medium | No (estimate) |
+| 3. The car's parameters | The physics car | Only through the drive limit (mass, torque) | Up to 354 s of re-drives | High if tuned; low if sourced first | No |
+| 4. C2 as the default | The server's default controller | No | 0 | Low to moderate | No |
+| 5. Stop here | Nothing; the gap is recorded as a known limit | No | 0 | None | No |
+
+### My recommendation
+
+1. **Make C2 the default** (option 4; decision 14). It improved every row on every reported measure,
+   and it changes no SUMO result.
+2. **For the gate, test the torque-limit rule in physics only** (option 1; decision 13).
+   - **Why this rule:** it has no number to fit.
+   - **When:** chosen now, before any further drive.
+   - **Where:** on the 5 northbound rows.
+   - **What gets reported:** the verdicts under today's rule alongside it. The southbound numbers
+     above stay post hoc.
+   - **The reading, set now:** the rule is confirmed if, with C2 in PhysX, the policy passes every
+     northbound row it passes in SUMO (10, 52 and 66) under both gate sets, with no collision.
+     - Otherwise it is not confirmed, and the failure is reported as it is. That includes a failure
+       for another reason, such as a first-decision jerk.
+   - **If you'd rather not change the gate:** stop here (option 5), with option 4.
+3. **Not options 2 or 3 now** (decisions 15 and 16).
+   - **Option 2** modifies the 3D model, which you said not to do, and the held-out comparison
+     couldn't follow it.
+   - **Option 3** has no real-vehicle source yet.
+4. **Take an offline look at the first-decision jerk on rows 53 and 67** (decision 17): reading code
+   and logs only, uncharged.
+
 ## Decisions for you
 
 Decisions 1–7 were decided on November 25, 2026, relayed by the main Claude session and recorded
@@ -2686,6 +3035,30 @@ relayed by the main Claude session.
     - **What has changed since:** with C2, row 11's peak jerk (4.75) and overspeed (0) now pass.
     - **What's left:** every southbound row fails only on the stable merge, merge quality, and, on
       rows 53 and 67, per-car jerk.
+
+    **Revisited** in [Physics gap options](#physics-gap-options-november-27-what-next-for-your-decision): decision 13.
+
+Decisions 13 to 17 were proposed on November 27, 2026 (see
+[Physics gap options](#physics-gap-options-november-27-what-next-for-your-decision)). Nothing in them has run.
+
+13. **The physics gate:** what counts as a realization intervention in physics?
+    - **The torque-limit rule, tested on the 5 northbound rows** (recommended).
+      - **The drives:** C2, unrendered, at most 400 s and 3,000 decisions, counted as evaluation
+        episodes in their own allowance.
+      - **The reading:** as set in the proposal.
+      - **First, uncharged:** the ideal-driver checks.
+      - **Code changes:** the rule and the runner, with CI before any drive.
+    - **Or a tolerance or trailing 1 s speed-error threshold,** with the value named by you before any
+      drive, and tested the same way.
+    - **Or keep the gate and stop here** (option 5).
+    - No choice needs a raise.
+14. **C2 as the default physics controller:** yes (recommended) or no.
+15. **The road profile:** leave the 3D model as it is (recommended), or ask me for a smoothing
+    proposal, which would modify the model.
+16. **The car's physics parameters:** keep them provisional and labelled so (recommended), or ask me
+    for a proposal to source them from a real reference vehicle.
+17. **The first-decision jerk on rows 53 and 67:** an offline look, reading code and logs only and
+    uncharged (recommended), or leave it.
 
 ## What carries over from v14
 
