@@ -4,6 +4,20 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-27 - Plan v15 physics gap proposal: why row 11 fails in PhysX, and a controller-only fix
+
+- **Planning only, nothing run:** an offline analysis of Stage 5's saved PhysX drives and the LA lane
+  graph, with no simulator.
+- **Diagnosis:** all four gate failures on row 11 come from the two command ramps, three sharp grade
+  breaks in the road model, and the force bias the low-level controller learns from them.
+  - The 22 flags are 5–49 mm/s speed misses.
+  - No miss was a lack of drive.
+  - Level 1's drive limit already exists and never bound.
+- **Proposed:** controller versions C1 and C2 (physics side only, so no SUMO result changes), checked
+  on the southbound focused rows with matched before-and-after drives.
+  - Recommended cap: 850 s and 6,000 decisions, with no raise.
+  - The gate question is a separate decision.
+
 ## 2026-11-27 - Plan v15 Stage 5 part 2: the physics drives; Stage 5 complete
 
 - **Ran:** expert v3 and the policy on development row 11 in Isaac Sim PhysX (not a replay),

@@ -56,6 +56,13 @@ shared ledger needs the user's approval of its resolved configuration first, as 
       and crest at the merge.
     - No collision. Charged 176.2 s of the 500 s cap.
   - **Stage 5 is complete.**
+- **The physics gap** (you chose "Physics gap first" on November 27): proposed, nothing run; see
+  [Physics gap proposal](#physics-gap-proposal-november-27-why-row-11-fails-in-physics-for-your-approval).
+  - All four gate failures on row 11 come from the two command ramps, three sharp grade breaks in
+    the road model, and the controller's learned force bias.
+  - None comes from a lack of drive: the car went faster than commanded on all 6 torque-limit
+    decisions.
+  - The proposal is a change to the low-level controller only (decisions 11 and 12).
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -2235,6 +2242,217 @@ so this isn't a matched comparison.
 
 **Exit check ("Recorded and labelled"): met.** Stage 5 is complete.
 
+## Physics gap proposal (November 27): why row 11 fails in physics, for your approval
+
+**Your decision (relayed by the main Claude session):** "Physics gap first", a written proposal only.
+**Nothing ran for it.** No simulator was launched.
+- **What was read:** Stage 5's saved PhysX drives on row 11 and the LA lane graph.
+  - The three drives (the uncharged development drive and the two charged ones) are byte-identical,
+    so one drive's log stands for all three.
+  - The road slope under the car is computed from the lane graph at the logged chassis positions.
+- **Where the analysis is:** scripts and outputs in
+  `outputs/highway-merge-v15/stage-5/physics/gap-analysis/` (outside Git).
+- **Labels:** "read" means taken from the logs, the report or the code. Everything else is inferred.
+
+### What fails on row 11 (PhysX)
+
+**The 22 flags.** Each one is v14's `native_realization_unattributed`: the realized acceleration
+differs from the command by more than 0.05 m/s² over a 0.1 s decision.
+- **In speed terms:** 0.05 m/s² is 5 mm/s at the decision's end. The 22 flagged misses are 5–49 mm/s
+  (read). The mean miss over all 462 decisions is 0.014 m/s².
+- **Times** are decision end times, as in the Stage 5 records.
+
+| Where | Decisions (s) | Flags | Miss (m/s²) | Read from the logs | Cause (inferred) |
+|---|---|---|---|---|---|
+| Ramp: command ramps | 5.1, 6.4 | 2 | −0.055, +0.056 | Road slope steady (0.030–0.039). The command steps by about 0.25 per decision, and the realized acceleration trails it by 0.03–0.06 through both ramps | Response lag. The feedforward also leaves out the wheels' rotational inertia (1.7% of the mass, read from the asset) |
+| Grade break at the junction onto the mainline (a sag) | 27.5 | 1 | −0.325 | Road slope 0.031 → 0.049 in one decision (then 0.066 and 0.076). The chassis drops 1.3 cm. Its pitch follows the road slope to within 0.006 | The body's response to the break. The grade feedforward is not the cause here |
+| Just after the sag | 27.9–28.2 | 4 | +0.07 to +0.16 | The force bias rises from 72 to 274 N, learned from the 27.5 miss. Pitch exceeds the road slope by up to 0.012 | The bias, learned from a transient, and the pitch overshoot both add force. The car goes faster than commanded, even at the torque limit |
+| The crest | 28.6–29.3 | 6 | −0.14 to +0.49 | Road slope 0.070 → −0.050 in 0.6 s. The chassis rides up to 3.2 cm high. The misses alternate in sign; over 28.6–28.9 they net 2.6 cm/s. 28.7 is the 7.9 m/s³ peak jerk | The body's pitch and heave over the crest |
+| Settling after the crest | 29.5, 29.6 | 2 | +0.08, +0.07 | Road slope steady (−0.050). The bias moves from 285 to 225 N | The bias relearning |
+| A second crest, at 26.8 m/s | 42.8–43.3, 43.5 | 7 | −0.33 to +0.29 | Road slope 0.049 → 0 in 0.2 s, an implied vertical acceleration of up to 8.9 m/s². The chassis rides 6.4 cm high and its pitch differs from the road slope by 0.021, both the most on the drive. The bias swings from 169 to −64 to 255 N | Heave, the pitch-based feedforward (about 30–70% of each miss, estimated) and the bias |
+
+**Inside the stable-merge window (27.7–35.7 s):** 12 of its 81 decisions are flagged, in the third
+to fifth rows of the table.
+
+**What the logs rule out:**
+- **No miss was the car running out of drive.** On all 6 torque-limit decisions it went *faster*
+  than commanded, by +0.009 to +0.49 m/s² (read).
+- **Level 1's drive limit is already in place.** v14's grade-aware ceiling
+  (`traffic/road_grade.py`: 0.1 m/s² headroom, a 0.2 s look-ahead) caps every command. It never
+  bound on row 11, in SUMO or in PhysX (read).
+  - On the climb and the crest, expert v3's requests sat 0.05–0.08 m/s² under that ceiling.
+  - Over the crest, the request follows the ceiling as it rises: from 1.04 to 1.71 m/s² in 0.3 s.
+- **Measuring speed along the road instead of horizontally** gives 23 flags instead of 22 (read).
+- **A rough offline estimate** removes the pitch-versus-road feedforward error from each miss. It
+  leaves 25 flags rather than fewer. So feeding forward the road's slope alone probably isn't
+  enough. This is a linear estimate, not a physics prediction.
+
+**The other three gates, from the saved report** (read, with the pool's own gate function):
+- **Per-car comfort or control:** only the peak jerk fails. It is 7.9 m/s³ at 28.7 s and −5.1 at
+  27.5 s, against 5. The interventions, 4.8%, pass the per-car 5%.
+- **Safety events:** 2 overspeed decisions, at 42.8 and 42.9 s. The second crest pushes the speed to
+  26.83 and 26.85 m/s, against the 26.82 m/s limit. There is no collision, teleport or emergency
+  braking.
+- **Rolling merge quality:** the environment records a car's merge quality only after a stable merge
+  (v04's code). With the stable merge failed, there's none, so the gate fails.
+- **The comfort-rate clip at 43.0 s** is a knock-on as well. The clip allows ±0.4 m/s² around the
+  measured acceleration, and the crest had pushed that to +0.14.
+
+**In short:** all four gate failures on row 11 come from the two command ramps, three sharp grade
+breaks in the road model, and the force bias the controller learns from them.
+
+### The fixes, ranked
+
+**1. Recommended: the low-level controller only (physics side).** Two versions, both fixed in code
+before any drive:
+- **C1:**
+  - grade feedforward from the road model's slope under the axles (the server already loads that
+    surface), taken 0.05 s ahead, instead of the chassis pitch;
+  - force-bias learning paused while the road slope changes by more than 0.005 in a decision, and
+    for 0.5 s after;
+  - the wheels' rotational inertia in the feedforward mass (1,830 kg instead of 1,800).
+- **C2:** C1 plus a stronger speed correction within each decision.
+  - The gain goes from 2 to 6 per second.
+  - At 2, a decision removes about 18% of a speed error that arises within it. At 6 it removes
+    about 45%.
+  - This is the only part that acts on the body's own pitch and heave.
+- **What changes:** `traffic/physical_controller.py` and `scripts/physics_drive_server.py`, with tests
+  on the existing simple car model. That's about 100–150 lines, built and tested without a
+  simulator.
+- **No SUMO result can change:** only the physics server uses this controller (read). So no SUMO
+  re-check is needed.
+- **Expected effect: unknown until driven.** C1 targets the bias, the pitch overshoot and the ramp
+  lag. C2 also targets the heave at the breaks. Neither may be enough.
+
+**2. Not recommended now: a Level 1 change.** For example, a limit on how fast the command may follow
+a rising drive ceiling over a crest.
+- **Why not now:** Level 1 isn't what failed on row 11.
+- **The cost:**
+  - **The re-check:** it changes the executor of both expert v3 and the policy. So it needs a 70-row
+    SUMO re-check of both: about 271,000 decisions, about 120–150 s at 16 workers.
+  - **The no-regression rule, set before the re-check runs:**
+    - neither driver loses a development row under either gate set (now 62 re-baselined, 54
+      recorded);
+    - no new event kind;
+    - rows where the new limit never acts reproduce their recorded traces exactly.
+  - **The physics drives** come on top of that.
+
+**3. Outside this plan: smoothing the road model's vertical profile.** The three breaks are in the LA
+lane graph (read). Changing it changes the 3D model, and Level 1's drive limit reads the same lane
+graph. That isn't authorized, and it isn't sized here.
+
+### How it would be checked in physics
+
+**Which rows physics can drive:** 10 of the 70 development rows.
+- **The constraints (read from the code):** the physics server drives one car per run, and needs an
+  LA corridor with a corridor manifest.
+- **The 10 rows:** the two focused cases, with 1 controlled car among 16.
+  - **Southbound Adams** (case 11): rows 11, 25, 39, 53 and 67. The policy, like expert v3, passes
+    all 5 in SUMO re-baselined, and rows 11 and 25 recorded.
+  - **Northbound Pasadena** (case 10): rows 10, 24, 38, 52 and 66. The policy passes 10, 52 and 66 in
+    SUMO under both gates, and fails 24 and 38.
+    - This corridor has never been driven in physics.
+- **The other cases can't be driven:**
+  - the multi-car LA cases (4 or 8 controlled cars) would need more than one physics car;
+  - the other 8 cases' networks have no corridor manifest, so there's no road model to drive on.
+
+**The setup:**
+- **The driver:** the policy only. It drove identically to expert v3 on row 11, in SUMO and in
+  PhysX.
+- **Matched before and after:**
+  - Row 11's "before" is the Stage 5 drive, which PhysX reproduced byte-identically 3 times, so it
+    isn't re-run.
+  - Every other row gets a drive with the current controller as well as one with the new controller.
+- **Rendering:** row 11's drives render at 10 Hz, for the video. The others aren't rendered. In
+  Stage 5, rendering changed no action or physics value (read).
+- **Uncharged before any drive:**
+  - the controller code and its tests, with no simulator;
+  - the ideal-driver check (the physical environment without physics, a SUMO run) on each new row,
+    as in Stage 5.
+- **All physics drives are charged.** PhysX repeats exactly, so a practice drive on a row would be
+  that row's result.
+
+**The options.**
+- **Per-drive estimates:** the measured maxima, 88.4 s rendered and 70.8 s unrendered.
+  - These are taken whatever the row's length, since Isaac Sim's start (36 s) is about half of a
+    drive.
+  - Before each drive, the runner checks the larger of its estimate and the longest drive so far
+    against what's left of the cap.
+
+| | Minimum | Recommended | Larger |
+|---|---|---|---|
+| Drives | C1 on row 11 (rendered) | C1 and C2 on row 11 (rendered); then the pick and the current controller on rows 25, 39, 53 and 67 | The recommended drives; then the pick and the current controller on the 5 northbound rows |
+| Number of drives | 1 | 10 | 20 |
+| Expected time | 88.4 s | 743.2 s | 1,451.2 s |
+| Cap | 150 s, 1,000 decisions | 850 s, 6,000 decisions | 1,650 s, 10,000 decisions |
+| Study time left after, at the cap | 1,727.5 s | 1,027.5 s | 227.5 s |
+
+**The pick between C1 and C2,** made on row 11 by a rule set now:
+1. fewer failed gates, counted over both gate sets;
+2. then fewer realization flags;
+3. then C1, the smaller change.
+
+**The episodes:**
+- **Recommended:** count them as evaluation episodes in their own allowance, as Stage 5's were.
+- **Or:** count them as diagnostic episodes. Only 1 of the 174 is left, so the recommended option
+  would need a raise of 9 diagnostic episodes, and the larger one 19.
+- **No raise of the study total** is needed for any option. Their clock time counts in the study
+  total either way.
+
+**Settings and stop rules, set before any drive:**
+- **C1 and C2 are frozen** (committed, with hashes in the configuration) before the first drive.
+  Nothing is changed after a drive, and the pick isn't revisited after the other rows.
+- **A collision, or a link or physics failure,** ends that drive. A collision with C1 or C2 also
+  stops the rest of the run. It's reported, and nothing is retuned.
+- **Before each drive:** if it doesn't fit what's left of the cap, the run stops and asks. Drives
+  are never trimmed.
+- **Your own Isaac Sim:** if one the run didn't start is open, the run stops and asks, and never
+  closes it.
+- **As in Stage 5:**
+  - one process at below-normal priority, under the shared lock, with no SUMO run alongside;
+  - never on held-out rows;
+  - nothing installed into Isaac Sim's Python;
+  - the LA model and the car's physics parameters unchanged.
+
+**The reading, set before any drive:**
+- **Row 11:** the gap is closed there if the pick passes both gate sets in PhysX. In Stage 5 it
+  failed 4 gates under each set.
+- **The southbound corridor** (recommended option; 5 rows, so counts and no intervals):
+  - **Closed:** the pick passes in PhysX every row the policy passes in SUMO, under each gate set (5
+    re-baselined; 2 recorded), with no collision.
+  - **Improved:** the pick passes more rows than the current controller under the re-baselined
+    gates, loses none under either set, and has no new event kind.
+  - **Otherwise: not improved.** The next step would then be your decision: the gate question below,
+    or the road model.
+- **The northbound rows** (larger option) are read the same way. The policy passes 3 of them in SUMO.
+- **Reported per row, not gated:**
+  - the flags and the stable-merge window fraction;
+  - the peak jerk and overspeed decisions;
+  - the acceleration error and torque-limit decisions.
+
+### A separate decision: do realization mismatches count as interventions in physics?
+
+- **The background:** the 0.05 m/s² tolerance comes from SUMO, where commands are carried out
+  exactly. In PhysX it is 5 mm/s of speed per decision.
+- **Changing it alone doesn't fix row 11:**
+  - Without these flags, the stable-merge window would have no interventions.
+  - But the same drive would still fail two gates: per-car (peak jerk 7.9) and safety (2 overspeed
+    decisions).
+- **The choices:**
+  - **Keep it** (recommended until C1's result is in);
+  - **count only mismatches above a physics tolerance;**
+  - **count a cumulative speed error instead.**
+- It isn't part of the options above, and it changes no SUMO result.
+
+### My recommendation
+
+1. **The recommended option:** C1 and C2 on row 11, then the pick and the current controller on the
+   other 4 southbound rows.
+   - At most 850 s and 6,000 decisions, counted as evaluation episodes in its own allowance.
+   - No raise.
+   - The northbound rows can follow as a separate approval, from the time left.
+2. **Keep the gates as they are for now** (decision 12), and decide after C1's result.
+
 ## Decisions for you
 
 Decisions 1–7 were decided on November 25, 2026, relayed by the main Claude session and recorded
@@ -2321,6 +2539,21 @@ relayed by the main Claude session.
     session). Part 1 runs all three drivers, at most 300,000 decisions and 300 s. Part 2's drives are
     counted as Stage 5 evaluation episodes, at most 500 s. See
     [Stage 5 part 1](#stage-5-part-1-november-27-the-held-out-check).
+11. **The physics gap** (proposed on November 27; see
+    [Physics gap proposal](#physics-gap-proposal-november-27-why-row-11-fails-in-physics-for-your-approval)).
+    - **Minimum:** C1 on row 11 only, at most 150 s.
+    - **Recommended:** C1 and C2 on row 11, then the pick and the current controller on the other 4
+      southbound rows, at most 850 s and 6,000 decisions.
+    - **Larger:** the recommended drives, then the 5 northbound rows, at most 1,650 s and 10,000
+      decisions.
+    - **The episodes:** counted as evaluation episodes in their own allowance (recommended), or as
+      diagnostic episodes with a raise of 9 (recommended option) or 19 (larger).
+    - **No raise of the study total** is needed for any option.
+12. **Realization mismatches in physics:** do they count as interventions?
+    - **Keep as now** (recommended until C1's result is in);
+    - **or count only mismatches above a physics tolerance;**
+    - **or count a cumulative speed error.**
+    - Changing this alone leaves row 11 failing two gates (peak jerk and overspeed).
 
 ## What carries over from v14
 
