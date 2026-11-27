@@ -4,6 +4,28 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-27 - Plan v15 physics gap result: controller C2 halves the failed gates in PhysX, but no row passes
+
+- **Approved:** "Yes, as recommended" (decision 11, recommended; decision 12, keep the gates).
+- **Built:** controller versions C1 and C2 in `traffic/physical_controller.py` (frozen, `219b5b8`).
+  - The physics server's `--controller` option, whose default is the unchanged controller
+    (golden-fingerprint test).
+  - The runner `experiments/v15_physics_gap.py` and the pinned configuration
+    (`configs/evaluation/v15-physics-gap.json`, `d21915c`).
+- **Ran (PhysX, not a replay):** the policy drove 10 times.
+  - C1 and C2 on development row 11 (rendered); C2 was picked by the pre-set rule, on fewer flags.
+  - The current controller and C2 on southbound rows 25, 39, 53 and 67.
+- **Result:**
+  - **Gates:** C2 halves the failed gates (2 per set on row 11, not 4; 12 per set on the corridor, not
+    20).
+  - **Overspeed and torque limit:** C2 removes every overspeed and torque-limit decision.
+  - **Flags:** 150 become 67.
+  - **No row passes** with either controller. The stable merge still fails on 5 to 9 interventions in
+    its 81-decision window (at most 4 allowed), mostly at the grade breaks at the merge.
+  - **The pre-set reading:** row 11 not closed; the corridor not improved.
+- **Charged:** 4,458 decisions, 10 evaluation episodes and 462.7 s of the 850 s cap (phase 6); no
+  raise. Study time left: 1,414.8 s.
+
 ## 2026-11-27 - Plan v15 physics gap proposal: why row 11 fails in PhysX, and a controller-only fix
 
 - **Planning only, nothing run:** an offline analysis of Stage 5's saved PhysX drives and the LA lane

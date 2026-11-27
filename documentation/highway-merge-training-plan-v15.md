@@ -56,13 +56,21 @@ shared ledger needs the user's approval of its resolved configuration first, as 
       and crest at the merge.
     - No collision. Charged 176.2 s of the 500 s cap.
   - **Stage 5 is complete.**
-- **The physics gap** (you chose "Physics gap first" on November 27): proposed, nothing run; see
-  [Physics gap proposal](#physics-gap-proposal-november-27-why-row-11-fails-in-physics-for-your-approval).
-  - All four gate failures on row 11 come from the two command ramps, three sharp grade breaks in
-    the road model, and the controller's learned force bias.
-  - None comes from a lack of drive: the car went faster than commanded on all 6 torque-limit
-    decisions.
-  - The proposal is a change to the low-level controller only (decisions 11 and 12).
+- **The physics gap** (you chose "Physics gap first" on November 27): proposed, approved ("Yes, as
+  recommended") and run (PhysX, not a replay); see [Physics gap result](#physics-gap-result-november-27-c1-and-c2-in-physx).
+  - **The diagnosis:** all four gate failures on row 11 came from the two command ramps, three sharp
+    grade breaks in the road model, and the controller's learned force bias.
+  - **The fix and the pick:** controller-only versions C1 and C2; C2 was picked on row 11 by the rule
+    set before the run.
+  - **What C2 changed:** it halves the failed gates on row 11 (2 per gate set, not 4) and on the
+    southbound corridor (12 per set over the 5 rows, not 20). It removes every overspeed and
+    torque-limit decision, and cuts the realization flags from 150 to 67.
+  - **No row passes** under either gate set, with either controller.
+    - The stable merge still fails on every row: 5 to 9 of the 81 decisions after the merge are
+      interventions, against at most 4. Merge quality fails with it.
+    - By the reading set before the run, the gap is not closed on row 11 and the corridor is "not
+      improved".
+  - **Charged:** 462.7 s of the 850 s cap; no collision.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -2453,6 +2461,121 @@ graph. That isn't authorized, and it isn't sized here.
    - The northbound rows can follow as a separate approval, from the time left.
 2. **Keep the gates as they are for now** (decision 12), and decide after C1's result.
 
+## Physics gap result (November 27): C1 and C2 in PhysX
+
+**Your decision (relayed by the main session):** "Yes, as recommended" (decision 11, the recommended
+option; decision 12, keep the gates).
+
+**What ran:** the policy `l2:bc7c050f6d3da3ce` drove the PhysX car (physics, not a replay; the other
+cars are SUMO's, drawn at their SUMO positions). The 10 drives, in order:
+1. C1, then C2, on development row 11, rendered at 10 Hz.
+2. The pick between them, by the rule set before the run.
+3. On each of southbound rows 25, 39, 53 and 67, unrendered: the current controller, then the pick.
+
+Row 11's "before" is the Stage 5 drive.
+
+**The setup:**
+- **The controllers:** C1 and C2 were frozen and committed before the first drive (`219b5b8`). The
+  configuration (`d21915c`, `configs/evaluation/v15-physics-gap.json`) was pinned and CI passed
+  (run 46069377364) before any drive.
+- **The current controller** reproduces its earlier commands byte for byte: a fingerprint test over
+  960 ticks matches the hash taken before the change.
+- **The ideal-driver checks** (uncharged; SUMO with the ideal driver, not physics) on rows 25, 39,
+  53 and 67:
+  - They matched SUMO's verdict under both gate sets, and its events.
+  - The ideal driver's car ended 1 to 3 decisions later. I haven't investigated why.
+- **The runner:** `experiments/v15_physics_gap.py`, ledger phase 6.
+
+### The pick: C2
+
+- **Gates:** C1 and C2 each failed 2 gates per set on row 11 (4 in all), a tie.
+- **Flags:** C2 had fewer, 9 to C1's 11, so the rule picked C2.
+
+### Results (PhysX; recorded and re-baselined gates gave the same verdicts on every drive)
+
+| Row | Controller | Failed gates (per set) | Flags | Window interventions (of 81) | Per-car interventions | Peak jerk (m/s³) | Overspeed decisions | Torque-limit decisions | Mean acceleration error (m/s²) |
+|---|---|---|---|---|---|---|---|---|---|
+| 11 | current (Stage 5 drive) | 4: safety, per-car, stable merge, merge quality | 22 | 12 | 4.8% | 7.90 | 2 | 6 | 0.014 |
+| 11 | C1 | 2: stable merge, merge quality | 11 | 9 | 2.4% | 4.47 | 0 | 0 | 0.009 |
+| 11 | **C2 (pick)** | 2: stable merge, merge quality | 9 | 7 | 2.0% | 4.75 | 0 | 0 | 0.008 |
+| 25 | current | 4 | 38 | 11 | 8.4% | 3.91 | 2 | 4 | 0.015 |
+| 25 | C2 | 2: stable merge, merge quality | 16 | 7 | 3.5% | 3.31 | 0 | 0 | 0.009 |
+| 39 | current | 4 | 30 | 14 | 6.9% | 5.05 | 2 | 3 | 0.013 |
+| 39 | C2 | 2: stable merge, merge quality | 18 | 8 | 4.1% | 4.96 | 0 | 0 | 0.007 |
+| 53 | current | 4 | 31 | 13 | 7.2% | 5.38 | 2 | 2 | 0.013 |
+| 53 | C2 | 3: per-car (jerk), stable merge, merge quality | 15 | 8 | 3.5% | 5.28 | 0 | 0 | 0.007 |
+| 67 | current | 4 | 29 | 12 | 6.5% | 5.80 | 2 | 2 | 0.013 |
+| 67 | C2 | 3: per-car (jerk), stable merge, merge quality | 9 | 5 | 2.0% | 5.13 | 0 | 0 | 0.007 |
+
+**The limits:**
+- **The stable merge:** at most 5% of the 81 decisions in the 8 s window after the merge may be
+  interventions, which is 4.
+- **Per-car:** at most 5% interventions over the route, and a peak jerk of at most 5 m/s³.
+- **What "current" fails:** the same 4 gates on every row. Safety fails on its 2 overspeed decisions.
+  Per-car fails on interventions over 5% on rows 25 to 67, and also on jerk on rows 39 to 67.
+- **Not shown in the table:** no drive had a collision, and every drive's server reported the
+  planned controller.
+
+### The reading (set before the run)
+
+- **Row 11:** not closed. C2 still fails the stable merge and merge quality.
+- **The southbound corridor:** **not improved.**
+  - Neither controller passes any of the 5 rows under the re-baselined gates (0 and 0).
+  - C2 loses no row and adds no event kind.
+  - In SUMO the policy passes all 5 rows re-baselined, and rows 11 and 25 recorded.
+
+### What the drives show (read from the reports and logs; causes are inferred)
+
+- **C2 fixes what the proposal traced to the controller:**
+  - **Overspeed:** 10 decisions over the 5 rows become 0.
+  - **Torque limit:** 17 decisions become 0.
+  - **Flags:** 150 become 67.
+  - **Peak jerk:** 7.9 on row 11 becomes 4.75.
+  - **Per-car interventions:** under 5% on every row, where the current controller is at 4.8% to
+    8.4%.
+  - **Second crest:** on row 11, its flags (7 in Stage 5) drop to 1.
+- **What still blocks the stable merge:** 5 to 9 interventions in the 81-decision window on every
+  row, all realization flags.
+  - **Where they fall on row 11 (C2), 8 of the 9 flags:** from the junction sag (27.5 s) to the end
+    of the crest (29.2 s); the ninth is at 43.1 s. 7 of the 8 are inside the window.
+  - **What happens there:** the car is commanded +1.0 to +1.8 m/s². It mostly gets 0.08 to 0.19 m/s²
+    less, once 0.18 m/s² more, with no torque limit reached.
+  - **What changes there:** the road model's slope changes by up to 0.027 within a single decision.
+  - **Inferred:** the body's pitch and heave over those grade breaks, which no controller-only change
+    here removes.
+- **Merge quality:** no qualified merge is recorded in any C2 drive (`quality_merges` is empty), as
+  in Stage 5, so it fails with the stable merge.
+- **Rows 53 and 67:** C2 also fails per-car there, on peak jerk (5.28 and 5.13) alone.
+
+### Charge
+
+- **Phase 6:** 4,458 decisions, 10 evaluation episodes and 462.7 s, of the 850 s and 6,000
+  decisions; the configuration expected 4,444 and 743.2 s.
+- **Drive times:** 121.4 s for C1 and 89.9 s for C2 (rendered). The unrendered drives took 28.5 to
+  33.8 s.
+  - C1's drive ran over its 88.4 s estimate; I haven't investigated why.
+  - The 70.8 s unrendered estimate came from Stage 5's development drive.
+  - The check before each drive held throughout.
+- **No raise:** of the study total or of the diagnostic episodes.
+- **Study time:** 63,285.2 of 64,700 s used; 1,414.8 s left.
+- **Video** (PhysX physics, labelled so in the video, the other cars at their SUMO positions):
+  `outputs/highway-merge-v15/physics-gap/row11-c2/physics-with-graph/physics-with-graph.mp4`, outside
+  Git.
+
+### Not done
+
+None of these was authorized:
+- the northbound rows;
+- any Level 1 change;
+- the road model, the LA model, or the car's physics parameters;
+- gate changes;
+- held-out rows;
+- installs into Isaac Sim's Python;
+- training, any raise, or a merge to main.
+
+The gates are unchanged (decision 12, "keep"). Revisiting them is your decision, now that the
+results are in.
+
 ## Decisions for you
 
 Decisions 1–7 were decided on November 25, 2026, relayed by the main Claude session and recorded
@@ -2549,11 +2672,20 @@ relayed by the main Claude session.
     - **The episodes:** counted as evaluation episodes in their own allowance (recommended), or as
       diagnostic episodes with a raise of 9 (recommended option) or 19 (larger).
     - **No raise of the study total** is needed for any option.
+
+    **Decided: recommended,** on November 27, 2026 ("Yes, as recommended", relayed by the main
+    session). It ran: C2 was picked, and the gap was not closed. See
+    [Physics gap result](#physics-gap-result-november-27-c1-and-c2-in-physx).
 12. **Realization mismatches in physics:** do they count as interventions?
     - **Keep as now** (recommended until C1's result is in);
     - **or count only mismatches above a physics tolerance;**
     - **or count a cumulative speed error.**
     - Changing this alone leaves row 11 failing two gates (peak jerk and overspeed).
+
+    **Decided: keep,** on November 27, 2026, to be revisited with you after the results.
+    - **What has changed since:** with C2, row 11's peak jerk (4.75) and overspeed (0) now pass.
+    - **What's left:** every southbound row fails only on the stable merge, merge quality, and, on
+      rows 53 and 67, per-car jerk.
 
 ## What carries over from v14
 
