@@ -25,11 +25,21 @@ wheels need the understeer angle on top of the geometric one; both come from the
 mass and tire stiffness through the linear bicycle model (cornering_terms).
 
 Pure Python (math only) so it can be unit-tested outside Isaac Sim and imported inside it.
+
+Controller versions (plan v15 "Physics gap proposal", user decision of November 27, 2026, relayed by the main Claude
+session: "Yes, as recommended", decision 11). CONTROLLERS names them; 'stage5' is the controller every physics drive
+used before, and stays the default, unchanged:
+- 'c1': the grade feedforward takes the road model's slope under the axles, 0.05 s ahead (state['road_grade'], which
+  the physics server computes from the lane-graph surface), instead of the chassis pitch; the force bias is not
+  learned from a decision in which that slope changed by more than 0.005, nor from any decision that starts within
+  0.5 s after one; and the acceleration feedforward includes the wheels' rotational inertia (m + n I / r^2);
+- 'c2': c1 with the speed correction gain raised from 2 to 6 per second.
+Both were fixed before any drive with them; they are not tuned on drive results.
 """
 from __future__ import annotations
 
 import math
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, replace
 
 GRAVITY = 9.81
 
@@ -51,6 +61,14 @@ class VehicleSpec:
     # Linear-bicycle cornering terms (rad per m/s2 of lateral acceleration), 0 for a car without tire slip:
     understeer_rad_per_m_s2: float = 0.     # m_front / C_front - m_rear / C_rear
     rear_slip_rad_per_m_s2: float = 0.      # m_rear / C_rear: the body points this much into the turn
+    wheels: int = 4
+    wheel_moi_kg_m2: float = 0.             # each wheel's moment of inertia (used only with wheel_inertia_feedforward)
+
+    def feedforward_mass_kg(self, wheel_inertia):
+        """The mass the acceleration feedforward multiplies: with wheel inertia, m + n I / r^2."""
+        if not wheel_inertia:
+            return self.mass_kg
+        return self.mass_kg + self.wheels * self.wheel_moi_kg_m2 / self.wheel_radius_m ** 2
 
 
 def cornering_terms(mass_kg, wheelbase_m, center_of_mass_x_m, front_axle_x_m, rear_axle_x_m,
@@ -78,6 +96,23 @@ class ControllerGains:
     path_smoothing_m: float = 8.       # moving-average window over the reference path (SUMO lanes are polylines)
     steady_command_m_s2: float = .2    # learn the force bias only when consecutive commands differ less than this
     stop_speed_m_s: float = .3
+    # Physics gap versions (see the module docstring); these defaults are the 'stage5' controller.
+    grade_source: str = 'pitch'        # 'pitch': state['grade'] (chassis); 'road': state['road_grade'] (road model)
+    grade_preview_s: float = 0.        # how far ahead the server takes the road slope ('road' only)
+    bias_pause_slope_change: float | None = None   # no bias learning from a decision whose road slope changed more
+    bias_pause_hold_s: float = 0.      # ... nor from a decision starting within this long after such a decision
+    wheel_inertia_feedforward: bool = False
+
+
+_C1 = ControllerGains(grade_source='road', grade_preview_s=.05, bias_pause_slope_change=.005, bias_pause_hold_s=.5,
+                      wheel_inertia_feedforward=True)
+CONTROLLERS = {'stage5': ControllerGains(), 'c1': _C1, 'c2': replace(_C1, speed_kp=6.)}
+
+
+def controller_gains(name):
+    if name not in CONTROLLERS:
+        raise ValueError(f'Unknown controller version {name!r}; one of {sorted(CONTROLLERS)}')
+    return CONTROLLERS[name]
 
 
 def wrap(angle):
@@ -160,6 +195,8 @@ class LowLevelController:
         self.steer = 0.
         self.saturated = False
         self.history = []
+        self.pause_until = -math.inf      # no bias learning from decisions starting before this (c1, c2)
+        self.last_road_grade = None
 
     def begin_decision(self, *, time, acceleration, path, speed):
         """Start a 0.1 s decision: the commanded acceleration and the reference path for it."""
@@ -169,20 +206,32 @@ class LowLevelController:
             measured = (speed - previous['speed']) / (time - previous['time'])
             error = previous['acceleration'] - measured
             steady = abs(float(acceleration) - previous['acceleration']) < g.steady_command_m_s2
-            if not previous['saturated'] and previous['speed'] > g.stop_speed_m_s and steady:
+            paused = False
+            if g.bias_pause_slope_change is not None:
+                if previous['road_low'] is None:
+                    raise RuntimeError('This controller version needs state["road_grade"] from the physics server')
+                if previous['road_high'] - previous['road_low'] > g.bias_pause_slope_change:
+                    self.pause_until = max(self.pause_until, float(time) + g.bias_pause_hold_s)
+                paused = previous['time'] < self.pause_until - 1e-6     # starting exactly hold_s after: learned
+            if not previous['saturated'] and previous['speed'] > g.stop_speed_m_s and steady and not paused:
                 limit = g.bias_limit_m_s2 * v.mass_kg
                 self.bias_n = min(limit, max(-limit, self.bias_n + g.bias_gain * v.mass_kg * error))
             self.history.append(dict(time=previous['time'], commanded=previous['acceleration'],
-                                     measured=measured, saturated=previous['saturated']))
+                                     measured=measured, saturated=previous['saturated'], bias_paused=paused))
+        # The road slope's range over a decision starts from the last tick before it, so a change across the
+        # boundary counts.
+        last = self.last_road_grade
         self.decision = dict(time=float(time), acceleration=float(acceleration), speed=float(speed),
-                             path=PathGeometry(path, g.path_smoothing_m), saturated=False)
+                             path=PathGeometry(path, g.path_smoothing_m), saturated=False,
+                             road_low=last, road_high=last)
 
     def command(self, state, time, dt):
         """Wheel commands for one physics tick.
 
         state: x, y (chassis origin), yaw (rad, from +x), speed (forward, m/s), grade (sine of the
-        nose-up pitch). Returns steering (rad, positive left), drive and brake torque per wheel (N*m)
-        and diagnostics.
+        nose-up pitch) and, for the 'road' grade source, road_grade (the road model's slope under the
+        axles, taken grade_preview_s ahead by the server). Returns steering (rad, positive left), drive
+        and brake torque per wheel (N*m) and diagnostics.
         """
         g, v, d = self.gains, self.vehicle, self.decision
         if d is None:
@@ -191,7 +240,24 @@ class LowLevelController:
         # longitudinal
         reference = d['speed'] + d['acceleration'] * (time - d['time'])
         wanted = d['acceleration'] + g.speed_kp * (reference - speed)
-        force = v.mass_kg * (wanted + GRAVITY * float(state['grade'])) + self.bias_n
+        road = state.get('road_grade')
+        if road is not None:
+            road = float(road)
+            self.last_road_grade = road
+            d['road_low'] = road if d['road_low'] is None else min(d['road_low'], road)
+            d['road_high'] = road if d['road_high'] is None else max(d['road_high'], road)
+        if g.grade_source == 'road':
+            if road is None:
+                raise RuntimeError('This controller version needs state["road_grade"] from the physics server')
+            grade = road
+        elif g.grade_source == 'pitch':
+            grade = float(state['grade'])
+        else:
+            raise ValueError(f'Unknown grade source {g.grade_source!r}')
+        if g.wheel_inertia_feedforward:
+            force = v.feedforward_mass_kg(True) * wanted + v.mass_kg * GRAVITY * grade + self.bias_n
+        else:
+            force = v.mass_kg * (wanted + GRAVITY * grade) + self.bias_n
         hold = speed < g.stop_speed_m_s and d['acceleration'] <= 0.
         drive = brake = 0.
         if hold:
@@ -226,10 +292,22 @@ class LowLevelController:
         return dict(steer_rad=self.steer, drive_nm=drive, brake_nm=brake, saturated=saturated, hold=hold,
                     reference_speed_m_s=reference, wanted_acceleration_m_s2=wanted, force_n=force,
                     bias_n=self.bias_n, lateral_error_m=lateral, heading_error_rad=heading_error,
-                    path_curvature=curvature, path_s_m=s)
+                    path_curvature=curvature, path_s_m=s, grade_used=grade)
 
     def describe(self):
-        return dict(vehicle=asdict(self.vehicle), gains=asdict(self.gains),
-                    law=('longitudinal: per-decision speed reference v0 + a_cmd * (t - t0), force feedforward '
-                         'm * (a + g * grade) + learned bias + proportional speed correction; lateral: '
-                         'curvature feedforward + heading error + Stanley term at the front bumper + small integral'))
+        g = self.gains
+        law = ('longitudinal: per-decision speed reference v0 + a_cmd * (t - t0), force feedforward '
+               'm * (a + g * grade) + learned bias + proportional speed correction; lateral: '
+               'curvature feedforward + heading error + Stanley term at the front bumper + small integral')
+        changes = []
+        if g.grade_source == 'road':
+            changes.append(f'grade from the road model under the axles, {g.grade_preview_s:g} s ahead')
+        if g.bias_pause_slope_change is not None:
+            changes.append(f'no bias learning from a decision whose road slope changes by more than '
+                           f'{g.bias_pause_slope_change:g}, nor for {g.bias_pause_hold_s:g} s after')
+        if g.wheel_inertia_feedforward:
+            changes.append(f'acceleration feedforward mass m + n I / r^2 = '
+                           f'{self.vehicle.feedforward_mass_kg(True):.1f} kg')
+        if changes:
+            law += '; versions: ' + '; '.join(changes)
+        return dict(vehicle=asdict(self.vehicle), gains=asdict(g), law=law)

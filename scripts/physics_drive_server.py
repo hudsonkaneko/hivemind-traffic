@@ -20,6 +20,13 @@ What moves what:
 Each 'advance' (one 0.1 s decision) first renders the frame for its start time, when the
 physics car's pose equals its SUMO shadow's and the background is SUMO's for that time, then
 runs 12 physics ticks and replies with the new front-bumper pose, forward speed and telemetry.
+
+--controller picks the low-level controller version (traffic/physical_controller.CONTROLLERS; plan v15
+"Physics gap proposal", decision 11). 'stage5', the default, is the controller of every earlier drive. For
+the versions that take the grade from the road model ('c1', 'c2') the server gives the controller, at
+every tick, road_grade: the sine of the slope between the model's lane surface under the front and the
+rear axle, both taken speed * grade_preview_s ahead along the heading. The wheels' moment of inertia is
+read from the package (physxVehicleWheel:moi) for the versions that use it in the feedforward.
 """
 from __future__ import annotations
 
@@ -37,7 +44,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from traffic import physics_link  # noqa: E402
-from traffic.physical_controller import ControllerGains, LowLevelController, VehicleSpec, cornering_terms  # noqa: E402
+from traffic.physical_controller import (CONTROLLERS, LowLevelController, VehicleSpec, controller_gains,  # noqa: E402
+                                         cornering_terms)
 
 PHYSICS_HZ = 120
 DECISION_S = .1
@@ -204,19 +212,29 @@ class Server:
                                          front_x, rear_x, tires['FrontTire'], tires['RearTire'])
         self.cornering.update(tire_lateral_stiffness_n_rad=tires, source=(
             'asset mass, centre of mass, wheel positions and lateralStiffnessGraph; linear bicycle model'))
+        moi = {}
+        for name in ('FrontWheel', 'RearWheel'):
+            value = stage.GetPrimAtPath(PATHS.vehicle + '/Physics/' + name).GetAttribute('physxVehicleWheel:moi').Get()
+            if value is None:
+                raise RuntimeError(f'The package has no physxVehicleWheel:moi on {name}')
+            moi[name] = float(value)
+        self.axles = dict(front_x_m=front_x, rear_x_m=rear_x)
+        self.gains = controller_gains(args.controller)
         self.spec = VehicleSpec(mass_kg=mass, wheelbase_m=float(meta['wheelbase_m']),
                                 front_bumper_m=float(meta['body_collision_center_m'][0] + meta['body_collision_dimensions_m'][0] / 2),
                                 rear_axle_m=-rear_x, wheel_radius_m=float(meta['wheel_radius_m']),
                                 max_drive_nm_per_wheel=args.max_drive_nm, max_brake_nm_per_wheel=args.max_brake_nm,
                                 understeer_rad_per_m_s2=self.cornering['understeer_rad_per_m_s2'],
-                                rear_slip_rad_per_m_s2=self.cornering['rear_slip_rad_per_m_s2'])
-        self.controller = LowLevelController(self.spec, ControllerGains())
+                                rear_slip_rad_per_m_s2=self.cornering['rear_slip_rad_per_m_s2'],
+                                wheels=len(meta['wheel_centers_m']),
+                                wheel_moi_kg_m2=(moi['FrontWheel'] + moi['RearWheel']) / 2)
+        self.controller = LowLevelController(self.spec, self.gains)
         self.scene = dict(road_model=str(args.road_model), road_decks_in_ground_group=len(decks),
                           road_physics_scene='deactivated in this stage', package_ground_plane='deactivated',
                           asphalt_tire_friction=ASPHALT_FRICTION, tire_friction_table=dict(
                               materials=[str(t) for t in materials.GetTargets()], values=values + [ASPHALT_FRICTION]),
                           surface=self.surface_info, physics_hz=PHYSICS_HZ, background='visual only, SUMO poses',
-                          cornering=self.cornering)
+                          cornering=self.cornering, controller=args.controller, wheel_moi_kg_m2=moi)
         self.paths = PATHS
 
     def spawn(self, pose):
@@ -302,6 +320,16 @@ class Server:
                     ground=[str(s.get(VEHICLE_WHEEL_STATE_GROUND_SHAPE, '')) for s in wheels])
 
     # --- background and camera -----------------------------------------------------------
+    def road_grade(self, state):
+        """Sine of the model road's slope between the front and rear axle, grade_preview_s ahead."""
+        ahead = max(float(state['speed']), 0.) * self.gains.grade_preview_s
+        c, s = math.cos(state['yaw']), math.sin(state['yaw'])
+        front, rear = self.axles['front_x_m'] + ahead, self.axles['rear_x_m'] + ahead
+        zf = self.surface.height(state['x'] + front * c, state['y'] + front * s)
+        zr = self.surface.height(state['x'] + rear * c, state['y'] + rear * s)
+        rise, run = zf - zr, front - rear
+        return rise / math.hypot(run, rise)
+
     def place_background(self, background):
         from pxr import Gf
         present = {b['id']: b for b in background}
@@ -377,9 +405,12 @@ class Server:
                                        path=command['path'], speed=start['speed'])
         dt = 1. / PHYSICS_HZ
         ticks, state = [], start
+        road = self.gains.grade_source == 'road'
         for k in range(STEPS_PER_DECISION):
-            control = self.controller.command(dict(x=state['x'], y=state['y'], yaw=state['yaw'], speed=state['speed'],
-                                                   grade=state['grade']), now + k * dt, dt)
+            inputs = dict(x=state['x'], y=state['y'], yaw=state['yaw'], speed=state['speed'], grade=state['grade'])
+            if road:
+                inputs['road_grade'] = self.road_grade(state)
+            control = self.controller.command(inputs, now + k * dt, dt)
             applied = AppliedControl(control['steer_rad'],
                                      control['drive_nm'] / self.spec.max_drive_nm_per_wheel if self.spec.max_drive_nm_per_wheel else 0.,
                                      control['brake_nm'] / self.spec.max_brake_nm_per_wheel if self.spec.max_brake_nm_per_wheel else 0.,
@@ -399,6 +430,8 @@ class Server:
                          brake_nm=sum(t['brake_nm'] for t in ticks) / len(ticks),
                          steer_rad=ticks[-1]['steer_rad'], lateral_error_m=ticks[-1]['lateral_error_m'],
                          heading_error_rad=ticks[-1]['heading_error_rad'], bias_n=ticks[-1]['bias_n'],
+                         grade_used=ticks[-1]['grade_used'],
+                         grade_used_range=[min(t['grade_used'] for t in ticks), max(t['grade_used'] for t in ticks)],
                          maneuver=command.get('maneuver'), lane_id=command.get('lane_id'),
                          chassis=state['chassis'], pitch_rad=state['pitch_rad'], roll_rad=state['roll_rad'],
                          vertical_speed=state['vertical_speed'], on_ground=state['on_ground'], jounce=state['jounce'],
@@ -416,6 +449,8 @@ class Server:
             return max(values) if values else None
         errors = [abs(r['commanded_acceleration'] - r['measured_acceleration']) for r in rows]
         return dict(schema='physics_drive_server_v01', agent=self.agent, decisions=len(rows),
+                    controller=self.args.controller,
+                    bias_paused_decisions=sum(h['bias_paused'] for h in self.controller.history),
                     vehicle=dict(package=str(self.args.vehicle_package), spec=self.controller.describe(),
                                  provisional_physics=self.vehicle.metadata.get('provisional_physics')),
                     scene=self.scene, spawn=getattr(self, 'spawn_report', None), frames=len(self.frames),
@@ -479,6 +514,7 @@ def main():
     parser.add_argument('--max-drive-nm', type=float, default=700.)
     parser.add_argument('--max-brake-nm', type=float, default=1500.)
     parser.add_argument('--link-port', type=int, required=True)
+    parser.add_argument('--controller', default='stage5', choices=sorted(CONTROLLERS))
     args = parser.parse_args()
     args.output = args.output.resolve()
     if not args.output.is_relative_to(ROOT / 'outputs') or args.output.exists():
