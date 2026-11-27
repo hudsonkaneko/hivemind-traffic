@@ -3,7 +3,7 @@
 Proposed by Claude on November 25, 2026, after v14 round 24. Every phase that charges the
 shared ledger needs the user's approval of its resolved configuration first, as before.
 
-**Status (November 26, 2026):** the user decided all seven questions at the end of this plan.
+**Status (November 27, 2026):** the user decided all seven questions at the end of this plan.
 - **Phase 0** (tools only, no training, nothing charged) passed its exit check; see
   [Phase 0 result](#phase-0-result-november-25).
 - **Phase 1** (baselines, evaluation only, charged) ran and met its exit check; see
@@ -35,11 +35,13 @@ shared ledger needs the user's approval of its resolved configuration first, as 
   - It passes 61 of 70 re-baselined and 54 recorded. It gains row 37 but loses rows 48 and 50, both
     on headway.
   - So it doesn't join the held-out check, by the reading set before the run.
-- **Next:** Stage 5, the held-out check and the physics drives, with the Phase 3 policy as the only
-  candidate. It is sized for your approval (decision 10); see
+- **Stage 5** (you approved the recommended size on November 27: "Approve recommended"; decision 10):
+  the held-out check and the physics drives, with the Phase 3 policy as the only candidate; see
   [Stage 5 proposal](#stage-5-proposal-november-26-the-held-out-check-and-physics-drives-for-your-approval).
-  - It fits the 2,164.4 s of study time left, with no raise.
-  - Nothing more runs until you decide.
+  - **Part 1, the held-out check,** is built and its configuration pinned; it runs next. See
+    [Stage 5 part 1](#stage-5-part-1-november-27-the-held-out-check).
+  - **Part 2, the physics drives,** follows: an uncharged build and development drive, then the two
+    charged drives.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -1996,6 +1998,49 @@ There's no pass mark; the plan's exit check is "Recorded and labelled".
 
 Together they fit the study time left with no raise.
 
+## Stage 5 part 1 (November 27): the held-out check
+
+**Approved** on November 27, 2026: "Approve recommended", typed in the Claude side session, in answer
+to "Approve Stage 5 at the recommended size?" (decision 10). So:
+- **Part 1:** the policy, expert v3 and round 16 on the 42 held-out rows, once, in one batch, at most
+  300,000 decisions and 300 s.
+- **Part 2:** the uncharged physics build and development drive, then the two charged drives on
+  development row 11, at most 500 s, counted as Stage 5 evaluation episodes.
+- **No raise** of the study total.
+
+### Built first (uncharged)
+
+- **The runner:** step `held-out` in `experiments/v15_stage5.py`.
+  - **Its configuration pins:**
+    - the policy's weights (`l2:bc7c050f6d3da3ce`, from the relabel step) and round 16's
+      (`policy:f0b11fa577b33763`, from Phase 1), each checked against its hash;
+    - expert v3's source;
+    - the frozen regrade (sha256 `515c3b7c…`, unchanged);
+    - the benchmark manifest.
+  - **It runs one batch:** the policy on development row 3 first (the canary re-runs it), the 126
+    held-out tasks, then the parity row 52.
+  - **It refuses to run again** once its output holds a result or the ledger has a segment for it.
+  - **Its report** covers each case and the pool, under the re-baselined and the recorded gates,
+    with Wilson intervals, paired differences with exact McNemar tests, events, and the reading set
+    before the run.
+- **The held-out rows in the pool:** a new row set, `v15-held-out`.
+  - Only a pool given the user's authorization (`WorkerPool(held_out=...)`) builds those rows,
+    through `held_out_rows(cfg, authorized=True)`.
+  - Without one, a task on them is refused, and every other pool refuses them too.
+  - The other row sets and every result key are unchanged; the development check and the parity row
+    confirm it in the run.
+- **The resolve builds no held-out row.** It takes their horizons from the cases and their decisions
+  from the development rows, as in the proposal.
+- **Tests:** 8 new, none of which builds a held-out row; the v15 suite passes (123 passed).
+
+**Configuration:** `configs/evaluation/v15-stage5-held-out.json` (canonical-JSON sha256 `d48b2abb…`).
+Its numbers are the proposal's:
+- **Expected:** 249,597 decisions, 129 evaluation episodes, about 156.3 s.
+- **Projected:** 262,077 decisions.
+- **Range:** 232,604–272,099 decisions.
+- **Reservation:** 280 s.
+- **Allowance:** 300,000 decisions and 300 s, out of the 2,164.4 s of study time left.
+
 ## Decisions for you
 
 Decisions 1–7 were decided on November 25, 2026, relayed by the main Claude session and recorded
@@ -2077,6 +2122,11 @@ relayed by the main Claude session.
       - The episodes are counted as Stage 5 evaluation episodes (recommended), or as diagnostic
         episodes with a raise of 1.
     - **No raise of the study total** is needed for any option.
+
+    **Decided: recommended,** on November 27, 2026 ("Approve recommended", typed in the Claude side
+    session). Part 1 runs all three drivers, at most 300,000 decisions and 300 s. Part 2's drives are
+    counted as Stage 5 evaluation episodes, at most 500 s. See
+    [Stage 5 part 1](#stage-5-part-1-november-27-the-held-out-check).
 
 ## What carries over from v14
 

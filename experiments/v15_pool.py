@@ -68,6 +68,11 @@ if str(ROOT) not in sys.path:
 OUTPUT_ROOT = ROOT / 'outputs'
 SCHEMA = 'highway_merge_v15_pool_v01'
 ROW_SETS = ('v14-validation', 'v14-training', 'v15-development', 'v15-training')   # never the held-out rows
+# The 42 reserved held-out rows (traffic/v15_benchmark.held_out_rows), for Stage 5 only (plan v15 decision 10, user
+# decision of November 27, 2026, "Approve recommended"). Only a pool given the user's authorization builds them
+# (WorkerPool(held_out=...)); every other pool, and every worker without it, refuses a task on them.
+HELD_OUT_ROW_SET = 'v15-held-out'
+_HELD_OUT = {}       # the authorization of the pool built with it in this process (learner or worker); empty otherwise
 BACKGROUNDS = ('idm', 'krauss')
 MODES = ('validate', 'collect')
 BACKGROUND_PROFILES = ('native_cautious', 'native_balanced', 'native_attentive')
@@ -101,7 +106,11 @@ class Task:
     perturb: str | None = None       # Level 2 rule data only: the perturbation version (traffic/v15_level2)
 
     def __post_init__(self):
-        if self.row_set not in ROW_SETS:
+        if self.row_set == HELD_OUT_ROW_SET:
+            if not _HELD_OUT.get('authorization'):
+                raise ValueError(f"Row set {self.row_set!r} is reserved: only a pool built with the user's "
+                                 'authorization (Stage 5) takes tasks on it')
+        elif self.row_set not in ROW_SETS:
             raise ValueError(f'Unknown row set {self.row_set!r}; expected one of {ROW_SETS}')
         if self.background not in BACKGROUNDS or self.mode not in MODES:
             raise ValueError(f'Unknown background {self.background!r} or mode {self.mode!r}')
@@ -280,7 +289,18 @@ def _row_set(cfg, name):
     raise ValueError(name)
 
 
-def _worker_setup(backend, round_index, policy_dir):
+def _held_out(cfg, authorization):
+    """The 42 held-out rows, built only with the user's authorization (a non-empty string recording it)."""
+    if not isinstance(authorization, str) or not authorization.strip():
+        raise PermissionError("The v15 held-out rows are reserved: a pool builds them only with the user's "
+                              'authorization (Stage 5)')
+    from traffic import v15_benchmark
+    rows = v15_benchmark.held_out_rows(cfg, authorized=True)
+    _HELD_OUT['authorization'] = authorization
+    return rows
+
+
+def _worker_setup(backend, round_index, policy_dir, held_out=None):
     import numpy as np
     import torch
     from traffic import sumo_coupling
@@ -297,6 +317,8 @@ def _worker_setup(backend, round_index, policy_dir):
     random.seed(cfg['seed'])
     _W.update(runner=runner, base=runner.base, cfg=cfg, policies={}, policy_dir=Path(policy_dir),
               rows={name: _row_set(cfg, name) for name in ROW_SETS}, round_index=round_index)
+    if held_out is not None:
+        _W['rows'][HELD_OUT_ROW_SET] = _held_out(cfg, held_out)
 
 
 def _driver(driver, task=None, key=None):
@@ -466,10 +488,10 @@ def _save(batch, path):
     return len(data)
 
 
-def _worker_main(worker, inbox, outbox, backend, round_index, policy_dir, priority='normal'):
+def _worker_main(worker, inbox, outbox, backend, round_index, policy_dir, priority='normal', held_out=None):
     try:
         read = set_priority(priority)
-        _worker_setup(backend, round_index, policy_dir)
+        _worker_setup(backend, round_index, policy_dir, held_out)
         _W['worker'] = worker
         outbox.put(('ready', worker, os.getpid(), read))
     except BaseException:
@@ -512,7 +534,8 @@ class BatchResult:
 class WorkerPool:
     """N worker processes, each owning one SUMO simulation at a time, and the learner's side of the loop."""
 
-    def __init__(self, workers, out, *, backend='libsumo', round_index=24, start_timeout_s=600, priority='normal'):
+    def __init__(self, workers, out, *, backend='libsumo', round_index=24, start_timeout_s=600, priority='normal',
+                 held_out=None):
         self.out = Path(out).resolve()
         if not self.out.is_relative_to(OUTPUT_ROOT):
             raise ValueError('Pool outputs must stay inside project outputs')
@@ -525,6 +548,10 @@ class WorkerPool:
         from traffic import highway_flow_rl_v14_contract as contract
         self.cfg = contract.build_config(round_index)
         self.rows = {name: _row_set(self.cfg, name) for name in ROW_SETS}
+        # held_out: the user's authorization for the held-out rows (Stage 5 only); without it they are never built
+        self.held_out = held_out
+        if held_out is not None:
+            self.rows[HELD_OUT_ROW_SET] = _held_out(self.cfg, held_out)
         context = mp.get_context('spawn')
         self.outbox = context.Queue()
         self.inboxes, self.processes = [], []
@@ -532,7 +559,8 @@ class WorkerPool:
         for worker in range(self.size):
             inbox = context.Queue()
             process = context.Process(target=_worker_main, daemon=True,
-                                      args=(worker, inbox, self.outbox, backend, round_index, str(self.out / 'policies'), priority))
+                                      args=(worker, inbox, self.outbox, backend, round_index, str(self.out / 'policies'), priority,
+                                            held_out))
             process.start()
             self.inboxes.append(inbox)
             self.processes.append(process)
@@ -559,6 +587,9 @@ class WorkerPool:
                 self._known.setdefault(record['key'], record)
 
     def key(self, task):
+        if task.row_set not in self.rows:
+            raise PermissionError(f'This pool has no {task.row_set!r} rows: the held-out rows need a pool built with '
+                                  "the user's authorization (Stage 5)")
         return task_key(key_fields(task, self.round_index, self.rows[task.row_set][task.row]))
 
     def publish_level2(self, state_dict):
@@ -691,6 +722,8 @@ class WorkerPool:
                                                      samples_sha=record['samples_sha'], decisions=record['decisions'])) + '\n')
 
     def close(self):
+        if self.held_out is not None:
+            _HELD_OUT.clear()
         for inbox, process in zip(self.inboxes, self.processes):
             if process.is_alive():
                 inbox.put(('stop',))

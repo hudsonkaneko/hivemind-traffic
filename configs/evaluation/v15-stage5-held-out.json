@@ -1,0 +1,922 @@
+{
+ "authorization": "Stage 5 part 1, the held-out check: user decision of November 27, 2026, typed in the Claude side session: \"Approve recommended\" (plan v15 decision 10 at the recommended size: the Phase 3 policy l2:bc7c050f6d3da3ce, with expert v3 and the round-16 policy as fixed baselines, on the 42 reserved held-out rows, once, in one batch with the development checks; Stage 5's own allowance of at most 300,000 decisions and 300 s, with no raise of the study total; at most 16 workers at below-normal priority, IDM background only, SUMO only, the shared lock, and the resolved configuration and expected charge in the coordination master before it runs; then part 2, the physics drives on development row 11, at most 500 s, counted as Stage 5 evaluation episodes; not authorized: any raise of the study total, Phase 4 step B, Krauss runs, Isaac Lab training, merging to main).",
+ "backend": "libsumo",
+ "backgrounds": [
+  "idm"
+ ],
+ "batches": [
+  {
+   "drivers": [
+    "l2:bc7c050f6d3da3ce",
+    "rule:expert-v3",
+    "policy:f0b11fa577b33763"
+   ],
+   "expected_decisions": 249597,
+   "name": "held-out",
+   "tasks": [
+    {
+     "dev_check": true,
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 3,
+     "row_set": "v15-development"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 0,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 0,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 0,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 1,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 1,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 1,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 2,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 2,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 2,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 3,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 3,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 3,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 4,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 4,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 4,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 5,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 5,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 5,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 6,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 6,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 6,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 7,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 7,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 7,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 8,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 8,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 8,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 9,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 9,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 9,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 10,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 10,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 10,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 11,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 11,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 11,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 12,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 12,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 12,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 13,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 13,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 13,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 14,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 14,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 14,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 15,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 15,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 15,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 16,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 16,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 16,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 17,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 17,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 17,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 18,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 18,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 18,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 19,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 19,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 19,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 20,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 20,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 20,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 21,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 21,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 21,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 22,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 22,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 22,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 23,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 23,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 23,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 24,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 24,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 24,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 25,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 25,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 25,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 26,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 26,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 26,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 27,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 27,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 27,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 28,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 28,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 28,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 29,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 29,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 29,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 30,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 30,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 30,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 31,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 31,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 31,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 32,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 32,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 32,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 33,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 33,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 33,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 34,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 34,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 34,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 35,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 35,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 35,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 36,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 36,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 36,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 37,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 37,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 37,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 38,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 38,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 38,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 39,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 39,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 39,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 40,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 40,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 40,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "l2:bc7c050f6d3da3ce",
+     "row": 41,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "rule:expert-v3",
+     "row": 41,
+     "row_set": "v15-held-out"
+    },
+    {
+     "driver": "policy:f0b11fa577b33763",
+     "row": 41,
+     "row_set": "v15-held-out"
+    },
+    {
+     "decisions": 191,
+     "driver": "l2:rule-v3",
+     "mode": "validate",
+     "parity": true,
+     "report_sha": "ed17062a918ebefdb02992e50dcd7d93370879e6e1d75340e7aa816e01420605",
+     "row": 52,
+     "row_set": "v15-development",
+     "source": "outputs/highway-merge-v15/phase-2/run-03/results.jsonl, rule:expert-v3",
+     "trace_sha": "bb4f9d9aa3a9b689d3c6763521347a95843cd0e5c6cd74cb94b08ff27cc76f31"
+    }
+   ]
+  }
+ ],
+ "benchmark": {
+  "cases": [
+   "v05-validation-i110-merge",
+   "v05-val-0-cruise",
+   "v05-val-0-passing",
+   "v05-validation-i110-following",
+   "ramp-eval-train-2-lane-ramp120-ramp-started",
+   "v02-development-60mph-cruise",
+   "ramp-eval-validation-2-lane-ramp180-ramp-started",
+   "ramp-eval-validation-4-lane-ramp180-ramp-started",
+   "v12-val-la-nb-pasadena-model-merge-8of16-medium",
+   "v12-val-la-sb-adams-model-merge-8of16-medium",
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+   "v12-val-la-nb-pasadena-model-following-8of16-dense",
+   "v12-val-la-sb-adams-model-passing-4of16-medium"
+  ],
+  "development_rows": 70,
+  "development_seeds": [
+   6952001,
+   6952002,
+   6952003,
+   6952004,
+   6952005
+  ],
+  "held_out_rows": 42,
+  "held_out_seeds": [
+   6953001,
+   6953002,
+   6953003
+  ],
+  "held_out_status": "reserved; never run; final candidate only, with the user's authorization",
+  "row_order": "row 14 * k + c is case c at development seed k",
+  "schema": "highway_merge_v15_benchmark_v01",
+  "source": "v14 round 24 validation rows 0-13"
+ },
+ "charge": {
+  "decisions_left": 300000,
+  "estimate_source": {
+   "checks": {
+    "canary": 3084,
+    "dev_check": 3084,
+    "parity": 191
+   },
+   "decisions_per_worker_second": 140,
+   "longest_episode_decisions": 6885,
+   "per_driver": {
+    "l2:bc7c050f6d3da3ce": {
+     "development_decisions": 135439,
+     "expected": 81263,
+     "high": 88650,
+     "longest": 6688,
+     "low": 76341,
+     "per_case_mean": {
+      "0": 3175.2,
+      "1": 1640.8,
+      "10": 299.8,
+      "11": 444.4,
+      "12": 2095.2,
+      "13": 975.6,
+      "2": 1620.4,
+      "3": 3080.8,
+      "4": 779.8,
+      "5": 6666.2,
+      "6": 840.8,
+      "7": 816.6,
+      "8": 2216.2,
+      "9": 2436.0
+     }
+    },
+    "policy:f0b11fa577b33763": {
+     "development_decisions": 134530,
+     "expected": 80718,
+     "high": 88353,
+     "longest": 6885,
+     "low": 73569,
+     "per_case_mean": {
+      "0": 3275.4,
+      "1": 1654.8,
+      "10": 220.4,
+      "11": 337.0,
+      "12": 2140.0,
+      "13": 1012.0,
+      "2": 1624.6,
+      "3": 3095.6,
+      "4": 797.8,
+      "5": 6842.2,
+      "6": 847.6,
+      "7": 883.4,
+      "8": 1807.6,
+      "9": 2367.6
+     }
+    },
+    "rule:expert-v3": {
+     "development_decisions": 135428,
+     "expected": 81257,
+     "high": 88737,
+     "longest": 6688,
+     "low": 76335,
+     "per_case_mean": {
+      "0": 3175.2,
+      "1": 1648.6,
+      "10": 299.8,
+      "11": 444.4,
+      "12": 2095.2,
+      "13": 962.2,
+      "2": 1623.8,
+      "3": 3080.8,
+      "4": 779.8,
+      "5": 6666.2,
+      "6": 840.8,
+      "7": 816.6,
+      "8": 2216.2,
+      "9": 2436.0
+     }
+    }
+   },
+   "rate": {
+    "decisions": 139117,
+    "decisions_per_clock_second": 1900.4,
+    "seconds": 73.205,
+    "step": "relabel"
+   },
+   "rule": "each driver's mean decisions per case over its 5 development seeds, times 3, summed over the 14 cases; the range from each case's fewest and most",
+   "start_seconds": 15.0
+  },
+  "expected_clock_seconds": 156.3,
+  "expected_decisions": 249597,
+  "expected_episodes": 129,
+  "guard_margin": 0.05,
+  "phase_allowance": 300000,
+  "phase_decisions_used": 0,
+  "phase_seconds_used": 0.0,
+  "phase_time_cap": 300.0,
+  "projected_decisions": 262077,
+  "range": {
+   "high": 272099,
+   "low": 232604
+  },
+  "reserve_seconds": 280,
+  "seconds_left": 300.0,
+  "study_seconds_left": 2164.357,
+  "total_wall_seconds": 64700
+ },
+ "dev_check": {
+  "decisions": 3084,
+  "driver": "l2:bc7c050f6d3da3ce",
+  "report_sha": "4218f367962427068ff533380b1da24b7405763f7a82b2db0cb203b57f5f624c",
+  "row": 3,
+  "source": "outputs/highway-merge-v15/phase-3/relabel/results.jsonl",
+  "trace_sha": "3808110fd437b8521e92990b07f3585185a8aadff022f79064b1f16215034bf2"
+ },
+ "drivers": [
+  {
+   "development": {
+    "rebaselined_passed": 62,
+    "recorded_passed": 54
+   },
+   "file_sha256": "6a3934444b1c0ce04721a3b5a654e5cedc6eaaf700898d9bd34c225668b3adee",
+   "id": "l2:bc7c050f6d3da3ce",
+   "name": "policy",
+   "role": "candidate",
+   "weights": "outputs/highway-merge-v15/phase-3/relabel/policies/bc7c050f6d3da3ce.pt"
+  },
+  {
+   "development": {
+    "rebaselined_passed": 62,
+    "recorded_passed": 54
+   },
+   "file_sha256": "9018ba3a239d6f2e79255f5a8f2ffacb2ce5c5f24f0b0ff1928f39d755eb6571",
+   "id": "rule:expert-v3",
+   "module": "traffic/v15_rule_expert.py",
+   "name": "expert v3",
+   "qualified": "Phase 2 run 3",
+   "role": "fixed baseline"
+  },
+  {
+   "development": {
+    "rebaselined_passed": 36,
+    "recorded_passed": 33
+   },
+   "file_sha256": "7796d8eabd5b9bf3532608a4da4c1453741ef0ecbec42a4b2d1cdbec477b0608",
+   "id": "policy:f0b11fa577b33763",
+   "name": "round 16",
+   "role": "fixed baseline",
+   "weights": "outputs/highway-merge-v15/phase-1/run-01/policies/f0b11fa577b33763.pt"
+  }
+ ],
+ "held_out": {
+  "built": "only when the run starts, by a worker pool given the authorization; resolve builds none",
+  "row_order": "row 14 * k + c is case c at held-out seed k",
+  "row_set": "v15-held-out",
+  "rows": 42,
+  "runs": "once; the step refuses to run again",
+  "seeds": [
+   6953001,
+   6953002,
+   6953003
+  ]
+ },
+ "level2": {
+  "rule": "l2:rule-v3",
+  "settings_digest": "ded23aba10a5006516dfde35139d02db67749dd37e6685b430c31c98d9ce3d49"
+ },
+ "parity": {
+  "decisions": 191,
+  "driver": "l2:rule-v3",
+  "report_sha": "ed17062a918ebefdb02992e50dcd7d93370879e6e1d75340e7aa816e01420605",
+  "row": 52,
+  "source": "outputs/highway-merge-v15/phase-2/run-03/results.jsonl, rule:expert-v3",
+  "trace_sha": "bb4f9d9aa3a9b689d3c6763521347a95843cd0e5c6cd74cb94b08ff27cc76f31"
+ },
+ "phase": "5",
+ "policy_development": {
+  "events": {
+   "cut_ins": {
+    "count": 2,
+    "rows": 2
+   }
+  },
+  "failures_rebaselined": [
+   "rolling_merge_quality"
+  ]
+ },
+ "priority": "below_normal",
+ "reading": "the policy holds up as well as its teacher if the 95% interval of its paired difference from expert v3 under the frozen re-baselined gates includes 0, it has no collision, and it shows no gate failure or event it never had on the development rows; it beats v14's best if the 95% interval of its paired difference from round 16 (re-baselined) lies above 0; these are the study's final numbers for this policy and nothing is tuned on them",
+ "regrade": {
+  "module_sha256": "515c3b7cccdf8598f18a9449341e7bf57dd12a4052d3e67ee42dfe3a86f0932d",
+  "rules": [
+   "every_merge",
+   "restart_at_stop_line",
+   "eligible_samples_only"
+  ],
+  "source": "outputs/highway-merge-v15/phase-2/run-03/rebaseline/rebaseline.json"
+ },
+ "round_index": 24,
+ "schema": "highway_merge_v15_stage5_v01",
+ "simulator": "SUMO (libsumo); no physics",
+ "sources": {
+  "experiments/v15_pool.py": "50b1168eec920540c0f8fc976400f1fb1fbe32bb1c3879cb0a56fd011ed465aa",
+  "experiments/v15_regrade.py": "515c3b7cccdf8598f18a9449341e7bf57dd12a4052d3e67ee42dfe3a86f0932d",
+  "traffic/v15_benchmark.py": "939a48a3252bff98b22dc4f05728ee07973e6de24b9154994a9fae89682683f6",
+  "traffic/v15_level2.py": "7a1c1066f68eef06efb88ba7b70e4705ebbd19bd312d7d713237517758bc01e2",
+  "traffic/v15_rule_expert.py": "9018ba3a239d6f2e79255f5a8f2ffacb2ce5c5f24f0b0ff1928f39d755eb6571",
+  "traffic/v15_stats.py": "f99ab105a1cffc43a08921af9191246bcbfb8350503ad906d9d0132baf5f0dc6"
+ },
+ "step": "held-out",
+ "stop_checks": {
+  "one_car_la_cases": [
+   "v12-val-la-nb-pasadena-model-merge-focused-1of16-medium",
+   "v12-val-la-sb-adams-model-merge-focused-1of16-medium"
+  ],
+  "rule": "before dispatch, stop and ask if the projection does not fit the allowance, the lock is held, or a test fails, and never trim the run; a canary, development-check or parity mismatch reports the run as failed and nothing is re-run; events on held-out rows (collisions, free-road stops, cut-ins, emergencies) are results, reported, and nothing is retuned; no held-out row is ever re-run"
+ },
+ "workers": 16
+}

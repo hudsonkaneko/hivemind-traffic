@@ -4,6 +4,17 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-27 - Plan v15 Stage 5 approved; part 1, the held-out check, built and pinned
+
+- **User decision:** "Approve recommended", typed in the Claude side session (plan v15 decision 10).
+- **Built, uncharged:** step `held-out` in `experiments/v15_stage5.py`, plus a held-out row set in the
+  worker pool that only a pool given the authorization builds.
+  - 8 new tests, none of which builds a held-out row; the v15 suite passes (123 passed).
+- **Configuration:** `configs/evaluation/v15-stage5-held-out.json` (sha256 `d48b2abb…`).
+  - The policy, expert v3 and round 16 on the 42 held-out rows, once, with the development checks.
+  - Expected: 249,597 decisions, 129 episodes, about 156 s. Allowance: 300,000 decisions and 300 s.
+  - No raise of the study total.
+
 ## 2026-11-26 - Plan v15 Stage 5 proposal: the held-out check and physics drives, sized for approval
 
 - **User request:** "Yes, size it", relayed by the main Claude session. Sizing only: nothing built,
