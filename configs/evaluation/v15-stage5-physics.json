@@ -1,0 +1,97 @@
+{
+ "authorization": "Stage 5 part 2, the physics drives: user decision of November 27, 2026, typed in the Claude side session: \"Approve recommended\" (plan v15 decision 10: after part 1, an uncharged build and development drive, then expert v3 and the Phase 3 policy each drive the PhysX car on development row 11, at most 500 s for both, counted as Stage 5 evaluation episodes, with no raise of the study total; never on held-out rows, never alongside a SUMO run; not authorized: any raise of the study total, Phase 4 step B, Krauss runs, Isaac Lab training, merging to main).",
+ "backend": "libsumo",
+ "background": "idm",
+ "case": "v12-val-la-sb-adams-model-merge-focused-1of16-medium",
+ "charge": {
+  "estimate_source": {
+   "development_drive": "expert",
+   "rule": "each drive: the larger of the development drive's time scaled to its decisions and v14's rendered rate; Isaac Sim's start is charged",
+   "v14_rendered_seconds_per_decision": 0.4788
+  },
+  "expected_clock_seconds": 442.4,
+  "expected_decisions": 924,
+  "expected_episodes": 2,
+  "per_drive_seconds": {
+   "expert": 221.2,
+   "policy": 221.2
+  },
+  "phase_allowance": 300000,
+  "phase_decisions_used": 253863,
+  "phase_seconds_used": 110.75,
+  "reserve_seconds": 500.0,
+  "study_seconds_left": 2053.607,
+  "time_cap": 500.0,
+  "total_wall_seconds": 64700
+ },
+ "development": {
+  "decisions": 462,
+  "driver": "expert",
+  "elapsed_seconds": 70.8,
+  "file_sha256": "31b6048d47b270b90e717b940b1339f2a807130456406a241c1e610758d4687b",
+  "physics": {
+   "acceleration_error": {
+    "max_abs": 0.4897013228617233,
+    "mean_abs": 0.014242202449133353,
+    "saturated_decisions": 6,
+    "unsaturated_mean_abs": 0.012526146478929388
+   },
+   "decisions": 462,
+   "frames": 0,
+   "max_abs_lateral_error_m": 0.11585766931719177,
+   "max_abs_pitch_rad": 0.08692505516662748,
+   "max_abs_roll_rad": 0.010798037715220046,
+   "wheels_off_ground_decisions": 0,
+   "wheels_off_ground_times": []
+  },
+  "render_hz": 0,
+  "summary": "outputs/test-runs/v15-stage5-physics-dev-expert-01/summary.json"
+ },
+ "drivers": [
+  {
+   "id": "rule:expert-v3",
+   "name": "expert",
+   "sumo": {
+    "decisions": 462,
+    "key": "1644bbae91723ff1c0bcbd2933020f0036ed33ccbe39a353f1676efccb1b0292",
+    "passed": true,
+    "report_sha": "4c7918d7120382159dadff1cbcc2ad1712661c11806ea3f3ef196a5301a29f54",
+    "trace_sha": "78b68d624616202cccb53eb18c22d8a02770f29b3bf081452c81989c89bf1741"
+   }
+  },
+  {
+   "id": "l2:bc7c050f6d3da3ce",
+   "name": "policy",
+   "sumo": {
+    "decisions": 462,
+    "key": "4968c4ee4454aa8ec3b8b1bd2d5324353b3f1fe68bad174f5fa56a5ee03a04be",
+    "passed": true,
+    "report_sha": "4c7918d7120382159dadff1cbcc2ad1712661c11806ea3f3ef196a5301a29f54",
+    "trace_sha": "78b68d624616202cccb53eb18c22d8a02770f29b3bf081452c81989c89bf1741"
+   }
+  }
+ ],
+ "held_out": "not used: development row 11 only",
+ "motion": "controlled car: Isaac Sim PhysX rigid-body vehicle (Americano v14, provisional physics) on the LA model's deck colliders, driven by the low-level controller; other cars: SUMO poses (kinematic). Physics, not a replay",
+ "phase": "5",
+ "priority": "below_normal",
+ "render_hz": 10,
+ "road_model": "highway_usd/la_10_110/la_10_110_flat.usdc (unchanged)",
+ "round_index": 24,
+ "row": 11,
+ "schema": "highway_merge_v15_stage5_physics_v01",
+ "seed": 6952001,
+ "sources": {
+  "environments/highway_flow_rl_v14_physical_env.py": "804156b9b84f4f1d009b2c6a1d78e58f0efef64e9932a46f0407cb50ee6a415a",
+  "experiments/v15_pool.py": "50b1168eec920540c0f8fc976400f1fb1fbe32bb1c3879cb0a56fd011ed465aa",
+  "experiments/v15_regrade.py": "515c3b7cccdf8598f18a9449341e7bf57dd12a4052d3e67ee42dfe3a86f0932d",
+  "experiments/v15_stage5_physics.py": "d6b3798ce4ccfa49bd501c1ebe71333b98301fd70ad7f09eba3f93e0eb5544b5",
+  "scripts/physics_drive_server.py": "cb328ea55f0f36c2031072d3e654306c403984b50651fd6fa2a6f9a22e454281",
+  "traffic/physical_drive.py": "d32bba46629ffa12680a14d8e54c8ffd9fd8cf348ff1b800f02fdd080d49d402",
+  "traffic/physics_link.py": "c4b96e837ed09908f3e2038cc4dd995a2b6f41ee8869edc9cd2a9acb83098bef",
+  "traffic/v15_level2.py": "7a1c1066f68eef06efb88ba7b70e4705ebbd19bd312d7d713237517758bc01e2",
+  "traffic/v15_rule_expert.py": "9018ba3a239d6f2e79255f5a8f2ffacb2ce5c5f24f0b0ff1928f39d755eb6571"
+ },
+ "step": "physics",
+ "stop_rule": "a collision, or a link or physics failure, ends that drive: it is reported and the controller is not retuned; before each charged drive, stop and ask if its estimate does not fit what is left of the 500 s, or if an Isaac Sim this run did not start is open"
+}
