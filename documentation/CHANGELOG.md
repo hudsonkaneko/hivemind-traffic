@@ -4,6 +4,27 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-27 - Repository cleanup: a shared module for new v15 runners (going forward only, nothing run)
+
+- **Asked:** "Yes, as recommended" (relayed by the main session), approving the cleanup plan.
+- **Added:** `experiments/v15_runner.py`, for every new v15 runner:
+  - slim configurations: the decided settings plus the canonical hash of the full resolved
+    configuration; the generated sections are rebuilt at run time, the run refuses to dispatch on a
+    mismatch, and the full configuration goes to the run's `outputs/` folder;
+  - saved results as a short summary with hashes plus a deterministic `.json.gz`;
+  - the lock and ledger session, the 16-worker, below-normal-priority limit, the charge projection,
+    pool dispatch with charging on failure, the canary check, and the charge, report and log
+    writers.
+- **Tests:** `tests/test_v15_runner.py` (49), including agreement with the recorded runners' copies
+  and a read-only slim round trip of the 18 recorded v15 configurations.
+- **`.gitattributes`:** `documentation/evidence/** linguist-generated=true`, and an LF pin for the
+  new module.
+- **Line counts:** the 18 recorded configurations stay at 13,802 lines; in the slim form they would
+  be 3,075. This change is 681 lines of code, 4 of `.gitattributes` and none of data.
+- **Unchanged:** every recorded configuration, hash, ledger entry, result and evidence file, the
+  recorded runners, the rule-expert modules, the existing tests and `AGENTS.md`.
+- **Charged:** nothing.
+
 ## 2026-11-27 - Plan v15 ramp driving: the slow merges, written up first for decision (nothing run)
 
 - **Asked:** "Yes, driving first" (relayed by the main session): the ramp-driving problem first, then

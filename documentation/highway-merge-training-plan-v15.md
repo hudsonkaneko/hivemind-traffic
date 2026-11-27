@@ -88,6 +88,12 @@ shared ledger needs the user's approval of its resolved configuration first, as 
   nothing run; see [Physics gap options](#physics-gap-options-november-27-what-next-for-your-decision).
   - **Recommended:** C2 as the default physics controller, and a physics-only torque-limit rule for
     realization interventions, tested on the 5 northbound rows (decisions 16 to 20).
+- **The repository cleanup** (you approved it on November 27: "Yes, as recommended"): done, going
+  forward only, nothing run; see [Repository cleanup](#repository-cleanup-november-27-the-shared-runner-module).
+  - **New runners** use one shared module, `experiments/v15_runner.py`, with its tests.
+  - **New configurations are committed slim:** the decided settings plus the hash of the full
+    resolved configuration. On the 18 recorded configurations that form would be 3,075 lines
+    instead of 13,802; they stay as they are.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -3256,6 +3262,58 @@ a grade break.
    - decision 16, the torque-limit test drives, after decision 14;
    - decisions 18 and 19, no change to the road model or the car;
    - decision 20, the offline look at the first-decision jerk.
+
+## Repository cleanup (November 27): the shared runner module
+
+**Your decision (relayed by the main session):** "Yes, as recommended", answering "Approve the
+cleanup plan as recommended?" The other choice offered was "Change something".
+
+**Scope:** going forward only. Nothing ran and nothing was charged. Nothing recorded was rewritten
+or moved:
+- no configuration, hash, ledger entry, result or evidence file;
+- no recorded phase's runner, no rule-expert module and no existing test;
+- not `AGENTS.md`, and not Git history.
+
+**What a new runner does now** (`experiments/v15_runner.py`):
+1. **It commits a slim configuration:** the decided settings, plus `resolved_sha256`, the canonical
+   hash of the full resolved configuration. It is the same hash the recorded runners give the
+   ledger, so whitespace and key order don't change it.
+   - **The generated sections are rebuilt at run time** by the runner's `resolve()`: the batch
+     lists, the row lists, the shared benchmark manifest, the parity row, the baseline and the
+     training rows.
+   - **Before dispatch, `pin` refuses the run** if a decided setting, the set of generated sections
+     or the hash differs from what is committed.
+   - **The full resolved configuration** is written to the run's `outputs/` folder.
+2. **Saved results, where they go into Git,** are two files:
+   - `<name>.summary.json`, a short summary with the hashes;
+   - `<name>.json.gz`, the full results, compressed so that the same results give the same bytes.
+
+   `read_results` checks both hashes. `.gitattributes` now marks `documentation/evidence/**` as
+   generated, so GitHub collapses it in diffs and leaves it out of the language statistics.
+3. **One shared module** holds the parts the recorded runners each copied:
+   - the lock and ledger session;
+   - the CPU limit: at most 16 workers, at below-normal priority, refused otherwise;
+   - the projected charge and the check that it fits what is left;
+   - pool dispatch, with the same charging when a batch fails, and the canary check;
+   - the training-episode count;
+   - the charge, report and log writers.
+
+   Where a part copies a recorded runner's code, a test checks that the two agree: Phase 1's hash,
+   Phase 3's task and charge, Phase 4's projection and fit check, and Stage 5's charge summary. The
+   next new runner uses this module.
+4. **Commits keep code and data apart,** and commit messages and PR descriptions state the code
+   lines and the data lines separately.
+
+**Line counts:**
+- **The 18 recorded v15 configurations:** 13,802 lines, unchanged.
+- **The same 18 in the slim form** (a projection only; nothing was rewritten): 3,075 lines, 22.3%.
+  - The two physics configurations have none of the generated sections, so the slim form doesn't
+    shrink them: 336 to 337 lines, and 97 to 103.
+- **This change:** 681 lines of code (the module, 326, and its tests, 355), 4 lines of
+  `.gitattributes`, and no data.
+
+**Tests:** `tests/test_v15_runner.py`, 49 tests on temporary ledgers, never the shared one. They
+include a read-only round trip of each recorded configuration through the slim form.
 
 ## Decisions for you
 
