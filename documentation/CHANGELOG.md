@@ -4,6 +4,23 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-27 - Plan v15 Stage 5 part 2: the physics drives; Stage 5 complete
+
+- **Ran:** expert v3 and the policy on development row 11 in Isaac Sim PhysX (not a replay),
+  rendered at 10 Hz, under the shared lock.
+  - The runner is `experiments/v15_stage5_physics.py`, with v14's physics adapter unchanged.
+  - An uncharged unrendered development drive came first (70.8 s).
+- **Charged:** 924 decisions, 2 evaluation episodes and 176.2 s, against a 500 s cap. Study time left:
+  1,877.5 s.
+- **Result:**
+  - The two drivers drove identically.
+  - Both pass the row in SUMO and fail it under physics: the stable merge fails on interventions,
+    12 of 81 window decisions where PhysX's acceleration differed from the command on the climb
+    and crest at the merge.
+  - Peak jerk 7.9 m/s³ against 3.0 in SUMO. No collision.
+- **Video** (outside Git, labelled PHYSICS):
+  `outputs/highway-merge-v15/stage-5/physics/policy/physics-with-graph/physics-with-graph.mp4`.
+
 ## 2026-11-27 - Plan v15 Stage 5 part 1: on the held-out rows the policy matches expert v3 and beats round 16
 
 - **Ran:** the held-out check under the shared lock. SUMO (libsumo), IDM, 16 workers at below-normal

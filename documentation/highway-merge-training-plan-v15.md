@@ -48,8 +48,14 @@ shared ledger needs the user's approval of its resolved configuration first, as 
     - By the same reading, it doesn't "hold up as well as its teacher". The only reason is a stable
       merge failure on two rows, a failure it never had on the development rows. Expert v3 fails
       the same two rows the same way.
-  - **Part 2, the physics drives,** follows: an uncharged build and development drive, then the two
-    charged drives.
+  - **Part 2, the physics drives, ran** (PhysX, not a replay); see
+    [Stage 5 part 2](#stage-5-part-2-november-27-the-physics-drives).
+    - On development row 11, expert v3 and the policy drove identically.
+    - Both fail the row under physics, though both pass it in SUMO. The stable merge fails on its
+      intervention fraction: PhysX's realized acceleration differs from the command on the climb
+      and crest at the merge.
+    - No collision. Charged 176.2 s of the 500 s cap.
+  - **Stage 5 is complete.**
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -2115,6 +2121,119 @@ Its numbers are the proposal's:
   had on the development rows. Expert v3 fails the stable merge on the same two rows, and the two
   drivers' verdicts match on every row.
 - **These are the study's final numbers for this policy.** Nothing is tuned on them.
+
+## Stage 5 part 2 (November 27): the physics drives
+
+**Physics, not a replay.** The controlled car is an Isaac Sim PhysX rigid-body vehicle (the v14
+Americano, provisional physics) on the LA model's deck colliders, driven by the low-level
+controller. The other cars are SUMO's (IDM), drawn at their SUMO poses. The LA model is referenced
+unchanged, and nothing was installed into Isaac Sim's Python.
+
+### Built first (uncharged)
+
+- **The runner:** `experiments/v15_stage5_physics.py` (commit `c5eda94`, with 2 new tests; the v15
+  suite passes, 125).
+  - It reuses v14's physics adapter unchanged: `HighwayFlowRLV14PhysicalEnv`, the link, and
+    `scripts/physics_drive_server.py` in Isaac Sim's Python.
+  - The v15 pool's worker code drives the episode, so the drivers and the result key are the
+    ones of Phases 2–4.
+- **Ideal-driver check (not physics):** through the physical environment with exact kinematics, both
+  drivers reproduce their SUMO records on row 11: 462 decisions, both gates passed, no events. So the
+  adapter carries over.
+- **Development drive (PhysX, unrendered):** expert v3 on row 11,
+  `outputs/test-runs/v15-stage5-physics-dev-expert-01`.
+  - **Time:** 70.8 s in all. Isaac Sim's start took 36 s of it and the drive 19 s.
+  - **Result:** the same as the charged drives below.
+- **Time check against the 500 s:** fits.
+  - The runner takes, per drive, the larger of the development drive's time and v14's rendered
+    rate (108.2 s for 226 decisions): 221.2 s each, 442.4 s for both.
+  - Before the second drive it checks the larger of that and the first drive's measured time.
+- **Configuration:** `configs/evaluation/v15-stage5-physics.json` (canonical-JSON sha256
+  `41cf3ea9…`, commit `19aef9f`; CI passed before the run).
+  - Development row 11, seed 6952001. Expert v3 first, then the policy. Rendered at 10 Hz.
+  - Expected: 924 decisions, 2 evaluation episodes, 442.4 s. Reservation: 500 s.
+
+### Result
+
+**Ran** on November 27, under the shared lock (`outputs/highway-merge-v15/stage-5/physics`).
+- **Charged (Stage 5 evaluation episodes):** 924 decisions, 2 episodes, 176.2 s (expert v3 88.4 s,
+  the policy 86.8 s).
+  - Expected 442.4 s; cap 500 s.
+  - It was quicker than estimated because the rendered scene loaded in under 1 s; in v14's
+    rendered drive it took 58 s.
+- **Rendered:** 462 frames per drive at 10 Hz.
+- **Isaac Sim:** no other Isaac Sim was open, and each drive's own Isaac Sim closed when the drive
+  ended.
+- **No stop-rule event:** no collision, link failure or physics failure.
+
+**SUMO against PhysX on row 11.** Expert v3 and the policy have the same numbers on both sides.
+
+| | SUMO | PhysX |
+|---|---|---|
+| Recorded gates | pass | **fail:** safety events or missing counts, per-car comfort or control, stable merge, merge quality |
+| Re-baselined gates | pass | **fail:** the same four |
+| Collisions | 0 | 0 |
+| Merge entry / lateral merge | 27.7 s / 27.7 s | 27.7 s / 27.7 s |
+| Stable merge | passed | **failed:** 12 of 81 window decisions flagged (14.8%; the gate allows 5%) |
+| Interventions | 0% | 4.8% (22 of 462 decisions) |
+| Override episodes | 0 | 10 |
+| Peak jerk | 3.0 m/s³ | 7.9 m/s³ |
+
+**Physics side:**
+- acceleration error: mean 0.014 m/s² (0.013 under the torque limit), at most 0.49;
+- 6 decisions at the drive-torque limit, at 27.7–28.0 s and 28.7–28.8 s;
+- lateral path error at most 0.12 m;
+- no wheel left the deck;
+- pitch up to 0.087 rad.
+
+**The two drivers drove identically.**
+- The two drives' action logs are byte-identical.
+- The policy's Level 2 output (source, target, plan, lane and maneuver) matches expert v3's on all
+  462 decisions, as in SUMO, where the two share a trace on this row.
+- The unrendered development drive gave the same actions, so rendering doesn't change the result.
+
+**Why the gates fail (read from the physics log and the episode):**
+- **The flags:** all 22 are v14's `native_realization_unattributed`: the acceleration PhysX
+  realized differs from the command. One also has a comfort-rate clip.
+- **Around the merge, 13 of them, at 27.5–29.6 s:**
+  - over these decisions the pitch rises to 0.081 rad and falls to −0.057 rad: the climb onto the
+    mainline and over its crest;
+  - the torque limit is reached on 6 decisions;
+  - realized acceleration is off the command by up to 0.49 m/s² (commanded 1.24, realized 1.73 at
+    28.7 s).
+- **Inside the stable-merge window (27.7–35.7 s):** 12 of those 13. That's 14.8% of the window's
+  81 decisions, over the gate's 5%.
+- **The other 9:** 2 on the ramp (5.1 and 6.4 s) and 7 at 42.8–43.5 s.
+- **The other three gates:** the recorder doesn't save why they fail. They likely count the same
+  overrides and jerk (inferred, not read).
+
+**Compared with v14's drives on this corridor:** those were a different seed (6950004) and policy,
+so this isn't a matched comparison.
+- Round 16 had 33.6% interventions and peak jerk 14.1; round 20 had 25.5% and 5.5.
+- Both failed the stable merge too, with flagged decisions on the climb and crest. For round 20,
+  v14 inferred this rather than read it.
+
+**What it means:**
+- On this row, the SUMO pass doesn't carry over to physics, for either driver. The reason is the
+  car's realized acceleration on the grade and crest, which SUMO's car model doesn't have.
+- The mismatches are small on average (0.014 m/s²). But the stable-merge gate counts each flagged
+  decision as an intervention, and 12 of them fall inside its 8 s window.
+- The policy behaves like its teacher here as well: physics changes neither driver's choices, only
+  how the car realizes them.
+
+**Video** (outside Git):
+`outputs/highway-merge-v15/stage-5/physics/policy/physics-with-graph/physics-with-graph.mp4`.
+- The title says PHYSICS, and that the other cars are at SUMO poses.
+- Below the 3D view: the speed against the merge target, and the commanded acceleration against
+  PhysX's, with ticks at the torque limit.
+- The expert's drive is identical, so it wasn't composed separately.
+
+**Ledger:**
+- **Phase 5:** 254,787 decisions, 286.9 s and 131 evaluation episodes.
+- **Study time:** 62,822.5 of 64,700 s used, 1,877.5 s left.
+- The lock was released.
+
+**Exit check ("Recorded and labelled"): met.** Stage 5 is complete.
 
 ## Decisions for you
 
