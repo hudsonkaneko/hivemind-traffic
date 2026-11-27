@@ -4,6 +4,25 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-26 - Plan v15 Phase 4: the +1 offset check gains row 37 but loses rows 48 and 50; step B skipped
+
+- **User decision:** "Yes, run the check", typed in the Claude side session and also recorded by the
+  main Claude session. Step B is skipped.
+- **Built:** step `offset-check` (commit `46ea143`; 125 v15 tests pass). It runs
+  `l2:probe-offset-p1` on the 62 development rows the probe didn't, and takes the other 8 from the
+  probe's second batch.
+- **Settings:** SUMO (libsumo), IDM, 16 workers at below-normal priority, under the shared lock.
+  Development rows only.
+- **Result:** 61 of 70 re-baselined and 54 recorded, against the Phase 3 policy's 62 and 54.
+  - It gains row 37 and loses rows 48 and 50, both on headway. Row 48 also fails on jerk and on its
+    merge.
+  - No stop-rule event.
+  - By the reading set before the run, it doesn't join the held-out check.
+- **Charged:** 121,082 decisions and 54.4 s, against 127,096 decisions projected. Phase 4: 217,715
+  decisions and 157.8 s. Study time: 62,535.6 of 64,700 s (2,164.4 s left).
+- **Recommended:** the held-out check (Stage 5) with the Phase 3 policy alone. It needs your
+  authorization. Details are in plan v15, "Phase 4 offset check".
+
 ## 2026-11-26 - Plan v15 Phase 4 step A: the probe's second batch; row 37 passes both gates faster
 
 - **User decision,** relayed by the main Claude session: "Yes, run batch 2". It ran as its own step,

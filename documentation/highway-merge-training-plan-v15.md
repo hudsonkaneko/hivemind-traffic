@@ -29,11 +29,15 @@ shared ledger needs the user's approval of its resolved configuration first, as 
   - **Its second batch** ran after you approved it, with no stop-rule event.
   - **What it found:** room on 2 of the 8 failing rows, 9 and 37. Row 37 also passes the recorded
     gates, with a constant +1 or +2 m/s offset.
-- **Next:** step B of decision 9 waits for you. My recommendation is to skip it.
-  - **First:** check the constant +1 offset on all 70 development rows. No training and no raise;
-    it needs a small new Phase 4 allowance.
-  - **Then:** the held-out check (Stage 5), which needs your authorization.
-  - **Study time left:** 2,218.8 s. Nothing more runs until you decide.
+- **Step B is skipped** (you decided on November 26: "Yes, run the check").
+- **The +1 offset check** (you approved it on November 26) ran on all 70 development rows; see
+  [Phase 4 offset check](#phase-4-offset-check-november-26).
+  - It passes 61 of 70 re-baselined and 54 recorded. It gains row 37 but loses rows 48 and 50, both
+    on headway.
+  - So it doesn't join the held-out check, by the reading set before the run.
+- **Next:** the held-out check (Stage 5) with the Phase 3 policy alone, which needs your
+  authorization.
+  - **Study time left:** 2,164.4 s. Nothing more runs until you decide.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -1288,8 +1292,9 @@ lock, development rows only.
 
 **Step A approved on November 26** ("Yes, run step A", decision 9) and run in full. Its probe stopped
 at its stop rule after the first batch, and the second batch ran after you approved it. See
-[Phase 4 step A result](#phase-4-step-a-result-november-26). Step B isn't approved. The proposal is
-kept below as written.
+[Phase 4 step A result](#phase-4-step-a-result-november-26). Step B was skipped on November 26, and
+the +1 offset check ran instead; see [Phase 4 offset check](#phase-4-offset-check-november-26). The
+proposal is kept below as written.
 
 **Proposal only.** Nothing here has been built or run, and nothing is charged until you approve it.
 The user asked for it on November 26: "do the relabel fix first then work on the phase 4 budget".
@@ -1689,6 +1694,114 @@ rule):
     exploration will try slower approaches.
   - So the rule should say whether it also covers the training rollouts.
 
+## Phase 4 offset check (November 26)
+
+- **Approved by you:** "Yes, run the check", typed in this side session. The main Claude session
+  recorded the same answer in the coordination master, with step B skipped (decision 9).
+- **What it is:** the probe's constant +1 m/s offset (`l2:probe-offset-p1`: the rule's choices, with
+  the speed target 1 m/s higher) on every development row, with no training.
+- **Settings:** SUMO (libsumo), not physics, with IDM background, 16 workers at below-normal
+  priority, under the shared lock. Development rows only; the held-out rows were not built or run.
+
+### Built first (uncharged)
+
+- **Step `offset-check`** in `experiments/v15_phase4.py` (commit `46ea143`; 125 v15 tests pass).
+  - It runs the variant on the 62 development rows the probe didn't, with its own canary and the
+    parity row.
+  - The other 8 rows (0, 8, 9, 14, 22, 24, 37 and 38) come from the probe's second batch, whose
+    report it pins by sha256. It refuses to run unless:
+    - that batch's segment is complete and its parity matched;
+    - its Level 2 sources match byte for byte;
+    - its settings and benchmark are the same.
+  - The report covers all 70 rows under both gates, against expert v3 and the Phase 3 policy.
+- **Checked before the build:** expert v3 and the Phase 3 policy `l2:bc7c050f6d3da3ce` give the same
+  verdict on every development row under both gates.
+- **Configuration:** `configs/evaluation/v15-phase4-offset-check.json`, sha256
+  `cb353180ee1ccddc6bf6a0a73f959493b823eee8c75ccd6eddd70dd4749e52b1`. It was recorded in the
+  coordination master before it ran.
+- **Its own allowance:** 140,000 decisions and 100 s. That fits inside the main session's
+  authorized "at most 160,000 decisions and 150 s", with no raise.
+- **Expected:** 121,044 decisions and 88.7 s. The decisions are expert v3's 117,769 on the 62 rows,
+  the parity row's 191 and the canary's 3,084. Projected: 127,096 decisions, with the 5% margin.
+- **Reading, set before the run:** the variant joins the held-out check only if both hold:
+  - it passes every row expert v3 passes, under the re-baselined gates;
+  - it has no stop-rule event.
+
+### Result
+
+| | Re-baselined | Recorded |
+|---|---|---|
+| Phase 3 policy (and expert v3) | 62 of 70 | 54 of 70 |
+| The +1 offset | 61 of 70 | 54 of 70 |
+
+- **Gained:** row 37, under both gates. That result comes from the probe's second batch.
+- **Lost:** rows 48 and 50 under the re-baselined gates. Row 50 is also lost under the recorded
+  gates; row 48 already failed them.
+- **Every other row:** the same verdicts as the Phase 3 policy, under both gates.
+- **No stop-rule event:** no collision, free-road stop, cut-in or emergency on any row. The canary and
+  the parity row matched.
+- **By the reading set before the run, the +1 variant doesn't join the held-out check.**
+
+### The two lost rows, traced
+
+Both fail the headway gate (1.5 s): the faster target brings the car too close to the one ahead.
+
+- **Row 50** (LA northbound Pasadena, 8 controlled cars).
+  - **What fails:** only agent_0, on headway: 1.42 s, against expert v3's 1.60 s. Every other check
+    and every other car is unchanged.
+  - **Where:** 3.0 s into the episode on the on-ramp, behind agent_3 (another controlled car). The
+    gap was 22.6 m at 15.9 m/s, against expert v3's 24.5 m at 15.3 m/s.
+  - **Why:** the offset raises agent_0's target by 1 m/s from the first decision, so it closes on
+    agent_3.
+- **Row 48** (the 2-lane ramp case `ramp-eval-validation-2-lane-ramp180-ramp-started`, one
+  controlled car).
+  - **What fails:** headway (0.31 s against 1.64 s), peak jerk (62 m/s³ against 3.0), the stable merge
+    and the rolling merge quality.
+  - **The merge:** the +1 car changed into the main lane 1.0 s later and 23 m further along than
+    expert v3's car: 38.6 s at 288 m, against 37.6 s at 265 m. It was going 18.3 m/s, against 19.5.
+  - **After the merge:** its merge slowdown ended 1 s later, so it was about 3 m/s slower than
+    expert v3's car.
+  - **The brake:** at 41.8 s a background car, main_5, appeared 5.3 m ahead of it in its lane. Within
+    one 0.1 s step agent_0 went from +1.7 to −4.5 m/s², and was still at −4.5 at 42.0 s.
+  - **main_5's lane change:** SUMO's lane-change log records it moving over from the next lane (reason
+    "keepRight"), with agent_0 5.27 m behind; the log stamps it at 43.1 s. In expert v3's run, main_5
+    never changed lanes.
+  - **Not traced:** why the +1 car merged later.
+- **The same pattern as row 24 in the probe** (headway 1.35 s): the faster target closes gaps.
+- **Speed match on rows that still pass:** rows 20 and 34 dropped from 1.0 to 0.97 and 0.96, still
+  above the 0.9 gate.
+
+### Ledger
+
+| | Before the check | After |
+|---|---|---|
+| Study time | 62,481.2 of 64,700 s (2,218.8 s left) | 62,535.6 of 64,700 s (2,164.4 s left) |
+| Phase 4 decisions | 96,633 | 217,715 (the check: 121,082 of its 140,000) |
+| Phase 4 clock time | 103.3 s | 157.8 s (the check: 54.4 of its 100 s) |
+
+- **Charged:** 121,082 decisions (3,084 of them the canary), 64 evaluation episodes and 54.4 s. It
+  expected 121,044 decisions and 88.7 s.
+- **Segment:** Phase 4's third, complete.
+- **The lock:** released.
+
+### Stage 5: my recommendation
+
+- **Go to the held-out check (Stage 5) with the Phase 3 policy `l2:bc7c050f6d3da3ce` alone.**
+  - **Why:** no constant Level 2 change has beaten it on the development rows. The probe and this
+    check found only row 37, and the +1 offset that takes it loses 2 others.
+  - **What it tests:** the policy matches expert v3 row for row, so Stage 5 shows whether the learned
+    Level 2 holds up on rows that nothing was chosen on.
+- **What Stage 5 needs** (from the plan; it needs your authorization and its own sizing):
+  - **The held-out rows, once:** about 82,000 decisions per driver on 42 rows.
+  - **Physics drives** of the expert and the policy on the PhysX car on the LA model, each video
+    labelled physics or kinematic replay. v14's took 55–108 s each, and only 1 of 174 diagnostic
+    episodes is left.
+  - **To decide in that sizing:** whether expert v3 also runs the held-out rows, for the paired
+    comparison the benchmark reports.
+- **Study time left:** 2,164.4 s, about 1,560 s more than the 600 s kept for Stage 5.
+- **The +1 variant stays out.** A version that speeds up only in row 37's situation would be a rule
+  fitted to one development row.
+
 ## Decisions for you
 
 Decisions 1–7 were decided on November 25, 2026, relayed by the main Claude session and recorded
@@ -1755,9 +1868,11 @@ relayed by the main Claude session.
    **Step A decided: yes,** on November 26 ("Yes, run step A"). The probe stopped at its stop rule
    after its first batch. Its second batch then ran, after "Yes, run batch 2"; see
    [Phase 4 step A result](#phase-4-step-a-result-november-26).
-   - **Step B is open.** Its raises are now about 4,080 s (recommended) and about 1,480 s (minimum).
-   - **My recommendation:** skip step B. First check the constant +1 offset on all 70 development
-     rows (about 140,000 decisions and 100 s, no raise), then go to Stage 5.
+   - **Step B decided: skipped,** on November 26 ("Yes, run the check", also recorded by the main
+     Claude session). The +1 offset check ran instead. It scores 61 of 70 re-baselined and 54
+     recorded, so it doesn't join Stage 5; see
+     [Phase 4 offset check](#phase-4-offset-check-november-26).
+   - **Next:** Stage 5 with the Phase 3 policy, which needs your authorization.
 
 ## What carries over from v14
 
