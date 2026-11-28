@@ -74,6 +74,15 @@ def rotate(q, v):
     return (vx + w * tx + (y * tz - z * ty), vy + w * ty + (z * tx - x * tz), vz + w * tz + (x * ty - y * tx))
 
 
+def spawn_velocity(speed, forward):
+    """The body's start velocity along its pitched heading `forward`, and its speed along the road (the wheels'
+    rolling speed). Decision 22 (plan v15, November 27, 2026): the horizontal forward speed, which is what read()
+    reports and what the gate sees, equals SUMO's `speed`. Before, the speed along the road was SUMO's, so the first
+    reading was low by v(1 - cos(pitch)): -0.135 m/s^2 at the first decision on the Adams ramp's 2.7 degree spawn."""
+    along = float(speed) / math.hypot(forward[0], forward[1])
+    return tuple(along * f for f in forward), along
+
+
 class Surface:
     """scripts/render_i110_merge_replay.surface_elevation, vectorised with numpy."""
 
@@ -264,8 +273,7 @@ class Server:
         quat = Gf.Quatf if orient.GetPrecision() == UsdGeom.XformOp.PrecisionFloat else Gf.Quatd
         vec = Gf.Vec3f if quat is Gf.Quatf else Gf.Vec3d
         orient.Set(quat(q[0], vec(q[1], q[2], q[3])))
-        speed = float(pose['speed'])
-        velocity = tuple(speed * f for f in forward)
+        velocity, along = spawn_velocity(pose['speed'], forward)       # decision 22: SUMO's speed, horizontal
         UsdPhysics.RigidBodyAPI(chassis).CreateVelocityAttr().Set(Gf.Vec3f(*velocity))
         UsdPhysics.RigidBodyAPI(chassis).CreateAngularVelocityAttr().Set(Gf.Vec3f(0., 0., 0.))
         from traffic.driver_control import AppliedControl
@@ -289,11 +297,12 @@ class Server:
             import numpy as np
             native.set_velocities(np.asarray(values, dtype=np.float32), np.asarray([0], dtype=np.uint32))
         for wheel in self.vehicle.wheel_paths:
-            self.vehicle.physx.set_wheel_rotation_speed(wheel, speed / spec.wheel_radius_m)
+            self.vehicle.physx.set_wheel_rotation_speed(wheel, along / spec.wheel_radius_m)
         after = self.read()
         self.speed = after['speed']
         self.spawn_report = dict(requested=pose, chassis=[cx, cy, z], yaw_rad=yaw, pitch_rad=pitch,
                                  road_height_front_axle=zf, road_height_rear_axle=zr, rest_height_m=rest,
+                                 speed_along_road_m_s=along, speed_convention='horizontal (decision 22)',
                                  after_start=after, start=self.session.startup)
         self.camera_state = None
         return self.spawn_report
