@@ -1,0 +1,169 @@
+{
+ "content_sha256": "cd4486a6d2cbefa07a17f6b55ef7200ff481d2921c304fd2645f94c8657a89cc",
+ "entries": 16,
+ "gzip_sha256": "fcd61bfe15b3e76206e7e5d91a0a6726f179c4e0a5948f2ac4afd40bbdc2d9fc",
+ "results": "replay.json.gz",
+ "schema": "highway_merge_v15_results_summary_v01",
+ "summary": {
+  "expert_v4_settings": {
+   "hold_step_m_s": 0.25,
+   "run_up_floor_m_s2": 0.3,
+   "wait_brake_m_s2": 1.5,
+   "wait_lead_s": 0.5
+  },
+  "label": "open-loop kinematic projection on a stream reconstructed from saved SUMO records; neither SUMO nor physics; post hoc",
+  "schema": "highway_merge_v15_expert_v4_replay_v01",
+  "settings": {
+   "horizon_s": 60.0,
+   "idm_range_m": 200.0,
+   "match_arrival_s": 0.2,
+   "moving_m_s": 3.0,
+   "radius_m": 250.0,
+   "workers": 8
+  },
+  "situations": {
+   "blocked": 5,
+   "clear": 7,
+   "i110": 7,
+   "stream": 12
+  },
+  "source_driver": "rule:expert-v3",
+  "source_run": "outputs/highway-merge-v15/phase-2/run-03",
+  "sources": {
+   "experiments/v15_expert_v4_replay.py": "5c2cdee52de75ee1d5c5622bbdeaeef66a850f09f7f7898ba59b47945f58b1ac",
+   "traffic/v15_movement.py": "69177490463c1c4a11fb03173aa384a89184dbac7f217f502fa460f4479f1453",
+   "traffic/v15_rule_expert.py": "9018ba3a239d6f2e79255f5a8f2ffacb2ce5c5f24f0b0ff1928f39d755eb6571",
+   "traffic/v15_rule_expert_v4.py": "f0a892d1287eef505a6a607dc47082d69935541481d2daac9d7ffd7f051edbaf"
+  },
+  "summary": {
+   "clear": {
+    "cars": 7,
+    "decisions": 232,
+    "recorded": {
+     "crossed": 7,
+     "fails": 0,
+     "m1": 0,
+     "m2": 0,
+     "m3_applies": 7,
+     "m3_flags": 7,
+     "m4": 0,
+     "median_below_5_s": 0.0,
+     "median_cross_s": 3.3,
+     "median_cross_v": 15.51,
+     "median_min_v": 12.24
+    },
+    "v3": {
+     "crossed": 7,
+     "dilemma_cars": 0,
+     "fails": 0,
+     "m1": 0,
+     "m2": 0,
+     "m3_applies": 7,
+     "m3_flags": 7,
+     "m4": 0,
+     "median_below_5_s": 0.0,
+     "median_cross_s": 3.3,
+     "median_cross_v": 15.51,
+     "median_min_v": 12.24,
+     "undone_commits": 0
+    },
+    "v3_replay_matches_record": 232,
+    "v4": {
+     "crossed": 7,
+     "dilemma_cars": 0,
+     "fails": 0,
+     "m1": 0,
+     "m2": 0,
+     "m3_applies": 7,
+     "m3_flags": 7,
+     "m4": 0,
+     "median_below_5_s": 0.0,
+     "median_cross_s": 3.3,
+     "median_cross_v": 15.6,
+     "median_min_v": 12.12,
+     "undone_commits": 0
+    },
+    "v4_differs_from_v3": 113,
+    "v4_written": {
+     "crossed": 7,
+     "dilemma_cars": 0,
+     "fails": 0,
+     "m1": 0,
+     "m2": 0,
+     "m3_applies": 7,
+     "m3_flags": 7,
+     "m4": 0,
+     "median_below_5_s": 0.0,
+     "median_cross_s": 3.3,
+     "median_cross_v": 15.54,
+     "median_min_v": 12.24,
+     "undone_commits": 0
+    }
+   },
+   "stream": {
+    "cars": 12,
+    "decisions": 2495,
+    "recorded": {
+     "crossed": 12,
+     "fails": 11,
+     "m1": 10,
+     "m2": 8,
+     "m3_applies": 8,
+     "m3_flags": 8,
+     "m4": 3,
+     "median_below_5_s": 14.1,
+     "median_cross_s": 19.0,
+     "median_cross_v": 4.46,
+     "median_min_v": 0.69
+    },
+    "v3": {
+     "crossed": 12,
+     "dilemma_cars": 0,
+     "fails": 11,
+     "m1": 10,
+     "m2": 8,
+     "m3_applies": 8,
+     "m3_flags": 8,
+     "m4": 2,
+     "median_below_5_s": 14.1,
+     "median_cross_s": 19.0,
+     "median_cross_v": 4.31,
+     "median_min_v": 0.65,
+     "undone_commits": 13
+    },
+    "v3_replay_matches_record": 2436,
+    "v4": {
+     "crossed": 12,
+     "dilemma_cars": 0,
+     "fails": 12,
+     "m1": 9,
+     "m2": 8,
+     "m3_applies": 8,
+     "m3_flags": 8,
+     "m4": 3,
+     "median_below_5_s": 13.9,
+     "median_cross_s": 19.0,
+     "median_cross_v": 4.01,
+     "median_min_v": 0.25,
+     "undone_commits": 10
+    },
+    "v4_differs_from_v3": 1890,
+    "v4_written": {
+     "crossed": 12,
+     "dilemma_cars": 2,
+     "fails": 10,
+     "m1": 8,
+     "m2": 7,
+     "m3_applies": 8,
+     "m3_flags": 8,
+     "m4": 3,
+     "median_below_5_s": 14.0,
+     "median_cross_s": 19.0,
+     "median_cross_v": 5.11,
+     "median_min_v": 0.67,
+     "undone_commits": 9
+    }
+   }
+  }
+ }
+}

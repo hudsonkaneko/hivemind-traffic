@@ -1,0 +1,2090 @@
+[
+ {
+  "drive": "physics-gap/row11-c1",
+  "controller": "c1",
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": -0.0003,
+  "grade_used_first": 0.0003836875972060136,
+  "v_sumo_at_handoff": 12.13862,
+  "v_level2_t0": 12.1386,
+  "v_body_after_spawn": 12.13862,
+  "body_over_sumo": 1.0,
+  "cos_spawn_pitch": 1.0,
+  "speed_t1_physics": 12.11032,
+  "speed_t1_level2": 12.1103,
+  "commanded_t0": -0.3,
+  "physics_measured_t1": -0.2829,
+  "physics_recomputed_t1": -0.2829,
+  "gate_realized_t1": -0.2829,
+  "gate_recomputed_t1": -0.2829,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.0,
+  "predicted_spawn_step_m_s2": -0.0,
+  "tracking_error_t1": 0.0171,
+  "gate_jerk_t1": -2.829,
+  "jerk_if_body_reference": -2.829,
+  "jerk_if_exact": -3.0,
+  "request_t1": -0.5829,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 45.3,
+  "later_decisions_compared": 460,
+  "tracking_error_t2_t5": [
+   0.0035,
+   0.0204,
+   0.0177,
+   0.0158
+  ],
+  "max_abs_tracking_error_later": [
+   0.2097,
+   27.5
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": -0.3,
+    "meas": -0.2829,
+    "v": 12.1103,
+    "drive_nm": 0.0,
+    "brake_nm": 56.44,
+    "bias_n": 0.0,
+    "vz": 0.0091,
+    "pitch": -0.00047,
+    "grade_used": 0.0003836875972060136,
+    "jounce": [
+     0.1004,
+     0.0997,
+     0.0996,
+     0.0988
+    ],
+    "gate_a": -0.2829
+   },
+   {
+    "t": 0.3,
+    "cmd": -0.5829,
+    "meas": -0.5794,
+    "v": 12.0524,
+    "drive_nm": 0.0,
+    "brake_nm": 105.94,
+    "bias_n": 0.0,
+    "vz": 0.0235,
+    "pitch": -4e-05,
+    "grade_used": 0.0016799359838888105,
+    "jounce": [
+     0.1018,
+     0.1006,
+     0.0985,
+     0.0971
+    ],
+    "gate_a": -0.5794
+   },
+   {
+    "t": 0.4,
+    "cmd": -0.8794,
+    "meas": -0.859,
+    "v": 11.9665,
+    "drive_nm": 0.0,
+    "brake_nm": 158.5,
+    "bias_n": 0.0,
+    "vz": 0.024,
+    "pitch": 0.00095,
+    "grade_used": 0.002928910540385236,
+    "jounce": [
+     0.1013,
+     0.1002,
+     0.0972,
+     0.0958
+    ],
+    "gate_a": -0.859
+   },
+   {
+    "t": 0.5,
+    "cmd": -1.159,
+    "meas": -1.1413,
+    "v": 11.8523,
+    "drive_nm": 0.0,
+    "brake_nm": 208.93,
+    "bias_n": 0.0,
+    "vz": 0.029,
+    "pitch": 0.00176,
+    "grade_used": 0.002928903809665729,
+    "jounce": [
+     0.1009,
+     0.1,
+     0.0975,
+     0.0966
+    ],
+    "gate_a": -1.1413
+   }
+  ],
+  "after_start": {
+   "vz": -0.0036,
+   "expected_vz": -0.0036,
+   "pitch": -0.00049,
+   "jounce": [
+    0.1004,
+    0.1004,
+    0.1,
+    0.0999
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 12.1386,
+    "a": 0.0,
+    "request": -0.3
+   },
+   {
+    "t": 0.2,
+    "v": 12.1086,
+    "a": -0.3,
+    "request": -0.6
+   },
+   {
+    "t": 0.3,
+    "v": 12.0486,
+    "a": -0.6,
+    "request": -0.9
+   }
+  ],
+  "gate_peak_abs_jerk": 4.471005567295805,
+  "sumo_peak_abs_jerk": 3.0000007897615477,
+  "top_gate_jerks": [
+   [
+    4.471,
+    28.7
+   ],
+   [
+    4.084,
+    27.5
+   ],
+   [
+    3.124,
+    3.5
+   ]
+  ]
+ },
+ {
+  "drive": "physics-gap/row11-c2",
+  "controller": "c2",
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": -0.0003,
+  "grade_used_first": 0.0003836414943279332,
+  "v_sumo_at_handoff": 12.13862,
+  "v_level2_t0": 12.1386,
+  "v_body_after_spawn": 12.13862,
+  "body_over_sumo": 1.0,
+  "cos_spawn_pitch": 1.0,
+  "speed_t1_physics": 12.1094,
+  "speed_t1_level2": 12.1094,
+  "commanded_t0": -0.3,
+  "physics_measured_t1": -0.2921,
+  "physics_recomputed_t1": -0.2921,
+  "gate_realized_t1": -0.2921,
+  "gate_recomputed_t1": -0.2921,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.0,
+  "predicted_spawn_step_m_s2": -0.0,
+  "tracking_error_t1": 0.0079,
+  "gate_jerk_t1": -2.921,
+  "jerk_if_body_reference": -2.921,
+  "jerk_if_exact": -3.0,
+  "request_t1": -0.5921,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 4.4,
+  "later_decisions_compared": 460,
+  "tracking_error_t2_t5": [
+   -0.002,
+   0.0125,
+   0.0094,
+   0.0083
+  ],
+  "max_abs_tracking_error_later": [
+   0.1923,
+   28.8
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": -0.3,
+    "meas": -0.2921,
+    "v": 12.1094,
+    "drive_nm": 0.0,
+    "brake_nm": 58.34,
+    "bias_n": 0.0,
+    "vz": 0.0091,
+    "pitch": -0.00047,
+    "grade_used": 0.0003836414943279332,
+    "jounce": [
+     0.1004,
+     0.0997,
+     0.0996,
+     0.0987
+    ],
+    "gate_a": -0.2921
+   },
+   {
+    "t": 0.3,
+    "cmd": -0.5921,
+    "meas": -0.5942,
+    "v": 12.05,
+    "drive_nm": 0.0,
+    "brake_nm": 108.85,
+    "bias_n": 0.0,
+    "vz": 0.0235,
+    "pitch": -5e-05,
+    "grade_used": 0.001679550518934621,
+    "jounce": [
+     0.1019,
+     0.1006,
+     0.0984,
+     0.097
+    ],
+    "gate_a": -0.5942
+   },
+   {
+    "t": 0.4,
+    "cmd": -0.8942,
+    "meas": -0.8817,
+    "v": 11.9618,
+    "drive_nm": 0.0,
+    "brake_nm": 163.05,
+    "bias_n": 0.0,
+    "vz": 0.024,
+    "pitch": 0.00092,
+    "grade_used": 0.0029289105403967537,
+    "jounce": [
+     0.1014,
+     0.1002,
+     0.0971,
+     0.0958
+    ],
+    "gate_a": -0.8817
+   },
+   {
+    "t": 0.5,
+    "cmd": -1.1817,
+    "meas": -1.1723,
+    "v": 11.8446,
+    "drive_nm": 0.0,
+    "brake_nm": 214.9,
+    "bias_n": 0.0,
+    "vz": 0.029,
+    "pitch": 0.00171,
+    "grade_used": 0.002928903809554029,
+    "jounce": [
+     0.101,
+     0.1,
+     0.0974,
+     0.0966
+    ],
+    "gate_a": -1.1723
+   }
+  ],
+  "after_start": {
+   "vz": -0.0036,
+   "expected_vz": -0.0036,
+   "pitch": -0.00049,
+   "jounce": [
+    0.1004,
+    0.1004,
+    0.1,
+    0.0999
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 12.1386,
+    "a": 0.0,
+    "request": -0.3
+   },
+   {
+    "t": 0.2,
+    "v": 12.1086,
+    "a": -0.3,
+    "request": -0.6
+   },
+   {
+    "t": 0.3,
+    "v": 12.0486,
+    "a": -0.6,
+    "request": -0.9
+   }
+  ],
+  "gate_peak_abs_jerk": 4.745674592438931,
+  "sumo_peak_abs_jerk": 3.0000007897615477,
+  "top_gate_jerks": [
+   [
+    4.745,
+    28.7
+   ],
+   [
+    3.897,
+    27.5
+   ],
+   [
+    3.154,
+    3.5
+   ]
+  ]
+ },
+ {
+  "drive": "physics-gap/row25-stage5",
+  "controller": "stage5",
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": 0.00106,
+  "grade_used_first": 0.0009579672641828567,
+  "v_sumo_at_handoff": 13.18711,
+  "v_level2_t0": 13.1871,
+  "v_body_after_spawn": 13.1871,
+  "body_over_sumo": 0.999999,
+  "cos_spawn_pitch": 0.999999,
+  "speed_t1_physics": 13.1801,
+  "speed_t1_level2": 13.1801,
+  "commanded_t0": 0.0,
+  "physics_measured_t1": -0.07,
+  "physics_recomputed_t1": -0.07,
+  "gate_realized_t1": -0.07,
+  "gate_recomputed_t1": -0.07,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.0001,
+  "predicted_spawn_step_m_s2": -0.0001,
+  "tracking_error_t1": -0.07,
+  "gate_jerk_t1": -0.7,
+  "jerk_if_body_reference": -0.7,
+  "jerk_if_exact": 0.0,
+  "request_t1": 0.064,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 23.1,
+  "later_decisions_compared": 452,
+  "tracking_error_t2_t5": [
+   -0.0799,
+   -0.0295,
+   -0.0181,
+   -0.0249
+  ],
+  "max_abs_tracking_error_later": [
+   0.2617,
+   42.0
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": 0.0,
+    "meas": -0.07,
+    "v": 13.1801,
+    "drive_nm": 4.96,
+    "brake_nm": 0.0,
+    "bias_n": 0.0,
+    "vz": 0.0217,
+    "pitch": 0.00096,
+    "grade_used": 0.0009579672641828567,
+    "jounce": [
+     0.0971,
+     0.1013,
+     0.0969,
+     0.1012
+    ],
+    "gate_a": -0.07
+   },
+   {
+    "t": 0.3,
+    "cmd": 0.064,
+    "meas": -0.0159,
+    "v": 13.1785,
+    "drive_nm": 37.04,
+    "brake_nm": 0.0,
+    "bias_n": 37.8,
+    "vz": 0.0061,
+    "pitch": 0.00042,
+    "grade_used": 0.000499389319534943,
+    "jounce": [
+     0.0906,
+     0.1031,
+     0.0919,
+     0.1044
+    ],
+    "gate_a": -0.0159
+   },
+   {
+    "t": 0.4,
+    "cmd": 0.1672,
+    "meas": 0.1377,
+    "v": 13.1923,
+    "drive_nm": 78.23,
+    "brake_nm": 0.0,
+    "bias_n": 80.9,
+    "vz": -0.004,
+    "pitch": -0.00063,
+    "grade_used": -0.0005362834560604934,
+    "jounce": [
+     0.0894,
+     0.104,
+     0.0905,
+     0.1052
+    ],
+    "gate_a": 0.1377
+   },
+   {
+    "t": 0.5,
+    "cmd": 0.2897,
+    "meas": 0.2715,
+    "v": 13.2194,
+    "drive_nm": 121.73,
+    "brake_nm": 0.0,
+    "bias_n": 96.9,
+    "vz": -0.0161,
+    "pitch": -0.00136,
+    "grade_used": -0.0013384402494255598,
+    "jounce": [
+     0.0911,
+     0.1032,
+     0.0908,
+     0.1029
+    ],
+    "gate_a": 0.2715
+   }
+  ],
+  "after_start": {
+   "vz": 0.014,
+   "expected_vz": 0.014,
+   "pitch": 0.00086,
+   "jounce": [
+    0.0997,
+    0.0997,
+    0.0997,
+    0.0997
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 13.1871,
+    "a": 0.0,
+    "request": 0.0
+   },
+   {
+    "t": 0.2,
+    "v": 13.1871,
+    "a": 0.0,
+    "request": 0.05
+   },
+   {
+    "t": 0.3,
+    "v": 13.1921,
+    "a": 0.05,
+    "request": 0.14
+   }
+  ],
+  "gate_peak_abs_jerk": 3.908418608601849,
+  "sumo_peak_abs_jerk": 3.000000789761542,
+  "top_gate_jerks": [
+   [
+    3.909,
+    26.6
+   ],
+   [
+    3.63,
+    27.9
+   ],
+   [
+    2.998,
+    42.2
+   ]
+  ]
+ },
+ {
+  "drive": "physics-gap/row25-c2",
+  "controller": "c2",
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": 0.00106,
+  "grade_used_first": 0.0005645183347402627,
+  "v_sumo_at_handoff": 13.18711,
+  "v_level2_t0": 13.1871,
+  "v_body_after_spawn": 13.1871,
+  "body_over_sumo": 0.999999,
+  "cos_spawn_pitch": 0.999999,
+  "speed_t1_physics": 13.18063,
+  "speed_t1_level2": 13.1806,
+  "commanded_t0": 0.0,
+  "physics_measured_t1": -0.0647,
+  "physics_recomputed_t1": -0.0647,
+  "gate_realized_t1": -0.0648,
+  "gate_recomputed_t1": -0.0648,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.0001,
+  "predicted_spawn_step_m_s2": -0.0001,
+  "tracking_error_t1": -0.0647,
+  "gate_jerk_t1": -0.648,
+  "jerk_if_body_reference": -0.647,
+  "jerk_if_exact": 0.0,
+  "request_t1": 0.063,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 5.1,
+  "later_decisions_compared": 452,
+  "tracking_error_t2_t5": [
+   -0.0704,
+   -0.0285,
+   -0.015,
+   -0.016
+  ],
+  "max_abs_tracking_error_later": [
+   0.1456,
+   26.6
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": 0.0,
+    "meas": -0.0647,
+    "v": 13.1806,
+    "drive_nm": 8.18,
+    "brake_nm": 0.0,
+    "bias_n": 0.0,
+    "vz": 0.0217,
+    "pitch": 0.00096,
+    "grade_used": 0.0005645183347402627,
+    "jounce": [
+     0.0971,
+     0.1013,
+     0.0969,
+     0.1012
+    ],
+    "gate_a": -0.0648
+   },
+   {
+    "t": 0.3,
+    "cmd": 0.063,
+    "meas": -0.0075,
+    "v": 13.1799,
+    "drive_nm": 40.01,
+    "brake_nm": 0.0,
+    "bias_n": 34.9,
+    "vz": 0.0061,
+    "pitch": 0.00043,
+    "grade_used": -0.0004840268335275329,
+    "jounce": [
+     0.0906,
+     0.1031,
+     0.092,
+     0.1045
+    ],
+    "gate_a": -0.0075
+   },
+   {
+    "t": 0.4,
+    "cmd": 0.1645,
+    "meas": 0.136,
+    "v": 13.1935,
+    "drive_nm": 76.35,
+    "brake_nm": 0.0,
+    "bias_n": 73.0,
+    "vz": -0.004,
+    "pitch": -0.00062,
+    "grade_used": -0.001322977351437075,
+    "jounce": [
+     0.0894,
+     0.104,
+     0.0905,
+     0.1053
+    ],
+    "gate_a": 0.136
+   },
+   {
+    "t": 0.5,
+    "cmd": 0.2873,
+    "meas": 0.2723,
+    "v": 13.2207,
+    "drive_nm": 122.43,
+    "brake_nm": 0.0,
+    "bias_n": 88.4,
+    "vz": -0.0161,
+    "pitch": -0.00136,
+    "grade_used": -0.0013219967133409575,
+    "jounce": [
+     0.0911,
+     0.1032,
+     0.0908,
+     0.1029
+    ],
+    "gate_a": 0.2723
+   }
+  ],
+  "after_start": {
+   "vz": 0.014,
+   "expected_vz": 0.014,
+   "pitch": 0.00086,
+   "jounce": [
+    0.0997,
+    0.0997,
+    0.0997,
+    0.0997
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 13.1871,
+    "a": 0.0,
+    "request": 0.0
+   },
+   {
+    "t": 0.2,
+    "v": 13.1871,
+    "a": 0.0,
+    "request": 0.05
+   },
+   {
+    "t": 0.3,
+    "v": 13.1921,
+    "a": 0.05,
+    "request": 0.14
+   }
+  ],
+  "gate_peak_abs_jerk": 3.31215820933366,
+  "sumo_peak_abs_jerk": 3.000000789761542,
+  "top_gate_jerks": [
+   [
+    3.312,
+    26.6
+   ],
+   [
+    3.01,
+    17.4
+   ],
+   [
+    2.979,
+    9.0
+   ]
+  ]
+ },
+ {
+  "drive": "physics-gap/row39-stage5",
+  "controller": "stage5",
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": 0.04514,
+  "grade_used_first": 0.0451221657581975,
+  "v_sumo_at_handoff": 13.23511,
+  "v_level2_t0": 13.2351,
+  "v_body_after_spawn": 13.22163,
+  "body_over_sumo": 0.998981,
+  "cos_spawn_pitch": 0.998981,
+  "speed_t1_physics": 13.18462,
+  "speed_t1_level2": 13.1846,
+  "commanded_t0": -0.3,
+  "physics_measured_t1": -0.3701,
+  "physics_recomputed_t1": -0.3701,
+  "gate_realized_t1": -0.5049,
+  "gate_recomputed_t1": -0.5049,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.1348,
+  "predicted_spawn_step_m_s2": -0.1348,
+  "tracking_error_t1": -0.0701,
+  "gate_jerk_t1": -5.049,
+  "jerk_if_body_reference": -3.701,
+  "jerk_if_exact": -3.0,
+  "request_t1": -0.8049,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 9.0,
+  "later_decisions_compared": 435,
+  "tracking_error_t2_t5": [
+   0.0533,
+   0.014,
+   0.0164,
+   0.0119
+  ],
+  "max_abs_tracking_error_later": [
+   0.332,
+   40.6
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": -0.3,
+    "meas": -0.3701,
+    "v": 13.1846,
+    "drive_nm": 54.24,
+    "brake_nm": 0.0,
+    "bias_n": 0.0,
+    "vz": 0.6192,
+    "pitch": 0.04516,
+    "grade_used": 0.0451221657581975,
+    "jounce": [
+     0.1025,
+     0.0995,
+     0.1022,
+     0.0994
+    ],
+    "gate_a": -0.5049
+   },
+   {
+    "t": 0.3,
+    "cmd": -0.8049,
+    "meas": -0.7516,
+    "v": 13.1095,
+    "drive_nm": 0.0,
+    "brake_nm": 67.3,
+    "bias_n": 0.0,
+    "vz": 0.6199,
+    "pitch": 0.04552,
+    "grade_used": 0.04547415428514279,
+    "jounce": [
+     0.0995,
+     0.1003,
+     0.0981,
+     0.0992
+    ],
+    "gate_a": -0.7516
+   },
+   {
+    "t": 0.4,
+    "cmd": -1.0516,
+    "meas": -1.0376,
+    "v": 13.0057,
+    "drive_nm": 0.0,
+    "brake_nm": 109.93,
+    "bias_n": 0.0,
+    "vz": 0.6073,
+    "pitch": 0.04591,
+    "grade_used": 0.04586170443591475,
+    "jounce": [
+     0.0973,
+     0.1009,
+     0.0949,
+     0.0988
+    ],
+    "gate_a": -1.0376
+   },
+   {
+    "t": 0.5,
+    "cmd": -1.3376,
+    "meas": -1.3212,
+    "v": 12.8736,
+    "drive_nm": 0.0,
+    "brake_nm": 161.23,
+    "bias_n": 0.0,
+    "vz": 0.601,
+    "pitch": 0.04605,
+    "grade_used": 0.04604726724485608,
+    "jounce": [
+     0.0957,
+     0.1027,
+     0.0933,
+     0.1004
+    ],
+    "gate_a": -1.3212
+   }
+  ],
+  "after_start": {
+   "vz": 0.5972,
+   "expected_vz": 0.5972,
+   "pitch": 0.04494,
+   "jounce": [
+    0.1066,
+    0.0982,
+    0.1063,
+    0.0978
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 13.2351,
+    "a": 0.0,
+    "request": -0.3
+   },
+   {
+    "t": 0.2,
+    "v": 13.2051,
+    "a": -0.3,
+    "request": -0.6
+   },
+   {
+    "t": 0.3,
+    "v": 13.1451,
+    "a": -0.6,
+    "request": -0.9
+   }
+  ],
+  "gate_peak_abs_jerk": 5.049176306193814,
+  "sumo_peak_abs_jerk": 3.0000003054738045,
+  "top_gate_jerks": [
+   [
+    5.049,
+    0.2
+   ],
+   [
+    4.745,
+    40.5
+   ],
+   [
+    4.186,
+    26.1
+   ]
+  ]
+ },
+ {
+  "drive": "physics-gap/row39-c2",
+  "controller": "c2",
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": 0.04514,
+  "grade_used_first": 0.045482951108151946,
+  "v_sumo_at_handoff": 13.23511,
+  "v_level2_t0": 13.2351,
+  "v_body_after_spawn": 13.22163,
+  "body_over_sumo": 0.998981,
+  "cos_spawn_pitch": 0.998981,
+  "speed_t1_physics": 13.18549,
+  "speed_t1_level2": 13.1855,
+  "commanded_t0": -0.3,
+  "physics_measured_t1": -0.3614,
+  "physics_recomputed_t1": -0.3614,
+  "gate_realized_t1": -0.4962,
+  "gate_recomputed_t1": -0.4962,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.1348,
+  "predicted_spawn_step_m_s2": -0.1348,
+  "tracking_error_t1": -0.0614,
+  "gate_jerk_t1": -4.962,
+  "jerk_if_body_reference": -3.614,
+  "jerk_if_exact": -3.0,
+  "request_t1": -0.7962,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 30.9,
+  "later_decisions_compared": 436,
+  "tracking_error_t2_t5": [
+   0.0324,
+   0.0018,
+   -0.001,
+   -0.0081
+  ],
+  "max_abs_tracking_error_later": [
+   0.1537,
+   26.3
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": -0.3,
+    "meas": -0.3614,
+    "v": 13.1855,
+    "drive_nm": 58.94,
+    "brake_nm": 0.0,
+    "bias_n": 0.0,
+    "vz": 0.6192,
+    "pitch": 0.04516,
+    "grade_used": 0.045482951108151946,
+    "jounce": [
+     0.1025,
+     0.0995,
+     0.1022,
+     0.0994
+    ],
+    "gate_a": -0.4962
+   },
+   {
+    "t": 0.3,
+    "cmd": -0.7962,
+    "meas": -0.7638,
+    "v": 13.1091,
+    "drive_nm": 0.0,
+    "brake_nm": 70.77,
+    "bias_n": 0.0,
+    "vz": 0.62,
+    "pitch": 0.04552,
+    "grade_used": 0.046259437560247425,
+    "jounce": [
+     0.0995,
+     0.1003,
+     0.0981,
+     0.0992
+    ],
+    "gate_a": -0.7638
+   },
+   {
+    "t": 0.4,
+    "cmd": -1.0638,
+    "meas": -1.062,
+    "v": 13.0029,
+    "drive_nm": 0.0,
+    "brake_nm": 114.84,
+    "bias_n": 0.0,
+    "vz": 0.6072,
+    "pitch": 0.04589,
+    "grade_used": 0.0468980139250102,
+    "jounce": [
+     0.0973,
+     0.1009,
+     0.0949,
+     0.0987
+    ],
+    "gate_a": -1.062
+   },
+   {
+    "t": 0.5,
+    "cmd": -1.362,
+    "meas": -1.363,
+    "v": 12.8666,
+    "drive_nm": 0.0,
+    "brake_nm": 169.77,
+    "bias_n": 0.0,
+    "vz": 0.6008,
+    "pitch": 0.046,
+    "grade_used": 0.04689543825019048,
+    "jounce": [
+     0.0959,
+     0.1026,
+     0.0934,
+     0.1001
+    ],
+    "gate_a": -1.363
+   }
+  ],
+  "after_start": {
+   "vz": 0.5972,
+   "expected_vz": 0.5972,
+   "pitch": 0.04494,
+   "jounce": [
+    0.1066,
+    0.0982,
+    0.1063,
+    0.0978
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 13.2351,
+    "a": 0.0,
+    "request": -0.3
+   },
+   {
+    "t": 0.2,
+    "v": 13.2051,
+    "a": -0.3,
+    "request": -0.6
+   },
+   {
+    "t": 0.3,
+    "v": 13.1451,
+    "a": -0.6,
+    "request": -0.9
+   }
+  ],
+  "gate_peak_abs_jerk": 4.961909178456381,
+  "sumo_peak_abs_jerk": 3.0000003054738045,
+  "top_gate_jerks": [
+   [
+    4.962,
+    0.2
+   ],
+   [
+    3.241,
+    17.2
+   ],
+   [
+    3.084,
+    4.8
+   ]
+  ]
+ },
+ {
+  "drive": "physics-gap/row53-stage5",
+  "controller": "stage5",
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": 0.04692,
+  "grade_used_first": 0.04684921895658389,
+  "v_sumo_at_handoff": 12.2413,
+  "v_level2_t0": 12.2413,
+  "v_body_after_spawn": 12.22783,
+  "body_over_sumo": 0.9989,
+  "cos_spawn_pitch": 0.9989,
+  "speed_t1_physics": 12.18748,
+  "speed_t1_level2": 12.1875,
+  "commanded_t0": -0.3,
+  "physics_measured_t1": -0.4035,
+  "physics_recomputed_t1": -0.4035,
+  "gate_realized_t1": -0.5382,
+  "gate_recomputed_t1": -0.5382,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.1347,
+  "predicted_spawn_step_m_s2": -0.1347,
+  "tracking_error_t1": -0.1035,
+  "gate_jerk_t1": -5.382,
+  "jerk_if_body_reference": -4.035,
+  "jerk_if_exact": -3.0,
+  "request_t1": -0.8382,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 20.8,
+  "later_decisions_compared": 429,
+  "tracking_error_t2_t5": [
+   0.0001,
+   0.009,
+   0.0246,
+   0.0219
+  ],
+  "max_abs_tracking_error_later": [
+   0.3095,
+   25.5
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": -0.3,
+    "meas": -0.4035,
+    "v": 12.1875,
+    "drive_nm": 61.04,
+    "brake_nm": 0.0,
+    "bias_n": 0.0,
+    "vz": 0.5942,
+    "pitch": 0.04688,
+    "grade_used": 0.04684921895658389,
+    "jounce": [
+     0.1011,
+     0.1003,
+     0.1012,
+     0.1005
+    ],
+    "gate_a": -0.5382
+   },
+   {
+    "t": 0.3,
+    "cmd": -0.8382,
+    "meas": -0.8381,
+    "v": 12.1037,
+    "drive_nm": 0.0,
+    "brake_nm": 69.46,
+    "bias_n": 0.0,
+    "vz": 0.5922,
+    "pitch": 0.04701,
+    "grade_used": 0.04697999775827699,
+    "jounce": [
+     0.0937,
+     0.1055,
+     0.0925,
+     0.1045
+    ],
+    "gate_a": -0.8381
+   },
+   {
+    "t": 0.4,
+    "cmd": -1.1381,
+    "meas": -1.1291,
+    "v": 11.9908,
+    "drive_nm": 0.0,
+    "brake_nm": 123.06,
+    "bias_n": 0.0,
+    "vz": 0.579,
+    "pitch": 0.04717,
+    "grade_used": 0.04713593785256842,
+    "jounce": [
+     0.091,
+     0.1073,
+     0.0883,
+     0.1048
+    ],
+    "gate_a": -1.1291
+   },
+   {
+    "t": 0.5,
+    "cmd": -1.4291,
+    "meas": -1.4045,
+    "v": 11.8503,
+    "drive_nm": 0.0,
+    "brake_nm": 175.74,
+    "bias_n": 0.0,
+    "vz": 0.5693,
+    "pitch": 0.04729,
+    "grade_used": 0.04727870632498221,
+    "jounce": [
+     0.092,
+     0.1069,
+     0.0887,
+     0.1036
+    ],
+    "gate_a": -1.4045
+   }
+  ],
+  "after_start": {
+   "vz": 0.5741,
+   "expected_vz": 0.5741,
+   "pitch": 0.04672,
+   "jounce": [
+    0.1065,
+    0.0978,
+    0.1067,
+    0.098
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 12.2413,
+    "a": 0.0,
+    "request": -0.3
+   },
+   {
+    "t": 0.2,
+    "v": 12.2113,
+    "a": -0.3,
+    "request": -0.6
+   },
+   {
+    "t": 0.3,
+    "v": 12.1513,
+    "a": -0.6,
+    "request": -0.9
+   }
+  ],
+  "gate_peak_abs_jerk": 5.382013279611897,
+  "sumo_peak_abs_jerk": 3.0000007897615366,
+  "top_gate_jerks": [
+   [
+    5.382,
+    0.2
+   ],
+   [
+    4.589,
+    25.5
+   ],
+   [
+    3.945,
+    39.9
+   ]
+  ]
+ },
+ {
+  "drive": "physics-gap/row53-c2",
+  "controller": "c2",
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": 0.04692,
+  "grade_used_first": 0.04708822175398412,
+  "v_sumo_at_handoff": 12.2413,
+  "v_level2_t0": 12.2413,
+  "v_body_after_spawn": 12.22783,
+  "body_over_sumo": 0.9989,
+  "cos_spawn_pitch": 0.9989,
+  "speed_t1_physics": 12.18846,
+  "speed_t1_level2": 12.1885,
+  "commanded_t0": -0.3,
+  "physics_measured_t1": -0.3937,
+  "physics_recomputed_t1": -0.3937,
+  "gate_realized_t1": -0.5284,
+  "gate_recomputed_t1": -0.5284,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.1347,
+  "predicted_spawn_step_m_s2": -0.1347,
+  "tracking_error_t1": -0.0937,
+  "gate_jerk_t1": -5.284,
+  "jerk_if_body_reference": -3.937,
+  "jerk_if_exact": -3.0,
+  "request_t1": -0.8284,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 33.7,
+  "later_decisions_compared": 429,
+  "tracking_error_t2_t5": [
+   -0.0142,
+   -0.004,
+   0.0063,
+   0.0012
+  ],
+  "max_abs_tracking_error_later": [
+   0.1758,
+   25.6
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": -0.3,
+    "meas": -0.3937,
+    "v": 12.1885,
+    "drive_nm": 66.72,
+    "brake_nm": 0.0,
+    "bias_n": 0.0,
+    "vz": 0.5943,
+    "pitch": 0.04688,
+    "grade_used": 0.04708822175398412,
+    "jounce": [
+     0.1011,
+     0.1003,
+     0.1013,
+     0.1005
+    ],
+    "gate_a": -0.5284
+   },
+   {
+    "t": 0.3,
+    "cmd": -0.8284,
+    "meas": -0.8426,
+    "v": 12.1042,
+    "drive_nm": 0.0,
+    "brake_nm": 71.24,
+    "bias_n": 0.0,
+    "vz": 0.5923,
+    "pitch": 0.04702,
+    "grade_used": 0.04764208554289482,
+    "jounce": [
+     0.0937,
+     0.1055,
+     0.0925,
+     0.1045
+    ],
+    "gate_a": -0.8426
+   },
+   {
+    "t": 0.4,
+    "cmd": -1.1426,
+    "meas": -1.1466,
+    "v": 11.9895,
+    "drive_nm": 0.0,
+    "brake_nm": 126.9,
+    "bias_n": 0.0,
+    "vz": 0.579,
+    "pitch": 0.04716,
+    "grade_used": 0.04820105482752416,
+    "jounce": [
+     0.091,
+     0.1073,
+     0.0883,
+     0.1048
+    ],
+    "gate_a": -1.1466
+   },
+   {
+    "t": 0.5,
+    "cmd": -1.4466,
+    "meas": -1.4404,
+    "v": 11.8455,
+    "drive_nm": 0.0,
+    "brake_nm": 183.16,
+    "bias_n": 0.0,
+    "vz": 0.569,
+    "pitch": 0.04725,
+    "grade_used": 0.04825483821537051,
+    "jounce": [
+     0.092,
+     0.107,
+     0.0886,
+     0.1036
+    ],
+    "gate_a": -1.4404
+   }
+  ],
+  "after_start": {
+   "vz": 0.5741,
+   "expected_vz": 0.5741,
+   "pitch": 0.04672,
+   "jounce": [
+    0.1065,
+    0.0978,
+    0.1067,
+    0.098
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 12.2413,
+    "a": 0.0,
+    "request": -0.3
+   },
+   {
+    "t": 0.2,
+    "v": 12.2113,
+    "a": -0.3,
+    "request": -0.6
+   },
+   {
+    "t": 0.3,
+    "v": 12.1513,
+    "a": -0.6,
+    "request": -0.9
+   }
+  ],
+  "gate_peak_abs_jerk": 5.283944409472419,
+  "sumo_peak_abs_jerk": 3.0000007897615366,
+  "top_gate_jerks": [
+   [
+    5.284,
+    0.2
+   ],
+   [
+    3.251,
+    16.5
+   ],
+   [
+    3.142,
+    0.3
+   ]
+  ]
+ },
+ {
+  "drive": "physics-gap/row67-stage5",
+  "controller": "stage5",
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": 0.04756,
+  "grade_used_first": 0.04781915598745323,
+  "v_sumo_at_handoff": 11.38281,
+  "v_level2_t0": 11.3828,
+  "v_body_after_spawn": 11.36993,
+  "body_over_sumo": 0.998869,
+  "cos_spawn_pitch": 0.998869,
+  "speed_t1_physics": 11.33019,
+  "speed_t1_level2": 11.3302,
+  "commanded_t0": -0.3,
+  "physics_measured_t1": -0.3974,
+  "physics_recomputed_t1": -0.3974,
+  "gate_realized_t1": -0.5262,
+  "gate_recomputed_t1": -0.5262,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.1287,
+  "predicted_spawn_step_m_s2": -0.1287,
+  "tracking_error_t1": -0.0974,
+  "gate_jerk_t1": -5.262,
+  "jerk_if_body_reference": -3.974,
+  "jerk_if_exact": -3.0,
+  "request_t1": -0.8262,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 6.9,
+  "later_decisions_compared": 443,
+  "tracking_error_t2_t5": [
+   0.027,
+   0.0137,
+   0.029,
+   0.0257
+  ],
+  "max_abs_tracking_error_later": [
+   0.3865,
+   26.9
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": -0.3,
+    "meas": -0.3974,
+    "v": 11.3302,
+    "drive_nm": 63.79,
+    "brake_nm": 0.0,
+    "bias_n": 0.0,
+    "vz": 0.563,
+    "pitch": 0.0479,
+    "grade_used": 0.04781915598745323,
+    "jounce": [
+     0.1013,
+     0.1014,
+     0.1003,
+     0.1005
+    ],
+    "gate_a": -0.5262
+   },
+   {
+    "t": 0.3,
+    "cmd": -0.8262,
+    "meas": -0.7991,
+    "v": 11.2503,
+    "drive_nm": 0.0,
+    "brake_nm": 65.52,
+    "bias_n": 0.0,
+    "vz": 0.5598,
+    "pitch": 0.04835,
+    "grade_used": 0.04832544619442025,
+    "jounce": [
+     0.0942,
+     0.104,
+     0.0941,
+     0.1039
+    ],
+    "gate_a": -0.7991
+   },
+   {
+    "t": 0.4,
+    "cmd": -1.0991,
+    "meas": -1.0855,
+    "v": 11.1417,
+    "drive_nm": 0.0,
+    "brake_nm": 113.96,
+    "bias_n": 0.0,
+    "vz": 0.5472,
+    "pitch": 0.04802,
+    "grade_used": 0.04804125141751314,
+    "jounce": [
+     0.0919,
+     0.105,
+     0.0908,
+     0.1039
+    ],
+    "gate_a": -1.0855
+   },
+   {
+    "t": 0.5,
+    "cmd": -1.3855,
+    "meas": -1.3564,
+    "v": 11.0061,
+    "drive_nm": 0.0,
+    "brake_nm": 166.96,
+    "bias_n": 0.0,
+    "vz": 0.5359,
+    "pitch": 0.04748,
+    "grade_used": 0.04750411616190919,
+    "jounce": [
+     0.0938,
+     0.1047,
+     0.0906,
+     0.1016
+    ],
+    "gate_a": -1.3564
+   }
+  ],
+  "after_start": {
+   "vz": 0.5412,
+   "expected_vz": 0.5412,
+   "pitch": 0.04737,
+   "jounce": [
+    0.1059,
+    0.0989,
+    0.1054,
+    0.0987
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 11.3828,
+    "a": 0.0,
+    "request": -0.3
+   },
+   {
+    "t": 0.2,
+    "v": 11.3528,
+    "a": -0.3,
+    "request": -0.6
+   },
+   {
+    "t": 0.3,
+    "v": 11.2928,
+    "a": -0.6,
+    "request": -0.9
+   }
+  ],
+  "gate_peak_abs_jerk": 5.79714021284552,
+  "sumo_peak_abs_jerk": 3.0000007897615366,
+  "top_gate_jerks": [
+   [
+    5.797,
+    26.9
+   ],
+   [
+    5.262,
+    0.2
+   ],
+   [
+    4.528,
+    41.3
+   ]
+  ]
+ },
+ {
+  "drive": "physics-gap/row67-c2",
+  "controller": "c2",
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": 0.04756,
+  "grade_used_first": 0.04824055171465894,
+  "v_sumo_at_handoff": 11.38281,
+  "v_level2_t0": 11.3828,
+  "v_body_after_spawn": 11.36993,
+  "body_over_sumo": 0.998869,
+  "cos_spawn_pitch": 0.998869,
+  "speed_t1_physics": 11.3315,
+  "speed_t1_level2": 11.3315,
+  "commanded_t0": -0.3,
+  "physics_measured_t1": -0.3843,
+  "physics_recomputed_t1": -0.3843,
+  "gate_realized_t1": -0.513,
+  "gate_recomputed_t1": -0.513,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.1287,
+  "predicted_spawn_step_m_s2": -0.1287,
+  "tracking_error_t1": -0.0843,
+  "gate_jerk_t1": -5.13,
+  "jerk_if_body_reference": -3.843,
+  "jerk_if_exact": -3.0,
+  "request_t1": -0.813,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 17.9,
+  "later_decisions_compared": 442,
+  "tracking_error_t2_t5": [
+   0.0068,
+   -0.0054,
+   0.0091,
+   0.0082
+  ],
+  "max_abs_tracking_error_later": [
+   0.2127,
+   26.9
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": -0.3,
+    "meas": -0.3843,
+    "v": 11.3315,
+    "drive_nm": 70.59,
+    "brake_nm": 0.0,
+    "bias_n": 0.0,
+    "vz": 0.563,
+    "pitch": 0.04791,
+    "grade_used": 0.04824055171465894,
+    "jounce": [
+     0.1013,
+     0.1013,
+     0.1003,
+     0.1005
+    ],
+    "gate_a": -0.513
+   },
+   {
+    "t": 0.3,
+    "cmd": -0.813,
+    "meas": -0.8063,
+    "v": 11.2509,
+    "drive_nm": 0.0,
+    "brake_nm": 68.03,
+    "bias_n": 0.0,
+    "vz": 0.5597,
+    "pitch": 0.04836,
+    "grade_used": 0.048251136755382174,
+    "jounce": [
+     0.0942,
+     0.104,
+     0.0941,
+     0.104
+    ],
+    "gate_a": -0.8063
+   },
+   {
+    "t": 0.4,
+    "cmd": -1.1063,
+    "meas": -1.1117,
+    "v": 11.1397,
+    "drive_nm": 0.0,
+    "brake_nm": 119.28,
+    "bias_n": 0.0,
+    "vz": 0.5471,
+    "pitch": 0.048,
+    "grade_used": 0.0483777103874895,
+    "jounce": [
+     0.0919,
+     0.105,
+     0.0908,
+     0.1039
+    ],
+    "gate_a": -1.1117
+   },
+   {
+    "t": 0.5,
+    "cmd": -1.4117,
+    "meas": -1.4026,
+    "v": 10.9994,
+    "drive_nm": 0.0,
+    "brake_nm": 176.2,
+    "bias_n": 0.0,
+    "vz": 0.5356,
+    "pitch": 0.04743,
+    "grade_used": 0.04865342657527716,
+    "jounce": [
+     0.0939,
+     0.1048,
+     0.0905,
+     0.1015
+    ],
+    "gate_a": -1.4026
+   }
+  ],
+  "after_start": {
+   "vz": 0.5412,
+   "expected_vz": 0.5412,
+   "pitch": 0.04737,
+   "jounce": [
+    0.1059,
+    0.0989,
+    0.1054,
+    0.0987
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 11.3828,
+    "a": 0.0,
+    "request": -0.3
+   },
+   {
+    "t": 0.2,
+    "v": 11.3528,
+    "a": -0.3,
+    "request": -0.6
+   },
+   {
+    "t": 0.3,
+    "v": 11.2928,
+    "a": -0.6,
+    "request": -0.9
+   }
+  ],
+  "gate_peak_abs_jerk": 5.13029488236274,
+  "sumo_peak_abs_jerk": 3.0000007897615366,
+  "top_gate_jerks": [
+   [
+    5.13,
+    0.2
+   ],
+   [
+    3.254,
+    17.8
+   ],
+   [
+    3.137,
+    17.9
+   ]
+  ]
+ },
+ {
+  "drive": "stage-5/physics/policy",
+  "controller": null,
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": -0.0003,
+  "grade_used_first": null,
+  "v_sumo_at_handoff": 12.13862,
+  "v_level2_t0": 12.1386,
+  "v_body_after_spawn": 12.13862,
+  "body_over_sumo": 1.0,
+  "cos_spawn_pitch": 1.0,
+  "speed_t1_physics": 12.1105,
+  "speed_t1_level2": 12.1105,
+  "commanded_t0": -0.3,
+  "physics_measured_t1": -0.2812,
+  "physics_recomputed_t1": -0.2812,
+  "gate_realized_t1": -0.2812,
+  "gate_recomputed_t1": -0.2812,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.0,
+  "predicted_spawn_step_m_s2": -0.0,
+  "tracking_error_t1": 0.0188,
+  "gate_jerk_t1": -2.812,
+  "jerk_if_body_reference": -2.812,
+  "jerk_if_exact": -3.0,
+  "request_t1": -0.5812,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 42.9,
+  "later_decisions_compared": 460,
+  "tracking_error_t2_t5": [
+   0.0002,
+   0.0166,
+   0.0207,
+   0.025
+  ],
+  "max_abs_tracking_error_later": [
+   0.4897,
+   28.7
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": -0.3,
+    "meas": -0.2812,
+    "v": 12.1105,
+    "drive_nm": 0.0,
+    "brake_nm": 56.19,
+    "bias_n": 0.0,
+    "vz": 0.0091,
+    "pitch": -0.00047,
+    "grade_used": null,
+    "jounce": [
+     0.1004,
+     0.0997,
+     0.0996,
+     0.0988
+    ],
+    "gate_a": -0.2812
+   },
+   {
+    "t": 0.3,
+    "cmd": -0.5812,
+    "meas": -0.581,
+    "v": 12.0524,
+    "drive_nm": 0.0,
+    "brake_nm": 106.32,
+    "bias_n": 0.0,
+    "vz": 0.0235,
+    "pitch": -4e-05,
+    "grade_used": null,
+    "jounce": [
+     0.1018,
+     0.1006,
+     0.0985,
+     0.0971
+    ],
+    "gate_a": -0.581
+   },
+   {
+    "t": 0.4,
+    "cmd": -0.881,
+    "meas": -0.8643,
+    "v": 11.966,
+    "drive_nm": 0.0,
+    "brake_nm": 159.54,
+    "bias_n": 0.0,
+    "vz": 0.024,
+    "pitch": 0.00094,
+    "grade_used": null,
+    "jounce": [
+     0.1013,
+     0.1002,
+     0.0972,
+     0.0958
+    ],
+    "gate_a": -0.8643
+   },
+   {
+    "t": 0.5,
+    "cmd": -1.1643,
+    "meas": -1.1437,
+    "v": 11.8516,
+    "drive_nm": 0.0,
+    "brake_nm": 209.09,
+    "bias_n": 0.0,
+    "vz": 0.029,
+    "pitch": 0.00175,
+    "grade_used": null,
+    "jounce": [
+     0.1009,
+     0.1,
+     0.0975,
+     0.0966
+    ],
+    "gate_a": -1.1437
+   }
+  ],
+  "after_start": {
+   "vz": -0.0036,
+   "expected_vz": -0.0036,
+   "pitch": -0.00049,
+   "jounce": [
+    0.1004,
+    0.1004,
+    0.1,
+    0.0999
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 12.1386,
+    "a": 0.0,
+    "request": -0.3
+   },
+   {
+    "t": 0.2,
+    "v": 12.1086,
+    "a": -0.3,
+    "request": -0.6
+   },
+   {
+    "t": 0.3,
+    "v": 12.0486,
+    "a": -0.6,
+    "request": -0.9
+   }
+  ],
+  "gate_peak_abs_jerk": null,
+  "sumo_peak_abs_jerk": null,
+  "top_gate_jerks": [
+   [
+    7.897,
+    28.7
+   ],
+   [
+    5.095,
+    27.5
+   ],
+   [
+    4.534,
+    43.0
+   ]
+  ]
+ },
+ {
+  "drive": "stage-5/physics/expert",
+  "controller": null,
+  "lane": "mlk_on_0",
+  "spawn_time": 0.1,
+  "spawn_pitch_rad": -0.0003,
+  "grade_used_first": null,
+  "v_sumo_at_handoff": 12.13862,
+  "v_level2_t0": 12.1386,
+  "v_body_after_spawn": 12.13862,
+  "body_over_sumo": 1.0,
+  "cos_spawn_pitch": 1.0,
+  "speed_t1_physics": 12.1105,
+  "speed_t1_level2": 12.1105,
+  "commanded_t0": -0.3,
+  "physics_measured_t1": -0.2812,
+  "physics_recomputed_t1": -0.2812,
+  "gate_realized_t1": -0.2812,
+  "gate_recomputed_t1": -0.2812,
+  "gate_realized_t0": 0.0,
+  "spawn_step_m_s2": -0.0,
+  "predicted_spawn_step_m_s2": -0.0,
+  "tracking_error_t1": 0.0188,
+  "gate_jerk_t1": -2.812,
+  "jerk_if_body_reference": -2.812,
+  "jerk_if_exact": -3.0,
+  "request_t1": -0.5812,
+  "later_max_abs_gate_minus_physics": 5e-05,
+  "later_max_at_t": 42.9,
+  "later_decisions_compared": 460,
+  "tracking_error_t2_t5": [
+   0.0002,
+   0.0166,
+   0.0207,
+   0.025
+  ],
+  "max_abs_tracking_error_later": [
+   0.4897,
+   28.7
+  ],
+  "first_rows": [
+   {
+    "t": 0.2,
+    "cmd": -0.3,
+    "meas": -0.2812,
+    "v": 12.1105,
+    "drive_nm": 0.0,
+    "brake_nm": 56.19,
+    "bias_n": 0.0,
+    "vz": 0.0091,
+    "pitch": -0.00047,
+    "grade_used": null,
+    "jounce": [
+     0.1004,
+     0.0997,
+     0.0996,
+     0.0988
+    ],
+    "gate_a": -0.2812
+   },
+   {
+    "t": 0.3,
+    "cmd": -0.5812,
+    "meas": -0.581,
+    "v": 12.0524,
+    "drive_nm": 0.0,
+    "brake_nm": 106.32,
+    "bias_n": 0.0,
+    "vz": 0.0235,
+    "pitch": -4e-05,
+    "grade_used": null,
+    "jounce": [
+     0.1018,
+     0.1006,
+     0.0985,
+     0.0971
+    ],
+    "gate_a": -0.581
+   },
+   {
+    "t": 0.4,
+    "cmd": -0.881,
+    "meas": -0.8643,
+    "v": 11.966,
+    "drive_nm": 0.0,
+    "brake_nm": 159.54,
+    "bias_n": 0.0,
+    "vz": 0.024,
+    "pitch": 0.00094,
+    "grade_used": null,
+    "jounce": [
+     0.1013,
+     0.1002,
+     0.0972,
+     0.0958
+    ],
+    "gate_a": -0.8643
+   },
+   {
+    "t": 0.5,
+    "cmd": -1.1643,
+    "meas": -1.1437,
+    "v": 11.8516,
+    "drive_nm": 0.0,
+    "brake_nm": 209.09,
+    "bias_n": 0.0,
+    "vz": 0.029,
+    "pitch": 0.00175,
+    "grade_used": null,
+    "jounce": [
+     0.1009,
+     0.1,
+     0.0975,
+     0.0966
+    ],
+    "gate_a": -1.1437
+   }
+  ],
+  "after_start": {
+   "vz": -0.0036,
+   "expected_vz": -0.0036,
+   "pitch": -0.00049,
+   "jounce": [
+    0.1004,
+    0.1004,
+    0.1,
+    0.0999
+   ],
+   "start": {
+    "before_steps": 0,
+    "before_time_s": 0.0,
+    "origin_steps": 2,
+    "origin_time_s": 0.016666666666666666,
+    "initialization_steps": 2,
+    "initialization_note": "Installed manager warm-up precedes episode tick zero"
+   }
+  },
+  "sumo_record": [
+   {
+    "t": 0.1,
+    "v": 12.1386,
+    "a": 0.0,
+    "request": -0.3
+   },
+   {
+    "t": 0.2,
+    "v": 12.1086,
+    "a": -0.3,
+    "request": -0.6
+   },
+   {
+    "t": 0.3,
+    "v": 12.0486,
+    "a": -0.6,
+    "request": -0.9
+   }
+  ],
+  "gate_peak_abs_jerk": null,
+  "sumo_peak_abs_jerk": null,
+  "top_gate_jerks": [
+   [
+    7.897,
+    28.7
+   ],
+   [
+    5.095,
+    27.5
+   ],
+   [
+    4.534,
+    43.0
+   ]
+  ]
+ }
+]

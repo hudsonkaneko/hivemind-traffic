@@ -1,0 +1,105 @@
+{
+ "generated": [
+  "batches",
+  "benchmark",
+  "parity",
+  "rows"
+ ],
+ "note": "Generated sections are rebuilt by the runner at run time; the full resolved configuration is written to the run's outputs/ folder (experiments/v15_runner.py).",
+ "resolved_sha256": "8e5615d56f9bed2194014966956f9062c76edf95e63300810f8ffb791b3931aa",
+ "schema": "highway_merge_v15_slim_config_v01",
+ "settings": {
+  "authorization": "not authorized: decision 14 step 2 needs the user's go-ahead (\"Size it and present the pinned config and the expected charge for the go-ahead\", relayed by the main Claude session, November 27, 2026)",
+  "backend": "libsumo",
+  "backgrounds": [
+   "idm"
+  ],
+  "charge": {
+   "estimate_source": {
+    "canary": {
+     "driver": "rule:expert-v4",
+     "row": 0,
+     "rule": "the shortest-horizon task, then the first",
+     "task": 0
+    },
+    "decisions_per_worker_second": 140.0,
+    "longest_episode_decisions": 6688,
+    "per_row": "expert v3: Phase 2 run 3; the policy: Phase 3 step relabel (first attempts); each v4 driver at its v3 counterpart's decisions",
+    "rate": {
+     "decisions": 139117,
+     "decisions_per_clock_second": 1900.4,
+     "seconds": 73.205,
+     "step": "relabel"
+    },
+    "start_seconds": 15.0
+   },
+   "expected_clock_seconds": 169.6,
+   "expected_decisions": 274736,
+   "expected_episodes": 143,
+   "guard_margin": 0.05,
+   "projected_decisions": 288473,
+   "proposed_allowance": {
+    "decisions": 290000,
+    "seconds": 300.0
+   },
+   "raise_needed": false,
+   "reserve_seconds": 301.308,
+   "study_seconds_left": 1414.764,
+   "total_wall_seconds": 64700
+  },
+  "drivers": [
+   "rule:expert-v4",
+   "l2v4:bc7c050f6d3da3ce"
+  ],
+  "expert_v4": {
+   "driver": "rule:expert-v4",
+   "settings": {
+    "hold_step_m_s": 0.25,
+    "run_up_floor_m_s2": 0.3,
+    "wait_brake_m_s2": 1.5,
+    "wait_lead_s": 0.5
+   }
+  },
+  "held_out": "not built, not run",
+  "level2": {
+   "network_of": "l2:bc7c050f6d3da3ce",
+   "policy": "l2v4:bc7c050f6d3da3ce",
+   "rule": "l2v4:rule-v4",
+   "settings_digest": "6430852da270f2fe1dfcda83c0c3b92f8ba3d0793e9282a8fcc12d3d7cb1b551",
+   "v3_settings_digest": "ded23aba10a5006516dfde35139d02db67749dd37e6685b430c31c98d9ce3d49"
+  },
+  "no_regression": {
+   "drivers": {
+    "compared": {
+     "l2v4:bc7c050f6d3da3ce": "l2:bc7c050f6d3da3ce",
+     "rule:expert-v4": "rule:expert-v3"
+    },
+    "matched_rows": "every development row"
+   },
+   "events": "no new event kind, in particular no native emergency and no cut-in",
+   "movement": "fewer cars fail the movement checks than today's 23 of 31, and none of the 7 clear cars does (M1, M2 and M4, traffic/v15_movement.py; M3 reported alongside)",
+   "rows": "neither driver loses a development row it passes today, under either gate set (54 recorded, 62 re-baselined)",
+   "situations": "reported separately: clear, stream, blocked, i110 (decision 15)",
+   "unchanged": "rows where the change never acts reproduce their traces exactly"
+  },
+  "phase": "7",
+  "priority": "below_normal",
+  "reading": "Option A passes if both drivers keep the no-regression rule. The offline replay (post hoc, open loop) expects it not to: on the 12 stream cars v4 crosses when v3 does (median 19.0 s) and fails the movement checks on 12, v3 on 11.",
+  "round_index": 24,
+  "schema": "highway_merge_v15_expert_v4_recheck_v01",
+  "simulator": "SUMO (libsumo); no physics",
+  "sources": {
+   "experiments/v15_expert_v4_recheck.py": "3d0f843a83896034202b6cb4b681d1982625b655c5d48e09cda2e0ebf0ebaf92",
+   "experiments/v15_pool.py": "50b1168eec920540c0f8fc976400f1fb1fbe32bb1c3879cb0a56fd011ed465aa",
+   "experiments/v15_regrade.py": "515c3b7cccdf8598f18a9449341e7bf57dd12a4052d3e67ee42dfe3a86f0932d",
+   "experiments/v15_runner.py": "731c6d1a3eb36930043794247c171d1100b17417953146d81253baa6caadf509",
+   "traffic/v15_level2.py": "7a1c1066f68eef06efb88ba7b70e4705ebbd19bd312d7d713237517758bc01e2",
+   "traffic/v15_level2_v4.py": "b167906742c45be9662cf5abc03e46a57eccc2845e2bc9908c2f30e3174d0247",
+   "traffic/v15_movement.py": "69177490463c1c4a11fb03173aa384a89184dbac7f217f502fa460f4479f1453",
+   "traffic/v15_rule_expert.py": "9018ba3a239d6f2e79255f5a8f2ffacb2ce5c5f24f0b0ff1928f39d755eb6571",
+   "traffic/v15_rule_expert_v4.py": "f0a892d1287eef505a6a607dc47082d69935541481d2daac9d7ffd7f051edbaf"
+  },
+  "step": "recheck",
+  "workers": 16
+ }
+}
