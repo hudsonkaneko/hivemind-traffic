@@ -4,6 +4,33 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-27 - Plan v15 decisions 13-20: expert v4, its offline replay, C2 as the physics default (nothing run)
+
+- **Asked:** "Yes, as recommended" (relayed by the main session) for decisions 13-20. Decision 14's
+  step 2 (the SUMO re-check) and decision 16 were not authorized.
+- **Added:**
+  - `traffic/v15_movement.py`: movement checks M1-M4 (reported, not gates);
+  - expert v4 (`traffic/v15_rule_expert_v4.py`, a new driver id) and the Level 2 drivers on its
+    executor (`traffic/v15_level2_v4.py`). Expert v3 and the policy's code paths are unchanged.
+  - **The offline replay** (`experiments/v15_expert_v4_replay.py`, an open-loop projection, post
+    hoc). On the 12 stream cars v4 crosses when v3 does (a median of 19.0 s). It fails the movement
+    checks on 12 of them, against v3's 11.
+    - As the write-up specified it, v4 crossed unsafely on 2 rows. A fourth change (the run-up the
+      car can make) fixes that, for the user's decision.
+  - **The step-2 sizing** (`experiments/v15_expert_v4_recheck.py`; `run` refuses): 274,736
+    decisions, about 170 s.
+  - **The first-decision jerk check** (`experiments/v15_first_decision_check.py`): it comes mostly
+    from the spawn's speed convention.
+- **Changed:** `scripts/physics_drive_server.py`'s default controller, from `stage5` to `c2`.
+- **Data:**
+  - `documentation/evidence/v15-expert-v4-replay/` and
+    `documentation/evidence/v15-first-decision-jerk/`;
+  - `configs/evaluation/slim/v15-expert-v4-recheck.json`, in slim form.
+- **Tests:** 49 new.
+- **Unchanged:** every recorded configuration, result and evidence file, the recorded runners, expert
+  v1-v3, `traffic/v15_level2.py`, `experiments/v15_pool.py`, the existing tests and `AGENTS.md`.
+- **Charged:** nothing.
+
 ## 2026-11-27 - Repository cleanup: a shared module for new v15 runners (going forward only, nothing run)
 
 - **Asked:** "Yes, as recommended" (relayed by the main session), approving the cleanup plan.

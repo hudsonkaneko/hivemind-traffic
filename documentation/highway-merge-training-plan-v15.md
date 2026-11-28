@@ -94,6 +94,19 @@ shared ledger needs the user's approval of its resolved configuration first, as 
   - **New configurations are committed slim:** the decided settings plus the hash of the full
     resolved configuration. On the 18 recorded configurations that form would be 3,075 lines
     instead of 13,802; they stay as they are.
+- **Decisions 13 to 20** (you approved them on November 27: "Yes, as recommended"): carried out;
+  nothing ran in SUMO or Isaac Sim; see
+  [Decisions 13–20 carried out](#decisions-1320-carried-out-november-27-expert-v4-replayed-offline-c2-the-default).
+  - **Expert v4** is written, tested and replayed offline (a post hoc, open-loop projection).
+    - On the 12 stream cars it crosses when v3 does, at a median of 19.0 s.
+    - It fails the movement checks on 12 of them; v3 fails on 11. It waits more gently but crawls
+      slower.
+    - As written, it crossed unsafely on 2 rows. So a fourth change limits its run-up to what the
+      car can make.
+  - **Step 2, the SUMO re-check,** is sized and configured, not run: 274,736 decisions, about 170 s.
+  - **C2 is the physics default.**
+  - **The first-decision jerk** on rows 53 and 67 comes mostly from the spawn's speed convention.
+  - **For you:** decisions 21 and 22.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -3315,6 +3328,205 @@ or moved:
 **Tests:** `tests/test_v15_runner.py`, 49 tests on temporary ledgers, never the shared one. They
 include a read-only round trip of each recorded configuration through the slim form.
 
+## Decisions 13–20 carried out (November 27): expert v4 replayed offline, C2 the default
+
+**Your decision (relayed by the main session):** "Yes, as recommended" for decisions 13 to 20.
+- **Not authorized:** decision 14's step 2 (the 70-row SUMO re-check) and decision 16. Nothing was
+  run in SUMO or Isaac Sim, and nothing was charged.
+- **You asked:** "I'll judge v4 by the movement as well as the numbers." So the replay reports the
+  movement checks M1–M4 and each stream car's speed.
+
+### Done
+
+- **13, movement checks:** `traffic/v15_movement.py`, with the thresholds set in the write-up.
+  - They are reported checks, not gates.
+  - The replay uses them, and so does the re-check's no-regression rule.
+- **14, step 1:** expert v4's code, its tests and the offline replay.
+  - **The code:** `traffic/v15_rule_expert_v4.py` ('rule:expert-v4') and
+    `traffic/v15_level2_v4.py`, which carries the policy and the rule Level 2 on v4's executor.
+  - Expert v3, `traffic/v15_level2.py` and the pool keep their recorded bytes (tested).
+- **15, reporting:** the replay reports the stream and clear cars apart. The 5 blocked and 7 I-110
+  cars aren't replayed.
+- **17:** C2 is the physics server's default controller (`scripts/physics_drive_server.py`).
+  - `stage5` stays selectable, with its fingerprint test.
+  - No recorded configuration or result changed.
+- **18 and 19:** no change to the road model, the 3D model or the car's physics values. The car's
+  values stay labelled provisional.
+- **20:** the first-decision jerk, read from code and logs; see below.
+
+### Expert v4 as built: the write-up's three changes, and a fourth
+
+**The three changes, as written** (option A, with the choices made to write them down):
+1. **No early slowing.** The car keeps its speed while its wait plan still works after 0.5 s more
+   at that speed. Then it slows at 1.5 m/s².
+   - **Choice:** the write-up said "until holding would need 2.0 m/s² of braking". But 2.0 m/s² for
+     3 decisions is exactly what M1 flags, so v4 plans its slowing at 1.5 m/s², v3's own run-up
+     rate.
+2. **A run-up option.** The car brakes to a moderate hold speed, holds it, then runs up at
+   1.5 m/s², crossing the line just as the gap arrives. It takes the gentlest such plan that passes
+   v3's gap test. v3's two ways to wait stay as fallbacks.
+   - **Choice:** a plan counts only if, where its run-up starts, the car could still stop at the
+     line braking at most 3.0 m/s². Without this, a fast hold reaches v3's dilemma zone before the
+     gap opens.
+3. **A committed car runs up as planned,** where its gap passes only with the run-up. The 3.0 m/s²
+   abort is kept.
+
+**The fourth change, found by the replay** (not in the write-up; for your decision): **the run-up
+the car can actually make.**
+- **The problem:** v3's gap test assumes a 1.5 m/s² run-up up to the free-road speed. The car can't
+  always make it:
+  - the environment's drive bound caps it at about 1.3 m/s² on the Adams ramp;
+  - on row 24, the curve cap stops it short.
+- **What went wrong without it:** with change 3, a car committed to such a gap fell behind its plan.
+  The commit was undone only once the car was already in the dilemma zone, so it held.
+  - **Row 37:** the car crossed at 3.4 s at 16.6 m/s, in front of a mainline car that would need
+    8.0 m/s² of braking.
+  - **Row 24:** the car crossed 4.0 s sooner than v3 (at 7.8 s, at 17.1 m/s), and the mainline car behind
+    would need 3.8 m/s².
+  - Both are open-loop projections: the mainline car doesn't react.
+- **The change:** the gap test, the wait plans and the committed run-up all use the rate the car can
+  make now.
+  - That rate is the environment's ceiling less v3's margin, between 0.3 and 1.5 m/s².
+  - Its top speed is at most the curve cap, now and at the line.
+- **Where nothing binds** (a ceiling of at least 1.55 m/s² and no curve cap), the test is v3's.
+
+### The offline replay
+
+`experiments/v15_expert_v4_replay.py`; evidence in `documentation/evidence/v15-expert-v4-replay/`,
+with a generated `report.md`.
+- **Label:** an open-loop kinematic projection on a stream rebuilt from saved SUMO records.
+  - It is neither SUMO nor physics, and post hoc.
+  - The checks are measured to the stop line, not to merge completion.
+- **The source:** expert v3's Phase 2 run 3, on the 12 stream cars and the 7 clear cars.
+
+**How it was checked:**
+- **The rebuilt stream:** v3's replayed choices match its record at 2,436 of 2,495 stream decisions
+  (97.6%), and at all 232 clear decisions.
+- **The projection:** projected v3 crosses within 0.1 s of recorded v3 on all 12 stream cars, and
+  the same 11 cars fail the movement checks.
+
+**Results on the 12 stream cars** (M1, M2, M4 count toward "fail any"; M3 applies to 8 cars):
+
+| Driver | Fail any | M1 | M2 | M4 | M3 flagged | Median crossing | Crossing speed | Lowest speed | Below 5 m/s | Undone commits |
+|---|---|---|---|---|---|---|---|---|---|---|
+| v3 recorded (SUMO) | 11 | 10 | 8 | 3 | 8 | 19.0 s | 4.46 m/s | 0.69 m/s | 14.1 s | — |
+| v3 projected | 11 | 10 | 8 | 2 | 8 | 19.0 s | 4.31 m/s | 0.65 m/s | 14.1 s | 13 |
+| **v4 projected** | **12** | 9 | 8 | 3 | 8 | 19.0 s | 4.01 m/s | 0.25 m/s | 13.9 s | 10 |
+| v4 as written (changes 1–3) | 10 | 8 | 7 | 3 | 8 | 19.0 s | 5.11 m/s | 0.67 m/s | 14.0 s | 9 |
+
+- **v4 as written** fails fewer checks, but it crosses unsafely on rows 37 and 24 (above).
+- **On the 7 clear cars,** no driver fails M1, M2 or M4, and all cross at a median of 3.3 s.
+  - Change 3 still acts on 5 of them: their go-now gap passes only with the run-up, so v4
+    accelerates a little sooner.
+  - Change 4 makes row 51's car turn down its gap for one decision (at a 1.26 m/s² run-up). It eases
+    off at up to 0.6 m/s², then goes; it crosses 0.1 s later.
+
+**How a stream car's speed would change** (open-loop projection; speeds at 1 s steps are in the
+report):
+- **Rows 38, 39, 53 and 67** (single-car ramps; about 50 m from the line at the first decision,
+  with a 14–18 s wait):
+  - **v3** brakes at 3.0 m/s² from 11–13 m/s to about 1.2 m/s within 5 s. It crawls at about 1 m/s for
+    11–12 s, then pulls away at the line at about 2.2 m/s.
+  - **v4** brakes the same way for the first 2 s: the line is too close for any plan that keeps its
+    speed. It then slows more gently, at 1.5 m/s², down to 0.5 m/s by about 7 s.
+  - It crawls at 0.5 m/s, drops to 0.1–0.2 m/s near the line, and pulls away at about 1.6 m/s, at
+    the same moment as v3.
+  - The gentler slowing covers more of the short ramp, so less is left for the crawl. That's why the
+    crawl is slower.
+- **Row 22:** v3 brakes hard to 4.5 m/s within 4 s and holds it, merging at 16.6 s at 8.9 m/s.
+  - v4 slows gently over 10 s, to 3.5 m/s, and merges at 16.9 s at 4.9 m/s.
+  - No hard braking (M1 passes), but the car is slower at the line.
+- **Row 24:** v4 keeps more speed early (10.8 m/s at 3 s against 6.3). It merges at 11.2 s at
+  14.4 m/s, against v3's 11.8 s at 15.9 m/s. The car behind it would need 1.2 m/s², against 1.5.
+- **Row 37:** v3 brakes at up to 4.5 m/s² to a near stop and waits 8 s. v4 brakes at most
+  3.0 m/s², waits the same, and merges at 17.2 s at 3.2 m/s, against v3's 2.6.
+- **Rows 8 and 9** (queues of 3 and 2 controlled cars): v4 brakes less hard at first (1.7–1.9 m/s²
+  against 3.0 for row 8's first two cars). It crosses 0.1–0.3 s earlier, a little slower.
+
+**The reading:**
+- **The merge time is set by the stream.** Every driver crosses at a median of 19.0 s. That's when
+  the stream gives a gap that passes v3's gap test (the car behind brakes at most 2.0 m/s²).
+- **v4 changes only how the car waits.** On the short ramps it can't keep its speed, and its gentler
+  slowing leaves a slower crawl.
+- **No earlier gap passes** once the run-up is limited to what the car can make. The faster merges
+  on rows 24 and 37 came from a run-up the car couldn't make.
+- **Against the no-regression rule** ("fewer cars fail the movement checks than today's 23 of 31,
+  and none of the 7 clear cars does"):
+  - the projection expects it to fail on the stream cars: 12 fail, against v3's 11;
+  - the clear cars pass.
+  - This is post hoc and open loop. Only the SUMO re-check would settle it.
+
+### Step 2, sized and configured, not run
+
+`experiments/v15_expert_v4_recheck.py resolve` writes `configs/evaluation/slim/v15-expert-v4-recheck.json`
+(slim form; resolved hash `8e5615d5…`). `run` refuses.
+- **Where slim configurations go:** `configs/evaluation/slim/`, apart from the 18 recorded full
+  configurations, which `tests/test_v15_runner.py` counts.
+- **What would run** (SUMO, libsumo, IDM background, at 16 workers at below-normal priority, on
+  development rows only):
+  - 'rule:expert-v4' and the policy on v4 ('l2v4:bc7c050f6d3da3ce') on all 70 rows;
+  - the parity row (row 52) for v3, and a v4 parity row: 'l2v4:rule-v4' must reproduce expert v4;
+  - the pool's canary.
+- **Expected:** 274,736 decisions and 143 episodes, from recorded per-row decisions (v3's for v4,
+  the policy's for the policy on v4).
+  - Projected with the 5% margin: 288,473 decisions.
+  - About 170 s of clock time at Phase 3's measured 1,900 decisions per second. That's more than the
+    write-up's 150 s, which left out the parity rows and the canary.
+  - **Proposed allowance:** 290,000 decisions and 300 s, as ledger phase 7.
+  - **No raise:** 1,414.8 s are left.
+- **Still to write if you say go** (uncharged, before the run): a pool extension that registers the
+  v4 drivers without editing `experiments/v15_pool.py`, and the no-regression report.
+- **The no-regression rule** is in the configuration as set in the write-up. "Rows where the change
+  never acts" are few: change 3 acts on 5 of the 7 clear cars.
+
+### Decision 20: the first-decision jerk on rows 53 and 67
+
+Read from code and the saved physics logs; no fix was built.
+`experiments/v15_first_decision_check.py` → `documentation/evidence/v15-first-decision-jerk/`.
+- **The cause is the spawn's speed convention** (read in `scripts/physics_drive_server.py`):
+  - `spawn()` gives the body SUMO's speed along its pitched heading;
+  - `read()`, which feeds the gate, reports the horizontal forward speed.
+  - On the Adams ramp's 2.6–2.7° spawn, the first reading is lower by v(1 − cos θ), about 0.013 m/s.
+  - So the gate's first realized acceleration is 0.135 m/s² lower than the command. This matches
+    the formula exactly on rows 39, 53 and 67.
+- **On rows 53 and 67, with a −0.3 m/s² command,** the gate sees −0.53 and −0.51 with C2, and −0.54
+  and −0.53 with stage5.
+  - **The spawn step** is 57–60% of the excess.
+  - **The rest** is the car's first-decision tracking error, −0.08 to −0.10 m/s². At decisions 2–5
+    the error is at most 0.03.
+  - The tracking error is also about −0.07 on row 25, which spawns flat, so its cause is not only the
+    grade (not verified further).
+- **The jerk:** 5.28 and 5.13 m/s³ with C2 (the drives' largest), against −3.0 if the command were
+  realized exactly. Rows 11 and 25 spawn nearly flat and have no spawn step.
+- **What it means for the gate:** with C2, rows 53 and 67 fail the per-car check on peak jerk alone
+  (limit 5 m/s³).
+  - Without the spawn step, the first-decision jerk would be about 3.9 and 3.8 m/s³, by arithmetic
+    on the logs. The next largest in those drives is 3.25.
+  - Only a re-drive would confirm it.
+  - Both rows still fail the stable merge and merge quality.
+- **A fix would be physics-only:** spawn the body so that its horizontal forward speed equals
+  SUMO's. That is a one-line change in `spawn()`.
+  - It changes every drive that spawns on a grade, so confirming it needs re-drives. The physics
+    gap's drives cost about 46 s each.
+  - Your decision (decision 22).
+
+### C2 as the default: one side effect
+
+Three older runners start the physics server without naming a controller:
+`experiments/v15_stage5_physics.py`, `scripts/record_highway_flow_v14_physics.py` and
+`scripts/run_physics_drive_stage1.py`.
+- **A re-run of any of them would now drive C2.** Their recorded results stay as they were, labelled
+  with the controller they used.
+- **They aren't changed:** they're frozen.
+- **To reproduce a stage5 drive,** pass `--controller stage5` to the server. The physics gap runner
+  names its controller explicitly.
+
+### Tests and lines
+
+- **Tests:** 49 new, all passing: v4 (26), the movement checks (9), the replay (9), the re-check
+  sizing (3) and the default controller (2). The existing suites they touch pass too.
+- **Code and data are in separate commits.**
+
 ## Decisions for you
 
 Decisions 1–7 were decided on November 25, 2026, relayed by the main Claude session and recorded
@@ -3470,6 +3682,28 @@ Decisions 13 to 20 were proposed on November 27, 2026. Nothing in them has run.
     for a proposal to source them from a real reference vehicle.
 20. **The first-decision jerk on rows 53 and 67:** an offline look, reading code and logs only and
     uncharged (recommended), or leave it.
+
+Decisions 13 to 20 were decided on November 27, 2026: "Yes, as recommended", relayed by the main
+Claude session. Decision 14's step 2 and decision 16 were not authorized. See
+[Decisions 13–20 carried out](#decisions-1320-carried-out-november-27-expert-v4-replayed-offline-c2-the-default).
+
+21. **Expert v4's step 2:**
+    - **Don't run it, and stay with option C** (recommended): keep v4's code as an unused driver,
+      and report the movement checks.
+      - In the replay, v4 merges no sooner, and it is expected to fail the no-regression rule on the
+        stream cars.
+    - **Or run the re-check anyway,** for the closed-loop answer:
+      - about 170 s and 288,473 projected decisions, of the 1,414.8 s left, with no raise;
+      - under the no-regression rule in its configuration.
+    - **Or option B:** acceleration lanes in the SUMO network. It would modify the 3D model.
+    - **Change 4** (the run-up the car can make) stays in v4 either way. Without it, the replay's v4
+      crossed unsafely on rows 24 and 37.
+22. **The spawn speed** (decision 20's finding):
+    - **Fix it in code** (recommended): spawn the physics body at SUMO's horizontal speed.
+      - It's uncharged, with tests.
+      - The next physics drives you approve would confirm it; no drive just for this.
+    - **Or re-drive rows 53 and 67 with the fix,** about 46 s each.
+    - **Or leave it,** and keep reporting the first-decision jerk as a spawn artifact.
 
 ## What carries over from v14
 
