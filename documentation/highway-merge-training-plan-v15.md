@@ -101,12 +101,23 @@ shared ledger needs the user's approval of its resolved configuration first, as 
     - On the 12 stream cars it crosses when v3 does, at a median of 19.0 s.
     - It fails the movement checks on 12 of them; v3 fails on 11. It waits more gently but crawls
       slower.
-    - As written, it crossed unsafely on 2 rows. So a fourth change limits its run-up to what the
-      car can make.
+    - As written, it crossed sooner on 2 rows, where (open loop) the car behind would need 3.8 and
+      8.0 m/s². So a fourth change limits its run-up to what the car can make.
   - **Step 2, the SUMO re-check,** is sized and configured, not run: 274,736 decisions, about 170 s.
   - **C2 is the physics default.**
   - **The first-decision jerk** on rows 53 and 67 comes mostly from the spawn's speed convention.
   - **For you:** decisions 21 and 22.
+- **The stream merges, questioned** (asked by the main session on November 27, after your "lets
+  just fix the controller first"): offline, from saved SUMO records; nothing run; see
+  [The stream merges, questioned](#the-stream-merges-questioned-november-27-the-stream-sets-the-time).
+  - **On 6 of the 12 stream cars no gap passes v3's 2.0 m/s² test before the last mainline car has
+    passed,** even at the best speed the car could have at the line. No driver keeping that rule
+    could merge sooner. On the five short ramps the crawl is forced too.
+  - **Before our car crosses, SUMO's mainline cars don't react to it:** the same SUMO cars are
+    identical in v3's and round 16's records. So the wait isn't an artefact of the replay.
+  - **Rows 24, 38, 39, 53 and 67 have only SUMO cars in the stream;** rows 8, 9, 22 and 37 have 1–3
+    of ours.
+  - **Recommended:** don't run step 2. The options are sized there.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -3379,8 +3390,8 @@ the car can actually make.**
   - on row 24, the curve cap stops it short.
 - **What went wrong without it:** with change 3, a car committed to such a gap fell behind its plan.
   The commit was undone only once the car was already in the dilemma zone, so it held.
-  - **Row 37:** the car crossed at 3.4 s at 16.6 m/s, in front of a mainline car that would need
-    8.0 m/s² of braking.
+  - **Row 37:** the car crossed at 3.4 s at 16.6 m/s, in front of a mainline car (our own agent_5)
+    that would need 8.0 m/s² of braking.
   - **Row 24:** the car crossed 4.0 s sooner than v3 (at 7.8 s, at 17.1 m/s), and the mainline car behind
     would need 3.8 m/s².
   - Both are open-loop projections: the mainline car doesn't react.
@@ -3414,7 +3425,8 @@ with a generated `report.md`.
 | **v4 projected** | **12** | 9 | 8 | 3 | 8 | 19.0 s | 4.01 m/s | 0.25 m/s | 13.9 s | 10 |
 | v4 as written (changes 1–3) | 10 | 8 | 7 | 3 | 8 | 19.0 s | 5.11 m/s | 0.67 m/s | 14.0 s | 9 |
 
-- **v4 as written** fails fewer checks, but it crosses unsafely on rows 37 and 24 (above).
+- **v4 as written** fails fewer checks, but on rows 37 and 24 it crosses where, open loop, the car
+  behind would need 8.0 and 3.8 m/s² (above).
 - **On the 7 clear cars,** no driver fails M1, M2 or M4, and all cross at a median of 3.3 s.
   - Change 3 still acts on 5 of them: their go-now gap passes only with the run-up, so v4
     accelerates a little sooner.
@@ -3526,6 +3538,150 @@ Three older runners start the physics server without naming a controller:
 - **Tests:** 49 new, all passing: v4 (26), the movement checks (9), the replay (9), the re-check
   sizing (3) and the default controller (2). The existing suites they touch pass too.
 - **Code and data are in separate commits.**
+
+## The stream merges, questioned (November 27): the stream sets the time
+
+**Asked by the main session**, relaying your priority ("lets just fix the controller first", read as
+decision 14's merge logic):
+1. does expert v4 merge sooner without asking a mainline car to brake harder than v3's 2.0 m/s²;
+2. if not, why, and how much of that comes from the replay's open loop;
+3. whose cars are in each stream;
+4. is step 2 still worth its cost, or is there a better next step.
+
+- **How:** offline, from saved SUMO records only: expert v3's (Phase 2 run 3), round 16's (Phase 1
+  run 1), and the replay's rebuilt stream. Nothing was simulated or charged. All of it is post hoc.
+- **Where:** `experiments/v15_stream_gaps.py`, with 9 tests. Its evidence, with a generated
+  `report.md`, is in `documentation/evidence/v15-stream-gaps/`.
+
+### 1. Does v4 merge sooner without harder braking? No
+
+- **In the replay,** v4 crosses within 0.6 s of v3 on each of the 12 stream cars, at a median of
+  19.0 s.
+- **Its car behind never needs more than v3's 2.0 m/s².** On row 24 it needs 1.2 m/s², against v3's
+  1.5.
+- **v4 as written** (without change 4) crossed sooner on rows 24 and 37. Open loop, the car behind
+  would need 3.8 and 8.0 m/s².
+  - For a fast entry, that open-loop figure can overstate what SUMO's cars do (see 2 below).
+  - So "unsafe", which I wrote before, was too strong. Only SUMO can settle it.
+
+### 2. Why: on most stream cars, no gap passes v3's test before the stream has gone by
+
+**The check.** Every gap in the rebuilt stream is judged by v3's own gap test:
+- the car behind brakes at most 2.0 m/s², by its own SUMO IDM;
+- the car ahead passed at least 1 s before.
+
+It is judged at its best case:
+- **When:** crossing at the earliest the gap allows.
+- **At what speed:** the highest the car could have crossing the line then, from its first decision.
+  It brakes at once (up to the environment's 4.5 m/s²), or stops and waits. Then it runs up at v3's
+  1.5 m/s², to the free-road speed and at most the curve cap at the line.
+- **What it ignores:** curves before the line, the ramp car ahead and v3's 0.5 m/s crawl.
+- **So it's an upper bound.** A gap that fails it is out of reach for any driver that keeps v3's
+  rule and run-up.
+
+**On the 12 stream cars:**
+
+| Cars | Rows | Earliest crossing by v3's rule, best case | v3 crossed (record) |
+|---|---|---|---|
+| 6 | 22, 37, 38, 39, 53, 67 | After the last mainline car: 16.5–18.7 s | 0.1–0.5 s later |
+| 1 | 24 | 11.0 s | 11.8 s |
+| 4 | 8, 9: queued behind our own ramp cars | After the car ahead on the ramp, then after the last mainline car: 20.8–29.2 s | 2.0–3.1 s later |
+| 1 | 8: agent_6, the first of our queue | 7.4 s (behind our agent_1), or 11.7 s (behind main_8) | 19.8 s |
+
+Times are from each car's first decision at the entry.
+
+- **The six:** no gap passes even at the merge gate's 3.0 m/s² limit, which v3 uses only to hold a
+  started commit. No driver keeping v3's rule could merge sooner.
+  - **The stream is a platoon** of 4 or 5 cars at 20–27 m/s, 2.3–3.7 s apart.
+  - **On the five short ramps** (rows 37, 38, 39, 53 and 67), each gap before the last car needs
+    18–31 m/s at the line under the 2.0 m/s² rule, and still 15–30 m/s at 3.0. One has no room at
+    all.
+    - The car could reach at most 16–18 m/s at the first gap, about 3 s in.
+    - At the later gaps it could reach only 9.1–12.7 m/s: it must already have slowed to wait.
+  - **On row 22** the car could reach 15–19 m/s; the gaps need 21–27 m/s (18–25 at 3.0).
+- **The crawl is forced on the five short ramps.**
+  - The car starts 42–50 m from the line, and may not cross for 16.9–18.7 s.
+  - Above 5 m/s it would cover more than 5 m each second. So it must spend at least 7.0–9.9 s
+    below 5 m/s, whatever the controller.
+  - **So M2** (no more than 1 s below 5 m/s with no close leader) **can't be met there** by any
+    driver that keeps v3's rule.
+- **Rows 8 and 9: a queue of four on the ramp.** SUMO's ramp_0 is first, then our agents 6, 0 and 2,
+  starting 87, 129 and 171 m from the line.
+  - On row 9, ramp_0 stood at the line from 9.9 to 20.0 s (v3's record).
+  - Each of our later cars waits for the one ahead.
+- **Row 8, agent_6: the one real loss.**
+  - v3 first planned to cross ahead of our own agent_1 (0.2–1.0 s). It gave that up at 2.0 s and
+    slowed to a 6.1 m/s hold.
+  - From there it couldn't run up to the 16.3 or 11.2 m/s the next two gaps needed. So it waited
+    for the last car. v4 did the same in the replay.
+  - Up to 12.4 s is at stake on this car.
+
+**How much comes from the open loop: none of the wait.**
+- **Before our car crosses, SUMO's mainline cars don't react to it.** On rows 22, 24, 38, 39, 53
+  and 67, every reading of the same SUMO car at the same instant agrees between v3's record and
+  round 16's, to 0.000 m and 0.000 m/s.
+  - That holds up to 2.6–6.6 s, just before round 16 crossed.
+  - Round 16 drove the ramp car very differently: it crossed at 15–20 m/s, where v3 crawls.
+- **What this confirms:** the note in v3's code that SUMO's mainline cars ignore a ramp car until it
+  crosses the line. So the rebuilt stream before the crossing is what SUMO gives any driver, and the
+  wait is not a replay artefact.
+- **Rows 8 and 9 differ** (by up to 1.5 m and 27 m). Their streams contain our own agent_1, which
+  the two drivers drive differently. Row 37 has no matching readings.
+- **After the crossing, the open loop is only a proxy.** What SUMO logged for round 16's early
+  crossings:
+  - **Emergency braking at 9.0 m/s²** by a SUMO car on rows 8, 9 (two cars) and 39.
+  - **Junction collisions** on two rows:
+    - row 8: main_8 with our agent_2;
+    - row 24: our car with main_11, the car ahead, which had passed 0.1 s before (v3 waits 1 s).
+  - **Nothing logged** on rows 22, 38, 53 and 67, where the open loop said the car behind would need
+    10.5, 7.9, 5.8 and 1.6 m/s².
+  - **So for a fast entry, the open-loop braking can overstate** what SUMO's cars did.
+    - Inferred, not checked: SUMO logs emergency braking only beyond a car's own limit (its log
+      line gives "wished=4.50"). If so, on those 4 rows the car behind braked at most 4.5 m/s².
+  - **v4 as written's row 37 crossing** (3.4 s at 16.6 m/s) is round 16's (3.4 s at 16.5 m/s). SUMO
+    logged nothing for round 16 there, and the car behind is our own agent_5.
+
+### 3. Whose cars are in the stream
+
+Verified in each row's `routes.rou.xml` and action records.
+- **Rows 24, 38, 39, 53 and 67:** SUMO's only. Our ramp car is the only controlled car.
+- **Rows 8, 9, 22 and 37:** eight controlled cars each. 1 to 3 of ours are in the stream:
+  - agent_1 on rows 8 and 9;
+  - agents 5 and 1 on row 22;
+  - agents 5, 4 and 7 on row 37.
+
+  The rest are SUMO's.
+- **So our own cars opening a gap** (in the plan, never built) could act only on those 4 rows: for 7
+  of the 12 ramp cars. On row 8 the first gap is right behind our agent_1.
+- **It can't help on the five one-car rows:** every car in their streams is SUMO's.
+
+### 4. Is step 2 worth it? Not for faster merges
+
+| Option | What it would answer | SUMO cost (from recorded decisions) |
+|---|---|---|
+| **Don't run step 2; stay with option C** (recommended) | — | None |
+| Step 2 as configured | Whether v4's gentler wait keeps the no-regression rule in closed loop. Expected: no, on the movement condition | 274,736 decisions (288,473 projected), about 170 s; allowance 290,000 decisions and 300 s |
+| A stream-rows-only diagnostic (9 rows) | v4's closed-loop movement on the stream cars only. It can't apply the no-regression rule, which needs every row | 27,863 decisions (29,256 projected), about 73 s: the longest episode sets the clock |
+| v3's gap test at the gate's 3.0 m/s² | Already answered offline: an earlier gap on 1 of the 12 cars (row 24: 7.6 s instead of 11.0) | Not worth a run |
+| Our own mainline cars open a gap | Faster merges on rows 8, 9, 22 and 37 at most | New code first, then a 70-row check of step 2's size (about 170 s) |
+| Acceleration lanes in the SUMO network (option B) | Faster merges wherever the yield junction forces the wait | A benchmark change: it would modify the 3D model too, and every baseline would be re-run. v3, the policy and round 16 recorded 405,397 decisions on the 70 rows: about 238 s by the same estimate |
+
+The clocks are the re-check's own estimate: the decisions at Phase 3's measured 1,900 per second
+(or the longest episode at one worker's rate, if longer), plus start and settling time. 1,414.8 s
+are left.
+
+**My reading:**
+- **Fixing the controller can't make most stream merges faster.**
+  - On 6 of the 12 cars, no driver that keeps v3's 2.0 m/s² rule could merge sooner.
+  - On the five short ramps the crawl is forced too.
+  - v3's logic loses real time on 1 car (row 8, agent_6). Against the best case, it loses at most
+    2–3 s on the 4 queued cars and 0.1–0.8 s on the other seven.
+- **If faster merges with mainline cars coming are the goal,** the choice is between two options,
+  each written up first:
+  - our own cars opening gaps (4 of the 9 rows);
+  - acceleration lanes (a benchmark change).
+- **For the portfolio caveat:** on the stream rows, the merge time and the crawl come from SUMO's
+  yield-junction ramps (no acceleration lane) and the 2.0 m/s² rule, not from the controller.
 
 ## Decisions for you
 
@@ -3697,7 +3853,9 @@ Claude session. Decision 14's step 2 and decision 16 were not authorized. See
       - under the no-regression rule in its configuration.
     - **Or option B:** acceleration lanes in the SUMO network. It would modify the 3D model.
     - **Change 4** (the run-up the car can make) stays in v4 either way. Without it, the replay's v4
-      crossed unsafely on rows 24 and 37.
+      crossed rows 24 and 37 where, open loop, the car behind would need 3.8 and 8.0 m/s².
+    - **The stream merges, questioned** (below) adds the sizes of the other options and why v4 can't
+      merge sooner: see [The stream merges, questioned](#the-stream-merges-questioned-november-27-the-stream-sets-the-time).
 22. **The spawn speed** (decision 20's finding):
     - **Fix it in code** (recommended): spawn the physics body at SUMO's horizontal speed.
       - It's uncharged, with tests.

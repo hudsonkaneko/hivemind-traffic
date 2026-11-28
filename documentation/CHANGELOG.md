@@ -4,6 +4,27 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-27 - Plan v15: the stream merges, questioned (offline, nothing run)
+
+- **Asked:** the main session relayed the user's priority ("lets just fix the controller first") with
+  four questions: does expert v4 merge sooner without harder braking, why not, whose cars are in each
+  stream, and is step 2 still worth running.
+- **Added:** `experiments/v15_stream_gaps.py` (an offline reading of saved SUMO records, post hoc),
+  with 9 tests. Its evidence is in `documentation/evidence/v15-stream-gaps/`.
+  - **v4 merges no sooner:** within 0.6 s of v3 on each of the 12 stream cars.
+  - **On 6 of them no gap passes v3's 2.0 m/s² test before the last mainline car has passed,** even
+    at the best speed the car could have at the line. On the five short ramps the crawl is forced.
+  - **The wait isn't a replay artefact.** Before our car crosses, the same SUMO cars read identically
+    in v3's and round 16's records.
+  - **Rows 24, 38, 39, 53 and 67 have only SUMO cars in the stream;** rows 8, 9, 22 and 37 have 1-3
+    of ours.
+  - **The options are sized** (SUMO decisions, from records). Recommended: don't run step 2.
+- **Changed:** plan v15's "crossed unsafely" wording for v4 as written. It now gives the open-loop
+  braking (3.8 and 8.0 m/s²), which SUMO's own log suggests can overstate a fast entry.
+- **Unchanged:** every recorded configuration, result and evidence file, the recorded runners and
+  the drivers.
+- **Charged:** nothing.
+
 ## 2026-11-27 - Plan v15 decisions 13-20: expert v4, its offline replay, C2 as the physics default (nothing run)
 
 - **Asked:** "Yes, as recommended" (relayed by the main session) for decisions 13-20. Decision 14's
