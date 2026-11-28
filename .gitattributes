@@ -84,3 +84,9 @@ experiments/v15_pool.py text eol=lf
 experiments/v15_runner.py text eol=lf
 # Saved results and evidence are generated data: collapsed in GitHub diffs and left out of language statistics.
 documentation/evidence/** linguist-generated=true
+# Decisions 13-20 (November 27): the configuration and the replay's evidence pin these files' exact LF bytes.
+traffic/v15_movement.py text eol=lf
+traffic/v15_rule_expert_v4.py text eol=lf
+traffic/v15_level2_v4.py text eol=lf
+experiments/v15_expert_v4_replay.py text eol=lf
+experiments/v15_expert_v4_recheck.py text eol=lf

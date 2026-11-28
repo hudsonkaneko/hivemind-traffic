@@ -22,7 +22,8 @@ physics car's pose equals its SUMO shadow's and the background is SUMO's for tha
 runs 12 physics ticks and replies with the new front-bumper pose, forward speed and telemetry.
 
 --controller picks the low-level controller version (traffic/physical_controller.CONTROLLERS; plan v15
-"Physics gap proposal", decision 11). 'stage5', the default, is the controller of every earlier drive. For
+"Physics gap proposal", decision 11). 'c2' is the default (decision 17, November 27, 2026); 'stage5', the
+controller of every drive before decision 11 and the default until decision 17, stays selectable. For
 the versions that take the grade from the road model ('c1', 'c2') the server gives the controller, at
 every tick, road_grade: the sine of the slope between the model's lane surface under the front and the
 rear axle, both taken speed * grade_preview_s ahead along the heading. The wheels' moment of inertia is
@@ -46,6 +47,8 @@ if str(ROOT) not in sys.path:
 from traffic import physics_link  # noqa: E402
 from traffic.physical_controller import (CONTROLLERS, LowLevelController, VehicleSpec, controller_gains,  # noqa: E402
                                          cornering_terms)
+
+DEFAULT_CONTROLLER = 'c2'          # decision 17 (plan v15, "Physics gap options", option 4); was 'stage5'
 
 PHYSICS_HZ = 120
 DECISION_S = .1
@@ -514,7 +517,7 @@ def main():
     parser.add_argument('--max-drive-nm', type=float, default=700.)
     parser.add_argument('--max-brake-nm', type=float, default=1500.)
     parser.add_argument('--link-port', type=int, required=True)
-    parser.add_argument('--controller', default='stage5', choices=sorted(CONTROLLERS))
+    parser.add_argument('--controller', default=DEFAULT_CONTROLLER, choices=sorted(CONTROLLERS))
     args = parser.parse_args()
     args.output = args.output.resolve()
     if not args.output.is_relative_to(ROOT / 'outputs') or args.output.exists():
