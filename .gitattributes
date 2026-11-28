@@ -90,3 +90,5 @@ traffic/v15_rule_expert_v4.py text eol=lf
 traffic/v15_level2_v4.py text eol=lf
 experiments/v15_expert_v4_replay.py text eol=lf
 experiments/v15_expert_v4_recheck.py text eol=lf
+# The stream-gap reading (November 27) pins its own LF bytes in its evidence.
+experiments/v15_stream_gaps.py text eol=lf
