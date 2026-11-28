@@ -4,6 +4,21 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-27 - Plan v15 decisions 21 and 22: no re-check; the physics spawn at SUMO's horizontal speed (nothing run)
+
+- **Asked:** "Yes, as recommended" (relayed by the main session) for decisions 21 and 22.
+- **Decision 21:** expert v4's SUMO re-check (step 2) isn't run, and option C stays. Expert v3 and the
+  policy stay the drivers. Expert v4 stays in the code, unused, with change 4.
+- **Changed (decision 22):** `scripts/physics_drive_server.py`'s `spawn()` starts the body so that
+  its horizontal forward speed, the one `read()` reports, is SUMO's speed. Before, its speed along
+  the pitched road was SUMO's, which put a −0.135 m/s² step into the first reading on the Adams
+  ramp's 2.7° spawn. A flat spawn is unchanged. No drive was run; the next approved physics drives
+  will confirm it.
+- **Tests:** 7 new (`tests/test_physics_spawn_speed.py`).
+- **Unchanged:** every recorded configuration, result and evidence file, the drivers, and the road
+  and 3D models.
+- **Charged:** nothing.
+
 ## 2026-11-27 - Plan v15: the stream merges, questioned (offline, nothing run)
 
 - **Asked:** the main session relayed the user's priority ("lets just fix the controller first") with

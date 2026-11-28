@@ -106,7 +106,7 @@ shared ledger needs the user's approval of its resolved configuration first, as 
   - **Step 2, the SUMO re-check,** is sized and configured, not run: 274,736 decisions, about 170 s.
   - **C2 is the physics default.**
   - **The first-decision jerk** on rows 53 and 67 comes mostly from the spawn's speed convention.
-  - **For you:** decisions 21 and 22.
+  - **Decisions 21 and 22** are decided (below).
 - **The stream merges, questioned** (asked by the main session on November 27, after your "lets
   just fix the controller first"): offline, from saved SUMO records; nothing run; see
   [The stream merges, questioned](#the-stream-merges-questioned-november-27-the-stream-sets-the-time).
@@ -118,6 +118,13 @@ shared ledger needs the user's approval of its resolved configuration first, as 
   - **Rows 24, 38, 39, 53 and 67 have only SUMO cars in the stream;** rows 8, 9, 22 and 37 have 1–3
     of ours.
   - **Recommended:** don't run step 2. The options are sized there.
+- **Decisions 21 and 22** (you approved them on November 27: "Yes, as recommended"): carried out;
+  nothing ran in SUMO or Isaac Sim; see
+  [Decisions 21 and 22 carried out](#decisions-21-and-22-carried-out-november-27-no-re-check-the-spawn-speed-fixed).
+  - **21:** step 2 isn't run, and option C stays. Expert v3 and the policy stay the drivers; v4
+    stays in the code, unused.
+  - **22:** the physics server now spawns the body at SUMO's speed as its horizontal speed. The next
+    physics drives you approve will confirm it.
 
 It replaces the approach of v06–v14: PPO fine-tuning of one network that outputs an
 acceleration every decision, with reward and gate patches after each round. Their evidence
@@ -3517,7 +3524,8 @@ Read from code and the saved physics logs; no fix was built.
   - Only a re-drive would confirm it.
   - Both rows still fail the stable merge and merge quality.
 - **A fix would be physics-only:** spawn the body so that its horizontal forward speed equals
-  SUMO's. That is a one-line change in `spawn()`.
+  SUMO's. That is a one-line change in `spawn()`. Done on November 27 (decision 22, see
+  [Decisions 21 and 22 carried out](#decisions-21-and-22-carried-out-november-27-no-re-check-the-spawn-speed-fixed)).
   - It changes every drive that spawns on a grade, so confirming it needs re-drives. The physics
     gap's drives cost about 46 s each.
   - Your decision (decision 22).
@@ -3854,7 +3862,7 @@ Claude session. Decision 14's step 2 and decision 16 were not authorized. See
     - **Or option B:** acceleration lanes in the SUMO network. It would modify the 3D model.
     - **Change 4** (the run-up the car can make) stays in v4 either way. Without it, the replay's v4
       crossed rows 24 and 37 where, open loop, the car behind would need 3.8 and 8.0 m/s².
-    - **The stream merges, questioned** (below) adds the sizes of the other options and why v4 can't
+    - **The stream merges, questioned** (above) adds the sizes of the other options and why v4 can't
       merge sooner: see [The stream merges, questioned](#the-stream-merges-questioned-november-27-the-stream-sets-the-time).
 22. **The spawn speed** (decision 20's finding):
     - **Fix it in code** (recommended): spawn the physics body at SUMO's horizontal speed.
@@ -3862,6 +3870,56 @@ Claude session. Decision 14's step 2 and decision 16 were not authorized. See
       - The next physics drives you approve would confirm it; no drive just for this.
     - **Or re-drive rows 53 and 67 with the fix,** about 46 s each.
     - **Or leave it,** and keep reporting the first-decision jerk as a spawn artifact.
+
+Decisions 21 and 22 were decided on November 27, 2026: "Yes, as recommended", relayed by the main
+Claude session after it showed you the options table in
+[The stream merges, questioned](#the-stream-merges-questioned-november-27-the-stream-sets-the-time).
+See [Decisions 21 and 22 carried out](#decisions-21-and-22-carried-out-november-27-no-re-check-the-spawn-speed-fixed).
+
+## Decisions 21 and 22 carried out (November 27): no re-check, the spawn speed fixed
+
+**You decided:** "Yes, as recommended", relayed by the main Claude session after it showed you the
+options table in "The stream merges, questioned". Nothing ran in SUMO or Isaac Sim, and nothing was
+charged.
+
+### Decision 21: no re-check, option C stays
+
+- **Step 2 isn't run.** Its configuration stays in `configs/evaluation/slim/`, and
+  `experiments/v15_expert_v4_recheck.py run` still refuses.
+- **Expert v3 and the policy stay the drivers.**
+- **Expert v4 stays in the code as an unused driver** (`rule:expert-v4`), with change 4 (the run-up
+  the car can make).
+- **The movement checks M1–M4 are reported,** as decision 13 set them (`traffic/v15_movement.py`).
+
+### Decision 22: the spawn speed
+
+- **The change,** in `spawn()` in `scripts/physics_drive_server.py`:
+  - The body starts along its pitched heading at v / cos θ. So its horizontal forward speed, which
+    `read()` reports and the gate sees, is SUMO's v. Before, the speed along the road was v.
+  - The wheels spin at the same speed along the road, as before.
+  - On a flat spawn nothing changes. On the Adams ramp's 2.7° spawn, the car starts 0.014 m/s
+    faster along the road, at 12.2 m/s.
+  - The spawn report now records `speed_along_road_m_s` and `speed_convention`.
+- **What it should do:** remove the first reading's −0.135 m/s² step on a graded spawn.
+  - By decision 20's arithmetic on the logs, rows 53 and 67's first-decision jerk with C2 would be
+    about 3.9 and 3.8 m/s³ instead of 5.28 and 5.13.
+  - **Not confirmed:** no drive was run for it. The next physics drives you approve will confirm it.
+- **Tests:** 7 new (`tests/test_physics_spawn_speed.py`), without Isaac Sim:
+  - a pitched spawn reads SUMO's speed;
+  - the old convention's step matches decision 20's formula, and the Adams step is gone;
+  - a flat spawn is unchanged;
+  - `spawn()` uses the new velocity for the body and the wheels.
+- **What stays:**
+  - The recorded physics drives and their results stay as they are, under the old convention.
+  - The physics-gap runner's recorded configuration pins the server's digest. So it wouldn't
+    re-run as recorded, which was already the case after decision 17.
+  - Any new physics drive spawns the new way.
+
+### Not authorized
+
+- the SUMO re-check, the stream-rows-only diagnostic and the gap-opening code;
+- acceleration lanes, and any road or 3D-model change;
+- decision 16, new held-out rows, and any charge, raise or merge to main.
 
 ## What carries over from v14
 
