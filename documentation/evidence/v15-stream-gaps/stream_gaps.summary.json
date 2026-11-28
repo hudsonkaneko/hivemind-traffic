@@ -1,0 +1,53 @@
+{
+ "content_sha256": "7e1e8fe3cb0106cc8a7633ed427a7d4c7d38f3f6ce8bb64ed6d1cf00267bc01d",
+ "entries": 9,
+ "gzip_sha256": "287fbba07426f1bb35e42bc7d99d79364e37821e383e50f1f510082626e1da7f",
+ "results": "stream_gaps.json.gz",
+ "schema": "highway_merge_v15_results_summary_v01",
+ "summary": {
+  "label": "offline reading of saved SUMO records (expert v3: Phase 2 run 3; round 16: Phase 1 run 1) and of the stream the offline replay reconstructs from them; nothing simulated; post hoc",
+  "safe_m_s2": {
+   "entry_safe": 2.0,
+   "gate_limit": 3.0
+  },
+  "schema": "highway_merge_v15_stream_gaps_v01",
+  "sizes": {
+   "recorded per driver, 70 rows": {
+    "l2v4:bc7c050f6d3da3ce": 135439,
+    "rule:expert-v4": 135428
+   },
+   "step 2 as configured (70 rows)": {
+    "expected_clock_seconds": 169.6,
+    "expected_decisions": 274736,
+    "expected_episodes": 143,
+    "projected_decisions": 288473,
+    "proposed_allowance": {
+     "decisions": 290000,
+     "seconds": 300.0
+    }
+   },
+   "stream rows only (9 rows)": {
+    "expected_clock_seconds": 72.8,
+    "expected_decisions": 27863,
+    "expected_episodes": 21,
+    "projected_decisions": 29256,
+    "proposed_allowance": {
+     "decisions": 30000,
+     "seconds": 300.0
+    }
+   },
+   "study_seconds_left": 1414.764
+  },
+  "sources": {
+   "code": {
+    "experiments/v15_expert_v4_replay.py": "5c2cdee52de75ee1d5c5622bbdeaeef66a850f09f7f7898ba59b47945f58b1ac",
+    "experiments/v15_stream_gaps.py": "05ca45983a27522e20f289c2621fcd28b6c2863fa5b7bfe241867dca5992b36e",
+    "traffic/v15_rule_expert.py": "9018ba3a239d6f2e79255f5a8f2ffacb2ce5c5f24f0b0ff1928f39d755eb6571"
+   },
+   "expert_v3": "outputs/highway-merge-v15/phase-2/run-03",
+   "replay": "documentation/evidence/v15-expert-v4-replay/replay.summary.json",
+   "replay_content_sha256": "cd4486a6d2cbefa07a17f6b55ef7200ff481d2921c304fd2645f94c8657a89cc",
+   "round16": "outputs/highway-merge-v15/phase-1/run-01"
+  }
+ }
+}
