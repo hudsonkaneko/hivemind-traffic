@@ -4,6 +4,27 @@ This is a curated guide to meaningful changes, not a replacement for Git history
 Dates below use America/Los_Angeles. Existing experiment reports remain the
 authority for historical measurements and failures.
 
+## 2026-11-28 - Plan v16 proposed (nothing built or run)
+
+- **Asked:** "Yes, plan v16", and "lookat how we previosuly fixed the merge speed. would that method
+  help what we are currently doing?"
+- **Added:** `documentation/highway-merge-training-plan-v16.md`, a proposal for the user's decisions.
+  - **The earlier fix:** v11's merge-speed rule (match the target speed for 4 s before a merging lane
+    change) and its scripted merge approach.
+    - The rule is already in v15's lane mask. It helps where a merge is a lane change from a lane
+      alongside the traffic.
+    - It can't help the slow LA merges, which cross a yield line: the 3D model has no acceleration
+      lane (plan v12, round 19), and the short ramps leave 42–50 m.
+    - It would apply with an acceleration lane, which would mean changing the 3D model (the user's
+      decision).
+  - **The phases:** offline checks first (the I-110 case, gap-opening, movement checks as gates,
+    what an acceleration lane would take), then the road, rules (expert v5), imitation if needed,
+    physics and a new held-out check.
+  - **Decisions:** v16-1 to v16-6.
+- **Unchanged:** every code path, configuration, result and evidence file, and the road and 3D
+  models.
+- **Charged:** nothing.
+
 ## 2026-11-27 - Plan v15 decisions 21 and 22: no re-check; the physics spawn at SUMO's horizontal speed (nothing run)
 
 - **Asked:** "Yes, as recommended" (relayed by the main session) for decisions 21 and 22.
